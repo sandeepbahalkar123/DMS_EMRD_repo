@@ -1,0 +1,492 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainParentLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/otp_background_layout"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/hideMainLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:focusable="true"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp56"
+            android:background="@color/tagColor">
+
+            <Button
+                android:id="@+id/applyButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:background="@color/transparent"
+                android:focusable="true"
+                android:text="@string/apply"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp16" />
+
+            <com.rescribe.doctor.ui.customesViews.CustomTextView
+                android:id="@+id/titleTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:text="@string/filter"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp18"
+                app:customFont="@string/roboto_bold" />
+
+            <Button
+                android:id="@+id/resetButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@color/transparent"
+                android:text="@string/reset"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp16" />
+
+        </RelativeLayout>
+
+        <android.support.v4.widget.NestedScrollView
+            android:id="@+id/nestedScroll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:visibility="visible">
+
+                    <LinearLayout
+                        android:id="@+id/sortingHeaderView"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp40"
+                        android:background="@color/white"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            style="@style/drawer_filter_header_icon_layout"
+                            android:layout_gravity="center"
+                            app:srcCompat="@drawable/filtersortingicon" />
+
+                        <com.rescribe.doctor.ui.customesViews.CustomTextView
+                            style="@style/drawer_filter_header_layout"
+                            android:text="@string/sorting"
+                            app:customFont="@string/roboto_medium" />
+
+                        <ImageView
+                            style="@style/drawer_filter_header_direction_icon_layout"
+                            android:visibility="gone" />
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:id="@+id/chooseOptionToSort"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp40"
+                        android:background="@color/otp_background_layout"
+                        android:orientation="horizontal"
+                        android:visibility="visible">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="left"
+                            android:orientation="vertical">
+
+                            <com.rescribe.doctor.ui.customesViews.CustomTextView
+                                style="@style/drawer_filter_header_layout"
+                                android:layout_marginLeft="@dimen/dp8"
+                                android:layout_marginStart="@dimen/dp8"
+                                android:text="@string/sort"
+                                android:textColor="@color/tagColor"
+                                android:textSize="@dimen/sp14"
+                                app:customFont="@string/roboto_regular" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.5"
+                            android:orientation="vertical">
+
+                            <com.rescribe.doctor.ui.customesViews.CustomTextView
+                                android:id="@+id/chooseOptionForSort"
+                                style="@style/drawer_filter_header_layout"
+                                android:drawablePadding="@dimen/dp16"
+                                android:drawableRight="@drawable/sorting_arrow"
+                                android:gravity="right|end|center_vertical"
+                                android:text="@string/choose_one_option"
+                                android:textColor="@color/choose_option_color"
+                                app:customFont="@string/roboto_regular" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:visibility="visible">
+
+                    <LinearLayout
+                        android:id="@+id/genderHeaderView"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp40"
+                        android:background="@color/white"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            style="@style/drawer_filter_header_icon_layout"
+                            android:layout_gravity="center"
+                            app:srcCompat="@drawable/filtergendericon" />
+
+                        <com.rescribe.doctor.ui.customesViews.CustomTextView
+                            style="@style/drawer_filter_header_layout"
+                            android:text="@string/gender"
+                            app:customFont="@string/roboto_medium" />
+
+                    </LinearLayout>
+
+                    <com.rescribe.doctor.ui.customesViews.CustomTextView
+                        android:id="@+id/selectGender"
+                        style="@style/drawer_filter_header_layout"
+                        android:background="@color/otp_background_layout"
+                        android:gravity="center"
+                        android:padding="@dimen/dp5"
+                        android:text="@string/select_gender"
+                        app:customFont="@string/roboto_regular" />
+
+                    <LinearLayout
+                        android:id="@+id/genderContentView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/dp8"
+                        android:background="@color/otp_background_layout"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:visibility="visible">
+
+                        <LinearLayout
+                            android:id="@+id/genderMaleLayout"
+                            android:layout_width="@dimen/dp0"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:id="@+id/genderMaleIcon"
+                                style="@style/drawer_filter_gender_style"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                app:srcCompat="@drawable/filtergraymaleicon" />
+
+
+                            <com.rescribe.doctor.ui.customesViews.CustomTextView
+                                android:id="@+id/genderMaleText"
+                                style="@style/drawer_filter_gender_style"
+                                android:layout_gravity="center"
+                                android:text="@string/male"
+                                android:textColor="@color/gender_drawer"
+                                app:customFont="@string/roboto_regular" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/genderFemaleLayout"
+                            android:layout_width="@dimen/dp0"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:id="@+id/genderFemaleIcon"
+                                style="@style/drawer_filter_gender_style"
+                                android:layout_gravity="center"
+                                app:srcCompat="@drawable/filtergrayfemaleicon" />
+
+                            <com.rescribe.doctor.ui.customesViews.CustomTextView
+                                android:id="@+id/genderFemaleText"
+                                style="@style/drawer_filter_gender_style"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:text="@string/female"
+                                android:textColor="@color/gender_drawer"
+                                app:customFont="@string/roboto_regular" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/transGenderMaleLayout"
+                            android:layout_width="@dimen/dp0"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:id="@+id/transGenderMaleIcon"
+                                style="@style/drawer_filter_gender_style"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                app:srcCompat="@drawable/filtergraytransgendericon" />
+
+                            <com.rescribe.doctor.ui.customesViews.CustomTextView
+                                android:id="@+id/transGenderMaleText"
+                                style="@style/drawer_filter_gender_style"
+                                android:layout_gravity="center"
+                                android:text="@string/transgender"
+                                android:textColor="@color/gender_drawer"
+                                app:customFont="@string/roboto_regular" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/clinicFeesView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:visibility="visible">
+
+                    <LinearLayout
+                        android:id="@+id/clinicFeesHeaderView"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp40"
+                        android:background="@color/white"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            style="@style/drawer_filter_header_icon_layout"
+                            android:layout_gravity="center"
+                            app:srcCompat="@drawable/filterageicon" />
+
+                        <com.rescribe.doctor.ui.customesViews.CustomTextView
+                            style="@style/drawer_filter_header_layout"
+                            android:text="@string/age"
+                            app:customFont="@string/roboto_medium" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/clinicFeesContentView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/otp_background_layout"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:paddingBottom="@dimen/dp20"
+                        android:paddingLeft="@dimen/dp10"
+                        android:visibility="visible">
+
+                        <com.rescribe.doctor.ui.customesViews.CustomTextView
+                            android:id="@+id/ageRange"
+                            style="@style/drawer_filter_header_layout"
+                            android:background="@color/otp_background_layout"
+                            android:gravity="center"
+                            android:padding="@dimen/dp5"
+                            android:text="@string/age_range"
+                            app:customFont="@string/roboto_regular" />
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <com.rescribe.doctor.ui.customesViews.CustomTextView
+                                android:id="@+id/clinicFeesSeekBarMinValue"
+                                style="@style/drawer_filter_header_layout"
+                                android:layout_width="wrap_content"
+                                android:layout_alignParentLeft="true"
+                                android:drawableLeft="@drawable/filterbabyicon"
+                                android:drawablePadding="@dimen/dp4"
+                                android:drawableStart="@drawable/filterbabyicon"
+                                android:text="0"
+                                android:textColor="@color/black"
+                                app:customFont="@string/roboto_bold" />
+
+                            <com.rescribe.doctor.ui.customesViews.CustomTextView
+                                android:id="@+id/clinicFeesSeekBarMaxValue"
+                                style="@style/drawer_filter_header_layout"
+                                android:layout_width="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:drawableEnd="@drawable/filteroldageicon"
+                                android:drawablePadding="@dimen/dp4"
+                                android:drawableRight="@drawable/filteroldageicon"
+                                android:text="100"
+                                android:textColor="@color/black"
+                                app:customFont="@string/roboto_bold" />
+
+                        </RelativeLayout>
+
+                        <com.crystal.crystalrangeseekbar.widgets.CrystalRangeSeekbar
+                            android:id="@+id/clinicFeesSeekBar"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/dp40"
+                            android:layout_marginEnd="@dimen/dp8"
+                            android:layout_marginStart="@dimen/dp8"
+                            android:minHeight="@dimen/dp40"
+                            android:paddingEnd="@dimen/dp10"
+                            android:paddingStart="@dimen/dp10" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/locationView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:visibility="visible">
+
+                    <LinearLayout
+                        android:id="@+id/locationHeaderView"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp40"
+                        android:background="@color/white"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            style="@style/drawer_filter_header_icon_layout"
+                            app:srcCompat="@drawable/filterlocationicon" />
+
+                        <com.rescribe.doctor.ui.customesViews.CustomTextView
+                            style="@style/drawer_filter_header_layout"
+                            android:text="@string/city"
+                            app:customFont="@string/roboto_medium" />
+
+
+                    </LinearLayout>
+
+                    <com.rescribe.doctor.ui.customesViews.CustomTextView
+                        android:id="@+id/selectCityTextLabel"
+                        style="@style/drawer_filter_header_layout"
+                        android:background="@color/otp_background_layout"
+                        android:gravity="center"
+                        android:padding="@dimen/dp5"
+                        android:text="@string/select_city"
+                        app:customFont="@string/roboto_regular" />
+
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/locationContentRecycleView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/otp_background_layout"
+                        android:focusable="false"
+                        android:paddingBottom="@dimen/dp20"
+                        android:paddingTop="@dimen/dp10"
+                        android:visibility="visible" />
+
+
+                </LinearLayout>
+            </LinearLayout>
+        </android.support.v4.widget.NestedScrollView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/showSortLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp56"
+            android:background="@color/tagColor">
+
+            <Button
+                android:id="@+id/doneButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:background="@color/transparent"
+                android:text="@string/done"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp16" />
+
+            <com.rescribe.doctor.ui.customesViews.CustomTextView
+                android:id="@+id/sortingTitleTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:text="@string/filter"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp18"
+                app:customFont="@string/roboto_bold" />
+
+            <Button
+                android:id="@+id/resetSortingButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@color/transparent"
+                android:text="@string/reset"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp16" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/sortingView"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp40"
+            android:orientation="horizontal">
+
+            <ImageView
+                style="@style/drawer_filter_header_icon_layout"
+                android:layout_gravity="center"
+                app:srcCompat="@drawable/filtersortingicon" />
+
+            <com.rescribe.doctor.ui.customesViews.CustomTextView
+                style="@style/drawer_filter_header_layout"
+                android:text="@string/sorting"
+                app:customFont="@string/roboto_medium" />
+
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp1"
+            android:background="@color/divider" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/sortRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:divider="@null"
+            android:dividerHeight="0dp" />
+
+    </LinearLayout>
+</LinearLayout>

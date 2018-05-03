@@ -1,0 +1,646 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp210"
+        tools:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TableRow
+                android:id="@+id/rowScrollBoth"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dp5"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                android:weightSum="6">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="4"
+                    android:textSize="@dimen/sp14"
+                    android:gravity="center_vertical"
+                    android:text="@string/scrollingBoth"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+
+                <Switch
+                    android:id="@+id/et_uhid"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="2"
+                    android:checked="false"
+                    android:maxLines="1"
+                    android:textSize="@dimen/sp14"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+
+
+            </TableRow>
+
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dp5"
+                android:orientation="vertical"
+                android:weightSum="6">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="6"
+                    android:gravity="center_vertical"
+                    android:maxLines="1"
+                    android:textSize="@dimen/sp14"
+                    android:text="@string/patientInformation"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+            </TableRow>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp1"
+                android:layout_marginBottom="@dimen/margin_tiny"
+                android:background="@color/grey_500" />
+
+
+            <TextView
+                android:id="@+id/tvPatientName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_tiny"
+                android:layout_marginLeft="@dimen/dp5"
+                android:layout_marginStart="@dimen/dp5"
+                android:layout_marginTop="@dimen/margin_tiny"
+                android:drawableLeft="@mipmap/usercheck"
+                android:drawablePadding="@dimen/dp5"
+                android:drawableStart="@mipmap/usercheck"
+                android:gravity="center_vertical"
+                android:textSize="@dimen/sp14"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tvPatientUHIDText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/margin_tiny"
+                    android:layout_marginLeft="@dimen/dp5"
+                    android:layout_marginStart="@dimen/dp5"
+                    android:layout_weight="1"
+                    android:drawableLeft="@mipmap/keyblack"
+                    android:drawablePadding="@dimen/dp5"
+                    android:drawableStart="@mipmap/keyblack"
+                    android:gravity="center_vertical"
+                    android:text="@string/uhid"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/sp14"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvPatientUHID"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/margin_tiny"
+                    android:layout_marginLeft="@dimen/dp5"
+                    android:layout_marginStart="@dimen/dp5"
+                    android:layout_weight="2"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/sp14"
+                    android:textStyle="bold"
+                    tools:text="@string/uhid" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tvPatientLocationText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/margin_tiny"
+                    android:layout_marginLeft="@dimen/dp5"
+                    android:layout_marginStart="@dimen/dp5"
+                    android:layout_weight="1"
+                    android:drawableLeft="@mipmap/placeholderblack"
+                    android:drawablePadding="@dimen/dp5"
+                    android:drawableStart="@mipmap/placeholderblack"
+                    android:gravity="center_vertical"
+                    android:text="@string/address"
+                    android:textSize="@dimen/sp14"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvPatientLocation"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/margin_tiny"
+                    android:layout_marginLeft="@dimen/dp5"
+                    android:layout_marginStart="@dimen/dp5"
+                    android:layout_weight="2"
+                    android:gravity="center_vertical"
+                    android:textSize="@dimen/sp14"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    tools:text="@string/address" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/fileOneLay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp1"
+                    android:layout_marginBottom="@dimen/margin_tiny"
+                    android:background="@color/grey_500" />
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/dp5"
+                    android:orientation="horizontal"
+                    android:weightSum="3">
+
+                    <TextView
+                        android:layout_width="@dimen/dp0"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:drawablePadding="@dimen/padding_tiny"
+                        android:gravity="center_vertical"
+                        android:text="@string/file_one"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/sp14"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="@dimen/dp0"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2">
+
+                        <TextView
+                            android:id="@+id/fileTypeOneFileTypeName"
+                            android:layout_width="@dimen/dp20"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@drawable/background_fileno"
+                            android:gravity="center"
+                            android:lines="1"
+                            android:textSize="@dimen/sp14"
+                            android:padding="@dimen/padding_tiny"
+                            android:text=""
+                            android:textColor="@color/white"
+                            android:textStyle="bold" />
+
+                        <View
+                            android:layout_width="@dimen/dp0"
+                            android:layout_height="match_parent"
+                            android:layout_weight="3" />
+                    </LinearLayout>
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dp5"
+                    android:layout_marginLeft="@dimen/dp5"
+                    android:layout_marginRight="@dimen/dp5"
+                    android:orientation="horizontal"
+                    android:weightSum="3">
+
+                    <TextView
+                        android:layout_width="@dimen/dp0"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:drawableLeft="@mipmap/referenceidblack"
+                        android:drawablePadding="@dimen/padding_tiny"
+                        android:drawableStart="@mipmap/referenceidblack"
+                        android:gravity="center_vertical"
+                        android:text="@string/refId"
+                        android:textSize="@dimen/sp14"
+                        android:textColor="@color/black"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="@dimen/dp0"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2">
+
+                        <TextView
+                            android:id="@+id/fileTypeOneRefID"
+                            android:layout_width="@dimen/dp20"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@drawable/background_refid"
+                            android:gravity="center"
+                            android:lines="1"
+                            android:padding="@dimen/padding_tiny"
+                            android:text=""
+                            android:textSize="@dimen/sp14"
+                            android:textColor="@color/white"
+                            android:textStyle="bold" />
+
+                        <View
+                            android:layout_width="@dimen/dp0"
+                            android:layout_height="match_parent"
+                            android:layout_weight="3" />
+                    </LinearLayout>
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dp5"
+                    android:layout_marginLeft="@dimen/dp5"
+                    android:layout_marginStart="@dimen/dp5"
+                    android:orientation="horizontal"
+                    android:weightSum="3">
+
+                    <TextView
+                        android:layout_width="@dimen/dp0"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:drawableLeft="@mipmap/doctorblack"
+                        android:drawablePadding="@dimen/dp5"
+                        android:drawableStart="@mipmap/doctorblack"
+                        android:gravity="center_vertical"
+                        android:text="@string/doctor"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/sp12"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/fileTypeOneDoctorName"
+                        android:layout_width="@dimen/dp0"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="2"
+                        android:maxLines="1"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/sp12"
+                        android:textStyle="bold" />
+
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dp5"
+                    android:layout_marginLeft="@dimen/dp5"
+                    android:layout_marginStart="@dimen/dp5"
+                    android:orientation="horizontal"
+                    android:weightSum="3">
+
+                    <TextView
+                        android:layout_width="@dimen/dp0"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:drawableLeft="@mipmap/calendarblack"
+                        android:drawablePadding="@dimen/dp5"
+                        android:drawableStart="@mipmap/calendarblack"
+                        android:gravity="center_vertical"
+                        android:text="@string/admission"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/sp12"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/fileTypeOneAdmissionDate"
+                        android:layout_width="@dimen/dp0"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="2"
+                        android:maxLines="1"
+                        android:text=""
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/sp12"
+                        android:textStyle="bold" />
+
+
+                </TableRow>
+
+
+                <TableRow
+                    android:id="@+id/dischargeDateRow"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dp10"
+                    android:layout_marginLeft="@dimen/dp5"
+                    android:layout_marginStart="@dimen/dp5"
+                    android:orientation="horizontal"
+                    android:weightSum="3">
+
+                    <TextView
+                        android:layout_width="@dimen/dp0"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:drawableLeft="@mipmap/calendarblack"
+                        android:drawablePadding="@dimen/dp5"
+                        android:drawableStart="@mipmap/calendarblack"
+                        android:gravity="center_vertical"
+                        android:text="@string/discharge"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/sp12"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/fileTypeOneDischargeDate"
+                        android:layout_width="@dimen/dp0"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="2"
+                        android:maxLines="1"
+                        android:text=""
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/sp12"
+                        android:textStyle="bold" />
+
+
+                </TableRow>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp1"
+                    android:layout_marginBottom="@dimen/margin_tiny"
+                    android:background="@color/grey_500" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/fileTwoLay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/dp5"
+                    android:orientation="horizontal"
+                    android:weightSum="3">
+
+                    <TextView
+                        android:layout_width="@dimen/dp0"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:drawablePadding="@dimen/padding_tiny"
+                        android:gravity="center_vertical"
+                        android:text="@string/file_two"
+                        android:textColor="@color/black"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="@dimen/dp0"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2">
+
+                        <TextView
+                            android:id="@+id/fileTypeTwoFileTypeName"
+                            android:layout_width="@dimen/dp20"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@drawable/background_fileno"
+                            android:gravity="center"
+                            android:lines="1"
+                            android:padding="@dimen/dp5"
+                            android:text=""
+                            android:textColor="@color/white"
+                            android:textStyle="bold" />
+
+                        <View
+                            android:layout_width="@dimen/dp0"
+                            android:layout_height="match_parent"
+                            android:layout_weight="3" />
+                    </LinearLayout>
+
+
+                </TableRow>
+
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dp5"
+                    android:layout_marginLeft="@dimen/dp5"
+                    android:layout_marginRight="@dimen/dp5"
+                    android:orientation="horizontal"
+                    android:weightSum="3">
+
+                    <TextView
+                        android:layout_width="@dimen/dp0"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:drawableLeft="@mipmap/referenceidblack"
+                        android:drawablePadding="@dimen/padding_tiny"
+                        android:drawableStart="@mipmap/referenceidblack"
+                        android:gravity="center_vertical"
+                        android:text="@string/refId"
+                        android:textSize="@dimen/sp14"
+                        android:textColor="@color/black"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="@dimen/dp0"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp5"
+                        android:layout_marginStart="@dimen/dp5"
+                        android:layout_weight="2">
+
+                        <TextView
+                            android:id="@+id/fileTypeTwoRefID"
+                            android:layout_width="@dimen/dp20"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@drawable/background_refid"
+                            android:gravity="center"
+                            android:lines="1"
+                            android:padding="@dimen/dp5"
+                            android:text=""
+                            android:textSize="@dimen/sp14"
+                            android:textColor="@color/white"
+                            android:textStyle="bold" />
+
+                        <View
+                            android:layout_width="@dimen/dp0"
+                            android:layout_height="match_parent"
+                            android:layout_weight="3" />
+                    </LinearLayout>
+
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dp5"
+                    android:layout_marginLeft="@dimen/dp5"
+                    android:layout_marginStart="@dimen/dp5"
+                    android:orientation="horizontal"
+                    android:weightSum="3">
+
+                    <TextView
+                        android:layout_width="@dimen/dp0"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:drawableLeft="@mipmap/doctorblack"
+                        android:drawablePadding="@dimen/dp5"
+                        android:drawableStart="@mipmap/doctorblack"
+                        android:gravity="center_vertical"
+                        android:text="@string/doctor"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/sp12"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/fileTypeTwoDoctorName"
+                        android:layout_width="@dimen/dp0"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="2"
+                        android:maxLines="1"
+                        android:text=""
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/sp12"
+                        android:textStyle="bold" />
+
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dp5"
+                    android:layout_marginLeft="@dimen/dp5"
+                    android:layout_marginStart="@dimen/dp5"
+                    android:orientation="horizontal"
+                    android:weightSum="3">
+
+                    <TextView
+                        android:layout_width="@dimen/dp0"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:drawableLeft="@mipmap/calendarblack"
+                        android:drawablePadding="@dimen/dp5"
+                        android:drawableStart="@mipmap/calendarblack"
+                        android:gravity="center_vertical"
+                        android:text="@string/admission"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/sp12"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/fileTypeTwoAdmissionDate"
+                        android:layout_width="@dimen/dp0"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="2"
+                        android:maxLines="1"
+                        android:text=""
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/sp12"
+                        android:textStyle="bold" />
+
+
+                </TableRow>
+
+
+                <TableRow
+                    android:id="@+id/dischargeDateRowTwo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dp10"
+                    android:layout_marginLeft="@dimen/dp5"
+                    android:layout_marginStart="@dimen/dp5"
+                    android:orientation="horizontal"
+                    android:weightSum="3">
+
+                    <TextView
+                        android:layout_width="@dimen/dp0"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:drawableLeft="@mipmap/calendarblack"
+                        android:drawablePadding="@dimen/dp5"
+                        android:drawableStart="@mipmap/calendarblack"
+                        android:gravity="center_vertical"
+                        android:text="@string/discharge"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/sp12"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/fileTypeTwoDischargeDate"
+                        android:layout_width="@dimen/dp0"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="2"
+                        android:maxLines="1"
+                        android:text=""
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/sp12"
+                        android:textStyle="bold" />
+
+                </TableRow>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp1"
+                    android:layout_marginBottom="@dimen/margin_tiny"
+                    android:background="@color/grey_500" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </ScrollView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp1"
+        android:background="@color/grey_500" />
+
+    <RelativeLayout
+        android:id="@+id/fileTypeTreeViewContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </RelativeLayout>
+
+
+</LinearLayout>

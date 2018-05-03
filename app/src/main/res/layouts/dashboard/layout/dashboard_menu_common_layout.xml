@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/menuOptionLinearLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/dp16"
+        android:layout_marginLeft="@dimen/dp13"
+        android:layout_marginRight="@dimen/dp16"
+        android:layout_marginStart="@dimen/dp13"
+        android:layout_marginTop="@dimen/dp17">
+
+        <ImageView
+            android:id="@+id/menuImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:ignore="ContentDescription"
+            tools:src="@drawable/today_s_appointments" />
+
+        <com.rescribe.doctor.ui.customesViews.CustomTextView
+            android:id="@+id/menuNameTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@id/menuImageView"
+            android:layout_toRightOf="@id/menuImageView"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:paddingLeft="@dimen/dp23"
+            android:paddingStart="@dimen/dp23"
+            android:text="@string/welcome"
+            android:textColor="@color/dashboard_menu_text_color"
+            android:textSize="@dimen/sp16"
+            app:customFont="@string/roboto_regular"
+            tools:ignore="RtlSymmetry"
+            tools:text="Today's Appointments" />
+        <com.rescribe.doctor.ui.customesViews.CustomTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@id/menuImageView"
+            android:layout_toRightOf="@id/menuImageView"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:paddingLeft="@dimen/dp23"
+            android:paddingStart="@dimen/dp23"
+            android:text="@string/welcome"
+            android:textColor="@color/black"
+            android:textSize="@dimen/sp16"
+            app:customFont="@string/roboto_bold"
+            tools:ignore="RtlSymmetry"
+            android:visibility="gone"
+            tools:text="Today's Appointments" />
+
+        <ImageView
+            android:id="@+id/dashboardArrowImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            app:srcCompat="@drawable/dashboard_arrow"
+            android:visibility="gone"
+            tools:ignore="ContentDescription"
+            tools:visibility="visible" />
+
+        <com.rescribe.doctor.ui.customesViews.SwitchButton
+            android:id="@+id/radioSwitch"
+            style="@style/SwitchButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:checked="true"
+            android:visibility="gone"
+            app:kswAnimationDuration="0"
+            app:kswTextOff="OFF"
+            app:kswTextOn="ON" />
+    </RelativeLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/dp17"
+        android:background="@color/divider"
+        tools:ignore="ContentDescription" />
+</LinearLayout>

@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/content_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="dms.ui.activities.PatientList"
+    tools:showIn="@layout/patient_list_app_bar">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/compareDialog">
+
+        <LinearLayout
+            android:id="@+id/patientListLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:reverseLayout="false" />
+
+            <ExpandableListView
+                android:id="@+id/expandableListView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:backgroundTint="@color/white"
+                android:childDivider="@android:color/transparent"
+                android:childIndicator="@color/white"
+                android:divider="@android:color/black"
+                android:dividerHeight="@dimen/dp1"
+                android:groupIndicator="@android:color/holo_red_dark" />
+
+        </LinearLayout>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/openFilterRightDrawerFAB"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_marginBottom="@dimen/fab_margin"
+            android:layout_marginEnd="@dimen/fab_margin_right"
+            android:layout_marginRight="@dimen/fab_margin"
+            app:backgroundTint="@color/colorPrimaryDark"
+            android:src="@drawable/ic_filter" />
+
+
+
+    </FrameLayout>
+
+    <RelativeLayout
+        android:id="@+id/compareDialog"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp"
+        android:animateLayoutChanges="true"
+        tools:layout_height="280dp">
+
+        <TextView
+            android:id="@+id/compareLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/compare_label_background"
+            android:gravity="center"
+            android:paddingBottom="5dp"
+            android:paddingEnd="@dimen/activity_horizontal_margin"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingStart="@dimen/activity_horizontal_margin"
+            android:paddingTop="10dp"
+            android:text="@string/comparedocument"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp16" />
+
+        <View
+            android:id="@+id/deviderView"
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:layout_below="@+id/compareLabel"
+            android:background="@color/grey_800" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/compareButton"
+            android:layout_below="@+id/deviderView"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <ImageView
+                    android:id="@+id/fileOneIcon"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:padding="10dp"
+                    tools:src="@drawable/ic_selected_document" />
+
+                <TextView
+                    android:id="@+id/fileOneType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="@dimen/sp16"
+                    android:textStyle="bold"
+                    tools:text="IPD:1229" />
+
+                <TextView
+                    android:id="@+id/fileOneAdmissionDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/sp16"
+                    tools:text="Admission Date: 12/Sep/1091" />
+
+                <!-- <TextView
+                     android:id="@+id/fileOneDischargeDate"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:gravity="center"
+                     android:textStyle="bold"
+                     tools:text="Discharge Date: 12/Sep/1091" />-->
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.2">
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/vs_icon" />
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <ImageView
+                    android:id="@+id/fileTwoIcon"
+                    android:layout_width="@dimen/dp80"
+                    android:layout_height="80dp"
+                    android:padding="10dp"
+                    tools:src="@drawable/ic_selected_document" />
+
+                <TextView
+                    android:id="@+id/fileTwoType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="@dimen/sp18"
+                    android:textStyle="bold"
+                    tools:text="UPD:1263" />
+
+                <TextView
+                    android:id="@+id/fileTwoAdmissionDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/sp18"
+                    tools:text="Admission Date: 12/Sep/1091" />
+
+                <!--  <TextView
+                      android:id="@+id/fileTwoDischargeDate"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:gravity="center"
+                      android:textStyle="bold"
+                      tools:text="Discharge Date: 12/Sep/1091"
+                      tools:visibility="visible" />-->
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/compareButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginStart="10dp"
+            android:background="@drawable/compare_button_red_background"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="@string/comparedocument"
+            android:textColor="@color/grey_700"
+            android:textSize="@dimen/sp18" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

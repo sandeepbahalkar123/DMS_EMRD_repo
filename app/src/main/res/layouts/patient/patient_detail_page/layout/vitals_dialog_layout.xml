@@ -1,0 +1,308 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/transparent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/vitalsDialogLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp10"
+        android:layout_marginRight="@dimen/dp10"
+        android:clickable="true"
+        android:focusable="true"
+        android:orientation="vertical"
+        android:padding="@dimen/dp16">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/showVitalUnitNameIconLayout"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp100"
+                android:layout_marginTop="@dimen/dp40"
+                android:background="@drawable/vitals_curve_grey_bg"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <com.rescribe.doctor.ui.customesViews.CustomTextView
+                    android:id="@+id/vitalNameDialog"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingTop="@dimen/dp24"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/sp14"
+                    app:customFont="@string/roboto_bold" />
+
+                <com.rescribe.doctor.ui.customesViews.CustomTextView
+                    android:id="@+id/noOfVitalsDialog"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="@dimen/sp14"
+                    app:customFont="@string/roboto_medium" />
+
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/vitalImageDialog"
+                android:layout_width="@dimen/dp80"
+                android:layout_height="@dimen/dp80"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/circular_shape_vital_bg"
+                android:clickable="true"
+                android:focusable="true"
+                android:padding="@dimen/dp20"
+                tools:src="@drawable/weight" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/showVitalRangeLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:clickable="true"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dp16"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/normalRangeLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <com.rescribe.doctor.ui.customesViews.CustomTextView
+                        android:layout_width="@dimen/dp0"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:text="@string/normal"
+                        android:textColor="@color/range_label_color"
+                        android:textSize="@dimen/sp14"
+                        app:customFont="@string/roboto_medium" />
+
+                    <com.rescribe.doctor.ui.customesViews.CustomTextView
+                        android:id="@+id/normalRange"
+                        android:layout_width="@dimen/dp0"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:paddingLeft="@dimen/dp8"
+                        android:paddingTop="@dimen/dp16"
+                        android:textColor="@color/range_green"
+                        android:textSize="@dimen/sp14"
+                        app:customFont="@string/roboto_medium" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/moderateRangeLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingTop="@dimen/dp16">
+
+                    <com.rescribe.doctor.ui.customesViews.CustomTextView
+                        android:layout_width="@dimen/dp0"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:text="@string/moderate"
+                        android:textColor="@color/range_label_color"
+                        android:textSize="@dimen/sp14"
+                        app:customFont="@string/roboto_medium" />
+
+                    <com.rescribe.doctor.ui.customesViews.CustomTextView
+                        android:id="@+id/moderateRange"
+                        android:layout_width="@dimen/dp0"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:paddingLeft="@dimen/dp8"
+                        android:textColor="@color/range_yellow"
+                        android:textSize="@dimen/sp14"
+                        app:customFont="@string/roboto_medium" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/severeRangeLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingTop="@dimen/dp16">
+
+                    <com.rescribe.doctor.ui.customesViews.CustomTextView
+                        android:layout_width="@dimen/dp0"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:text="@string/severe"
+                        android:textColor="@color/range_label_color"
+                        android:textSize="@dimen/sp14"
+                        app:customFont="@string/roboto_medium" />
+
+                    <com.rescribe.doctor.ui.customesViews.CustomTextView
+                        android:id="@+id/severeRange"
+                        android:layout_width="@dimen/dp0"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:paddingLeft="@dimen/dp8"
+                        android:textColor="@color/Red"
+                        android:textSize="@dimen/sp14"
+                        app:customFont="@string/roboto_medium" />
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/showVitalNameLayout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp100"
+            android:background="@color/vitals_dialog_grey"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <com.rescribe.doctor.ui.customesViews.CustomTextView
+                android:id="@+id/vitalTypeNameDialog"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp14"
+                app:customFont="@string/roboto_bold" />
+
+            <com.rescribe.doctor.ui.customesViews.CustomTextView
+                android:id="@+id/noOfVitalsTypeDialog"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textSize="@dimen/sp14"
+                app:customFont="@string/roboto_medium" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/bpMinLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/vitals_curve_white_bg"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dp16"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/normalSubTypeRangeLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <com.rescribe.doctor.ui.customesViews.CustomTextView
+                        android:layout_width="@dimen/dp0"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:text="@string/normal"
+                        android:textColor="@color/range_label_color"
+                        android:textSize="@dimen/sp14"
+                        app:customFont="@string/roboto_medium" />
+
+                    <com.rescribe.doctor.ui.customesViews.CustomTextView
+                        android:id="@+id/normalSubTypeRange"
+                        android:layout_width="@dimen/dp0"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:paddingLeft="@dimen/dp8"
+                        android:paddingTop="@dimen/dp16"
+                        android:textColor="@color/range_green"
+                        android:textSize="@dimen/sp14"
+                        app:customFont="@string/roboto_medium" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/moderateSubTypeRangeLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingTop="@dimen/dp16">
+
+                    <com.rescribe.doctor.ui.customesViews.CustomTextView
+                        android:layout_width="@dimen/dp0"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:text="@string/moderate"
+                        android:textColor="@color/range_label_color"
+                        android:textSize="@dimen/sp14"
+                        app:customFont="@string/roboto_medium" />
+
+                    <com.rescribe.doctor.ui.customesViews.CustomTextView
+                        android:id="@+id/moderateSubTypeRange"
+                        android:layout_width="@dimen/dp0"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:paddingLeft="@dimen/dp8"
+                        android:textColor="@color/range_yellow"
+                        android:textSize="@dimen/sp14"
+                        app:customFont="@string/roboto_medium" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/severeSubTypeRangeLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingTop="@dimen/dp16">
+
+                    <com.rescribe.doctor.ui.customesViews.CustomTextView
+                        android:layout_width="@dimen/dp0"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:text="@string/severe"
+                        android:textColor="@color/range_label_color"
+                        android:textSize="@dimen/sp14"
+                        app:customFont="@string/roboto_medium" />
+
+                    <com.rescribe.doctor.ui.customesViews.CustomTextView
+                        android:id="@+id/severeSubTypeRange"
+                        android:layout_width="@dimen/dp0"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:paddingLeft="@dimen/dp8"
+                        android:textColor="@color/Red"
+                        android:textSize="@dimen/sp14"
+                        app:customFont="@string/roboto_medium" />
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

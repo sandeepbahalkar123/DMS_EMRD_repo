@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/login_bg"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_weight="0.7"
+        android:layout_marginTop="@dimen/dp10"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            app:srcCompat="@drawable/vector_smart_object" />
+
+        <com.rescribe.doctor.ui.customesViews.CustomTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/your_health"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp16"
+            app:customFont="@string/roboto_medium" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/dp30"
+            android:paddingRight="@dimen/dp30">
+
+            <EditText
+                android:id="@+id/editTextName"
+                style="@style/AppLoginNewMainStyle"
+                android:hint="@string/name"
+                android:inputType="text"
+                android:textStyle="bold"
+                android:typeface="sans" />
+            <!--  Email Label -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp1"
+                android:background="@color/white" />
+
+
+            <EditText
+                android:id="@+id/editTextEmailID"
+                android:layout_marginTop="@dimen/dp4"
+                style="@style/AppLoginNewMainStyle"
+                android:hint="@string/enter_email_id"
+                android:inputType="textEmailAddress"
+                android:textStyle="bold"
+                android:typeface="sans" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp1"
+                android:background="@color/white" />
+
+            <EditText
+                android:id="@+id/editTextPassword"
+                android:layout_marginTop="@dimen/dp4"
+                style="@style/AppLoginNewMainStyle"
+                android:hint="@string/enter_password"
+                android:inputType="textPassword"
+                android:textStyle="bold"
+                android:typeface="sans" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp1"
+                android:background="@color/white" />
+            <EditText
+                android:id="@+id/editTextMobileNo"
+                android:layout_marginTop="@dimen/dp4"
+                style="@style/AppLoginNewMainStyle"
+                android:hint="@string/enter_mobile_no"
+                android:inputType="phone"
+                android:textStyle="bold"
+                android:typeface="sans" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp1"
+                android:background="@color/white" />
+            <Button
+                android:layout_marginTop="@dimen/dp16"
+                android:id="@+id/btnSignUp"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp40"
+                android:layout_gravity="center"
+                android:background="@color/login_bg_color"
+                android:gravity="center"
+                android:textSize="@dimen/sp16"
+                android:layout_marginLeft="@dimen/dp10"
+                android:layout_marginRight="@dimen/dp10"
+                android:paddingBottom="@dimen/dp10"
+                android:paddingTop="@dimen/dp10"
+                android:text="@string/sign_up"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white" />
+
+            <com.rescribe.doctor.ui.customesViews.CustomTextView
+                    android:id="@+id/login"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:padding="@dimen/dp6"
+                    android:layout_gravity="right"
+                    android:maxLines="2"
+                    android:layout_marginRight="@dimen/dp10"
+                    android:text="@string/log_in"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp14"
+                    android:textStyle="bold"
+                    android:typeface="sans" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/dp20"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:layout_gravity="center"
+            app:srcCompat="@drawable/or"
+            android:layout_marginLeft="@dimen/dp10"
+            android:layout_marginRight="@dimen/dp10"
+            android:textColor="@color/white" />
+
+        <ImageView
+            android:id="@+id/signUpWithFacebook"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/dp16"
+            android:gravity="center_vertical"
+            app:srcCompat="@drawable/fb_logo_copy"
+            android:layout_marginLeft="@dimen/dp20"
+            android:layout_marginRight="@dimen/dp20"
+            android:textColor="@color/white" />
+
+        <ImageView
+            android:id="@+id/signUpWithGoogle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/dp20"
+            android:layout_marginRight="@dimen/dp20"
+            android:layout_marginTop="@dimen/dp16"
+            android:gravity="center_vertical"
+            app:srcCompat="@drawable/gmail_copy"
+            android:textColor="@color/white" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/dp16"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="@dimen/dp8"
+            app:srcCompat="@drawable/by_continuing_you_accept_the_terms_of_use_and_privacy_policy"
+            android:textColor="@color/white" />
+    </LinearLayout>
+</LinearLayout>
+

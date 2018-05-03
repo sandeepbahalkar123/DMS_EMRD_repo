@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_marginStart="@dimen/dp4"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="@dimen/dp4">
+    <RelativeLayout
+        android:padding="@dimen/dp8"
+        android:id="@+id/hospitalDetailsLinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.rescribe.doctor.ui.customesViews.CircularImageView
+            android:id="@+id/bulletImageView"
+            android:layout_width="@dimen/dp8"
+            android:layout_height="@dimen/dp8"
+            android:layout_marginRight="@dimen/dp8"
+            android:layout_marginTop="@dimen/dp6"
+            android:layout_marginBottom="@dimen/dp6"
+            android:background="@drawable/circular_bullet" />
+
+        <com.rescribe.doctor.ui.customesViews.CustomTextView
+            android:id="@+id/clinicNameTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@id/bulletImageView"
+            android:layout_toRightOf="@id/bulletImageView"
+            android:textColor="@color/black"
+            android:textSize="@dimen/sp16"
+            app:customFont="@string/roboto_bold"
+            tools:text="Shree Clinic - " />
+
+        <com.rescribe.doctor.ui.customesViews.CustomTextView
+            android:id="@+id/clinicAddress"
+            android:layout_width="match_parent"
+            android:paddingTop="@dimen/dp3"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@id/clinicNameTextView"
+            android:layout_toRightOf="@id/clinicNameTextView"
+            android:textColor="@color/clinic_address_color"
+            android:textSize="@dimen/sp13"
+            android:ellipsize="end"
+            android:maxLines="1"
+            app:customFont="@string/roboto_medium"
+            tools:text="Worli, Mumbaifgfdgfdgfgf" />
+
+
+
+    </RelativeLayout>
+</LinearLayout>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp44"
+        android:orientation="horizontal"
+        android:padding="@dimen/dp2">
+
+        <TextView
+            android:id="@+id/uhid"
+            android:layout_width="?attr/actionBarSize"
+            android:layout_height="match_parent"
+            android:background="@drawable/rounded_button_blue"
+            android:gravity="center"
+            android:paddingBottom="@dimen/uhid"
+            android:paddingTop="@dimen/uhid"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp14"
+            tools:text="111" />
+
+        <TextView
+            android:id="@+id/patientId"
+            android:layout_width="@dimen/patientIdWidth"
+            android:layout_height="wrap_content"
+            android:paddingEnd="@dimen/activity_horizontal_margin"
+            android:paddingLeft="@dimen/dp5"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingStart="@dimen/dp5"
+            android:textSize="@dimen/sp14"
+            tools:text="111" />
+
+        <TextView
+            android:id="@+id/userName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp5"
+            android:drawableLeft="@mipmap/userfill"
+            android:drawablePadding="@dimen/dp10"
+            android:gravity="center_vertical"
+            android:text="@string/user_name"
+            android:textSize="@dimen/sp14"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <!--<LinearLayout
+        android:id="@+id/contentLayout"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+       <include layout="@layout/item_patient_content" />
+    </LinearLayout>
+    <TextView
+        android:id="@+id/moreOption"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:gravity="right"
+        android:text="@string/more"
+        android:textColor="@color/cobalt_blue" />
+-->
+</LinearLayout>

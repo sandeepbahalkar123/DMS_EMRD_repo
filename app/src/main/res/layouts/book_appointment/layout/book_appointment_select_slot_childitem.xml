@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainLayout"
+    android:layout_width="wrap_content"
+    android:layout_height="@dimen/dp32">
+
+    <com.rescribe.doctor.ui.customesViews.CustomTextView
+        android:id="@+id/showTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:padding="@dimen/dp6"
+        android:textColor="@color/tagColor"
+        android:textSize="@dimen/sp14"
+        tools:text="8:00 AM" />
+</LinearLayout>

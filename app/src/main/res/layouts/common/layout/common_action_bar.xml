@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp56"
+        android:background="@color/tagColor">
+
+        <ImageView
+            android:id="@+id/backImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp14"
+            android:paddingBottom="@dimen/dp10"
+            android:paddingEnd="@dimen/dp10"
+            android:paddingLeft="@dimen/dp14"
+            android:paddingRight="@dimen/dp10"
+            android:paddingStart="@dimen/dp14"
+            android:paddingTop="@dimen/dp6"
+            app:srcCompat="@drawable/back_arrow_a_01" />
+
+        <com.rescribe.doctor.ui.customesViews.CustomTextView
+            android:id="@+id/titleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp14"
+            android:layout_toEndOf="@id/backImageView"
+            android:layout_toLeftOf="@+id/dateTextview"
+            android:layout_toRightOf="@id/backImageView"
+            android:layout_toStartOf="@+id/dateTextview"
+            android:ellipsize="end"
+            android:lines="1"
+            android:paddingEnd="@dimen/dp16"
+            android:paddingStart="@dimen/dp16"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp17"
+            app:customFont="@string/roboto_bold"
+            tools:text="@string/appointment_completed" />
+
+        <com.rescribe.doctor.ui.customesViews.CustomTextView
+            android:id="@+id/userInfoTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/titleTextView"
+            android:layout_marginBottom="@dimen/dp2"
+            android:layout_toEndOf="@id/backImageView"
+            android:layout_toRightOf="@id/backImageView"
+            android:paddingLeft="@dimen/dp16"
+            android:paddingStart="@dimen/dp16"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp12"
+            android:visibility="gone"
+            app:customFont="@string/roboto_bold"
+            tools:ignore="RtlSymmetry"
+            tools:text="36 yrs - Male"
+            tools:visibility="visible" />
+
+        <com.rescribe.doctor.ui.customesViews.CustomTextView
+            android:id="@+id/dateTextview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="@dimen/dp14"
+            android:paddingBottom="@dimen/dp6"
+            android:paddingEnd="@dimen/dp16"
+            android:paddingRight="@dimen/dp16"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp12"
+            android:visibility="gone"
+            app:customFont="@string/roboto_medium"
+            tools:ignore="RtlSymmetry"
+            tools:text="27th Dec '17"
+            tools:visibility="visible" />
+
+        <Spinner
+            android:id="@+id/year"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginTop="@dimen/dp14"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp16"
+            android:textStyle="bold"
+            android:visibility="gone"
+            app:srcCompat="@drawable/ic_arrow_back_white_24dp"
+            tools:ignore="RtlHardcoded"
+            tools:visibility="visible" />
+
+        <ImageView
+            android:id="@+id/addImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="@dimen/dp14"
+            android:gravity="right"
+            android:paddingBottom="@dimen/dp6"
+            android:paddingEnd="@dimen/dp16"
+            android:paddingRight="@dimen/dp16"
+            android:visibility="gone"
+            app:srcCompat="@drawable/bsp_ic_add_circle_24dp"
+            tools:ignore="RtlHardcoded,RtlSymmetry"
+            tools:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/downloadPatients"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="@dimen/dp14"
+            android:gravity="right"
+            android:paddingBottom="@dimen/dp10"
+            android:paddingEnd="@dimen/dp16"
+            android:paddingRight="@dimen/dp16"
+            android:paddingTop="@dimen/dp10"
+            android:visibility="gone"
+            app:srcCompat="@drawable/sync_patients"
+            tools:ignore="RtlHardcoded,RtlSymmetry"
+            tools:visibility="visible" />
+
+    </RelativeLayout>
+
+</LinearLayout>

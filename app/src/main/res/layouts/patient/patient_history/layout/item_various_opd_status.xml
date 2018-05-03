@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/dp10"
+    android:orientation="vertical">
+
+ <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="0.1"
+            android:gravity="center">
+
+            <com.rescribe.doctor.ui.customesViews.CircularImageView
+                android:id="@+id/statusImage"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                tools:src="@drawable/circular_bullet_light_green"
+                app:shadow="true"
+                app:border="true"
+                app:border_width="@dimen/dp2"
+                app:border_color="@color/white"/>
+        </LinearLayout>
+
+        <com.rescribe.doctor.ui.customesViews.CustomTextView
+            android:id="@+id/text"
+            android:layout_width="@dimen/dp0"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="0.3"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:textSize="@dimen/sp16"
+            android:textStyle="normal"
+            app:customFont="@string/roboto_regular"
+            tools:text="100" />
+
+    </LinearLayout>
+  <!--  <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+        <com.rescribe.doctor.ui.customesViews.CircularImageView
+            android:id="@+id/statusImage"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            tools:src="@drawable/circular_bullet_light_green"
+            app:shadow="true"
+            android:paddingTop="@dimen/dp6"
+            android:layout_centerVertical="true"
+            app:border="true"
+            app:border_width="@dimen/dp2"
+            app:border_color="@color/white"/>
+        <com.rescribe.doctor.ui.customesViews.CustomTextView
+            android:id="@+id/text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_marginStart="@dimen/dp26"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/statusImage"
+            android:textColor="@color/black"
+            android:textSize="@dimen/sp16"
+            app:customFont="@string/roboto_regular"
+            tools:text="100"
+            android:layout_marginLeft="@dimen/dp26" />
+    </RelativeLayout>-->
+
+
+</LinearLayout>

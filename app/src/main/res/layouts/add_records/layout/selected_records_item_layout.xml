@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<droidninja.filepicker.views.SquareRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/dp5">
+
+    <RelativeLayout
+        android:id="@+id/item_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/addCaptionText"
+            android:background="@drawable/curve_edges_image">
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginEnd="1.5dp"
+                android:layout_marginStart="1.5dp"
+                android:layout_marginTop="1.5dp"
+                app:cardCornerRadius="3dp">
+
+                <ImageView
+                    android:id="@+id/iv_photo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerCrop"
+                    tools:src="@drawable/image_placeholder" />
+
+            </android.support.v7.widget.CardView>
+
+        </RelativeLayout>
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/addCaptionText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="2"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/curve_edges_caption"
+            android:textCursorDrawable="@drawable/cursor_color"
+            android:hint="@string/add_caption"
+            android:padding="@dimen/dp6" />
+
+        <ImageView
+            android:id="@+id/crossImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:background="@color/transparent"
+            android:padding="@dimen/dp8"
+            app:srcCompat="@drawable/del" />
+
+    </RelativeLayout>
+
+</droidninja.filepicker.views.SquareRelativeLayout>

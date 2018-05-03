@@ -1,0 +1,26 @@
+apply plugin: 'com.android.library'
+
+android {
+
+    compileSdkVersion Integer.parseInt(project.ANDROID_BUILD_SDK_VERSION)
+    buildToolsVersion project.ANDROID_BUILD_TOOLS_VERSION
+
+    defaultConfig {
+        minSdkVersion Integer.parseInt(project.ANDROID_BUILD_MIN_SDK_VERSION)
+        targetSdkVersion Integer.parseInt(project.ANDROID_BUILD_TARGET_SDK_VERSION)
+        versionName project.VERSION_NAME
+        versionCode Integer.parseInt(project.VERSION_CODE)
+        vectorDrawables.useSupportLibrary = true
+        // TODO: If we ever remove the duplicate number pad classes in this library and instead
+        // import our NumberPadTimePicker library, we can safely remove this line. The remaining
+        // classes in this library have no issue building with Proguard for release build type,
+        // so we don't have any exclusion rules to add.
+        consumerProguardFiles 'proguard-rules.pro'
+    }
+}
+
+dependencies {
+    compile "com.android.support:appcompat-v7:${project.ANDROID_SUPPORT_LIBRARY_VERSION}"
+    compile "com.android.support:gridlayout-v7:${project.ANDROID_SUPPORT_LIBRARY_VERSION}"
+    compile "com.android.support:design:${project.ANDROID_SUPPORT_LIBRARY_VERSION}"
+}

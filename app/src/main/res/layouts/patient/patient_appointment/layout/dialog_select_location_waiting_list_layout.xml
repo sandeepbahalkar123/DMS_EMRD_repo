@@ -1,0 +1,100 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_centerInParent="true"
+    android:layout_gravity="center"
+    android:background="@color/transparent"
+    android:gravity="center">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp20"
+            android:layout_marginRight="@dimen/dp20"
+            android:background="@color/transparent"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp100"
+                    android:layout_marginTop="@dimen/dp40"
+                    android:background="@drawable/vitals_curve_grey_bg"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <com.rescribe.doctor.ui.customesViews.CustomTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:paddingTop="@dimen/dp30"
+                        android:text="@string/select_clinic_location"
+                        android:textSize="@dimen/sp17"
+                        app:customFont="@string/roboto_bold" />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/icon"
+                    android:layout_width="@dimen/dp82"
+                    android:layout_height="@dimen/dp82"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/circular_shape_vital_bg"
+                    android:padding="@dimen/dp20"
+                    app:srcCompat="@drawable/location_icon" />
+
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/vitals_curve_white_bg"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/dp12"
+                android:paddingTop="@dimen/dp12">
+
+                <RadioGroup
+                    android:id="@+id/radioGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/dp12"
+                    android:layout_marginStart="@dimen/dp12"
+                    android:orientation="vertical" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp1"
+                    android:layout_marginBottom="@dimen/dp12"
+                    android:layout_marginTop="@dimen/dp12"
+                    android:background="@color/divider" />
+
+                <android.support.v7.widget.AppCompatButton
+                    android:id="@+id/okButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/dp28"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/dp10"
+                    android:layout_marginStart="@dimen/dp10"
+                    android:background="@drawable/curve_edges_button"
+                    android:gravity="center"
+                    android:paddingLeft="@dimen/dp10"
+                    android:paddingRight="@dimen/dp10"
+                    android:text="@string/ok"
+                    android:textAllCaps="true"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp14"
+                    app:customFont="@string/roboto_medium" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".ui.activities.add_records.AddRecordsActivity"
+    tools:showIn="@layout/activity_add_records">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/dp30"
+        android:paddingTop="@dimen/dp30"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginEnd="@dimen/dp20"
+            android:layout_marginStart="@dimen/dp20"
+            android:adjustViewBounds="true"
+            app:srcCompat="@drawable/ref" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dp16"
+            android:layout_marginStart="@dimen/dp16"
+            android:layout_marginTop="@dimen/dp35"
+            android:background="@drawable/curve_edges_common"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/dropdownLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+                <com.rescribe.doctor.ui.customesViews.CircularImageView
+                    android:id="@+id/doctorImage"
+                    android:layout_width="@dimen/dp56"
+                    android:layout_height="@dimen/dp56"
+                    android:layout_centerVertical="true"
+                    android:padding="@dimen/dp10"
+                    android:layout_marginLeft="@dimen/dp4"
+                    app:border="true"
+                    app:shadow="true"
+                    tools:src="@drawable/layer_12" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toEndOf="@+id/doctorImage"
+                    android:layout_toLeftOf="@+id/clearButton"
+                    android:layout_toRightOf="@+id/doctorImage"
+                    android:layout_toStartOf="@+id/clearButton"
+                    android:orientation="vertical"
+                    android:padding="@dimen/dp8">
+
+                    <com.rescribe.doctor.ui.customesViews.CustomTextView
+                        android:id="@+id/doctorSpecialist"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:customFont="@string/roboto_bold"
+                        tools:text="Medium Text" />
+
+                    <com.rescribe.doctor.ui.customesViews.CustomTextView
+                        android:id="@+id/doctorName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/tagColor"
+                        android:textSize="@dimen/sp16"
+                        android:textStyle="bold"
+                        app:customFont="@string/roboto_bold"
+                        tools:text="Medium Text" />
+
+                    <com.rescribe.doctor.ui.customesViews.CustomTextView
+                        android:id="@+id/doctorAddress"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/sp12"
+                        tools:text="Medium Text" />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/clearButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/dp8"
+                    android:layout_marginRight="@dimen/dp8"
+                    android:padding="@dimen/dp8"
+                    app:srcCompat="@drawable/del" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/autocompleteLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="false">
+
+                <AutoCompleteTextView
+                    android:id="@+id/selectDoctorName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:gravity="center_vertical"
+                    android:hint="@string/select_doctor_name"
+                    android:inputType="textPersonName"
+                    android:paddingTop="@dimen/dp10"
+                    android:paddingBottom="@dimen/dp10"
+                    android:paddingStart="@dimen/dp16"
+                    android:paddingEnd="45dp"
+                    android:paddingRight="45dp"
+                    android:paddingLeft="@dimen/dp16"
+                    android:textCursorDrawable="@drawable/cursor" />
+
+                <ImageView
+                    android:id="@+id/searchButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/dp8"
+                    android:layout_marginRight="@dimen/dp8"
+                    android:padding="@dimen/dp8"
+                    app:srcCompat="@drawable/magnifying_glass" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dp16"
+            android:layout_marginStart="@dimen/dp16"
+            android:layout_marginTop="@dimen/dp16"
+            android:background="@drawable/curve_edges_common"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/dateSpinnerLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+                <Spinner
+                    android:id="@+id/selectDateSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:listitem="@android:layout/test_list_item" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/selectDateLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.rescribe.doctor.ui.customesViews.CustomTextView
+                    android:id="@+id/selectDateTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@+id/dateIcon"
+                    android:layout_toStartOf="@+id/dateIcon"
+                    android:background="@null"
+                    android:gravity="center_vertical"
+                    android:hint="@string/enter_date"
+                    android:paddingEnd="@dimen/dp16"
+                    android:paddingStart="@dimen/dp16"
+                    android:paddingBottom="@dimen/dp10"
+                    android:paddingTop="@dimen/dp10"
+                    android:textSize="@dimen/sp18" />
+
+                <ImageView
+                    android:id="@+id/dateIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/dp8"
+                    android:layout_marginRight="@dimen/dp8"
+                    android:padding="@dimen/dp8"
+                    app:srcCompat="@drawable/calendar" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/selectAddressLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dp16"
+            android:layout_marginStart="@dimen/dp16"
+            android:layout_marginTop="@dimen/dp16"
+            android:visibility="gone"
+            android:background="@drawable/curve_edges_common">
+
+            <EditText
+                android:id="@+id/selectAddressText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:hint="@string/enter_address"
+                android:layout_toLeftOf="@+id/addressIcon"
+                android:layout_toStartOf="@+id/addressIcon"
+                android:textSize="@dimen/sp18"
+                android:inputType="textPostalAddress"
+                android:paddingEnd="@dimen/dp16"
+                android:paddingStart="@dimen/dp16"
+                android:paddingBottom="@dimen/dp10"
+                android:paddingTop="@dimen/dp10"
+                android:textCursorDrawable="@drawable/cursor" />
+
+            <ImageView
+                android:id="@+id/addressIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/dp4"
+                android:layout_marginRight="@dimen/dp8"
+                android:padding="@dimen/dp8"
+                app:srcCompat="@drawable/location_grey" />
+
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/uploadButton"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp44"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/curve_edges_button"
+            android:paddingEnd="@dimen/dp50"
+            android:paddingStart="@dimen/dp50"
+            android:layout_marginTop="@dimen/dp35"
+            android:text="@string/next"
+            android:textColor="@color/white" />
+
+    </LinearLayout>
+
+</ScrollView>

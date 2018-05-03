@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:ignore="MissingTranslation">
+
+    <com.rescribe.doctor.ui.customesViews.CustomTextView
+        android:id="@+id/pickSpeciality"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dp8"
+        android:layout_marginLeft="@dimen/dp10"
+        android:layout_marginTop="@dimen/dp16"
+        android:text="@string/pick_speciality"
+        android:textColor="@color/black"
+        android:textSize="@dimen/sp16"
+        android:visibility="gone"
+        app:customFont="@string/roboto_medium" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/listView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/pickSpeciality"
+        android:divider="@null"
+        android:dividerHeight="0dp"
+        android:visibility="visible"/>
+
+    <RelativeLayout
+        android:layout_below="@id/listView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:layout_marginBottom="@dimen/dp16"
+        android:layout_marginLeft="@dimen/dp10"
+        android:layout_marginRight="@dimen/dp10"
+        android:layout_marginTop="@dimen/dp16"
+        android:gravity="bottom|center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <com.rescribe.doctor.ui.customesViews.CustomTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/curve_edge_blue"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/dp6"
+            android:paddingLeft="@dimen/dp12"
+            android:paddingRight="@dimen/dp12"
+            android:paddingTop="@dimen/dp6"
+            android:text="@string/details_note"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp12"
+            app:customFont="@string/roboto_bold" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/emptyListView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/no_records_found"
+            android:gravity="center"
+            android:orientation="vertical" />
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="@dimen/dp56"
+    android:background="@drawable/background_sms"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="167dp"
+        android:padding="@dimen/dp16">
+
+        <com.rescribe.doctor.ui.customesViews.CustomTextView
+            android:id="@+id/toTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="To"
+            android:textSize="@dimen/sp16"
+            app:customFont="@string/roboto_bold" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp16"
+            android:layout_marginStart="@dimen/dp16"
+            android:background="@drawable/curve_edges_background"
+            android:padding="@dimen/dp10"
+            android:clipToPadding="false"
+            android:layout_toEndOf="@id/toTextView"
+            android:layout_toRightOf="@id/toTextView" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_alignParentBottom="true"
+        android:padding="@dimen/dp16">
+
+        <EditText
+            android:id="@+id/editTextSmsContent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="@dimen/dp14"
+            android:layout_marginRight="@dimen/dp8"
+            android:layout_toLeftOf="@+id/sendSmsButton"
+            android:layout_toStartOf="@+id/sendSmsButton"
+            android:background="@drawable/curve_edges_background"
+            android:inputType="textMultiLine"
+            android:padding="@dimen/dp8"
+            android:textCursorDrawable="@drawable/cursor" />
+
+        <ImageView
+            android:id="@+id/sendSmsButton"
+            android:layout_width="@dimen/dp32"
+            android:layout_height="@dimen/dp32"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            app:srcCompat="@drawable/send_button" />
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

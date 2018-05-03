@@ -1,0 +1,101 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/dp16"
+        android:layout_marginRight="@dimen/dp16"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/dp17"
+        android:visibility="visible">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp56"
+            android:orientation="horizontal">
+
+            <com.rescribe.doctor.ui.customesViews.CustomTextView
+                android:id="@+id/textName"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center|left"
+                android:text="@string/setting_add_patient_header"
+                android:textColor="@color/tagColor"
+                android:textSize="@dimen/sp16"
+                app:customFont="@string/roboto_medium" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <com.rescribe.doctor.ui.customesViews.SwitchButton
+                    android:id="@+id/addPatientRadioSwitch"
+                    style="@style/SwitchButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:kswAnimationDuration="0"
+                    app:kswTextOff="OFF"
+                    app:kswTextOn="ON" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp1"
+            android:background="@color/divider" />
+
+        <RelativeLayout
+            android:id="@+id/selectMenuLayout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp56">
+
+            <ImageView
+                android:id="@+id/menuIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/dp10"
+                android:layout_marginStart="@dimen/dp10"
+                android:adjustViewBounds="true"
+                android:padding="@dimen/dp10"
+                android:visibility="gone"
+                app:srcCompat="@drawable/dashboard_arrow" />
+
+            <com.rescribe.doctor.ui.customesViews.CustomTextView
+                android:id="@+id/logout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="@string/logout"
+                android:textColor="@color/tagColor"
+                android:textSize="@dimen/sp16"
+                app:customFont="@string/roboto_medium" />
+
+            <ImageView
+                android:id="@+id/dashboardArrowIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="18dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+
+                app:srcCompat="@drawable/layer_5" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp1"
+        android:background="@color/divider" />
+
+</LinearLayout>

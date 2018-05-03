@@ -1,0 +1,366 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp130"
+        android:background="@drawable/doctor_profile_bg"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/dp5"
+        android:paddingLeft="@dimen/dp10"
+        android:paddingRight="@dimen/dp10">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:layout_width="@dimen/dp80"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp6">
+
+                <com.rescribe.doctor.ui.customesViews.CustomTextView
+                    android:id="@+id/premiumType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/premium_doctor_bg"
+                    android:drawableLeft="@drawable/premium_icon"
+                    android:drawablePadding="@dimen/dp4"
+                    android:drawableStart="@drawable/premium_icon"
+                    android:padding="@dimen/dp4"
+                    android:text="Premium"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp12"
+                    android:visibility="invisible"
+                    app:customFont="@string/roboto_medium" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true">
+
+                <LinearLayout
+                    android:id="@+id/rupeesLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="right|center"
+                    android:background="@drawable/ruppee_tag"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:visibility="gone"
+                    tools:visibility="gone">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:paddingTop="@dimen/dp2">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:srcCompat="@drawable/about_ruppee_icon" />
+
+                        <com.rescribe.doctor.ui.customesViews.CustomTextView
+                            android:id="@+id/doctorFees"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="@dimen/dp2"
+                            android:text="123"
+                            android:textColor="@color/rating_color"
+                            android:textSize="@dimen/sp13"
+                            app:customFont="@string/roboto_bold" />
+
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/ruppeeShadow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/dp4"
+                        app:srcCompat="@drawable/ruppee_line" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerCrop"
+                    app:srcCompat="@drawable/ruppee_shadow"
+                    android:visibility="gone" />
+
+            </RelativeLayout>
+        </RelativeLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
+            <com.rescribe.doctor.ui.customesViews.CircularImageView
+                android:id="@+id/profileImage"
+                android:layout_width="@dimen/dp86"
+                android:layout_height="@dimen/dp86"
+                android:layout_gravity="center"
+                app:srcCompat="@drawable/layer_12"
+                app:border="true"
+                app:border_width="@dimen/dp1"
+                app:border_color="@color/white"
+                app:shadow="true" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="center|left"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/dp10">
+
+                <!-- Title Of Song-->
+                <com.rescribe.doctor.ui.customesViews.CustomTextView
+                    android:id="@+id/clinicName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1dip"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/sp16"
+                    android:textStyle="bold"
+                    android:visibility="visible"
+                    app:customFont="@string/roboto_bold"
+                    tools:text="Neurology" />
+
+                <!-- Artist Name -->
+                <com.rescribe.doctor.ui.customesViews.CustomTextView
+                    android:id="@+id/doctorName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Dr. Rahul Kalyanpur"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/sp16"
+                    android:typeface="sans"
+                    app:customFont="@string/roboto_bold" />
+
+                <!-- Rightend Duration -->
+                <com.rescribe.doctor.ui.customesViews.CustomTextView
+                    android:id="@+id/doctorSpecialization"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:text="MBBS, MD - Medicine, Neurology"
+                    android:textColor="@color/about_doctor_color"
+                    android:textSize="@dimen/sp13"
+                    android:textStyle="bold"
+                    app:customFont="@string/roboto_medium" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp6"
+            android:gravity="bottom"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:id="@+id/docRatingBarLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerInParent="true">
+
+                <com.rescribe.doctor.ui.customesViews.CustomTextView
+                    android:id="@+id/docRating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="4.5"
+                    android:textColor="@color/tagColor"
+                    android:textSize="@dimen/sp16"
+                    android:visibility="invisible"
+                    app:customFont="@string/roboto_regular" />
+
+                <RatingBar
+                    android:id="@+id/docRatingBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="10dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/dp3"
+                    android:stepSize="0.5"
+                    android:visibility="invisible"
+                    tools:rating="3.5" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerInParent="true"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/doChat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/chat_icon" />
+
+                <ImageView
+                    android:id="@+id/favorite"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp20"
+                    android:visibility="invisible" />
+            </LinearLayout>
+
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/allClinicPracticeLocationMainLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="@dimen/dp10">
+
+            <com.rescribe.doctor.ui.customesViews.CustomTextView
+                android:id="@+id/docPracticesLocationCount"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Practices at 1 location"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp14"
+                app:customFont="@string/roboto_regular" />
+
+            <ImageView
+                android:id="@+id/viewAllClinicsOnMap"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/view_on_map_btn"
+                android:visibility="visible" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/clinicNameSpinnerParentLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/dp6"
+            android:paddingLeft="@dimen/dp10"
+            android:paddingRight="@dimen/dp10">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:paddingLeft="@dimen/dp5"
+                android:paddingStart="@dimen/dp5">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:padding="@dimen/dp1"
+                    app:srcCompat="@drawable/location_icon_bluecircle" />
+            </LinearLayout>
+
+            <Spinner
+                android:id="@+id/clinicNameSpinner"
+                style="@style/SpinnerThemeProfile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:spinnerMode="dropdown"
+                android:visibility="visible" />
+
+            <com.rescribe.doctor.ui.customesViews.CustomTextView
+                style="@style/SpinnerThemeProfile"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:spinnerMode="dropdown"
+                android:visibility="gone" />
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/selectClinicLine"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp1"
+            android:background="@color/divider" />
+
+        <LinearLayout
+            android:id="@+id/doctorExperienceLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="@dimen/dp10"
+            android:visibility="visible">
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    app:srcCompat="@drawable/experience_icon" />
+
+                <com.rescribe.doctor.ui.customesViews.CustomTextView
+                    android:id="@+id/countDoctorExperience"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:paddingBottom="@dimen/dp4"
+                    android:text="12"
+                    android:textColor="@color/tagColor"
+                    android:textSize="@dimen/sp12"
+                    app:customFont="@string/roboto_bold" />
+            </FrameLayout>
+
+            <com.rescribe.doctor.ui.customesViews.CustomTextView
+                android:id="@+id/doctorExperience"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center|left"
+                android:paddingLeft="@dimen/dp18"
+                android:paddingStart="@dimen/dp18"
+                android:text="12 years of experience"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp15"
+                app:customFont="@string/roboto_regular" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/yearsExperienceLine"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp1"
+        android:background="@color/divider" />
+</LinearLayout>

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+   Copyright 2013 Csaba Szugyiczki
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+-->
+<resources>
+
+    <!-- XCropImageView attributes -->
+    <declare-styleable name="JCropImageView">
+
+        <!-- Defines the alignment of the text. A heuristic is used to determine the resolved
+            text alignment. -->
+        <attr name="cropType" format="integer">
+            <!-- Default -->
+            <!-- Stretch to fit width -->
+            <enum name="fit_width" value="0" />
+            <!-- Stretch to fit width or height to fill -->
+            <enum name="fit_fill" value="1" />
+            <!-- Stretch to fit height -->
+            <enum name="fit_height" value="2" />
+        </attr>
+
+        <!-- Defines the alignment of the scaled image -->
+        <attr name="cropAlign" format="integer">
+            <!-- Default -->
+            <enum name="top" value="0" />
+            <!-- Bottom edge -->
+            <enum name="bottom" value="1" />
+            <!-- Right edge -->
+            <enum name="center" value="2" />
+            <!-- Left edge -->
+            <enum name="left" value="3" />
+            <!-- Right edge -->
+            <enum name="right" value="4" />
+        </attr>
+
+    </declare-styleable>
+
+    <declare-styleable name="TextView">
+        <attr name="fontName" format="string" />
+    </declare-styleable>
+
+    <declare-styleable name="CustomTextView">
+        <attr name="customFont" format="string" />
+    </declare-styleable>
+
+    <declare-styleable name="CircularImageView">
+        <attr name="border" format="boolean" />
+        <attr name="border_width" format="dimension" />
+        <attr name="border_color" format="color" />
+        <attr name="shadow" format="boolean" />
+        <attr name="shadow_color" format="color" />
+        <attr name="shadow_radius" format="float" />
+    </declare-styleable>
+    <declare-styleable name="ReadMoreTextView">
+        <attr name="trimExpandedText" format="string" />
+        <attr name="trimCollapsedText" format="string" />
+        <attr name="trimLength" format="integer" />
+        <attr name="showTrimExpandedText" format="boolean" />
+        <attr name="colorClickableText" format="color" />
+        <attr name="trimLines" format="integer" />
+        <attr name="trimMode">
+            <enum name="trimModeLine" value="0" />
+            <enum name="trimModeLength" value="1" />
+        </attr>
+    </declare-styleable>
+    <declare-styleable name="EditTextWithDeleteButton">
+        <attr name="hintText" format="string" />
+        <attr name="rightLabel" format="string" />
+        <attr name="deleteButtonRes" format="reference" />
+        <attr name="rightLabelStyle" format="reference" />
+        <attr name="textSize" format="dimension" />
+    </declare-styleable>
+    <declare-styleable name="SwipeRevealLayout">
+        <attr name="dragEdge">
+            <flag name="left" value="1" />
+            <flag name="right" value="2" />
+            <flag name="top" value="4" />
+            <flag name="bottom" value="8" />
+        </attr>
+
+        <attr name="mode">
+            <enum name="normal" value="0" />
+            <enum name="same_level"   value="1" />
+        </attr>
+
+        <attr name="flingVelocity" format="integer" />
+
+        <attr name="minDistRequestDisallowParent" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="CircleLayout">
+        <attr name="isRotating" format="boolean" />
+        <attr name="radius" format="dimension" />
+        <attr name="speed" format="integer" />
+        <attr name="firstChildPosition">
+            <enum name="East" value="0" />
+            <enum name="South" value="90" />
+            <enum name="West" value="180" />
+            <enum name="North" value="270" />
+        </attr>
+    </declare-styleable>
+
+</resources>

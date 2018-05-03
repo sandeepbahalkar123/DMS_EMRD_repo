@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/recepientLayout">
+
+    <com.rescribe.doctor.ui.customesViews.CustomTextView
+        android:id="@+id/patientNameTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/curve_edges_button"
+        android:drawablePadding="@dimen/dp8"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:paddingTop="@dimen/dp5"
+        android:paddingBottom="@dimen/dp5"
+        android:paddingStart="@dimen/dp8"
+        android:paddingEnd="@dimen/dp8"
+        android:textSize="@dimen/sp14"
+        tools:text="987655566" />
+
+</LinearLayout>

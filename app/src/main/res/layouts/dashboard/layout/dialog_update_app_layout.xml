@@ -1,0 +1,114 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_centerInParent="true"
+    android:layout_gravity="center"
+    android:background="@color/transparent"
+    android:gravity="center">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="@dimen/dp20"
+        android:layout_marginRight="@dimen/dp20"
+        android:background="@color/transparent"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp100"
+                android:layout_marginTop="@dimen/dp40"
+                android:background="@drawable/vitals_curve_grey_bg"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <com.rescribe.doctor.ui.customesViews.CustomTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingTop="@dimen/dp30"
+                    android:text="@string/do_you_want_to_update"
+                    android:textSize="@dimen/sp17"
+                    app:customFont="@string/roboto_bold" />
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/icon"
+                android:layout_width="@dimen/dp82"
+                android:layout_height="@dimen/dp82"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/circular_shape_vital_bg"
+                android:padding="@dimen/dp20"
+                app:srcCompat="@drawable/logo" />
+
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/vitals_curve_white_bg"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/dp12"
+            android:paddingTop="@dimen/dp12">
+
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/skipButton"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp28"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/dp10"
+                android:layout_marginStart="@dimen/dp10"
+                android:background="@drawable/curve_edges_button"
+                android:gravity="center"
+                android:paddingLeft="@dimen/dp10"
+                android:paddingRight="@dimen/dp10"
+                android:text="@string/skip"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp14"
+                app:customFont="@string/roboto_medium" />
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/updateButton"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp28"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/dp10"
+                android:layout_marginStart="@dimen/dp10"
+                android:background="@drawable/curve_edges_button"
+                android:gravity="center"
+                android:paddingLeft="@dimen/dp10"
+                android:paddingRight="@dimen/dp10"
+                android:text="@string/update"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp14"
+                app:customFont="@string/roboto_medium" />
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/laterButton"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp28"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/dp10"
+                android:layout_marginStart="@dimen/dp10"
+                android:background="@drawable/curve_edges_button"
+                android:gravity="center"
+                android:paddingLeft="@dimen/dp10"
+                android:paddingRight="@dimen/dp10"
+                android:text="@string/later"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp14"
+                app:customFont="@string/roboto_medium" />
+
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

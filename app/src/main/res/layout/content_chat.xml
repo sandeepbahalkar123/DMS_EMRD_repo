@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainRelativeLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".ui.activities.ChatActivity"
+    tools:showIn="@layout/activity_chat">
+
+    <com.rescribe.doctor.ui.customesViews.JCropImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/messageTypeLayout"
+        android:src="@drawable/layer_3"
+        app:cropAlign="top"
+        app:cropType="fit_width" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/chatList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/bookAppointmentLayout"
+        android:paddingEnd="@dimen/dp6"
+        android:paddingStart="@dimen/dp6" />
+
+    <com.rescribe.doctor.ui.customesViews.CustomTextView
+        android:id="@+id/dateTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/dp6"
+        android:background="@drawable/date_time_back"
+        android:clickable="false"
+        android:padding="@dimen/dp6"
+        android:textAllCaps="true"
+        android:textColor="@color/Gray"
+        android:textSize="@dimen/sp12"
+        android:visibility="gone"
+        tools:text="12 September 2017" />
+
+    <LinearLayout
+        android:id="@+id/bookAppointmentLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/messageTypeLayout"
+        android:background="@color/clickHere"
+        android:gravity="center">
+
+
+        <com.rescribe.doctor.ui.customesViews.CustomTextView
+            android:id="@+id/consultationLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp14"
+            android:text="@string/consultation_details"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp16"
+            android:visibility="visible"
+            app:customFont="@string/roboto_medium" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/dp6"
+            app:srcCompat="@drawable/arrow" />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/messageTypeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/tagColor"
+        android:padding="@dimen/dp8">
+
+        <ng.max.slideview.SlideView
+            android:id="@+id/audioSlider"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            app:buttonBackgroundColor="@android:color/transparent"
+            app:buttonImage="@drawable/speak"
+            app:reverseSlide="true"
+            app:slideBackgroundColor="@color/tagColor"
+            app:slideText="@string/timing"
+            app:slideTextColor="@android:color/white"
+            app:strokeColor="@color/tagColor" />
+
+        <RelativeLayout
+            android:id="@+id/messageTypeSubLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp4"
+            android:layout_marginStart="@dimen/dp4"
+            android:layout_toLeftOf="@+id/sendButton"
+            android:layout_toStartOf="@+id/sendButton"
+            android:background="@drawable/group_4_copy_2">
+
+            <EditText
+                android:id="@+id/messageType"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp48"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/buttonLayout"
+                android:layout_toStartOf="@+id/buttonLayout"
+                android:background="@null"
+                android:hint="@string/type_a_message"
+                android:padding="@dimen/dp8"
+                android:textCursorDrawable="@drawable/cursor"
+                android:textSize="@dimen/sp16" />
+
+            <LinearLayout
+                android:id="@+id/buttonLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true">
+
+                <ImageButton
+                    android:id="@+id/attachmentButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/transparent"
+                    android:paddingBottom="@dimen/dp14"
+                    android:paddingEnd="@dimen/dp18"
+                    android:paddingLeft="@dimen/dp9"
+                    android:paddingRight="@dimen/dp18"
+                    android:paddingStart="@dimen/dp9"
+                    android:paddingTop="@dimen/dp14"
+                    app:srcCompat="@drawable/attach" />
+
+                <ImageButton
+                    android:id="@+id/cameraButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/transparent"
+                    android:paddingBottom="@dimen/dp14"
+                    android:paddingEnd="@dimen/dp18"
+                    android:paddingLeft="@dimen/dp9"
+                    android:paddingRight="@dimen/dp18"
+                    android:paddingStart="@dimen/dp9"
+                    android:paddingTop="@dimen/dp14"
+                    app:srcCompat="@drawable/photo_camera" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/sendButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/dp2"
+            android:layout_marginRight="@dimen/dp2"
+            android:padding="@dimen/dp6"
+            android:visibility="invisible"
+            app:srcCompat="@drawable/send" />
+
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/exitRevealDialog"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true"
+        android:focusable="true" />
+
+    <io.codetail.widget.RevealFrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/messageTypeLayout"
+        android:paddingEnd="@dimen/dp6"
+        android:paddingStart="@dimen/dp6">
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/reveal_items"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:clickable="true"
+            android:focusable="true"
+            app:cardCornerRadius="@dimen/dp10"
+            app:cardUseCompatPadding="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageButton
+                        android:id="@+id/camera"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:background="@drawable/camera" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="Camera" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageButton
+                        android:id="@+id/document"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:background="@drawable/circular_menu_back"
+                        app:srcCompat="@drawable/attach_file_menu" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="Document" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageButton
+                        android:id="@+id/location"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:background="@drawable/location" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="Location" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+    </io.codetail.widget.RevealFrameLayout>
+
+</RelativeLayout>

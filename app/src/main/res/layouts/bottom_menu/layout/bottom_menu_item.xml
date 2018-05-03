@@ -1,0 +1,81 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/black">
+
+    <LinearLayout
+        android:id="@+id/menuBottomLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginEnd="2dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="@dimen/dp4"
+        android:orientation="vertical"
+        tools:layout_width="100dp"
+        tools:ignore="UselessParent">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
+            <View
+                android:id="@+id/spaceView"
+                android:layout_width="@dimen/dp8"
+                android:layout_height="@dimen/dp8"
+                android:visibility="gone"
+                tools:visibility="visible"/>
+
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/menuBottomIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp8"
+                android:layout_toEndOf="@+id/spaceView"
+                tools:src="@drawable/md_ic_arrow_drop_down"
+                android:layout_toRightOf="@+id/spaceView"
+                android:adjustViewBounds="true"/>
+
+            <TextView
+                android:id="@+id/showCountTextView"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_marginLeft="-10dp"
+                android:layout_marginStart="-10dp"
+                android:layout_toEndOf="@+id/menuBottomIcon"
+                android:layout_toRightOf="@+id/menuBottomIcon"
+                android:background="@drawable/badge_notification"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="10sp"
+                android:fontFamily="sans-serif-condensed"
+                android:visibility="gone"
+                tools:text="1"
+                tools:visibility="visible"
+                tools:ignore="SmallSp" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/bottomMenuName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:paddingTop="5dp"
+            android:textColor="#04abdf"
+            android:textSize="@dimen/sp10"
+            tools:text="@string/md_content_description_drawer_close" />
+
+        <TextView
+            android:id="@+id/bottomMenuTab"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="3dp"
+            android:background="@color/white"
+            android:visibility="visible" />
+    </LinearLayout>
+
+</RelativeLayout>

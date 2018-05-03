@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:fillViewport="true"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp0"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:paddingTop="@dimen/dp10"
+                app:srcCompat="@drawable/support_bg" />
+
+            <com.rescribe.doctor.ui.customesViews.CustomTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/dp12"
+                android:text="@string/need_some_help"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp20"
+                app:customFont="@string/roboto_medium" />
+
+            <com.rescribe.doctor.ui.customesViews.CustomTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/dp8"
+                android:text="@string/feel_free"
+                android:textColor="@color/grey_shade"
+                android:textSize="@dimen/sp14"
+                app:customFont="@string/roboto_medium" />
+
+            <com.rescribe.doctor.ui.customesViews.CustomTextView
+                android:id="@+id/callTextView"
+                android:layout_width="@dimen/dp222"
+                android:layout_height="@dimen/dp40"
+                android:layout_marginTop="@dimen/dp8"
+                android:background="@drawable/call_bg"
+                android:gravity="center"
+                android:text="@string/call"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp19"
+                app:customFont="@string/roboto_bold" />
+
+            <com.rescribe.doctor.ui.customesViews.CustomTextView
+                android:id="@+id/emailtextView"
+                android:layout_width="@dimen/dp222"
+                android:layout_height="@dimen/dp40"
+                android:layout_marginTop="@dimen/dp10"
+                android:background="@drawable/type_here_bg"
+                android:gravity="center"
+                android:text="@string/email"
+                android:textColor="@color/tagColor"
+                android:textSize="@dimen/sp19"
+                app:customFont="@string/roboto_bold" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="center"
+            android:layout_marginBottom="@dimen/dp9"
+            android:layout_marginTop="@dimen/dp30"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <com.rescribe.doctor.ui.customesViews.CustomTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:text="Doctor Rescribe is a unique product of"
+                android:textColor="@color/logo_color"
+                android:textSize="@dimen/sp13"
+                app:customFont="@string/roboto_regular"
+                app:srcCompat="@drawable/scrog_product" />
+
+            <com.rescribe.doctor.ui.customesViews.CustomTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/company_name"
+                android:textColor="@color/logo_color"
+                android:textSize="@dimen/sp13"
+                app:customFont="@string/roboto_regular"
+                app:srcCompat="@drawable/scrog_product" />
+
+            <com.rescribe.doctor.ui.customesViews.CustomTextView
+                android:id="@+id/versionText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textColor="@color/logo_color"
+                android:textSize="@dimen/sp13"
+                tools:text="v1.1(4)"
+                app:customFont="@string/roboto_regular"
+                app:srcCompat="@drawable/scrog_product" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+</ScrollView>

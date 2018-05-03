@@ -1,0 +1,126 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="@dimen/dp56"
+    android:focusableInTouchMode="true">
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:descendantFocusability="blocksDescendants"
+            android:orientation="vertical">
+
+            <include layout="@layout/doctor_header_info" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/servicesLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <com.rescribe.doctor.ui.customesViews.CustomTextView
+                        android:id="@+id/servicesHeaderView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="@dimen/dp6"
+                        android:paddingLeft="@dimen/dp10"
+                        android:paddingRight="@dimen/dp10"
+                        android:paddingTop="@dimen/dp10"
+                        android:text="@string/services"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/sp16"
+                        app:customFont="@string/roboto_medium" />
+
+                    <ListView
+                        android:id="@+id/servicesListView"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp67"
+                        android:divider="@null"
+                        android:dividerHeight="0dp"
+                        android:clipToPadding="false"
+                        android:paddingStart="@dimen/dp7"
+                        android:paddingEnd="@dimen/dp7"
+                        android:listSelector="@android:color/transparent"
+                        android:visibility="visible" />
+
+                    <com.rescribe.doctor.ui.customesViews.CustomTextView
+                        android:id="@+id/readMoreDocServices"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp16"
+                        android:layout_marginStart="@dimen/dp10"
+                        android:paddingBottom="@dimen/dp10"
+                        android:text="@string/read_more"
+                        android:textColor="@color/tagColor"
+                        android:textSize="@dimen/sp14"
+                        app:customFont="@string/roboto_medium"
+                        tools:visibility="visible" />
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/servicesLine"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp1"
+                    android:background="@color/divider"
+                    android:paddingBottom="@dimen/dp10"
+                    android:paddingTop="@dimen/dp10" />
+
+                <LinearLayout
+                    android:id="@+id/aboutLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/dp10"
+                    tools:visibility="visible">
+
+                    <com.rescribe.doctor.ui.customesViews.CustomTextView
+                        android:id="@+id/aboutDoctor"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="@dimen/dp6"
+                        android:text="@string/about_doctor"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/sp16"
+                        app:customFont="@string/roboto_medium" />
+
+                    <com.rescribe.doctor.ui.customesViews.CustomTextView
+                        android:id="@+id/aboutDoctorDescription"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="@dimen/dp10"
+                        android:text="Lorem ipsum dolor sit amet, consectetur adipiscing
+elit, sed do eiusmod tempor incididunt ut labore et
+dolore magna aliqua. Ut enim ad minim veniam,
+quis nostrud exercitation ullamco laboris nisi ut
+aliquip ex ea commodo consequat. Duis aute irure
+dolor in reprehenderit in voluptate velit esse cillum
+dolore eu fugiat nulla pariatur. Excepteur sint occae
+cat cupidatat non proident, sunt in culpa qui officia
+deserunt mollit anim id est laborum.Excepteur sint
+occaecat cupidatat non proident, sunt in culpa qui
+officia deserunt mollit anim id est laborum sunt in
+culpa qui  officia deserunt mollit anim id est laborum"
+                        android:textColor="@color/about_doctor_color"
+                        android:textSize="@dimen/sp14"
+                        app:customFont="@string/roboto_regular" />
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+
+</RelativeLayout>
