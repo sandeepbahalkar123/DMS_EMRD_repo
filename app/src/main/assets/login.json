@@ -1,0 +1,52 @@
+{
+  "common": {
+    "success": true,
+    "statusCode": 200,
+    "statusMessage": "USER AUTHENTICATED"
+  },
+  "data": {
+    "authToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbElkIjoiZHIucmFqa290Z2lyZUBnbWFpbC5jb20iLCJwYXNzd29yZCI6ImRvY3RvciIsImlhdCI6MTUyNTQ0MTgzOSwiZXhwIjoxNTI1NTI4MjM5fQ.ays-dD2_NaCMGkjtzPc2nUHbik1VSLMapSdAbjMUU2c",
+    "docDetail": {
+      "docId": 2600,
+      "premium": true,
+      "docName": "Raj Kotgire",
+      "docEmail": "dr.rajkotgire@gmail.com",
+      "docSpaciality": "Oncologist",
+      "docAddress": "Shop Number 17, 1st Floor, Metro 9, kothrud, Pune",
+      "docImgUrl": "https://drrescribe.com/medsonit-be/assets/doc_profile/2600.jpg",
+      "docDegree": "MD - Medicine, DM - Oncology",
+      "docExperience": "10",
+      "docInfo": "I believe in listening to each patient and creating a partnership to maintain and improve lifelong health. Teaching medical students and residents continues to be one of my strong areas of interest.",
+      "clinicList": [
+        {
+          "clinicId": 77,
+          "clinicName": "Sai Clinic",
+          "clinicAddress": "kothrud,Pune",
+          "areaName": "Kothrud",
+          "cityName": "Pune",
+          "cityId": 2763,
+          "locationId": 65,
+          "services": [
+            "Medical Oncology",
+            "Breast Cancer",
+            "Chemotherapy"
+          ]
+        },
+        {
+          "clinicId": 77,
+          "clinicName": "Sai Clinic",
+          "clinicAddress": "Aundh,Pune",
+          "areaName": "Aundh",
+          "cityName": "Pune",
+          "cityId": 2763,
+          "locationId": 74,
+          "services": [
+            "Medical Oncology",
+            "Breast Cancer",
+            "Chemotherapy"
+          ]
+        }
+      ]
+    }
+  }
+}

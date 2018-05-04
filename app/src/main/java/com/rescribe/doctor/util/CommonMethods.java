@@ -4,23 +4,29 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Environment;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -29,9 +35,12 @@ import android.widget.Toast;
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.rescribe.doctor.R;
+import com.rescribe.doctor.dms.util.Config;
 import com.rescribe.doctor.interfaces.CheckIpConnection;
 import com.rescribe.doctor.interfaces.DatePickerDialogListener;
 import com.rescribe.doctor.model.patient.patient_history.DatesData;
+import com.rescribe.doctor.preference.RescribePreferencesManager;
+import com.rescribe.doctor.ui.activities.SplashScreenActivity;
 
 import org.joda.time.DateTime;
 import org.joda.time.Period;
@@ -40,6 +49,9 @@ import org.joda.time.Weeks;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.DateFormat;
@@ -51,6 +63,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class CommonMethods {
 
@@ -927,6 +941,141 @@ public class CommonMethods {
             datesDataList.add(datesData);
         }
         return datesDataList;
+    }
+
+
+    //this alert is shown for input of serverpath
+    public static Dialog showIPAlertDialog(Context activity, String dialogHeader, CheckIpConnection checkIpConnection) {
+        final Context mContext = activity;
+        mCheckIpConnection = checkIpConnection;
+        final Dialog dialog = new Dialog(activity);
+
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_ok_cancel);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setCancelable(false);
+        if (dialogHeader != null)
+            ((TextView) dialog.findViewById(R.id.textView_dialog_heading)).setText(dialogHeader);
+
+        dialog.findViewById(R.id.button_ok).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                EditText etServerPath = (EditText) dialog.findViewById(R.id.et_server_path);
+
+                if (isValidIP(etServerPath.getText().toString())) {
+                    String mServerPath = com.rescribe.doctor.dms.util.Config.HTTP + etServerPath.getText().toString() + Config.API;
+                    Log.e(TAG, "SERVER PATH===" + mServerPath);
+                    mCheckIpConnection.onOkButtonClickListner(mServerPath, mContext, dialog);
+                } else {
+                    Toast.makeText(mContext, R.string.error_in_ip, Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+        dialog.findViewById(R.id.button_cancel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                ((Activity) mContext).finish();
+            }
+        });
+        dialog.show();
+
+        return dialog;
+    }
+
+    public static void showDialog(String msg,String changeIpAddress , final Context mContext) {
+
+
+        final Dialog dialog = new Dialog(mContext);
+
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.change_ip_address_dialog);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setCancelable(false);
+
+        ((TextView) dialog.findViewById(R.id.textview_ipaddress_label)).setText(msg);
+        ((TextView) dialog.findViewById(R.id.textview_change_ip_address)).setText(changeIpAddress);
+        dialog.findViewById(R.id.button_yes).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                RescribePreferencesManager.clearSharedPref(mContext);
+                ((Activity) mContext).finish();
+                mContext.startActivity(new Intent(mContext, SplashScreenActivity.class));
+
+            }
+        });
+        dialog.findViewById(R.id.button_no).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+
+            }
+        });
+
+        dialog.show();
+    }
+
+
+    private static boolean isValidIP(String ipAddr) {
+
+        Pattern ptn = Pattern.compile("(\\b(1?[0-9]{1,2}|2[0-4][0-9]|25[0-5])\\b)\\.(\\b(1?[0-9]{1,2}|2[0-4][0-9]|25[0-5])\\b)\\.(\\b(1?[0-9]{1,2}|2[0-4][0-9]|25[0-5])\\b)\\.(\\b(1?[0-9]{1,2}|2[0-4][0-9]|25[0-5])\\b)\\:(\\d{1,4})$");
+        Matcher mtch = ptn.matcher(ipAddr);
+        return mtch.find();
+    }
+
+    public static View loadView(int resourceName, Context mActivity) {
+
+        LayoutInflater inflater = (LayoutInflater) mActivity
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+        // param.gravity = Gravity.CENTER;
+        View child = inflater.inflate(resourceName, null);
+        LinearLayout l1 = new LinearLayout(mActivity);
+        child.setLayoutParams(param);
+
+        l1.setLayoutParams(param);
+        l1.addView(child);
+        return l1;
+    }
+
+
+    public static File storeAndGetDocument(Context context, String base64Pdf, String filename, String extension) {
+        // Create a file in the Internal Storage
+
+        String filepath = Environment.getExternalStorageDirectory().getPath();
+        File file = null;
+
+        byte[] pdfAsBytes = Base64.decode(base64Pdf, 0);
+
+        FileOutputStream outputStream;
+        try {
+
+            file = new File(filepath + "/Android/data/" + context.getPackageName() + "/Documents");
+            if (!file.exists()) {
+                file.mkdirs();
+            }
+
+            file = new File(file.getAbsolutePath(), filename + "." + extension);
+
+            outputStream = new FileOutputStream(file);
+            outputStream.write(pdfAsBytes);
+            outputStream.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return file;
+    }
+
+    public static boolean isTablet(Context context) {
+        return (context.getResources().getConfiguration().screenLayout
+                & Configuration.SCREENLAYOUT_SIZE_MASK)
+                >= Configuration.SCREENLAYOUT_SIZE_LARGE;
     }
 }
 

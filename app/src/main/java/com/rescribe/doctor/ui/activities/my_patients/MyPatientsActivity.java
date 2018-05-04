@@ -29,7 +29,6 @@ import com.rescribe.doctor.util.CommonMethods;
 import com.rescribe.doctor.util.NetworkUtil;
 import com.rescribe.doctor.util.RescribeConstants;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 
@@ -104,7 +103,7 @@ public class MyPatientsActivity extends AppCompatActivity implements DrawerForMy
         mMyPatientsFragment = MyPatientsFragment.newInstance(bundle);
         getSupportFragmentManager().beginTransaction().replace(R.id.viewContainer, mMyPatientsFragment).commit();
 
-        boolean isPatientDownloaded = RescribePreferencesManager.getBoolean(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.PATIENT_DOWNLOAD, this);
+        boolean isPatientDownloaded = RescribePreferencesManager.getBoolean(RescribePreferencesManager.DMS_PREFERENCES_KEY.PATIENT_DOWNLOAD, this);
 
         if (NetworkUtil.getConnectivityStatusBoolean(mContext)) {
             if (isPatientDownloaded) {
@@ -168,7 +167,7 @@ public class MyPatientsActivity extends AppCompatActivity implements DrawerForMy
 
     @Override
     public void onApply(RequestSearchPatients mRequestSearchPatients, boolean isReset) {
-        mRequestSearchPatients.setDocId(Integer.valueOf(RescribePreferencesManager.getString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.DOC_ID, mContext)));
+        mRequestSearchPatients.setDocId(Integer.valueOf(RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.DOC_ID, mContext)));
         mMyPatientsFragment.apply(mRequestSearchPatients, isReset);
         if (!isReset)
             drawerLayout.closeDrawers();

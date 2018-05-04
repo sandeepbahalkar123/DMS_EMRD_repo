@@ -294,8 +294,8 @@ public class PatientHistoryListFragmentContainer extends Fragment implements Hel
         dialog.setCancelable(true);
 
         LayoutInflater inflater = LayoutInflater.from(getContext());
-        if (!RescribePreferencesManager.getString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.SELECTED_LOCATION_ID, getActivity()).equals(""))
-            mLocationId = RescribePreferencesManager.getString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.SELECTED_LOCATION_ID, getActivity());
+        if (!RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.SELECTED_LOCATION_ID, getActivity()).equals(""))
+            mLocationId = RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.SELECTED_LOCATION_ID, getActivity());
         RadioGroup radioGroup = (RadioGroup) dialog.findViewById(R.id.radioGroup);
         for (int index = 0; index < mPatientListsOriginal.size(); index++) {
             final DoctorLocationModel clinicList = mPatientListsOriginal.get(index);
@@ -354,7 +354,7 @@ public class PatientHistoryListFragmentContainer extends Fragment implements Hel
     }
 
     private void callAddRecordsActivity(String mLocationId, int mHospitalId, int year, int monthOfYear, int dayOfMonth) {
-        RescribePreferencesManager.putString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.SELECTED_LOCATION_ID, String.valueOf(mLocationId), getActivity());
+        RescribePreferencesManager.putString(RescribePreferencesManager.DMS_PREFERENCES_KEY.SELECTED_LOCATION_ID, String.valueOf(mLocationId), getActivity());
         Intent intent = new Intent(getActivity(), SelectedRecordsActivity.class);
         intent.putExtra(RescribeConstants.OPD_ID, "0");
         intent.putExtra(RescribeConstants.PATIENT_HOS_PAT_ID, mHospitalPatId);

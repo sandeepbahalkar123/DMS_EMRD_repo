@@ -20,39 +20,28 @@ import android.graphics.drawable.ColorDrawable;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
-import android.util.Base64;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
-import android.view.WindowManager;
-import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.beloo.widget.chipslayoutmanager.layouter.Item;
 import com.rescribe.doctor.R;
 import com.rescribe.doctor.preference.RescribePreferencesManager;
-import com.rescribe.doctor.ui.customesViews.CustomProgressDialog;
 import com.theartofdev.edmodo.cropper.CropImage;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
 import static android.app.Activity.RESULT_OK;
 import static android.content.ContentValues.TAG;
-import static com.theartofdev.edmodo.cropper.CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE;
 
 @SuppressLint("SdCardPath")
 public class Imageutils {
@@ -590,7 +579,7 @@ public class Imageutils {
             path.mkdirs();
         }
 
-        String file_name = "profile_" + RescribePreferencesManager.getString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.DOC_ID, context) + "_" + System.currentTimeMillis() + ".jpg";
+        String file_name = "profile_" + RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.DOC_ID, context) + "_" + System.currentTimeMillis() + ".jpg";
 
         File file = new File(path, file_name);
 

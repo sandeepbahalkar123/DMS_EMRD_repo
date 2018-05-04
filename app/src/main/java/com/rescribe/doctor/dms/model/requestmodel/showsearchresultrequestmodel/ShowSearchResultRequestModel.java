@@ -2,7 +2,7 @@ package com.rescribe.doctor.dms.model.requestmodel.showsearchresultrequestmodel;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.rescribe.doctor.dms.interfaces.CustomResponse;
+import com.rescribe.doctor.interfaces.CustomResponse;
 
 public class ShowSearchResultRequestModel implements CustomResponse {
 

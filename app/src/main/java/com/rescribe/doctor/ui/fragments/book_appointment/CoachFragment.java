@@ -35,7 +35,7 @@ public class CoachFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 getActivity().getSupportFragmentManager().popBackStack();
-                RescribePreferencesManager.putString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.COACHMARK_ALL_PATIENT_DOWNLOAD, RescribeConstants.YES, getActivity());
+                RescribePreferencesManager.putString(RescribePreferencesManager.DMS_PREFERENCES_KEY.COACHMARK_ALL_PATIENT_DOWNLOAD, RescribeConstants.YES, getActivity());
             }
         });
         return rootView;

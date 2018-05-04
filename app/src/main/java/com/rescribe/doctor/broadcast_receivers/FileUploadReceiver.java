@@ -36,7 +36,7 @@ public class FileUploadReceiver extends UploadServiceBroadcastReceiver {
         if (instance == null)
             instance = new AppDBHelper(context);
 
-        String doctorId = RescribePreferencesManager.getString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.DOC_ID, context);
+        String doctorId = RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.DOC_ID, context);
 
         String prefix[] = uploadInfo.getUploadId().split("_");
         if (prefix[0].equals(doctorId))
@@ -53,7 +53,7 @@ public class FileUploadReceiver extends UploadServiceBroadcastReceiver {
         if (instance == null)
             instance = new AppDBHelper(context);
 
-        String doctorId = RescribePreferencesManager.getString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.DOC_ID, context);
+        String doctorId = RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.DOC_ID, context);
 
             String prefix[] = uploadInfo.getUploadId().split("_");
             if (prefix[0].equals(doctorId)) {

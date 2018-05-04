@@ -431,10 +431,10 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.ItemL
 
         appDBHelper = new AppDBHelper(this);
 
-        docId = RescribePreferencesManager.getString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.DOC_ID, this);
-        docName = RescribePreferencesManager.getString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.USER_NAME, this);
-        imageUrl = RescribePreferencesManager.getString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.PROFILE_PHOTO, this);
-        speciality = RescribePreferencesManager.getString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.SPECIALITY, this);
+        docId = RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.DOC_ID, this);
+        docName = RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.USER_NAME, this);
+        imageUrl = RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.PROFILE_PHOTO, this);
+        speciality = RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.SPECIALITY, this);
 
         downloadInit();
         uploadInit();
@@ -948,7 +948,7 @@ public class ChatActivity extends AppCompatActivity implements ChatAdapter.ItemL
         // Uploading
         device = Device.getInstance(ChatActivity.this);
         Url = Config.BASE_URL + Config.CHAT_FILE_UPLOAD;
-        authorizationString = RescribePreferencesManager.getString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.AUTHTOKEN, ChatActivity.this);
+        authorizationString = RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.AUTHTOKEN, ChatActivity.this);
         uploadNotificationConfig = new UploadNotificationConfig();
         uploadNotificationConfig.setTitleForAllStatuses("File Uploading");
         uploadNotificationConfig.setIconColorForAllStatuses(Color.parseColor("#04abdf"));

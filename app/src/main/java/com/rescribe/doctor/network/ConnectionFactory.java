@@ -45,7 +45,7 @@ public class ConnectionFactory extends ConnectRequest {
     public void setHeaderParams() {
 
         Map<String, String> headerParams = new HashMap<>();
-        String authorizationString = RescribePreferencesManager.getString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.AUTHTOKEN, mContext);
+        String authorizationString = RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.AUTHTOKEN, mContext);
         headerParams.put(RescribeConstants.CONTENT_TYPE, RescribeConstants.APPLICATION_JSON);
         headerParams.put(RescribeConstants.AUTHORIZATION_TOKEN, authorizationString);
         headerParams.put(RescribeConstants.DEVICEID, device.getDeviceId());

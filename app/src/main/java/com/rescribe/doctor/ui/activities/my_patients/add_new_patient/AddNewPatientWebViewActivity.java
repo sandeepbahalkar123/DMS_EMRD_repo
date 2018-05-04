@@ -105,14 +105,14 @@ public class AddNewPatientWebViewActivity extends AppCompatActivity implements H
         locationID = extras.getString(RescribeConstants.LOCATION_ID);
         cityID = extras.getInt(RescribeConstants.CITY_ID);
         cityName = extras.getString(RescribeConstants.CITY_NAME);
-        docID = Integer.valueOf(RescribePreferencesManager.getString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.DOC_ID, this));
+        docID = Integer.valueOf(RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.DOC_ID, this));
 
         String urlData = Config.ADD_NEW_PATIENT_WEB_URL + docID + "/" +
                 hospitalId + "/" + locationID + "/" + cityID;
 
         mWebViewTitle.setText(getString(R.string.patient_registration));
 
-        mAddPatientOfflineSetting = RescribePreferencesManager.getBoolean(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.ADD_PATIENT_OFFLINE_SETTINGS, this);
+        mAddPatientOfflineSetting = RescribePreferencesManager.getBoolean(RescribePreferencesManager.DMS_PREFERENCES_KEY.ADD_PATIENT_OFFLINE_SETTINGS, this);
 
         boolean internetAvailable = NetworkUtil.isInternetAvailable(this);
         if (internetAvailable && !mAddPatientOfflineSetting) {

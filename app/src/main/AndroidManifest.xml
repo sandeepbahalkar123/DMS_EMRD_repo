@@ -23,10 +23,10 @@
     <application
         android:name=".singleton.RescribeApplication"
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:largeHeap="true"
-        android:roundIcon="@drawable/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
@@ -109,10 +109,6 @@
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />
 
-        <activity
-            android:name=".ui.activities.LoginSignUpActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.activities.ProfileActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
@@ -248,17 +244,12 @@
         <!--DMS-->
 
         <activity
-            android:name="com.rescribe.doctor.dms.ui.activities.SplashScreenActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity
             android:name="com.rescribe.doctor.dms.ui.activities.PatientList"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/patient_list"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
-            android:name="com.rescribe.doctor.dms.ui.activities.LoginActivity"
+            android:name="com.rescribe.doctor.ui.activities.LoginActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/title_activity_login"
             android:noHistory="true"

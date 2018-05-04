@@ -1,95 +1,155 @@
 package com.rescribe.doctor.ui.activities;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.DefaultRetryPolicy;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
 import com.rescribe.doctor.R;
-import com.rescribe.doctor.network.RequestPool;
+import com.rescribe.doctor.helpers.login.LoginHelper;
+import com.rescribe.doctor.interfaces.CheckIpConnection;
+import com.rescribe.doctor.interfaces.CustomResponse;
+import com.rescribe.doctor.interfaces.HelperResponse;
+import com.rescribe.doctor.model.iptestresponsemodel.IpTestResponseModel;
 import com.rescribe.doctor.notification.MQTTServiceAlarmTask;
 import com.rescribe.doctor.preference.RescribePreferencesManager;
+import com.rescribe.doctor.util.CommonMethods;
 import com.rescribe.doctor.util.RescribeConstants;
 
-import java.util.HashMap;
-import java.util.Map;
 
-import static com.android.volley.Request.Method.GET;
-
-public class SplashScreenActivity extends AppCompatActivity {
+public class SplashScreenActivity extends AppCompatActivity implements HelperResponse {
 
     private Context mContext;
-
+    private LoginHelper mLoginHelper;
+    private Dialog mDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splash_screen);
+        setContentView(R.layout.splashscreen);
 
         mContext = SplashScreenActivity.this;
+
+        mLoginHelper = new LoginHelper(this, this);
 
         MQTTServiceAlarmTask.cancelAlarm(mContext);
         new MQTTServiceAlarmTask(mContext).run();
 
-        doNext();
+         doAppCheckLogin();
+    }
+
+    private void doAppCheckLogin() {
+        //handler to close the splash activity after the set time
+        new Handler().postDelayed(new Runnable() {
+
+
+            @Override
+            public void run() {
+
+                String userName = RescribePreferencesManager.getString(RescribeConstants.USERNAME, mContext);
+                String password = RescribePreferencesManager.getString(RescribeConstants.PASSWORD, mContext);
+
+                Intent intentObj = null;
+
+                if (RescribeConstants.BLANK.equalsIgnoreCase(userName) || RescribeConstants.BLANK.equalsIgnoreCase(password)) {
+                    if (!RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.IS_VALID_IP_CONFIG, mContext).equals(RescribeConstants.TRUE)) {
+                        //alert dialog for serverpath
+                        CommonMethods.showIPAlertDialog(SplashScreenActivity.this, getString(R.string.server_path) + "\n" + getString(R.string.for_example_server_path), new CheckIpConnection() {
+                            @Override
+                            public void onOkButtonClickListner(String serverPath, Context context, Dialog dialog) {
+                                mDialog = dialog;
+                                mContext = context;
+                                RescribePreferencesManager.putString(RescribePreferencesManager.DMS_PREFERENCES_KEY.SERVER_PATH, serverPath, context);
+                                mLoginHelper.checkConnectionToServer(serverPath);
+
+
+                            }
+                        });
+                    } else {
+                        intentObj = new Intent(mContext, LoginActivity.class);
+                        intentObj.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        intentObj.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        intentObj.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intentObj);
+
+                        finish();
+                        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+
+                    }
+                } else {
+                    //------Check Remember ME first , then only move on next screen.
+                    intentObj = new Intent(mContext, HomePageActivity.class);
+                    intentObj.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    intentObj.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intentObj.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intentObj);
+
+                    finish();
+                    overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+                }
+
+
+            }
+        }, RescribeConstants.TIME_STAMPS.THREE_SECONDS);
 
     }
 
-    /*private void callApi() {
-        StringRequest stringRequest = new StringRequest(GET, "https://drrescribe.com/medsonit-be/Masterdata/getAllDoctorSpecialities",
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        Log.d("Responce", response);
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.d("Responce", "error");
-                    }
-                }
-        )
+    @Override
 
-        {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> headerParams = new HashMap<>();
-                headerParams.put("User-ID", "2600");
-                headerParams.put("Auth-Key", "simplerestapi");
-                headerParams.put("Location-ID", "65");
-                headerParams.put("Client-Service", "frontend-client");
-                headerParams.put("Parent-ID", "2600");
-                headerParams.put("Authorization-Token", "$1$DowDISK4$T/hjDf0/myRL.SnvTuLdf0");
-                headerParams.put("Hospital-ID", "77");
-                return headerParams;
-            }
-        };
-        stringRequest.setRetryPolicy(new DefaultRetryPolicy(1000 * 60, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        stringRequest.setTag("BackUpRequest");
-        RequestPool.getInstance(this).addToRequestQueue(stringRequest);
-    }*/
+    public void onSuccess(String mOldDataTag, CustomResponse customResponse) {
+        mDialog.dismiss();
+        //TODO : IP CHECK API IN NOT IMPLEMENTED YET, HENCE COMMENTED BELOW CODE
 
-    private void doNext() {
-        new Handler().postDelayed(new Runnable() {
+        IpTestResponseModel ipTestResponseModel = (IpTestResponseModel) customResponse;
+        if (ipTestResponseModel.getCommon().getStatusCode().equals(RescribeConstants.SUCCESS)) {
+            RescribePreferencesManager.putString(RescribePreferencesManager.DMS_PREFERENCES_KEY.IS_VALID_IP_CONFIG, RescribeConstants.TRUE, mContext);
+            Intent intentObj = new Intent(mContext, LoginActivity.class);
+            intentObj.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            intentObj.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            intentObj.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            mContext.startActivity(intentObj);
+            finish();
+
+        }
+    }
+
+    @Override
+    public void onParseError(String mOldDataTag, String errorMessage) {
+
+    }
+
+    @Override
+    public void onServerError(String mOldDataTag, String serverErrorMessage) {
+        RescribePreferencesManager.putString(RescribeConstants.LOGIN_SUCCESS, RescribeConstants.FALSE, mContext);
+        CommonMethods.showIPAlertDialog(SplashScreenActivity.this, getString(R.string.wrong_server_path) + "\n" + getString(R.string.for_example_server_path), new CheckIpConnection() {
             @Override
-            public void run() {
-                if (RescribePreferencesManager.getString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.LOGIN_STATUS, mContext).equals(RescribeConstants.YES)) {
-                    Intent intentObj = new Intent(SplashScreenActivity.this, HomePageActivity.class);
-                    startActivity(intentObj);
-                } else {
-                    Intent intentObj = new Intent(SplashScreenActivity.this, LoginSignUpActivity.class);
-                    startActivity(intentObj);
-                }
-                finish();
+            public void onOkButtonClickListner(String serverPath, Context context, Dialog dialog) {
+                RescribePreferencesManager.putString(RescribePreferencesManager.DMS_PREFERENCES_KEY.SERVER_PATH, serverPath, context);
+                mLoginHelper.checkConnectionToServer(serverPath);
             }
-        }, RescribeConstants.TIME_STAMPS.THREE_SECONDS);
+        });
+
+    }
+
+    @Override
+    public void onNoConnectionError(String mOldDataTag, String serverErrorMessage) {
+        RescribePreferencesManager.putString(RescribeConstants.LOGIN_SUCCESS, RescribeConstants.FALSE, mContext);
+        CommonMethods.showIPAlertDialog(SplashScreenActivity.this, getString(R.string.wrong_server_path) + "\n" + getString(R.string.for_example_server_path), new CheckIpConnection() {
+            @Override
+            public void onOkButtonClickListner(String serverPath, Context context, Dialog dialog) {
+
+                RescribePreferencesManager.putString(RescribePreferencesManager.DMS_PREFERENCES_KEY.SERVER_PATH, serverPath, context);
+                mLoginHelper.checkConnectionToServer(serverPath);
+            }
+        });
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 }

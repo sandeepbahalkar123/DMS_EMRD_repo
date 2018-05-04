@@ -104,7 +104,7 @@ public class PatientDetailHelper implements ConnectionListener {
     public void doGetOneDayVisit(String opdId, String patientID) {
         ConnectionFactory mConnectionFactory = new ConnectionFactory(mContext, this, null, true, RescribeConstants.TASK_ONE_DAY_VISIT, Request.Method.GET, false);
         mConnectionFactory.setHeaderParams();
-        String docId = (RescribePreferencesManager.getString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.DOC_ID, mContext));
+        String docId = (RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.DOC_ID, mContext));
         mConnectionFactory.setUrl(Config.ONE_DAY_VISIT_URL + opdId + "&patientId=" + patientID + "&docId=" + docId);
         mConnectionFactory.createConnection(RescribeConstants.TASK_ONE_DAY_VISIT);
        /* try {
@@ -126,7 +126,7 @@ public class PatientDetailHelper implements ConnectionListener {
     public void doGetPatientHistory(String patientID, String year, boolean getPatientInfo, String hospitalPatid) {
         ConnectionFactory mConnectionFactory = new ConnectionFactory(mContext, this, null, true, RescribeConstants.TASK_PATIENT_HISTORY, Request.Method.POST, false);
         RequestForPatientHistory mRequestForPatientHistory = new RequestForPatientHistory();
-        mRequestForPatientHistory.setDocId(Integer.valueOf(RescribePreferencesManager.getString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.DOC_ID, mContext)));
+        mRequestForPatientHistory.setDocId(Integer.valueOf(RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.DOC_ID, mContext)));
         String date = CommonMethods.getCurrentDate(RescribeConstants.DATE_PATTERN.YYYY_MM_DD);
         mRequestForPatientHistory.setPatientId(Integer.valueOf(patientID));
         mRequestForPatientHistory.setHospitalPatId(Integer.valueOf(hospitalPatid));

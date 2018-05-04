@@ -222,7 +222,7 @@ public class ChatPatientListFragment extends Fragment implements ChatPatientList
 
     public void nextPage(int pageNo) {
         mAppointmentHelper = new AppointmentHelper(getContext(), this);
-        mRequestSearchPatients.setDocId(Integer.valueOf(RescribePreferencesManager.getString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.DOC_ID, getContext())));
+        mRequestSearchPatients.setDocId(Integer.valueOf(RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.DOC_ID, getContext())));
         mRequestSearchPatients.setSearchText(searchText);
         mRequestSearchPatients.setPageNo(pageNo);
         mAppointmentHelper.doGetSearchResult(mRequestSearchPatients, false);
@@ -232,7 +232,7 @@ public class ChatPatientListFragment extends Fragment implements ChatPatientList
         mMyPatientsAdapter.clear();
         mRequestSearchPatients.setPageNo(0);
         mAppointmentHelper = new AppointmentHelper(getContext(), this);
-        mRequestSearchPatients.setDocId(Integer.valueOf(RescribePreferencesManager.getString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.DOC_ID, getContext())));
+        mRequestSearchPatients.setDocId(Integer.valueOf(RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.DOC_ID, getContext())));
         mRequestSearchPatients.setSearchText(searchText);
         mAppointmentHelper.doGetSearchResult(mRequestSearchPatients, false);
     }

@@ -42,10 +42,10 @@ import com.rescribe.doctor.dms.adapters.Custom_Spin_Adapter;
 import com.rescribe.doctor.dms.adapters.PatientExpandableListAdapter;
 import com.rescribe.doctor.dms.adapters.ShowPatientNameAdapter;
 import com.rescribe.doctor.dms.adapters.TagAdapter;
-import com.rescribe.doctor.dms.helpers.patients.PatientsHelper;
-import com.rescribe.doctor.dms.interfaces.CustomResponse;
-import com.rescribe.doctor.dms.interfaces.DatePickerDialogListener;
-import com.rescribe.doctor.dms.interfaces.HelperResponse;
+import com.rescribe.doctor.helpers.patient_list.PatientsHelper;
+import com.rescribe.doctor.interfaces.CustomResponse;
+import com.rescribe.doctor.interfaces.DatePickerDialogListener;
+import com.rescribe.doctor.interfaces.HelperResponse;
 import com.rescribe.doctor.dms.model.requestmodel.showsearchresultrequestmodel.ShowSearchResultRequestModel;
 import com.rescribe.doctor.dms.model.responsemodel.annotationlistresponsemodel.AnnotationList;
 import com.rescribe.doctor.dms.model.responsemodel.annotationlistresponsemodel.AnnotationListData;
@@ -58,10 +58,12 @@ import com.rescribe.doctor.dms.model.responsemodel.showsearchresultresponsemodel
 import com.rescribe.doctor.dms.model.responsemodel.showsearchresultresponsemodel.SearchResult;
 import com.rescribe.doctor.dms.model.responsemodel.showsearchresultresponsemodel.ShowSearchResultResponseModel;
 import com.rescribe.doctor.dms.preference.DmsPreferencesManager;
-import com.rescribe.doctor.dms.util.CommonMethods;
 import com.rescribe.doctor.dms.util.DmsConstants;
 import com.rescribe.doctor.dms.views.treeViewHolder.arrow_expand.ArrowExpandIconTreeItemHolder;
 import com.rescribe.doctor.dms.views.treeViewHolder.arrow_expand.ArrowExpandSelectableHeaderHolder;
+import com.rescribe.doctor.preference.RescribePreferencesManager;
+import com.rescribe.doctor.ui.activities.SplashScreenActivity;
+import com.rescribe.doctor.util.CommonMethods;
 import com.unnamed.b.atv.model.TreeNode;
 import com.unnamed.b.atv.view.AndroidTreeView;
 
@@ -316,7 +318,7 @@ public class PatientList extends AppCompatActivity implements HelperResponse, Vi
                     startActivity(intent);
                     // Handle the camera action
                 } else if (id == R.id.change_ip_address) {
-                    CommonMethods.showDialog(DmsPreferencesManager.getString(DmsPreferencesManager.DMS_PREFERENCES_KEY.SERVER_PATH, mContext), getString(R.string.change_ip), mContext);
+                    CommonMethods.showDialog(RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.SERVER_PATH, mContext), getString(R.string.change_ip), mContext);
 
                 }
 

@@ -3,9 +3,13 @@ package com.rescribe.doctor.helpers.login;
 import android.content.Context;
 
 import com.android.volley.Request;
+import com.rescribe.doctor.dms.model.responsemodel.loginresponsemodel.LoginResponseModel;
+import com.rescribe.doctor.dms.util.DmsConstants;
 import com.rescribe.doctor.interfaces.ConnectionListener;
 import com.rescribe.doctor.interfaces.CustomResponse;
 import com.rescribe.doctor.interfaces.HelperResponse;
+import com.rescribe.doctor.model.Common;
+import com.rescribe.doctor.model.iptestresponsemodel.IpTestResponseModel;
 import com.rescribe.doctor.model.login.ActiveRequest;
 import com.rescribe.doctor.model.login.LoginModel;
 import com.rescribe.doctor.model.login.SignUpModel;
@@ -14,9 +18,13 @@ import com.rescribe.doctor.model.requestmodel.login.SignUpRequestModel;
 import com.rescribe.doctor.model.requestmodel.login.SignUpVerifyOTPRequestModel;
 import com.rescribe.doctor.network.ConnectRequest;
 import com.rescribe.doctor.network.ConnectionFactory;
+import com.rescribe.doctor.preference.RescribePreferencesManager;
 import com.rescribe.doctor.util.CommonMethods;
 import com.rescribe.doctor.util.Config;
 import com.rescribe.doctor.util.RescribeConstants;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by ganeshshirole on 10/7/17.
@@ -26,6 +34,9 @@ public class LoginHelper implements ConnectionListener {
     String TAG = this.getClass().getName();
     Context mContext;
     HelperResponse mHelperResponseManager;
+    private String mServerPath;
+    private String userName;
+    private String password;
 
     public LoginHelper(Context context, HelperResponse loginActivity) {
         this.mContext = context;
@@ -40,9 +51,24 @@ public class LoginHelper implements ConnectionListener {
         switch (responseResult) {
             case ConnectionListener.RESPONSE_OK:
                 switch (mOldDataTag) {
-                    case RescribeConstants.TASK_LOGIN:
-                        LoginModel loginModel = (LoginModel) customResponse;
-                        mHelperResponseManager.onSuccess(mOldDataTag, loginModel);
+                    case RescribeConstants.TASK_LOGIN_CODE:
+
+                        LoginResponseModel model = (LoginResponseModel) customResponse;
+                        RescribePreferencesManager.putString(RescribeConstants.LOGIN_SUCCESS, DmsConstants.TRUE, mContext);
+                        RescribePreferencesManager.putString(RescribeConstants.ACCESS_TOKEN, model.getAccessToken(), mContext);
+                        RescribePreferencesManager.putString(RescribeConstants.TOKEN_TYPE, model.getTokenType(), mContext);
+                        RescribePreferencesManager.putString(RescribeConstants.REFRESH_TOKEN, model.getRefreshToken(), mContext);
+                        RescribePreferencesManager.putString(RescribeConstants.USERNAME, userName, mContext);
+                        RescribePreferencesManager.putString(RescribeConstants.PASSWORD, password, mContext);
+                        CommonMethods.Log(TAG, "Refersh token after login response: " + model.getRefreshToken());
+                        RescribePreferencesManager.putString(RescribePreferencesManager.DMS_PREFERENCES_KEY.USER_GENDER, model.getUserGender(), mContext);
+                        mHelperResponseManager.onSuccess(mOldDataTag, model);
+
+                        break;
+                    case RescribeConstants.TASK_CHECK_SERVER_CONNECTION:
+                        IpTestResponseModel ipTestResponseModel = (IpTestResponseModel) customResponse;
+                        mHelperResponseManager.onSuccess(mOldDataTag, ipTestResponseModel);
+
                         break;
                     case RescribeConstants.TASK_SIGN_UP:
                         SignUpModel signUpModel = (SignUpModel) customResponse;
@@ -87,17 +113,21 @@ public class LoginHelper implements ConnectionListener {
 
     }
 
-    //Do login using mobileNo and password
-    public void doLogin(String email, String password) {
-        ConnectionFactory mConnectionFactory = new ConnectionFactory(mContext, this, null, true, RescribeConstants.TASK_LOGIN, Request.Method.POST, true);
+    public void doAppLogin(String userName, String password) {
+        this.userName = userName;
+        this.password = password;
+        com.rescribe.doctor.dms.network.ConnectionFactory mConnectionFactory = new com.rescribe.doctor.dms.network.ConnectionFactory(mContext, this, null, true, DmsConstants.TASK_LOGIN_CODE, Request.Method.POST);
         mConnectionFactory.setHeaderParams();
-        LoginRequestModel loginRequestModel = new LoginRequestModel();
-        loginRequestModel.setEmailId(email);
-        loginRequestModel.setPassword(password);
-        mConnectionFactory.setPostParams(loginRequestModel);
-        mConnectionFactory.setUrl(Config.LOGIN_URL);
-        mConnectionFactory.createConnection(RescribeConstants.TASK_LOGIN);
+        Map<String, String> testParams = new HashMap<String, String>();
+        testParams.put(DmsConstants.GRANT_TYPE_KEY, DmsConstants.PASSWORD);
+        testParams.put(DmsConstants.USERNAME, userName);
+        testParams.put(DmsConstants.PASSWORD, password);
+        testParams.put(DmsConstants.CLIENT_ID_KEY, DmsConstants.CLIENT_ID_VALUE);
+        mConnectionFactory.setPostParams(testParams);
+        mConnectionFactory.setUrl(com.rescribe.doctor.dms.util.Config.URL_LOGIN);
+        mConnectionFactory.createConnection(DmsConstants.TASK_LOGIN_CODE);
     }
+
 
     //Do login using Otp
     public void doLoginByOTP(String otp) {
@@ -144,5 +174,20 @@ public class LoginHelper implements ConnectionListener {
         mConnectionFactory.setPostParams(activeRequest);
         mConnectionFactory.setUrl(Config.ACTIVE);
         mConnectionFactory.createConnection(RescribeConstants.ACTIVE_STATUS);
+    }
+
+    public void checkConnectionToServer(String serverPath) {
+        this.mServerPath = serverPath;
+
+        //TODO : IP CHECK API IN NOT IMPLEMENTED YET, HENCE COMMENTED BELOW CODE, N GOES INTO ONSUCEESS.
+        //ConnectionFactory mConnectionFactory = new ConnectionFactory(mContext, this, null, true, DmsConstants.TASK_CHECK_SERVER_CONNECTION, Request.Method.GET,false);
+        //mConnectionFactory.setUrl(Config.URL_CHECK_SERVER_CONNECTION);
+        // mConnectionFactory.createConnection(RescribeConstants.TASK_CHECK_SERVER_CONNECTION);
+
+        IpTestResponseModel i = new IpTestResponseModel();
+        Common c = new Common();
+        c.setStatusCode(RescribeConstants.SUCCESS);
+        i.setCommon(c);
+        onResponse(ConnectionListener.RESPONSE_OK, i, DmsConstants.TASK_CHECK_SERVER_CONNECTION);
     }
 }

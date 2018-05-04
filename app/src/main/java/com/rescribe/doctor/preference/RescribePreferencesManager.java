@@ -26,6 +26,7 @@ import javax.crypto.spec.SecretKeySpec;
  */
 public class RescribePreferencesManager {
 
+    private static final String TAG = "DMS/DmsPreferencesManager";
     private static SharedPreferences sharedPreferences = null;
     private static byte[] sKey;
 
@@ -225,21 +226,19 @@ public class RescribePreferencesManager {
     }
 
 
-    public interface RESCRIBE_PREFERENCES_KEY {
-        String USER_GENDER = "user_gender";
+    public interface DMS_PREFERENCES_KEY {
+
         String EMAIL = "email";
         String AUTHTOKEN = "authToken";
         String DOC_ID = "docId";
         String LOGIN_STATUS = "login_status";
         String MOBILE_NUMBER = "mobileNumber";
-        String PASSWORD = "password";
         String LOGIN_OR_SIGNUP = "signup_login";
         String COACHMARK = "coachmark";
-        String MOBILE_NUMBER_GMAIL = "mobile_number_gmail" ;
+        String MOBILE_NUMBER_GMAIL = "mobile_number_gmail";
         String PASSWORD_GMAIL = "password_gmail";
         String MOBILE_NUMBER_FACEBOOK = "mobile_number_facebook";
         String PASSWORD_FACEBOOK = "password_facebook";
-        String USER_NAME = "doctorname";
         String PROFILE_PHOTO = "doctorprofile";
         String SPECIALITY = "speciality";
         String ADDRESS = "address";
@@ -250,9 +249,9 @@ public class RescribePreferencesManager {
         String SELECTED_LOCATION_ID = "selected_location_id";
         String BACK_UP = "back_up";
         String PATIENT_DOWNLOAD = "patient_download";
-        String COACHMARK_GET_TOKEN = "coachmark_get_token" ;
+        String COACHMARK_GET_TOKEN = "coachmark_get_token";
 
-        String COACHMARK_ALL_PATIENT_DOWNLOAD = "COACHMARK_ALL_PATIENT_DOWNLOAD" ;
+        String COACHMARK_ALL_PATIENT_DOWNLOAD = "COACHMARK_ALL_PATIENT_DOWNLOAD";
 
         String isSkippedClicked = "is_skipped";
         String isUpdatedClicked = "is_updated_clicked";
@@ -261,6 +260,14 @@ public class RescribePreferencesManager {
         String SHOW_UPDATE_DIALOG = "show_update_dialog";
         String SHOW_UPDATE_DIALOG_ON_SKIPPED = "show_update_dialog_on_skipped";
         String ADD_PATIENT_OFFLINE_SETTINGS = "isAddPatientOfflineSetting";
+
+
+        String SERVER_PATH = "server_path";
+        String USER_GENDER = "user_gender";
+        String SERVER_CONNECTION_SUCCESS = "success";
+        String IS_VALID_IP_CONFIG = "isvalidipconfig";
+        String USER_NAME = "user_name";
+        String PASSWORD = "password";
 
     }
 }

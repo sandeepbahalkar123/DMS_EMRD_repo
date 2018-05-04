@@ -202,30 +202,30 @@ public class OTPConfirmationForSignUp extends Fragment implements HelperResponse
             if (receivedModel.getCommon().isSuccess()) {
                 if(mSignUpRequestModel.isGmailLogin()){
                     RescribePreferencesManager.putString(RescribeConstants.GMAIL_LOGIN,getString(R.string.login_with_gmail),getActivity());
-                    RescribePreferencesManager.putString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.MOBILE_NUMBER_GMAIL,mSignUpRequestModel.getMobileNumber(),getActivity());
-                    RescribePreferencesManager.putString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.PASSWORD_GMAIL,mSignUpRequestModel.getPassword(),getActivity());
+                    RescribePreferencesManager.putString(RescribePreferencesManager.DMS_PREFERENCES_KEY.MOBILE_NUMBER_GMAIL,mSignUpRequestModel.getMobileNumber(),getActivity());
+                    RescribePreferencesManager.putString(RescribePreferencesManager.DMS_PREFERENCES_KEY.PASSWORD_GMAIL,mSignUpRequestModel.getPassword(),getActivity());
                 }
                 if(mSignUpRequestModel.isFaceBookLogin()){
                     RescribePreferencesManager.putString(RescribeConstants.FACEBOOK_LOGIN,getString(R.string.login_with_facebook),getActivity());
-                    RescribePreferencesManager.putString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.MOBILE_NUMBER_FACEBOOK,mSignUpRequestModel.getMobileNumber(),getActivity());
-                    RescribePreferencesManager.putString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.PASSWORD_FACEBOOK,mSignUpRequestModel.getPassword(),getActivity());
+                    RescribePreferencesManager.putString(RescribePreferencesManager.DMS_PREFERENCES_KEY.MOBILE_NUMBER_FACEBOOK,mSignUpRequestModel.getMobileNumber(),getActivity());
+                    RescribePreferencesManager.putString(RescribePreferencesManager.DMS_PREFERENCES_KEY.PASSWORD_FACEBOOK,mSignUpRequestModel.getPassword(),getActivity());
                 }
 
                 DocDetail docDetail = receivedModel.getDoctorLoginData().getDocDetail();
                 String authToken = receivedModel.getDoctorLoginData().getAuthToken();
 
-                RescribePreferencesManager.putString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.AUTHTOKEN, authToken, getActivity());
-                RescribePreferencesManager.putString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.DOC_ID, String.valueOf(docDetail.getDocId()), getActivity());
-                RescribePreferencesManager.putString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.USER_NAME, docDetail.getDocName(), getActivity());
-                RescribePreferencesManager.putString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.PROFILE_PHOTO, docDetail.getDocImgUrl(), getActivity());
-                RescribePreferencesManager.putString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.EMAIL, docDetail.getDocEmail(), getActivity());
-                RescribePreferencesManager.putString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.SPECIALITY, docDetail.getDocSpaciality(), getActivity());
-                RescribePreferencesManager.putString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.ADDRESS, docDetail.getDocAddress(), getActivity());
+                RescribePreferencesManager.putString(RescribePreferencesManager.DMS_PREFERENCES_KEY.AUTHTOKEN, authToken, getActivity());
+                RescribePreferencesManager.putString(RescribePreferencesManager.DMS_PREFERENCES_KEY.DOC_ID, String.valueOf(docDetail.getDocId()), getActivity());
+                RescribePreferencesManager.putString(RescribePreferencesManager.DMS_PREFERENCES_KEY.USER_NAME, docDetail.getDocName(), getActivity());
+                RescribePreferencesManager.putString(RescribePreferencesManager.DMS_PREFERENCES_KEY.PROFILE_PHOTO, docDetail.getDocImgUrl(), getActivity());
+                RescribePreferencesManager.putString(RescribePreferencesManager.DMS_PREFERENCES_KEY.EMAIL, docDetail.getDocEmail(), getActivity());
+                RescribePreferencesManager.putString(RescribePreferencesManager.DMS_PREFERENCES_KEY.SPECIALITY, docDetail.getDocSpaciality(), getActivity());
+                RescribePreferencesManager.putString(RescribePreferencesManager.DMS_PREFERENCES_KEY.ADDRESS, docDetail.getDocAddress(), getActivity());
 
-                RescribePreferencesManager.putString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.LOGIN_STATUS, RescribeConstants.YES, getActivity());
+                RescribePreferencesManager.putString(RescribePreferencesManager.DMS_PREFERENCES_KEY.LOGIN_STATUS, RescribeConstants.YES, getActivity());
 
-                RescribePreferencesManager.putString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.MOBILE_NUMBER, mSignUpRequestModel.getMobileNumber().toString(), getActivity());
-                RescribePreferencesManager.putString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.PASSWORD, mSignUpRequestModel.getPassword().toString(), getActivity());
+                RescribePreferencesManager.putString(RescribePreferencesManager.DMS_PREFERENCES_KEY.MOBILE_NUMBER, mSignUpRequestModel.getMobileNumber().toString(), getActivity());
+                RescribePreferencesManager.putString(RescribePreferencesManager.DMS_PREFERENCES_KEY.PASSWORD, mSignUpRequestModel.getPassword().toString(), getActivity());
                 Intent intent = new Intent(getActivity(), HomePageActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);

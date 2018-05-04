@@ -14,8 +14,8 @@ import android.widget.TextView;
 import com.rescribe.doctor.R;
 import com.rescribe.doctor.dms.model.responsemodel.showsearchresultresponsemodel.PatientFileData;
 import com.rescribe.doctor.dms.model.responsemodel.showsearchresultresponsemodel.SearchResult;
-import com.rescribe.doctor.dms.util.CommonMethods;
 import com.rescribe.doctor.dms.util.DmsConstants;
+import com.rescribe.doctor.util.CommonMethods;
 
 import java.util.ArrayList;
 import java.util.HashMap;

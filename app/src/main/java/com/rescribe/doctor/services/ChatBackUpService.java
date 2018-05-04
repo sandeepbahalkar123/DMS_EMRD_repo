@@ -33,8 +33,6 @@ import com.rescribe.doctor.util.CommonMethods;
 import com.rescribe.doctor.util.Config;
 import com.rescribe.doctor.util.RescribeConstants;
 
-import org.json.JSONException;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -115,7 +113,7 @@ public class ChatBackUpService extends Service {
                 .setProgress(0, 0, true);
         mNotifyManager.notify(RescribeConstants.FOREGROUND_SERVICE, mBuilder.build());
 
-        String id = RescribePreferencesManager.getString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.DOC_ID, this);
+        String id = RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.DOC_ID, this);
         StringRequest stringRequest = new StringRequest(GET, Config.BASE_URL + Config.GET_PATIENT_LIST + id,
                 new Response.Listener<String>() {
                     @Override
@@ -132,7 +130,7 @@ public class ChatBackUpService extends Service {
                         } else {
                             restored();
                             CommonMethods.showToast(ChatBackUpService.this, patientConnectModel.getCommon().getStatusMessage());
-                            RescribePreferencesManager.putBoolean(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.BACK_UP, true, ChatBackUpService.this);
+                            RescribePreferencesManager.putBoolean(RescribePreferencesManager.DMS_PREFERENCES_KEY.BACK_UP, true, ChatBackUpService.this);
                             stopSelf();
                         }
                     }
@@ -150,7 +148,7 @@ public class ChatBackUpService extends Service {
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Device device = Device.getInstance(ChatBackUpService.this);
                 Map<String, String> headerParams = new HashMap<>();
-                String authorizationString = RescribePreferencesManager.getString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.AUTHTOKEN, ChatBackUpService.this);
+                String authorizationString = RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.AUTHTOKEN, ChatBackUpService.this);
                 headerParams.put(RescribeConstants.CONTENT_TYPE, RescribeConstants.APPLICATION_JSON);
                 headerParams.put(RescribeConstants.AUTHORIZATION_TOKEN, authorizationString);
                 headerParams.put(RescribeConstants.DEVICEID, device.getDeviceId());
@@ -170,7 +168,7 @@ public class ChatBackUpService extends Service {
 
         PatientData patientData = patientDataList.get(patientIndex);
 
-        String docId = RescribePreferencesManager.getString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.DOC_ID, this);
+        String docId = RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.DOC_ID, this);
         String url = Config.BASE_URL + Config.CHAT_HISTORY + "user1id=" + docId + "&user2id=" + patientData.getId();
 
         patientIndex += 1;
@@ -240,7 +238,7 @@ public class ChatBackUpService extends Service {
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Device device = Device.getInstance(ChatBackUpService.this);
                 Map<String, String> headerParams = new HashMap<>();
-                String authorizationString = RescribePreferencesManager.getString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.AUTHTOKEN, ChatBackUpService.this);
+                String authorizationString = RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.AUTHTOKEN, ChatBackUpService.this);
                 headerParams.put(RescribeConstants.CONTENT_TYPE, RescribeConstants.APPLICATION_JSON);
                 headerParams.put(RescribeConstants.AUTHORIZATION_TOKEN, authorizationString);
                 headerParams.put(RescribeConstants.DEVICEID, device.getDeviceId());
@@ -271,7 +269,7 @@ public class ChatBackUpService extends Service {
                 .setProgress(0, 0, false);
         mNotifyManager.notify(RescribeConstants.FOREGROUND_SERVICE, mBuilder.build());
 
-        RescribePreferencesManager.putBoolean(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.BACK_UP, !isFailed, ChatBackUpService.this);
+        RescribePreferencesManager.putBoolean(RescribePreferencesManager.DMS_PREFERENCES_KEY.BACK_UP, !isFailed, ChatBackUpService.this);
 
         stopForeground(true);
         stopSelf();

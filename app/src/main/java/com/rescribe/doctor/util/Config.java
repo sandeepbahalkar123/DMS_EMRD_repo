@@ -78,6 +78,10 @@ public class Config {
     public static final String GET_PATIENTS_SYNC = "doctor/api/patient/getPatientSyncList";
     public static final String ADD_PATIENTS_SYNC = "doctor/api/patient/addPatients";
 
+
+    //---
+    public static final String URL_CHECK_SERVER_CONNECTION = "connectionCheck";
+
 }
 
 

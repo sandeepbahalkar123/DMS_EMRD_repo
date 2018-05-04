@@ -73,7 +73,7 @@ public class PatientConnectHelper implements ConnectionListener {
     public void doGetPatientList() {
         ConnectionFactory mConnectionFactory = new ConnectionFactory(mContext, this, null, true, RescribeConstants.TASK_GET_PATIENT_LIST, Request.Method.GET, true);
         mConnectionFactory.setHeaderParams();
-        String id = RescribePreferencesManager.getString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.DOC_ID, mContext);
+        String id = RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.DOC_ID, mContext);
         mConnectionFactory.setUrl(Config.GET_PATIENT_LIST + id);
         mConnectionFactory.createConnection(RescribeConstants.TASK_GET_PATIENT_LIST);
     }
@@ -81,7 +81,7 @@ public class PatientConnectHelper implements ConnectionListener {
     public void doGetChatPatientList() {
         ConnectionFactory mConnectionFactory = new ConnectionFactory(mContext, this, null, true, RescribeConstants.GET_PATIENT_CHAT_LIST, Request.Method.GET, true);
         mConnectionFactory.setHeaderParams();
-        String id = RescribePreferencesManager.getString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.DOC_ID, mContext);
+        String id = RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.DOC_ID, mContext);
         mConnectionFactory.setUrl(Config.GET_PATIENT_CHAT_LIST + id);
         mConnectionFactory.createConnection(RescribeConstants.GET_PATIENT_CHAT_LIST);
     }

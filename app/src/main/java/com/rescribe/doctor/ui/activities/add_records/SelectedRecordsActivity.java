@@ -37,7 +37,6 @@ import com.rescribe.doctor.R;
 import com.rescribe.doctor.helpers.database.AppDBHelper;
 import com.rescribe.doctor.model.investigation.Image;
 import com.rescribe.doctor.preference.RescribePreferencesManager;
-import com.rescribe.doctor.services.MQTTService;
 import com.rescribe.doctor.singleton.Device;
 import com.rescribe.doctor.ui.customesViews.CustomTextView;
 import com.rescribe.doctor.util.CommonMethods;
@@ -255,7 +254,7 @@ public class SelectedRecordsActivity extends AppCompatActivity {
 
         visitDate = getIntent().getStringExtra(RescribeConstants.VISIT_DATE);
 
-        docId = Integer.parseInt(RescribePreferencesManager.getString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.DOC_ID, mContext));
+        docId = Integer.parseInt(RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.DOC_ID, mContext));
 
         appDBHelper = new AppDBHelper(SelectedRecordsActivity.this);
         device = Device.getInstance(SelectedRecordsActivity.this);
@@ -263,7 +262,7 @@ public class SelectedRecordsActivity extends AppCompatActivity {
         Url = Config.BASE_URL + Config.MY_RECORDS_UPLOAD;
 //        Url = "http://192.168.0.115:8000/" + Config.MY_RECORDS_UPLOAD;
 
-        authorizationString = RescribePreferencesManager.getString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.AUTHTOKEN, SelectedRecordsActivity.this);
+        authorizationString = RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.AUTHTOKEN, SelectedRecordsActivity.this);
 
         UploadService.UPLOAD_POOL_SIZE = 10;
         setDateInToolbar();
@@ -412,7 +411,7 @@ public class SelectedRecordsActivity extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.coachmark:
               /*  coachmark.setVisibility(View.GONE);
-                RescribePreferencesManager.putString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.COACHMARK, RescribeConstants.YES, mContext);*/
+                RescribePreferencesManager.putString(RescribePreferencesManager.DMS_PREFERENCES_KEY.COACHMARK, RescribeConstants.YES, mContext);*/
                 break;
             case R.id.uploadButton:
                 if (imagePaths.isEmpty()) {

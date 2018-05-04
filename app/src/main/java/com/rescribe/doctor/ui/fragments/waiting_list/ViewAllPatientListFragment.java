@@ -15,7 +15,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
@@ -23,8 +22,6 @@ import android.widget.Toast;
 
 import com.h6ah4i.android.widget.advrecyclerview.animator.DraggableItemAnimator;
 import com.h6ah4i.android.widget.advrecyclerview.animator.GeneralItemAnimator;
-import com.h6ah4i.android.widget.advrecyclerview.decoration.ItemShadowDecorator;
-import com.h6ah4i.android.widget.advrecyclerview.decoration.SimpleListDividerDecorator;
 import com.h6ah4i.android.widget.advrecyclerview.draggable.RecyclerViewDragDropManager;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager;
 import com.h6ah4i.android.widget.advrecyclerview.touchguard.RecyclerViewTouchActionGuardManager;
@@ -198,7 +195,7 @@ public class ViewAllPatientListFragment extends Fragment implements OnStartDragL
             public void onDeleteClick(int position, ViewAll viewAll) {
                 adapterPos = position;
                 RequestDeleteBaseModel requestDeleteBaseModel = new RequestDeleteBaseModel();
-                requestDeleteBaseModel.setDocId(Integer.valueOf(RescribePreferencesManager.getString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.DOC_ID, getActivity())));
+                requestDeleteBaseModel.setDocId(Integer.valueOf(RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.DOC_ID, getActivity())));
                 requestDeleteBaseModel.setLocationId(mLocationId);
                 requestDeleteBaseModel.setWaitingDate(CommonMethods.getCurrentDate(RescribeConstants.DATE_PATTERN.YYYY_MM_DD));
                 requestDeleteBaseModel.setWaitingId(viewAll.getWaitingId());
@@ -297,7 +294,7 @@ public class ViewAllPatientListFragment extends Fragment implements OnStartDragL
     public void onDeleteViewAllLayoutClicked(int adapterPosition, ViewAll viewAll) {
         adapterPos = adapterPosition;
         RequestDeleteBaseModel requestDeleteBaseModel = new RequestDeleteBaseModel();
-        requestDeleteBaseModel.setDocId(Integer.valueOf(RescribePreferencesManager.getString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.DOC_ID, getActivity())));
+        requestDeleteBaseModel.setDocId(Integer.valueOf(RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.DOC_ID, getActivity())));
         requestDeleteBaseModel.setLocationId(mLocationId);
         requestDeleteBaseModel.setWaitingDate(CommonMethods.getCurrentDate(RescribeConstants.DATE_PATTERN.YYYY_MM_DD));
         requestDeleteBaseModel.setWaitingId(viewAll.getWaitingId());

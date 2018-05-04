@@ -332,8 +332,8 @@ public class CompletedOpdFragment extends Fragment implements CompletedOpdAdapte
         dialog.setCancelable(true);
 
         LayoutInflater inflater = LayoutInflater.from(getActivity());
-        if (!RescribePreferencesManager.getString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.SELECTED_LOCATION_ID, getActivity()).equals(""))
-            mLocationId = Integer.parseInt(RescribePreferencesManager.getString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.SELECTED_LOCATION_ID, getActivity()));
+        if (!RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.SELECTED_LOCATION_ID, getActivity()).equals(""))
+            mLocationId = Integer.parseInt(RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.SELECTED_LOCATION_ID, getActivity()));
         RadioGroup radioGroup = (RadioGroup) dialog.findViewById(R.id.radioGroup);
         for (int index = 0; index < mDoctorLocationModel.size(); index++) {
             final DoctorLocationModel clinicList = mDoctorLocationModel.get(index);
@@ -363,7 +363,7 @@ public class CompletedOpdFragment extends Fragment implements CompletedOpdAdapte
             public void onClick(View v) {
 
                 if (mLocationId != 0) {
-                    RescribePreferencesManager.putString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.SELECTED_LOCATION_ID, String.valueOf(mLocationId), getActivity());
+                    RescribePreferencesManager.putString(RescribePreferencesManager.DMS_PREFERENCES_KEY.SELECTED_LOCATION_ID, String.valueOf(mLocationId), getActivity());
                     mAppointmentHelper.doGetDoctorTemplate();
                     dialog.cancel();
                 } else {

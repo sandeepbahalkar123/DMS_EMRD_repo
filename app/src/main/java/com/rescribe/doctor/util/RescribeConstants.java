@@ -1,6 +1,8 @@
 package com.rescribe.doctor.util;
 
 
+import com.rescribe.doctor.dms.util.DmsConstants;
+
 /**
  * @author Sandeep Bahalkar
  */
@@ -23,7 +25,7 @@ public class RescribeConstants {
     public static final String OS = "OS";
     public static final String OSVERSION = "OsVersion";
     public static final String DEVICE_TYPE = "DeviceType";
-    public static final String APP_NAME ="appName";
+    public static final String APP_NAME = "appName";
     public static final String ACCESS_TOKEN = "accessToken";
     public static final String TOKEN_TYPE = "token_type";
     public static final String REFRESH_TOKEN = "refresh_token";
@@ -115,6 +117,17 @@ public class RescribeConstants {
     public static final String TASK_CONFIRM_APPOINTMENT = RescribeConstants.BLANK + 38;
     public static final String DATA = "DATA";
     public static final Integer SUCCESS = 200;
+
+    //-----------
+    public static final String TASK_CHECK_SERVER_CONNECTION = RescribeConstants.BLANK + 39;
+    public static final String TASK_PATIENT_LIST = RescribeConstants.BLANK + 40;
+    public static final String TASK_ANNOTATIONS_LIST = RescribeConstants.BLANK + 41;
+    public static final String TASK_GET_ARCHIVED_LIST = RescribeConstants.BLANK + 42;
+    public static final String TASK_GET_PDF_DATA = RescribeConstants.BLANK + "PDF_DATA";
+    public static final String TASK_GET_PATIENT_NAME_LIST = RescribeConstants.BLANK + 43;
+    public static final String TASK_LOGIN_CODE = RescribeConstants.BLANK + 44;
+
+    //-----------
 
     public static final String TAKEN_DATE = "takenDate";
 

@@ -29,7 +29,6 @@ import com.rescribe.doctor.util.Config;
 import com.rescribe.doctor.util.RescribeConstants;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 import static com.rescribe.doctor.util.RescribeConstants.TASK_GET_TIME_SLOTS_TO_BOOK_APPOINTMENT;
 
@@ -88,7 +87,7 @@ public class AppointmentHelper implements ConnectionListener {
 
         ConnectionFactory mConnectionFactory = new ConnectionFactory(mContext, this, null, true, RescribeConstants.TASK_GET_APPOINTMENT_DATA, Request.Method.POST, true);
         RequestAppointmentData mRequestAppointmentData = new RequestAppointmentData();
-        mRequestAppointmentData.setDocId(Integer.valueOf(RescribePreferencesManager.getString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.DOC_ID, mContext)));
+        mRequestAppointmentData.setDocId(Integer.valueOf(RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.DOC_ID, mContext)));
         mRequestAppointmentData.setDate(userSelectedDate);
         mConnectionFactory.setPostParams(mRequestAppointmentData);
         mConnectionFactory.setHeaderParams();
@@ -108,7 +107,7 @@ public class AppointmentHelper implements ConnectionListener {
     public void doGetDoctorTemplate() {
         ConnectionFactory mConnectionFactory = new ConnectionFactory(mContext, this, null, true, RescribeConstants.TASK_GET_DOCTOR_SMS_TEMPLATE, Request.Method.GET, true);
         mConnectionFactory.setHeaderParams();
-        mConnectionFactory.setUrl(Config.GET_SMS_TEMPLATE + Integer.valueOf(RescribePreferencesManager.getString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.DOC_ID, mContext)));
+        mConnectionFactory.setUrl(Config.GET_SMS_TEMPLATE + Integer.valueOf(RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.DOC_ID, mContext)));
         mConnectionFactory.createConnection(RescribeConstants.TASK_GET_DOCTOR_SMS_TEMPLATE);
     }
 
@@ -126,7 +125,7 @@ public class AppointmentHelper implements ConnectionListener {
 
         ConnectionFactory mConnectionFactory = new ConnectionFactory(mContext, this, null, true, RescribeConstants.TASK_GET_WAITING_LIST, Request.Method.POST, true);
         RequestAppointmentData mRequestAppointmentData = new RequestAppointmentData();
-        mRequestAppointmentData.setDocId(Integer.valueOf(RescribePreferencesManager.getString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.DOC_ID, mContext)));
+        mRequestAppointmentData.setDocId(Integer.valueOf(RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.DOC_ID, mContext)));
         String date = CommonMethods.getCurrentDate(RescribeConstants.DATE_PATTERN.YYYY_MM_DD);
         mRequestAppointmentData.setDate(date);
         mConnectionFactory.setPostParams(mRequestAppointmentData);
@@ -171,7 +170,7 @@ public class AppointmentHelper implements ConnectionListener {
         String date = CommonMethods.getCurrentDate(RescribeConstants.DATE_PATTERN.YYYY_MM_DD);
         ConnectionFactory mConnectionFactory = new ConnectionFactory(mContext, this, null, true, RescribeConstants.TASK_GET_COMPLETED_OPD, Request.Method.POST, true);
         RequestAppointmentData mRequestAppointmentData = new RequestAppointmentData();
-        mRequestAppointmentData.setDocId(Integer.valueOf(RescribePreferencesManager.getString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.DOC_ID, mContext)));
+        mRequestAppointmentData.setDocId(Integer.valueOf(RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.DOC_ID, mContext)));
         mRequestAppointmentData.setDate(date);
         mConnectionFactory.setPostParams(mRequestAppointmentData);
         mConnectionFactory.setHeaderParams();
@@ -183,7 +182,7 @@ public class AppointmentHelper implements ConnectionListener {
         String date = CommonMethods.getCurrentDate(RescribeConstants.DATE_PATTERN.YYYY_MM_DD);
         ConnectionFactory mConnectionFactory = new ConnectionFactory(mContext, this, null, true, RescribeConstants.TASK_GET_NEW_PATIENT_LIST, Request.Method.POST, true);
         RequestAppointmentData mRequestAppointmentData = new RequestAppointmentData();
-        mRequestAppointmentData.setDocId(Integer.valueOf(RescribePreferencesManager.getString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.DOC_ID, mContext)));
+        mRequestAppointmentData.setDocId(Integer.valueOf(RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.DOC_ID, mContext)));
         mRequestAppointmentData.setDate(date);
         mConnectionFactory.setPostParams(mRequestAppointmentData);
         mConnectionFactory.setHeaderParams();
@@ -194,7 +193,7 @@ public class AppointmentHelper implements ConnectionListener {
     public void getFilterLocationList() {
         ConnectionFactory mConnectionFactory = new ConnectionFactory(mContext, this, null, true, RescribeConstants.TASK_GET_DOCTOR_PATIENT_CITY, Request.Method.POST, true);
         LocationsRequest locationsRequest = new LocationsRequest();
-        locationsRequest.setDocId(Integer.valueOf(RescribePreferencesManager.getString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.DOC_ID, mContext)));
+        locationsRequest.setDocId(Integer.valueOf(RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.DOC_ID, mContext)));
         mConnectionFactory.setPostParams(locationsRequest);
         mConnectionFactory.setHeaderParams();
         mConnectionFactory.setUrl(Config.GET_DOCTOR_PATIENT_CITY);
@@ -260,7 +259,7 @@ public class AppointmentHelper implements ConnectionListener {
         patient.setOfflineReferenceID(dataToAdd.getReferenceID());
 
         SyncPatientsRequest mSyncPatientsRequest = new SyncPatientsRequest();
-        String id = RescribePreferencesManager.getString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.DOC_ID, mContext);
+        String id = RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.DOC_ID, mContext);
         mSyncPatientsRequest.setDocId(id);
 
         ArrayList<PatientDetail> add = new ArrayList<PatientDetail>();

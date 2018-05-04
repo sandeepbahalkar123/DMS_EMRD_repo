@@ -72,7 +72,7 @@ public class DashboardHelper implements ConnectionListener {
     public void doDoctorGetLocationList() {
         ConnectionFactory mConnectionFactory = new ConnectionFactory(mContext, this, null, false, RescribeConstants.TASK_GET_LOCATION_LIST, Request.Method.GET, true);
         mConnectionFactory.setHeaderParams();
-        mConnectionFactory.setUrl(Config.GET_CLINIC_LOCATION_LIST + RescribePreferencesManager.getString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.DOC_ID, mContext));
+        mConnectionFactory.setUrl(Config.GET_CLINIC_LOCATION_LIST + RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.DOC_ID, mContext));
         mConnectionFactory.createConnection(RescribeConstants.TASK_GET_LOCATION_LIST);
     }
 
@@ -81,7 +81,7 @@ public class DashboardHelper implements ConnectionListener {
         RequestAppointmentData mRequestAppointmentData = new RequestAppointmentData();
         //   mRequestAppointmentData.setDocId(2602);
         mRequestAppointmentData.setAppName(RescribeConstants.DOCTOR);
-        mRequestAppointmentData.setDocId(Integer.valueOf(RescribePreferencesManager.getString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.DOC_ID, mContext)));
+        mRequestAppointmentData.setDocId(Integer.valueOf(RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.DOC_ID, mContext)));
         String date = CommonMethods.getCurrentDate(RescribeConstants.DATE_PATTERN.YYYY_MM_DD);
         mRequestAppointmentData.setDate(date);
         mConnectionFactory.setPostParams(mRequestAppointmentData);

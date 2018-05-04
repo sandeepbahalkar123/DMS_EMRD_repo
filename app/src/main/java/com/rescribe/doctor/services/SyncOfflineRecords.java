@@ -25,7 +25,6 @@ import java.net.MalformedURLException;
 import static com.rescribe.doctor.services.ChatBackUpService.STATUS;
 import static com.rescribe.doctor.util.RescribeConstants.FILE_STATUS.COMPLETED;
 import static com.rescribe.doctor.util.RescribeConstants.FILE_STATUS.FAILED;
-import static com.rescribe.doctor.util.RescribeConstants.FILE_STATUS.UPLOADING;
 import static net.gotev.uploadservice.Placeholders.ELAPSED_TIME;
 import static net.gotev.uploadservice.Placeholders.PROGRESS;
 import static net.gotev.uploadservice.Placeholders.UPLOAD_RATE;
@@ -50,7 +49,7 @@ public class SyncOfflineRecords {
         if (cursor.getCount() > 0) {
 
             String Url = Config.BASE_URL + Config.MY_RECORDS_UPLOAD;
-            String authorizationString = RescribePreferencesManager.getString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.AUTHTOKEN, context);
+            String authorizationString = RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.AUTHTOKEN, context);
             Device device = Device.getInstance(context);
 
             if (cursor.moveToFirst()) {
@@ -168,7 +167,7 @@ public class SyncOfflineRecords {
     void onCreate(Context mContext) {
         this.context = mContext;
         appDBHelper = new AppDBHelper(context);
-        if (RescribePreferencesManager.getString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.LOGIN_STATUS, mContext).equals(RescribeConstants.YES))
+        if (RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.LOGIN_STATUS, mContext).equals(RescribeConstants.YES))
             check();
         broadcastReceiver.register(context);
     }
@@ -186,7 +185,7 @@ public class SyncOfflineRecords {
         @Override
         public void onError(Context context, UploadInfo uploadInfo, ServerResponse serverResponse, Exception exception) {
             // your implementation
-            if (RescribePreferencesManager.getString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.LOGIN_STATUS, context).equals(RescribeConstants.YES)) {
+            if (RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.LOGIN_STATUS, context).equals(RescribeConstants.YES)) {
                 appDBHelper.updateRecordUploads(uploadInfo.getUploadId(), FAILED);
                 Intent intent = new Intent(DOC_UPLOAD);
                 intent.putExtra(UPLOAD_INFO, uploadInfo);
@@ -199,7 +198,7 @@ public class SyncOfflineRecords {
         public void onCompleted(Context context, UploadInfo uploadInfo, ServerResponse serverResponse) {
             // your implementation
 
-            if (RescribePreferencesManager.getString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.LOGIN_STATUS, context).equals(RescribeConstants.YES)) {
+            if (RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.LOGIN_STATUS, context).equals(RescribeConstants.YES)) {
                 appDBHelper.updateRecordUploads(uploadInfo.getUploadId(), COMPLETED);
                 Intent intent = new Intent(DOC_UPLOAD);
                 intent.putExtra(UPLOAD_INFO, uploadInfo);

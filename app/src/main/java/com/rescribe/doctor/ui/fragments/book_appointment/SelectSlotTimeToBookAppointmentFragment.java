@@ -213,7 +213,7 @@ public class SelectSlotTimeToBookAppointmentFragment extends Fragment implements
         } else if (!mPatientinfoObject.getPatientArea().equals("") && !mPatientinfoObject.getPatientCity().equals("")) {
             patientAddress.setText(mPatientinfoObject.getPatientArea() + ", " + mPatientinfoObject.getPatientCity());
         }
-       /* String coachMarkStatus = RescribePreferencesManager.getString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.COACHMARK_GET_TOKEN, mContext);
+       /* String coachMarkStatus = RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.COACHMARK_GET_TOKEN, mContext);
         if (!coachMarkStatus.equals(RescribeConstants.YES)) {
             FragmentManager supportFragmentManager = getActivity().getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = supportFragmentManager.beginTransaction();
@@ -543,10 +543,10 @@ public class SelectSlotTimeToBookAppointmentFragment extends Fragment implements
                             Reschedule reschedule = new Reschedule();
                             reschedule.setAptId(String.valueOf(mPatientinfoObject.getAptId()));
                             reschedule.setStatus("4");
-                            mAppointmentHelper.doConfirmAppointmentRequest(Integer.parseInt(RescribePreferencesManager.getString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.DOC_ID, getActivity())), mDoctorLocationModelObject.getLocationId(), mSelectedTimeSlotDate, mSelectSlotToBookAppointmentAdapter.getSelectedTimeSlot(), mSelectSlotToBookAppointmentAdapter.getToTimeSlot(), Integer.parseInt(mSelectSlotToBookAppointmentAdapter.getSlotId()), reschedule, mPatientinfoObject.getPatientId());
+                            mAppointmentHelper.doConfirmAppointmentRequest(Integer.parseInt(RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.DOC_ID, getActivity())), mDoctorLocationModelObject.getLocationId(), mSelectedTimeSlotDate, mSelectSlotToBookAppointmentAdapter.getSelectedTimeSlot(), mSelectSlotToBookAppointmentAdapter.getToTimeSlot(), Integer.parseInt(mSelectSlotToBookAppointmentAdapter.getSlotId()), reschedule, mPatientinfoObject.getPatientId());
 
                         } else {
-                            mAppointmentHelper.doConfirmAppointmentRequest(Integer.parseInt(RescribePreferencesManager.getString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.DOC_ID, getActivity())), mDoctorLocationModelObject.getLocationId(), mSelectedTimeSlotDate, mSelectSlotToBookAppointmentAdapter.getSelectedTimeSlot(), mSelectSlotToBookAppointmentAdapter.getToTimeSlot(), Integer.parseInt(mSelectSlotToBookAppointmentAdapter.getSlotId()), null, mPatientinfoObject.getPatientId());
+                            mAppointmentHelper.doConfirmAppointmentRequest(Integer.parseInt(RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.DOC_ID, getActivity())), mDoctorLocationModelObject.getLocationId(), mSelectedTimeSlotDate, mSelectSlotToBookAppointmentAdapter.getSelectedTimeSlot(), mSelectSlotToBookAppointmentAdapter.getToTimeSlot(), Integer.parseInt(mSelectSlotToBookAppointmentAdapter.getSlotId()), null, mPatientinfoObject.getPatientId());
 
                         }
                     }
@@ -633,7 +633,7 @@ public class SelectSlotTimeToBookAppointmentFragment extends Fragment implements
             calendar.add(Calendar.DATE, 15);
             mMaxDateRange = calendar.getTime();
             //------------
-            mAppointmentHelper.getTimeSlotToBookAppointmentWithDoctor("" + RescribePreferencesManager.getString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.DOC_ID, getActivity()), mDoctorLocationModelObject.getLocationId(), mSelectedTimeSlotDate, false, mPatientinfoObject.getPatientId());
+            mAppointmentHelper.getTimeSlotToBookAppointmentWithDoctor("" + RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.DOC_ID, getActivity()), mDoctorLocationModelObject.getLocationId(), mSelectedTimeSlotDate, false, mPatientinfoObject.getPatientId());
           */
             confirmedTokenMainLayout.setVisibility(View.GONE);
             timeSlotListViewLayout.setVisibility(View.VISIBLE);
@@ -648,7 +648,7 @@ public class SelectSlotTimeToBookAppointmentFragment extends Fragment implements
             //--------
 
             selectDateTime.setEnabled(true);
-            mAppointmentHelper.getTimeSlotToBookAppointmentWithDoctor("" + RescribePreferencesManager.getString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.DOC_ID, getActivity()), mDoctorLocationModelObject.getLocationId(), mSelectedTimeSlotDate, false, mPatientinfoObject.getPatientId());
+            mAppointmentHelper.getTimeSlotToBookAppointmentWithDoctor("" + RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.DOC_ID, getActivity()), mDoctorLocationModelObject.getLocationId(), mSelectedTimeSlotDate, false, mPatientinfoObject.getPatientId());
 
         }
     }
@@ -692,7 +692,7 @@ public class SelectSlotTimeToBookAppointmentFragment extends Fragment implements
         mSelectedTimeSlotDate = year + "-" + monthOfYearData + "-" + dateConverted;
         selectDateTime.setText(dayFromDate + ", " + CommonMethods.getFormattedDate(dateConverted + "-" + monthOfYearData + "-" + year, RescribeConstants.DATE_PATTERN.DD_MM_YYYY, RescribeConstants.DATE_PATTERN.DD_MMM));
         isShowPreviousDayLeftArrow(false);
-        mAppointmentHelper.getTimeSlotToBookAppointmentWithDoctor("" + RescribePreferencesManager.getString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.DOC_ID, getActivity()), mDoctorLocationModelObject.getLocationId(), mSelectedTimeSlotDate, false, mPatientinfoObject.getPatientId());
+        mAppointmentHelper.getTimeSlotToBookAppointmentWithDoctor("" + RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.DOC_ID, getActivity()), mDoctorLocationModelObject.getLocationId(), mSelectedTimeSlotDate, false, mPatientinfoObject.getPatientId());
 
     }
 }

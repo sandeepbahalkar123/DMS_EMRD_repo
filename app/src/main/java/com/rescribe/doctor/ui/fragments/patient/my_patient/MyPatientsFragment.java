@@ -1,10 +1,7 @@
 package com.rescribe.doctor.ui.fragments.patient.my_patient;
 
 import android.app.Dialog;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -55,7 +52,6 @@ import com.rescribe.doctor.model.waiting_list.new_request_add_to_waiting_list.Pa
 import com.rescribe.doctor.model.waiting_list.new_request_add_to_waiting_list.RequestToAddWaitingList;
 import com.rescribe.doctor.model.waiting_list.response_add_to_waiting_list.AddToWaitingListBaseModel;
 import com.rescribe.doctor.preference.RescribePreferencesManager;
-import com.rescribe.doctor.services.LoadAllPatientsService;
 import com.rescribe.doctor.ui.activities.my_patients.MyPatientsActivity;
 import com.rescribe.doctor.ui.activities.my_patients.add_new_patient.AddNewPatientWebViewActivity;
 import com.rescribe.doctor.ui.activities.my_patients.patient_history.PatientHistoryActivity;
@@ -74,7 +70,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
-import static com.rescribe.doctor.services.SyncOfflineRecords.DOC_UPLOAD;
 import static com.rescribe.doctor.singleton.RescribeApplication.getDoctorLocationModels;
 import static com.rescribe.doctor.ui.activities.my_patients.add_new_patient.AddNewPatientWebViewActivity.ADD_PATIENT_REQUEST;
 import static com.rescribe.doctor.ui.activities.waiting_list.WaitingMainListActivity.RESULT_CLOSE_ACTIVITY_WAITING_LIST;
@@ -142,7 +137,7 @@ public class MyPatientsFragment extends Fragment implements MyPatientsAdapter.On
         //  hideSoftKeyboard();
         unbinder = ButterKnife.bind(this, mRootView);
 
-        String coachMarkStatus = RescribePreferencesManager.getString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.COACHMARK_ALL_PATIENT_DOWNLOAD, getActivity());
+        String coachMarkStatus = RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.COACHMARK_ALL_PATIENT_DOWNLOAD, getActivity());
         if (!coachMarkStatus.equals(RescribeConstants.YES)) {
             FragmentManager supportFragmentManager = getActivity().getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = supportFragmentManager.beginTransaction();
@@ -454,8 +449,8 @@ public class MyPatientsFragment extends Fragment implements MyPatientsAdapter.On
         dialog.setContentView(R.layout.dialog_select_location_waiting_list_layout);
 
         LayoutInflater inflater = LayoutInflater.from(getActivity());
-        if (!RescribePreferencesManager.getString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.SELECTED_LOCATION_ID, getActivity()).equals(""))
-            mLocationId = Integer.parseInt(RescribePreferencesManager.getString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.SELECTED_LOCATION_ID, getActivity()));
+        if (!RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.SELECTED_LOCATION_ID, getActivity()).equals(""))
+            mLocationId = Integer.parseInt(RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.SELECTED_LOCATION_ID, getActivity()));
 
         RadioGroup radioGroup = (RadioGroup) dialog.findViewById(R.id.radioGroup);
         for (int index = 0; index < mDoctorLocationModel.size(); index++) {
@@ -486,7 +481,7 @@ public class MyPatientsFragment extends Fragment implements MyPatientsAdapter.On
             public void onClick(View v) {
 
                 if (mLocationId != 0) {
-                    RescribePreferencesManager.putString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.SELECTED_LOCATION_ID, String.valueOf(mLocationId), getActivity());
+                    RescribePreferencesManager.putString(RescribePreferencesManager.DMS_PREFERENCES_KEY.SELECTED_LOCATION_ID, String.valueOf(mLocationId), getActivity());
                     mAppointmentHelper.doGetDoctorTemplate();
                     dialog.cancel();
                 } else {
@@ -521,8 +516,8 @@ public class MyPatientsFragment extends Fragment implements MyPatientsAdapter.On
         dialog.setContentView(R.layout.dialog_select_location_waiting_list_layout);
 
         LayoutInflater inflater = LayoutInflater.from(getActivity());
-        if (!RescribePreferencesManager.getString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.SELECTED_LOCATION_ID, getActivity()).equals("")) {
-            mLocationId = Integer.parseInt(RescribePreferencesManager.getString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.SELECTED_LOCATION_ID, getActivity()));
+        if (!RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.SELECTED_LOCATION_ID, getActivity()).equals("")) {
+            mLocationId = Integer.parseInt(RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.SELECTED_LOCATION_ID, getActivity()));
 
             for (DoctorLocationModel doctorLocationModel : getDoctorLocationModels()) {
                 if (doctorLocationModel.getLocationId().equals(mLocationId)) {
@@ -582,7 +577,7 @@ public class MyPatientsFragment extends Fragment implements MyPatientsAdapter.On
                         i.putExtra(RescribeConstants.PATIENT_DETAILS, b);
                         getActivity().startActivityForResult(i, ADD_PATIENT_REQUEST);
 
-                        CommonMethods.Log("DOC_ID", "" + Integer.valueOf(RescribePreferencesManager.getString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.DOC_ID, getActivity())));
+                        CommonMethods.Log("DOC_ID", "" + Integer.valueOf(RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.DOC_ID, getActivity())));
                     } else {
                         callWaitingListApi();
                     }
@@ -608,7 +603,7 @@ public class MyPatientsFragment extends Fragment implements MyPatientsAdapter.On
 
 
     private void callWaitingListApi() {
-        RescribePreferencesManager.putString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.SELECTED_LOCATION_ID, String.valueOf(mLocationId), getActivity());
+        RescribePreferencesManager.putString(RescribePreferencesManager.DMS_PREFERENCES_KEY.SELECTED_LOCATION_ID, String.valueOf(mLocationId), getActivity());
         for (int i = 0; i < mDoctorLocationModel.size(); i++) {
             if (mLocationId == mDoctorLocationModel.get(i).getLocationId()) {
                 mClinicId = mDoctorLocationModel.get(i).getClinicId();
@@ -627,7 +622,7 @@ public class MyPatientsFragment extends Fragment implements MyPatientsAdapter.On
         requestForWaitingListPatients.setAddToList(addToWaitingArrayList);
         requestForWaitingListPatients.setTime(CommonMethods.getCurrentTimeStamp(RescribeConstants.DATE_PATTERN.HH_mm_ss));
         requestForWaitingListPatients.setDate(CommonMethods.getCurrentDate(RescribeConstants.DATE_PATTERN.YYYY_MM_DD));
-        requestForWaitingListPatients.setDocId(Integer.valueOf(RescribePreferencesManager.getString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.DOC_ID, getActivity())));
+        requestForWaitingListPatients.setDocId(Integer.valueOf(RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.DOC_ID, getActivity())));
         mAppointmentHelper.doAddToWaitingListFromMyPatients(requestForWaitingListPatients);
     }
 
@@ -662,7 +657,7 @@ public class MyPatientsFragment extends Fragment implements MyPatientsAdapter.On
                     Intent i = new Intent(getActivity(), AddNewPatientWebViewActivity.class);
                     i.putExtra(RescribeConstants.PATIENT_DETAILS, b);
                     getActivity().startActivityForResult(i, ADD_PATIENT_REQUEST);
-                    CommonMethods.Log("DOC_ID", "" + Integer.valueOf(RescribePreferencesManager.getString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.DOC_ID, getActivity())));
+                    CommonMethods.Log("DOC_ID", "" + Integer.valueOf(RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.DOC_ID, getActivity())));
                 } else {
                     showDialogToSelectLocation(mDoctorLocationModel, getString(R.string.new_patients));
                 }
@@ -755,11 +750,11 @@ public class MyPatientsFragment extends Fragment implements MyPatientsAdapter.On
     }
 
     public void nextPage(int pageNo, boolean isInternetAvailable) {
-        boolean isAllPatientDownloaded = RescribePreferencesManager.getBoolean(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.PATIENT_DOWNLOAD, getActivity());
+        boolean isAllPatientDownloaded = RescribePreferencesManager.getBoolean(RescribePreferencesManager.DMS_PREFERENCES_KEY.PATIENT_DOWNLOAD, getActivity());
 
         if (isInternetAvailable && !isAllPatientDownloaded) {
             mAppointmentHelper = new AppointmentHelper(getContext(), this);
-            mRequestSearchPatients.setDocId(Integer.valueOf(RescribePreferencesManager.getString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.DOC_ID, getContext())));
+            mRequestSearchPatients.setDocId(Integer.valueOf(RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.DOC_ID, getContext())));
             mRequestSearchPatients.setSearchText(searchText);
             mRequestSearchPatients.setPageNo(pageNo);
             mAppointmentHelper.doGetSearchResult(mRequestSearchPatients, searchEditText.getText().toString().isEmpty());
@@ -784,7 +779,7 @@ public class MyPatientsFragment extends Fragment implements MyPatientsAdapter.On
         if (isInternetAvailable) {
             mRequestSearchPatients.setPageNo(0);
             mAppointmentHelper = new AppointmentHelper(getContext(), this);
-            mRequestSearchPatients.setDocId(Integer.valueOf(RescribePreferencesManager.getString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.DOC_ID, getContext())));
+            mRequestSearchPatients.setDocId(Integer.valueOf(RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.DOC_ID, getContext())));
             mRequestSearchPatients.setSearchText(searchText);
             mAppointmentHelper.doGetSearchResult(mRequestSearchPatients, searchEditText.getText().toString().isEmpty());
         } else {

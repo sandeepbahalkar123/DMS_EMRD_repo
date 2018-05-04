@@ -6,7 +6,7 @@ package com.rescribe.doctor.dms.network;
 
 import android.content.Context;
 
-import com.rescribe.doctor.dms.interfaces.ConnectionListener;
+import com.rescribe.doctor.interfaces.ConnectionListener;
 import com.rescribe.doctor.dms.views.CustomProgressDialog;
 
 import java.util.Map;

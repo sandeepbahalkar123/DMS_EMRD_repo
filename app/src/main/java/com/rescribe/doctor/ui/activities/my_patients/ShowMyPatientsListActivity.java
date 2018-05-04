@@ -111,7 +111,7 @@ public class ShowMyPatientsListActivity extends AppCompatActivity implements Dra
 
     @Override
     public void onApply(RequestSearchPatients mRequestSearchPatients, boolean isReset) {
-        mRequestSearchPatients.setDocId(Integer.valueOf(RescribePreferencesManager.getString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.DOC_ID, mContext)));
+        mRequestSearchPatients.setDocId(Integer.valueOf(RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.DOC_ID, mContext)));
         mMyPatientsFragment.apply(mRequestSearchPatients, isReset);
         if (!isReset) {
             drawerLayout.closeDrawers();

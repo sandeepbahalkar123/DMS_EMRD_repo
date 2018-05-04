@@ -1,33 +1,22 @@
 package com.rescribe.doctor.ui.activities.my_patients;
 
-import android.app.Activity;
-import android.app.Dialog;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SimpleItemAnimator;
 import android.view.View;
-import android.view.Window;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.rescribe.doctor.R;
 import com.rescribe.doctor.adapters.my_patients.TemplateAdapter;
 import com.rescribe.doctor.helpers.myappointments.AppointmentHelper;
-import com.rescribe.doctor.interfaces.CustomResponse;
-import com.rescribe.doctor.interfaces.HelperResponse;
 import com.rescribe.doctor.model.my_appointments.AppointmentList;
-import com.rescribe.doctor.model.my_appointments.ClinicList;
 import com.rescribe.doctor.model.my_appointments.PatientList;
-import com.rescribe.doctor.model.patient.template_sms.TemplateBaseModel;
 import com.rescribe.doctor.model.patient.template_sms.TemplateList;
 import com.rescribe.doctor.model.patient.template_sms.request_send_sms.ClinicListForSms;
 import com.rescribe.doctor.model.patient.template_sms.request_send_sms.PatientInfoList;
@@ -120,7 +109,7 @@ public class TemplateListActivity extends AppCompatActivity implements TemplateA
             ArrayList<PatientInfoList> patientInfoLists = new ArrayList<>();
             listForSms.setClinicId(appointmentList.getClinicId());
             listForSms.setClinicName(appointmentList.getClinicName());
-            listForSms.setDocId(Integer.valueOf(RescribePreferencesManager.getString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.DOC_ID, mContext)));
+            listForSms.setDocId(Integer.valueOf(RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.DOC_ID, mContext)));
             listForSms.setLocationId(appointmentList.getLocationId());
             listForSms.setTemplateContent(templateList.getTemplateContent());
             for (PatientList patientList : appointmentList.getPatientList()) {

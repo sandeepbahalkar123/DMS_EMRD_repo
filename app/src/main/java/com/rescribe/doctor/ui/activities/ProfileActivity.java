@@ -42,7 +42,6 @@ import com.rescribe.doctor.bottom_menus.BottomMenuAdapter;
 import com.rescribe.doctor.model.doctor_location.DoctorLocationModel;
 import com.rescribe.doctor.model.login.ClinicList;
 import com.rescribe.doctor.model.login.DocDetail;
-import com.rescribe.doctor.model.patient.template_sms.TemplateBaseModel;
 import com.rescribe.doctor.model.profile_photo.ProfilePhotoResponse;
 import com.rescribe.doctor.preference.RescribePreferencesManager;
 import com.rescribe.doctor.singleton.Device;
@@ -186,22 +185,22 @@ public class ProfileActivity extends BottomMenuActivity implements BottomMenuAda
         ColorGenerator mColorGenerator = ColorGenerator.MATERIAL;
         imageutils = new Imageutils(this);
         device = Device.getInstance(ProfileActivity.this);
-        docId = RescribePreferencesManager.getString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.DOC_ID, mContext);
-        authorizationString = RescribePreferencesManager.getString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.AUTHTOKEN, ProfileActivity.this);
+        docId = RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.DOC_ID, mContext);
+        authorizationString = RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.AUTHTOKEN, ProfileActivity.this);
         mArrayListDoctorLocationModel = RescribeApplication.getDoctorLocationModels();
         int size = mArrayListDoctorLocationModel.size();
         titleTextView.setText(getString(R.string.profile));
         backImageView.setVisibility(View.GONE);
 
         String doctorNameToDisplay;
-        if (RescribePreferencesManager.getString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.USER_NAME, mContext).toLowerCase().contains("Dr."))
-            doctorNameToDisplay = RescribePreferencesManager.getString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.USER_NAME, mContext);
+        if (RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.USER_NAME, mContext).toLowerCase().contains("Dr."))
+            doctorNameToDisplay = RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.USER_NAME, mContext);
          else
-            doctorNameToDisplay = "Dr. " + RescribePreferencesManager.getString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.USER_NAME, mContext);
+            doctorNameToDisplay = "Dr. " + RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.USER_NAME, mContext);
 
         doctorName.setText(doctorNameToDisplay);
 
-        String doctorDetails = RescribePreferencesManager.getString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.DOC_INFO, this);
+        String doctorDetails = RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.DOC_INFO, this);
         final DocDetail docDetail = new Gson().fromJson(doctorDetails, DocDetail.class);
         if(docDetail.getDocInfo().isEmpty()){
             aboutLayout.setVisibility(View.INVISIBLE);
@@ -240,7 +239,7 @@ public class ProfileActivity extends BottomMenuActivity implements BottomMenuAda
             allClinicPracticeLocationMainLayout.setVisibility(View.GONE);
         }
 
-        String mDoctorName = RescribePreferencesManager.getString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.USER_NAME, mContext);
+        String mDoctorName = RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.USER_NAME, mContext);
         if (mDoctorName.contains("Dr. ")) {
             mDoctorName = mDoctorName.replace("Dr. ", "");
         }
@@ -259,7 +258,7 @@ public class ProfileActivity extends BottomMenuActivity implements BottomMenuAda
         requestOptions.error(drawable);
 
         Glide.with(mContext)
-                .load(RescribePreferencesManager.getString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.PROFILE_PHOTO, mContext))
+                .load(RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.PROFILE_PHOTO, mContext))
                 .apply(requestOptions).thumbnail(0.5f)
                 .into(profileImage);
 
@@ -550,7 +549,7 @@ public class ProfileActivity extends BottomMenuActivity implements BottomMenuAda
 
                     ProfilePhotoResponse profilePhotoResponse = new Gson().fromJson(bodyAsString, ProfilePhotoResponse.class);
                     if (profilePhotoResponse.getCommon().isSuccess()) {
-                        RescribePreferencesManager.putString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.PROFILE_PHOTO, profilePhotoResponse.getData().getDocImgUrl(), mContext);
+                        RescribePreferencesManager.putString(RescribePreferencesManager.DMS_PREFERENCES_KEY.PROFILE_PHOTO, profilePhotoResponse.getData().getDocImgUrl(), mContext);
                         Toast.makeText(context, profilePhotoResponse.getCommon().getStatusMessage(), Toast.LENGTH_SHORT).show();
                         RequestOptions requestOptions = new RequestOptions();
                         requestOptions.dontAnimate();

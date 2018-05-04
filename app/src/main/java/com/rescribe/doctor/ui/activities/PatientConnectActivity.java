@@ -11,15 +11,10 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.SearchView;
 import android.text.Editable;
 import android.util.Log;
 
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 
 import android.view.Window;
@@ -28,7 +23,6 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.rescribe.doctor.R;
 import com.rescribe.doctor.interfaces.CustomResponse;
@@ -51,7 +45,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static com.rescribe.doctor.preference.RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.BACK_UP;
+import static com.rescribe.doctor.preference.RescribePreferencesManager.DMS_PREFERENCES_KEY.BACK_UP;
 import static com.rescribe.doctor.services.ChatBackUpService.CHAT_BACKUP;
 import static com.rescribe.doctor.services.ChatBackUpService.RUNNING;
 import static com.rescribe.doctor.services.ChatBackUpService.STATUS;

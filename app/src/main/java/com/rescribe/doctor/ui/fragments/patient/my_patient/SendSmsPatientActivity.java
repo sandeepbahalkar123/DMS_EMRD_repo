@@ -173,7 +173,7 @@ public class SendSmsPatientActivity extends AppCompatActivity implements SmsRece
                         } else {
                             clinicListForSms.setTemplateContent(editTextSmsContent.getText().toString());
                         }
-                        clinicListForSms.setDocId(Integer.valueOf(RescribePreferencesManager.getString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.DOC_ID, mContext)));
+                        clinicListForSms.setDocId(Integer.valueOf(RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.DOC_ID, mContext)));
                         clinicListForSms.setClinicId(mClinicId);
                         clinicListForSmsSend.add(clinicListForSms);
                     }

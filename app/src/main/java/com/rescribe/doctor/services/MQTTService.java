@@ -148,7 +148,7 @@ public class MQTTService extends Service {
                                     }
 
                                     // checking pending uploads
-                                    if (RescribePreferencesManager.getString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.LOGIN_STATUS, mContext).equals(RescribeConstants.YES)) {
+                                    if (RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.LOGIN_STATUS, mContext).equals(RescribeConstants.YES)) {
                                         syncOfflineRecords.check();
                                         syncOfflinePatients.check();
                                     }
@@ -215,8 +215,8 @@ public class MQTTService extends Service {
 
                     try {
                         if (!msg.isDuplicate()) {
-                            String myid = RescribePreferencesManager.getString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.DOC_ID, mContext);
-                            String userLogin = RescribePreferencesManager.getString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.LOGIN_STATUS, mContext);
+                            String myid = RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.DOC_ID, mContext);
+                            String userLogin = RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.LOGIN_STATUS, mContext);
 
                             if (userLogin.equals(RescribeConstants.YES)) {
                                 if (topic.equals(TOPIC[MESSAGE_TOPIC])) {
@@ -344,7 +344,7 @@ public class MQTTService extends Service {
 
     private void passInternetConnect() {
         try {
-            String myId = RescribePreferencesManager.getString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.DOC_ID, mContext);
+            String myId = RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.DOC_ID, mContext);
 
             InternetConnect internetConnect = new InternetConnect();
             internetConnect.setUserId(Integer.parseInt(myId));
@@ -354,7 +354,7 @@ public class MQTTService extends Service {
             MqttMessage message = new MqttMessage(content.getBytes());
             message.setQos(1);
             message.setRetained(true);
-            if (mqttClient.isConnected() && RescribePreferencesManager.getString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.LOGIN_STATUS, mContext).equals(RescribeConstants.YES)) {
+            if (mqttClient.isConnected() && RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.LOGIN_STATUS, mContext).equals(RescribeConstants.YES)) {
                 mqttClient.publish(TOPIC[INTERNET_TOPIC], message);
                 ArrayList<MQTTMessage> chatMessageByMessageStatus = appDBHelper.getChatMessageByMessageStatus(PENDING);
                 for (MQTTMessage mqttMessage : chatMessageByMessageStatus)

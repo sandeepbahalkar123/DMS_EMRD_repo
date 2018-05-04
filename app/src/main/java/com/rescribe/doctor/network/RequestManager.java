@@ -26,7 +26,14 @@ import com.android.volley.toolbox.StringRequest;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.rescribe.doctor.R;
+import com.rescribe.doctor.dms.model.responsemodel.annotationlistresponsemodel.AnnotationListResponseModel;
+import com.rescribe.doctor.dms.model.responsemodel.filetreeresponsemodel.FileTreeResponseModel;
+import com.rescribe.doctor.dms.model.responsemodel.getpdfdataresponsemodel.GetPdfDataResponseModel;
+import com.rescribe.doctor.dms.model.responsemodel.patientnamelistresponsemodel.PatientNameListResponseModel;
+import com.rescribe.doctor.dms.model.responsemodel.showsearchresultresponsemodel.ShowSearchResultResponseModel;
+import com.rescribe.doctor.dms.util.DmsConstants;
 import com.rescribe.doctor.helpers.database.AppDBHelper;
+import com.rescribe.doctor.model.iptestresponsemodel.IpTestResponseModel;
 import com.rescribe.doctor.model.patient.doctor_patients.MyPatientBaseModel;
 import com.rescribe.doctor.interfaces.ConnectionListener;
 import com.rescribe.doctor.interfaces.Connector;
@@ -438,9 +445,9 @@ public class RequestManager extends ConnectRequest implements Connector, Request
                 // Need to Add
                 LoginModel loginModel = gson.fromJson(data, LoginModel.class);
                 if (loginModel.getCommon().getStatusCode().equals(SUCCESS)) {
-                    RescribePreferencesManager.putString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.AUTHTOKEN, loginModel.getDoctorLoginData().getAuthToken(), mContext);
-                    RescribePreferencesManager.putString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.LOGIN_STATUS, RescribeConstants.YES, mContext);
-                    RescribePreferencesManager.putString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.DOC_ID, String.valueOf(loginModel.getDoctorLoginData().getDocDetail().getDocId()), mContext);
+                    RescribePreferencesManager.putString(RescribePreferencesManager.DMS_PREFERENCES_KEY.AUTHTOKEN, loginModel.getDoctorLoginData().getAuthToken(), mContext);
+                    RescribePreferencesManager.putString(RescribePreferencesManager.DMS_PREFERENCES_KEY.LOGIN_STATUS, RescribeConstants.YES, mContext);
+                    RescribePreferencesManager.putString(RescribePreferencesManager.DMS_PREFERENCES_KEY.DOC_ID, String.valueOf(loginModel.getDoctorLoginData().getDocDetail().getDocId()), mContext);
 
                     mHeaderParams.put(RescribeConstants.AUTHORIZATION_TOKEN, loginModel.getDoctorLoginData().getAuthToken());
                     connect();
@@ -453,10 +460,10 @@ public class RequestManager extends ConnectRequest implements Connector, Request
 
                 switch (this.mDataTag) {
                     // Need to add
-                    case RescribeConstants.TASK_LOGIN: //This is for get archived list
+                  /*  case RescribeConstants.TASK_LOGIN: //This is for get archived list
                         LoginModel loginModel = gson.fromJson(data, LoginModel.class);
                         this.mConnectionListener.onResponse(ConnectionListener.RESPONSE_OK, loginModel, mOldDataTag);
-                        break;
+                        break;*/
                     case RescribeConstants.TASK_LOGIN_WITH_PASSWORD: //This is for get archived list
                         LoginModel loginWithPasswordModel = new Gson().fromJson(data, LoginModel.class);
                         this.mConnectionListener.onResponse(ConnectionListener.RESPONSE_OK, loginWithPasswordModel, mOldDataTag);
@@ -599,8 +606,35 @@ public class RequestManager extends ConnectRequest implements Connector, Request
                         this.mConnectionListener.onResponse(ConnectionListener.RESPONSE_OK, model, mOldDataTag);
                         break;
 
+                    case RescribeConstants.TASK_PATIENT_LIST: //This is for patient list
+                        ShowSearchResultResponseModel showSearchResultResponseModel = gson.fromJson(data, ShowSearchResultResponseModel.class);
+                        this.mConnectionListener.onResponse(ConnectionListener.RESPONSE_OK, showSearchResultResponseModel, mOldDataTag);
+                        break;
+                    case RescribeConstants.TASK_ANNOTATIONS_LIST: //This is for annotation list
+                        AnnotationListResponseModel annotationListResponseModel = gson.fromJson(data, AnnotationListResponseModel.class);
+                        this.mConnectionListener.onResponse(ConnectionListener.RESPONSE_OK, annotationListResponseModel, mOldDataTag);
+                        break;
+                    case RescribeConstants.TASK_GET_ARCHIVED_LIST: //This is for get archived list
+                        FileTreeResponseModel fileTreeResponseModel = gson.fromJson(data, FileTreeResponseModel.class);
+                        this.mConnectionListener.onResponse(ConnectionListener.RESPONSE_OK, fileTreeResponseModel, mOldDataTag);
+                        break;
+
+                    case RescribeConstants.TASK_CHECK_SERVER_CONNECTION: //This is for get archived list
+                        IpTestResponseModel ipTestResponseModel = gson.fromJson(data, IpTestResponseModel.class);
+                        this.mConnectionListener.onResponse(ConnectionListener.RESPONSE_OK, ipTestResponseModel, mOldDataTag);
+                        break;
+                    case RescribeConstants.TASK_GET_PATIENT_NAME_LIST: //This is for get archived list
+                        PatientNameListResponseModel patientNameListResponseModel = gson.fromJson(data, PatientNameListResponseModel.class);
+                        this.mConnectionListener.onResponse(ConnectionListener.RESPONSE_OK, patientNameListResponseModel, mOldDataTag);
+                        break;
 
                     default:
+                        //This is for get PDF PatientNameListData
+                        if (mOldDataTag.startsWith(RescribeConstants.TASK_GET_PDF_DATA)) {
+                            GetPdfDataResponseModel getPdfDataResponseModel = gson.fromJson(data, GetPdfDataResponseModel.class);
+                            this.mConnectionListener.onResponse(ConnectionListener.RESPONSE_OK, getPdfDataResponseModel, mOldDataTag);
+                        }
+
 
 
                 }
@@ -684,8 +718,8 @@ public class RequestManager extends ConnectRequest implements Connector, Request
 
         LoginRequestModel loginRequestModel = new LoginRequestModel();
 
-        loginRequestModel.setEmailId(RescribePreferencesManager.getString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.EMAIL, mContext));
-        loginRequestModel.setPassword(RescribePreferencesManager.getString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.PASSWORD, mContext));
+        loginRequestModel.setEmailId(RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.EMAIL, mContext));
+        loginRequestModel.setPassword(RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.PASSWORD, mContext));
         if (!(RescribeConstants.BLANK.equalsIgnoreCase(loginRequestModel.getEmailId()) &&
                 RescribeConstants.BLANK.equalsIgnoreCase(loginRequestModel.getPassword()))) {
             Map<String, String> headerParams = new HashMap<>();

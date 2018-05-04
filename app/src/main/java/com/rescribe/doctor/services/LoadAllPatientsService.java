@@ -99,7 +99,7 @@ public class LoadAllPatientsService extends Service {
                 startForeground(RescribeConstants.FOREGROUND_SERVICE, notification);
 
                 // Start Downloading
-                request(RescribePreferencesManager.getBoolean(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.PATIENT_DOWNLOAD, LoadAllPatientsService.this));
+                request(RescribePreferencesManager.getBoolean(RescribePreferencesManager.DMS_PREFERENCES_KEY.PATIENT_DOWNLOAD, LoadAllPatientsService.this));
             }
         } else stopSelf();
         return super.onStartCommand(intent, flags, startId);
@@ -117,7 +117,7 @@ public class LoadAllPatientsService extends Service {
 
         RequestSearchPatients mRequestSearchPatients = new RequestSearchPatients();
 
-        String id = RescribePreferencesManager.getString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.DOC_ID, this);
+        String id = RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.DOC_ID, this);
         mRequestSearchPatients.setPageNo(pageCount);
         mRequestSearchPatients.setDocId(Integer.valueOf(id));
         mRequestSearchPatients.setSearchText("");
@@ -176,7 +176,7 @@ public class LoadAllPatientsService extends Service {
             public Map<String, String> getHeaders() {
                 Device device = Device.getInstance(LoadAllPatientsService.this);
                 Map<String, String> headerParams = new HashMap<>();
-                String authorizationString = RescribePreferencesManager.getString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.AUTHTOKEN, LoadAllPatientsService.this);
+                String authorizationString = RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.AUTHTOKEN, LoadAllPatientsService.this);
                 headerParams.put(RescribeConstants.CONTENT_TYPE, RescribeConstants.APPLICATION_JSON);
                 headerParams.put(RescribeConstants.AUTHORIZATION_TOKEN, authorizationString);
                 headerParams.put(RescribeConstants.DEVICEID, device.getDeviceId());
@@ -210,7 +210,7 @@ public class LoadAllPatientsService extends Service {
                 .setProgress(0, 0, false);
         mNotifyManager.notify(RescribeConstants.FOREGROUND_SERVICE, mBuilder.build());
 
-        RescribePreferencesManager.putBoolean(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.PATIENT_DOWNLOAD, !isFailed, LoadAllPatientsService.this);
+        RescribePreferencesManager.putBoolean(RescribePreferencesManager.DMS_PREFERENCES_KEY.PATIENT_DOWNLOAD, !isFailed, LoadAllPatientsService.this);
 
         stopForeground(true);
         stopSelf();

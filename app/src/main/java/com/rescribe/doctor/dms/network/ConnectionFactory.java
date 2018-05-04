@@ -8,13 +8,15 @@ package com.rescribe.doctor.dms.network;
 import android.content.Context;
 import android.view.View;
 
-import com.rescribe.doctor.dms.interfaces.ConnectionListener;
-import com.rescribe.doctor.dms.interfaces.Connector;
-import com.rescribe.doctor.dms.interfaces.CustomResponse;
+import com.rescribe.doctor.interfaces.ConnectionListener;
+import com.rescribe.doctor.interfaces.Connector;
+import com.rescribe.doctor.interfaces.CustomResponse;
 import com.rescribe.doctor.dms.preference.DmsPreferencesManager;
 import com.rescribe.doctor.dms.singleton.Device;
-import com.rescribe.doctor.dms.util.CommonMethods;
 import com.rescribe.doctor.dms.util.DmsConstants;
+import com.rescribe.doctor.network.ConnectRequest;
+import com.rescribe.doctor.network.RequestManager;
+import com.rescribe.doctor.util.CommonMethods;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -78,12 +80,12 @@ public class ConnectionFactory extends ConnectRequest {
     public void setUrl(String url) {
         String baseUrl = DmsPreferencesManager.getString(DmsPreferencesManager.DMS_PREFERENCES_KEY.SERVER_PATH, mContext);
         this.mURL = baseUrl + url;
-        CommonMethods.Log(TAG,"mURL: "+this.mURL);
+        CommonMethods.Log(TAG, "mURL: " + this.mURL);
     }
 
     public Connector createConnection(String type) {
 
-        connector = new RequestManager(mContext, mConnectionListener, type, mViewById, isProgressBarShown, mOldDataTag, reqPostOrGet);
+        connector = new RequestManager(mContext, mConnectionListener, type, mViewById, isProgressBarShown, mOldDataTag, reqPostOrGet,false);
 
         if (customResponse != null) connector.setPostParams(customResponse);
 

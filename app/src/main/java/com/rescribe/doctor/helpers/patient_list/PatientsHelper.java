@@ -1,11 +1,11 @@
-package com.rescribe.doctor.dms.helpers.patients;
+package com.rescribe.doctor.helpers.patient_list;
 
 import android.content.Context;
 
 import com.android.volley.Request;
-import com.rescribe.doctor.dms.interfaces.ConnectionListener;
-import com.rescribe.doctor.dms.interfaces.CustomResponse;
-import com.rescribe.doctor.dms.interfaces.HelperResponse;
+import com.rescribe.doctor.interfaces.ConnectionListener;
+import com.rescribe.doctor.interfaces.CustomResponse;
+import com.rescribe.doctor.interfaces.HelperResponse;
 import com.rescribe.doctor.dms.model.requestmodel.filetreerequestmodel.FileTreeRequestModel;
 import com.rescribe.doctor.dms.model.requestmodel.getpdfdatarequestmodel.GetPdfDataRequestModel;
 import com.rescribe.doctor.dms.model.requestmodel.showsearchresultrequestmodel.ShowSearchResultRequestModel;
@@ -14,11 +14,11 @@ import com.rescribe.doctor.dms.model.responsemodel.filetreeresponsemodel.FileTre
 import com.rescribe.doctor.dms.model.responsemodel.filetreeresponsemodel.FileTreeResponseModel;
 import com.rescribe.doctor.dms.model.responsemodel.filetreeresponsemodel.LstDocCategory;
 import com.rescribe.doctor.dms.model.responsemodel.filetreeresponsemodel.LstDocType;
-import com.rescribe.doctor.dms.network.ConnectRequest;
 import com.rescribe.doctor.dms.network.ConnectionFactory;
-import com.rescribe.doctor.dms.util.CommonMethods;
 import com.rescribe.doctor.dms.util.Config;
 import com.rescribe.doctor.dms.util.DmsConstants;
+import com.rescribe.doctor.network.ConnectRequest;
+import com.rescribe.doctor.util.CommonMethods;
 
 import java.util.List;
 

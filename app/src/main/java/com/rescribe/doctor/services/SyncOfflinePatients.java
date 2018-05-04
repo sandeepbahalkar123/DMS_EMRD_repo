@@ -61,7 +61,7 @@ public class SyncOfflinePatients {
         this.context = mContext;
         appDBHelper = new AppDBHelper(context);
         gson = new Gson();
-        if (RescribePreferencesManager.getString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.LOGIN_STATUS, mContext).equals(RescribeConstants.YES))
+        if (RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.LOGIN_STATUS, mContext).equals(RescribeConstants.YES))
             check();
     }
 
@@ -94,7 +94,7 @@ public class SyncOfflinePatients {
             mNotifyManager.notify(SYNC_NOTIFICATION_ID, mBuilder.build());
 
             SyncPatientsRequest mSyncPatientsRequest = new SyncPatientsRequest();
-            String id = RescribePreferencesManager.getString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.DOC_ID, context);
+            String id = RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.DOC_ID, context);
             mSyncPatientsRequest.setDocId(id);
             mSyncPatientsRequest.setPatientDetails(offlineAddedPatients);
 
@@ -141,7 +141,7 @@ public class SyncOfflinePatients {
                 public Map<String, String> getHeaders() {
                     Device device = Device.getInstance(context);
                     Map<String, String> headerParams = new HashMap<>();
-                    String authorizationString = RescribePreferencesManager.getString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.AUTHTOKEN, context);
+                    String authorizationString = RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.AUTHTOKEN, context);
                     headerParams.put(RescribeConstants.CONTENT_TYPE, RescribeConstants.APPLICATION_JSON);
                     headerParams.put(RescribeConstants.AUTHORIZATION_TOKEN, authorizationString);
                     headerParams.put(RescribeConstants.DEVICEID, device.getDeviceId());

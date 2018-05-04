@@ -545,7 +545,7 @@ public class MyAppointmentsFragment extends Fragment implements AppointmentAdapt
         requestForWaitingListPatients.setAddToList(addToArrayList);
         requestForWaitingListPatients.setTime(CommonMethods.getCurrentTimeStamp(RescribeConstants.DATE_PATTERN.HH_mm_ss));
         requestForWaitingListPatients.setDate(CommonMethods.getCurrentDate(RescribeConstants.DATE_PATTERN.YYYY_MM_DD));
-        requestForWaitingListPatients.setDocId(Integer.valueOf(RescribePreferencesManager.getString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.DOC_ID, getActivity())));
+        requestForWaitingListPatients.setDocId(Integer.valueOf(RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.DOC_ID, getActivity())));
         mAppointmentHelper.doAddToWaitingListFromMyPatients(requestForWaitingListPatients);
     }
 
@@ -656,7 +656,7 @@ public class MyAppointmentsFragment extends Fragment implements AppointmentAdapt
                         ArrayList<PatientInfoList> patientInfoLists = new ArrayList<>();
                         listForSms.setClinicId(appointmentList.getClinicId());
                         listForSms.setClinicName(appointmentList.getClinicName());
-                        listForSms.setDocId(Integer.valueOf(RescribePreferencesManager.getString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.DOC_ID, getContext())));
+                        listForSms.setDocId(Integer.valueOf(RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.DOC_ID, getContext())));
                         listForSms.setLocationId(appointmentList.getLocationId());
                         listForSms.setTemplateContent("");
                         for (PatientList patientList : appointmentList.getPatientList()) {
@@ -688,7 +688,7 @@ public class MyAppointmentsFragment extends Fragment implements AppointmentAdapt
                     ArrayList<PatientInfoList> patientInfoLists = new ArrayList<>();
                     listForSms.setClinicId(appointmentList.getClinicId());
                     listForSms.setClinicName(appointmentList.getClinicName());
-                    listForSms.setDocId(Integer.valueOf(RescribePreferencesManager.getString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.DOC_ID, getActivity())));
+                    listForSms.setDocId(Integer.valueOf(RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.DOC_ID, getActivity())));
                     listForSms.setLocationId(appointmentList.getLocationId());
                     listForSms.setTemplateContent("");
                     for (PatientList patientList : appointmentList.getPatientList()) {

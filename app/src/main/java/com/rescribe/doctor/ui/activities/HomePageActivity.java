@@ -41,6 +41,7 @@ import com.rescribe.doctor.adapters.dashboard.DashBoardAppointmentListAdapter;
 import com.rescribe.doctor.adapters.dashboard.DashBoardWaitingList;
 import com.rescribe.doctor.bottom_menus.BottomMenu;
 import com.rescribe.doctor.bottom_menus.BottomMenuActivity;
+import com.rescribe.doctor.dms.ui.activities.PatientList;
 import com.rescribe.doctor.helpers.dashboard.DashboardHelper;
 import com.rescribe.doctor.helpers.login.LoginHelper;
 import com.rescribe.doctor.interfaces.CustomResponse;
@@ -57,7 +58,6 @@ import com.rescribe.doctor.ui.activities.completed_opd.CompletedOpdActivity;
 import com.rescribe.doctor.ui.activities.dashboard.SettingsActivity;
 import com.rescribe.doctor.ui.activities.dashboard.SupportActivity;
 import com.rescribe.doctor.ui.activities.my_appointments.MyAppointmentsActivity;
-import com.rescribe.doctor.ui.activities.my_patients.MyPatientsActivity;
 import com.rescribe.doctor.ui.activities.new_patient.NewPatientActivity;
 import com.rescribe.doctor.ui.activities.waiting_list.WaitingMainListActivity;
 import com.rescribe.doctor.ui.customesViews.CircularImageView;
@@ -158,11 +158,11 @@ public class HomePageActivity extends BottomMenuActivity implements HelperRespon
         setContentView(R.layout.home_page_layout);
         ButterKnife.bind(this);
         mContext = HomePageActivity.this;
-        docId = RescribePreferencesManager.getString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.DOC_ID, mContext);
+        docId = RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.DOC_ID, mContext);
         logUser();
         mColorGenerator = ColorGenerator.MATERIAL;
         HomePageActivityPermissionsDispatcher.getPermissionWithCheck(HomePageActivity.this);
-        docId = RescribePreferencesManager.getString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.DOC_ID, mContext);
+        docId = RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.DOC_ID, mContext);
         loginHelper = new LoginHelper(mContext, HomePageActivity.this);
         initialize();
         setCurrentActivityTab(getString(R.string.home));
@@ -173,8 +173,8 @@ public class HomePageActivity extends BottomMenuActivity implements HelperRespon
         // TODO: Use the current user's information
         // You can call any combination of these three methods
         Crashlytics.setUserIdentifier(String.valueOf(docId));
-        Crashlytics.setUserEmail(RescribePreferencesManager.getString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.EMAIL, mContext));
-        Crashlytics.setUserName(RescribePreferencesManager.getString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.USER_NAME, mContext));
+        Crashlytics.setUserEmail(RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.EMAIL, mContext));
+        Crashlytics.setUserName(RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.USER_NAME, mContext));
     }
 
 
@@ -182,16 +182,16 @@ public class HomePageActivity extends BottomMenuActivity implements HelperRespon
 
         setAddPatientOfflineSettingSwitchStatus();
 
-        String doctorDetails = RescribePreferencesManager.getString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.DOC_INFO, this);
+        String doctorDetails = RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.DOC_INFO, this);
         final DocDetail docDetail = new Gson().fromJson(doctorDetails, DocDetail.class);
 
         mDashboardHelper = new DashboardHelper(this, this);
         mDashboardHelper.doDoctorGetLocationList();
         String doctorNameToDisplay;
-        if (RescribePreferencesManager.getString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.USER_NAME, mContext).toLowerCase().contains("Dr.")) {
-            doctorNameToDisplay = RescribePreferencesManager.getString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.USER_NAME, mContext);
+        if (RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.USER_NAME, mContext).toLowerCase().contains("Dr.")) {
+            doctorNameToDisplay = RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.USER_NAME, mContext);
         } else {
-            doctorNameToDisplay = "Dr. " + RescribePreferencesManager.getString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.USER_NAME, mContext);
+            doctorNameToDisplay = "Dr. " + RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.USER_NAME, mContext);
         }
 
         doctorNameTextView.setText(doctorNameToDisplay);
@@ -220,7 +220,7 @@ public class HomePageActivity extends BottomMenuActivity implements HelperRespon
         menuOptionLinearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mContext, com.rescribe.doctor.dms.ui.activities.SplashScreenActivity.class);
+                Intent intent = new Intent(mContext, PatientList.class);
                 intent.putExtra(RescribeConstants.ACTIVITY_LAUNCHED_FROM, RescribeConstants.HOME_PAGE);
                 startActivity(intent);
             }
@@ -410,8 +410,8 @@ public class HomePageActivity extends BottomMenuActivity implements HelperRespon
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                if (RescribePreferencesManager.getBoolean(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.isSkippedClicked, mContext)) {
-                    RescribePreferencesManager.putString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.SHOW_UPDATE_DIALOG_ON_SKIPPED, RescribeConstants.YES, mContext);
+                if (RescribePreferencesManager.getBoolean(RescribePreferencesManager.DMS_PREFERENCES_KEY.isSkippedClicked, mContext)) {
+                    RescribePreferencesManager.putString(RescribePreferencesManager.DMS_PREFERENCES_KEY.SHOW_UPDATE_DIALOG_ON_SKIPPED, RescribeConstants.YES, mContext);
                 }
                 finishAffinity();
             }
@@ -511,18 +511,18 @@ public class HomePageActivity extends BottomMenuActivity implements HelperRespon
                     }
 
                     if (mDashboardDetails.getVersionCode() > CommonMethods.getVersionCode(mContext) && CommonMethods.getVersionCode(mContext) != -1) {
-                        if (!RescribePreferencesManager.getString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.SHOW_UPDATE_DIALOG, mContext).equals(RescribeConstants.YES)) {
+                        if (!RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.SHOW_UPDATE_DIALOG, mContext).equals(RescribeConstants.YES)) {
                             showUpdateDialog(mDashboardDetails.getVersionCode(), mDashboardDetails.getAppURL());
-                            RescribePreferencesManager.putString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.SHOW_UPDATE_DIALOG, RescribeConstants.YES, mContext);
+                            RescribePreferencesManager.putString(RescribePreferencesManager.DMS_PREFERENCES_KEY.SHOW_UPDATE_DIALOG, RescribeConstants.YES, mContext);
                         } else {
-                            if (RescribePreferencesManager.getBoolean(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.isSkippedClicked, mContext)) {
-                                if (RescribePreferencesManager.getString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.SHOW_UPDATE_DIALOG_ON_SKIPPED, mContext).equalsIgnoreCase(RescribeConstants.YES)) {
-                                    RescribePreferencesManager.putString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.SHOW_UPDATE_DIALOG_ON_SKIPPED, RescribeConstants.NO, mContext);
+                            if (RescribePreferencesManager.getBoolean(RescribePreferencesManager.DMS_PREFERENCES_KEY.isSkippedClicked, mContext)) {
+                                if (RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.SHOW_UPDATE_DIALOG_ON_SKIPPED, mContext).equalsIgnoreCase(RescribeConstants.YES)) {
+                                    RescribePreferencesManager.putString(RescribePreferencesManager.DMS_PREFERENCES_KEY.SHOW_UPDATE_DIALOG_ON_SKIPPED, RescribeConstants.NO, mContext);
                                     showUpdateDialog(mDashboardDetails.getVersionCode(), mDashboardDetails.getAppURL());
                                 }
-                            } else if (RescribePreferencesManager.getBoolean(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.isLaterClicked, mContext)) {
+                            } else if (RescribePreferencesManager.getBoolean(RescribePreferencesManager.DMS_PREFERENCES_KEY.isLaterClicked, mContext)) {
                                 if (isVersionCodeIncrementedByOne(mDashboardDetails.getVersionCode())) {
-                                    RescribePreferencesManager.putInt(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.VERSION_CODE_FROM_SERVER, mDashboardDetails.getVersionCode(), mContext);
+                                    RescribePreferencesManager.putInt(RescribePreferencesManager.DMS_PREFERENCES_KEY.VERSION_CODE_FROM_SERVER, mDashboardDetails.getVersionCode(), mContext);
                                     showUpdateDialog(mDashboardDetails.getVersionCode(), mDashboardDetails.getAppURL());
                                 }
 
@@ -537,7 +537,7 @@ public class HomePageActivity extends BottomMenuActivity implements HelperRespon
 
     @SuppressLint("CheckResult")
     private boolean isVersionCodeIncrementedByOne(Integer versionCode) {
-        return RescribePreferencesManager.getInt(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.VERSION_CODE_FROM_SERVER, mContext) + 1 == versionCode;
+        return RescribePreferencesManager.getInt(RescribePreferencesManager.DMS_PREFERENCES_KEY.VERSION_CODE_FROM_SERVER, mContext) + 1 == versionCode;
     }
 
     private void showUpdateDialog(final int versionCode, final String appURL) {
@@ -553,10 +553,10 @@ public class HomePageActivity extends BottomMenuActivity implements HelperRespon
         skipButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                RescribePreferencesManager.putString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.SHOW_UPDATE_DIALOG_ON_SKIPPED, RescribeConstants.NO, mContext);
-                RescribePreferencesManager.putBoolean(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.isSkippedClicked, true, mContext);
-                RescribePreferencesManager.putBoolean(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.isUpdatedClicked, false, mContext);
-                RescribePreferencesManager.putBoolean(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.isLaterClicked, false, mContext);
+                RescribePreferencesManager.putString(RescribePreferencesManager.DMS_PREFERENCES_KEY.SHOW_UPDATE_DIALOG_ON_SKIPPED, RescribeConstants.NO, mContext);
+                RescribePreferencesManager.putBoolean(RescribePreferencesManager.DMS_PREFERENCES_KEY.isSkippedClicked, true, mContext);
+                RescribePreferencesManager.putBoolean(RescribePreferencesManager.DMS_PREFERENCES_KEY.isUpdatedClicked, false, mContext);
+                RescribePreferencesManager.putBoolean(RescribePreferencesManager.DMS_PREFERENCES_KEY.isLaterClicked, false, mContext);
                 dialog.dismiss();
             }
         });
@@ -564,9 +564,9 @@ public class HomePageActivity extends BottomMenuActivity implements HelperRespon
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                RescribePreferencesManager.putBoolean(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.isSkippedClicked, false, mContext);
-                RescribePreferencesManager.putBoolean(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.isUpdatedClicked, true, mContext);
-                RescribePreferencesManager.putBoolean(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.isLaterClicked, false, mContext);
+                RescribePreferencesManager.putBoolean(RescribePreferencesManager.DMS_PREFERENCES_KEY.isSkippedClicked, false, mContext);
+                RescribePreferencesManager.putBoolean(RescribePreferencesManager.DMS_PREFERENCES_KEY.isUpdatedClicked, true, mContext);
+                RescribePreferencesManager.putBoolean(RescribePreferencesManager.DMS_PREFERENCES_KEY.isLaterClicked, false, mContext);
                 Intent viewIntent = new Intent();
                 viewIntent.setAction(Intent.ACTION_VIEW);
                 viewIntent.setData(Uri.parse(appURL));
@@ -578,10 +578,10 @@ public class HomePageActivity extends BottomMenuActivity implements HelperRespon
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                RescribePreferencesManager.putInt(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.VERSION_CODE_FROM_SERVER, versionCode, mContext);
-                RescribePreferencesManager.putBoolean(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.isSkippedClicked, false, mContext);
-                RescribePreferencesManager.putBoolean(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.isUpdatedClicked, false, mContext);
-                RescribePreferencesManager.putBoolean(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.isLaterClicked, true, mContext);
+                RescribePreferencesManager.putInt(RescribePreferencesManager.DMS_PREFERENCES_KEY.VERSION_CODE_FROM_SERVER, versionCode, mContext);
+                RescribePreferencesManager.putBoolean(RescribePreferencesManager.DMS_PREFERENCES_KEY.isSkippedClicked, false, mContext);
+                RescribePreferencesManager.putBoolean(RescribePreferencesManager.DMS_PREFERENCES_KEY.isUpdatedClicked, false, mContext);
+                RescribePreferencesManager.putBoolean(RescribePreferencesManager.DMS_PREFERENCES_KEY.isLaterClicked, true, mContext);
             }
         });
 
@@ -601,7 +601,7 @@ public class HomePageActivity extends BottomMenuActivity implements HelperRespon
 
     @SuppressLint("CheckResult")
     private void setUpImage() {
-        String mDoctorName = RescribePreferencesManager.getString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.USER_NAME, mContext);
+        String mDoctorName = RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.USER_NAME, mContext);
         if (mDoctorName.contains("Dr. ")) {
             mDoctorName = mDoctorName.replace("Dr. ", "");
         }
@@ -620,7 +620,7 @@ public class HomePageActivity extends BottomMenuActivity implements HelperRespon
         requestOptions.diskCacheStrategy(DiskCacheStrategy.NONE);
 
         Glide.with(mContext)
-                .load(RescribePreferencesManager.getString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.PROFILE_PHOTO, mContext))
+                .load(RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.PROFILE_PHOTO, mContext))
                 .apply(requestOptions).thumbnail(0.5f)
                 .into(doctorDashboardImage);
     }
@@ -711,14 +711,14 @@ public class HomePageActivity extends BottomMenuActivity implements HelperRespon
         radioSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                RescribePreferencesManager.putBoolean(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.CHAT_IS_CHECKED, isChecked, mContext);
+                RescribePreferencesManager.putBoolean(RescribePreferencesManager.DMS_PREFERENCES_KEY.CHAT_IS_CHECKED, isChecked, mContext);
                 ActiveRequest activeRequest = new ActiveRequest();
                 activeRequest.setId(Integer.parseInt(docId));
 
                 if (isChecked) {
                     loginHelper.doActiveStatus(activeRequest);
                 } else {
-                    RescribePreferencesManager.putString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.IS_EXIT, RescribeConstants.NO, mContext);
+                    RescribePreferencesManager.putString(RescribePreferencesManager.DMS_PREFERENCES_KEY.IS_EXIT, RescribeConstants.NO, mContext);
                     loginHelper.doLogout(activeRequest);
                 }
             }
@@ -727,9 +727,9 @@ public class HomePageActivity extends BottomMenuActivity implements HelperRespon
 
         //Radio Button functionality for chat online offline status
 
-        boolean isExists = RescribePreferencesManager.getSharedPreference(mContext).contains(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.CHAT_IS_CHECKED);
+        boolean isExists = RescribePreferencesManager.getSharedPreference(mContext).contains(RescribePreferencesManager.DMS_PREFERENCES_KEY.CHAT_IS_CHECKED);
         if (isExists) {
-            radioSwitch.setChecked(RescribePreferencesManager.getBoolean(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.CHAT_IS_CHECKED, mContext));
+            radioSwitch.setChecked(RescribePreferencesManager.getBoolean(RescribePreferencesManager.DMS_PREFERENCES_KEY.CHAT_IS_CHECKED, mContext));
         } else {
             radioSwitch.setChecked(true);
         }
@@ -737,9 +737,9 @@ public class HomePageActivity extends BottomMenuActivity implements HelperRespon
 
     //This sets that, offline adding patinet is always true
     private void setAddPatientOfflineSettingSwitchStatus() {
-        boolean isExists = RescribePreferencesManager.getSharedPreference(mContext).contains(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.ADD_PATIENT_OFFLINE_SETTINGS);
+        boolean isExists = RescribePreferencesManager.getSharedPreference(mContext).contains(RescribePreferencesManager.DMS_PREFERENCES_KEY.ADD_PATIENT_OFFLINE_SETTINGS);
         if (!isExists) {
-            RescribePreferencesManager.putBoolean(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.ADD_PATIENT_OFFLINE_SETTINGS, true, mContext);
+            RescribePreferencesManager.putBoolean(RescribePreferencesManager.DMS_PREFERENCES_KEY.ADD_PATIENT_OFFLINE_SETTINGS, true, mContext);
         }
     }
 
@@ -766,7 +766,7 @@ public class HomePageActivity extends BottomMenuActivity implements HelperRespon
 
     @Override
     protected void onDestroy() {
-        RescribePreferencesManager.putString(RescribePreferencesManager.RESCRIBE_PREFERENCES_KEY.SHOW_UPDATE_DIALOG_ON_SKIPPED, RescribeConstants.YES, mContext);
+        RescribePreferencesManager.putString(RescribePreferencesManager.DMS_PREFERENCES_KEY.SHOW_UPDATE_DIALOG_ON_SKIPPED, RescribeConstants.YES, mContext);
         super.onDestroy();
     }
 }
