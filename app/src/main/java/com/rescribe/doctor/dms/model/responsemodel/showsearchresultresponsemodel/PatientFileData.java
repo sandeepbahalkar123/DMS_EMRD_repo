@@ -61,14 +61,6 @@ public class PatientFileData implements Serializable {
         this.dischargeDate = dischargeDate;
     }
 
-    public boolean isShowCompleteList() {
-        return isShowCompleteList;
-    }
-
-    public void setShowCompleteList(boolean showCompleteList) {
-        isShowCompleteList = showCompleteList;
-    }
-
     public String getRespectiveParentPatientID() {
         return respectiveParentPatientID;
     }

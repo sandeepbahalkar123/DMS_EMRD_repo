@@ -21,13 +21,14 @@
 
             <ImageView
                 android:id="@+id/openRightDrawer"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/dp34"
+                android:layout_height="@dimen/dp34"
                 android:layout_gravity="center_vertical|end"
                 android:layout_marginEnd="@dimen/dp10"
                 android:layout_marginRight="@dimen/dp10"
-                android:padding="@dimen/dp10"
+                android:padding="@dimen/dp6"
                 android:src="@mipmap/more" />
+
         </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>

@@ -270,10 +270,6 @@
             android:theme="@style/AppTheme.NoActionBar"/>
 
         <!--DMS-->
-
-        <meta-data
-            android:name="io.fabric.ApiKey"
-            android:value="8851ad6fd63975db848f308a0298d6c942f63d6b" />
     </application>
 
 </manifest>

@@ -229,7 +229,7 @@ public class FileTypeViewerActivity extends AppCompatActivity implements View.On
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, mDrawer, mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         toggle.setDrawerIndicatorEnabled(false);
-        toggle.setHomeAsUpIndicator(getResources().getDrawable(R.drawable.back));
+        toggle.setHomeAsUpIndicator(getResources().getDrawable(R.drawable.back_arrow_a_01));
         toggle.syncState();
 
         doBindHeaderViews();

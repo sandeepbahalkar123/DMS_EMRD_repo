@@ -36,6 +36,7 @@
     <dimen name="dp210">210dp</dimen>
     <dimen name="dp42">42dp</dimen>
     <dimen name="dp44">44dp</dimen>
+    <dimen name="dp46">46dp</dimen>
     <dimen name="dp35">35dp</dimen>
     <dimen name="dp120">120dp</dimen>
     <dimen name="dp80">80dp</dimen>
@@ -80,11 +81,14 @@
     <dimen name="margin_tiny">5dp</dimen>
     <dimen name="button_height">40dp</dimen>
 
-    <dimen name="patientIdWidth">205dp</dimen>
+    <dimen name="patientIdWidth">160dp</dimen>
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="dp22">22dp</dimen>
     <dimen name="filenotfoundmessagetextsize">24sp</dimen>
     <dimen name="text_medium">20sp</dimen>
+    <dimen name="dp26">26dp</dimen>
+    <dimen name="dp36">36dp</dimen>
+    <dimen name="compare_dialog">270dp</dimen>
 
 </resources>

@@ -79,8 +79,6 @@ import butterknife.ButterKnife;
 public class PatientList extends AppCompatActivity implements HelperResponse, View.OnClickListener, AdapterView.OnItemSelectedListener, PatientExpandableListAdapter.OnPatientListener, TreeNode.TreeNodeClickListener {
 
     private static final long ANIMATION_DURATION = 500; // in milliseconds
-    private static final int ANIMATION_LAYOUT_MAX_HEIGHT = 270; // in milliseconds
-    private static final int ANIMATION_LAYOUT_MIN_HEIGHT = 0; // in milliseconds
     SimpleDateFormat dfDate = new SimpleDateFormat(DmsConstants.DATE_PATTERN.yyyy_MM_dd, Locale.US);
 
     @BindView(R.id.expandableListView)
@@ -954,7 +952,7 @@ public class PatientList extends AppCompatActivity implements HelperResponse, Vi
     public void collapseCompareDialog() {
         isCompareDialogCollapsed = true;
 
-        ValueAnimator valueAnimator = ValueAnimator.ofInt(ANIMATION_LAYOUT_MAX_HEIGHT, ANIMATION_LAYOUT_MIN_HEIGHT);
+        ValueAnimator valueAnimator = ValueAnimator.ofInt((int) getResources().getDimension(R.dimen.compare_dialog), 0);
         valueAnimator.setDuration(ANIMATION_DURATION);
         valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             public void onAnimationUpdate(ValueAnimator animation) {
@@ -975,7 +973,7 @@ public class PatientList extends AppCompatActivity implements HelperResponse, Vi
 
         isCompareDialogCollapsed = false;
 
-        ValueAnimator valueAnimator = ValueAnimator.ofInt(ANIMATION_LAYOUT_MIN_HEIGHT, ANIMATION_LAYOUT_MAX_HEIGHT);
+        ValueAnimator valueAnimator = ValueAnimator.ofInt(0, (int) getResources().getDimension(R.dimen.compare_dialog));
         valueAnimator.setDuration(ANIMATION_DURATION);
         valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             public void onAnimationUpdate(ValueAnimator animation) {

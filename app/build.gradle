@@ -1,9 +1,4 @@
 apply plugin: 'com.android.application'
-apply plugin: 'io.fabric'
-
-repositories {
-    maven { url 'https://maven.fabric.io/public' }
-}
 
 android {
     signingConfigs {
@@ -131,10 +126,6 @@ dependencies {
     compile 'com.beloo.widget:ChipsLayoutManager:0.3.7@aar'
 
     compile 'com.theartofdev.edmodo:android-image-cropper:2.7.0'
-
-    compile('com.crashlytics.sdk.android:crashlytics:2.9.1@aar') {
-        transitive = true;
-    }
 
 }
 //apply plugin: 'com.google.gms.google-services'

@@ -2,7 +2,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:background="?android:attr/selectableItemBackground"
     android:minHeight="48dp">
 
@@ -12,8 +11,8 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:gravity="center"
-        android:paddingStart="@dimen/dp10"
-        android:paddingLeft="@dimen/dp10">
+        android:paddingLeft="@dimen/dp10"
+        android:paddingStart="@dimen/dp10">
 
         <android.support.v7.widget.AppCompatCheckBox
             android:id="@+id/node_selector"
@@ -25,10 +24,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/dp5"
+            android:layout_marginRight="@dimen/dp5"
             android:maxLines="2"
             android:singleLine="false"
             android:textColor="@color/black"
-            android:textSize="@dimen/sp12"
-            android:layout_marginRight="@dimen/dp5" />
+            android:textSize="@dimen/sp12" />
     </LinearLayout>
 </RelativeLayout>

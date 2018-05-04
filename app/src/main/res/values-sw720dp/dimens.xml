@@ -13,7 +13,9 @@
     <dimen name="dp20">30dp</dimen>
     <dimen name="dp30">45dp</dimen>
     <dimen name="dp56">84dp</dimen>
-    <dimen name="dp40">60dp</dimen>
+    <dimen name="dp40">56dp</dimen>
+    <dimen name="dp42">58dp</dimen>
+    <dimen name="dp46">56dp</dimen>
     <dimen name="dp50">75dp</dimen>
     <dimen name="dp48">72dp</dimen>
     <dimen name="margin_imageview">105dp</dimen>
@@ -82,6 +84,9 @@
 
     <dimen name="text_medium">20sp</dimen>
     <dimen name="filenotfoundmessagetextsize">24sp</dimen>
+    <dimen name="dp26">38dp</dimen>
+    <dimen name="dp36">52dp</dimen>
+    <dimen name="compare_dialog">360dp</dimen>
 
 
 </resources>
