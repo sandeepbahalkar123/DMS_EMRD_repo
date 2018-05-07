@@ -247,7 +247,7 @@ public class SelectSlotTimeToBookAppointmentFragment extends Fragment implements
         mCurrentDate = mSelectedTimeSlotDate;
         //----******************------
 
-        String dayFromDate = CommonMethods.getDayFromDate(RescribeConstants.DD_MM_YYYY, CommonMethods.getCurrentDate(RescribeConstants.DD_MM_YYYY));
+        String dayFromDate = CommonMethods.getDayFromDate(RescribeConstants.DATE_PATTERN.DD_MM_YYYY, CommonMethods.getCurrentDate(RescribeConstants.DATE_PATTERN.DD_MM_YYYY));
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(RescribeConstants.DATE_PATTERN.DD_MMM, Locale.US);
 
@@ -595,7 +595,7 @@ public class SelectSlotTimeToBookAppointmentFragment extends Fragment implements
         cc.add(Calendar.DATE, -1); // subtracting 1 days
         receivedDate = cc.getTime();
         //-----------
-        String formattedCurrentDateString = CommonMethods.formatDateTime(CommonMethods.getCurrentDate(RescribeConstants.DD_MM_YYYY), RescribeConstants.DATE_PATTERN.YYYY_MM_DD, RescribeConstants.DD_MM_YYYY, RescribeConstants.DATE);
+        String formattedCurrentDateString = CommonMethods.formatDateTime(CommonMethods.getCurrentDate(RescribeConstants.DATE_PATTERN.DD_MM_YYYY), RescribeConstants.DATE_PATTERN.YYYY_MM_DD, RescribeConstants.DATE_PATTERN.DD_MM_YYYY, RescribeConstants.DATE);
         SimpleDateFormat dateFormat = new SimpleDateFormat(RescribeConstants.DATE_PATTERN.YYYY_MM_DD, Locale.US);
         String receivedDateString = dateFormat.format(receivedDate);
         //------------

@@ -35,7 +35,6 @@ import android.widget.Toast;
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.rescribe.doctor.R;
-import com.rescribe.doctor.dms.util.Config;
 import com.rescribe.doctor.interfaces.CheckIpConnection;
 import com.rescribe.doctor.interfaces.DatePickerDialogListener;
 import com.rescribe.doctor.model.patient.patient_history.DatesData;
@@ -965,7 +964,7 @@ public class CommonMethods {
                 EditText etServerPath = (EditText) dialog.findViewById(R.id.et_server_path);
 
                 if (isValidIP(etServerPath.getText().toString())) {
-                    String mServerPath = com.rescribe.doctor.dms.util.Config.HTTP + etServerPath.getText().toString() + Config.API;
+                    String mServerPath =  Config.HTTP + etServerPath.getText().toString() + Config.API;
                     Log.e(TAG, "SERVER PATH===" + mServerPath);
                     mCheckIpConnection.onOkButtonClickListner(mServerPath, mContext, dialog);
                 } else {

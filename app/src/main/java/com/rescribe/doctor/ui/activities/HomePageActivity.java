@@ -34,14 +34,13 @@ import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
-import com.crashlytics.android.Crashlytics;
 import com.google.gson.Gson;
 import com.rescribe.doctor.R;
 import com.rescribe.doctor.adapters.dashboard.DashBoardAppointmentListAdapter;
 import com.rescribe.doctor.adapters.dashboard.DashBoardWaitingList;
 import com.rescribe.doctor.bottom_menus.BottomMenu;
 import com.rescribe.doctor.bottom_menus.BottomMenuActivity;
-import com.rescribe.doctor.dms.ui.activities.PatientList;
+import com.rescribe.doctor.ui.activities.dms_patient_list.PatientList;
 import com.rescribe.doctor.helpers.dashboard.DashboardHelper;
 import com.rescribe.doctor.helpers.login.LoginHelper;
 import com.rescribe.doctor.interfaces.CustomResponse;
@@ -158,8 +157,7 @@ public class HomePageActivity extends BottomMenuActivity implements HelperRespon
         setContentView(R.layout.home_page_layout);
         ButterKnife.bind(this);
         mContext = HomePageActivity.this;
-        docId = RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.DOC_ID, mContext);
-        logUser();
+
         mColorGenerator = ColorGenerator.MATERIAL;
         HomePageActivityPermissionsDispatcher.getPermissionWithCheck(HomePageActivity.this);
         docId = RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.DOC_ID, mContext);
@@ -167,14 +165,6 @@ public class HomePageActivity extends BottomMenuActivity implements HelperRespon
         initialize();
         setCurrentActivityTab(getString(R.string.home));
         //drawerConfiguration();
-    }
-
-    private void logUser() {
-        // TODO: Use the current user's information
-        // You can call any combination of these three methods
-        Crashlytics.setUserIdentifier(String.valueOf(docId));
-        Crashlytics.setUserEmail(RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.EMAIL, mContext));
-        Crashlytics.setUserName(RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.USER_NAME, mContext));
     }
 
 
@@ -476,7 +466,7 @@ public class HomePageActivity extends BottomMenuActivity implements HelperRespon
                         // inflate waiting list layout
                         setLayoutForWaitingList(mDashboardDetails.getDashboardAppointmentClinicList().getWaitingListCount() + "");
                         // inflate patientConnect layout
-                        setLayoutForPatientConnect();
+                      //  setLayoutForPatientConnect();
                         // inflate MyPatientsActivity layout
                         setLayoutForMyPatients();
 
@@ -490,7 +480,7 @@ public class HomePageActivity extends BottomMenuActivity implements HelperRespon
                         hostViewsLayout.removeAllViews();
                         setLayoutForWaitingListIfAppointmentListEmpty();
                         // inflate patientConnect layout
-                        setLayoutForPatientConnect();
+                    //    setLayoutForPatientConnect();
                         // inflate MyPatientsActivity layout
                         setLayoutForMyPatients();
                     } else {
@@ -505,7 +495,7 @@ public class HomePageActivity extends BottomMenuActivity implements HelperRespon
                         // inflate waiting list layout
                         setLayoutForWaitingList("0");
                         // inflate patientConnect layout
-                        setLayoutForPatientConnect();
+                       // setLayoutForPatientConnect();
                         // inflate MyPatientsActivity layout
                         setLayoutForMyPatients();
                     }
@@ -638,7 +628,7 @@ public class HomePageActivity extends BottomMenuActivity implements HelperRespon
         Toast.makeText(mContext, errorMessage + "", Toast.LENGTH_SHORT).show();
         setLayoutForAppointment(false, null);
         setLayoutForWaitingList("0");
-        setLayoutForPatientConnect();
+     //   setLayoutForPatientConnect();
         setLayoutForMyPatients();
 
 
@@ -657,7 +647,7 @@ public class HomePageActivity extends BottomMenuActivity implements HelperRespon
         Toast.makeText(mContext, serverErrorMessage + "", Toast.LENGTH_SHORT).show();
         setLayoutForAppointment(false, null);
         setLayoutForWaitingList("0");
-        setLayoutForPatientConnect();
+        //setLayoutForPatientConnect();
         setLayoutForMyPatients();
 
     }

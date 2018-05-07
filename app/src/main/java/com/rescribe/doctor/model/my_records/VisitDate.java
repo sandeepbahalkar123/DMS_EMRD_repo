@@ -7,7 +7,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.rescribe.doctor.util.CommonMethods;
 
-import static com.rescribe.doctor.util.RescribeConstants.DD_MM_YYYY;
+import static com.rescribe.doctor.util.RescribeConstants.DATE_PATTERN.DD_MM_YYYY;
 
 public class VisitDate implements Parcelable {
 

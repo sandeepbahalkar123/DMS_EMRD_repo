@@ -34,7 +34,7 @@ public class ShowTimingsBookAppointmentDoctor extends RecyclerView.Adapter<ShowT
         this.mDataList = dataList;
         this.mContext = mContext;
         this.mSelectedDate = mSelectedDate;
-        mFormattedCurrentDateString = CommonMethods.formatDateTime(CommonMethods.getCurrentDate(RescribeConstants.DD_MM_YYYY), RescribeConstants.DATE_PATTERN.YYYY_MM_DD, RescribeConstants.DD_MM_YYYY, RescribeConstants.DATE);
+        mFormattedCurrentDateString = CommonMethods.formatDateTime(CommonMethods.getCurrentDate(RescribeConstants.DATE_PATTERN.DD_MM_YYYY), RescribeConstants.DATE_PATTERN.YYYY_MM_DD, RescribeConstants.DATE_PATTERN.DD_MM_YYYY, RescribeConstants.DATE);
 
     }
 

@@ -1,67 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white">
+    android:background="@color/white"
+    android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/infoLayout"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp44"
-        android:orientation="horizontal"
-        android:padding="@dimen/dp2">
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/dp8"
+        android:paddingEnd="@dimen/dp8"
+        android:layout_toLeftOf="@+id/expandCollapseButton"
+        android:layout_toStartOf="@+id/expandCollapseButton"
+        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/uhid"
-            android:layout_width="?attr/actionBarSize"
-            android:layout_height="match_parent"
-            android:background="@drawable/rounded_button_blue"
-            android:gravity="center"
-            android:paddingBottom="@dimen/uhid"
-            android:paddingTop="@dimen/uhid"
-            android:textColor="@color/white"
-            android:textSize="@dimen/sp14"
-            tools:text="111" />
-
-        <TextView
-            android:id="@+id/patientId"
-            android:layout_width="@dimen/patientIdWidth"
-            android:layout_height="wrap_content"
-            android:paddingEnd="@dimen/activity_horizontal_margin"
-            android:paddingLeft="@dimen/dp5"
-            android:paddingRight="@dimen/activity_horizontal_margin"
-            android:paddingStart="@dimen/dp5"
-            android:textSize="@dimen/sp14"
-            tools:text="111" />
-
-        <TextView
-            android:id="@+id/userName"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dp5"
-            android:drawableLeft="@mipmap/userfill"
-            android:drawablePadding="@dimen/dp10"
-            android:gravity="center_vertical"
-            android:text="@string/user_name"
-            android:textSize="@dimen/sp14"
-            android:textStyle="bold" />
+            android:layout_height="@dimen/dp40"
+            android:orientation="horizontal"
+            android:padding="@dimen/dp2">
 
+            <TextView
+                android:id="@+id/uhid"
+                android:layout_width="?attr/actionBarSize"
+                android:layout_height="match_parent"
+                android:background="@drawable/rounded_button_blue"
+                android:gravity="center"
+                android:paddingBottom="@dimen/uhid"
+                android:paddingTop="@dimen/uhid"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp14"
+                tools:text="111" />
+
+            <TextView
+                android:id="@+id/patientId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingEnd="@dimen/activity_horizontal_margin"
+                android:paddingLeft="@dimen/dp5"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:paddingStart="@dimen/dp5"
+                android:textSize="@dimen/sp14"
+                tools:text="111" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/userName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp5"
+                android:layout_marginStart="@dimen/dp5"
+                android:drawableLeft="@mipmap/userfill"
+                android:drawablePadding="@dimen/dp10"
+                android:drawableStart="@mipmap/userfill"
+                android:gravity="center_vertical"
+                android:paddingBottom="@dimen/dp4"
+                android:paddingTop="@dimen/dp4"
+                android:textStyle="bold"
+                android:text="@string/user_name"
+                android:textSize="@dimen/sp14" />
+        </LinearLayout>
     </LinearLayout>
 
-    <!--<LinearLayout
-        android:id="@+id/contentLayout"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-       <include layout="@layout/item_patient_content" />
-    </LinearLayout>
-    <TextView
-        android:id="@+id/moreOption"
+    <android.support.v7.widget.AppCompatImageButton
+        android:id="@+id/expandCollapseButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:gravity="right"
-        android:text="@string/more"
-        android:textColor="@color/cobalt_blue" />
--->
-</LinearLayout>
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:background="@color/transparent"
+        android:padding="@dimen/dp6"
+        android:clickable="false"
+        app:srcCompat="@drawable/ic_expand_more_black_24dp" />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp1"
+        android:layout_below="@+id/infoLayout"
+        android:layout_marginBottom="@dimen/dp5"
+        android:layout_marginTop="@dimen/dp5"
+        android:background="@color/grey" />
+
+</RelativeLayout>

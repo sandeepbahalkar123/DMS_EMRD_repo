@@ -56,6 +56,35 @@ public class ConnectionFactory extends ConnectRequest {
         this.mHeaderParams = headerParams;
     }
 
+
+    //THis is done for now, as DMS API IS NOT AVAILABLE RIGHT NOW
+    public void setDMSHeaderParams() {
+
+        Map<String, String> headerParams = new HashMap<>();
+
+        String authorizationString = "";
+        String contentType = RescribePreferencesManager.getString(RescribeConstants.LOGIN_SUCCESS, mContext);
+
+        if (contentType.equalsIgnoreCase(RescribeConstants.TRUE)) {
+            authorizationString = RescribePreferencesManager.getString(RescribeConstants.TOKEN_TYPE, mContext)
+                    + " " + RescribePreferencesManager.getString(RescribeConstants.ACCESS_TOKEN, mContext);
+            headerParams.put(RescribeConstants.CONTENT_TYPE, RescribeConstants.APPLICATION_JSON);
+        } else {
+            headerParams.put(RescribeConstants.CONTENT_TYPE, RescribeConstants.APPLICATION_URL_ENCODED);
+        }
+
+        headerParams.put(RescribeConstants.AUTHORIZATION, authorizationString);
+        headerParams.put(RescribeConstants.DEVICEID, device.getDeviceId());
+
+        headerParams.put(RescribeConstants.OS, device.getOS());
+        headerParams.put(RescribeConstants.OSVERSION, device.getOSVersion());
+        //  headerParams.put(RescribeConstants.DEVICETYPE, device.getDeviceType());
+//        headerParams.put(RescribeConstants.ACCESS_TOKEN, "");
+        CommonMethods.Log(TAG, "setHeaderParams:" + headerParams.toString());
+        this.mHeaderParams = headerParams;
+    }
+
+
     public void setPostParams(CustomResponse customResponse) {
         this.customResponse = customResponse;
     }
@@ -66,6 +95,13 @@ public class ConnectionFactory extends ConnectRequest {
 
     public void setUrl(String url) {
         this.mURL = Config.BASE_URL + url;
+        CommonMethods.Log(TAG, "mURL: " + this.mURL);
+    }
+
+    public void setDMSUrl(String url) {
+        String baseUrl = RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.SERVER_PATH, mContext);
+
+        this.mURL = baseUrl + url;
         CommonMethods.Log(TAG, "mURL: " + this.mURL);
     }
 

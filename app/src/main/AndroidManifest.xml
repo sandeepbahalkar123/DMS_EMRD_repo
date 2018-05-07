@@ -244,7 +244,7 @@
         <!--DMS-->
 
         <activity
-            android:name="com.rescribe.doctor.dms.ui.activities.PatientList"
+            android:name="com.rescribe.doctor.ui.activities.dms_patient_list.PatientList"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/patient_list"
             android:theme="@style/AppTheme.NoActionBar"/>
@@ -255,16 +255,12 @@
             android:noHistory="true"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
-            android:name="com.rescribe.doctor.dms.ui.activities.FileTypeViewerActivity"
+            android:name="com.rescribe.doctor.ui.activities.dms_patient_list.FileTypeViewerActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/title_activity_login"
             android:theme="@style/AppTheme.NoActionBar"/>
 
         <!--DMS-->
-
-        <meta-data
-            android:name="io.fabric.ApiKey"
-            android:value="8851ad6fd63975db848f308a0298d6c942f63d6b" />
     </application>
 
 </manifest>

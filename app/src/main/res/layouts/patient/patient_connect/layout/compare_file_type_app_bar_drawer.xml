@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="dms.ui.activities.PatientList">
+    tools:context=".ui.activities.dms_patient_list.PatientList">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -21,13 +21,14 @@
 
             <ImageView
                 android:id="@+id/openRightDrawer"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/dp34"
+                android:layout_height="@dimen/dp34"
                 android:layout_gravity="center_vertical|end"
                 android:layout_marginEnd="@dimen/dp10"
                 android:layout_marginRight="@dimen/dp10"
-                android:padding="@dimen/dp10"
+                android:padding="@dimen/dp6"
                 android:src="@mipmap/more" />
+
         </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>

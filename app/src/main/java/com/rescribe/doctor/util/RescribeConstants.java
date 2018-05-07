@@ -1,8 +1,6 @@
 package com.rescribe.doctor.util;
 
 
-import com.rescribe.doctor.dms.util.DmsConstants;
-
 /**
  * @author Sandeep Bahalkar
  */
@@ -11,10 +9,11 @@ public class RescribeConstants {
     public static final String RESCRIBE_LOG_FOLDER = "Rescribe_LOG";
     public static final String RESCRIBE_LOG_FILE = "Rescribe_LOG_FILE.txt";
 
+
+
     public static final String MT_TABLET = "TABLET";
     public static final String MT_SYRUP = "SYRUP";
     public static final String MT_OINTMENT = "OINTMENT";
-    public static final String DD_MM_YYYY = "dd-MM-yyyy";
     public static final String YES = "yes";
     public static final String DOCUMENTS = "documents";
     public static final String ATTACHMENTS_LIST = "ATTACHMENTS_LIST";
@@ -130,7 +129,8 @@ public class RescribeConstants {
     //-----------
 
     public static final String TAKEN_DATE = "takenDate";
-
+    public static final String PATIENT_ADDRESS = "patientAddress";
+    public static final String DOCTOR_NAME = "doctorName";
     public static final String TITLE = "title";
     public static final int MAX_RETRIES = 3;
 
@@ -313,6 +313,18 @@ public class RescribeConstants {
         String ONLY_ATTACHMENTS = "only attachments";
         String NO_SHOW = "no show";
     }
+
+
+    public static class PATIENT_LIST_PARAMS {
+        public static final String PATIENT_NAME = "patientName";
+        public static final String FILE_TYPE = "fileType";
+        public static final String DATE_TYPE = "dateType";
+        public static final String FROM_DATE = "fromDate";
+        public static final String TO_DATE = "toDate";
+        public static final String ANNOTATION_TEXT = "annotationText";
+        public static final String DOC_TYPE_ID = "DocTypeId";
+    }
+
 }
 
 

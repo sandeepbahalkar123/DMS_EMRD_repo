@@ -26,19 +26,18 @@ import com.android.volley.toolbox.StringRequest;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.rescribe.doctor.R;
-import com.rescribe.doctor.dms.model.responsemodel.annotationlistresponsemodel.AnnotationListResponseModel;
-import com.rescribe.doctor.dms.model.responsemodel.filetreeresponsemodel.FileTreeResponseModel;
-import com.rescribe.doctor.dms.model.responsemodel.getpdfdataresponsemodel.GetPdfDataResponseModel;
-import com.rescribe.doctor.dms.model.responsemodel.patientnamelistresponsemodel.PatientNameListResponseModel;
-import com.rescribe.doctor.dms.model.responsemodel.showsearchresultresponsemodel.ShowSearchResultResponseModel;
-import com.rescribe.doctor.dms.util.DmsConstants;
+import com.rescribe.doctor.model.dms_models.responsemodel.annotationlistresponsemodel.AnnotationListResponseModel;
+import com.rescribe.doctor.model.dms_models.responsemodel.filetreeresponsemodel.FileTreeResponseModel;
+import com.rescribe.doctor.model.dms_models.responsemodel.getpdfdataresponsemodel.GetPdfDataResponseModel;
+import com.rescribe.doctor.model.dms_models.responsemodel.loginresponsemodel.LoginResponseModel;
+import com.rescribe.doctor.model.dms_models.responsemodel.patientnamelistresponsemodel.PatientNameListResponseModel;
+import com.rescribe.doctor.model.dms_models.responsemodel.showsearchresultresponsemodel.ShowSearchResultResponseModel;
 import com.rescribe.doctor.helpers.database.AppDBHelper;
 import com.rescribe.doctor.model.iptestresponsemodel.IpTestResponseModel;
 import com.rescribe.doctor.model.patient.doctor_patients.MyPatientBaseModel;
 import com.rescribe.doctor.interfaces.ConnectionListener;
 import com.rescribe.doctor.interfaces.Connector;
 import com.rescribe.doctor.interfaces.CustomResponse;
-import com.rescribe.doctor.model.Common;
 import com.rescribe.doctor.model.CommonBaseModelContainer;
 import com.rescribe.doctor.model.case_details.CaseDetailsModel;
 import com.rescribe.doctor.model.chat.SendMessageModel;
@@ -425,6 +424,8 @@ public class RequestManager extends ConnectRequest implements Connector, Request
             CommonMethods.Log(TAG, data);
             Gson gson = new Gson();
 
+            /*
+            // DONT KNOW, WHY THIS IS ADDED, HENCED COMMENTED.
             JSONObject jsonObject;
             try {
                 jsonObject = new JSONObject(data);
@@ -434,7 +435,7 @@ public class RequestManager extends ConnectRequest implements Connector, Request
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
-            }
+            }*/
 
             /*MessageModel messageModel = gson.fromJson(data, MessageModel.class);
             if (!messageModel.getCommon().getStatusCode().equals(RescribeConstants.SUCCESS))
@@ -464,6 +465,12 @@ public class RequestManager extends ConnectRequest implements Connector, Request
                         LoginModel loginModel = gson.fromJson(data, LoginModel.class);
                         this.mConnectionListener.onResponse(ConnectionListener.RESPONSE_OK, loginModel, mOldDataTag);
                         break;*/
+
+
+                    case RescribeConstants.TASK_LOGIN_CODE: //This is LOGIN
+                        LoginResponseModel mLoginResponseModel = new Gson().fromJson(data, LoginResponseModel.class);
+                        this.mConnectionListener.onResponse(ConnectionListener.RESPONSE_OK, mLoginResponseModel, mOldDataTag);
+                        break;
                     case RescribeConstants.TASK_LOGIN_WITH_PASSWORD: //This is for get archived list
                         LoginModel loginWithPasswordModel = new Gson().fromJson(data, LoginModel.class);
                         this.mConnectionListener.onResponse(ConnectionListener.RESPONSE_OK, loginWithPasswordModel, mOldDataTag);
@@ -634,7 +641,6 @@ public class RequestManager extends ConnectRequest implements Connector, Request
                             GetPdfDataResponseModel getPdfDataResponseModel = gson.fromJson(data, GetPdfDataResponseModel.class);
                             this.mConnectionListener.onResponse(ConnectionListener.RESPONSE_OK, getPdfDataResponseModel, mOldDataTag);
                         }
-
 
 
                 }

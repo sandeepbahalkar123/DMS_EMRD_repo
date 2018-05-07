@@ -29,7 +29,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight="4"
-                    android:textSize="@dimen/sp14"
+                    android:textSize="@dimen/sp13"
                     android:gravity="center_vertical"
                     android:text="@string/scrollingBoth"
                     android:textColor="@color/black"
@@ -43,7 +43,7 @@
                     android:layout_weight="2"
                     android:checked="false"
                     android:maxLines="1"
-                    android:textSize="@dimen/sp14"
+                    android:textSize="@dimen/sp13"
                     android:textColor="@color/black"
                     android:textStyle="bold" />
 
@@ -64,7 +64,7 @@
                     android:layout_weight="6"
                     android:gravity="center_vertical"
                     android:maxLines="1"
-                    android:textSize="@dimen/sp14"
+                    android:textSize="@dimen/sp13"
                     android:text="@string/patientInformation"
                     android:textColor="@color/black"
                     android:textStyle="bold" />
@@ -89,7 +89,7 @@
                 android:drawablePadding="@dimen/dp5"
                 android:drawableStart="@mipmap/usercheck"
                 android:gravity="center_vertical"
-                android:textSize="@dimen/sp14"
+                android:textSize="@dimen/sp13"
                 android:textColor="@color/black"
                 android:textStyle="bold" />
 
@@ -112,7 +112,7 @@
                     android:gravity="center_vertical"
                     android:text="@string/uhid"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/sp14"
+                    android:textSize="@dimen/sp13"
                     android:textStyle="bold" />
 
                 <TextView
@@ -125,7 +125,7 @@
                     android:layout_weight="2"
                     android:gravity="center_vertical"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/sp14"
+                    android:textSize="@dimen/sp13"
                     android:textStyle="bold"
                     tools:text="@string/uhid" />
 
@@ -149,7 +149,7 @@
                     android:drawableStart="@mipmap/placeholderblack"
                     android:gravity="center_vertical"
                     android:text="@string/address"
-                    android:textSize="@dimen/sp14"
+                    android:textSize="@dimen/sp13"
                     android:textColor="@color/black"
                     android:textStyle="bold" />
 
@@ -162,7 +162,7 @@
                     android:layout_marginStart="@dimen/dp5"
                     android:layout_weight="2"
                     android:gravity="center_vertical"
-                    android:textSize="@dimen/sp14"
+                    android:textSize="@dimen/sp13"
                     android:textColor="@color/black"
                     android:textStyle="bold"
                     tools:text="@string/address" />
@@ -197,7 +197,7 @@
                         android:gravity="center_vertical"
                         android:text="@string/file_one"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/sp14"
+                        android:textSize="@dimen/sp13"
                         android:textStyle="bold" />
 
                     <LinearLayout
@@ -213,7 +213,7 @@
                             android:background="@drawable/background_fileno"
                             android:gravity="center"
                             android:lines="1"
-                            android:textSize="@dimen/sp14"
+                            android:textSize="@dimen/sp13"
                             android:padding="@dimen/padding_tiny"
                             android:text=""
                             android:textColor="@color/white"
@@ -245,7 +245,7 @@
                         android:drawableStart="@mipmap/referenceidblack"
                         android:gravity="center_vertical"
                         android:text="@string/refId"
-                        android:textSize="@dimen/sp14"
+                        android:textSize="@dimen/sp13"
                         android:textColor="@color/black"
                         android:textStyle="bold" />
 
@@ -264,7 +264,7 @@
                             android:lines="1"
                             android:padding="@dimen/padding_tiny"
                             android:text=""
-                            android:textSize="@dimen/sp14"
+                            android:textSize="@dimen/sp13"
                             android:textColor="@color/white"
                             android:textStyle="bold" />
 
@@ -471,7 +471,7 @@
                         android:drawableStart="@mipmap/referenceidblack"
                         android:gravity="center_vertical"
                         android:text="@string/refId"
-                        android:textSize="@dimen/sp14"
+                        android:textSize="@dimen/sp13"
                         android:textColor="@color/black"
                         android:textStyle="bold" />
 
@@ -492,7 +492,7 @@
                             android:lines="1"
                             android:padding="@dimen/dp5"
                             android:text=""
-                            android:textSize="@dimen/sp14"
+                            android:textSize="@dimen/sp13"
                             android:textColor="@color/white"
                             android:textStyle="bold" />
 

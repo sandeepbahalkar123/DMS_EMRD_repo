@@ -56,8 +56,8 @@ public class LoginActivity extends AppCompatActivity implements HelperResponse {
     @OnClick(R.id.loginButton)
     public void doLogin() {
         if (!validate()) {
-         //   mLoginHelper.doAppLogin(mUserName.getText().toString(), mPassword.getText().toString());
-            onSuccess(null,null);
+            mLoginHelper.doAppLogin(mUserName.getText().toString(), mPassword.getText().toString());
+            // onSuccess(null, null);
         }
     }
 
@@ -111,7 +111,8 @@ public class LoginActivity extends AppCompatActivity implements HelperResponse {
                 RescribePreferencesManager.putString(RescribePreferencesManager.DMS_PREFERENCES_KEY.SPECIALITY, docDetail.getDocSpaciality(), this);
                 RescribePreferencesManager.putString(RescribePreferencesManager.DMS_PREFERENCES_KEY.ADDRESS, docDetail.getDocAddress(), this);
                 RescribePreferencesManager.putString(RescribePreferencesManager.DMS_PREFERENCES_KEY.LOGIN_STATUS, RescribeConstants.YES, this);
-                RescribePreferencesManager.putString(RescribePreferencesManager.DMS_PREFERENCES_KEY.PASSWORD, mPassword.getText().toString(), this);
+                //TODO: password hardcoded for dashboard data of doctor.
+                RescribePreferencesManager.putString(RescribePreferencesManager.DMS_PREFERENCES_KEY.PASSWORD, "doctor", this);
 
                 String doctorDetails = new Gson().toJson(docDetail);
                 RescribePreferencesManager.putString(RescribePreferencesManager.DMS_PREFERENCES_KEY.DOC_INFO, doctorDetails, this);
