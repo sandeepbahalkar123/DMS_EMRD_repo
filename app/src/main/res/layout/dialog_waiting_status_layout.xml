@@ -19,7 +19,7 @@
         app:srcCompat="@drawable/circular_bullet"
         android:layout_marginLeft="@dimen/dp6"
         />
-    <com.rescribe.doctor.ui.customesViews.CustomTextView
+    <com.scorg.dms.ui.customesViews.CustomTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/waitingStatusText"

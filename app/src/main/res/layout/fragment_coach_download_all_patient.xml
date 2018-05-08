@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.rescribe.doctor.ui.customesViews.JCropImageView
+    <com.scorg.dms.ui.customesViews.JCropImageView
         android:id="@+id/coachmark"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

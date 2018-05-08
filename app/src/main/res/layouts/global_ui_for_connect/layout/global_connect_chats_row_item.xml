@@ -9,7 +9,7 @@
     android:focusable="true"
     android:orientation="vertical">
 
-    <com.rescribe.doctor.ui.customesViews.CustomTextView
+    <com.scorg.dms.ui.customesViews.CustomTextView
         android:id="@+id/headingText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -72,7 +72,7 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
                 <!-- Artist Name -->
-                <com.rescribe.doctor.ui.customesViews.CustomTextView
+                <com.scorg.dms.ui.customesViews.CustomTextView
                     android:id="@+id/doctorName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -83,7 +83,7 @@
                     app:customFont="@string/roboto_bold"
                     tools:text="Sagar Patil" />
 
-                <com.rescribe.doctor.ui.customesViews.CustomTextView
+                <com.scorg.dms.ui.customesViews.CustomTextView
                     android:id="@+id/badgeText"
                     android:layout_width="@dimen/dp21"
                     android:layout_height="@dimen/dp21"
@@ -101,7 +101,7 @@
             </LinearLayout>
 
             <!-- Rightend Duration -->
-            <com.rescribe.doctor.ui.customesViews.CustomTextView
+            <com.scorg.dms.ui.customesViews.CustomTextView
                 android:id="@+id/messageTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -113,7 +113,7 @@
                 app:customFont="@string/roboto_medium" />
         </LinearLayout>
 
-        <com.rescribe.doctor.ui.customesViews.CustomTextView
+        <com.scorg.dms.ui.customesViews.CustomTextView
             android:id="@+id/dateTimeText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

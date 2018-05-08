@@ -19,7 +19,7 @@
             android:layout_height="@dimen/dp56"
             android:orientation="horizontal">
 
-            <com.rescribe.doctor.ui.customesViews.CustomTextView
+            <com.scorg.dms.ui.customesViews.CustomTextView
                 android:id="@+id/textName"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -36,7 +36,7 @@
                 android:gravity="center"
                 android:orientation="horizontal">
 
-                <com.rescribe.doctor.ui.customesViews.SwitchButton
+                <com.scorg.dms.ui.customesViews.SwitchButton
                     android:id="@+id/addPatientRadioSwitch"
                     style="@style/SwitchButtonStyle"
                     android:layout_width="wrap_content"
@@ -52,7 +52,7 @@
             android:layout_height="@dimen/dp1"
             android:background="@color/divider" />
 
-        <com.rescribe.doctor.ui.customesViews.CustomTextView
+        <com.scorg.dms.ui.customesViews.CustomTextView
             android:id="@+id/change_ip_address"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp56"
@@ -85,7 +85,7 @@
                 android:visibility="gone"
                 app:srcCompat="@drawable/dashboard_arrow" />
 
-            <com.rescribe.doctor.ui.customesViews.CustomTextView
+            <com.scorg.dms.ui.customesViews.CustomTextView
                 android:id="@+id/logout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

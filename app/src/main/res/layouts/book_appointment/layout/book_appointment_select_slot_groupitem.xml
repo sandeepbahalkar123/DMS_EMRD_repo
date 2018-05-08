@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical" />
 
-        <com.rescribe.doctor.ui.customesViews.CustomTextView
+        <com.scorg.dms.ui.customesViews.CustomTextView
             android:id="@+id/slotName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -33,7 +33,7 @@
             app:customFont="@string/roboto_regular"
             tools:text="Morning" />
 
-        <com.rescribe.doctor.ui.customesViews.CustomTextView
+        <com.scorg.dms.ui.customesViews.CustomTextView
             android:id="@+id/slotTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

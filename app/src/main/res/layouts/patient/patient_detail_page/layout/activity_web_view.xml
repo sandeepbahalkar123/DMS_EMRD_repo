@@ -24,7 +24,7 @@
                 android:padding="@dimen/dp16"
                 app:srcCompat="@drawable/ic_arrow_back_white_24dp" />
 
-            <com.rescribe.doctor.ui.customesViews.CustomTextView
+            <com.scorg.dms.ui.customesViews.CustomTextView
                 android:id="@+id/webViewTitle"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"

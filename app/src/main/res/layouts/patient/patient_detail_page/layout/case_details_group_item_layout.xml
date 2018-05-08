@@ -38,7 +38,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <com.rescribe.doctor.ui.customesViews.CustomTextView
+                <com.scorg.dms.ui.customesViews.CustomTextView
                     android:id="@+id/viewDetailHeaderLabel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -67,7 +67,7 @@
                 android:background="@color/divider"
                 android:visibility="gone" />
 
-            <com.rescribe.doctor.ui.customesViews.CustomTextView
+            <com.scorg.dms.ui.customesViews.CustomTextView
                 android:id="@+id/detailFirstPoint"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

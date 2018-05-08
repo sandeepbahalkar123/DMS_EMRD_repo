@@ -30,7 +30,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <com.rescribe.doctor.ui.customesViews.CustomTextView
+                    <com.scorg.dms.ui.customesViews.CustomTextView
                         android:id="@+id/servicesHeaderView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -55,7 +55,7 @@
                         android:listSelector="@android:color/transparent"
                         android:visibility="visible" />
 
-                    <com.rescribe.doctor.ui.customesViews.CustomTextView
+                    <com.scorg.dms.ui.customesViews.CustomTextView
                         android:id="@+id/readMoreDocServices"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -85,7 +85,7 @@
                     android:padding="@dimen/dp10"
                     tools:visibility="visible">
 
-                    <com.rescribe.doctor.ui.customesViews.CustomTextView
+                    <com.scorg.dms.ui.customesViews.CustomTextView
                         android:id="@+id/aboutDoctor"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -95,7 +95,7 @@
                         android:textSize="@dimen/sp16"
                         app:customFont="@string/roboto_medium" />
 
-                    <com.rescribe.doctor.ui.customesViews.CustomTextView
+                    <com.scorg.dms.ui.customesViews.CustomTextView
                         android:id="@+id/aboutDoctorDescription"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

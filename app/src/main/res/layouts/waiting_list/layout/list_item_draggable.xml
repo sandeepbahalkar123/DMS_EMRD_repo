@@ -69,7 +69,7 @@
                     app:srcCompat="@drawable/result_blue_line"
                     tools:ignore="ContentDescription,RtlSymmetry" />
 
-                <com.rescribe.doctor.ui.customesViews.CustomTextView
+                <com.scorg.dms.ui.customesViews.CustomTextView
                     android:id="@+id/patientIdTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -84,7 +84,7 @@
                     tools:ignore="RtlSymmetry"
                     tools:text="ID: 23456" />
 
-                <com.rescribe.doctor.ui.customesViews.CustomTextView
+                <com.scorg.dms.ui.customesViews.CustomTextView
                     android:id="@+id/appointmentTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -127,7 +127,7 @@
                     android:orientation="vertical"
                     tools:ignore="RelativeOverlap">
 
-                    <com.rescribe.doctor.ui.customesViews.CustomTextView
+                    <com.scorg.dms.ui.customesViews.CustomTextView
                         android:id="@+id/patientNameTextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -142,7 +142,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
-                        <com.rescribe.doctor.ui.customesViews.CustomTextView
+                        <com.scorg.dms.ui.customesViews.CustomTextView
                             android:id="@+id/statusTextView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -151,7 +151,7 @@
                             android:textSize="@dimen/sp12"
                             app:customFont="@string/roboto_medium" />
 
-                        <com.rescribe.doctor.ui.customesViews.CustomTextView
+                        <com.scorg.dms.ui.customesViews.CustomTextView
                             android:id="@+id/typeStatus"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -167,7 +167,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
-                        <com.rescribe.doctor.ui.customesViews.CustomTextView
+                        <com.scorg.dms.ui.customesViews.CustomTextView
                             android:id="@+id/appointmentLabelTextView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -176,7 +176,7 @@
                             android:textSize="@dimen/sp12"
                             app:customFont="@string/roboto_medium" />
 
-                        <com.rescribe.doctor.ui.customesViews.CustomTextView
+                        <com.scorg.dms.ui.customesViews.CustomTextView
                             android:id="@+id/appointmentTimeTextView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -208,7 +208,7 @@
                     android:layout_weight=".4"
                     android:gravity="center_horizontal">
 
-                    <com.rescribe.doctor.ui.customesViews.CustomTextView
+                    <com.scorg.dms.ui.customesViews.CustomTextView
                         android:id="@+id/patientPhoneNumber"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -240,7 +240,7 @@
                     android:gravity="center"
                     android:orientation="horizontal">
 
-                    <com.rescribe.doctor.ui.customesViews.CustomTextView
+                    <com.scorg.dms.ui.customesViews.CustomTextView
                         android:id="@+id/tokenLabelTextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -250,7 +250,7 @@
                         android:textSize="@dimen/sp11"
                         app:customFont="@string/roboto_medium" />
 
-                    <com.rescribe.doctor.ui.customesViews.CustomTextView
+                    <com.scorg.dms.ui.customesViews.CustomTextView
                         android:id="@+id/tokenNumber"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

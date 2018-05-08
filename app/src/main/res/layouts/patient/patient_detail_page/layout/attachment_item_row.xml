@@ -23,7 +23,7 @@
             android:scaleType="centerCrop"
             tools:src="@drawable/ic_file" />
 
-        <com.rescribe.doctor.ui.customesViews.CustomTextView
+        <com.scorg.dms.ui.customesViews.CustomTextView
             android:id="@+id/titleText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

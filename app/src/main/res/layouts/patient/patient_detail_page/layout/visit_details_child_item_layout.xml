@@ -26,13 +26,13 @@
         android:layout_marginLeft="@dimen/dp58"
         android:orientation="horizontal">
 
-        <com.rescribe.doctor.ui.customesViews.CircularImageView
+        <com.scorg.dms.ui.customesViews.CircularImageView
             android:layout_width="@dimen/dp5"
             android:layout_height="@dimen/dp5"
             android:layout_margin="@dimen/dp10"
             android:background="@drawable/circular_bullet" />
 
-        <com.rescribe.doctor.ui.customesViews.CustomTextView
+        <com.scorg.dms.ui.customesViews.CustomTextView
             android:id="@+id/textView_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

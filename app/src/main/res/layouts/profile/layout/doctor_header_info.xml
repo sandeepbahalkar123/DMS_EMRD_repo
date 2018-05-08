@@ -23,7 +23,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp6">
 
-                <com.rescribe.doctor.ui.customesViews.CustomTextView
+                <com.scorg.dms.ui.customesViews.CustomTextView
                     android:id="@+id/premiumType"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -72,7 +72,7 @@
                             android:layout_height="wrap_content"
                             app:srcCompat="@drawable/about_ruppee_icon" />
 
-                        <com.rescribe.doctor.ui.customesViews.CustomTextView
+                        <com.scorg.dms.ui.customesViews.CustomTextView
                             android:id="@+id/doctorFees"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -112,7 +112,7 @@
             android:layout_gravity="center"
             android:orientation="horizontal">
 
-            <com.rescribe.doctor.ui.customesViews.CircularImageView
+            <com.scorg.dms.ui.customesViews.CircularImageView
                 android:id="@+id/profileImage"
                 android:layout_width="@dimen/dp86"
                 android:layout_height="@dimen/dp86"
@@ -133,7 +133,7 @@
                 android:paddingLeft="@dimen/dp10">
 
                 <!-- Title Of Song-->
-                <com.rescribe.doctor.ui.customesViews.CustomTextView
+                <com.scorg.dms.ui.customesViews.CustomTextView
                     android:id="@+id/clinicName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -146,7 +146,7 @@
                     tools:text="Neurology" />
 
                 <!-- Artist Name -->
-                <com.rescribe.doctor.ui.customesViews.CustomTextView
+                <com.scorg.dms.ui.customesViews.CustomTextView
                     android:id="@+id/doctorName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -157,7 +157,7 @@
                     app:customFont="@string/roboto_bold" />
 
                 <!-- Rightend Duration -->
-                <com.rescribe.doctor.ui.customesViews.CustomTextView
+                <com.scorg.dms.ui.customesViews.CustomTextView
                     android:id="@+id/doctorSpecialization"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -185,7 +185,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_centerInParent="true">
 
-                <com.rescribe.doctor.ui.customesViews.CustomTextView
+                <com.scorg.dms.ui.customesViews.CustomTextView
                     android:id="@+id/docRating"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -245,7 +245,7 @@
             android:orientation="horizontal"
             android:padding="@dimen/dp10">
 
-            <com.rescribe.doctor.ui.customesViews.CustomTextView
+            <com.scorg.dms.ui.customesViews.CustomTextView
                 android:id="@+id/docPracticesLocationCount"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -296,7 +296,7 @@
                 android:spinnerMode="dropdown"
                 android:visibility="visible" />
 
-            <com.rescribe.doctor.ui.customesViews.CustomTextView
+            <com.scorg.dms.ui.customesViews.CustomTextView
                 style="@style/SpinnerThemeProfile"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -328,7 +328,7 @@
                     android:layout_height="match_parent"
                     app:srcCompat="@drawable/experience_icon" />
 
-                <com.rescribe.doctor.ui.customesViews.CustomTextView
+                <com.scorg.dms.ui.customesViews.CustomTextView
                     android:id="@+id/countDoctorExperience"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -341,7 +341,7 @@
                     app:customFont="@string/roboto_bold" />
             </FrameLayout>
 
-            <com.rescribe.doctor.ui.customesViews.CustomTextView
+            <com.scorg.dms.ui.customesViews.CustomTextView
                 android:id="@+id/doctorExperience"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"

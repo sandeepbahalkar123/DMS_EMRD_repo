@@ -5,7 +5,7 @@
     android:layout_width="wrap_content"
     android:layout_height="@dimen/dp32">
 
-    <com.rescribe.doctor.ui.customesViews.CustomTextView
+    <com.scorg.dms.ui.customesViews.CustomTextView
         android:id="@+id/showTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -40,7 +40,7 @@
                 android:layout_weight="1"
                 android:clickable="true">
 
-                <com.rescribe.doctor.ui.customesViews.CustomTextView
+                <com.scorg.dms.ui.customesViews.CustomTextView
                     android:id="@+id/todayWaitingListOrAppointmentCount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -52,7 +52,7 @@
                     app:customFont="@string/roboto_bold"
                     tools:text="21" />
 
-                <com.rescribe.doctor.ui.customesViews.CustomTextView
+                <com.scorg.dms.ui.customesViews.CustomTextView
                     android:id="@+id/todayWaitingListOrAppointmentTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -86,7 +86,7 @@
                 android:layout_weight="1"
                 android:clickable="true">
 
-                <com.rescribe.doctor.ui.customesViews.CustomTextView
+                <com.scorg.dms.ui.customesViews.CustomTextView
                     android:id="@+id/todayNewAppointmentCount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -98,7 +98,7 @@
                     app:customFont="@string/roboto_bold"
                     tools:text="21" />
 
-                <com.rescribe.doctor.ui.customesViews.CustomTextView
+                <com.scorg.dms.ui.customesViews.CustomTextView
                     android:id="@+id/todayNewAppointmentTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -133,7 +133,7 @@
                 android:clickable="true"
                 android:focusable="true">
 
-                <com.rescribe.doctor.ui.customesViews.CustomTextView
+                <com.scorg.dms.ui.customesViews.CustomTextView
                     android:id="@+id/todayFollowAppointmentCount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -145,7 +145,7 @@
                     app:customFont="@string/roboto_bold"
                     tools:text="21" />
 
-                <com.rescribe.doctor.ui.customesViews.CustomTextView
+                <com.scorg.dms.ui.customesViews.CustomTextView
                     android:id="@+id/todayFollowAppointmentTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -175,7 +175,7 @@
             android:orientation="horizontal"
             android:visibility="visible">
 
-            <com.rescribe.doctor.ui.customesViews.CircularImageView
+            <com.scorg.dms.ui.customesViews.CircularImageView
                 android:id="@+id/doctorDashboardImage"
                 android:layout_width="@dimen/dp100"
                 android:layout_height="@dimen/dp100"
@@ -190,7 +190,7 @@
                 android:layout_marginLeft="@dimen/dp8"
                 android:layout_marginStart="@dimen/dp8">
 
-                <com.rescribe.doctor.ui.customesViews.CustomTextView
+                <com.scorg.dms.ui.customesViews.CustomTextView
                     android:id="@+id/welcomeTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -199,7 +199,7 @@
                     android:textSize="@dimen/sp18"
                     app:customFont="@string/roboto_bold" />
 
-                <com.rescribe.doctor.ui.customesViews.CustomTextView
+                <com.scorg.dms.ui.customesViews.CustomTextView
                     android:id="@+id/doctorNameTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -209,7 +209,7 @@
                     app:customFont="@string/roboto_bold"
                     tools:text="Dr. Rahul Kalyanpur" />
 
-                <com.rescribe.doctor.ui.customesViews.CustomTextView
+                <com.scorg.dms.ui.customesViews.CustomTextView
                     android:id="@+id/aboutDoctorTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

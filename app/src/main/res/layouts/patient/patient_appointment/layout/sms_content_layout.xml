@@ -12,7 +12,7 @@
         android:layout_height="167dp"
         android:padding="@dimen/dp16">
 
-        <com.rescribe.doctor.ui.customesViews.CustomTextView
+        <com.scorg.dms.ui.customesViews.CustomTextView
             android:id="@+id/toTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

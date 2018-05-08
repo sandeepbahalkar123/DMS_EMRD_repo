@@ -27,7 +27,7 @@
                 app:srcCompat="@drawable/ic_arrow_back_white_24dp"
                 tools:ignore="VectorDrawableCompat" />
 
-            <com.rescribe.doctor.ui.customesViews.CustomTextView
+            <com.scorg.dms.ui.customesViews.CustomTextView
                 android:id="@+id/title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -55,7 +55,7 @@
                 android:visibility="visible"
                 app:srcCompat="@drawable/search" />
 
-            <com.rescribe.doctor.ui.customesViews.EditTextWithDeleteButton
+            <com.scorg.dms.ui.customesViews.EditTextWithDeleteButton
                 android:id="@+id/searchEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

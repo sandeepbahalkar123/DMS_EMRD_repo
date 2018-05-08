@@ -7,7 +7,7 @@
     android:background="@color/black"
     tools:context=".ui.activities.zoom_images.ZoomImageViewActivity">
 
-    <com.rescribe.doctor.ui.customesViews.zoomview.ZoomageView
+    <com.scorg.dms.ui.customesViews.zoomview.ZoomageView
         android:id="@+id/zoomView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

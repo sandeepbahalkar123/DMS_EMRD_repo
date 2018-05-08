@@ -38,14 +38,14 @@
         android:layout_toRightOf="@+id/doctorImage"
         android:orientation="vertical">
 
-        <com.rescribe.doctor.ui.customesViews.CustomTextView
+        <com.scorg.dms.ui.customesViews.CustomTextView
             android:id="@+id/doctorSpecialist"
             android:layout_width="match_parent"
             app:customFont="@string/roboto_bold"
             android:layout_height="wrap_content"
             tools:text="Medium Text" />
 
-        <com.rescribe.doctor.ui.customesViews.CustomTextView
+        <com.scorg.dms.ui.customesViews.CustomTextView
             android:id="@+id/doctorName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -55,7 +55,7 @@
             android:textStyle="bold"
             tools:text="Medium Text" />
 
-        <com.rescribe.doctor.ui.customesViews.CustomTextView
+        <com.scorg.dms.ui.customesViews.CustomTextView
             android:id="@+id/doctorAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

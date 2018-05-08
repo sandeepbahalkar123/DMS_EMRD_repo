@@ -7,7 +7,7 @@
     android:background="@color/white"
     android:orientation="vertical">
 
-    <com.rescribe.doctor.ui.customesViews.CustomTextView
+    <com.scorg.dms.ui.customesViews.CustomTextView
         android:id="@+id/headingText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -38,7 +38,7 @@
             android:layout_toEndOf="@+id/imageOfDoctor"
             android:layout_toRightOf="@+id/imageOfDoctor">
 
-            <com.rescribe.doctor.ui.customesViews.CustomTextView
+            <com.scorg.dms.ui.customesViews.CustomTextView
                 android:id="@+id/doctorName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -51,7 +51,7 @@
                 app:customFont="@string/roboto_bold"
                 tools:text="Sagar Patil" />
 
-            <com.rescribe.doctor.ui.customesViews.CustomTextView
+            <com.scorg.dms.ui.customesViews.CustomTextView
                 android:id="@+id/timeText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -69,7 +69,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/doctorName">
 
-            <com.rescribe.doctor.ui.customesViews.CustomTextView
+            <com.scorg.dms.ui.customesViews.CustomTextView
                 android:id="@+id/messageText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

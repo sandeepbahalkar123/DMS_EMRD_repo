@@ -28,7 +28,7 @@
             android:paddingLeft="@dimen/dp6"
             android:paddingStart="@dimen/dp6">
 
-            <com.rescribe.doctor.ui.customesViews.CustomTextView
+            <com.scorg.dms.ui.customesViews.CustomTextView
                 android:id="@+id/date"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -98,7 +98,7 @@
                     android:padding="3dip"
                     android:visibility="gone">
 
-                    <com.rescribe.doctor.ui.customesViews.CircularImageView
+                    <com.scorg.dms.ui.customesViews.CircularImageView
                         android:id="@+id/docProfileImage"
                         android:layout_width="@dimen/dp50"
                         android:layout_height="@dimen/dp50"
@@ -122,7 +122,7 @@
                     android:paddingRight="@dimen/dp12">
 
                     <!-- Title Of Song-->
-                    <com.rescribe.doctor.ui.customesViews.CustomTextView
+                    <com.scorg.dms.ui.customesViews.CustomTextView
                         android:id="@+id/doctorType"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -134,7 +134,7 @@
                         tools:text="Just gona stand there and  " />
 
                     <!-- Artist Name -->
-                    <com.rescribe.doctor.ui.customesViews.CustomTextView
+                    <com.scorg.dms.ui.customesViews.CustomTextView
                         android:id="@+id/doctorName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -145,7 +145,7 @@
                         tools:text="Complaints" />
 
                     <!-- Rightend Duration -->
-                    <com.rescribe.doctor.ui.customesViews.CustomTextView
+                    <com.scorg.dms.ui.customesViews.CustomTextView
                         android:id="@+id/doctorAddress"
                         android:layout_width="150dp"
                         android:layout_height="wrap_content"
@@ -166,7 +166,7 @@
                     android:layout_gravity="center_vertical"
                     android:orientation="vertical">
 
-                    <com.rescribe.doctor.ui.customesViews.CustomTextView
+                    <com.scorg.dms.ui.customesViews.CustomTextView
                         android:id="@+id/time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -181,7 +181,7 @@
                         app:customFont="@string/roboto_medium" />
 
                     <!-- Rightend Duration -->
-                    <com.rescribe.doctor.ui.customesViews.CustomTextView
+                    <com.scorg.dms.ui.customesViews.CustomTextView
                         android:id="@+id/viewMore"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

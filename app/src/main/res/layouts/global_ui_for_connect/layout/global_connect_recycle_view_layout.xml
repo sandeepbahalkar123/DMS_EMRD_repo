@@ -8,7 +8,7 @@
     android:orientation="vertical"
     tools:ignore="MissingTranslation">
 
-    <com.rescribe.doctor.ui.customesViews.CustomTextView
+    <com.scorg.dms.ui.customesViews.CustomTextView
         android:id="@+id/pickSpeciality"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -44,7 +44,7 @@
         android:orientation="vertical"
         android:visibility="gone">
 
-        <com.rescribe.doctor.ui.customesViews.CustomTextView
+        <com.scorg.dms.ui.customesViews.CustomTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

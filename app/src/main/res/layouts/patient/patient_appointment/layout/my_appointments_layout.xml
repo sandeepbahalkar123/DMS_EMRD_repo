@@ -44,7 +44,7 @@
                 android:background="@color/tagColor"
                 android:orientation="vertical">
 
-                <com.rescribe.doctor.ui.customesViews.EditTextWithDeleteButton
+                <com.scorg.dms.ui.customesViews.EditTextWithDeleteButton
                     android:id="@+id/searchEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

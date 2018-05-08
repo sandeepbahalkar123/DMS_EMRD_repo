@@ -16,7 +16,7 @@
         android:orientation="vertical"
         android:padding="@dimen/dp16">
 
-        <com.rescribe.doctor.ui.customesViews.CustomTextView
+        <com.scorg.dms.ui.customesViews.CustomTextView
             android:id="@+id/templateName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -28,7 +28,7 @@
             app:customFont="@string/roboto_bold"
             android:drawableLeft="@drawable/bullet_point" />
 
-        <com.rescribe.doctor.ui.customesViews.CustomTextView
+        <com.scorg.dms.ui.customesViews.CustomTextView
             android:id="@+id/templateContent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

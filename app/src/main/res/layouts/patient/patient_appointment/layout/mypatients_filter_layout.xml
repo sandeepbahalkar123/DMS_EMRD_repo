@@ -32,7 +32,7 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/sp16" />
 
-            <com.rescribe.doctor.ui.customesViews.CustomTextView
+            <com.scorg.dms.ui.customesViews.CustomTextView
                 android:id="@+id/titleTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -88,7 +88,7 @@
                             android:layout_gravity="center"
                             app:srcCompat="@drawable/filtersortingicon" />
 
-                        <com.rescribe.doctor.ui.customesViews.CustomTextView
+                        <com.scorg.dms.ui.customesViews.CustomTextView
                             style="@style/drawer_filter_header_layout"
                             android:text="@string/sorting"
                             app:customFont="@string/roboto_medium" />
@@ -115,7 +115,7 @@
                             android:gravity="left"
                             android:orientation="vertical">
 
-                            <com.rescribe.doctor.ui.customesViews.CustomTextView
+                            <com.scorg.dms.ui.customesViews.CustomTextView
                                 style="@style/drawer_filter_header_layout"
                                 android:layout_marginLeft="@dimen/dp8"
                                 android:layout_marginStart="@dimen/dp8"
@@ -131,7 +131,7 @@
                             android:layout_weight="0.5"
                             android:orientation="vertical">
 
-                            <com.rescribe.doctor.ui.customesViews.CustomTextView
+                            <com.scorg.dms.ui.customesViews.CustomTextView
                                 android:id="@+id/chooseOptionForSort"
                                 style="@style/drawer_filter_header_layout"
                                 android:drawablePadding="@dimen/dp16"
@@ -162,14 +162,14 @@
                             android:layout_gravity="center"
                             app:srcCompat="@drawable/filtergendericon" />
 
-                        <com.rescribe.doctor.ui.customesViews.CustomTextView
+                        <com.scorg.dms.ui.customesViews.CustomTextView
                             style="@style/drawer_filter_header_layout"
                             android:text="@string/gender"
                             app:customFont="@string/roboto_medium" />
 
                     </LinearLayout>
 
-                    <com.rescribe.doctor.ui.customesViews.CustomTextView
+                    <com.scorg.dms.ui.customesViews.CustomTextView
                         android:id="@+id/selectGender"
                         style="@style/drawer_filter_header_layout"
                         android:background="@color/otp_background_layout"
@@ -204,7 +204,7 @@
                                 app:srcCompat="@drawable/filtergraymaleicon" />
 
 
-                            <com.rescribe.doctor.ui.customesViews.CustomTextView
+                            <com.scorg.dms.ui.customesViews.CustomTextView
                                 android:id="@+id/genderMaleText"
                                 style="@style/drawer_filter_gender_style"
                                 android:layout_gravity="center"
@@ -227,7 +227,7 @@
                                 android:layout_gravity="center"
                                 app:srcCompat="@drawable/filtergrayfemaleicon" />
 
-                            <com.rescribe.doctor.ui.customesViews.CustomTextView
+                            <com.scorg.dms.ui.customesViews.CustomTextView
                                 android:id="@+id/genderFemaleText"
                                 style="@style/drawer_filter_gender_style"
                                 android:layout_width="wrap_content"
@@ -252,7 +252,7 @@
                                 android:layout_gravity="center"
                                 app:srcCompat="@drawable/filtergraytransgendericon" />
 
-                            <com.rescribe.doctor.ui.customesViews.CustomTextView
+                            <com.scorg.dms.ui.customesViews.CustomTextView
                                 android:id="@+id/transGenderMaleText"
                                 style="@style/drawer_filter_gender_style"
                                 android:layout_gravity="center"
@@ -282,7 +282,7 @@
                             android:layout_gravity="center"
                             app:srcCompat="@drawable/filterageicon" />
 
-                        <com.rescribe.doctor.ui.customesViews.CustomTextView
+                        <com.scorg.dms.ui.customesViews.CustomTextView
                             style="@style/drawer_filter_header_layout"
                             android:text="@string/age"
                             app:customFont="@string/roboto_medium" />
@@ -301,7 +301,7 @@
                         android:paddingLeft="@dimen/dp10"
                         android:visibility="visible">
 
-                        <com.rescribe.doctor.ui.customesViews.CustomTextView
+                        <com.scorg.dms.ui.customesViews.CustomTextView
                             android:id="@+id/ageRange"
                             style="@style/drawer_filter_header_layout"
                             android:background="@color/otp_background_layout"
@@ -314,7 +314,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
 
-                            <com.rescribe.doctor.ui.customesViews.CustomTextView
+                            <com.scorg.dms.ui.customesViews.CustomTextView
                                 android:id="@+id/clinicFeesSeekBarMinValue"
                                 style="@style/drawer_filter_header_layout"
                                 android:layout_width="wrap_content"
@@ -326,7 +326,7 @@
                                 android:textColor="@color/black"
                                 app:customFont="@string/roboto_bold" />
 
-                            <com.rescribe.doctor.ui.customesViews.CustomTextView
+                            <com.scorg.dms.ui.customesViews.CustomTextView
                                 android:id="@+id/clinicFeesSeekBarMaxValue"
                                 style="@style/drawer_filter_header_layout"
                                 android:layout_width="wrap_content"
@@ -373,7 +373,7 @@
                             style="@style/drawer_filter_header_icon_layout"
                             app:srcCompat="@drawable/filterlocationicon" />
 
-                        <com.rescribe.doctor.ui.customesViews.CustomTextView
+                        <com.scorg.dms.ui.customesViews.CustomTextView
                             style="@style/drawer_filter_header_layout"
                             android:text="@string/city"
                             app:customFont="@string/roboto_medium" />
@@ -381,7 +381,7 @@
 
                     </LinearLayout>
 
-                    <com.rescribe.doctor.ui.customesViews.CustomTextView
+                    <com.scorg.dms.ui.customesViews.CustomTextView
                         android:id="@+id/selectCityTextLabel"
                         style="@style/drawer_filter_header_layout"
                         android:background="@color/otp_background_layout"
@@ -430,7 +430,7 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/sp16" />
 
-            <com.rescribe.doctor.ui.customesViews.CustomTextView
+            <com.scorg.dms.ui.customesViews.CustomTextView
                 android:id="@+id/sortingTitleTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -467,7 +467,7 @@
                 android:layout_gravity="center"
                 app:srcCompat="@drawable/filtersortingicon" />
 
-            <com.rescribe.doctor.ui.customesViews.CustomTextView
+            <com.scorg.dms.ui.customesViews.CustomTextView
                 style="@style/drawer_filter_header_layout"
                 android:text="@string/sorting"
                 app:customFont="@string/roboto_medium" />

@@ -47,7 +47,7 @@
                     android:visibility="invisible"
                     android:src="@drawable/dashboard_arrow" />
 
-                <com.rescribe.doctor.ui.customesViews.CustomTextView
+                <com.scorg.dms.ui.customesViews.CustomTextView
                     android:id="@+id/selectDateTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -124,7 +124,7 @@
                                 android:layout_height="match_parent" />
                         </LinearLayout>
 
-                        <com.rescribe.doctor.ui.customesViews.CustomTextView
+                        <com.scorg.dms.ui.customesViews.CustomTextView
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:gravity="center|left"
@@ -133,7 +133,7 @@
                             android:textSize="@dimen/sp14"
                             app:customFont="@string/roboto_regular" />
 
-                        <com.rescribe.doctor.ui.customesViews.CustomTextView
+                        <com.scorg.dms.ui.customesViews.CustomTextView
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:gravity="center|left"
@@ -142,7 +142,7 @@
                             android:textSize="@dimen/sp10"
                             app:customFont="@string/roboto_regular" />
 
-                        <com.rescribe.doctor.ui.customesViews.CustomTextView
+                        <com.scorg.dms.ui.customesViews.CustomTextView
                             android:id="@+id/scheduledAppointmentsTimeStamp"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
@@ -189,7 +189,7 @@
                             android:layout_height="match_parent" />
                     </LinearLayout>
 
-                    <com.rescribe.doctor.ui.customesViews.CustomTextView
+                    <com.scorg.dms.ui.customesViews.CustomTextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:gravity="center|left"
@@ -225,7 +225,7 @@
                             android:layout_height="match_parent" />
                     </LinearLayout>
 
-                    <com.rescribe.doctor.ui.customesViews.CustomTextView
+                    <com.scorg.dms.ui.customesViews.CustomTextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:gravity="center|left"
@@ -234,7 +234,7 @@
                         android:textSize="@dimen/sp14"
                         app:customFont="@string/roboto_regular" />
 
-                    <com.rescribe.doctor.ui.customesViews.CustomTextView
+                    <com.scorg.dms.ui.customesViews.CustomTextView
                         android:id="@+id/waitingTime"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
@@ -245,7 +245,7 @@
                         app:customFont="@string/roboto_bold"
                         tools:text="10:30 AM" />
 
-                    <com.rescribe.doctor.ui.customesViews.CustomTextView
+                    <com.scorg.dms.ui.customesViews.CustomTextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:gravity="center|left"

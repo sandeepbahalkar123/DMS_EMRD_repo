@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:padding="@dimen/dp5">
 
-    <com.rescribe.doctor.ui.customesViews.CustomTextView
+    <com.scorg.dms.ui.customesViews.CustomTextView
         android:id="@+id/dateTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -37,7 +37,7 @@
             android:background="@drawable/chat_input_msg"
             android:orientation="vertical">
 
-            <com.rescribe.doctor.ui.customesViews.CustomTextView
+            <com.scorg.dms.ui.customesViews.CustomTextView
                 android:id="@+id/senderMessage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -161,7 +161,7 @@
                     android:layout_marginRight="@dimen/dp10"
                     tools:src="@drawable/welcome_copy_3" />
 
-                <com.rescribe.doctor.ui.customesViews.CustomTextView
+                <com.scorg.dms.ui.customesViews.CustomTextView
                     android:id="@+id/senderFileExtension"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -242,7 +242,7 @@
                 android:paddingTop="@dimen/dp2"
                 android:paddingBottom="@dimen/dp2">
 
-                <com.rescribe.doctor.ui.customesViews.CustomTextView
+                <com.scorg.dms.ui.customesViews.CustomTextView
                     android:id="@+id/senderTimeTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -300,7 +300,7 @@
             android:background="@drawable/chat_back"
             android:orientation="vertical">
 
-            <com.rescribe.doctor.ui.customesViews.CustomTextView
+            <com.scorg.dms.ui.customesViews.CustomTextView
                 android:id="@+id/receiverMessage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -391,7 +391,7 @@
 
                     </droidninja.filepicker.views.SquareRelativeLayout>
 
-                    <com.rescribe.doctor.ui.customesViews.CustomTextView
+                    <com.scorg.dms.ui.customesViews.CustomTextView
                         android:id="@+id/receiverMessageWithImage"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -422,7 +422,7 @@
                     android:layout_centerVertical="true"
                     tools:src="@drawable/welcome_copy_3" />
 
-                <com.rescribe.doctor.ui.customesViews.CustomTextView
+                <com.scorg.dms.ui.customesViews.CustomTextView
                     android:id="@+id/receiverFileExtension"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -503,7 +503,7 @@
                 android:paddingBottom="@dimen/dp2"
                 android:paddingTop="@dimen/dp2">
 
-                <com.rescribe.doctor.ui.customesViews.CustomTextView
+                <com.scorg.dms.ui.customesViews.CustomTextView
                     android:id="@+id/receiverTimeTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

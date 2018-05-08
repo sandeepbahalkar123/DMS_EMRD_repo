@@ -24,7 +24,7 @@
             android:paddingTop="@dimen/dp6"
             app:srcCompat="@drawable/back_arrow_a_01" />
 
-        <com.rescribe.doctor.ui.customesViews.CustomTextView
+        <com.scorg.dms.ui.customesViews.CustomTextView
             android:id="@+id/titleTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -42,7 +42,7 @@
             app:customFont="@string/roboto_bold"
             tools:text="@string/appointment_completed" />
 
-        <com.rescribe.doctor.ui.customesViews.CustomTextView
+        <com.scorg.dms.ui.customesViews.CustomTextView
             android:id="@+id/userInfoTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -60,7 +60,7 @@
             tools:text="36 yrs - Male"
             tools:visibility="visible" />
 
-        <com.rescribe.doctor.ui.customesViews.CustomTextView
+        <com.scorg.dms.ui.customesViews.CustomTextView
             android:id="@+id/dateTextview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

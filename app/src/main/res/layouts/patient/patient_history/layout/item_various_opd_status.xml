@@ -19,7 +19,7 @@
             android:layout_weight="0.1"
             android:gravity="center">
 
-            <com.rescribe.doctor.ui.customesViews.CircularImageView
+            <com.scorg.dms.ui.customesViews.CircularImageView
                 android:id="@+id/statusImage"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
@@ -30,7 +30,7 @@
                 app:border_color="@color/white"/>
         </LinearLayout>
 
-        <com.rescribe.doctor.ui.customesViews.CustomTextView
+        <com.scorg.dms.ui.customesViews.CustomTextView
             android:id="@+id/text"
             android:layout_width="@dimen/dp0"
             android:layout_height="wrap_content"
@@ -48,7 +48,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center">
-        <com.rescribe.doctor.ui.customesViews.CircularImageView
+        <com.scorg.dms.ui.customesViews.CircularImageView
             android:id="@+id/statusImage"
             android:layout_width="28dp"
             android:layout_height="28dp"
@@ -59,7 +59,7 @@
             app:border="true"
             app:border_width="@dimen/dp2"
             app:border_color="@color/white"/>
-        <com.rescribe.doctor.ui.customesViews.CustomTextView
+        <com.scorg.dms.ui.customesViews.CustomTextView
             android:id="@+id/text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

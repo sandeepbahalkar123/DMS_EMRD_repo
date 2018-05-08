@@ -29,7 +29,7 @@
         android:text="@string/no_time_slot_message"
         tools:visibility="visible" />
 
-    <com.rescribe.doctor.ui.customesViews.NonScrollExpandableListView
+    <com.scorg.dms.ui.customesViews.NonScrollExpandableListView
         android:id="@+id/selectTimeDateExpandableView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

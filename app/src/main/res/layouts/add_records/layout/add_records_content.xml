@@ -41,7 +41,7 @@
                 android:visibility="gone"
                 tools:visibility="visible">
 
-                <com.rescribe.doctor.ui.customesViews.CircularImageView
+                <com.scorg.dms.ui.customesViews.CircularImageView
                     android:id="@+id/doctorImage"
                     android:layout_width="@dimen/dp56"
                     android:layout_height="@dimen/dp56"
@@ -63,14 +63,14 @@
                     android:orientation="vertical"
                     android:padding="@dimen/dp8">
 
-                    <com.rescribe.doctor.ui.customesViews.CustomTextView
+                    <com.scorg.dms.ui.customesViews.CustomTextView
                         android:id="@+id/doctorSpecialist"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:customFont="@string/roboto_bold"
                         tools:text="Medium Text" />
 
-                    <com.rescribe.doctor.ui.customesViews.CustomTextView
+                    <com.scorg.dms.ui.customesViews.CustomTextView
                         android:id="@+id/doctorName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -80,7 +80,7 @@
                         app:customFont="@string/roboto_bold"
                         tools:text="Medium Text" />
 
-                    <com.rescribe.doctor.ui.customesViews.CustomTextView
+                    <com.scorg.dms.ui.customesViews.CustomTextView
                         android:id="@+id/doctorAddress"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -168,7 +168,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <com.rescribe.doctor.ui.customesViews.CustomTextView
+                <com.scorg.dms.ui.customesViews.CustomTextView
                     android:id="@+id/selectDateTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.rescribe.doctor">
+    package="com.scorg.dms">
 
     <!-- To auto-complete the email text field in the login form with the user's emails -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
@@ -21,7 +21,7 @@
     <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
-        android:name=".singleton.RescribeApplication"
+        android:name=".singleton.DMSApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -244,18 +244,18 @@
         <!--DMS-->
 
         <activity
-            android:name="com.rescribe.doctor.ui.activities.dms_patient_list.PatientList"
+            android:name="com.scorg.dms.ui.activities.dms_patient_list.PatientList"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/patient_list"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
-            android:name="com.rescribe.doctor.ui.activities.LoginActivity"
+            android:name="com.scorg.dms.ui.activities.LoginActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/title_activity_login"
             android:noHistory="true"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
-            android:name="com.rescribe.doctor.ui.activities.dms_patient_list.FileTypeViewerActivity"
+            android:name="com.scorg.dms.ui.activities.dms_patient_list.FileTypeViewerActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/title_activity_login"
             android:theme="@style/AppTheme.NoActionBar"/>

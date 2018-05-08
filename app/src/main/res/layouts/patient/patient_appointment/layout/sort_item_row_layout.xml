@@ -31,7 +31,7 @@
             android:orientation="vertical">
 
             <!-- Artist Name -->
-            <com.rescribe.doctor.ui.customesViews.CustomTextView
+            <com.scorg.dms.ui.customesViews.CustomTextView
                 android:id="@+id/sortName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

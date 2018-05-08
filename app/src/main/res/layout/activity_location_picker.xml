@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.rescribe.doctor.ui.activities.LocationPickerActivity">
+    tools:context="com.scorg.dms.ui.activities.LocationPickerActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -18,7 +18,7 @@
             android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context="com.rescribe.doctor.ui.activities.LocationPickerActivity" />
+            tools:context="com.scorg.dms.ui.activities.LocationPickerActivity" />
 
         <Button
             android:id="@+id/detectLocation"

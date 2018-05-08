@@ -31,7 +31,7 @@
             android:visibility="gone"
             tools:visibility="visible">
 
-            <com.rescribe.doctor.ui.customesViews.CircularImageView
+            <com.scorg.dms.ui.customesViews.CircularImageView
                 android:id="@+id/bulletImageView"
                 android:layout_width="@dimen/dp8"
                 android:layout_height="@dimen/dp8"
@@ -41,7 +41,7 @@
                 android:layout_marginTop="@dimen/dp6"
                 android:background="@drawable/circular_bullet" />
 
-            <com.rescribe.doctor.ui.customesViews.CustomTextView
+            <com.scorg.dms.ui.customesViews.CustomTextView
                 android:id="@+id/clinicNameTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -53,7 +53,7 @@
                 app:customFont="@string/roboto_bold"
                 tools:text="Shree Clinic - " />
 
-            <com.rescribe.doctor.ui.customesViews.CustomTextView
+            <com.scorg.dms.ui.customesViews.CustomTextView
                 android:id="@+id/clinicAddress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

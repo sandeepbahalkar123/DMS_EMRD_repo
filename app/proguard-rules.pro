@@ -106,7 +106,7 @@
 -keep class * implements com.google.gson.JsonSerializer
 -keep class * implements com.google.gson.JsonDeserializer
 
--keep class com.rescribe.doctor.model.** { *; }
+-keep class com.scorg.dms.model.** { *; }
 
 # Retain generated class which implement Unbinder.
 -keep public class * implements butterknife.Unbinder { public <init>(**, android.view.View); }

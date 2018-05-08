@@ -63,7 +63,7 @@
                 android:layout_height="@dimen/dp1"
                 android:background="@color/white" />
 
-            <com.rescribe.doctor.ui.customesViews.CustomTextView
+            <com.scorg.dms.ui.customesViews.CustomTextView
                 android:id="@+id/btnOtp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -105,7 +105,7 @@
                 android:layout_marginTop="@dimen/dp6"
                 android:orientation="horizontal">
 
-                <com.rescribe.doctor.ui.customesViews.CustomTextView
+                <com.scorg.dms.ui.customesViews.CustomTextView
                     android:id="@+id/forgotPasswordView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -125,7 +125,7 @@
                     android:background="@color/white"
                     android:visibility="gone" />
 
-                <com.rescribe.doctor.ui.customesViews.CustomTextView
+                <com.scorg.dms.ui.customesViews.CustomTextView
                     android:id="@+id/signup"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

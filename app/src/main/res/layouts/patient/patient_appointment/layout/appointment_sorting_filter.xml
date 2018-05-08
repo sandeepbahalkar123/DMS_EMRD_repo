@@ -32,7 +32,7 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/sp16" />
 
-            <com.rescribe.doctor.ui.customesViews.CustomTextView
+            <com.scorg.dms.ui.customesViews.CustomTextView
                 android:id="@+id/titleTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -90,14 +90,14 @@
                             app:srcCompat="@drawable/appointment_status"
                             tools:ignore="ContentDescription" />
 
-                        <com.rescribe.doctor.ui.customesViews.CustomTextView
+                        <com.scorg.dms.ui.customesViews.CustomTextView
                             style="@style/drawer_filter_header_layout"
                             android:text="@string/appointment_status"
                             app:customFont="@string/roboto_medium" />
 
                     </LinearLayout>
 
-                    <com.rescribe.doctor.ui.customesViews.CustomTextView
+                    <com.scorg.dms.ui.customesViews.CustomTextView
                         android:id="@+id/selectStatus"
                         style="@style/drawer_filter_header_layout"
                         android:background="@color/otp_background_layout"
@@ -136,7 +136,7 @@
                             app:srcCompat="@drawable/clinic_icon"
                             tools:ignore="ContentDescription" />
 
-                        <com.rescribe.doctor.ui.customesViews.CustomTextView
+                        <com.scorg.dms.ui.customesViews.CustomTextView
                             style="@style/drawer_filter_header_layout"
                             android:text="@string/clinic_names"
                             app:customFont="@string/roboto_medium" />
@@ -155,7 +155,7 @@
                         android:visibility="visible"
                         tools:ignore="RtlSymmetry">
 
-                        <com.rescribe.doctor.ui.customesViews.CustomTextView
+                        <com.scorg.dms.ui.customesViews.CustomTextView
                             android:id="@+id/selectClinic"
                             style="@style/drawer_filter_header_layout"
                             android:background="@color/otp_background_layout"
