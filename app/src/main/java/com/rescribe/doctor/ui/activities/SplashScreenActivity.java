@@ -12,7 +12,7 @@ import com.rescribe.doctor.helpers.login.LoginHelper;
 import com.rescribe.doctor.interfaces.CheckIpConnection;
 import com.rescribe.doctor.interfaces.CustomResponse;
 import com.rescribe.doctor.interfaces.HelperResponse;
-import com.rescribe.doctor.model.iptestresponsemodel.IpTestResponseModel;
+import com.rescribe.doctor.model.dms_models.responsemodel.iptestresponsemodel.IpTestResponseModel;
 import com.rescribe.doctor.notification.MQTTServiceAlarmTask;
 import com.rescribe.doctor.preference.RescribePreferencesManager;
 import com.rescribe.doctor.util.CommonMethods;

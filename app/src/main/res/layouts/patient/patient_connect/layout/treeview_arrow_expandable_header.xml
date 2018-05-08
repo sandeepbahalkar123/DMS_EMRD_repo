@@ -31,6 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:visibility="visible"
+            android:button="@drawable/checkbox_selector"
             android:visibility="gone" />
 
         <!--  <com.github.johnkil.print.PrintView

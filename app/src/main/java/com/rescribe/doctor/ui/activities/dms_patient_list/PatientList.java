@@ -9,11 +9,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.NavigationView;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -57,10 +56,9 @@ import com.rescribe.doctor.model.dms_models.responsemodel.patientnamelistrespons
 import com.rescribe.doctor.model.dms_models.responsemodel.showsearchresultresponsemodel.PatientFileData;
 import com.rescribe.doctor.model.dms_models.responsemodel.showsearchresultresponsemodel.SearchResult;
 import com.rescribe.doctor.model.dms_models.responsemodel.showsearchresultresponsemodel.ShowSearchResultResponseModel;
- import com.rescribe.doctor.dms.views.treeViewHolder.arrow_expand.ArrowExpandIconTreeItemHolder;
-import com.rescribe.doctor.dms.views.treeViewHolder.arrow_expand.ArrowExpandSelectableHeaderHolder;
 import com.rescribe.doctor.preference.RescribePreferencesManager;
-import com.rescribe.doctor.ui.activities.SplashScreenActivity;
+import com.rescribe.doctor.ui.customesViews.treeViewHolder.arrow_expand.ArrowExpandIconTreeItemHolder;
+import com.rescribe.doctor.ui.customesViews.treeViewHolder.arrow_expand.ArrowExpandSelectableHeaderHolder;
 import com.rescribe.doctor.util.CommonMethods;
 import com.rescribe.doctor.util.RescribeConstants;
 import com.unnamed.b.atv.model.TreeNode;
@@ -91,7 +89,6 @@ public class PatientList extends AppCompatActivity implements HelperResponse, Vi
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
     DrawerLayout mDrawer;
-    NavigationView mLeftNavigationView;
 
     @BindView(R.id.nav_right_view)
     FrameLayout mRightNavigationView;
@@ -138,9 +135,6 @@ public class PatientList extends AppCompatActivity implements HelperResponse, Vi
 
     //----------------
 
-    View mLeftHeaderView;
-    private ImageView mUserImage;
-    private TextView mUserName;
     private String mSelectedId;
     private String mSelectedFromDate;
     private String mAdmissionDate;
@@ -174,6 +168,7 @@ public class PatientList extends AppCompatActivity implements HelperResponse, Vi
     //    private TextView mFileTwoDischargeDate;
     private Button mCompareButton;
     private PatientExpandableListAdapter patientExpandableListAdapter;
+    private ActionBar mSupportActionBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -181,6 +176,13 @@ public class PatientList extends AppCompatActivity implements HelperResponse, Vi
         setContentView(R.layout.patient_list_activity);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         ButterKnife.bind(this);
+
+        //----------
+        setSupportActionBar(mToolbar);
+        mSupportActionBar = getSupportActionBar();
+        mSupportActionBar.setTitle(getString(R.string.my_patients));
+        mSupportActionBar.setDisplayHomeAsUpEnabled(true);
+        //----------
         initialize();
     }
 
@@ -229,7 +231,7 @@ public class PatientList extends AppCompatActivity implements HelperResponse, Vi
         if (mDrawer != null) {
             if (mDrawer.isDrawerOpen(GravityCompat.END) && mDrawer.isDrawerOpen(GravityCompat.START)) {
                 mDrawer.closeDrawer(GravityCompat.END);
-                mDrawer.closeDrawer(GravityCompat.START);
+                // mDrawer.closeDrawer(GravityCompat.START);
             } else if (mDrawer.isDrawerOpen(GravityCompat.END)) {
                 mDrawer.closeDrawer(GravityCompat.END);
             } else if (mDrawer.isDrawerOpen(GravityCompat.START)) {
@@ -237,6 +239,12 @@ public class PatientList extends AppCompatActivity implements HelperResponse, Vi
             } else super.onBackPressed();
         } else
             super.onBackPressed();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        finish();
+        return super.onOptionsItemSelected(item);
     }
 
     // register all views
@@ -269,60 +277,14 @@ public class PatientList extends AppCompatActivity implements HelperResponse, Vi
             public void onDrawerStateChanged(int newState) {
             }
         });
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, mDrawer, mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        mDrawer.addDrawerListener(toggle);
-        toggle.syncState();
+
         //---------
         mRecycleTag = (RecyclerView) findViewById(R.id.recycler_view);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, true);
         layoutManager.setReverseLayout(true);
         mRecycleTag.setLayoutManager(layoutManager);
 
-        mLeftNavigationView = (NavigationView) findViewById(R.id.nav_view);
-        mLeftHeaderView = mLeftNavigationView.getHeaderView(0);
-        //---------------
 
-        DrawerLayout.LayoutParams leftParams = (DrawerLayout.LayoutParams) mLeftNavigationView.getLayoutParams();
-        leftParams.width = width;
-        mLeftNavigationView.setLayoutParams(leftParams);
-        //---------------
-        mUserImage = (ImageView) mLeftHeaderView.findViewById(R.id.userImage);
-        mUserName = (TextView) mLeftHeaderView.findViewById(R.id.userName);
-
-        if (RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.USER_GENDER, mContext).equals("M")) {
-            mUserImage.setBackground(getResources().getDrawable(R.drawable.image_male));
-        } else {
-            mUserImage.setBackground(getResources().getDrawable(R.drawable.image_female));
-        }
-        //---------
-
-        // left navigation drawer clickListener
-        mLeftNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(MenuItem item) {
-                int id = item.getItemId();
-                if (id == R.id.nav_logout) {
-                    String mServerPath = RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.SERVER_PATH, mContext);
-                    String isValidConfig = RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.IS_VALID_IP_CONFIG, mContext);
-                    RescribePreferencesManager.clearSharedPref(mContext);
-                    RescribePreferencesManager.putString(RescribePreferencesManager.DMS_PREFERENCES_KEY.SERVER_PATH, mServerPath, mContext);
-                    RescribePreferencesManager.putString(RescribePreferencesManager.DMS_PREFERENCES_KEY.IS_VALID_IP_CONFIG, isValidConfig, mContext);
-                    Intent intent = new Intent(PatientList.this, SplashScreenActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(intent);
-                    // Handle the camera action
-                } else if (id == R.id.change_ip_address) {
-                    CommonMethods.showDialog(RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.SERVER_PATH, mContext), getString(R.string.change_ip), mContext);
-
-                }
-
-                mDrawer.closeDrawer(GravityCompat.START);
-                return true;
-            }
-        });
         //---------
         mSpinSelectedId.setOnItemSelectedListener(this);
         mSpinnerAmissionDate.setOnItemSelectedListener(this);
@@ -336,7 +298,6 @@ public class PatientList extends AppCompatActivity implements HelperResponse, Vi
         mClearSearchAnnotationButton.setVisibility(View.GONE);
         mClearPatientNameButton.setOnClickListener(this);
         mClearPatientNameButton.setBackground(getResources().getDrawable(R.mipmap.user));
-        mUserName.setText(RescribePreferencesManager.getString(RescribeConstants.USERNAME, mContext));
         //--------
         // setting adapter for spinner in header view of right drawer
         mCustomSpinAdapter = new Custom_Spin_Adapter(this, mArrayId, getResources().getStringArray(R.array.select_id));

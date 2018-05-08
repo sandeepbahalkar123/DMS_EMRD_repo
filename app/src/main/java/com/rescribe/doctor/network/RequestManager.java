@@ -33,7 +33,7 @@ import com.rescribe.doctor.model.dms_models.responsemodel.loginresponsemodel.Log
 import com.rescribe.doctor.model.dms_models.responsemodel.patientnamelistresponsemodel.PatientNameListResponseModel;
 import com.rescribe.doctor.model.dms_models.responsemodel.showsearchresultresponsemodel.ShowSearchResultResponseModel;
 import com.rescribe.doctor.helpers.database.AppDBHelper;
-import com.rescribe.doctor.model.iptestresponsemodel.IpTestResponseModel;
+import com.rescribe.doctor.model.dms_models.responsemodel.iptestresponsemodel.IpTestResponseModel;
 import com.rescribe.doctor.model.patient.doctor_patients.MyPatientBaseModel;
 import com.rescribe.doctor.interfaces.ConnectionListener;
 import com.rescribe.doctor.interfaces.Connector;

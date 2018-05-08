@@ -136,10 +136,12 @@
                     android:layout_gravity="center"
                     android:layout_marginLeft="@dimen/dp5"
                     android:layout_marginStart="@dimen/dp5"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    app:hintTextAppearance="@style/editTextInputLayout">
 
                     <EditText
                         android:id="@+id/et_fromdate"
+
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
@@ -152,6 +154,7 @@
                         android:imeOptions="actionNext"
                         android:maxLines="1"
                         android:textColor="@color/black"
+                        android:textCursorDrawable="@drawable/cursor_color"
                         android:textSize="@dimen/sp13" />
                 </android.support.design.widget.TextInputLayout>
 
@@ -163,10 +166,12 @@
                     android:layout_marginLeft="@dimen/dp2"
                     android:layout_marginRight="@dimen/dp5"
                     android:layout_marginStart="@dimen/dp2"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    app:hintTextAppearance="@style/editTextInputLayout">
 
                     <EditText
                         android:id="@+id/et_todate"
+
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
@@ -178,6 +183,7 @@
                         android:hint="@string/to"
                         android:imeOptions="actionNext"
                         android:textColor="@color/black"
+                        android:textCursorDrawable="@drawable/cursor_color"
                         android:textSize="@dimen/sp13" />
                 </android.support.design.widget.TextInputLayout>
 
@@ -195,16 +201,19 @@
                     android:layout_gravity="center"
                     android:layout_marginLeft="@dimen/dp5"
                     android:layout_toLeftOf="@+id/bt_clear_patient_name"
-                    android:layout_toStartOf="@+id/bt_clear_patient_name">
+                    android:layout_toStartOf="@+id/bt_clear_patient_name"
+                    app:hintTextAppearance="@style/editTextInputLayout">
 
                     <AutoCompleteTextView
                         android:id="@+id/et_searchPatientName"
+
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
                         android:hint="@string/searchbyPatient"
                         android:imeOptions="actionNext"
                         android:textColor="@color/black"
+                        android:textCursorDrawable="@drawable/cursor_color"
                         android:textSize="@dimen/sp13" />
 
                 </android.support.design.widget.TextInputLayout>
@@ -234,19 +243,22 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:layout_marginLeft="@dimen/dp5"
-                    android:layout_marginRight="@dimen/dp5">
+                    android:layout_marginRight="@dimen/dp5"
+                    app:hintTextAppearance="@style/editTextInputLayout">
 
                     <EditText
                         android:id="@+id/et_userEnteredAnnotation"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@null"
+
                         android:drawableEnd="@mipmap/annotation"
                         android:drawableRight="@mipmap/annotation"
                         android:ellipsize="end"
                         android:hint="@string/enterAnnotation"
                         android:imeOptions="actionNext"
                         android:textColor="@color/black"
+                        android:textCursorDrawable="@drawable/cursor_color"
                         android:textSize="@dimen/sp13" />
                 </android.support.design.widget.TextInputLayout>
 
@@ -264,7 +276,8 @@
                     android:layout_marginLeft="@dimen/dp5"
                     android:layout_marginStart="@dimen/dp5"
                     android:layout_toLeftOf="@+id/bt_clear_search_annotation"
-                    android:layout_toStartOf="@+id/bt_clear_search_annotation">
+                    android:layout_toStartOf="@+id/bt_clear_search_annotation"
+                    app:hintTextAppearance="@style/editTextInputLayout">
 
                     <EditText
                         android:id="@+id/et_search_annotation"
@@ -275,6 +288,7 @@
                         android:hint="@string/searchAnnotation"
                         android:imeOptions="actionDone"
                         android:textColor="@color/black"
+                        android:textCursorDrawable="@drawable/cursor_color"
                         android:textSize="@dimen/sp13" />
                 </android.support.design.widget.TextInputLayout>
 

@@ -48,8 +48,8 @@ import com.rescribe.doctor.model.dms_models.responsemodel.filetreeresponsemodel.
 import com.rescribe.doctor.model.dms_models.responsemodel.filetreeresponsemodel.LstDocType;
 import com.rescribe.doctor.model.dms_models.responsemodel.getpdfdataresponsemodel.GetPdfDataResponseModel;
 import com.rescribe.doctor.model.dms_models.responsemodel.showsearchresultresponsemodel.PatientFileData;
-import com.rescribe.doctor.dms.views.treeViewHolder.arrow_expand.ArrowExpandIconTreeItemHolder;
-import com.rescribe.doctor.dms.views.treeViewHolder.arrow_expand.ArrowExpandSelectableHeaderHolder;
+import com.rescribe.doctor.ui.customesViews.treeViewHolder.arrow_expand.ArrowExpandIconTreeItemHolder;
+import com.rescribe.doctor.ui.customesViews.treeViewHolder.arrow_expand.ArrowExpandSelectableHeaderHolder;
 import com.rescribe.doctor.util.CommonMethods;
 import com.rescribe.doctor.util.RescribeConstants;
 import com.shockwave.pdfium.PdfDocument;

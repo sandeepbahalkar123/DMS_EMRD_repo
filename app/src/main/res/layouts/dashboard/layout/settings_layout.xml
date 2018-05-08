@@ -52,6 +52,22 @@
             android:layout_height="@dimen/dp1"
             android:background="@color/divider" />
 
+        <com.rescribe.doctor.ui.customesViews.CustomTextView
+            android:id="@+id/change_ip_address"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp56"
+            android:layout_centerVertical="true"
+            android:gravity="center|left"
+            android:text="@string/change_ip_address"
+            android:textColor="@color/tagColor"
+            android:textSize="@dimen/sp16"
+            app:customFont="@string/roboto_medium" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp1"
+            android:background="@color/divider" />
+
         <RelativeLayout
             android:id="@+id/selectMenuLayout"
             android:layout_width="match_parent"

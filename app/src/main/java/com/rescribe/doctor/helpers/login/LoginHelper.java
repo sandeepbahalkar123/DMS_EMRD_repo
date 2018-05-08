@@ -7,8 +7,7 @@ import com.rescribe.doctor.model.dms_models.responsemodel.loginresponsemodel.Log
 import com.rescribe.doctor.interfaces.ConnectionListener;
 import com.rescribe.doctor.interfaces.CustomResponse;
 import com.rescribe.doctor.interfaces.HelperResponse;
-import com.rescribe.doctor.model.Common;
-import com.rescribe.doctor.model.iptestresponsemodel.IpTestResponseModel;
+import com.rescribe.doctor.model.dms_models.responsemodel.iptestresponsemodel.IpTestResponseModel;
 import com.rescribe.doctor.model.login.ActiveRequest;
 import com.rescribe.doctor.model.login.SignUpModel;
 import com.rescribe.doctor.model.requestmodel.login.LoginRequestModel;

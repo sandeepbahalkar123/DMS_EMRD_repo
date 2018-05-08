@@ -25,8 +25,11 @@ import com.rescribe.doctor.model.login.ActiveRequest;
 import com.rescribe.doctor.preference.RescribePreferencesManager;
 import com.rescribe.doctor.ui.activities.LoginActivity;
 import com.rescribe.doctor.ui.activities.ProfileActivity;
+import com.rescribe.doctor.ui.activities.SplashScreenActivity;
+import com.rescribe.doctor.ui.activities.dms_patient_list.PatientList;
 import com.rescribe.doctor.ui.customesViews.CustomTextView;
 import com.rescribe.doctor.ui.customesViews.SwitchButton;
+import com.rescribe.doctor.util.CommonMethods;
 import com.rescribe.doctor.util.RescribeConstants;
 
 import net.gotev.uploadservice.UploadService;
@@ -117,7 +120,7 @@ public class SettingsActivity extends BottomMenuActivity implements BottomMenuAd
         super.onBackPressed();
     }
 
-    @OnClick({R.id.backImageView, R.id.selectMenuLayout})
+    @OnClick({R.id.backImageView, R.id.selectMenuLayout, R.id.change_ip_address})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.backImageView:
@@ -125,6 +128,10 @@ public class SettingsActivity extends BottomMenuActivity implements BottomMenuAd
                 break;
             case R.id.selectMenuLayout:
                 showLogoutDialog();
+                break;
+
+            case R.id.change_ip_address:
+                CommonMethods.showDialog(RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.SERVER_PATH, mContext), getString(R.string.change_ip), this);
                 break;
         }
     }
@@ -216,10 +223,23 @@ public class SettingsActivity extends BottomMenuActivity implements BottomMenuAd
 
         appDBHelper.deleteDatabase();
 
-        Intent intent = new Intent(mContext, LoginActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+//        Intent intent = new Intent(mContext, LoginActivity.class);
+//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+//        startActivity(intent);
+//        finish();
+
+        //-------------
+        String mServerPath = RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.SERVER_PATH, mContext);
+        String isValidConfig = RescribePreferencesManager.getString(RescribePreferencesManager.DMS_PREFERENCES_KEY.IS_VALID_IP_CONFIG, mContext);
+        RescribePreferencesManager.clearSharedPref(mContext);
+        RescribePreferencesManager.putString(RescribePreferencesManager.DMS_PREFERENCES_KEY.SERVER_PATH, mServerPath, mContext);
+        RescribePreferencesManager.putString(RescribePreferencesManager.DMS_PREFERENCES_KEY.IS_VALID_IP_CONFIG, isValidConfig, mContext);
+        Intent intent = new Intent(mContext, SplashScreenActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
-        finish();
+        //-------------
     }
 
 
