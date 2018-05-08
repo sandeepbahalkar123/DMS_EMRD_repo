@@ -133,15 +133,15 @@ public class LoginHelper implements ConnectionListener {
         this.mServerPath = serverPath;
 
         //TODO : IP CHECK API IN NOT IMPLEMENTED YET, HENCE COMMENTED BELOW CODE, N GOES INTO ONSUCEESS.
-        //ConnectionFactory mConnectionFactory = new ConnectionFactory(mContext, this, null, true, DmsConstants.TASK_CHECK_SERVER_CONNECTION, Request.Method.GET,false);
-        //mConnectionFactory.setDMSUrl(Config.URL_CHECK_SERVER_CONNECTION);
-        // mConnectionFactory.createConnection(RescribeConstants.TASK_CHECK_SERVER_CONNECTION);
+        ConnectionFactory mConnectionFactory = new ConnectionFactory(mContext, this, null, true, RescribeConstants.TASK_CHECK_SERVER_CONNECTION, Request.Method.GET, false);
+        mConnectionFactory.setDMSUrl(Config.URL_CHECK_SERVER_CONNECTION);
+        mConnectionFactory.createConnection(RescribeConstants.TASK_CHECK_SERVER_CONNECTION);
 
-        IpTestResponseModel i = new IpTestResponseModel();
-        Common c = new Common();
-        c.setStatusCode(RescribeConstants.SUCCESS);
-        i.setCommon(c);
-        onResponse(ConnectionListener.RESPONSE_OK, i, RescribeConstants.TASK_CHECK_SERVER_CONNECTION);
+//        IpTestResponseModel i = new IpTestResponseModel();
+//        Common c = new Common();
+//        c.setStatusCode(RescribeConstants.SUCCESS);
+//        i.setCommon(c);
+//        onResponse(ConnectionListener.RESPONSE_OK, i, RescribeConstants.TASK_CHECK_SERVER_CONNECTION);
     }
 
     //-------DMS LOGIN AND IP CHECK APIS. : END

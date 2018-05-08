@@ -23,6 +23,7 @@ public class RescribeConstants {
     public static final String DEVICEID = "Device-Id";
     public static final String OS = "OS";
     public static final String OSVERSION = "OsVersion";
+    public static final String DMS_OSVERSION = "OS-Version";
     public static final String DEVICE_TYPE = "DeviceType";
     public static final String APP_NAME = "appName";
     public static final String ACCESS_TOKEN = "accessToken";
