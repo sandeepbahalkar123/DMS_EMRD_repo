@@ -12,8 +12,8 @@
         android:layout_height="@dimen/dp40"
         android:baselineAligned="false"
         android:orientation="horizontal"
-        android:paddingEnd="@dimen/dp8"
-        android:paddingStart="@dimen/dp8"
+        android:paddingEnd="@dimen/dp10"
+        android:paddingStart="@dimen/dp10"
         android:paddingTop="@dimen/dp5">
 
         <TextView
@@ -99,7 +99,7 @@
             android:id="@+id/ipdCheckBox"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight=".15"
+            android:layout_weight=".1"
             android:button="@drawable/checkboxselecter" />
     </LinearLayout>
 
