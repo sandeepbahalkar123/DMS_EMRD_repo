@@ -8,7 +8,7 @@
 
     <android.support.v7.widget.Toolbar
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp36"
+        android:layout_height="?attr/actionBarSize"
         android:background="@color/black"
         app:layout_scrollFlags="scroll|exitUntilCollapsed"
         app:popupTheme="@style/AppTheme"

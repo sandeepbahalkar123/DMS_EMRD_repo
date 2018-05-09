@@ -36,6 +36,7 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.philliphsu.bottomsheetpickers.date.DatePickerDialog;
 import com.scorg.dms.R;
 import com.scorg.dms.adapters.dms_adapters.Custom_Spin_Adapter;
 import com.scorg.dms.adapters.dms_adapters.PatientExpandableListAdapter;
@@ -43,7 +44,6 @@ import com.scorg.dms.adapters.dms_adapters.ShowPatientNameAdapter;
 import com.scorg.dms.adapters.dms_adapters.TagAdapter;
 import com.scorg.dms.helpers.patient_list.DMSPatientsHelper;
 import com.scorg.dms.interfaces.CustomResponse;
-import com.scorg.dms.interfaces.DatePickerDialogListener;
 import com.scorg.dms.interfaces.HelperResponse;
 import com.scorg.dms.model.dms_models.requestmodel.showsearchresultrequestmodel.ShowSearchResultRequestModel;
 import com.scorg.dms.model.dms_models.responsemodel.annotationlistresponsemodel.AnnotationList;
@@ -66,6 +66,7 @@ import com.unnamed.b.atv.view.AndroidTreeView;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -168,6 +169,8 @@ public class PatientList extends AppCompatActivity implements HelperResponse, Vi
     private Button mCompareButton;
     private PatientExpandableListAdapter patientExpandableListAdapter;
     private ActionBar mSupportActionBar;
+    private DatePickerDialog mDatePickerDialog;
+    private ShowPatientNameAdapter mShowPatientNameAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -369,8 +372,8 @@ public class PatientList extends AppCompatActivity implements HelperResponse, Vi
                 mPatientLists.add(patientName);
 
             }
-            ShowPatientNameAdapter adapter = new ShowPatientNameAdapter(this, R.layout.patient_filter_right_drawer, R.id.custom_spinner_txt_view_Id, mLstPatient);
-            mSearchPatientNameEditText.setAdapter(adapter);
+            mShowPatientNameAdapter = new ShowPatientNameAdapter(this, R.layout.patient_filter_right_drawer, R.id.custom_spinner_txt_view_Id, mLstPatient);
+            mSearchPatientNameEditText.setAdapter(mShowPatientNameAdapter);
             Log.d(TAG, "" + mLstPatient);
         }
 
@@ -415,8 +418,8 @@ public class PatientList extends AppCompatActivity implements HelperResponse, Vi
                 break;
             // on click of fromDate editext in right drawer
             case R.id.et_fromdate:
-
-
+                doConfigDatePickerDialog(getString(R.string.from), mFromDate);
+/*
                 new CommonMethods().datePickerDialog(this, new DatePickerDialogListener() {
                     @Override
                     public void getSelectedDate(String selectedTime) {
@@ -429,17 +432,18 @@ public class PatientList extends AppCompatActivity implements HelperResponse, Vi
                         }
 
                     }
-                }, null, true, mFromDate);
+                }, null, true, mFromDate);*/
                 break;
             // on click of endDate ediText in right drawer
             case R.id.et_todate:
-                new CommonMethods().datePickerDialog(this, new DatePickerDialogListener() {
+                doConfigDatePickerDialog(getString(R.string.to), mFromDate);
+               /* new CommonMethods().datePickerDialog(this, new DatePickerDialogListener() {
                     @Override
                     public void getSelectedDate(String selectedTime) {
                         mToDateEditText.setText("" + selectedTime);
 
                     }
-                }, null, false, mFromDate);
+                }, null, false, mFromDate);*/
                 break;
             //  on click of Reset in right drawer
             case R.id.reset:
@@ -710,7 +714,7 @@ public class PatientList extends AppCompatActivity implements HelperResponse, Vi
                     mClearPatientNameButton.setBackground(getResources().getDrawable(R.mipmap.crosswithcircle));
 
                 }
-
+                mShowPatientNameAdapter.getFilter().filter(enteredString);
             }
         });
 
@@ -1013,6 +1017,57 @@ public class PatientList extends AppCompatActivity implements HelperResponse, Vi
                     }
                 }
         }
+
+    }
+
+
+    private void doConfigDatePickerDialog(final String callFrom, Date mFromDate) {
+
+        //---------
+        Calendar selectedTimeSlotDateCal = Calendar.getInstance();
+        mDatePickerDialog = DatePickerDialog.newInstance(
+                new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePickerDialog dialog, int year, int monthOfYear, int dayOfMonth) {
+
+                        String selectedTime = year + "-" + (monthOfYear + 1) + "-" + dayOfMonth;
+                        if (getString(R.string.from).equalsIgnoreCase(callFrom)) {
+
+                            mSelectedFromDate = selectedTime;
+                            mFromDateEditText.setText("" + selectedTime);
+                            try {
+                                PatientList.this.mFromDate = dfDate.parse(mSelectedFromDate);
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+                        } else if (getString(R.string.to).equalsIgnoreCase(callFrom)) {
+                            mToDateEditText.setText("" + selectedTime);
+                        }
+                    }
+                },
+                selectedTimeSlotDateCal.get(Calendar.YEAR),
+                selectedTimeSlotDateCal.get(Calendar.MONTH),
+                selectedTimeSlotDateCal.get(Calendar.DAY_OF_MONTH));
+        //---------
+
+        mDatePickerDialog.setAccentColor(getResources().getColor(R.color.tagColor));
+        mDatePickerDialog.show(getSupportFragmentManager(), getResources().getString(R.string.select_date_text));
+        //-------------
+        if (getString(R.string.from).equalsIgnoreCase(callFrom)) {
+            Calendar now = Calendar.getInstance();
+            mDatePickerDialog.setMaxDate(now);
+
+        } else if (getString(R.string.to).equalsIgnoreCase(callFrom)) {
+            if (mFromDate != null) {
+                mDatePickerDialog.setMaxDate(Calendar.getInstance());
+                Calendar now = Calendar.getInstance();
+                now.setTime(mFromDate);
+                mDatePickerDialog.setMinDate(now);
+            } else {
+                mDatePickerDialog.setMaxDate(Calendar.getInstance());
+            }
+        }
+        //-------------
 
     }
 }

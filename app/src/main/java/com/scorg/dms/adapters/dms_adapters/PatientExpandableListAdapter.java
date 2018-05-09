@@ -18,6 +18,9 @@ import com.scorg.dms.util.CommonMethods;
 import com.scorg.dms.util.DMSConstants;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -77,7 +80,11 @@ public class PatientExpandableListAdapter extends BaseExpandableListAdapter {
             }
             //--------
 
-            listChildData.put(patientName, new ArrayList<PatientFileData>(patientFileData));
+            ArrayList<PatientFileData> formattedList = new ArrayList<>(patientFileData);
+
+            Collections.sort(formattedList, new DischargeDateWiseComparator());
+
+            listChildData.put(patientName, formattedList);
 
             try {
                 this.onPatientListener = ((OnPatientListener) _context);
@@ -262,6 +269,18 @@ public class PatientExpandableListAdapter extends BaseExpandableListAdapter {
         }
 
         convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                PatientFileData child = getChild(groupPosition, 0);
+
+                onPatientListener.onPatientListItemClick(child, getGroup(groupPosition).getPatientName());
+
+
+            }
+        });
+
+        groupViewHolder.expandCollapseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (isExpanded)
@@ -476,6 +495,15 @@ public class PatientExpandableListAdapter extends BaseExpandableListAdapter {
         void onPatientListItemClick(PatientFileData childElement, String patientName);
 
         void smoothScrollToPosition(int previousPosition);
+    }
+
+    private class DischargeDateWiseComparator implements Comparator<PatientFileData> {
+
+        public int compare(PatientFileData m1, PatientFileData m2) {
+            Date m1Date = CommonMethods.convertStringToDate(m1.getDischargeDate(), DMSConstants.DATE_PATTERN.DD_MM_YYYY_hh_mm);
+            Date m2Date = CommonMethods.convertStringToDate(m2.getDischargeDate(), DMSConstants.DATE_PATTERN.DD_MM_YYYY_hh_mm);
+            return m2Date.compareTo(m1Date);
+        }
     }
 
 }

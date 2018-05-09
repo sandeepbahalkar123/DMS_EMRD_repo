@@ -7,16 +7,16 @@ import java.util.List;
 
 public class PatientNameListData {
 
-@SerializedName("lstPatients")
-@Expose
-private List<LstPatient> lstPatients = null;
+    @SerializedName("lstPatients")
+    @Expose
+    private List<LstPatient> lstPatients = null;
 
-public List<LstPatient> getLstPatients() {
-return lstPatients;
-}
+    public List<LstPatient> getLstPatients() {
+        return lstPatients;
+    }
 
-public void setLstPatients(List<LstPatient> lstPatients) {
-this.lstPatients = lstPatients;
-}
+    public void setLstPatients(List<LstPatient> lstPatients) {
+        this.lstPatients = lstPatients;
+    }
 
 }

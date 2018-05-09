@@ -5,16 +5,16 @@ import com.google.gson.annotations.SerializedName;
 
 public class LstPatient {
 
-@SerializedName("patientName")
-@Expose
-private String patientName;
+    @SerializedName("PatientName")
+    @Expose
+    private String patientName;
 
-public String getPatientName() {
-return patientName;
-}
+    public String getPatientName() {
+        return patientName;
+    }
 
-public void setPatientName(String patientName) {
-this.patientName = patientName;
-}
+    public void setPatientName(String patientName) {
+        this.patientName = patientName;
+    }
 
 }
