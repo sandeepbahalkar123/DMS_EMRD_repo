@@ -583,7 +583,9 @@ public class HomePageActivity extends BottomMenuActivity implements HelperRespon
         lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
         lp.gravity = Gravity.CENTER;
         dialog.getWindow().setAttributes(lp);
-        dialog.show();
+
+        //TODO : NOT REQUIRED RIGHT NOW HENCE COMMENTED.
+        //dialog.show();
         dialog.setCanceledOnTouchOutside(false);
         dialog.setCancelable(false);
 
