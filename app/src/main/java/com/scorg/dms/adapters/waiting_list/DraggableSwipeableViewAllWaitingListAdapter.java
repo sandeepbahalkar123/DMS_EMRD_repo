@@ -218,7 +218,9 @@ public class DraggableSwipeableViewAllWaitingListAdapter
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
         final AbstractDataProvider.Data item = mProvider.getItem(position);
+        /*
 
+        //MESSAGE : Check comment at file top | clicked listener : start
         // set listeners
         // (if the item is *pinned*, click event comes to the itemView)
         holder.itemView.setOnClickListener(mItemViewOnClickListener);
@@ -238,6 +240,8 @@ public class DraggableSwipeableViewAllWaitingListAdapter
                 mEventListener.onPhoneClick(item.getViewAll().getPatientPhone());
             }
         });
+        //MESSAGE : Check comment at file top | clicked listener : END
+        */
 
         //---- START: Setting of hospitalID or referecne ID, reference is IS high priority than hospitalID.-----
         String dataToShowInPatientID = String.valueOf(item.getViewAll().getReferenceID());

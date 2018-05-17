@@ -53,6 +53,8 @@ import static com.scorg.dms.util.DMSConstants.APPOINTMENT_STATUS.OTHER;
 
 /**
  * Created by jeetal on 31/1/18.
+ *
+ * MESSAGE ==> Explicitly disable long press,swipe and click listener. And do needful to make this work.
  */
 
 public class AppointmentAdapter extends BaseExpandableListAdapter implements Filterable {
@@ -106,6 +108,8 @@ public class AppointmentAdapter extends BaseExpandableListAdapter implements Fil
             viewHolder.swipe_layout.open(true);
         else viewHolder.swipe_layout.close(true);
 
+
+        //---------
         viewHolder.swipe_layout.setSwipeListener(new SwipeRevealLayout.SwipeListener() {
             @Override
             public void onClosed(SwipeRevealLayout view) {
@@ -133,6 +137,9 @@ public class AppointmentAdapter extends BaseExpandableListAdapter implements Fil
         else
             viewHolder.swipe_layout.setLockDrag(true);
 
+
+        //MESSAGE : Check comment at file top
+        viewHolder.swipe_layout.setLockDrag(true);
         return convertView;
 
     }
@@ -277,7 +284,13 @@ public class AppointmentAdapter extends BaseExpandableListAdapter implements Fil
                 .into(viewHolder.patientImageView);
         viewHolder.checkbox.setChecked(patientList.isSelected());
 
-        viewHolder.checkbox.setOnClickListener(new View.OnClickListener() {
+
+        if (isLongPressed)
+            viewHolder.checkbox.setVisibility(View.VISIBLE);
+        else viewHolder.checkbox.setVisibility(View.GONE);
+
+        //---- //MESSAGE : Check comment at file top | clicked listener : start
+       /* viewHolder.checkbox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 patientList.setSelected(viewHolder.checkbox.isChecked());
@@ -287,10 +300,6 @@ public class AppointmentAdapter extends BaseExpandableListAdapter implements Fil
                 notifyDataSetChanged();
             }
         });
-
-        if (isLongPressed)
-            viewHolder.checkbox.setVisibility(View.VISIBLE);
-        else viewHolder.checkbox.setVisibility(View.GONE);
 
         viewHolder.patientDetailsClickLinearLayout.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -341,6 +350,8 @@ public class AppointmentAdapter extends BaseExpandableListAdapter implements Fil
             }
         });
 
+        //---- clicked listener : end
+        */
         // set height programmatically
 
         ViewTreeObserver vto = viewHolder.front_layout.getViewTreeObserver();
@@ -438,6 +449,10 @@ public class AppointmentAdapter extends BaseExpandableListAdapter implements Fil
             groupViewHolder.swipe_layout.setLockDrag(false);
         else
             groupViewHolder.swipe_layout.setLockDrag(true);
+
+
+        // //MESSAGE : Check comment at file top
+        groupViewHolder.swipe_layout.setLockDrag(true);
 
         return convertView;
     }
@@ -551,27 +566,9 @@ public class AppointmentAdapter extends BaseExpandableListAdapter implements Fil
                 .apply(requestOptions).thumbnail(0.5f)
                 .into(groupViewHolder.mPatientImageView);
 
-        groupViewHolder.mHospitalDetailsLinearLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mOnDownArrowClicked.onDownArrowSetClick(groupPosition, isExpanded);
-            }
-        });
         groupViewHolder.mGroupCheckbox.setChecked(appointmentListObject.isSelectedGroupCheckbox());
 
         groupViewHolder.mCheckbox.setChecked(appointmentListObject.getPatientHeader().isSelected());
-
-        groupViewHolder.mCheckbox.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                appointmentListObject.getPatientHeader().setSelected(groupViewHolder.mCheckbox.isChecked());
-                int selected = getSelectedCount(appointmentListObject.getPatientList());
-                appointmentListObject.setSelectedGroupCheckbox(selected == appointmentListObject.getPatientList().size() && appointmentListObject.getPatientHeader().isSelected());
-                mOnDownArrowClicked.onCheckUncheckRemoveSelectAllSelection(groupViewHolder.mCheckbox.isChecked());
-
-                notifyDataSetChanged();
-            }
-        });
 
 
         if (isLongPressed) {
@@ -581,6 +578,24 @@ public class AppointmentAdapter extends BaseExpandableListAdapter implements Fil
             groupViewHolder.mCheckbox.setVisibility(View.GONE);
             groupViewHolder.mGroupCheckbox.setVisibility(View.GONE);
         }
+
+
+        if (isExpanded) {
+            groupViewHolder.swipe_layout.setVisibility(View.GONE);
+            groupViewHolder.cardView.setVisibility(View.GONE);
+        } else {
+            groupViewHolder.cardView.setVisibility(View.VISIBLE);
+            groupViewHolder.swipe_layout.setVisibility(View.VISIBLE);
+        }
+
+        groupViewHolder.mHospitalDetailsLinearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mOnDownArrowClicked.onDownArrowSetClick(groupPosition, isExpanded);
+            }
+        });
+
+        /*//MESSAGE : Check comment at file top |  click listener : start
 
         groupViewHolder.mGroupCheckbox.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -613,13 +628,19 @@ public class AppointmentAdapter extends BaseExpandableListAdapter implements Fil
             }
         });
 
-        if (isExpanded) {
-            groupViewHolder.swipe_layout.setVisibility(View.GONE);
-            groupViewHolder.cardView.setVisibility(View.GONE);
-        } else {
-            groupViewHolder.cardView.setVisibility(View.VISIBLE);
-            groupViewHolder.swipe_layout.setVisibility(View.VISIBLE);
-        }
+        groupViewHolder.mCheckbox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                appointmentListObject.getPatientHeader().setSelected(groupViewHolder.mCheckbox.isChecked());
+                int selected = getSelectedCount(appointmentListObject.getPatientList());
+                appointmentListObject.setSelectedGroupCheckbox(selected == appointmentListObject.getPatientList().size() && appointmentListObject.getPatientHeader().isSelected());
+                mOnDownArrowClicked.onCheckUncheckRemoveSelectAllSelection(groupViewHolder.mCheckbox.isChecked());
+
+                notifyDataSetChanged();
+            }
+        });
+
+
 
         groupViewHolder.mAppointmentComplete.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -656,6 +677,8 @@ public class AppointmentAdapter extends BaseExpandableListAdapter implements Fil
             }
         });
 
+            //click listener : END
+        */
 
         // set height programmatically
 

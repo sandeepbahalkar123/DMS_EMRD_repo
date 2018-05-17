@@ -58,6 +58,11 @@ import static com.scorg.dms.adapters.waiting_list.DraggableSwipeableViewAllWaiti
 import static com.scorg.dms.adapters.waiting_list.DraggableSwipeableViewAllWaitingListAdapter.IN_QUEUE;
 import static com.scorg.dms.util.DMSConstants.SALUTATION;
 
+/**
+ * Created by jeetal on 31/1/18.
+ * <p>
+ * MESSAGE ==> Explicitly disable long press,swipe and click listener. And do needful to make this work.
+ */
 public class DraggableSwipeableActiveWaitingListAdapter
         extends RecyclerView.Adapter<DraggableSwipeableActiveWaitingListAdapter.MyViewHolder>
         implements DraggableItemAdapter<DraggableSwipeableActiveWaitingListAdapter.MyViewHolder>,
@@ -172,6 +177,7 @@ public class DraggableSwipeableActiveWaitingListAdapter
         mSwipeableViewContainerOnClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 onSwipeableViewContainerClick(v);
             }
         };
@@ -215,6 +221,10 @@ public class DraggableSwipeableActiveWaitingListAdapter
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
         final AbstractDataProvider.Data item = mProvider.getItem(position);
 
+       /*
+
+       //MESSAGE : Check comment at file top | clicked listener : start
+
         // set listeners
         // (if the item is *pinned*, click event comes to the itemView)
         holder.itemView.setOnClickListener(mItemViewOnClickListener);
@@ -234,7 +244,9 @@ public class DraggableSwipeableActiveWaitingListAdapter
                 mEventListener.onPhoneClick(item.getActiveAll().getPatientPhone());
             }
         });
+        //MESSAGE : Check comment at file top | clicked listener : END
 
+        */
 
         //---- START: Setting of hospitalID or referecne ID, reference is IS high priority than hospitalID.-----
         String dataToShowInPatientID = String.valueOf(item.getActiveAll().getReferenceID());

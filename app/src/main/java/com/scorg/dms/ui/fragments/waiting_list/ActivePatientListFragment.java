@@ -235,6 +235,7 @@ public class ActivePatientListFragment extends Fragment implements HelperRespons
 
         //adapter
         mDraggableSwipeableActiveWaitingListAdapter = new DraggableSwipeableActiveWaitingListAdapter(getDataProvider());
+
         mDraggableSwipeableActiveWaitingListAdapter.setEventListener(new DraggableSwipeableActiveWaitingListAdapter.EventListener() {
             @Override
             public void onDeleteClick(int position, Active viewAll) {
