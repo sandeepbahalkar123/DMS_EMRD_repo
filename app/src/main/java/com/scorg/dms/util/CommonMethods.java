@@ -51,6 +51,9 @@ import org.joda.time.format.DateTimeFormatter;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.security.GeneralSecurityException;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.DateFormat;
@@ -64,6 +67,13 @@ import java.util.Locale;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
 
 public class CommonMethods {
 
@@ -964,7 +974,7 @@ public class CommonMethods {
                 EditText etServerPath = (EditText) dialog.findViewById(R.id.et_server_path);
 
                 if (isValidIP(etServerPath.getText().toString())) {
-                    String mServerPath =  Config.HTTP + etServerPath.getText().toString() + Config.API;
+                    String mServerPath = Config.HTTP + etServerPath.getText().toString() + Config.API;
                     Log.e(TAG, "SERVER PATH===" + mServerPath);
                     mCheckIpConnection.onOkButtonClickListner(mServerPath, mContext, dialog);
                 } else {
@@ -984,7 +994,7 @@ public class CommonMethods {
         return dialog;
     }
 
-    public static void showDialog(String msg,String changeIpAddress , final Context mContext) {
+    public static void showDialog(String msg, String changeIpAddress, final Context mContext) {
 
 
         final Dialog dialog = new Dialog(mContext);
@@ -1076,5 +1086,65 @@ public class CommonMethods {
                 & Configuration.SCREENLAYOUT_SIZE_MASK)
                 >= Configuration.SCREENLAYOUT_SIZE_LARGE;
     }
+
+
+    //--------------
+    /**
+     * This use to decrypt received pdfFile path using AES Algo
+     * Step 1: Converted received encrypted text to hex array
+     * Step 2: Create Cipher class object based on AES/CBC/nopadding
+     * Step 3: Decrypt text
+     * Step 4: Create String object with UTF-8 encoding
+     *
+     * @param encryptedText
+     * @return
+     * @throws GeneralSecurityException
+     * @throws IOException
+     * @throws NoSuchAlgorithmException
+     * @throws NoSuchPaddingException
+     * @throws InvalidKeyException
+     * @throws InvalidAlgorithmParameterException
+     * @throws IllegalBlockSizeException
+     * @throws BadPaddingException
+     */
+    public static String decryptPDFFilePathUsingAESAlgo(String encryptedText) throws GeneralSecurityException, IOException,
+            NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, InvalidAlgorithmParameterException,
+            IllegalBlockSizeException, BadPaddingException {
+
+        //key byte array
+        byte[] sKeyArray = new byte[]{(byte) 113, (byte) 217, (byte) 19, (byte) 11, (byte) 24, (byte) 26,
+                (byte) 85, (byte) 45, (byte) 194, (byte) 184, (byte) 27, (byte) 162, (byte) 37, (byte) 112, (byte) 222, (byte) 209, (byte) 241,
+                (byte) 24, (byte) 175, (byte) 154, (byte) 173, (byte) 53, (byte) 196, (byte) 29, (byte) 24, (byte) 26, (byte) 17,
+                (byte) 218, (byte) 131, (byte) 236, (byte) 53, (byte) 209};
+
+        //vector byte array
+        byte[] vectorOrIvArray = new byte[]{(byte) 146, (byte) 64, (byte) 91, (byte) 111, (byte) 23, (byte) 3, (byte) 213,
+                (byte) 119, (byte) 231, (byte) 121, (byte) 252, (byte) 112, (byte) 79, (byte) 32, (byte) 114, (byte) 156};
+
+
+        //STEP 1
+        byte[] value_bytes = hexStringToByteArray(encryptedText);
+        //STEP 2
+        Cipher localCipher = Cipher.getInstance("AES/CBC/nopadding");
+
+        //STEP 3
+        localCipher.init(Cipher.DECRYPT_MODE, new SecretKeySpec(sKeyArray, "AES"), new IvParameterSpec(vectorOrIvArray));
+        byte[] decryptBytes = localCipher.doFinal(value_bytes);
+
+        //STEP 4
+        String s = new String(decryptBytes, "UTF-8");
+        return s;
+    }
+
+    private static byte[] hexStringToByteArray(String s) {
+        byte[] b = new byte[s.length() / 2];
+        for (int i = 0; i < b.length; i++) {
+            int index = i * 2;
+            int v = Integer.parseInt(s.substring(index, index + 2), 16);
+            b[i] = (byte) v;
+        }
+        return b;
+    }
+    //--------------
 }
 
