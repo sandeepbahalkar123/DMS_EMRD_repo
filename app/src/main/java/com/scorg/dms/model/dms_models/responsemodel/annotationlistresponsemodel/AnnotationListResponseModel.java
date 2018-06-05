@@ -3,7 +3,7 @@ package com.scorg.dms.model.dms_models.responsemodel.annotationlistresponsemodel
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.scorg.dms.interfaces.CustomResponse;
-import com.scorg.dms.model.dms_models.responsemodel.Common;
+import com.scorg.dms.model.Common;
 
 import java.io.Serializable;
 

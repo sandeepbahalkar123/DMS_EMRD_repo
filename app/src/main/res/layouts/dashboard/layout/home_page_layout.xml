@@ -31,7 +31,7 @@
             android:visibility="visible">
 
             <RelativeLayout
-                android:id="@+id/todayAppointmentsOrWaitingList"
+                android:id="@+id/totalPatientsLayout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -41,7 +41,7 @@
                 android:clickable="true">
 
                 <com.scorg.dms.ui.customesViews.CustomTextView
-                    android:id="@+id/todayWaitingListOrAppointmentCount"
+                    android:id="@+id/totalPatientsCount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
@@ -53,19 +53,19 @@
                     tools:text="21" />
 
                 <com.scorg.dms.ui.customesViews.CustomTextView
-                    android:id="@+id/todayWaitingListOrAppointmentTextView"
+                    android:id="@+id/totalPatientsHeaderText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/todayWaitingListOrAppointmentCount"
+                    android:layout_below="@id/totalPatientsCount"
                     android:layout_centerHorizontal="true"
                     android:clickable="false"
                     android:gravity="center"
                     android:paddingBottom="@dimen/dp10"
                     android:paddingTop="@dimen/dp10"
+                    android:text="@string/today_patient"
                     android:textColor="@color/dashboard_text_color"
                     android:textSize="@dimen/sp12"
-                    app:customFont="@string/roboto_regular"
-                    tools:text="Today's Appointment" />
+                    app:customFont="@string/roboto_regular" />
             </RelativeLayout>
 
             <ImageView
@@ -77,7 +77,53 @@
                 tools:ignore="ContentDescription" />
 
             <RelativeLayout
-                android:id="@+id/todayNewPatient"
+                android:id="@+id/todayAppointmentsLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/dp8"
+                android:layout_marginStart="@dimen/dp8"
+                android:layout_weight="1"
+                android:clickable="true">
+
+                <com.scorg.dms.ui.customesViews.CustomTextView
+                    android:id="@+id/todayAppointmentsCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:clickable="false"
+                    android:paddingTop="@dimen/dp16"
+                    android:textColor="@color/timing_bg_color"
+                    android:textSize="@dimen/sp24"
+                    app:customFont="@string/roboto_bold"
+                    tools:text="21" />
+
+                <com.scorg.dms.ui.customesViews.CustomTextView
+                    android:id="@+id/todayAppointmentsHeaderText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/todayAppointmentsCount"
+                    android:layout_centerHorizontal="true"
+                    android:clickable="false"
+                    android:gravity="center"
+                    android:paddingBottom="@dimen/dp10"
+                    android:paddingTop="@dimen/dp10"
+                    android:text="@string/today_appointment"
+                    android:textColor="@color/dashboard_text_color"
+                    android:textSize="@dimen/sp12"
+                    app:customFont="@string/roboto_regular" />
+            </RelativeLayout>
+
+            <ImageView
+                android:layout_width="@dimen/dp1"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="@dimen/dp21"
+                android:layout_marginTop="@dimen/dp21"
+                app:srcCompat="@drawable/vertical_line"
+                tools:ignore="ContentDescription" />
+
+            <RelativeLayout
+                android:id="@+id/waitingPatientLayout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -87,7 +133,7 @@
                 android:clickable="true">
 
                 <com.scorg.dms.ui.customesViews.CustomTextView
-                    android:id="@+id/todayNewAppointmentCount"
+                    android:id="@+id/waitingPatientCount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
@@ -99,19 +145,19 @@
                     tools:text="21" />
 
                 <com.scorg.dms.ui.customesViews.CustomTextView
-                    android:id="@+id/todayNewAppointmentTextView"
+                    android:id="@+id/waitingPatientHeaderText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/todayNewAppointmentCount"
+                    android:layout_below="@id/waitingPatientCount"
                     android:layout_centerHorizontal="true"
                     android:clickable="false"
                     android:gravity="center"
                     android:paddingBottom="@dimen/dp10"
                     android:paddingTop="@dimen/dp10"
+                    android:text="@string/waiting_patients"
                     android:textColor="@color/dashboard_text_color"
                     android:textSize="@dimen/sp12"
-                    app:customFont="@string/roboto_regular"
-                    tools:text="Today's Appointment" />
+                    app:customFont="@string/roboto_regular" />
             </RelativeLayout>
 
             <ImageView
@@ -123,7 +169,7 @@
                 tools:ignore="ContentDescription" />
 
             <RelativeLayout
-                android:id="@+id/todayCompletedOpd"
+                android:id="@+id/pendingApprovalLayout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -134,7 +180,7 @@
                 android:focusable="true">
 
                 <com.scorg.dms.ui.customesViews.CustomTextView
-                    android:id="@+id/todayFollowAppointmentCount"
+                    android:id="@+id/pendingApprovalCount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
@@ -146,10 +192,10 @@
                     tools:text="21" />
 
                 <com.scorg.dms.ui.customesViews.CustomTextView
-                    android:id="@+id/todayFollowAppointmentTextView"
+                    android:id="@+id/pendingApprovalHeaderText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/todayFollowAppointmentCount"
+                    android:layout_below="@id/pendingApprovalCount"
                     android:layout_centerHorizontal="true"
                     android:clickable="false"
                     android:gravity="center"
@@ -158,7 +204,7 @@
                     android:textColor="@color/dashboard_text_color"
                     android:textSize="@dimen/sp12"
                     app:customFont="@string/roboto_regular"
-                    tools:text="Today's Appointment" />
+                    android:text="@string/pending_approval" />
             </RelativeLayout>
 
         </LinearLayout>

@@ -7,11 +7,11 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.scorg.dms.interfaces.CustomResponse;
 
-public class Common implements Parcelable, CustomResponse{
+public class Common implements Parcelable, CustomResponse {
 
     @SerializedName("success")
     @Expose
-    private Boolean success;
+    private String success;
     @SerializedName("statusCode")
     @Expose
     private Integer statusCode;
@@ -26,7 +26,7 @@ public class Common implements Parcelable, CustomResponse{
         })
         public Common createFromParcel(Parcel in) {
             Common instance = new Common();
-            instance.success = ((Boolean) in.readValue((Boolean.class.getClassLoader())));
+            instance.success = ((String) in.readValue((String.class.getClassLoader())));
             instance.statusCode = ((Integer) in.readValue((Integer.class.getClassLoader())));
             instance.statusMessage = ((String) in.readValue((String.class.getClassLoader())));
             return instance;
@@ -38,11 +38,11 @@ public class Common implements Parcelable, CustomResponse{
 
     };
 
-    public Boolean isSuccess() {
+    public String getSuccess() {
         return success;
     }
 
-    public void setSuccess(Boolean success) {
+    public void setSuccess(String success) {
         this.success = success;
     }
 

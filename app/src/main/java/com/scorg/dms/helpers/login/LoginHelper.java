@@ -57,8 +57,12 @@ public class LoginHelper implements ConnectionListener {
                         DMSPreferencesManager.putString(DMSConstants.REFRESH_TOKEN, model.getRefreshToken(), mContext);
                         DMSPreferencesManager.putString(DMSConstants.USERNAME, userName, mContext);
                         DMSPreferencesManager.putString(DMSConstants.PASSWORD, password, mContext);
-                        CommonMethods.Log(TAG, "Refersh token after login response: " + model.getRefreshToken());
+                        DMSPreferencesManager.putString(DMSPreferencesManager.DMS_PREFERENCES_KEY.DOC_ID, String.valueOf(model.getDoctorId()), mContext);
                         DMSPreferencesManager.putString(DMSPreferencesManager.DMS_PREFERENCES_KEY.USER_GENDER, model.getUserGender(), mContext);
+                        DMSPreferencesManager.putString(DMSPreferencesManager.DMS_PREFERENCES_KEY.DOC_NAME, model.getDoctorName(), mContext);
+                        DMSPreferencesManager.putString(DMSPreferencesManager.DMS_PREFERENCES_KEY.HOSPITAL_NAME, model.getHospitalName(), mContext);
+
+                        CommonMethods.Log(TAG, "Refersh token after login response: " + model.getRefreshToken());
                         mHelperResponseManager.onSuccess(mOldDataTag, model);
 
                         break;
@@ -116,7 +120,7 @@ public class LoginHelper implements ConnectionListener {
         this.userName = userName;
         this.password = password;
         ConnectionFactory mConnectionFactory = new ConnectionFactory(mContext, this, null, true, DMSConstants.TASK_LOGIN_CODE, Request.Method.POST, false);
-        mConnectionFactory.setDMSHeaderParams();
+        mConnectionFactory.setHeaderParams();
         Map<String, String> testParams = new HashMap<String, String>();
         testParams.put(DMSConstants.GRANT_TYPE_KEY, DMSConstants.PASSWORD);
         testParams.put(DMSConstants.USERNAME, userName);
@@ -124,7 +128,7 @@ public class LoginHelper implements ConnectionListener {
         testParams.put(DMSConstants.CLIENT_ID_KEY, DMSConstants.CLIENT_ID_VALUE);
         mConnectionFactory.setPostParams(testParams);
         //TODO: setDMSUrl added for temporary purpose, once done with real API, use setUrl method
-        mConnectionFactory.setDMSUrl(Config.URL_LOGIN);
+        mConnectionFactory.setUrl(Config.URL_LOGIN);
         mConnectionFactory.createConnection(DMSConstants.TASK_LOGIN_CODE);
     }
 
@@ -133,7 +137,7 @@ public class LoginHelper implements ConnectionListener {
 
         //TODO : IP CHECK API IN NOT IMPLEMENTED YET, HENCE COMMENTED BELOW CODE, N GOES INTO ONSUCEESS.
         ConnectionFactory mConnectionFactory = new ConnectionFactory(mContext, this, null, true, DMSConstants.TASK_CHECK_SERVER_CONNECTION, Request.Method.GET, false);
-        mConnectionFactory.setDMSUrl(Config.URL_CHECK_SERVER_CONNECTION);
+        mConnectionFactory.setUrl(Config.URL_CHECK_SERVER_CONNECTION);
         mConnectionFactory.createConnection(DMSConstants.TASK_CHECK_SERVER_CONNECTION);
 
 //        IpTestResponseModel i = new IpTestResponseModel();

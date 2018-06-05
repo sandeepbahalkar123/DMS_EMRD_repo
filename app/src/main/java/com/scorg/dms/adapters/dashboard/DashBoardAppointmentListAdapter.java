@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.scorg.dms.R;
 import com.scorg.dms.model.dashboard.AppointmentClinicList;
+import com.scorg.dms.model.dashboard.DashboardDataModel;
 import com.scorg.dms.ui.customesViews.CustomTypefaceSpan;
 import com.scorg.dms.util.CommonMethods;
 import com.scorg.dms.util.DMSConstants;
@@ -29,15 +30,11 @@ import butterknife.ButterKnife;
 public class DashBoardAppointmentListAdapter extends RecyclerView.Adapter<DashBoardAppointmentListAdapter.ListViewHolder> {
 
     private Context mContext;
-    private ArrayList<AppointmentClinicList> mAppointmentClinicLists = new ArrayList<>();
-    private String mStartTimeToShow;
-    private String mStringFrom;
-    private String mRequiredOpdOrOtString;
+    private ArrayList<DashboardDataModel.AppointmentOpdAndOtherCount> mAppointmentClinicLists = new ArrayList<>();
 
-    public DashBoardAppointmentListAdapter(Context mContext, ArrayList<AppointmentClinicList> appointmentClinicList, String optOrOTRequired) {
+    public DashBoardAppointmentListAdapter(Context mContext, ArrayList<DashboardDataModel.AppointmentOpdAndOtherCount> appointmentOpdOTAndOtherCount) {
         this.mContext = mContext;
-        this.mAppointmentClinicLists = appointmentClinicList;
-        this.mRequiredOpdOrOtString = optOrOTRequired;
+        this.mAppointmentClinicLists = appointmentOpdOTAndOtherCount;
     }
 
     @Override
@@ -50,50 +47,16 @@ public class DashBoardAppointmentListAdapter extends RecyclerView.Adapter<DashBo
 
     @Override
     public void onBindViewHolder(final ListViewHolder holder, int position) {
-        final AppointmentClinicList appointmentClinicList = mAppointmentClinicLists.get(position);
-        if (appointmentClinicList.getAppointmentStartTime().equals("")) {
-            mStringFrom = "";
-            mStartTimeToShow = "";
-        } else {
-            mStringFrom = " From ";
-            mStartTimeToShow = CommonMethods.formatDateTime(appointmentClinicList.getAppointmentStartTime(), DMSConstants.DATE_PATTERN.hh_mm_a, DMSConstants.DATE_PATTERN.HH_mm_ss, DMSConstants.TIME);
-        }
-        //TODO : NEED TO IMPLEMENT
-        if(mRequiredOpdOrOtString.equals(DMSConstants.OT_AND_OPD)){
-
-            String otCount = appointmentClinicList.getAppointmentOTCount() + " OT";
-            String opdCount = appointmentClinicList.getAppointmentOpdCount() + " OPD, ";
-            String clinicInfo = appointmentClinicList.getClinicName() + ", " + appointmentClinicList.getAreaName() + ", " + appointmentClinicList.getCityName();
-
-            Typeface font = Typeface.createFromAsset(mContext.getAssets(), "fonts/roboto_bold.ttf");
-            SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder(clinicInfo + mStringFrom + mStartTimeToShow.toLowerCase() + " - " + opdCount + otCount);
-            spannableStringBuilder.setSpan(new CustomTypefaceSpan("", font), clinicInfo.length() + +mStringFrom.length() + mStartTimeToShow.length() + 3, spannableStringBuilder.length(), Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
-            holder.textViewName.setText(spannableStringBuilder);
+        DashboardDataModel.AppointmentOpdAndOtherCount appointmentOpdAndOtherCount = mAppointmentClinicLists.get(position);
 
 
-        }else if(mRequiredOpdOrOtString.equals(DMSConstants.OPD)){
+        String otCount = appointmentOpdAndOtherCount.getAppointmentOpdOTCount();
+        String clinicInfo = appointmentOpdAndOtherCount.getAppointmentOpdOTName();
 
-            String opdCount = appointmentClinicList.getAppointmentOpdCount() + " OPD";
-            String clinicInfo = appointmentClinicList.getClinicName() + ", " + appointmentClinicList.getAreaName() + ", " + appointmentClinicList.getCityName();
-
-            Typeface font = Typeface.createFromAsset(mContext.getAssets(), "fonts/roboto_bold.ttf");
-            SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder(clinicInfo + mStringFrom + mStartTimeToShow.toLowerCase() + " - " + opdCount);
-            spannableStringBuilder.setSpan(new CustomTypefaceSpan("", font), clinicInfo.length() + +mStringFrom.length() + mStartTimeToShow.length() + 3, spannableStringBuilder.length(), Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
-            holder.textViewName.setText(spannableStringBuilder);
-
-
-        }else if(mRequiredOpdOrOtString.equals(DMSConstants.OT)){
-
-            String otCount = appointmentClinicList.getAppointmentOTCount() + " OT";
-            String clinicInfo = appointmentClinicList.getClinicName() + ", " + appointmentClinicList.getAreaName() + ", " + appointmentClinicList.getCityName();
-
-            Typeface font = Typeface.createFromAsset(mContext.getAssets(), "fonts/roboto_bold.ttf");
-            SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder(clinicInfo + mStringFrom + mStartTimeToShow.toLowerCase() + " - " + otCount);
-            spannableStringBuilder.setSpan(new CustomTypefaceSpan("", font), clinicInfo.length() + +mStringFrom.length() + mStartTimeToShow.length() + 3, spannableStringBuilder.length(), Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
-            holder.textViewName.setText(spannableStringBuilder);
-
-        }
-
+        Typeface font = Typeface.createFromAsset(mContext.getAssets(), "fonts/roboto_bold.ttf");
+        SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder(clinicInfo + " - " + otCount);
+        spannableStringBuilder.setSpan(new CustomTypefaceSpan("", font), clinicInfo.length() + 3, spannableStringBuilder.length(), Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
+        holder.textViewName.setText(spannableStringBuilder);
 
     }
 

@@ -42,7 +42,7 @@ public class ConnectionFactory extends ConnectRequest {
         this.mHeaderParams = headerParams;
     }
 
-    public void setHeaderParams() {
+   /* public void setHeaderParams() {
 
         Map<String, String> headerParams = new HashMap<>();
         String authorizationString = DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.AUTHTOKEN, mContext);
@@ -54,11 +54,11 @@ public class ConnectionFactory extends ConnectRequest {
         headerParams.put(DMSConstants.DEVICE_TYPE, device.getDeviceType());
         CommonMethods.Log(TAG, "setHeaderParams:" + headerParams.toString());
         this.mHeaderParams = headerParams;
-    }
+    }*/
 
 
     //THis is done for now, as DMS API IS NOT AVAILABLE RIGHT NOW
-    public void setDMSHeaderParams() {
+    public void setHeaderParams() {
 
         Map<String, String> headerParams = new HashMap<>();
 
@@ -94,16 +94,12 @@ public class ConnectionFactory extends ConnectRequest {
     }
 
     public void setUrl(String url) {
-        this.mURL = Config.BASE_URL + url;
-        CommonMethods.Log(TAG, "mURL: " + this.mURL);
-    }
-
-    public void setDMSUrl(String url) {
         String baseUrl = DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.SERVER_PATH, mContext);
 
         this.mURL = baseUrl + url;
         CommonMethods.Log(TAG, "mURL: " + this.mURL);
     }
+
 
     public Connector createConnection(String type) {
 

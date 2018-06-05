@@ -627,7 +627,9 @@ public class RequestManager extends ConnectRequest implements Connector, Request
                         break;
 
                     case DMSConstants.TASK_CHECK_SERVER_CONNECTION: //This is for get archived list
-                        IpTestResponseModel ipTestResponseModel = gson.fromJson(data, IpTestResponseModel.class);
+                        //this is done bcaz, No common key is added in response from API.
+                        String editedResponse = "{ \"common\":" + data + "}";
+                        IpTestResponseModel ipTestResponseModel = gson.fromJson(editedResponse, IpTestResponseModel.class);
                         this.mConnectionListener.onResponse(ConnectionListener.RESPONSE_OK, ipTestResponseModel, mOldDataTag);
                         break;
                     case DMSConstants.TASK_GET_PATIENT_NAME_LIST: //This is for get archived list

@@ -185,7 +185,7 @@ public class OTPConfirmationForSignUp extends Fragment implements HelperResponse
     public void onSuccess(String mOldDataTag, CustomResponse customResponse) {
         if (mOldDataTag.equalsIgnoreCase(DMSConstants.TASK_SIGN_UP)) {
             SignUpModel loginModel = (SignUpModel) customResponse;
-            if (loginModel.getCommon().isSuccess()) {
+            if (DMSConstants.RESPONSE_OK.equalsIgnoreCase(loginModel.getCommon().getSuccess())) {
                 mResendOTPCount = mResendOTPCount + 1;
                 mCountDownTimer = new MyCountDownTimer(mStartTime, mInterval);
                 mCountDownTimer.start();
@@ -199,7 +199,7 @@ public class OTPConfirmationForSignUp extends Fragment implements HelperResponse
         } else if (mOldDataTag.equalsIgnoreCase(DMSConstants.TASK_VERIFY_SIGN_UP_OTP)) {
 
             LoginModel receivedModel = (LoginModel) customResponse;
-            if (receivedModel.getCommon().isSuccess()) {
+            if (DMSConstants.RESPONSE_OK.equalsIgnoreCase(receivedModel.getCommon().getSuccess())) {
                 if(mSignUpRequestModel.isGmailLogin()){
                     DMSPreferencesManager.putString(DMSConstants.GMAIL_LOGIN,getString(R.string.login_with_gmail),getActivity());
                     DMSPreferencesManager.putString(DMSPreferencesManager.DMS_PREFERENCES_KEY.MOBILE_NUMBER_GMAIL,mSignUpRequestModel.getMobileNumber(),getActivity());

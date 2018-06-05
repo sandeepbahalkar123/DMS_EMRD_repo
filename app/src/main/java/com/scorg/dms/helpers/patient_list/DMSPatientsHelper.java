@@ -41,25 +41,25 @@ public class DMSPatientsHelper implements ConnectionListener {
         ConnectionFactory mConnectionFactory = new ConnectionFactory(mContext, this, null, true, DMSConstants.TASK_GET_PATIENT_NAME_LIST, Request.Method.GET, false);
 
         //TODO: setDMSHeaderParams added for temporary purpose, once done with real API, use setHeaderParams method
-        mConnectionFactory.setDMSHeaderParams();
-        mConnectionFactory.setDMSUrl(Config.URL_PATIENT_NAME_LIST);
+        mConnectionFactory.setHeaderParams();
+        mConnectionFactory.setUrl(Config.URL_PATIENT_NAME_LIST);
         mConnectionFactory.createConnection(DMSConstants.TASK_GET_PATIENT_NAME_LIST);
     }
 
     //-- TO get Patient list from server
     public void doGetPatientList(ShowSearchResultRequestModel showSearchResultRequestModel) {
         ConnectionFactory mConnectionFactory = new ConnectionFactory(mContext, this, null, true, DMSConstants.TASK_PATIENT_LIST, Request.Method.POST, false);
-        mConnectionFactory.setDMSHeaderParams();
+        mConnectionFactory.setHeaderParams();
         mConnectionFactory.setPostParams(showSearchResultRequestModel);
-        mConnectionFactory.setDMSUrl(Config.URL_PATIENT_LIST);
+        mConnectionFactory.setUrl(Config.URL_PATIENT_LIST);
         mConnectionFactory.createConnection(DMSConstants.TASK_PATIENT_LIST);
     }
 
 
     public void doGetAllAnnotations() {
         ConnectionFactory mConnectionFactory = new ConnectionFactory(mContext, this, null, false, DMSConstants.TASK_ANNOTATIONS_LIST, Request.Method.GET, false);
-        mConnectionFactory.setDMSHeaderParams();
-        mConnectionFactory.setDMSUrl(Config.URL_ANNOTATIONS_LIST);
+        mConnectionFactory.setHeaderParams();
+        mConnectionFactory.setUrl(Config.URL_ANNOTATIONS_LIST);
         mConnectionFactory.createConnection(DMSConstants.TASK_ANNOTATIONS_LIST);
     }
 
@@ -68,10 +68,10 @@ public class DMSPatientsHelper implements ConnectionListener {
         //---------------
 
         ConnectionFactory mConnectionFactory = new ConnectionFactory(mContext, this, null, true, DMSConstants.TASK_GET_ARCHIVED_LIST, Request.Method.POST, false);
-        mConnectionFactory.setDMSHeaderParams();
+        mConnectionFactory.setHeaderParams();
         mConnectionFactory.setPostParams(fileTreeRequestModel);
 
-        mConnectionFactory.setDMSUrl(Config.URL_GET_ARCHIVED_LIST);
+        mConnectionFactory.setUrl(Config.URL_GET_ARCHIVED_LIST);
         mConnectionFactory.createConnection(DMSConstants.TASK_GET_ARCHIVED_LIST);
     }
 
@@ -79,9 +79,9 @@ public class DMSPatientsHelper implements ConnectionListener {
 
         //---------------
         ConnectionFactory mConnectionFactory = new ConnectionFactory(mContext, this, null, false, taskID, Request.Method.POST, false);
-        mConnectionFactory.setDMSHeaderParams();
+        mConnectionFactory.setHeaderParams();
         mConnectionFactory.setPostParams(getPdfDataRequestModel);
-        mConnectionFactory.setDMSUrl(Config.URL_GET_PDF_DATA);
+        mConnectionFactory.setUrl(Config.URL_GET_PDF_DATA);
         mConnectionFactory.createConnection(taskID);
     }
 

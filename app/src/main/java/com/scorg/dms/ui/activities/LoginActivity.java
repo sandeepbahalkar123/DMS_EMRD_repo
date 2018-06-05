@@ -11,6 +11,7 @@ import com.scorg.dms.R;
 import com.scorg.dms.helpers.login.LoginHelper;
 import com.scorg.dms.interfaces.CustomResponse;
 import com.scorg.dms.interfaces.HelperResponse;
+import com.scorg.dms.model.dms_models.responsemodel.loginresponsemodel.LoginResponseModel;
 import com.scorg.dms.model.login.DocDetail;
 import com.scorg.dms.model.login.LoginModel;
 import com.scorg.dms.preference.DMSPreferencesManager;
@@ -87,45 +88,12 @@ public class LoginActivity extends AppCompatActivity implements HelperResponse {
         DMSPreferencesManager.putString(DMSPreferencesManager.DMS_PREFERENCES_KEY.USER_NAME, mUserName.getText().toString(), mContext);
         DMSPreferencesManager.putString(DMSPreferencesManager.DMS_PREFERENCES_KEY.PASSWORD, mPassword.getText().toString(), mContext);
 
-        //-- TODO, THIS IS DONE TO LOGIN TO DOC_APP, ONCE API RECEIVED, REMOVE THIS.
-        try {
-            InputStream is = mContext.getAssets().open("login.json");
-            int size = is.available();
-            byte[] buffer = new byte[size];
-            is.read(buffer);
-            is.close();
-            String json = new String(buffer, "UTF-8");
+        LoginResponseModel model = (LoginResponseModel) customResponse;
 
-            //After login user navigated to HomepageActivity
-            LoginModel receivedModel = new Gson().fromJson(json, LoginModel.class);
-            if (receivedModel.getCommon().isSuccess()) {
-
-                DocDetail docDetail = receivedModel.getDoctorLoginData().getDocDetail();
-                String authToken = receivedModel.getDoctorLoginData().getAuthToken();
-
-                DMSPreferencesManager.putString(DMSPreferencesManager.DMS_PREFERENCES_KEY.AUTHTOKEN, authToken, this);
-                DMSPreferencesManager.putString(DMSPreferencesManager.DMS_PREFERENCES_KEY.DOC_ID, String.valueOf(docDetail.getDocId()), this);
-                DMSPreferencesManager.putString(DMSPreferencesManager.DMS_PREFERENCES_KEY.USER_NAME, docDetail.getDocName(), this);
-                DMSPreferencesManager.putString(DMSPreferencesManager.DMS_PREFERENCES_KEY.PROFILE_PHOTO, docDetail.getDocImgUrl(), this);
-                DMSPreferencesManager.putString(DMSPreferencesManager.DMS_PREFERENCES_KEY.EMAIL, docDetail.getDocEmail(), this);
-                DMSPreferencesManager.putString(DMSPreferencesManager.DMS_PREFERENCES_KEY.SPECIALITY, docDetail.getDocSpaciality(), this);
-                DMSPreferencesManager.putString(DMSPreferencesManager.DMS_PREFERENCES_KEY.ADDRESS, docDetail.getDocAddress(), this);
-                DMSPreferencesManager.putString(DMSPreferencesManager.DMS_PREFERENCES_KEY.LOGIN_STATUS, DMSConstants.YES, this);
-                //TODO: password hardcoded for dashboard data of doctor.
-                DMSPreferencesManager.putString(DMSPreferencesManager.DMS_PREFERENCES_KEY.PASSWORD, "doctor", this);
-
-                String doctorDetails = new Gson().toJson(docDetail);
-                DMSPreferencesManager.putString(DMSPreferencesManager.DMS_PREFERENCES_KEY.DOC_INFO, doctorDetails, this);
-
-                Intent intent = new Intent(this, HomePageActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
-
-            }
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
+        Intent intent = new Intent(this, HomePageActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
 
     }
 

@@ -182,7 +182,7 @@ public class SignUpFragment extends Fragment implements HelperResponse{
 
             SignUpModel loginModel = (SignUpModel) customResponse;
 
-            if (loginModel.getCommon().isSuccess()) {
+            if (DMSConstants.RESPONSE_OK.equalsIgnoreCase(loginModel.getCommon().getSuccess())) {
                 if (loginModel.getCommon().getStatusMessage().equalsIgnoreCase(getString(R.string.profile_exists))) {
                     CommonMethods.showToast(getActivity(), loginModel.getCommon().getStatusMessage());
                 } else {

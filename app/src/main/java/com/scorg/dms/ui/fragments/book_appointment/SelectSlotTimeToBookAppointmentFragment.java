@@ -434,7 +434,7 @@ public class SelectSlotTimeToBookAppointmentFragment extends Fragment implements
             case DMSConstants.TASK_CONFIRM_APPOINTMENT:
                 if (customResponse != null) {
                     ResponseAppointmentConfirmationModel mResponseAppointmentConfirmationModel = (ResponseAppointmentConfirmationModel) customResponse;
-                    if (mResponseAppointmentConfirmationModel.getCommon().isSuccess()) {
+                    if (DMSConstants.RESPONSE_OK.equalsIgnoreCase(mResponseAppointmentConfirmationModel.getCommon().getSuccess())) {
                         Toast.makeText(mContext, mResponseAppointmentConfirmationModel.getCommon().getStatusMessage(), Toast.LENGTH_SHORT).show();
                         Intent intentObject = new Intent(getContext(), MyAppointmentsActivity.class);
                         intentObject.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

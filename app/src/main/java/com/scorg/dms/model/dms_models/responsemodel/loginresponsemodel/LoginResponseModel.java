@@ -11,12 +11,6 @@ public class LoginResponseModel implements Serializable, CustomResponse {
     @SerializedName("access_token")
     @Expose
     private String accessToken;
-
-
-
-    @SerializedName("userGender")
-    @Expose
-    private String userGender;
     @SerializedName("token_type")
     @Expose
     private String tokenType;
@@ -26,6 +20,25 @@ public class LoginResponseModel implements Serializable, CustomResponse {
     @SerializedName("refresh_token")
     @Expose
     private String refreshToken;
+    @SerializedName("client_id")
+    @Expose
+    private String clientId;
+    @SerializedName("userName")
+    @Expose
+    private String userName;
+    @SerializedName("userGender")
+    @Expose
+    private String userGender;
+    @SerializedName("doctorId")
+    @Expose
+    private String doctorId;
+    @SerializedName("doctorName")
+    @Expose
+    private String doctorName;
+    @SerializedName("hospitalName")
+    @Expose
+    private String hospitalName;
+
 
     public String getAccessToken() {
         return accessToken;
@@ -58,6 +71,7 @@ public class LoginResponseModel implements Serializable, CustomResponse {
     public void setRefreshToken(String refreshToken) {
         this.refreshToken = refreshToken;
     }
+
     public String getUserGender() {
         return userGender;
     }
@@ -66,4 +80,43 @@ public class LoginResponseModel implements Serializable, CustomResponse {
         this.userGender = userGender;
     }
 
+    public String getClientId() {
+        return clientId;
+    }
+
+    public void setClientId(String clientId) {
+        this.clientId = clientId;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getDoctorId() {
+        return doctorId;
+    }
+
+    public void setDoctorId(String doctorId) {
+        this.doctorId = doctorId;
+    }
+
+    public String getDoctorName() {
+        return doctorName;
+    }
+
+    public void setDoctorName(String doctorName) {
+        this.doctorName = doctorName;
+    }
+
+    public String getHospitalName() {
+        return hospitalName;
+    }
+
+    public void setHospitalName(String hospitalName) {
+        this.hospitalName = hospitalName;
+    }
 }

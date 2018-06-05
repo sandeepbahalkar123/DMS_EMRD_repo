@@ -685,7 +685,7 @@ public class MyPatientsFragment extends Fragment implements MyPatientsAdapter.On
             }
         } else if (mOldDataTag.equalsIgnoreCase(DMSConstants.TASK_ADD_TO_WAITING_LIST)) {
             AddToWaitingListBaseModel addToWaitingListBaseModel = (AddToWaitingListBaseModel) customResponse;
-            if (addToWaitingListBaseModel.getCommon().isSuccess()) {
+            if (DMSConstants.RESPONSE_OK.equalsIgnoreCase(addToWaitingListBaseModel.getCommon().getSuccess())) {
                 if (addToWaitingListBaseModel.getAddToWaitingModel().getAddToWaitingResponse().get(0).getStatusMessage().toLowerCase().contains(getString(R.string.patients_added_to_waiting_list).toLowerCase())) {
                     Intent intent = new Intent(getActivity(), WaitingMainListActivity.class);
                     intent.putExtra(LOCATION_ID, mLocationId);

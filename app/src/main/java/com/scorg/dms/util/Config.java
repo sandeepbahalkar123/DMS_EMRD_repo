@@ -20,7 +20,7 @@ public class Config {
     public static final String GET_PATIENT_HISTORY = "doctor/api/patient/getPatientOpdHistory";
     public static final String ADD_TO_WAITING_LIST = "doctor/api/appointment/addToWaitingList";
     public static final String GET_CLINIC_LOCATION_LIST = "doctor/api/appointment/getDoctorLocationList?docId=";
-    public static final String GET_DASHBOARD_DATA = "doctor/api/dashboard/getDashboard";
+    public static final String GET_DASHBOARD_DATA = "DoctorDashboard";
     public static final String DELETE_WAITING_LIST = "doctor/api/appointment/deleteFromWaitingList";
     public static final String CANCEL_OR_COMPLETE_APPOINTMENT = "api/patient/updateAppointmentStatus";
     public static final String DRAG_AND_DROP_API = "doctor/api/appointment/dragDropPatientWaiting";

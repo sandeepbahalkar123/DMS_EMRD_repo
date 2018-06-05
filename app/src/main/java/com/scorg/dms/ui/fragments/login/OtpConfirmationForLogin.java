@@ -175,7 +175,7 @@ public class OtpConfirmationForLogin extends Fragment implements HelperResponse,
     public void onSuccess(String mOldDataTag, CustomResponse customResponse) {
         if (mOldDataTag.equalsIgnoreCase(DMSConstants.TASK_LOGIN_WITH_OTP)) {
             LoginModel loginModel = (LoginModel) customResponse;
-            if (loginModel.getCommon().isSuccess()) {
+            if (DMSConstants.RESPONSE_OK.equalsIgnoreCase(loginModel.getCommon().getSuccess())) {
                 mResendOTPCount = mResendOTPCount + 1;
                 mCountDownTimer = new OtpConfirmationForLogin.MyCountDownTimer(mStartTime, mInterval);
                 mCountDownTimer.start();
@@ -189,7 +189,7 @@ public class OtpConfirmationForLogin extends Fragment implements HelperResponse,
         } else if (mOldDataTag.equalsIgnoreCase(DMSConstants.TASK_VERIFY_SIGN_UP_OTP)) {
 
             LoginModel receivedModel = (LoginModel) customResponse;
-            if (receivedModel.getCommon().isSuccess()) {
+            if (DMSConstants.RESPONSE_OK.equalsIgnoreCase(receivedModel.getCommon().getSuccess())) {
 
                 DocDetail docDetail = receivedModel.getDoctorLoginData().getDocDetail();
                 String authToken = receivedModel.getDoctorLoginData().getAuthToken();

@@ -313,7 +313,7 @@ public class ViewAllPatientListFragment extends Fragment implements OnStartDragL
     public void onSuccess(String mOldDataTag, CustomResponse customResponse) {
         if (mOldDataTag.equals(DMSConstants.TASK_DELETE_WAITING_LIST)) {
             TemplateBaseModel templateBaseModel = (TemplateBaseModel) customResponse;
-            if (templateBaseModel.getCommon().isSuccess()) {
+            if (DMSConstants.RESPONSE_OK.equalsIgnoreCase(templateBaseModel.getCommon().getSuccess())) {
                 Toast.makeText(getActivity(), templateBaseModel.getCommon().getStatusMessage() + "", Toast.LENGTH_SHORT).show();
                 myItemAdapter.removeItem(adapterPos);
                 waitingPatientTempList.getViewAll().remove(adapterPos);
@@ -329,7 +329,7 @@ public class ViewAllPatientListFragment extends Fragment implements OnStartDragL
             }
         } else if (mOldDataTag.equals(DMSConstants.TASK_DARG_DROP)) {
             TemplateBaseModel templateBaseModel = (TemplateBaseModel) customResponse;
-            if (templateBaseModel.getCommon().isSuccess()) {
+            if (DMSConstants.RESPONSE_OK.equalsIgnoreCase(templateBaseModel.getCommon().getSuccess())) {
                 Toast.makeText(getActivity(), templateBaseModel.getCommon().getStatusMessage() + "", Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(getActivity(), templateBaseModel.getCommon().getStatusMessage() + "", Toast.LENGTH_SHORT).show();

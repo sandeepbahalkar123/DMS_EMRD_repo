@@ -79,8 +79,6 @@ public class DashboardHelper implements ConnectionListener {
     public void doGetDashboardResponse() {
         ConnectionFactory mConnectionFactory = new ConnectionFactory(mContext, this, null, true, DMSConstants.TASK_GET_DASHBOARD_RESPONSE, Request.Method.POST, true);
         RequestAppointmentData mRequestAppointmentData = new RequestAppointmentData();
-        //   mRequestAppointmentData.setDocId(2602);
-        mRequestAppointmentData.setAppName(DMSConstants.DOCTOR);
         mRequestAppointmentData.setDocId(Integer.valueOf(DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.DOC_ID, mContext)));
         String date = CommonMethods.getCurrentDate(DMSConstants.DATE_PATTERN.YYYY_MM_DD);
         mRequestAppointmentData.setDate(date);

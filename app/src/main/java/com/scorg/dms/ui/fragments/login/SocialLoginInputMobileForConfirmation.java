@@ -157,7 +157,7 @@ public class SocialLoginInputMobileForConfirmation extends Fragment implements H
 
             SignUpModel loginModel = (SignUpModel) customResponse;
 
-            if (loginModel.getCommon().isSuccess()) {
+            if (DMSConstants.RESPONSE_OK.equalsIgnoreCase(loginModel.getCommon().getSuccess())) {
                      AppGlobalContainerActivity activity = (AppGlobalContainerActivity) getActivity();
                      activity.loadFragment(getString(R.string.enter_otp), mSignUpRequestModel, getString(R.string.sign_up_confirmation));
 

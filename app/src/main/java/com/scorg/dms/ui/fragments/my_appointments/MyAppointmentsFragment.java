@@ -583,12 +583,12 @@ public class MyAppointmentsFragment extends Fragment implements AppointmentAdapt
     public void onSuccess(String mOldDataTag, CustomResponse customResponse) {
         if (mOldDataTag.equalsIgnoreCase(DMSConstants.TASK_ADD_TO_WAITING_LIST)) {
             AddToWaitingListBaseModel mAddToWaitingListBaseModel = (AddToWaitingListBaseModel) customResponse;
-            if (mAddToWaitingListBaseModel.getCommon().isSuccess()) {
+            if (DMSConstants.RESPONSE_OK.equalsIgnoreCase(mAddToWaitingListBaseModel.getCommon().getSuccess())) {
                 showDialogForWaitingStatus(mAddToWaitingListBaseModel.getAddToWaitingModel().getAddToWaitingResponse());
             }
         } else if (mOldDataTag.equalsIgnoreCase(DMSConstants.TASK_APPOINTMENT_CANCEL_OR_COMPLETE)) {
             TemplateBaseModel templateBaseModel = (TemplateBaseModel) customResponse;
-            if (templateBaseModel.getCommon().isSuccess()) {
+            if (DMSConstants.RESPONSE_OK.equalsIgnoreCase(templateBaseModel.getCommon().getSuccess())) {
                 Toast.makeText(getActivity(), templateBaseModel.getCommon().getStatusMessage() + "", Toast.LENGTH_SHORT).show();
                 ArrayList<AppointmentList> mAppointmentListOfAdapter = mAppointmentAdapter.getGroupList();
                 if (isFromGroup) {

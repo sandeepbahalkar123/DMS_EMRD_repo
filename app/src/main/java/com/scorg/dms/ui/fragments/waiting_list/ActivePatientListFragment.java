@@ -176,7 +176,7 @@ public class ActivePatientListFragment extends Fragment implements HelperRespons
     public void onSuccess(String mOldDataTag, CustomResponse customResponse) {
         if (mOldDataTag.equals(DMSConstants.TASK_DELETE_WAITING_LIST)) {
             TemplateBaseModel templateBaseModel = (TemplateBaseModel) customResponse;
-            if (templateBaseModel.getCommon().isSuccess()) {
+            if (DMSConstants.RESPONSE_OK.equalsIgnoreCase(templateBaseModel.getCommon().getSuccess())) {
                 Toast.makeText(getActivity(), templateBaseModel.getCommon().getStatusMessage() + "", Toast.LENGTH_SHORT).show();
                 mDraggableSwipeableActiveWaitingListAdapter.removeItem(adapterPos);
                 waitingPatientTempList.getActive().remove(adapterPos);
@@ -191,7 +191,7 @@ public class ActivePatientListFragment extends Fragment implements HelperRespons
             }
         } else if (mOldDataTag.equals(DMSConstants.TASK_DARG_DROP)) {
             TemplateBaseModel templateBaseModel = (TemplateBaseModel) customResponse;
-            if (templateBaseModel.getCommon().isSuccess()) {
+            if (DMSConstants.RESPONSE_OK.equalsIgnoreCase(templateBaseModel.getCommon().getSuccess())) {
                 Toast.makeText(getActivity(), templateBaseModel.getCommon().getStatusMessage() + "", Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(getActivity(), templateBaseModel.getCommon().getStatusMessage() + "", Toast.LENGTH_SHORT).show();

@@ -227,6 +227,8 @@ public class DMSPreferencesManager {
         String EMAIL = "email";
         String AUTHTOKEN = "authToken";
         String DOC_ID = "docId";
+        String DOC_NAME = "doctorName";
+        String HOSPITAL_NAME = "hospitalName";
         String LOGIN_STATUS = "login_status";
         String MOBILE_NUMBER = "mobileNumber";
         String LOGIN_OR_SIGNUP = "signup_login";

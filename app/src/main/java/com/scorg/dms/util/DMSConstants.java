@@ -117,6 +117,7 @@ public class DMSConstants {
     public static final String TASK_CONFIRM_APPOINTMENT = DMSConstants.BLANK + 38;
     public static final String DATA = "DATA";
     public static final Integer SUCCESS = 200;
+    public static final String RESPONSE_OK = "OK";
 
     //-----------
     public static final String TASK_CHECK_SERVER_CONNECTION = DMSConstants.BLANK + 39;

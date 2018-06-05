@@ -35,11 +35,4 @@ public class RequestAppointmentData implements CustomResponse {
         this.date = date;
     }
 
-    public String getAppName() {
-        return appName;
-    }
-
-    public void setAppName(String appName) {
-        this.appName = appName;
-    }
 }

@@ -194,7 +194,7 @@ public class SingleVisitDetailsActivity extends AppCompatActivity implements Hel
     public void onSuccess(String mOldDataTag, CustomResponse customResponse) {
         if (mOldDataTag.equalsIgnoreCase(DMSConstants.TASK_DELETE_PATIENT_OPD_ATTCHMENTS)) {
             CommonBaseModelContainer common = (CommonBaseModelContainer) customResponse;
-            if (common.getCommonRespose().isSuccess()) {
+            if (DMSConstants.RESPONSE_OK.equalsIgnoreCase(common.getCommonRespose().getSuccess())) {
                 isAllAttachmentDeleted = mSingleVisitAdapter.removeSelectedAttachmentFromList();
                 if (mSingleVisitAdapter.getListDataList().size() == 1) {
                     if (mSingleVisitAdapter.getListDataList().get(0).getCaseDetailName().equals(PAIN_SCALE)) {

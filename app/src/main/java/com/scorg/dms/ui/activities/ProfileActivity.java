@@ -548,7 +548,7 @@ public class ProfileActivity extends BottomMenuActivity implements BottomMenuAda
                     CommonMethods.Log(TAG, bodyAsString);
 
                     ProfilePhotoResponse profilePhotoResponse = new Gson().fromJson(bodyAsString, ProfilePhotoResponse.class);
-                    if (profilePhotoResponse.getCommon().isSuccess()) {
+                    if (DMSConstants.RESPONSE_OK.equalsIgnoreCase(profilePhotoResponse.getCommon().getSuccess())) {
                         DMSPreferencesManager.putString(DMSPreferencesManager.DMS_PREFERENCES_KEY.PROFILE_PHOTO, profilePhotoResponse.getData().getDocImgUrl(), mContext);
                         Toast.makeText(context, profilePhotoResponse.getCommon().getStatusMessage(), Toast.LENGTH_SHORT).show();
                         RequestOptions requestOptions = new RequestOptions();
