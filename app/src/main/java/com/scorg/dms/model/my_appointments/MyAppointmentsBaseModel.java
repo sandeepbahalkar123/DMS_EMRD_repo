@@ -4,13 +4,13 @@ package com.scorg.dms.model.my_appointments;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.os.Parcelable.Creator;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.scorg.dms.interfaces.CustomResponse;
 import com.scorg.dms.model.Common;
 
-public class MyAppointmentsBaseModel implements Parcelable , CustomResponse
-{
+public class MyAppointmentsBaseModel implements Parcelable, CustomResponse {
 
     @SerializedName("common")
     @Expose
@@ -22,7 +22,7 @@ public class MyAppointmentsBaseModel implements Parcelable , CustomResponse
 
 
         @SuppressWarnings({
-            "unchecked"
+                "unchecked"
         })
         public MyAppointmentsBaseModel createFromParcel(Parcel in) {
             return new MyAppointmentsBaseModel(in);
@@ -32,8 +32,7 @@ public class MyAppointmentsBaseModel implements Parcelable , CustomResponse
             return (new MyAppointmentsBaseModel[size]);
         }
 
-    }
-    ;
+    };
 
     protected MyAppointmentsBaseModel(Parcel in) {
         this.common = ((Common) in.readValue((Common.class.getClassLoader())));
@@ -65,7 +64,7 @@ public class MyAppointmentsBaseModel implements Parcelable , CustomResponse
     }
 
     public int describeContents() {
-        return  0;
+        return 0;
     }
 
 }

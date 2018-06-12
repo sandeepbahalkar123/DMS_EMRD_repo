@@ -5,12 +5,12 @@ import android.content.Intent;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.os.Parcelable.Creator;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.scorg.dms.util.CommonMethods;
 
-public class ViewAll implements Parcelable
-{
+public class ViewAll implements Parcelable {
 
     @SerializedName("waitingId")
     @Expose
@@ -64,7 +64,7 @@ public class ViewAll implements Parcelable
 
 
         @SuppressWarnings({
-            "unchecked"
+                "unchecked"
         })
         public ViewAll createFromParcel(Parcel in) {
             return new ViewAll(in);
@@ -236,7 +236,7 @@ public class ViewAll implements Parcelable
     }
 
     public int describeContents() {
-        return  0;
+        return 0;
     }
 
 }

@@ -1028,7 +1028,7 @@ public class PatientList extends AppCompatActivity implements HelperResponse, Vi
         mDatePickerDialog = DatePickerDialog.newInstance(
                 new DatePickerDialog.OnDateSetListener() {
                     @Override
-                    public void onDateSet(DatePickerDialog dialog, int year, int monthOfYear, int dayOfMonth) {
+                    public void onDateSet(DatePickerDialog dialog, String year, String monthOfYear, String dayOfMonth) {
 
                         String selectedTime = year + "-" + (monthOfYear + 1) + "-" + dayOfMonth;
                         if (getString(R.string.from).equalsIgnoreCase(callFrom)) {

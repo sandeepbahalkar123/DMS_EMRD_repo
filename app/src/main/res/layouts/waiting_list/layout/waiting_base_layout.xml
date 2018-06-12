@@ -44,7 +44,7 @@
         android:layout_marginRight="@dimen/fab_margin"
         android:layout_marginTop="@dimen/dp5"
         app:srcCompat="@drawable/ic_add_action"
-        android:visibility="visible"
+        android:visibility="gone"
         app:backgroundTint="@color/floating_blue_color" />
 
 </android.support.design.widget.CoordinatorLayout>

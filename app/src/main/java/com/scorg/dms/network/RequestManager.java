@@ -40,8 +40,7 @@ import com.scorg.dms.interfaces.Connector;
 import com.scorg.dms.interfaces.CustomResponse;
 import com.scorg.dms.model.CommonBaseModelContainer;
 import com.scorg.dms.model.case_details.CaseDetailsModel;
-import com.scorg.dms.model.chat.SendMessageModel;
-import com.scorg.dms.model.chat.history.ChatHistoryModel;
+
 import com.scorg.dms.model.completed_opd.CompletedOpdBaseModel;
 import com.scorg.dms.model.dashboard.DashboardBaseModel;
 import com.scorg.dms.model.doctor_connect.DoctorConnectBaseModel;
@@ -506,16 +505,6 @@ public class RequestManager extends ConnectRequest implements Connector, Request
                     case DMSConstants.GET_PATIENT_CHAT_LIST: //This is for get archived list
                         ChatPatientConnectModel patientConnectModel = new Gson().fromJson(data, ChatPatientConnectModel.class);
                         this.mConnectionListener.onResponse(ConnectionListener.RESPONSE_OK, patientConnectModel, mOldDataTag);
-                        break;
-
-                    case DMSConstants.SEND_MESSAGE: //This is for get archived list
-                        SendMessageModel sendMessageModel = new Gson().fromJson(data, SendMessageModel.class);
-                        this.mConnectionListener.onResponse(ConnectionListener.RESPONSE_OK, sendMessageModel, mOldDataTag);
-                        break;
-
-                    case DMSConstants.CHAT_HISTORY: //This is for get archived list
-                        ChatHistoryModel chatHistoryModel = new Gson().fromJson(data, ChatHistoryModel.class);
-                        this.mConnectionListener.onResponse(ConnectionListener.RESPONSE_OK, chatHistoryModel, mOldDataTag);
                         break;
 
                     case DMSConstants.ACTIVE_STATUS: //This is for get archived list

@@ -18,8 +18,8 @@ import com.scorg.dms.helpers.myappointments.AppointmentHelper;
 import com.scorg.dms.interfaces.CustomResponse;
 import com.scorg.dms.interfaces.HelperResponse;
 import com.scorg.dms.model.waiting_list.WaitingListBaseModel;
-import com.scorg.dms.model.waiting_list.WaitingclinicList;
-import com.scorg.dms.ui.activities.my_patients.MyPatientsActivity;
+import com.scorg.dms.model.waiting_list.WaitingClinicList;
+import com.scorg.dms.model.waiting_list.WaitingListDataModel;
 import com.scorg.dms.ui.customesViews.CustomTextView;
 import com.scorg.dms.ui.fragments.waiting_list.ActivePatientListFragment;
 import com.scorg.dms.ui.fragments.waiting_list.ViewAllPatientListFragment;
@@ -31,8 +31,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
-import static com.scorg.dms.util.DMSConstants.LOCATION_ID;
 
 /**
  * Created by jeetal on 22/2/18.
@@ -62,9 +60,9 @@ public class WaitingMainListActivity extends AppCompatActivity implements Helper
     FloatingActionButton leftFab;
     private ActivePatientListFragment mActivePatientListFragment;
     private ViewAllPatientListFragment mViewAllPatientListFragment;
-    private ArrayList<WaitingclinicList> mWaitingClinicList;
-    private Bundle bundle;
+    private ArrayList<WaitingClinicList> mWaitingClinicList;
     private AppointmentHelper mAppointmentHelper;
+    private WaitingListDataModel mWaitingListDataModel;
 
 
     @Override
@@ -81,8 +79,8 @@ public class WaitingMainListActivity extends AppCompatActivity implements Helper
     private void setupViewPager(ViewPager viewPager) {
         titleTextView.setText(getString(R.string.waiting_list));
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        mActivePatientListFragment = ActivePatientListFragment.newInstance(bundle);
-        mViewAllPatientListFragment = ViewAllPatientListFragment.newInstance(bundle);
+        mActivePatientListFragment = ActivePatientListFragment.newInstance(new Bundle());
+        mViewAllPatientListFragment = ViewAllPatientListFragment.newInstance(new Bundle());
         adapter.addFragment(mActivePatientListFragment, getString(R.string.active));
         adapter.addFragment(mViewAllPatientListFragment, getString(R.string.view_all));
         viewPager.setAdapter(adapter);
@@ -92,10 +90,7 @@ public class WaitingMainListActivity extends AppCompatActivity implements Helper
     public void onSuccess(String mOldDataTag, CustomResponse customResponse) {
         if (customResponse != null) {
             WaitingListBaseModel waitingListBaseModel = (WaitingListBaseModel) customResponse;
-            mWaitingClinicList = waitingListBaseModel.getWaitingListDataModel().getWaitingclinicList();
-            bundle = new Bundle();
-            bundle.putParcelableArrayList(DMSConstants.WAITING_LIST_INFO, mWaitingClinicList);
-            bundle.putInt(LOCATION_ID, getIntent().getIntExtra(LOCATION_ID, -1));
+            mWaitingListDataModel = waitingListBaseModel.getWaitingListDataModel();
             setupViewPager(viewpager);
             tabs.setupWithViewPager(viewpager);
         }
@@ -116,7 +111,7 @@ public class WaitingMainListActivity extends AppCompatActivity implements Helper
 
     }
 
-    @OnClick({R.id.backImageView, R.id.titleTextView, R.id.userInfoTextView,R.id.leftFab})
+    @OnClick({R.id.backImageView, R.id.titleTextView, R.id.userInfoTextView, R.id.leftFab})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.backImageView:
@@ -127,9 +122,7 @@ public class WaitingMainListActivity extends AppCompatActivity implements Helper
             case R.id.userInfoTextView:
                 break;
             case R.id.leftFab:
-                Intent intent = new Intent(this, MyPatientsActivity.class);
-                intent.putExtra(DMSConstants.ACTIVITY_LAUNCHED_FROM, DMSConstants.WAITING_LIST);
-                startActivityForResult(intent,RESULT_CLOSE_ACTIVITY_WAITING_LIST);
+
                 break;
         }
     }
@@ -174,5 +167,14 @@ public class WaitingMainListActivity extends AppCompatActivity implements Helper
         if (requestCode == RESULT_CLOSE_ACTIVITY_WAITING_LIST) {
             finish();
         }
+    }
+
+
+    public WaitingListDataModel getWaitingListDataModel() {
+        return mWaitingListDataModel;
+    }
+
+    public void setWaitingListDataModel(WaitingListDataModel mWaitingListDataModel) {
+        this.mWaitingListDataModel = mWaitingListDataModel;
     }
 }

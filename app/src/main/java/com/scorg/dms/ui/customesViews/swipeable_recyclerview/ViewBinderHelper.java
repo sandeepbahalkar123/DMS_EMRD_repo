@@ -26,11 +26,6 @@ package com.scorg.dms.ui.customesViews.swipeable_recyclerview;
 
 import android.os.Bundle;
 
-import com.scorg.dms.model.my_appointments.AppointmentList;
-import com.scorg.dms.model.my_appointments.PatientList;
-import com.scorg.dms.model.waiting_list.Active;
-import com.scorg.dms.model.waiting_list.ViewAll;
-
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;

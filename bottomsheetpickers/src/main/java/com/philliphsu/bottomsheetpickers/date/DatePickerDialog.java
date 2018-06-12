@@ -39,9 +39,9 @@ import static com.philliphsu.bottomsheetpickers.date.PagingDayPickerView.DAY_PIC
  * Dialog allowing users to select a date.
  */
 public class DatePickerDialog extends BottomSheetPickerDialog implements
-        View.OnClickListener, 
-        DatePickerController, 
-        View.OnTouchListener, 
+        View.OnClickListener,
+        DatePickerController,
+        View.OnTouchListener,
         AbsListView.OnScrollListener {
     private static final String TAG = "DatePickerDialog";
 
@@ -95,8 +95,10 @@ public class DatePickerDialog extends BottomSheetPickerDialog implements
     private int mWeekStart = mCalendar.getFirstDayOfWeek();
     private int mMinYear = DEFAULT_START_YEAR;
     private int mMaxYear = DEFAULT_END_YEAR;
-    private @Nullable Calendar mMinDate;
-    private @Nullable Calendar mMaxDate;
+    private @Nullable
+    Calendar mMinDate;
+    private @Nullable
+    Calendar mMaxDate;
 
     private HapticFeedbackController mHapticFeedbackController;
     private CalendarDay mSelectedDay;
@@ -125,13 +127,13 @@ public class DatePickerDialog extends BottomSheetPickerDialog implements
     public interface OnDateSetListener {
 
         /**
-         * @param dialog The dialog associated with this listener.
-         * @param year The year that was set.
+         * @param dialog      The dialog associated with this listener.
+         * @param year        The year that was set.
          * @param monthOfYear The month that was set (0-11) for compatibility
-         *            with {@link Calendar}.
-         * @param dayOfMonth The day of the month that was set.
+         *                    with {@link Calendar}.
+         * @param dayOfMonth  The day of the month that was set.
          */
-        void onDateSet(DatePickerDialog dialog, int year, int monthOfYear, int dayOfMonth);
+        void onDateSet(DatePickerDialog dialog, String year, String monthOfYear, String dayOfMonth);
     }
 
     /**
@@ -152,7 +154,7 @@ public class DatePickerDialog extends BottomSheetPickerDialog implements
      * @param monthOfYear The initial month of the dialog.
      * @param dayOfMonth  The initial day of the dialog.
      */
-    public static DatePickerDialog newInstance(OnDateSetListener callBack, int year, 
+    public static DatePickerDialog newInstance(OnDateSetListener callBack, int year,
                                                int monthOfYear, int dayOfMonth) {
         DatePickerDialog ret = new DatePickerDialog();
         ret.initialize(callBack, year, monthOfYear, dayOfMonth);
@@ -299,8 +301,21 @@ public class DatePickerDialog extends BottomSheetPickerDialog implements
             public void onClick(View v) {
                 tryVibrate();
                 if (mCallBack != null) {
-                    mCallBack.onDateSet(DatePickerDialog.this, mCalendar.get(Calendar.YEAR),
-                            mCalendar.get(Calendar.MONTH), mCalendar.get(Calendar.DAY_OF_MONTH));
+
+                    //-----
+                    String month = "" + mCalendar.get(Calendar.MONTH);
+                    if (Integer.parseInt(month) <= 9) {
+                        month = "0" + month;
+                    }
+                    //-----
+                    String day = "" + mCalendar.get(Calendar.DAY_OF_MONTH);
+                    if (Integer.parseInt(day) <= 9) {
+                        day = "0" + day;
+                    }
+                    //-----
+
+                    mCallBack.onDateSet(DatePickerDialog.this, "" + mCalendar.get(Calendar.YEAR),
+                            month, day);
                 }
                 dismiss();
             }
@@ -381,7 +396,7 @@ public class DatePickerDialog extends BottomSheetPickerDialog implements
     }
 
     public void setOutOfRageInvisible() {
-            this.isOutOfRangeInvisible = true;
+        this.isOutOfRangeInvisible = true;
     }
 
     @Override
@@ -578,6 +593,7 @@ public class DatePickerDialog extends BottomSheetPickerDialog implements
 
     /**
      * Use this to set the day that a week should start on.
+     *
      * @param startOfWeek A value from {@link Calendar#SUNDAY SUNDAY}
      *                    through {@link Calendar#SATURDAY SATURDAY}
      */
@@ -600,7 +616,7 @@ public class DatePickerDialog extends BottomSheetPickerDialog implements
      * <em>This does NOT change the minimal date's year or the maximal date's year.</em>
      *
      * @param startYear the start of the year range
-     * @param endYear the end of the year range
+     * @param endYear   the end of the year range
      */
     public void setYearRange(int startYear, int endYear) {
         if (endYear <= startYear) {
@@ -821,11 +837,11 @@ public class DatePickerDialog extends BottomSheetPickerDialog implements
 
     private static ColorStateList createColorStateList(int selectedColor, int unselectedColor) {
         final int[][] states = {
-                { android.R.attr.state_selected },
-                { -android.R.attr.state_selected },
+                {android.R.attr.state_selected},
+                {-android.R.attr.state_selected},
                 { /* default state */}
         };
-        final int[] colors = { selectedColor, unselectedColor, unselectedColor };
+        final int[] colors = {selectedColor, unselectedColor, unselectedColor};
         return new ColorStateList(states, colors);
     }
 
@@ -836,9 +852,11 @@ public class DatePickerDialog extends BottomSheetPickerDialog implements
         private int mWeekStart = Calendar.getInstance().getFirstDayOfWeek();
         private int mMinYear = DEFAULT_START_YEAR;
         private int mMaxYear = DEFAULT_END_YEAR;
-        private @Nullable Calendar mMinDate;
-        private @Nullable Calendar mMaxDate;
-        
+        private @Nullable
+        Calendar mMinDate;
+        private @Nullable
+        Calendar mMaxDate;
+
         private int mHeaderTextColorSelected;
         private int mHeaderTextColorUnselected;
         private int mDayOfWeekHeaderTextColorSelected;
@@ -856,9 +874,10 @@ public class DatePickerDialog extends BottomSheetPickerDialog implements
             mMonthOfYear = monthOfYear;
             mDayOfMonth = dayOfMonth;
         }
-        
+
         /**
          * Use this to set the day that a week should start on.
+         *
          * @param startOfWeek A value from {@link Calendar#SUNDAY SUNDAY}
          *                    through {@link Calendar#SATURDAY SATURDAY}
          */
@@ -875,7 +894,7 @@ public class DatePickerDialog extends BottomSheetPickerDialog implements
          * <em>This does NOT change the minimal date's year or the maximal date's year.</em>
          *
          * @param startYear the start of the year range
-         * @param endYear the end of the year range
+         * @param endYear   the end of the year range
          */
         public Builder setYearRange(int startYear, int endYear) {
             mMinYear = startYear;
@@ -977,7 +996,9 @@ public class DatePickerDialog extends BottomSheetPickerDialog implements
             return dialog;
         }
 
-        /** Builds this class's attributes. */
+        /**
+         * Builds this class's attributes.
+         */
         private void build(@NonNull BottomSheetPickerDialog dialog) {
             DatePickerDialog datePickerDialog = (DatePickerDialog) dialog;
             datePickerDialog.setHeaderTextColorSelected(mHeaderTextColorSelected);

@@ -2,10 +2,12 @@
 package com.scorg.dms.model.my_appointments;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Iterator;
+
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.os.Parcelable.Creator;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -16,10 +18,8 @@ public class MyAppointmentsDataModel implements Parcelable {
     private ArrayList<ClinicList> clinicList = new ArrayList<ClinicList>();
     @SerializedName("appointmentList")
     @Expose
-    private ArrayList<AppointmentList> appointmentList = new ArrayList<AppointmentList>();
-    @SerializedName("statusList")
-    @Expose
-    private ArrayList<StatusList> statusList = new ArrayList<StatusList>();
+    private ArrayList<AppointmentPatientData> appointmentPatientData = new ArrayList<AppointmentPatientData>();
+
     public final static Creator<MyAppointmentsDataModel> CREATOR = new Creator<MyAppointmentsDataModel>() {
 
 
@@ -38,8 +38,7 @@ public class MyAppointmentsDataModel implements Parcelable {
 
     protected MyAppointmentsDataModel(Parcel in) {
         in.readList(this.clinicList, (ClinicList.class.getClassLoader()));
-        in.readList(this.appointmentList, (AppointmentList.class.getClassLoader()));
-        in.readList(this.statusList, (StatusList.class.getClassLoader()));
+        in.readList(this.appointmentPatientData, (AppointmentPatientData.class.getClassLoader()));
     }
 
 
@@ -55,29 +54,42 @@ public class MyAppointmentsDataModel implements Parcelable {
         this.clinicList = clinicList;
     }
 
-    public ArrayList<AppointmentList> getAppointmentList() {
-        return appointmentList;
+    public ArrayList<AppointmentPatientData> getAppointmentPatientData() {
+        return appointmentPatientData;
     }
 
-    public void setAppointmentList(ArrayList<AppointmentList> appointmentList) {
-        this.appointmentList = appointmentList;
-    }
-    public ArrayList<StatusList> getStatusList() {
-        return statusList;
+    public void setAppointmentPatientData(ArrayList<AppointmentPatientData> appointmentPatientData) {
+        this.appointmentPatientData = appointmentPatientData;
     }
 
-    public void setStatusList(ArrayList<StatusList> statusList) {
-        this.statusList = statusList;
-    }
     public void writeToParcel(Parcel dest, int flags) {
 
         dest.writeList(clinicList);
-        dest.writeList(appointmentList);
-        dest.writeList(statusList);
+        dest.writeList(appointmentPatientData);
     }
 
     public int describeContents() {
         return 0;
     }
 
+
+    public ArrayList<StatusList> getStatusList() {
+
+        ArrayList<StatusList> statusLists = new ArrayList<StatusList>();
+
+        StatusList s1 = new StatusList();
+        s1.setStatusName("In Queue");
+        s1.setStatusId(1);
+        statusLists.add(s1);
+        s1 = new StatusList();
+        s1.setStatusName("Coming");
+        s1.setStatusId(2);
+        statusLists.add(s1);
+        s1 = new StatusList();
+        s1.setStatusName("Complete");
+        s1.setStatusId(3);
+        statusLists.add(s1);
+
+        return (statusLists);
+    }
 }

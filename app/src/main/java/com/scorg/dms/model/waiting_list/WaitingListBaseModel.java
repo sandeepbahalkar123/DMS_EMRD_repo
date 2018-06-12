@@ -4,13 +4,13 @@ package com.scorg.dms.model.waiting_list;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.os.Parcelable.Creator;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.scorg.dms.interfaces.CustomResponse;
 import com.scorg.dms.model.Common;
 
-public class WaitingListBaseModel implements Parcelable,CustomResponse
-{
+public class WaitingListBaseModel implements Parcelable, CustomResponse {
 
     @SerializedName("common")
     @Expose
@@ -22,7 +22,7 @@ public class WaitingListBaseModel implements Parcelable,CustomResponse
 
 
         @SuppressWarnings({
-            "unchecked"
+                "unchecked"
         })
         public WaitingListBaseModel createFromParcel(Parcel in) {
             return new WaitingListBaseModel(in);
@@ -37,9 +37,6 @@ public class WaitingListBaseModel implements Parcelable,CustomResponse
     protected WaitingListBaseModel(Parcel in) {
         this.common = ((Common) in.readValue((Common.class.getClassLoader())));
         this.waitingListDataModel = ((WaitingListDataModel) in.readValue((WaitingListDataModel.class.getClassLoader())));
-    }
-
-    public WaitingListBaseModel() {
     }
 
     public Common getCommon() {
@@ -64,7 +61,7 @@ public class WaitingListBaseModel implements Parcelable,CustomResponse
     }
 
     public int describeContents() {
-        return  0;
+        return 0;
     }
 
 }

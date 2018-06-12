@@ -28,17 +28,20 @@
             android:layout_marginStart="@dimen/dp8"
             android:background="@drawable/curve_edge_dashbooard_display_count_bg"
             android:orientation="horizontal"
+            android:paddingBottom="@dimen/dp16"
+            android:paddingTop="@dimen/dp16"
             android:visibility="visible">
 
             <RelativeLayout
                 android:id="@+id/totalPatientsLayout"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_marginLeft="@dimen/dp8"
                 android:layout_marginStart="@dimen/dp8"
                 android:layout_weight="1"
-                android:clickable="true">
+                android:clickable="true"
+                android:gravity="center">
 
                 <com.scorg.dms.ui.customesViews.CustomTextView
                     android:id="@+id/totalPatientsCount"
@@ -46,7 +49,6 @@
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:clickable="false"
-                    android:paddingTop="@dimen/dp16"
                     android:textColor="@color/timing_bg_color"
                     android:textSize="@dimen/sp24"
                     app:customFont="@string/roboto_bold"
@@ -60,8 +62,6 @@
                     android:layout_centerHorizontal="true"
                     android:clickable="false"
                     android:gravity="center"
-                    android:paddingBottom="@dimen/dp10"
-                    android:paddingTop="@dimen/dp10"
                     android:text="@string/today_patient"
                     android:textColor="@color/dashboard_text_color"
                     android:textSize="@dimen/sp12"
@@ -79,10 +79,9 @@
             <RelativeLayout
                 android:id="@+id/todayAppointmentsLayout"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:layout_marginLeft="@dimen/dp8"
-                android:layout_marginStart="@dimen/dp8"
+
                 android:layout_weight="1"
                 android:clickable="true">
 
@@ -92,7 +91,6 @@
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:clickable="false"
-                    android:paddingTop="@dimen/dp16"
                     android:textColor="@color/timing_bg_color"
                     android:textSize="@dimen/sp24"
                     app:customFont="@string/roboto_bold"
@@ -106,8 +104,7 @@
                     android:layout_centerHorizontal="true"
                     android:clickable="false"
                     android:gravity="center"
-                    android:paddingBottom="@dimen/dp10"
-                    android:paddingTop="@dimen/dp10"
+
                     android:text="@string/today_appointment"
                     android:textColor="@color/dashboard_text_color"
                     android:textSize="@dimen/sp12"
@@ -125,10 +122,9 @@
             <RelativeLayout
                 android:id="@+id/waitingPatientLayout"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
-                android:layout_marginEnd="@dimen/dp8"
-                android:layout_marginStart="@dimen/dp8"
+
                 android:layout_weight="1"
                 android:clickable="true">
 
@@ -138,7 +134,6 @@
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:clickable="false"
-                    android:paddingTop="@dimen/dp16"
                     android:textColor="@color/timing_bg_color"
                     android:textSize="@dimen/sp24"
                     app:customFont="@string/roboto_bold"
@@ -152,8 +147,7 @@
                     android:layout_centerHorizontal="true"
                     android:clickable="false"
                     android:gravity="center"
-                    android:paddingBottom="@dimen/dp10"
-                    android:paddingTop="@dimen/dp10"
+
                     android:text="@string/waiting_patients"
                     android:textColor="@color/dashboard_text_color"
                     android:textSize="@dimen/sp12"
@@ -171,10 +165,8 @@
             <RelativeLayout
                 android:id="@+id/pendingApprovalLayout"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
-                android:layout_marginEnd="@dimen/dp8"
-                android:layout_marginRight="@dimen/dp8"
                 android:layout_weight="1"
                 android:clickable="true"
                 android:focusable="true">
@@ -185,7 +177,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:clickable="false"
-                    android:paddingTop="@dimen/dp16"
+
                     android:textColor="@color/timing_bg_color"
                     android:textSize="@dimen/sp24"
                     app:customFont="@string/roboto_bold"
@@ -199,12 +191,10 @@
                     android:layout_centerHorizontal="true"
                     android:clickable="false"
                     android:gravity="center"
-                    android:paddingBottom="@dimen/dp10"
-                    android:paddingTop="@dimen/dp10"
+                    android:text="@string/pending_approval"
                     android:textColor="@color/dashboard_text_color"
                     android:textSize="@dimen/sp12"
-                    app:customFont="@string/roboto_regular"
-                    android:text="@string/pending_approval" />
+                    app:customFont="@string/roboto_regular" />
             </RelativeLayout>
 
         </LinearLayout>

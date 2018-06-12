@@ -10,8 +10,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.scorg.dms.model.chat.MQTTMessage;
-import com.scorg.dms.model.chat.StatusInfo;
 import com.scorg.dms.model.patient.add_new_patient.PatientDetail;
 import com.scorg.dms.model.patient.doctor_patients.PatientList;
 import com.scorg.dms.model.patient.doctor_patients.sync_resp.PatientUpdateDetail;
@@ -28,8 +26,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.util.ArrayList;
 
-import static com.scorg.dms.services.MQTTService.DOCTOR;
-import static com.scorg.dms.services.MQTTService.PATIENT;
 import static com.scorg.dms.util.DMSConstants.FILE_STATUS.FAILED;
 import static com.scorg.dms.util.DMSConstants.MESSAGE_STATUS.REACHED;
 import static com.scorg.dms.util.DMSConstants.MESSAGE_STATUS.READ;
@@ -224,105 +220,6 @@ public class AppDBHelper extends SQLiteOpenHelper {
         CommonMethods.Log("DeletedOfflineDatabase", "APP_DATA , PREFERENCES TABLE, INVESTIGATION");
     }
 
-    public int updateMessageUploadStatus(String messageId, int msgUploadStatus) {
-        SQLiteDatabase db = getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(CHAT_MESSAGES.UPLOAD_STATUS, msgUploadStatus);
-        return db.update(CHAT_MESSAGES.CHAT_MESSAGES_TABLE, contentValues, CHAT_MESSAGES.MSG_ID + " = ? AND " + CHAT_MESSAGES.SENDER + " = ?", new String[]{messageId, DOCTOR});
-    }
-
-    public MQTTMessage getChatMessageByMessageId(String messageId) {
-        SQLiteDatabase db = getReadableDatabase();
-        String countQuery = "select * from " + CHAT_MESSAGES.CHAT_MESSAGES_TABLE + " where " + CHAT_MESSAGES.MSG_ID + " = '" + messageId + "'";
-        Cursor cursor = db.rawQuery(countQuery, null);
-
-        MQTTMessage mqttMessage = null;
-
-        if (cursor.moveToFirst()) {
-            mqttMessage = new MQTTMessage();
-
-            mqttMessage.setMsgId(cursor.getString(cursor.getColumnIndex(CHAT_MESSAGES.MSG_ID)));
-            mqttMessage.setMsg(cursor.getString(cursor.getColumnIndex(CHAT_MESSAGES.MSG)));
-            mqttMessage.setMsgTime(cursor.getString(cursor.getColumnIndex(CHAT_MESSAGES.MSG_TIME)));
-            mqttMessage.setSender(cursor.getString(cursor.getColumnIndex(CHAT_MESSAGES.SENDER)));
-            mqttMessage.setPatId(cursor.getInt(cursor.getColumnIndex(CHAT_MESSAGES.USER2ID)));
-            mqttMessage.setDocId(cursor.getInt(cursor.getColumnIndex(CHAT_MESSAGES.USER1ID)));
-            mqttMessage.setSenderName(cursor.getString(cursor.getColumnIndex(CHAT_MESSAGES.SENDER_NAME)));
-
-            mqttMessage.setSpecialization(cursor.getString(cursor.getColumnIndex(CHAT_MESSAGES.SPECIALITY)));
-            mqttMessage.setMsgStatus(cursor.getString(cursor.getColumnIndex(CHAT_MESSAGES.MSG_STATUS)));
-            mqttMessage.setSenderImgUrl(cursor.getString(cursor.getColumnIndex(CHAT_MESSAGES.SENDER_IMG_URL)));
-            mqttMessage.setFileUrl(cursor.getString(cursor.getColumnIndex(CHAT_MESSAGES.FILE_URL)));
-            mqttMessage.setFileType(cursor.getString(cursor.getColumnIndex(CHAT_MESSAGES.FILE_TYPE)));
-
-            mqttMessage.setSalutation(cursor.getInt(cursor.getColumnIndex(CHAT_MESSAGES.SALUTATION)));
-            mqttMessage.setReceiverName(cursor.getString(cursor.getColumnIndex(CHAT_MESSAGES.RECEIVER_NAME)));
-            mqttMessage.setReceiverImgUrl(cursor.getString(cursor.getColumnIndex(CHAT_MESSAGES.RECEIVER_IMG_URL)));
-
-            mqttMessage.setUploadStatus(cursor.getInt(cursor.getColumnIndex(CHAT_MESSAGES.UPLOAD_STATUS)));
-            mqttMessage.setDownloadStatus(cursor.getInt(cursor.getColumnIndex(CHAT_MESSAGES.DOWNLOAD_STATUS)));
-            mqttMessage.setReadStatus(cursor.getInt(cursor.getColumnIndex(CHAT_MESSAGES.READ_STATUS)));
-        }
-        cursor.close();
-        db.close();
-
-        return mqttMessage;
-    }
-
-    public ArrayList<MQTTMessage> getChatMessageByMessageStatus(String messageStatus) {
-        SQLiteDatabase db = getReadableDatabase();
-        String countQuery = "select * from " + CHAT_MESSAGES.CHAT_MESSAGES_TABLE + " where " + CHAT_MESSAGES.MSG_STATUS + " = '" + messageStatus + "' AND " + CHAT_MESSAGES.SENDER + " = '" + DOCTOR + "'";
-        Cursor cursor = db.rawQuery(countQuery, null);
-        ArrayList<MQTTMessage> chatDoctors = new ArrayList<>();
-
-        if (cursor.moveToFirst()) {
-            while (!cursor.isAfterLast()) {
-                MQTTMessage mqttMessage = new MQTTMessage();
-
-                mqttMessage.setMsgId(cursor.getString(cursor.getColumnIndex(CHAT_MESSAGES.MSG_ID)));
-                mqttMessage.setMsg(cursor.getString(cursor.getColumnIndex(CHAT_MESSAGES.MSG)));
-                mqttMessage.setMsgTime(cursor.getString(cursor.getColumnIndex(CHAT_MESSAGES.MSG_TIME)));
-                mqttMessage.setSender(cursor.getString(cursor.getColumnIndex(CHAT_MESSAGES.SENDER)));
-                mqttMessage.setPatId(cursor.getInt(cursor.getColumnIndex(CHAT_MESSAGES.USER2ID)));
-                mqttMessage.setDocId(cursor.getInt(cursor.getColumnIndex(CHAT_MESSAGES.USER1ID)));
-                mqttMessage.setSenderName(cursor.getString(cursor.getColumnIndex(CHAT_MESSAGES.SENDER_NAME)));
-
-                mqttMessage.setSpecialization(cursor.getString(cursor.getColumnIndex(CHAT_MESSAGES.SPECIALITY)));
-                mqttMessage.setMsgStatus(cursor.getString(cursor.getColumnIndex(CHAT_MESSAGES.MSG_STATUS)));
-                mqttMessage.setSenderImgUrl(cursor.getString(cursor.getColumnIndex(CHAT_MESSAGES.SENDER_IMG_URL)));
-                mqttMessage.setFileUrl(cursor.getString(cursor.getColumnIndex(CHAT_MESSAGES.FILE_URL)));
-                mqttMessage.setFileType(cursor.getString(cursor.getColumnIndex(CHAT_MESSAGES.FILE_TYPE)));
-
-                mqttMessage.setSalutation(cursor.getInt(cursor.getColumnIndex(CHAT_MESSAGES.SALUTATION)));
-                mqttMessage.setReceiverName(cursor.getString(cursor.getColumnIndex(CHAT_MESSAGES.RECEIVER_NAME)));
-                mqttMessage.setReceiverImgUrl(cursor.getString(cursor.getColumnIndex(CHAT_MESSAGES.RECEIVER_IMG_URL)));
-
-                mqttMessage.setUploadStatus(cursor.getInt(cursor.getColumnIndex(CHAT_MESSAGES.UPLOAD_STATUS)));
-                mqttMessage.setDownloadStatus(cursor.getInt(cursor.getColumnIndex(CHAT_MESSAGES.DOWNLOAD_STATUS)));
-                mqttMessage.setReadStatus(cursor.getInt(cursor.getColumnIndex(CHAT_MESSAGES.READ_STATUS)));
-
-                chatDoctors.add(mqttMessage);
-                cursor.moveToNext();
-            }
-        }
-        cursor.close();
-        db.close();
-
-        return chatDoctors;
-    }
-
-    public void updateChatMessageStatus(StatusInfo statusInfo) {
-        SQLiteDatabase db = getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(CHAT_MESSAGES.MSG_STATUS, statusInfo.getMessageStatus());
-
-        if (statusInfo.getMessageStatus().equals(SEEN))
-            db.update(CHAT_MESSAGES.CHAT_MESSAGES_TABLE, contentValues, CHAT_MESSAGES.USER2ID + " = ? AND " + CHAT_MESSAGES.MSG_STATUS + " = ? OR " + CHAT_MESSAGES.MSG_STATUS + " = ?", new String[]{String.valueOf(statusInfo.getPatId()), SENT, REACHED});
-
-        if (statusInfo.getMessageStatus().equals(REACHED))
-            db.update(CHAT_MESSAGES.CHAT_MESSAGES_TABLE, contentValues, CHAT_MESSAGES.USER2ID + " = ? AND " + CHAT_MESSAGES.MSG_STATUS + " = ?", new String[]{String.valueOf(statusInfo.getPatId()), SENT});
-    }
-
     public Cursor getChatUsers() {
         SQLiteDatabase db = getReadableDatabase();
         String sql = "SELECT * FROM " + CHAT_MESSAGES.CHAT_MESSAGES_TABLE + " GROUP BY " + CHAT_MESSAGES.USER2ID + " ORDER BY " + CHAT_MESSAGES.MSG_TIME + " DESC";
@@ -442,98 +339,9 @@ public class AppDBHelper extends SQLiteOpenHelper {
         Integer IS_NOT_SYNC_WITH_SERVER = 0;
     }
 
-    public ArrayList<MQTTMessage> insertChatMessage(MQTTMessage mqttMessage) {
-
-        SQLiteDatabase db = getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-
-        contentValues.put(CHAT_MESSAGES.MSG_ID, mqttMessage.getMsgId());
-        contentValues.put(CHAT_MESSAGES.MSG, mqttMessage.getMsg());
-        contentValues.put(CHAT_MESSAGES.MSG_TIME, mqttMessage.getMsgTime());
-        contentValues.put(CHAT_MESSAGES.SENDER, mqttMessage.getSender());
-        contentValues.put(CHAT_MESSAGES.USER2ID, mqttMessage.getPatId());
-        contentValues.put(CHAT_MESSAGES.USER1ID, mqttMessage.getDocId());
-        contentValues.put(CHAT_MESSAGES.SENDER_NAME, mqttMessage.getSenderName());
-        contentValues.put(CHAT_MESSAGES.SPECIALITY, mqttMessage.getSpecialization());
-        contentValues.put(CHAT_MESSAGES.MSG_STATUS, mqttMessage.getMsgStatus());
-        contentValues.put(CHAT_MESSAGES.SENDER_IMG_URL, mqttMessage.getSenderImgUrl());
-        contentValues.put(CHAT_MESSAGES.FILE_URL, mqttMessage.getFileUrl());
-        contentValues.put(CHAT_MESSAGES.FILE_TYPE, mqttMessage.getFileType());
-        contentValues.put(CHAT_MESSAGES.UPLOAD_STATUS, mqttMessage.getUploadStatus());
-        contentValues.put(CHAT_MESSAGES.DOWNLOAD_STATUS, mqttMessage.getDownloadStatus());
-        contentValues.put(CHAT_MESSAGES.READ_STATUS, mqttMessage.getReadStatus());
-
-        contentValues.put(CHAT_MESSAGES.SALUTATION, mqttMessage.getSalutation());
-        contentValues.put(CHAT_MESSAGES.RECEIVER_NAME, mqttMessage.getReceiverName());
-        contentValues.put(CHAT_MESSAGES.RECEIVER_IMG_URL, mqttMessage.getReceiverImgUrl());
-
-        if (getChatMessageCountByMessageId(mqttMessage.getMsgId()) == 0)
-            db.insert(CHAT_MESSAGES.CHAT_MESSAGES_TABLE, null, contentValues);
-        else
-            db.update(CHAT_MESSAGES.CHAT_MESSAGES_TABLE, contentValues, CHAT_MESSAGES.MSG_ID + " = ?", new String[]{mqttMessage.getMsgId()});
-
-        return getChatUnreadMessagesByPatientId(mqttMessage.getPatId());
-    }
-
     private long getChatMessageCountByMessageId(String msgId) {
         SQLiteDatabase db = getReadableDatabase();
         return DatabaseUtils.queryNumEntries(db, CHAT_MESSAGES.CHAT_MESSAGES_TABLE, CHAT_MESSAGES.MSG_ID + " = '" + msgId + "'");
-    }
-
-    public void markAsAReadChatMessageByPatientId(int patientId) {
-        SQLiteDatabase db = getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(CHAT_MESSAGES.READ_STATUS, READ);
-        db.update(CHAT_MESSAGES.CHAT_MESSAGES_TABLE, contentValues, CHAT_MESSAGES.USER2ID + " = ? AND " + CHAT_MESSAGES.READ_STATUS + " = ? AND " + CHAT_MESSAGES.SENDER + " = ?", new String[]{String.valueOf(patientId), String.valueOf(UNREAD), PATIENT});
-        db.close();
-    }
-
-    public long unreadChatMessageCountByPatientId(int patientId) {
-        // Return Total Count
-        SQLiteDatabase db = getReadableDatabase();
-        return DatabaseUtils.queryNumEntries(db, CHAT_MESSAGES.CHAT_MESSAGES_TABLE, CHAT_MESSAGES.USER2ID + " = " + patientId + " AND " + CHAT_MESSAGES.READ_STATUS + " = " + UNREAD + " AND " + CHAT_MESSAGES.SENDER + " = '" + PATIENT + "'");
-    }
-
-    public ArrayList<MQTTMessage> getChatUnreadMessagesByPatientId(int user2Id) {
-        SQLiteDatabase db = getReadableDatabase();
-        String countQuery = "select * from " + CHAT_MESSAGES.CHAT_MESSAGES_TABLE + " where " + CHAT_MESSAGES.USER2ID + " = " + user2Id + " AND " + CHAT_MESSAGES.READ_STATUS + " = " + UNREAD + " AND " + CHAT_MESSAGES.SENDER + " = '" + PATIENT + "'";
-        Cursor cursor = db.rawQuery(countQuery, null);
-        ArrayList<MQTTMessage> chatDoctors = new ArrayList<>();
-
-        if (cursor.moveToFirst()) {
-            while (!cursor.isAfterLast()) {
-                MQTTMessage mqttMessage = new MQTTMessage();
-
-                mqttMessage.setMsgId(cursor.getString(cursor.getColumnIndex(CHAT_MESSAGES.MSG_ID)));
-                mqttMessage.setMsg(cursor.getString(cursor.getColumnIndex(CHAT_MESSAGES.MSG)));
-                mqttMessage.setMsgTime(cursor.getString(cursor.getColumnIndex(CHAT_MESSAGES.MSG_TIME)));
-                mqttMessage.setSender(cursor.getString(cursor.getColumnIndex(CHAT_MESSAGES.SENDER)));
-                mqttMessage.setPatId(cursor.getInt(cursor.getColumnIndex(CHAT_MESSAGES.USER2ID)));
-                mqttMessage.setDocId(cursor.getInt(cursor.getColumnIndex(CHAT_MESSAGES.USER1ID)));
-                mqttMessage.setSenderName(cursor.getString(cursor.getColumnIndex(CHAT_MESSAGES.SENDER_NAME)));
-
-                mqttMessage.setSpecialization(cursor.getString(cursor.getColumnIndex(CHAT_MESSAGES.SPECIALITY)));
-                mqttMessage.setMsgStatus(cursor.getString(cursor.getColumnIndex(CHAT_MESSAGES.MSG_STATUS)));
-                mqttMessage.setSenderImgUrl(cursor.getString(cursor.getColumnIndex(CHAT_MESSAGES.SENDER_IMG_URL)));
-                mqttMessage.setFileUrl(cursor.getString(cursor.getColumnIndex(CHAT_MESSAGES.FILE_URL)));
-                mqttMessage.setFileType(cursor.getString(cursor.getColumnIndex(CHAT_MESSAGES.FILE_TYPE)));
-
-                mqttMessage.setSalutation(cursor.getInt(cursor.getColumnIndex(CHAT_MESSAGES.SALUTATION)));
-                mqttMessage.setReceiverName(cursor.getString(cursor.getColumnIndex(CHAT_MESSAGES.RECEIVER_NAME)));
-                mqttMessage.setReceiverImgUrl(cursor.getString(cursor.getColumnIndex(CHAT_MESSAGES.RECEIVER_IMG_URL)));
-
-                mqttMessage.setUploadStatus(cursor.getInt(cursor.getColumnIndex(CHAT_MESSAGES.UPLOAD_STATUS)));
-                mqttMessage.setDownloadStatus(cursor.getInt(cursor.getColumnIndex(CHAT_MESSAGES.DOWNLOAD_STATUS)));
-                mqttMessage.setReadStatus(cursor.getInt(cursor.getColumnIndex(CHAT_MESSAGES.READ_STATUS)));
-
-                chatDoctors.add(mqttMessage);
-                cursor.moveToNext();
-            }
-        }
-        cursor.close();
-        db.close();
-
-        return chatDoctors;
     }
 
     public Cursor searchChatMessagesByChars(String chars) {
@@ -542,45 +350,6 @@ public class AppDBHelper extends SQLiteOpenHelper {
             String sql = "SELECT * FROM " + CHAT_MESSAGES.CHAT_MESSAGES_TABLE + " WHERE " + CHAT_MESSAGES.MSG + " LIKE '%" + chars + "%' ORDER BY " + CHAT_MESSAGES.MSG_TIME + " DESC LIMIT 50";
             return db.rawQuery(sql, null);
         } else return null;
-    }
-
-    public MQTTMessage getLastChatMessagesByPatientId(int patientId) {
-        SQLiteDatabase db = getReadableDatabase();
-
-        String countQuery = "SELECT * FROM " + CHAT_MESSAGES.CHAT_MESSAGES_TABLE + " WHERE " + CHAT_MESSAGES.USER2ID + " = " + patientId + " ORDER BY " + CHAT_MESSAGES.MSG_TIME + " DESC LIMIT 1";
-        Cursor cursor = db.rawQuery(countQuery, null);
-
-        MQTTMessage mqttMessage = null;
-
-        if (cursor.moveToFirst()) {
-            mqttMessage = new MQTTMessage();
-
-            mqttMessage.setMsgId(cursor.getString(cursor.getColumnIndex(CHAT_MESSAGES.MSG_ID)));
-            mqttMessage.setMsg(cursor.getString(cursor.getColumnIndex(CHAT_MESSAGES.MSG)));
-            mqttMessage.setMsgTime(cursor.getString(cursor.getColumnIndex(CHAT_MESSAGES.MSG_TIME)));
-            mqttMessage.setSender(cursor.getString(cursor.getColumnIndex(CHAT_MESSAGES.SENDER)));
-            mqttMessage.setPatId(cursor.getInt(cursor.getColumnIndex(CHAT_MESSAGES.USER2ID)));
-            mqttMessage.setDocId(cursor.getInt(cursor.getColumnIndex(CHAT_MESSAGES.USER1ID)));
-            mqttMessage.setSenderName(cursor.getString(cursor.getColumnIndex(CHAT_MESSAGES.SENDER_NAME)));
-
-            mqttMessage.setSpecialization(cursor.getString(cursor.getColumnIndex(CHAT_MESSAGES.SPECIALITY)));
-            mqttMessage.setMsgStatus(cursor.getString(cursor.getColumnIndex(CHAT_MESSAGES.MSG_STATUS)));
-            mqttMessage.setSenderImgUrl(cursor.getString(cursor.getColumnIndex(CHAT_MESSAGES.SENDER_IMG_URL)));
-            mqttMessage.setFileUrl(cursor.getString(cursor.getColumnIndex(CHAT_MESSAGES.FILE_URL)));
-            mqttMessage.setFileType(cursor.getString(cursor.getColumnIndex(CHAT_MESSAGES.FILE_TYPE)));
-
-            mqttMessage.setSalutation(cursor.getInt(cursor.getColumnIndex(CHAT_MESSAGES.SALUTATION)));
-            mqttMessage.setReceiverName(cursor.getString(cursor.getColumnIndex(CHAT_MESSAGES.RECEIVER_NAME)));
-            mqttMessage.setReceiverImgUrl(cursor.getString(cursor.getColumnIndex(CHAT_MESSAGES.RECEIVER_IMG_URL)));
-
-            mqttMessage.setUploadStatus(cursor.getInt(cursor.getColumnIndex(CHAT_MESSAGES.UPLOAD_STATUS)));
-            mqttMessage.setDownloadStatus(cursor.getInt(cursor.getColumnIndex(CHAT_MESSAGES.DOWNLOAD_STATUS)));
-            mqttMessage.setReadStatus(cursor.getInt(cursor.getColumnIndex(CHAT_MESSAGES.READ_STATUS)));
-        }
-        cursor.close();
-        db.close();
-
-        return mqttMessage;
     }
 
     public Cursor getChatMessagesByPatientId(int user2Id) {

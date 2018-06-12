@@ -126,11 +126,12 @@ public class AppointmentHelper implements ConnectionListener {
         ConnectionFactory mConnectionFactory = new ConnectionFactory(mContext, this, null, true, DMSConstants.TASK_GET_WAITING_LIST, Request.Method.POST, true);
         RequestAppointmentData mRequestAppointmentData = new RequestAppointmentData();
         mRequestAppointmentData.setDocId(Integer.valueOf(DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.DOC_ID, mContext)));
-        String date = CommonMethods.getCurrentDate(DMSConstants.DATE_PATTERN.YYYY_MM_DD);
-        mRequestAppointmentData.setDate(date);
+        String date = CommonMethods.getCurrentDate(DMSConstants.DATE_PATTERN.DD_MM_YYYY_SLASH);
+      //  mRequestAppointmentData.setDate(date);
+        mRequestAppointmentData.setDate("10/05/2018"); // TODO, ADDED FOR DEVELOPMENT, REMOVE IT LATER ON.
         mConnectionFactory.setPostParams(mRequestAppointmentData);
         mConnectionFactory.setHeaderParams();
-        mConnectionFactory.setUrl(Config.GET__WAITING_LIST);
+        mConnectionFactory.setUrl(Config.GET_WAITING_LIST);
         mConnectionFactory.createConnection(DMSConstants.TASK_GET_WAITING_LIST);
     }
 

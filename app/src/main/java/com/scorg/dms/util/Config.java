@@ -6,6 +6,12 @@ import android.content.Context;
  * Created by Sandeep Bahalkar
  */
 public class Config {
+
+    public static final String GET_DASHBOARD_DATA = "DoctorDashboard";
+    public static final String GET_WAITING_LIST = "WaitingList";
+    public static final String GET_MY_APPOINTMENTS_LIST = "Appointment";
+
+
     public static final String HTTP = "http://";
     public static final String API = "/api/";
     public static final String TOKEN_TYPE = "Bearer";
@@ -13,14 +19,13 @@ public class Config {
     public static final String VERIFY_SIGN_UP_OTP = "authApi/authenticate/verifyOTP";
     public static final String SIGN_UP_URL = "authApi/authenticate/signUp";
     public static final String ONE_DAY_VISIT_URL = "api/patient/getPatientOneDayVisit?opdId=";
-    public static final String GET_MY_APPOINTMENTS_LIST = "doctor/api/appointment/getAppointmentList";
     public static final String GET_SMS_TEMPLATE = "doctor/api/appointment/getDoctorSmsTemplate?docId=";
-    public static final String GET__WAITING_LIST = "doctor/api/appointment/getWaitingList";
+
     public static final String GET_MY_PATIENTS_LIST = "doctor/api/patient/getPatientList";
     public static final String GET_PATIENT_HISTORY = "doctor/api/patient/getPatientOpdHistory";
     public static final String ADD_TO_WAITING_LIST = "doctor/api/appointment/addToWaitingList";
     public static final String GET_CLINIC_LOCATION_LIST = "doctor/api/appointment/getDoctorLocationList?docId=";
-    public static final String GET_DASHBOARD_DATA = "DoctorDashboard";
+
     public static final String DELETE_WAITING_LIST = "doctor/api/appointment/deleteFromWaitingList";
     public static final String CANCEL_OR_COMPLETE_APPOINTMENT = "api/patient/updateAppointmentStatus";
     public static final String DRAG_AND_DROP_API = "doctor/api/appointment/dragDropPatientWaiting";

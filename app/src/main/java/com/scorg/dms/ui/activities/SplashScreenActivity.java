@@ -13,7 +13,6 @@ import com.scorg.dms.interfaces.CheckIpConnection;
 import com.scorg.dms.interfaces.CustomResponse;
 import com.scorg.dms.interfaces.HelperResponse;
 import com.scorg.dms.model.dms_models.responsemodel.iptestresponsemodel.IpTestResponseModel;
-import com.scorg.dms.notification.MQTTServiceAlarmTask;
 import com.scorg.dms.preference.DMSPreferencesManager;
 import com.scorg.dms.util.CommonMethods;
 import com.scorg.dms.util.DMSConstants;
@@ -34,10 +33,7 @@ public class SplashScreenActivity extends AppCompatActivity implements HelperRes
 
         mLoginHelper = new LoginHelper(this, this);
 
-        MQTTServiceAlarmTask.cancelAlarm(mContext);
-        new MQTTServiceAlarmTask(mContext).run();
-
-         doAppCheckLogin();
+        doAppCheckLogin();
     }
 
     private void doAppCheckLogin() {

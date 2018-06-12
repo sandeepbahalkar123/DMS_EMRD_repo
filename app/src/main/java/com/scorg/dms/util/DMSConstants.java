@@ -10,7 +10,6 @@ public class DMSConstants {
     public static final String RESCRIBE_LOG_FILE = "Rescribe_LOG_FILE.txt";
 
 
-
     public static final String MT_TABLET = "TABLET";
     public static final String MT_SYRUP = "SYRUP";
     public static final String MT_OINTMENT = "OINTMENT";
@@ -222,6 +221,12 @@ public class DMSConstants {
         int IN_CONSULTATION = 7;
         int IN_QUEUE = 8;
         int COMING = 9;
+
+        String COMPLETE_STATUS = "Complete";
+        String COMING_STATUS = "Coming";
+        String IN_QUEUE_STATUS = "In Queue";
+        String BOOKED_STATUS = "Booked";
+        String CONFIRM_STATUS = "Confirm";
     }
 
     public interface USER_STATUS {

@@ -50,6 +50,7 @@
                 android:textAllCaps="false"
                 android:textColor="@color/Red"
                 android:textSize="@dimen/sp12" />
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
@@ -194,12 +195,12 @@
                         android:id="@+id/patientNameTextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/sp15"
                         android:ellipsize="end"
                         android:maxLines="1"
                         android:paddingEnd="@dimen/dp6"
                         android:paddingRight="@dimen/dp6"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/sp15"
                         app:customFont="@string/roboto_bold"
                         tools:text="Mr. Uren Chhadva" />
 
@@ -316,7 +317,8 @@
                     android:layout_marginStart="@dimen/dp20"
                     android:layout_weight=".6"
                     android:gravity="center"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="gone">
 
                     <com.scorg.dms.ui.customesViews.CustomTextView
                         android:id="@+id/outstandingAmountTextView"

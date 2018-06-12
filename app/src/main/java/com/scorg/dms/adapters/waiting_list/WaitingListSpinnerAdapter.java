@@ -6,8 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+
 import com.scorg.dms.R;
-import com.scorg.dms.model.waiting_list.WaitingclinicList;
+import com.scorg.dms.model.waiting_list.WaitingClinicList;
 import com.scorg.dms.ui.customesViews.CustomTextView;
 
 import java.util.ArrayList;
@@ -19,16 +20,16 @@ import java.util.ArrayList;
 public class WaitingListSpinnerAdapter extends BaseAdapter {
 
     private Context mContext;
-    private ArrayList<WaitingclinicList> mWaitingclinicLists;
+    private ArrayList<WaitingClinicList> mWaitingClinicLists;
 
-    public WaitingListSpinnerAdapter(Context context, ArrayList<WaitingclinicList> mWaitingclinicLists) {
+    public WaitingListSpinnerAdapter(Context context, ArrayList<WaitingClinicList> mWaitingClinicLists) {
         this.mContext = context;
-        this.mWaitingclinicLists = mWaitingclinicLists;
+        this.mWaitingClinicLists = mWaitingClinicLists;
     }
 
     @Override
     public int getCount() {
-        return mWaitingclinicLists.size();
+        return mWaitingClinicLists.size();
     }
 
     @Override
@@ -50,12 +51,12 @@ public class WaitingListSpinnerAdapter extends BaseAdapter {
             view = inflater.inflate(R.layout.spinner_row_item_layout, parent, false);
         }
 
-        final WaitingclinicList waitingClinicListObject = mWaitingclinicLists.get(position);
+        final WaitingClinicList waitingClinicListObject = mWaitingClinicLists.get(position);
         if (waitingClinicListObject != null) {
             CustomTextView clinicNameTextView = (CustomTextView) view.findViewById(R.id.clinicNameTextView);
             CustomTextView clinicAddress = (CustomTextView) view.findViewById(R.id.clinicAddress);
-            clinicNameTextView.setText(waitingClinicListObject.getClinicName()+" - ");
-            clinicAddress.setText(waitingClinicListObject.getArea() + ", " + waitingClinicListObject.getCity());
+            clinicNameTextView.setText(waitingClinicListObject.getHosName() + " - ");
+            clinicAddress.setText(waitingClinicListObject.getHosAddress1() + ", " + waitingClinicListObject.getHosAddress2());
 
         }
         return view;

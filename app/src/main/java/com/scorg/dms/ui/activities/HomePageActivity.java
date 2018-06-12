@@ -54,12 +54,10 @@ import com.scorg.dms.model.doctor_location.DoctorLocationBaseModel;
 import com.scorg.dms.model.login.ActiveRequest;
 import com.scorg.dms.model.login.DocDetail;
 import com.scorg.dms.singleton.DMSApplication;
-import com.scorg.dms.ui.activities.completed_opd.CompletedOpdActivity;
-import com.scorg.dms.ui.activities.dashboard.SettingsActivity;
+ import com.scorg.dms.ui.activities.dashboard.SettingsActivity;
 import com.scorg.dms.ui.activities.dashboard.SupportActivity;
 import com.scorg.dms.ui.activities.my_appointments.MyAppointmentsActivity;
-import com.scorg.dms.ui.activities.new_patient.NewPatientActivity;
-import com.scorg.dms.ui.activities.waiting_list.WaitingMainListActivity;
+ import com.scorg.dms.ui.activities.waiting_list.WaitingMainListActivity;
 import com.scorg.dms.ui.customesViews.CircularImageView;
 import com.scorg.dms.ui.customesViews.CustomTextView;
 import com.scorg.dms.ui.customesViews.SwitchButton;
@@ -159,7 +157,6 @@ public class HomePageActivity extends BottomMenuActivity implements HelperRespon
     private void initialize() {
 
         mDashboardHelper = new DashboardHelper(this, this);
-        mDashboardHelper.doDoctorGetLocationList();
         String doctorNameToDisplay;
         if (DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.USER_NAME, mContext).toLowerCase().contains("Dr.")) {
             doctorNameToDisplay = DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.USER_NAME, mContext);
@@ -253,10 +250,7 @@ public class HomePageActivity extends BottomMenuActivity implements HelperRespon
             case ACTIVE_STATUS:
                 CommonMethods.Log(ACTIVE_STATUS, "active");
                 break;
-            case DMSConstants.TASK_GET_LOCATION_LIST:
-                DoctorLocationBaseModel doctorLocationBaseModel = (DoctorLocationBaseModel) customResponse;
-                DMSApplication.setDoctorLocationModels(doctorLocationBaseModel.getDoctorLocationModel());
-                break;
+
             case DMSConstants.TASK_GET_DASHBOARD_RESPONSE:
                 DashboardBaseModel mDashboardBaseModel = (DashboardBaseModel) customResponse;
                 if (DMSConstants.RESPONSE_OK.equalsIgnoreCase(mDashboardBaseModel.getCommon().getSuccess())) {
@@ -396,7 +390,7 @@ public class HomePageActivity extends BottomMenuActivity implements HelperRespon
         appointmentTextView = (CustomTextView) inflatedLayout.findViewById(R.id.appointmentTextView);
         viewTextView = (CustomTextView) inflatedLayout.findViewById(R.id.viewTextView);
         menuImageView.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.appointment));
-        appointmentTextView.setText(getString(R.string.today_appointment));
+        appointmentTextView.setText(getString(R.string.today_appointment).replace("\n", " "));
         viewTextView.setVisibility(View.VISIBLE);
         recyclerView.setVisibility(View.VISIBLE);
         viewTextView.setText(getString(R.string.view));

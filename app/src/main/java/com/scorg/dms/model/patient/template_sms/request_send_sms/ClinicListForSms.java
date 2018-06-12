@@ -3,13 +3,11 @@ package com.scorg.dms.model.patient.template_sms.request_send_sms;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.annotation.NonNull;
 
 import java.util.ArrayList;
-import java.util.ArrayList;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.scorg.dms.model.my_appointments.AppointmentList;
 
 public class ClinicListForSms implements Parcelable ,Cloneable{
 

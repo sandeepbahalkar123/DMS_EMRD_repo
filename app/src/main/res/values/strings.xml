@@ -218,11 +218,11 @@
     <string name="complete_and_cancelled_status">Complete and cancel status patients cannot be added to waiting list</string>
     <string name="today_new_patient">Today\s\nNew Patients</string>
     <string name="today_appointment">Today\'s\nAppointments</string>
-    <string name="today_waiting_list"> Today\'s\nWaiting List</string>
-    <string name="today_completed_opd"> Today\'s\nCompleted OPD</string>
-    <string name="waiting_patients"> In Walkin/\nWaiting Patients </string>
-    <string name="pending_approval">Pending Approval</string>
-    <string name="today_patient">"Total\nPatient"</string>
+    <string name="today_waiting_list">Today\'s\nWaiting List</string>
+    <string name="today_completed_opd">Today\'s\nCompleted OPD</string>
+    <string name="waiting_patients"> Waiting\nPatients </string>
+    <string name="pending_approval">Pending\nApproval</string>
+    <string name="today_patient">Total\nPatient</string>
     <string name="completed_opd">Completed OPD</string>
     <string name="consultation">Consultation</string>
     <string name="follow_up">Follow Up</string>

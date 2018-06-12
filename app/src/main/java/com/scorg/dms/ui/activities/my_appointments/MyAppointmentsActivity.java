@@ -22,7 +22,7 @@ import com.scorg.dms.R;
 import com.scorg.dms.helpers.myappointments.AppointmentHelper;
 import com.scorg.dms.interfaces.CustomResponse;
 import com.scorg.dms.interfaces.HelperResponse;
-import com.scorg.dms.model.my_appointments.AppointmentList;
+import com.scorg.dms.model.my_appointments.AppointmentPatientData;
 import com.scorg.dms.model.my_appointments.ClinicList;
 import com.scorg.dms.model.my_appointments.MyAppointmentsBaseModel;
 import com.scorg.dms.model.my_appointments.MyAppointmentsDataModel;
@@ -44,8 +44,6 @@ import butterknife.OnClick;
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.RuntimePermissions;
 
-import static com.scorg.dms.ui.fragments.my_appointments.MyAppointmentsFragment.isLongPressed;
-import static com.scorg.dms.util.DMSConstants.APPOINTMENT_STATUS.BOOKED;
 import static com.scorg.dms.util.DMSConstants.APPOINTMENT_STATUS.CONFIRM;
 import static com.scorg.dms.util.DMSConstants.SUCCESS;
 
@@ -93,7 +91,8 @@ public class MyAppointmentsActivity extends AppCompatActivity implements HelperR
         titleTextView.setText(getString(R.string.appointments));
         setDateInToolbar();
         //Call api for AppointmentData
-        String date = CommonMethods.getCurrentDate(DMSConstants.DATE_PATTERN.YYYY_MM_DD);
+        String date = CommonMethods.getCurrentDate(DMSConstants.DATE_PATTERN.DD_MM_YYYY_SLASH);
+
         mAppointmentHelper = new AppointmentHelper(this, this);
         mAppointmentHelper.doGetAppointmentData(date);
     }
@@ -130,10 +129,10 @@ public class MyAppointmentsActivity extends AppCompatActivity implements HelperR
                 myAppointmentsBaseMainModel = (MyAppointmentsBaseModel) customResponse;
                 if (myAppointmentsBaseMainModel.getCommon().getStatusCode().equals(SUCCESS)) {
 
-                    MyAppointmentsDataModel myAppointmentsDM = new MyAppointmentsDataModel();
-                    myAppointmentsDM.setAppointmentList(getBookedAndConfirmed(myAppointmentsBaseMainModel.getMyAppointmentsDataModel().getAppointmentList()));
+                    MyAppointmentsDataModel myAppointmentsDM = myAppointmentsBaseMainModel.getMyAppointmentsDataModel();
+                    myAppointmentsDM.setAppointmentPatientData(getBookedAndConfirmed(myAppointmentsBaseMainModel.getMyAppointmentsDataModel().getAppointmentPatientData()));
 
-                    mMyAppointmentsFragment = MyAppointmentsFragment.newInstance(myAppointmentsDM,mDateSelectedByUser);
+                    mMyAppointmentsFragment = MyAppointmentsFragment.newInstance(myAppointmentsDM, mDateSelectedByUser);
                     getSupportFragmentManager().beginTransaction().replace(R.id.viewContainer, mMyAppointmentsFragment).commit();
 
                     Bundle bundle = new Bundle();
@@ -180,7 +179,7 @@ public class MyAppointmentsActivity extends AppCompatActivity implements HelperR
                         now.get(Calendar.MONTH),
                         now.get(Calendar.DAY_OF_MONTH));
                 datePickerDialog.setAccentColor(getResources().getColor(R.color.tagColor));
-                datePickerDialog.setMinDate(Calendar.getInstance());
+                //  datePickerDialog.setMinDate(Calendar.getInstance());
                 datePickerDialog.show(getSupportFragmentManager(), getResources().getString(R.string.select_date_text));
 
                 break;
@@ -192,12 +191,7 @@ public class MyAppointmentsActivity extends AppCompatActivity implements HelperR
         if (drawerLayout.isDrawerOpen(GravityCompat.END)) {
             drawerLayout.closeDrawer(GravityCompat.END);
         } else {
-            if (mMyAppointmentsFragment != null)
-                if (isLongPressed) {
-                    mMyAppointmentsFragment.removeCheckBox();
-                } else {
-                    super.onBackPressed();
-                }
+            super.onBackPressed();
         }
     }
 
@@ -207,88 +201,46 @@ public class MyAppointmentsActivity extends AppCompatActivity implements HelperR
 
         if (statusLists.isEmpty() && clinicLists.isEmpty()) {
             MyAppointmentsDataModel myAppointmentsDM = new MyAppointmentsDataModel();
-            myAppointmentsDM.setAppointmentList(getBookedAndConfirmed(myAppointmentsBaseMainModel.getMyAppointmentsDataModel().getAppointmentList()));
+            myAppointmentsDM.setAppointmentPatientData(getBookedAndConfirmed(myAppointmentsBaseMainModel.getMyAppointmentsDataModel().getAppointmentPatientData()));
             mMyAppointmentsFragment.setFilteredData(myAppointmentsDM);
         } else {
 
-            ArrayList<AppointmentList> mAppointmentLists = new ArrayList<>();
-            ArrayList<AppointmentList> mFilterAppointmentList = new ArrayList<>();
+            ArrayList<AppointmentPatientData> mAppointmentPatientData = new ArrayList<>();
+            ArrayList<AppointmentPatientData> mFilterAppointmentPatientData = new ArrayList<>();
 
             if (statusLists.isEmpty()) {
-                mAppointmentLists.addAll(myAppointmentsBaseMainModel.getMyAppointmentsDataModel().getAppointmentList());
+                mAppointmentPatientData.addAll(myAppointmentsBaseMainModel.getMyAppointmentsDataModel().getAppointmentPatientData());
             } else {
-                for (AppointmentList appointmentObject : myAppointmentsBaseMainModel.getMyAppointmentsDataModel().getAppointmentList()) {
+                for (AppointmentPatientData appointmentObject : myAppointmentsBaseMainModel.getMyAppointmentsDataModel().getAppointmentPatientData()) {
 
                     ArrayList<PatientList> mPatientListArrayList = new ArrayList<>();
-                    AppointmentList tempAppointmentListObject = null;
+                    AppointmentPatientData tempAppointmentPatientDataObject = null;
                     try {
-                        tempAppointmentListObject = (AppointmentList) appointmentObject.clone();
+                        tempAppointmentPatientDataObject = (AppointmentPatientData) appointmentObject.clone();
                     } catch (CloneNotSupportedException e) {
                         e.printStackTrace();
                     }
 
-                    for (PatientList patientList : appointmentObject.getPatientList()) {
-                        for (StatusList statusName : statusLists) {
-                            if (statusName.getStatusId().equals(patientList.getAppointmentStatusId()))
-                                mPatientListArrayList.add(patientList);
-                        }
-                    }
-
-                    if (!mPatientListArrayList.isEmpty()) {
-                        tempAppointmentListObject.setPatientList(mPatientListArrayList);
-                        mAppointmentLists.add(tempAppointmentListObject);
-                    }
-                }
-            }
-
-            if (clinicLists.isEmpty()) {
-                mFilterAppointmentList.addAll(mAppointmentLists);
-            } else {
-                for (AppointmentList appointmentObject : mAppointmentLists) {
-                    for (ClinicList clinicList : clinicLists) {
-                        if (clinicList.getLocationId().equals(appointmentObject.getLocationId()))
-                            mFilterAppointmentList.add(appointmentObject);
-                    }
                 }
             }
 
             MyAppointmentsDataModel myAppointmentsDataModel = new MyAppointmentsDataModel();
-            myAppointmentsDataModel.setAppointmentList(mFilterAppointmentList);
+            myAppointmentsDataModel.setAppointmentPatientData(mFilterAppointmentPatientData);
             myAppointmentsDataModel.setClinicList(myAppointmentsBaseMainModel.getMyAppointmentsDataModel().getClinicList());
-            myAppointmentsDataModel.setStatusList(myAppointmentsBaseMainModel.getMyAppointmentsDataModel().getStatusList());
 
             mMyAppointmentsFragment.setFilteredData(myAppointmentsDataModel);
         }
     }
 
-    private ArrayList<AppointmentList> getBookedAndConfirmed(ArrayList<AppointmentList> mAppointmentList) {
+    private ArrayList<AppointmentPatientData> getBookedAndConfirmed(ArrayList<AppointmentPatientData> mAppointmentPatientData) {
 
-        ArrayList<AppointmentList> mAppointListForBookAndConfirm = new ArrayList<>();
-        for (int i = 0; i < mAppointmentList.size(); i++) {
-            ArrayList<PatientList> patientListToAddBookAndConfirmEntries = new ArrayList<>();
-
-            AppointmentList tempAppointmentListObject = null;
-            try {
-                tempAppointmentListObject = (AppointmentList) mAppointmentList.get(i).clone();
-            } catch (CloneNotSupportedException e) {
-                e.printStackTrace();
-            }
-
-            ArrayList<PatientList> mPatientListsForBookAndCancel = tempAppointmentListObject.getPatientList();
-            if (!mPatientListsForBookAndCancel.isEmpty()) {
-                for (int j = 0; j < mPatientListsForBookAndCancel.size(); j++) {
-                    if (mPatientListsForBookAndCancel.get(j).getAppointmentStatusId().equals(CONFIRM) || mPatientListsForBookAndCancel.get(j).getAppointmentStatusId().equals(BOOKED)) {
-                        PatientList patientList = mPatientListsForBookAndCancel.get(j);
-                        patientListToAddBookAndConfirmEntries.add(patientList);
-                    }
-                }
-                if (!patientListToAddBookAndConfirmEntries.isEmpty()) {
-                    tempAppointmentListObject.setPatientList(patientListToAddBookAndConfirmEntries);
-                    mAppointListForBookAndConfirm.add(tempAppointmentListObject);
-                }
+        ArrayList<AppointmentPatientData> mAppointListForBookAndConfirm = new ArrayList<>();
+        for (int i = 0; i < mAppointmentPatientData.size(); i++) {
+            String appointmentStatus = mAppointmentPatientData.get(i).getAppointmentStatus();
+            if (appointmentStatus.equalsIgnoreCase(DMSConstants.APPOINTMENT_STATUS.BOOKED_STATUS) || appointmentStatus.equalsIgnoreCase(DMSConstants.APPOINTMENT_STATUS.CONFIRM_STATUS)) {
+                mAppointListForBookAndConfirm.add(mAppointmentPatientData.get(i));
             }
         }
-
         return mAppointListForBookAndConfirm;
     }
 
@@ -320,10 +272,10 @@ public class MyAppointmentsActivity extends AppCompatActivity implements HelperR
     }
 
     @Override
-    public void onDateSet(DatePickerDialog dialog, int year, int monthOfYear, int dayOfMonth) {
+    public void onDateSet(DatePickerDialog dialog, String year, String monthOfYear, String dayOfMonth) {
 
-        int monthOfYearToShow = monthOfYear + 1;
-        mDateSelectedByUser = dayOfMonth+"-"+monthOfYearToShow+"-"+year;
+        int monthOfYearToShow = Integer.parseInt(monthOfYear) + 1;
+        mDateSelectedByUser = dayOfMonth + "-" + monthOfYearToShow + "-" + year;
         dateTextview.setVisibility(View.VISIBLE);
         String timeToShow = CommonMethods.formatDateTime(dayOfMonth + "-" + monthOfYearToShow + "-" + year, DMSConstants.DATE_PATTERN.MMM_YY,
                 DMSConstants.DATE_PATTERN.DD_MM_YYYY, DMSConstants.DATE).toLowerCase();
@@ -342,7 +294,14 @@ public class MyAppointmentsActivity extends AppCompatActivity implements HelperR
             dateTextview.setText(Html.fromHtml(toDisplay));
 
         mAppointmentHelper = new AppointmentHelper(this, this);
-        isLongPressed = false;
-        mAppointmentHelper.doGetAppointmentData(year + "-" + monthOfYearToShow + "-" + dayOfMonth);
+
+        //-----
+        String monthToSend = "" + monthOfYearToShow;
+        if (monthOfYearToShow <= 9) {
+            monthToSend = "0" + monthToSend;
+        }
+        //-----
+
+        mAppointmentHelper.doGetAppointmentData(dayOfMonth + "/" + monthToSend + "/" + year);
     }
 }

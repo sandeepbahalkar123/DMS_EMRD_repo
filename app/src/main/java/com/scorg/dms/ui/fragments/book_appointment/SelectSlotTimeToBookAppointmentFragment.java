@@ -380,7 +380,7 @@ public class SelectSlotTimeToBookAppointmentFragment extends Fragment implements
                                 appointmentTypeIsBookButton.setVisibility(View.GONE);
                                 appointmentMessageTextView.setVisibility(View.VISIBLE);
                             }
-                        }else{
+                        } else {
                             appointmentMessageTextView.setVisibility(View.GONE);
                             noTimeSlotMessageTextView.setVisibility(View.GONE);
                             if (!selectSlotList.getTimeSlotsInfoList().isEmpty()) {
@@ -577,7 +577,7 @@ public class SelectSlotTimeToBookAppointmentFragment extends Fragment implements
                 date = c.getTime();
                 //---------
                 if (mMaxDateRange.getTime() >= date.getTime()) {
-                    onDateSet(mDatePickerDialog, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
+                    onDateSet(mDatePickerDialog, "" + c.get(Calendar.YEAR), "" + c.get(Calendar.MONTH), "" + c.get(Calendar.DAY_OF_MONTH));
                 }
 
                 break;
@@ -603,7 +603,7 @@ public class SelectSlotTimeToBookAppointmentFragment extends Fragment implements
         //------------
         if ((currentDate.getTime() < receivedDate.getTime()) || (formattedCurrentDateString.equalsIgnoreCase(receivedDateString))) {
             if (isCallOnDateSet)
-                onDateSet(mDatePickerDialog, cc.get(Calendar.YEAR), cc.get(Calendar.MONTH), cc.get(Calendar.DAY_OF_MONTH));
+                onDateSet(mDatePickerDialog, ""+cc.get(Calendar.YEAR), ""+cc.get(Calendar.MONTH), ""+cc.get(Calendar.DAY_OF_MONTH));
         } else {
             leftArrow.setVisibility(View.INVISIBLE);
         }
@@ -676,11 +676,8 @@ public class SelectSlotTimeToBookAppointmentFragment extends Fragment implements
 
 
     @Override
-    public void onDateSet(DatePickerDialog dialog, int year, int monthOfYear, int dayOfMonth) {
+    public void onDateSet(DatePickerDialog dialog, String year, String monthOfYear, String dayOfMonth) {
         String dateConverted = "" + dayOfMonth;
-        if (dayOfMonth < 10) {
-            dateConverted = "0" + dayOfMonth;
-        }
 
         String monthOfYearData = "" + (monthOfYear + 1);
         if (monthOfYearData.length() == 1) {
