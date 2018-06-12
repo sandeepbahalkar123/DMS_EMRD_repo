@@ -38,9 +38,8 @@ public class DMSPatientsHelper implements ConnectionListener {
     }
 
     public void doGetPatientNameList() {
-        ConnectionFactory mConnectionFactory = new ConnectionFactory(mContext, this, null, true, DMSConstants.TASK_GET_PATIENT_NAME_LIST, Request.Method.GET, false);
+        ConnectionFactory mConnectionFactory = new ConnectionFactory(mContext, this, null, true, DMSConstants.TASK_GET_PATIENT_NAME_LIST, Request.Method.POST, false);
 
-        //TODO: setDMSHeaderParams added for temporary purpose, once done with real API, use setHeaderParams method
         mConnectionFactory.setHeaderParams();
         mConnectionFactory.setUrl(Config.URL_PATIENT_NAME_LIST);
         mConnectionFactory.createConnection(DMSConstants.TASK_GET_PATIENT_NAME_LIST);

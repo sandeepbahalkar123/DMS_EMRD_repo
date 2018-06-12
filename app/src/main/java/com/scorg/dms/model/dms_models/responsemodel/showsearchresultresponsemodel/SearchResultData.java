@@ -13,7 +13,7 @@ import java.util.List;
 
 public class SearchResultData implements CustomResponse {
 
-    @SerializedName("searchResult")
+    @SerializedName("searchResultList")
     @Expose
     private List<SearchResult> searchResult = new ArrayList<SearchResult>();
 

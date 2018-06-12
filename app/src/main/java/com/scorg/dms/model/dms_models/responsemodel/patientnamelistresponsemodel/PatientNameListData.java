@@ -7,7 +7,7 @@ import java.util.List;
 
 public class PatientNameListData {
 
-    @SerializedName("lstPatients")
+    @SerializedName("patientNameList")
     @Expose
     private List<LstPatient> lstPatients = null;
 

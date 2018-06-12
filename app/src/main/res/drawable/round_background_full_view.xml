@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<inset xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <shape>
+        <stroke
+            android:width="@dimen/dp1"
+            android:color="@color/tagColor" />
+
+        <solid android:color="@color/white" />
+
+        <corners android:radius="@dimen/dp7" />
+    </shape>
+</inset>
+

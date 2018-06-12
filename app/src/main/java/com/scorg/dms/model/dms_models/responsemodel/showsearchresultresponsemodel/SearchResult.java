@@ -20,6 +20,9 @@ public class SearchResult {
     @SerializedName("patientName")
     @Expose
     private String patientName;
+    @SerializedName("patientImageURL")
+    @Expose
+    private String patientImageURL;
     @SerializedName("patientFileData")
     @Expose
     private List<PatientFileData> patientFileData = null;
@@ -63,4 +66,11 @@ public class SearchResult {
         this.patientAddress = patientAddress;
     }
 
+    public String getPatientImageURL() {
+        return patientImageURL;
+    }
+
+    public void setPatientImageURL(String patientImageURL) {
+        this.patientImageURL = patientImageURL;
+    }
 }

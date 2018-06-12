@@ -1,16 +1,21 @@
 package com.scorg.dms.adapters.dms_adapters;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.AppCompatImageButton;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.CheckBox;
 import android.widget.ExpandableListView;
-import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.amulyakhare.textdrawable.TextDrawable;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.scorg.dms.R;
 import com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemodel.PatientFileData;
 import com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemodel.SearchResult;
@@ -18,7 +23,6 @@ import com.scorg.dms.util.CommonMethods;
 import com.scorg.dms.util.DMSConstants;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
@@ -57,6 +61,7 @@ public class PatientExpandableListAdapter extends BaseExpandableListAdapter {
     private HashMap<Integer, boolean[]> mChildCheckStates = new HashMap<>();
     private String mCheckedBoxGroupName = null;
     private int lastExpanded = -1;
+    private boolean mIsGroupExpanded;
 
     public PatientExpandableListAdapter(Context context, List<SearchResult> searchResult) {
         this._context = context;
@@ -82,7 +87,7 @@ public class PatientExpandableListAdapter extends BaseExpandableListAdapter {
 
             ArrayList<PatientFileData> formattedList = new ArrayList<>(patientFileData);
 
-            Collections.sort(formattedList, new DischargeDateWiseComparator());
+            //Collections.sort(formattedList, new DischargeDateWiseComparator());
 
             listChildData.put(patientName, formattedList);
 
@@ -200,14 +205,27 @@ public class PatientExpandableListAdapter extends BaseExpandableListAdapter {
 
         manageChild(null);
 
-        if (isLastChild)
-            childViewHolder.divider.setVisibility(View.VISIBLE);
-        else childViewHolder.divider.setVisibility(View.GONE);
-
         childViewHolder.rowLay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onPatientListener.onPatientListItemClick(childElement, getGroup(groupPosition).getPatientName());
+            }
+        });
+
+        if (isLastChild) {
+            childViewHolder.childCardView.setBackgroundResource(R.drawable.round_background_and_square_top_view);
+            childViewHolder.childItemExpandCollapseButton.setImageResource(R.drawable.ic_expand_less_black_24dp);
+            childViewHolder.childItemCollapseButton.setVisibility(View.VISIBLE);
+        } else {
+            childViewHolder.childCardView.setBackgroundResource(R.drawable.round_background_and_square_side_view);
+            childViewHolder.childItemCollapseButton.setVisibility(View.GONE);
+        }
+
+        final ExpandableListView mExpandableListView = (ExpandableListView) parent;
+        childViewHolder.childItemExpandCollapseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mExpandableListView.collapseGroup(groupPosition);
             }
         });
 
@@ -258,15 +276,36 @@ public class PatientExpandableListAdapter extends BaseExpandableListAdapter {
 
         groupViewHolder.userName.setText(groupHeader.getPatientName());
         groupViewHolder.patientId.setText(groupHeader.getPatientId());
-        groupViewHolder.uhid.setText(uhid);
+        groupViewHolder.uhid.setText(uhid + ":");
 
         if (isExpanded) {
-            groupViewHolder.expandCollapseButton.setImageResource(R.drawable.ic_expand_less_black_24dp);
-            groupViewHolder.divider.setVisibility(View.GONE);
+            groupViewHolder.cardView.setBackground(ContextCompat.getDrawable(_context, R.drawable.round_background_and_square_bottom_view));
+
+            groupViewHolder.groupItemCollapseButton.setVisibility(View.GONE);
+            groupViewHolder.groupItemExpandCollapseButton.setImageResource(R.drawable.ic_expand_less_black_24dp);
+            //   groupViewHolder.divider.setVisibility(View.GONE);
         } else {
-            groupViewHolder.expandCollapseButton.setImageResource(R.drawable.ic_expand_more_black_24dp);
-            groupViewHolder.divider.setVisibility(View.VISIBLE);
+            groupViewHolder.cardView.setBackground(ContextCompat.getDrawable(_context, R.drawable.round_background_full_view));
+
+            groupViewHolder.groupItemCollapseButton.setVisibility(View.VISIBLE);
+            groupViewHolder.groupItemExpandCollapseButton.setImageResource(R.drawable.ic_expand_more_black_24dp);
+            //  groupViewHolder.divider.setVisibility(View.VISIBLE);
         }
+
+        //-------------
+        TextDrawable textDrawable = CommonMethods.getTextDrawable(groupViewHolder.patientImageView.getContext(), groupHeader.getPatientName());
+        RequestOptions requestOptions = new RequestOptions();
+        requestOptions.dontAnimate();
+        requestOptions.override(groupViewHolder.patientImageView.getResources().getDimensionPixelSize(R.dimen.dp67));
+        requestOptions.circleCrop();
+        requestOptions.placeholder(textDrawable);
+        requestOptions.error(textDrawable);
+
+        Glide.with(groupViewHolder.patientImageView.getContext())
+                .load(groupHeader.getPatientImageURL())
+                .apply(requestOptions)
+                .into(groupViewHolder.patientImageView);
+        //-------------
 
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -280,21 +319,27 @@ public class PatientExpandableListAdapter extends BaseExpandableListAdapter {
             }
         });
 
-        groupViewHolder.expandCollapseButton.setOnClickListener(new View.OnClickListener() {
+        groupViewHolder.groupItemExpandCollapseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (isExpanded)
+
+                mIsGroupExpanded = isExpanded;
+
+                if (isExpanded) {
                     mExpandableListView.collapseGroup(groupPosition);
-                else {
+                } else {
 
                     if (lastExpanded != -1 && lastExpanded != groupPosition)
                         mExpandableListView.collapseGroup(lastExpanded);
 
                     mExpandableListView.expandGroup(groupPosition, true);
                     lastExpanded = groupPosition;
+
+
                 }
             }
         });
+
 
         return convertView;
     }
@@ -310,17 +355,23 @@ public class PatientExpandableListAdapter extends BaseExpandableListAdapter {
     }
 
     static class GroupViewHolder {
+        @BindView(R.id.cardView)
+        LinearLayout cardView;
         @BindView(R.id.userName)
         TextView userName;
         @BindView(R.id.uhid)
         TextView uhid;
         @BindView(R.id.patientId)
         TextView patientId;
-        @BindView(R.id.expandCollapseButton)
-        ImageButton expandCollapseButton;
+        @BindView(R.id.groupItemExpandCollapseButton)
+        AppCompatImageButton groupItemExpandCollapseButton;
+        @BindView(R.id.groupItemCollapseButton)
+        LinearLayout groupItemCollapseButton;
+        @BindView(R.id.patientImageView)
+        ImageView patientImageView;
 
-        @BindView(R.id.divider)
-        View divider;
+        //@BindView(R.id.divider)
+        //View divider;
 
         GroupViewHolder(View view) {
             ButterKnife.bind(this, view);
@@ -330,6 +381,8 @@ public class PatientExpandableListAdapter extends BaseExpandableListAdapter {
     static class ChildViewHolder {
         //---------
 
+        @BindView(R.id.cardView)
+        LinearLayout childCardView;
         @BindView(R.id.rowLay)
         LinearLayout rowLay;
         @BindView(R.id.ipd)
@@ -346,8 +399,10 @@ public class PatientExpandableListAdapter extends BaseExpandableListAdapter {
         TextView ipdDischargeDateValue;
         @BindView(R.id.ipdCheckBox)
         CheckBox ipdCheckBox;
-        @BindView(R.id.divider)
-        View divider;
+        @BindView(R.id.childItemCollapseButton)
+        LinearLayout childItemCollapseButton;
+        @BindView(R.id.childItemExpandCollapseButton)
+        AppCompatImageButton childItemExpandCollapseButton;
 
         ChildViewHolder(View view) {
             ButterKnife.bind(this, view);

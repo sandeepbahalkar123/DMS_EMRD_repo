@@ -199,7 +199,7 @@ public class PatientList extends AppCompatActivity implements HelperResponse, Vi
     private void initializeVariables() {
         mContext = PatientList.this;
         mPatientsHelper = new DMSPatientsHelper(this, this);
-        doGetPatientNameList();
+        //doGetPatientNameList();
         mAddedTagsForFiltering = new HashMap<String, Object>();
         mAddedTagsForFiltering.put(DMSConstants.PATIENT_LIST_PARAMS.PATIENT_NAME, DMSConstants.BLANK);
         mAddedTagsForFiltering.put(DMSConstants.PATIENT_LIST_PARAMS.TO_DATE, DMSConstants.BLANK);
@@ -352,7 +352,6 @@ public class PatientList extends AppCompatActivity implements HelperResponse, Vi
             mPatientListView.setChildIndicator(null);
             mPatientListView.setChildDivider(ContextCompat.getDrawable(this, R.color.transparent));
             mPatientListView.setDivider(ContextCompat.getDrawable(this, R.color.white));
-            mPatientListView.setDividerHeight(2);
 
             //mPatientListView.setDividerHeight(2);
         } else if (mOldDataTag == DMSConstants.TASK_ANNOTATIONS_LIST) {

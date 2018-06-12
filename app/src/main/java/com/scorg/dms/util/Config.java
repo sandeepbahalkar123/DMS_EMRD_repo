@@ -10,6 +10,8 @@ public class Config {
     public static final String GET_DASHBOARD_DATA = "DoctorDashboard";
     public static final String GET_WAITING_LIST = "WaitingList";
     public static final String GET_MY_APPOINTMENTS_LIST = "Appointment";
+    public static final String URL_PATIENT_LIST = "Result";
+
 
 
     public static final String HTTP = "http://";
@@ -88,7 +90,6 @@ public class Config {
     //Declared all URL used in app here
 
     public static final String URL_LOGIN = "userLogin";
-    public static final String URL_PATIENT_LIST = "result/ShowSearchResults";
     public static final String URL_ANNOTATIONS_LIST = "documenttype/getAnnotations";
     public static final String URL_PATIENT_NAME_LIST = "Patient";
 

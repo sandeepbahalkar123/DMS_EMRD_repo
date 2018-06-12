@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class LstPatient {
 
-    @SerializedName("PatientName")
+    @SerializedName("patientName")
     @Expose
     private String patientName;
 
