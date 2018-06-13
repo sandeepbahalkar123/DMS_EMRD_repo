@@ -224,10 +224,6 @@ public class PatientList extends AppCompatActivity implements HelperResponse, Vi
 
     }
 
-    private void doGetPatientNameList() {
-        mPatientsHelper.doGetPatientNameList();
-    }
-
     @Override
     public void onBackPressed() {
         if (mDrawer != null) {
@@ -373,6 +369,7 @@ public class PatientList extends AppCompatActivity implements HelperResponse, Vi
             }
             mShowPatientNameAdapter = new ShowPatientNameAdapter(this, R.layout.patient_filter_right_drawer, R.id.custom_spinner_txt_view_Id, mLstPatient);
             mSearchPatientNameEditText.setAdapter(mShowPatientNameAdapter);
+
             Log.d(TAG, "" + mLstPatient);
         }
 
@@ -708,12 +705,13 @@ public class PatientList extends AppCompatActivity implements HelperResponse, Vi
                 String enteredString = mSearchPatientNameEditText.getText().toString();
                 if (enteredString.equals("")) {
                     mClearPatientNameButton.setBackground(getResources().getDrawable(R.mipmap.user));
-
                 } else {
                     mClearPatientNameButton.setBackground(getResources().getDrawable(R.mipmap.crosswithcircle));
-
                 }
-                mShowPatientNameAdapter.getFilter().filter(enteredString);
+                if (enteredString.trim().length() >= 3) {
+                    mPatientsHelper.doGetPatientNameList(s.toString());
+                }
+
             }
         });
 

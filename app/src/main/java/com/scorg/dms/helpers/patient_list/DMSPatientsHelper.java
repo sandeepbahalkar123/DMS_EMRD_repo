@@ -3,6 +3,9 @@ package com.scorg.dms.helpers.patient_list;
 import android.content.Context;
 
 import com.android.volley.Request;
+import com.google.gson.JsonObject;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 import com.scorg.dms.interfaces.ConnectionListener;
 import com.scorg.dms.interfaces.CustomResponse;
 import com.scorg.dms.interfaces.HelperResponse;
@@ -35,14 +38,6 @@ public class DMSPatientsHelper implements ConnectionListener {
     public DMSPatientsHelper(Context context, HelperResponse loginActivity1) {
         this.mContext = context;
         this.mHelperResponseManager = loginActivity1;
-    }
-
-    public void doGetPatientNameList() {
-        ConnectionFactory mConnectionFactory = new ConnectionFactory(mContext, this, null, true, DMSConstants.TASK_GET_PATIENT_NAME_LIST, Request.Method.POST, false);
-
-        mConnectionFactory.setHeaderParams();
-        mConnectionFactory.setUrl(Config.URL_PATIENT_NAME_LIST);
-        mConnectionFactory.createConnection(DMSConstants.TASK_GET_PATIENT_NAME_LIST);
     }
 
     //-- TO get Patient list from server
@@ -143,4 +138,33 @@ public class DMSPatientsHelper implements ConnectionListener {
     public void onTimeout(ConnectRequest request) {
 
     }
+
+
+    public void doGetPatientNameList(String enteredPatientName) {
+        ConnectionFactory mConnectionFactory = new ConnectionFactory(mContext, this, null, true, DMSConstants.TASK_GET_PATIENT_NAME_LIST, Request.Method.POST, false);
+
+        SearchPatientNameText s = new SearchPatientNameText();
+        s.setSearchPatientName(enteredPatientName);
+        mConnectionFactory.setHeaderParams();
+        mConnectionFactory.setPostParams(s);
+        mConnectionFactory.setUrl(Config.URL_PATIENT_NAME_LIST);
+        mConnectionFactory.createConnection(DMSConstants.TASK_GET_PATIENT_NAME_LIST);
+    }
+
+    //--- Ideally, this method should be of type GET, but made as POST.
+    // Creating separate class for single used is not proper, hence made it inner class.
+    public class SearchPatientNameText implements CustomResponse {
+        @SerializedName("searchPatientName")
+        @Expose
+        private String searchPatientName;
+
+        public String getSearchPatientName() {
+            return searchPatientName;
+        }
+
+        public void setSearchPatientName(String searchPatientName) {
+            this.searchPatientName = searchPatientName;
+        }
+    }
+
 }

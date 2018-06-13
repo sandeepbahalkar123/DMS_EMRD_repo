@@ -7,10 +7,6 @@ import android.content.Context;
  */
 public class Config {
 
-    public static final String GET_DASHBOARD_DATA = "DoctorDashboard";
-    public static final String GET_WAITING_LIST = "WaitingList";
-    public static final String GET_MY_APPOINTMENTS_LIST = "Appointment";
-    public static final String URL_PATIENT_LIST = "Result";
 
 
 
@@ -89,13 +85,18 @@ public class Config {
     //--DMS URLs-
     //Declared all URL used in app here
 
-    public static final String URL_LOGIN = "userLogin";
-    public static final String URL_ANNOTATIONS_LIST = "documenttype/getAnnotations";
-    public static final String URL_PATIENT_NAME_LIST = "Patient";
+    public static final String URL_LOGIN = "/api/userLogin";
+    public static final String URL_ANNOTATIONS_LIST = "/api/documenttype/getAnnotations";
+    public static final String URL_PATIENT_NAME_LIST = "/api/Patient";
 
-    public static final String URL_GET_ARCHIVED_LIST = "getArchived";
-    public static final String URL_GET_PDF_DATA = "showfile";
-    public static final String URL_CHECK_SERVER_CONNECTION = "connectionCheck";
+    public static final String URL_GET_ARCHIVED_LIST = "/api/getArchived";
+    public static final String URL_GET_PDF_DATA = "/api/showfile";
+    public static final String URL_CHECK_SERVER_CONNECTION = "/api/connectionCheck";
+
+    public static final String GET_DASHBOARD_DATA = "/api/DoctorDashboard";
+    public static final String GET_WAITING_LIST = "/api/WaitingList";
+    public static final String GET_MY_APPOINTMENTS_LIST = "/api/Appointment";
+    public static final String URL_PATIENT_LIST = "/api/Result";
 
 }
 

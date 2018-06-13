@@ -974,7 +974,7 @@ public class CommonMethods {
                 EditText etServerPath = (EditText) dialog.findViewById(R.id.et_server_path);
 
                 if (isValidIP(etServerPath.getText().toString())) {
-                    String mServerPath = Config.HTTP + etServerPath.getText().toString() + Config.API;
+                    String mServerPath = Config.HTTP + etServerPath.getText().toString();// + Config.API;
                     Log.e(TAG, "SERVER PATH===" + mServerPath);
                     mCheckIpConnection.onOkButtonClickListner(mServerPath, mContext, dialog);
                 } else {
@@ -1089,6 +1089,7 @@ public class CommonMethods {
 
 
     //--------------
+
     /**
      * This use to decrypt received pdfFile path using AES Algo
      * Step 1: Converted received encrypted text to hex array

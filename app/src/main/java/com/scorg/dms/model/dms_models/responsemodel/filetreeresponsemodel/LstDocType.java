@@ -23,6 +23,9 @@ public class LstDocType {
     @SerializedName("pageNumber")
     @Expose
     private Integer pageNumber;
+    @SerializedName("filePath")
+    @Expose
+    private String encryptedPDFFilePath;
 
 
     private String[] mergedFileCompareCustomID = null;
@@ -83,6 +86,15 @@ public class LstDocType {
         this.mergedFileCompareCustomID = mergedFileCompareCustomID;
     }
 
+
+    public String getEncryptedPDFFilePath() {
+        return encryptedPDFFilePath;
+    }
+
+    public void setEncryptedPDFFilePath(String encryptedPDFFilePath) {
+        this.encryptedPDFFilePath = encryptedPDFFilePath;
+    }
+
     @Override
     public String toString() {
         return "LstDocType{" +
@@ -92,6 +104,7 @@ public class LstDocType {
                 ", createdDate='" + createdDate + '\'' +
                 ", pageCount=" + pageCount +
                 ", pageNumber=" + pageNumber +
+                ", encryptedPDFFilePath='" + encryptedPDFFilePath + '\'' +
                 '}';
     }
 }

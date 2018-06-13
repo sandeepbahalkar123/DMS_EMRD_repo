@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Canvas;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -18,6 +19,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.webkit.WebView;
 import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -48,14 +50,18 @@ import com.scorg.dms.model.dms_models.responsemodel.filetreeresponsemodel.LstDoc
 import com.scorg.dms.model.dms_models.responsemodel.filetreeresponsemodel.LstDocType;
 import com.scorg.dms.model.dms_models.responsemodel.getpdfdataresponsemodel.GetPdfDataResponseModel;
 import com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemodel.PatientFileData;
+import com.scorg.dms.preference.DMSPreferencesManager;
 import com.scorg.dms.ui.customesViews.treeViewHolder.arrow_expand.ArrowExpandIconTreeItemHolder;
 import com.scorg.dms.ui.customesViews.treeViewHolder.arrow_expand.ArrowExpandSelectableHeaderHolder;
 import com.scorg.dms.util.CommonMethods;
+import com.scorg.dms.util.Config;
 import com.scorg.dms.util.DMSConstants;
 import com.shockwave.pdfium.PdfDocument;
 import com.unnamed.b.atv.model.TreeNode;
 import com.unnamed.b.atv.view.AndroidTreeView;
 
+import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -355,27 +361,7 @@ public class FileTypeViewerActivity extends AppCompatActivity implements View.On
 
     @Override
     public void onSuccess(String mOldDataTag, CustomResponse customResponse) {
-
-        //Changed from switch to if..else, due to dynamically comparing received mOldDataTag.
-        if (mOldDataTag.startsWith(DMSConstants.TASK_GET_PDF_DATA + mMergedRequestCalled)) {
-            GetPdfDataResponseModel getPdfDataResponseModel = (GetPdfDataResponseModel) customResponse;
-            if (getPdfDataResponseModel.getCommon().getStatusCode().equals(DMSConstants.SUCCESS)) {
-                String fileData = getPdfDataResponseModel.getGetPdfDataResponseData().getFileData();
-                if (fileData != null) {
-                    if (mMergedRequestCalled.equalsIgnoreCase("0") || mOldDataTag.endsWith("0")) {
-                        mFirstFileTypeProgressDialogLayout.setVisibility(View.GONE);
-                        fileOneData = fileData;
-                        askWriteExtenralStoragePermission(REQUEST_CODE_WRITE_FILE_ONE_PERMISSIONS);
-                    } else if (mMergedRequestCalled.equalsIgnoreCase(("1")) || mOldDataTag.endsWith("1")) {
-                        mSecondFileTypeProgressDialogLayout.setVisibility(View.GONE);
-                        fileTwoData = fileData;
-                        askWriteExtenralStoragePermission(REQUEST_CODE_WRITE_FILE_TWO_PERMISSIONS);
-                    }
-                } else
-                    Toast.makeText(mContext, "Document not available", Toast.LENGTH_SHORT).show();
-            }
-
-        } else if (String.valueOf(mOldDataTag).equalsIgnoreCase("" + DMSConstants.TASK_GET_ARCHIVED_LIST)) {
+        if (String.valueOf(mOldDataTag).equalsIgnoreCase("" + DMSConstants.TASK_GET_ARCHIVED_LIST)) {
             FileTreeResponseModel fileTreeResponseModel = (FileTreeResponseModel) customResponse;
             mFileTreeResponseData = fileTreeResponseModel.getFileTreeResponseData();
 
@@ -387,6 +373,36 @@ public class FileTypeViewerActivity extends AppCompatActivity implements View.On
             //------
 
         }
+    }
+
+
+    private void doValidateReceivedEncryptedFilePath(String filePath, String mOldDataTag) {
+        //------
+        try {
+
+            String fileData = CommonMethods.decryptPDFFilePathUsingAESAlgo(filePath);
+            if (fileData != null) {
+                if (mMergedRequestCalled.equalsIgnoreCase("0") || mOldDataTag.endsWith("0")) {
+                    mFirstFileTypeProgressDialogLayout.setVisibility(View.GONE);
+                    fileOneData = fileData;
+                    loadPDFFromServer(fileData, mFirstPdfView, fileOneData, "file1", "pdf");
+
+                } else if (mMergedRequestCalled.equalsIgnoreCase(("1")) || mOldDataTag.endsWith("1")) {
+                    mSecondFileTypeProgressDialogLayout.setVisibility(View.GONE);
+                    fileTwoData = fileData;
+                    loadPDFFromServer(fileData, mSecondPdfView, fileTwoData, "file2", "pdf");
+
+                }
+            } else
+                Toast.makeText(mContext, "Document not available", Toast.LENGTH_SHORT).show();
+        } catch (GeneralSecurityException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        //----
+
     }
 
     @Override
@@ -507,6 +523,7 @@ public class FileTypeViewerActivity extends AppCompatActivity implements View.On
 
                 if (isFirstPdf && mFirstPdfView == pdfView) {
                     mSecondPdfView.jumpTo(displayedPage);
+
                     mSecondPdfView.zoomWithAnimation(mFirstPdfView.getZoom());
                     mSecondPdfView.moveTo(mFirstPdfView.getCurrentXOffset(), mFirstPdfView.getCurrentYOffset());
 
@@ -599,10 +616,8 @@ public class FileTypeViewerActivity extends AppCompatActivity implements View.On
         mMessageForSecondFile.setVisibility(View.GONE);
         //---
         mDrawer.closeDrawer(GravityCompat.END);
-        String idToFetch[] = null;
-
-        GetPdfDataRequestModel getPdfDataRequestModel = new GetPdfDataRequestModel();
-        getPdfDataRequestModel.setPatientId(respectivePatientID);
+        //String idToFetch[] = null;
+        String filePathToFetch = null;
 
         if (value instanceof ArrowExpandIconTreeItemHolder.IconTreeItem) {
             ArrowExpandIconTreeItemHolder.IconTreeItem value1 = (ArrowExpandIconTreeItemHolder.IconTreeItem) value;
@@ -612,67 +627,22 @@ public class FileTypeViewerActivity extends AppCompatActivity implements View.On
             mMergedRequestCalled = DMSConstants.BLANK;
 
             //----- Get Object of clicked Element and create map to send  : Start------
-            if (value1.objectData instanceof ArchiveDatum) {
-                ArchiveDatum tempData = (ArchiveDatum) value1.objectData;
-                List<LstDocCategory> lstDocCategories = tempData.getLstDocCategories();
-                mPreviousClickedTreeElement.put(mClickedTreeStructureLevel, tempData.getFileType());
-                getPdfDataRequestModel.setLstDocTypeRequests(createLstDocTypeRequest(lstDocCategories));
-
-                //----
-                if (tempData.getMergedFileCompareCustomID().length != 2) {
-                    mMergedRequestCalled = tempData.getMergedFileCompareCustomID()[0];
-                } else {
-                    idToFetch = tempData.getMergedFileCompareCustomID();
-                }
-                //----
-
-            } else if (value1.objectData instanceof LstDocCategory) {
-                LstDocCategory objectData = (LstDocCategory) value1.objectData;
-                List<LstDocCategory> lstDocCategories = new ArrayList<>();
-                lstDocCategories.add(objectData);
-                mPreviousClickedTreeElement.put(mClickedTreeStructureLevel, objectData.getCategoryName());
-                getPdfDataRequestModel.setLstDocTypeRequests(createLstDocTypeRequest(lstDocCategories));
-
-                //----
-                if (objectData.getMergedFileCompareCustomID().length != 2) {
-                    mMergedRequestCalled = objectData.getMergedFileCompareCustomID()[0];
-                } else {
-                    idToFetch = objectData.getMergedFileCompareCustomID();
-                }
-                //----
-
-            } else if (value1.objectData instanceof LstDocType) {
+            if (value1.objectData instanceof LstDocType) {
                 LstDocType clickedLstDocTypeElement = (LstDocType) value1.objectData;
                 mPreviousClickedTreeElement.put(mClickedTreeStructureLevel, clickedLstDocTypeElement.getTypeName());
-                //----
-                List<LstDocType> lstDocType = new ArrayList<>();
-                lstDocType.add(clickedLstDocTypeElement);
-                //-----
-                List<LstDocCategory> lstDocCategories = new ArrayList<>();
-                LstDocCategory temp = new LstDocCategory();
-                temp.setLstDocTypes(lstDocType);
-                lstDocCategories.add(temp);
-
-                getPdfDataRequestModel.setLstDocTypeRequests(createLstDocTypeRequest(lstDocCategories));
 
                 //--------
                 if (clickedLstDocTypeElement.getMergedFileCompareCustomID().length != 2) {
                     mMergedRequestCalled = clickedLstDocTypeElement.getMergedFileCompareCustomID()[0];
-                } else {
-                    idToFetch = clickedLstDocTypeElement.getMergedFileCompareCustomID();
                 }
+                filePathToFetch = clickedLstDocTypeElement.getEncryptedPDFFilePath();
                 //--------
             }
             //----- Get Object of clicked Element and create map to send  : End------
 
-            List<LstDocTypeRequest> lstDocTypeRequestsToFetchFromServer = getPdfDataRequestModel.getLstDocTypeRequests();
-
             switch (mMergedRequestCalled) {
 
                 case "0":
-                    //--- Set fileType and refID based on mClickedTreeStructureLevel
-                    getPdfDataRequestModel.setFileType(mSelectedFileTypeDataToCompare.get(Integer.parseInt(mMergedRequestCalled)).getFileType());
-                    getPdfDataRequestModel.setFileTypeRefId("" + mSelectedFileTypeDataToCompare.get(Integer.parseInt(mMergedRequestCalled)).getReferenceId());
 
                     //-- To Grayed out alternate views based on selection :START----
                     if (isComparingBetweenSameFileType) {
@@ -681,12 +651,9 @@ public class FileTypeViewerActivity extends AppCompatActivity implements View.On
                     }
                     //-- To Grayed out alternate views based on selection : END ----
 
-                    doCallPDFDataService(getPdfDataRequestModel, lstDocTypeRequestsToFetchFromServer.size(), mFirstPdfView, mFirstFileTypeProgressDialogLayout, mFirstFileTypePdfViewLayout, mMergedRequestCalled);
+                    doCallPDFDataService(filePathToFetch, 0, mFirstPdfView, mFirstFileTypeProgressDialogLayout, mFirstFileTypePdfViewLayout, mMergedRequestCalled);
                     break;
                 case "1":
-                    //--- Set fileType and refID based on mClickedTreeStructureLevel
-                    getPdfDataRequestModel.setFileType(mSelectedFileTypeDataToCompare.get(Integer.parseInt(mMergedRequestCalled)).getFileType());
-                    getPdfDataRequestModel.setFileTypeRefId("" + mSelectedFileTypeDataToCompare.get(Integer.parseInt(mMergedRequestCalled)).getReferenceId());
 
                     //-- To Grayed out alternate views based on selection :START----
                     if (isComparingBetweenSameFileType) {
@@ -695,75 +662,35 @@ public class FileTypeViewerActivity extends AppCompatActivity implements View.On
                     }
                     //-- To Grayed out alternate views based on selection : END ----
 
-                    doCallPDFDataService(getPdfDataRequestModel, lstDocTypeRequestsToFetchFromServer.size(), mSecondPdfView, mSecondFileTypeProgressDialogLayout, mSecondFileTypePdfViewLayout, mMergedRequestCalled);
+                    doCallPDFDataService(filePathToFetch, 0, mSecondPdfView, mSecondFileTypeProgressDialogLayout, mSecondFileTypePdfViewLayout, mMergedRequestCalled);
                     break;
                 default:
-                    if (idToFetch != null) {
-                        for (int i = 0; i < idToFetch.length; i++) {
-                            //--- Set fileType and refID based on mClickedTreeStructureLevel
-                            getPdfDataRequestModel.setFileType(mSelectedFileTypeDataToCompare.get(Integer.parseInt(idToFetch[i])).getFileType());
-                            getPdfDataRequestModel.setFileTypeRefId("" + mSelectedFileTypeDataToCompare.get(Integer.parseInt(idToFetch[i])).getReferenceId());
-                            if (i == 0)
-                                doCallPDFDataService(getPdfDataRequestModel, lstDocTypeRequestsToFetchFromServer.size(), mFirstPdfView, mFirstFileTypeProgressDialogLayout, mFirstFileTypePdfViewLayout, i + "");
-                            else
-                                doCallPDFDataService(getPdfDataRequestModel, lstDocTypeRequestsToFetchFromServer.size(), mSecondPdfView, mSecondFileTypeProgressDialogLayout, mSecondFileTypePdfViewLayout, i + "");
-                        }
+                    if (filePathToFetch != null) {
+                        doCallPDFDataService(filePathToFetch, 0, mFirstPdfView, mFirstFileTypeProgressDialogLayout, mFirstFileTypePdfViewLayout, "1");
+                        doCallPDFDataService(filePathToFetch, 0, mSecondPdfView, mSecondFileTypeProgressDialogLayout, mSecondFileTypePdfViewLayout, "2");
                     }
             }
         }
     }
 
-    // TO create object to pass to helper
-    private List<LstDocTypeRequest> createLstDocTypeRequest(List<LstDocCategory> lstDocCategories) {
 
-        List<LstDocTypeRequest> docList = new ArrayList<>();
+    private void loadPDFFromServer(String pdfFileURL, PDFView pdfViewToLoad, String base64Pdf, String fileName, String extension) {
+       /* pdfViewToLoad.fromFile(CommonMethods.storeAndGetDocument(this, base64Pdf, fileName, extension))
+                .defaultPage(mPageNumber)
+                .onError(this)
+                .onDraw(this)
+                .onLoad(this)
+                .enableAnnotationRendering(true)
+                .scrollHandle(new DefaultScrollHandle(this))
+                .load();*/
 
-        for (LstDocCategory tempCat :
-                lstDocCategories) {
-            List<LstDocType> lstDocTypes = tempCat.getLstDocTypes();
+        String baseUrl = DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.SERVER_PATH, mContext);
 
-            for (LstDocType tempDocObject :
-                    lstDocTypes) {
-                LstDocTypeRequest lstDocTypeRequest = new LstDocTypeRequest();
-                lstDocTypeRequest.setTypeId(tempDocObject.getTypeId());
-                lstDocTypeRequest.setTypeName(tempDocObject.getTypeName());
-                lstDocTypeRequest.setAbbreviation(tempDocObject.getAbbreviation());
-                lstDocTypeRequest.setCreatedDate(tempDocObject.getCreatedDate());
-                lstDocTypeRequest.setPageCount(tempDocObject.getPageCount());
-                lstDocTypeRequest.setPageNumber(tempDocObject.getPageNumber());
-                docList.add(lstDocTypeRequest);
-            }
-        }
-        return docList;
-    }
+        pdfFileURL = baseUrl + pdfFileURL.replace("~", "");
 
-    private void askWriteExtenralStoragePermission(int requestCode) {
-        int hasWriteContactsPermissionCamera = ContextCompat.checkSelfPermission(mContext, android.Manifest.permission.WRITE_EXTERNAL_STORAGE);
-
-        if (hasWriteContactsPermissionCamera != PackageManager.PERMISSION_GRANTED) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, requestCode);
-            }
-            return;
-        }
-
-        switch (requestCode) {
-            case REQUEST_CODE_WRITE_FILE_ONE_PERMISSIONS:
-                loadPDFFromServer(mFirstPdfView, fileOneData, "file1", "pdf");
-                break;
-
-            case REQUEST_CODE_WRITE_FILE_TWO_PERMISSIONS:
-                loadPDFFromServer(mSecondPdfView, fileTwoData, "file2", "pdf");
-                break;
-
-            default:
-                CommonMethods.Log(TAG, String.valueOf(requestCode));
-        }
-
-    }
-
-    private void loadPDFFromServer(PDFView pdfViewToLoad, String base64Pdf, String fileName, String extension) {
-        pdfViewToLoad.fromFile(CommonMethods.storeAndGetDocument(this, base64Pdf, fileName, extension))
+        Uri.Builder builder = Uri.parse(pdfFileURL.trim()).buildUpon();
+        Uri build = builder.build();
+        pdfViewToLoad.fromUri(build)
                 .defaultPage(mPageNumber)
                 .onError(this)
                 .onDraw(this)
@@ -774,36 +701,7 @@ public class FileTypeViewerActivity extends AppCompatActivity implements View.On
     }
 
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        switch (requestCode) {
-            case REQUEST_CODE_WRITE_FILE_ONE_PERMISSIONS:
-
-                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    // Permission Granted
-                    loadPDFFromServer(mFirstPdfView, fileOneData, "file1", "pdf");
-                } else {
-                    // Permission Denied
-                    CommonMethods.showToast(mContext, getString(R.string.denied_permission_read_document));
-                }
-                break;
-
-            case REQUEST_CODE_WRITE_FILE_TWO_PERMISSIONS:
-                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    // Permission Granted
-                    loadPDFFromServer(mSecondPdfView, fileTwoData, "file2", "pdf");
-                } else {
-                    // Permission Denied
-                    CommonMethods.showToast(mContext, getString(R.string.denied_permission_read_document));
-                }
-                break;
-
-            default:
-                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        }
-    }
-
-    private void doCallPDFDataService(GetPdfDataRequestModel getPdfDataRequestModel, int size, PDFView pdfView, RelativeLayout progressBarLayout, FrameLayout pdfContainerLayout, String mTagID) {
+    private void doCallPDFDataService(String filePathToFetch, int size, PDFView pdfView, RelativeLayout progressBarLayout, FrameLayout pdfContainerLayout, String mTagID) {
         //-----TO grayed out pdfview based on no element in that view -----
         if (size != 0) {
             pdfView.setVisibility(View.VISIBLE);
@@ -813,7 +711,8 @@ public class FileTypeViewerActivity extends AppCompatActivity implements View.On
             pdfView.setVisibility(View.GONE);
             pdfContainerLayout.setBackgroundColor(ContextCompat.getColor(this, R.color.Gray));
         }
-        mPatientsHelper.getPdfData(getPdfDataRequestModel, (DMSConstants.TASK_GET_PDF_DATA + mTagID));
+
+        doValidateReceivedEncryptedFilePath(filePathToFetch, (DMSConstants.TASK_GET_PDF_DATA + mTagID));
     }
 
     @Override
