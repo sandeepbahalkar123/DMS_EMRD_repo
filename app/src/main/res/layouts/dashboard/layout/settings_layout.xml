@@ -14,44 +14,6 @@
         android:paddingLeft="@dimen/dp17"
         android:visibility="visible">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp56"
-            android:orientation="horizontal">
-
-            <com.scorg.dms.ui.customesViews.CustomTextView
-                android:id="@+id/textName"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center|left"
-                android:text="@string/setting_add_patient_header"
-                android:textColor="@color/tagColor"
-                android:textSize="@dimen/sp16"
-                app:customFont="@string/roboto_medium" />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <com.scorg.dms.ui.customesViews.SwitchButton
-                    android:id="@+id/addPatientRadioSwitch"
-                    style="@style/SwitchButtonStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:kswAnimationDuration="0"
-                    app:kswTextOff="OFF"
-                    app:kswTextOn="ON" />
-            </LinearLayout>
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp1"
-            android:background="@color/divider" />
-
         <com.scorg.dms.ui.customesViews.CustomTextView
             android:id="@+id/change_ip_address"
             android:layout_width="match_parent"

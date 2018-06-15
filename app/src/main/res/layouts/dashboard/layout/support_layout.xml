@@ -86,7 +86,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
-                android:text="Doctor Rescribe is a unique product of"
+                android:text="DMS is a unique product of"
                 android:textColor="@color/logo_color"
                 android:textSize="@dimen/sp13"
                 app:customFont="@string/roboto_regular"

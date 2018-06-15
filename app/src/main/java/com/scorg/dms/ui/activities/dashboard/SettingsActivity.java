@@ -58,8 +58,7 @@ public class SettingsActivity extends BottomMenuActivity implements BottomMenuAd
     ImageView dashboardArrowIcon;
     @BindView(R.id.selectMenuLayout)
     RelativeLayout selectMenuLayout;
-    @BindView(R.id.addPatientRadioSwitch)
-    SwitchButton mAddPatientRadioSwitch;
+
     private AppDBHelper appDBHelper;
     private Context mContext;
     private LoginHelper loginHelper;
@@ -82,15 +81,6 @@ public class SettingsActivity extends BottomMenuActivity implements BottomMenuAd
         titleTextView.setText(getString(R.string.settings));
         backImageView.setVisibility(View.GONE);
 
-        mAddPatientRadioSwitch.setCheckedNoEvent(DMSPreferencesManager.getBoolean(DMSPreferencesManager.DMS_PREFERENCES_KEY.ADD_PATIENT_OFFLINE_SETTINGS, mContext));
-
-        mAddPatientRadioSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                DMSPreferencesManager.putBoolean(DMSPreferencesManager.DMS_PREFERENCES_KEY.ADD_PATIENT_OFFLINE_SETTINGS, isChecked, mContext);
-                mAddPatientRadioSwitch.setChecked(isChecked);
-            }
-        });
     }
 
 

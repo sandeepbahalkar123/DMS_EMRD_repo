@@ -296,6 +296,7 @@
     <string name="discharge">Discharge</string>
     <string name="from">From</string>
     <string name="to">To</string>
+    <string name="patient_id">Patient ID:</string>
 
     <!-- Strings related to login -->
     <string name="error_empty_fields">Please enter username/password</string>

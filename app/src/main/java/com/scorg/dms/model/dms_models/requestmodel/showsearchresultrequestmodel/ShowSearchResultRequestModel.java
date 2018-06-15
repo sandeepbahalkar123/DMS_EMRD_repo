@@ -30,6 +30,9 @@ public class ShowSearchResultRequestModel implements CustomResponse {
     @SerializedName("annotationText")
     @Expose
     private String annotationText = "";
+    @SerializedName("pageNumber")
+    @Expose
+    private String pageNumber = "";
 
     private String[] DocTypeId = new String[0];
 
@@ -112,6 +115,14 @@ public class ShowSearchResultRequestModel implements CustomResponse {
                 }
             }
         }
+    }
+
+    public String getPageNumber() {
+        return pageNumber;
+    }
+
+    public void setPageNumber(String pageNumber) {
+        this.pageNumber = pageNumber;
     }
 
     @Override

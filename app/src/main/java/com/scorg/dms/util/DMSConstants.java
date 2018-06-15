@@ -283,7 +283,7 @@ public class DMSConstants {
         String DD_MM_YYYY_hh_mm = "dd/MM/yyyy hh:mm aa";
         String HH_MM = "hh:mm";
         String HH_mm = "HH:mm";
-        String MMM_YYYY = "MMM, yyyy";
+        String DD_MMM_YYYY = "dd MMM, yyyy";
         String MMM_YY = "MMM, yy";
         String DD_MM_YYYY_hh_mm_ss = "dd-MM-yyyy hh:mm:ss";
         String YYYY_MM_DD_hh_mm_ss = "yyyy-MM-dd hh:mm:ss";

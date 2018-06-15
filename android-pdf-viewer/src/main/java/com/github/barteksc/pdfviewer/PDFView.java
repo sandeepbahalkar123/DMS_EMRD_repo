@@ -29,6 +29,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.os.HandlerThread;
+import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -58,6 +59,7 @@ import com.shockwave.pdfium.PdfDocument;
 import com.shockwave.pdfium.PdfiumCore;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -87,6 +89,7 @@ public class PDFView extends RelativeLayout {
     public static final float DEFAULT_MAX_SCALE = 3.0f;
     public static final float DEFAULT_MID_SCALE = 1.75f;
     public static final float DEFAULT_MIN_SCALE = 1.0f;
+    private Context mContext;
 
     private float minZoom = DEFAULT_MIN_SCALE;
     private float midZoom = DEFAULT_MID_SCALE;
@@ -301,6 +304,8 @@ public class PDFView extends RelativeLayout {
         debugPaint.setStyle(Style.STROKE);
 
         pdfiumCore = new PdfiumCore(context);
+
+        this.mContext = context;
         setWillNotDraw(false);
     }
 
@@ -1245,8 +1250,8 @@ public class PDFView extends RelativeLayout {
             return this;
         }
 
-        private Configurator fileUrl(String fileUrl){
-            this.fileUrl=fileUrl;
+        private Configurator fileUrl(String fileUrl) {
+            this.fileUrl = fileUrl;
             return this;
         }
 
@@ -1331,23 +1336,23 @@ public class PDFView extends RelativeLayout {
         }
 
 
-        public void loadFromUrl(){
-            final String SDPath = Environment.getExternalStorageDirectory().getAbsolutePath()+"/PDFViewCache/";
-            int index = fileUrl.lastIndexOf("/");
+        public void loadFromUrl() {
+            //final String SDPath = getCacheTempFilePath() + "/PDFViewCache/";
+            final String SDPath = Environment.getExternalStorageDirectory().getAbsolutePath()+"/PDFViewCache/";            int index = fileUrl.lastIndexOf("/");
             String fileName = fileUrl.substring(index);
             final File file = new File(SDPath, fileName);
-            if(file.exists()){
+            if (file.exists()) {
                 //文件存在
-                if(onFileDownloadCompleteListener!=null){
+                if (onFileDownloadCompleteListener != null) {
                     onFileDownloadCompleteListener.onDownloadComplete(file);
                 }
                 PDFView.this.fromFile(file);
                 load();
-            }else{
+            } else {
                 DownloadUtil.get().download(fileUrl, SDPath, new DownloadUtil.OnDownloadListener() {
                     @Override
                     public void onDownloadSuccess(File file) {
-                        if(onFileDownloadCompleteListener!=null){
+                        if (onFileDownloadCompleteListener != null) {
                             onFileDownloadCompleteListener.onDownloadComplete(file);
                         }
                         PDFView.this.fromFile(file);
@@ -1366,5 +1371,34 @@ public class PDFView extends RelativeLayout {
                 });
             }
         }
+
+        /**
+         * Create a temporary file in the cache directory on either internal or external storage,
+         * whichever is available and has more free space.
+         */
+        private String getCacheTempFilePath() {
+            try {
+                File externalCacheDir = mContext.getExternalCacheDir();
+                File internalCacheDir = mContext.getCacheDir();
+                File cacheDir;
+                if (externalCacheDir == null && internalCacheDir == null) {
+                    throw new IOException("No cache directory available");
+                }
+                if (externalCacheDir == null) {
+                    cacheDir = internalCacheDir;
+                } else if (internalCacheDir == null) {
+                    cacheDir = externalCacheDir;
+                } else {
+                    cacheDir = externalCacheDir.getFreeSpace() > internalCacheDir.getFreeSpace() ?
+                            externalCacheDir : internalCacheDir;
+                }
+
+                return cacheDir.getAbsolutePath();
+            } catch (IOException e) {
+
+            }
+            return "";
+        }
+
     }
 }

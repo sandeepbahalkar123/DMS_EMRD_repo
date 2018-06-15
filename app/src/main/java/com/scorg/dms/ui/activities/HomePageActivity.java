@@ -54,10 +54,10 @@ import com.scorg.dms.model.doctor_location.DoctorLocationBaseModel;
 import com.scorg.dms.model.login.ActiveRequest;
 import com.scorg.dms.model.login.DocDetail;
 import com.scorg.dms.singleton.DMSApplication;
- import com.scorg.dms.ui.activities.dashboard.SettingsActivity;
+import com.scorg.dms.ui.activities.dashboard.SettingsActivity;
 import com.scorg.dms.ui.activities.dashboard.SupportActivity;
 import com.scorg.dms.ui.activities.my_appointments.MyAppointmentsActivity;
- import com.scorg.dms.ui.activities.waiting_list.WaitingMainListActivity;
+import com.scorg.dms.ui.activities.waiting_list.WaitingMainListActivity;
 import com.scorg.dms.ui.customesViews.CircularImageView;
 import com.scorg.dms.ui.customesViews.CustomTextView;
 import com.scorg.dms.ui.customesViews.SwitchButton;
@@ -171,7 +171,8 @@ public class HomePageActivity extends BottomMenuActivity implements HelperRespon
 
     @Override
     protected void onResume() {
-        mDashboardHelper.doGetDashboardResponse();
+        if (mDashboardDataModel == null)
+            mDashboardHelper.doGetDashboardResponse();
         setUpImage();
         super.onResume();
     }
@@ -261,9 +262,7 @@ public class HomePageActivity extends BottomMenuActivity implements HelperRespon
                         todayAppointmentsCount.setText(mDashboardDataModel.getAppointmentCount());
                         waitingPatientCount.setText(mDashboardDataModel.getWaitingCount());
 
-                        ArrayList<DashboardDataModel.AppointmentOpdAndOtherCount> list = new ArrayList<>();
-                        list.add(mDashboardDataModel.getAppointmentOpdOTAndOtherCount());
-                        setLayoutForAppointment(true, list);
+                        setLayoutForAppointment(true, mDashboardDataModel.getAppointmentOpdOTAndOtherCountList());
                         // inflate waiting list layout
                         setLayoutForWaitingList(mDashboardDataModel.getWaitingCount());
 
@@ -344,8 +343,9 @@ public class HomePageActivity extends BottomMenuActivity implements HelperRespon
                 startActivity(todayAppointmentsOrWaitingList);
                 break;
             case R.id.totalPatientsCount:
-                Intent PatientList = new Intent(this, PatientList.class);
-                startActivity(PatientList);
+                Intent patientList = new Intent(this, PatientList.class);
+                patientList.putExtra(DMSConstants.PATIENT_LIST_PARAMS.FILE_TYPE, mDashboardDataModel.getFileTypes());
+                startActivity(patientList);
                 break;
             case R.id.doctorDashboardImage:
                 break;
@@ -472,6 +472,7 @@ public class HomePageActivity extends BottomMenuActivity implements HelperRespon
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, PatientList.class);
                 intent.putExtra(DMSConstants.ACTIVITY_LAUNCHED_FROM, DMSConstants.HOME_PAGE);
+                intent.putExtra(DMSConstants.PATIENT_LIST_PARAMS.FILE_TYPE, mDashboardDataModel.getFileTypes());
                 startActivity(intent);
             }
         });

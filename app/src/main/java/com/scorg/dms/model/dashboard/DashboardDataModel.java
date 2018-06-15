@@ -28,14 +28,13 @@ public class DashboardDataModel implements Parcelable {
     @Expose
     private String[] fileTypes;
 
+    /* @SerializedName("appointmentOpdOTAndOtherCount")
+     @Expose
+     private AppointmentOpdAndOtherCount appointmentOpdOTAndOtherCount;
+ */
     @SerializedName("appointmentOpdOTAndOtherCount")
     @Expose
-    private AppointmentOpdAndOtherCount appointmentOpdOTAndOtherCount;
-
-    //TODO: commented for now, response need to be in array.
-    /*@SerializedName("appointmentOpdOTAndOtherCount")
-    @Expose*/
-    private ArrayList<AppointmentOpdAndOtherCount> appointmentOpdOTAndOtherCountList;
+    private ArrayList<AppointmentOpdAndOtherCount> appointmentOpdOTAndOtherCountList = new ArrayList<>();
     public final static Parcelable.Creator<DashboardDataModel> CREATOR = new Creator<DashboardDataModel>() {
 
 
@@ -51,9 +50,9 @@ public class DashboardDataModel implements Parcelable {
             instance.setFileTypes(in.createStringArray());
 
             instance.setFileTypes(in.createStringArray());
-            instance.setAppointmentOpdOTAndOtherCount((AppointmentOpdAndOtherCount) in.readValue(AppointmentOpdAndOtherCount.class.getClassLoader()));
+            // instance.setAppointmentOpdOTAndOtherCount((AppointmentOpdAndOtherCount) in.readValue(AppointmentOpdAndOtherCount.class.getClassLoader()));
 
-//            in.readList(instance.getAppointmentOpdOTAndOtherCount(), (AppointmentOpdAndOtherCount.class.getClassLoader()));
+            in.readList(instance.getAppointmentOpdOTAndOtherCountList(), (AppointmentOpdAndOtherCount.class.getClassLoader()));
 
             return instance;
         }
@@ -70,8 +69,7 @@ public class DashboardDataModel implements Parcelable {
         dest.writeValue(getPendingApprovedCount());
         dest.writeValue(getWaitingCount());
         dest.writeStringArray(getFileTypes());
-        dest.writeValue(getAppointmentOpdOTAndOtherCount());
-        //dest.writeList(getAppointmentOpdOTAndOtherCount());
+        dest.writeList(getAppointmentOpdOTAndOtherCountList());
     }
 
     public int describeContents() {
@@ -118,21 +116,21 @@ public class DashboardDataModel implements Parcelable {
         this.fileTypes = fileTypes;
     }
 
-    public AppointmentOpdAndOtherCount getAppointmentOpdOTAndOtherCount() {
+    /*public AppointmentOpdAndOtherCount getAppointmentOpdOTAndOtherCount() {
         return appointmentOpdOTAndOtherCount;
     }
 
     public void setAppointmentOpdOTAndOtherCount(AppointmentOpdAndOtherCount appointmentOpdOTAndOtherCount) {
         this.appointmentOpdOTAndOtherCount = appointmentOpdOTAndOtherCount;
-    }
+    }*/
 
-/* public ArrayList<AppointmentOpdAndOtherCount> getAppointmentOpdOTAndOtherCount() {
+    public ArrayList<AppointmentOpdAndOtherCount> getAppointmentOpdOTAndOtherCountList() {
         return appointmentOpdOTAndOtherCountList;
     }
 
-    public void setAppointmentOpdOTAndOtherCount(ArrayList<AppointmentOpdAndOtherCount> appointmentOpdOTAndOtherCount) {
+    public void setAppointmentOpdOTAndOtherCountList(ArrayList<AppointmentOpdAndOtherCount> appointmentOpdOTAndOtherCount) {
         this.appointmentOpdOTAndOtherCountList = appointmentOpdOTAndOtherCount;
-    }*/
+    }
 
     public static class AppointmentOpdAndOtherCount implements Parcelable {
 

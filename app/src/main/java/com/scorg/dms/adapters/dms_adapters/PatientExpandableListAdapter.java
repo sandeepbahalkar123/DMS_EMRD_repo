@@ -46,16 +46,16 @@ public class PatientExpandableListAdapter extends BaseExpandableListAdapter {
     // child data in format of header title, child title
     private HashMap<String, ArrayList<PatientFileData>> _listDataChild = new HashMap<String, ArrayList<PatientFileData>>();
 
-    private List<SearchResult> _originalListDataHeader; // header titles
+    private List<SearchResult> _originalListDataHeader = new ArrayList<>(); // header titles
     // child data in format of header title, child title
-    private HashMap<String, ArrayList<PatientFileData>> _originalListDataChild;
+    private HashMap<String, ArrayList<PatientFileData>> _originalListDataChild = new HashMap<>();
 
     // @BindString(R.string.opd)
     private String opd;
     // @BindString(R.string.ipd)
     private String ipd;
     private String uhid;
-    private List<SearchResult> searchResultForPatientDetails;
+    private List<SearchResult> searchResultForPatientDetails = new ArrayList<>();
 
     // Hashmap for keeping track of our checkbox check states
     private HashMap<Integer, boolean[]> mChildCheckStates = new HashMap<>();
@@ -65,6 +65,15 @@ public class PatientExpandableListAdapter extends BaseExpandableListAdapter {
 
     public PatientExpandableListAdapter(Context context, List<SearchResult> searchResult) {
         this._context = context;
+
+        doCreateDataListMap(searchResult);
+        opd = _context.getString(R.string.opd);
+        ipd = _context.getString(R.string.ipd);
+        uhid = _context.getString(R.string.uhid);
+
+    }
+
+    private void doCreateDataListMap(List<SearchResult> searchResult) {
 
         List<SearchResult> listDataHeader = new ArrayList<>();
         HashMap<String, ArrayList<PatientFileData>> listChildData = new HashMap<String, ArrayList<PatientFileData>>();
@@ -98,15 +107,11 @@ public class PatientExpandableListAdapter extends BaseExpandableListAdapter {
             }
         }
 
-        this.searchResultForPatientDetails = searchResult;
-        this._originalListDataHeader = listDataHeader;
-        this._originalListDataChild = listChildData;
+        this.searchResultForPatientDetails.addAll(searchResult);
+        this._originalListDataHeader.addAll(listDataHeader);
+        this._originalListDataChild.putAll(listChildData);
 
         manageChild(null);
-
-        opd = _context.getString(R.string.opd);
-        ipd = _context.getString(R.string.ipd);
-        uhid = _context.getString(R.string.uhid);
 
     }
 
@@ -150,7 +155,7 @@ public class PatientExpandableListAdapter extends BaseExpandableListAdapter {
             childViewHolder.ipd.setText(opd);
             childViewHolder.ipdValue.setText(childElement.getReferenceId());
 
-            String s = CommonMethods.formatDateTime(childElement.getAdmissionDate(), DMSConstants.DATE_PATTERN.DD_MM_YYYY_SLASH, DMSConstants.DATE_PATTERN.DD_MM_YYYY_hh_mm, DMSConstants.DATE);
+            String s = CommonMethods.formatDateTime(childElement.getAdmissionDate(), DMSConstants.DATE_PATTERN.DD_MMM_YYYY, DMSConstants.DATE_PATTERN.DD_MM_YYYY_hh_mm, DMSConstants.DATE);
             childViewHolder.ipdAdmissionDateValue.setText(s);
 
         } else {
@@ -165,10 +170,10 @@ public class PatientExpandableListAdapter extends BaseExpandableListAdapter {
             childViewHolder.ipd.setText(ipd);
             childViewHolder.ipdValue.setText(String.valueOf(childElement.getReferenceId()));
 
-            String date = CommonMethods.formatDateTime(childElement.getAdmissionDate(), DMSConstants.DATE_PATTERN.DD_MM_YYYY_SLASH, DMSConstants.DATE_PATTERN.DD_MM_YYYY_hh_mm, DMSConstants.DATE);
+            String date = CommonMethods.formatDateTime(childElement.getAdmissionDate(), DMSConstants.DATE_PATTERN.DD_MMM_YYYY, DMSConstants.DATE_PATTERN.DD_MM_YYYY_hh_mm, DMSConstants.DATE);
             childViewHolder.ipdAdmissionDateValue.setText(date);
 
-            date = CommonMethods.formatDateTime(childElement.getDischargeDate(), DMSConstants.DATE_PATTERN.DD_MM_YYYY_SLASH, DMSConstants.DATE_PATTERN.DD_MM_YYYY_hh_mm, DMSConstants.DATE);
+            date = CommonMethods.formatDateTime(childElement.getDischargeDate(), DMSConstants.DATE_PATTERN.DD_MMM_YYYY, DMSConstants.DATE_PATTERN.DD_MM_YYYY_hh_mm, DMSConstants.DATE);
 
             childViewHolder.ipdDischargeDateValue.setText(date);
         }
@@ -560,5 +565,11 @@ public class PatientExpandableListAdapter extends BaseExpandableListAdapter {
             return m2Date.compareTo(m1Date);
         }
     }
+
+
+    public void addNewItems(List<SearchResult> searchResult) {
+        doCreateDataListMap(searchResult);
+    }
+
 
 }
