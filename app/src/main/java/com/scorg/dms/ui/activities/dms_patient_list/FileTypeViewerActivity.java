@@ -39,6 +39,7 @@ import com.scorg.dms.R;
 import com.scorg.dms.helpers.patient_list.DMSPatientsHelper;
 import com.scorg.dms.interfaces.CustomResponse;
 import com.scorg.dms.interfaces.HelperResponse;
+import com.scorg.dms.model.Common;
 import com.scorg.dms.model.dms_models.requestmodel.filetreerequestmodel.FileTreeRequestModel;
 import com.scorg.dms.model.dms_models.requestmodel.filetreerequestmodel.LstSearchParam;
 import com.scorg.dms.model.dms_models.requestmodel.getpdfdatarequestmodel.GetPdfDataRequestModel;
@@ -385,11 +386,14 @@ public class FileTypeViewerActivity extends AppCompatActivity implements View.On
                 if (mMergedRequestCalled.equalsIgnoreCase("0") || mOldDataTag.endsWith("0")) {
                     mFirstFileTypeProgressDialogLayout.setVisibility(View.GONE);
                     fileOneData = fileData;
-                    loadPDFFromServer(fileData, mFirstPdfView, fileOneData, "file1", "pdf");
+                    askWriteExtenralStoragePermission(REQUEST_CODE_WRITE_FILE_ONE_PERMISSIONS);
+
 
                 } else if (mMergedRequestCalled.equalsIgnoreCase(("1")) || mOldDataTag.endsWith("1")) {
                     mSecondFileTypeProgressDialogLayout.setVisibility(View.GONE);
                     fileTwoData = fileData;
+                    askWriteExtenralStoragePermission(REQUEST_CODE_WRITE_FILE_TWO_PERMISSIONS);
+
                     loadPDFFromServer(fileData, mSecondPdfView, fileTwoData, "file2", "pdf");
 
                 }
@@ -417,6 +421,33 @@ public class FileTypeViewerActivity extends AppCompatActivity implements View.On
 
     @Override
     public void onNoConnectionError(String mOldDataTag, String serverErrorMessage) {
+
+    }
+
+
+    private void askWriteExtenralStoragePermission(int requestCode) {
+        int hasWriteContactsPermissionCamera = ContextCompat.checkSelfPermission(mContext, android.Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
+        if (hasWriteContactsPermissionCamera != PackageManager.PERMISSION_GRANTED) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, requestCode);
+            }
+            return;
+        }
+
+        switch (requestCode) {
+            case REQUEST_CODE_WRITE_FILE_ONE_PERMISSIONS:
+                loadPDFFromServer(fileOneData, mFirstPdfView, "", "file1", "pdf");
+
+                break;
+
+            case REQUEST_CODE_WRITE_FILE_TWO_PERMISSIONS:
+                loadPDFFromServer(fileTwoData, mSecondPdfView, "", "file2", "pdf");
+                break;
+
+            default:
+                CommonMethods.Log(TAG, String.valueOf(requestCode));
+        }
 
     }
 
@@ -651,7 +682,7 @@ public class FileTypeViewerActivity extends AppCompatActivity implements View.On
                     }
                     //-- To Grayed out alternate views based on selection : END ----
 
-                    doCallPDFDataService(filePathToFetch, 0, mFirstPdfView, mFirstFileTypeProgressDialogLayout, mFirstFileTypePdfViewLayout, mMergedRequestCalled);
+                    doCallPDFDataService(filePathToFetch, 1, mFirstPdfView, mFirstFileTypeProgressDialogLayout, mFirstFileTypePdfViewLayout, mMergedRequestCalled);
                     break;
                 case "1":
 
@@ -662,12 +693,12 @@ public class FileTypeViewerActivity extends AppCompatActivity implements View.On
                     }
                     //-- To Grayed out alternate views based on selection : END ----
 
-                    doCallPDFDataService(filePathToFetch, 0, mSecondPdfView, mSecondFileTypeProgressDialogLayout, mSecondFileTypePdfViewLayout, mMergedRequestCalled);
+                    doCallPDFDataService(filePathToFetch, 1, mSecondPdfView, mSecondFileTypeProgressDialogLayout, mSecondFileTypePdfViewLayout, mMergedRequestCalled);
                     break;
                 default:
                     if (filePathToFetch != null) {
-                        doCallPDFDataService(filePathToFetch, 0, mFirstPdfView, mFirstFileTypeProgressDialogLayout, mFirstFileTypePdfViewLayout, "1");
-                        doCallPDFDataService(filePathToFetch, 0, mSecondPdfView, mSecondFileTypeProgressDialogLayout, mSecondFileTypePdfViewLayout, "2");
+                        doCallPDFDataService(filePathToFetch, 1, mFirstPdfView, mFirstFileTypeProgressDialogLayout, mFirstFileTypePdfViewLayout, "1");
+                        doCallPDFDataService(filePathToFetch, 1, mSecondPdfView, mSecondFileTypeProgressDialogLayout, mSecondFileTypePdfViewLayout, "2");
                     }
             }
         }
@@ -686,18 +717,51 @@ public class FileTypeViewerActivity extends AppCompatActivity implements View.On
 
         String baseUrl = DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.SERVER_PATH, mContext);
 
-        pdfFileURL = baseUrl + pdfFileURL.replace("~", "");
+        pdfFileURL = baseUrl + pdfFileURL.replace("~", "").trim();
 
-        Uri.Builder builder = Uri.parse(pdfFileURL.trim()).buildUpon();
-        Uri build = builder.build();
-        pdfViewToLoad.fromUri(build)
+        //Uri.Builder builder = Uri.parse(pdfFileURL.trim()).buildUpon();
+        //Uri build = builder.build();
+
+        CommonMethods.Log(TAG, "PDF URL:==-->> " + pdfFileURL);
+
+        pdfViewToLoad.fromUrl(pdfFileURL)
                 .defaultPage(mPageNumber)
                 .onError(this)
                 .onDraw(this)
                 .onLoad(this)
                 .enableAnnotationRendering(true)
                 .scrollHandle(new DefaultScrollHandle(this))
-                .load();
+                .loadFromUrl();
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case REQUEST_CODE_WRITE_FILE_ONE_PERMISSIONS:
+
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // Permission Granted
+                    loadPDFFromServer(fileOneData, mFirstPdfView, "", "file1", "pdf");
+                } else {
+                    // Permission Denied
+                    CommonMethods.showToast(mContext, getString(R.string.denied_permission_read_document));
+                }
+                break;
+
+            case REQUEST_CODE_WRITE_FILE_TWO_PERMISSIONS:
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // Permission Granted
+                    loadPDFFromServer(fileTwoData, mSecondPdfView, "", "file2", "pdf");
+                } else {
+                    // Permission Denied
+                    CommonMethods.showToast(mContext, getString(R.string.denied_permission_read_document));
+                }
+                break;
+
+            default:
+                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
     }
 
 
