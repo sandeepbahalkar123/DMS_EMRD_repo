@@ -359,6 +359,13 @@ public class PatientExpandableListAdapter extends BaseExpandableListAdapter {
         return true;
     }
 
+    public void removeAll() {
+        _listDataChild.clear();
+        _listDataHeader.clear();
+        _originalListDataChild.clear();
+        _originalListDataHeader.clear();
+    }
+
     static class GroupViewHolder {
         @BindView(R.id.cardView)
         LinearLayout cardView;

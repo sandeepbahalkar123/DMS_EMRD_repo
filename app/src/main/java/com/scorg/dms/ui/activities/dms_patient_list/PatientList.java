@@ -264,6 +264,7 @@ public class PatientList extends AppCompatActivity implements HelperResponse, Vi
         mAddedTagsEventHandler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
+                patientExpandableListAdapter.removeAll();
                 currentPage = 0;
                 doGetPatientList();
             }
@@ -355,9 +356,7 @@ public class PatientList extends AppCompatActivity implements HelperResponse, Vi
         } else {
             //TODO, hacked bcaz API not sending UHID, remove else block once received from API.
             String[] stringArrayExtraTemp = new String[mFileTypeStringArrayExtra.length + 1];
-            for (int cnt = 0; cnt < mFileTypeStringArrayExtra.length; cnt++) {
-                stringArrayExtraTemp[cnt] = mFileTypeStringArrayExtra[cnt];
-            }
+            System.arraycopy(mFileTypeStringArrayExtra, 0, stringArrayExtraTemp, 0, mFileTypeStringArrayExtra.length);
             stringArrayExtraTemp[mFileTypeStringArrayExtra.length] = getString(R.string.uhid);
             mFileTypeStringArrayExtra = stringArrayExtraTemp;
         }
@@ -424,13 +423,13 @@ public class PatientList extends AppCompatActivity implements HelperResponse, Vi
             mLstPatient = mPatientNameListData.getLstPatients();
             mPatientLists = new ArrayList();
             for (int i = 0; i < mLstPatient.size(); i++) {
-
                 patientName = mLstPatient.get(i).getPatientName();
                 mPatientLists.add(patientName);
-
             }
+
             mShowPatientNameAdapter = new ShowPatientNameAdapter(this, R.layout.patient_filter_right_drawer, R.id.custom_spinner_txt_view_Id, mLstPatient);
             mSearchPatientNameEditText.setAdapter(mShowPatientNameAdapter);
+            mSearchPatientNameEditText.showDropDown();
 
             Log.d(TAG, "" + mLstPatient);
         }
@@ -534,10 +533,9 @@ public class PatientList extends AppCompatActivity implements HelperResponse, Vi
 
                 onCompareDialogShow(null, null, null, null, false);
 
-                mAddedTagsForFiltering.clear();
                 String fromDate = mFromDateEditText.getText().toString().trim();
                 String toDate = mToDateEditText.getText().toString().trim();
-
+                patientExpandableListAdapter.removeAll();
 
                 //*********adding field values in arrayList to generate tags in recycler view
                 //we are adding refrence id and file type value in FILE_TYPE parameter
@@ -596,7 +594,6 @@ public class PatientList extends AppCompatActivity implements HelperResponse, Vi
                 mDrawer.closeDrawer(GravityCompat.END);
                 currentPage = 0;
                 doGetPatientList();
-
 
                 break;
 

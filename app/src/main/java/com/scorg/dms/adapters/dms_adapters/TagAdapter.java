@@ -60,7 +60,8 @@ public class TagAdapter extends RecyclerView.Adapter<TagAdapter.ViewHolder> {
             } else {
                 tempValue = (entry.getValue().toString() + "|" + entry.getKey());
             }
-            if (!DMSConstants.BLANK.equalsIgnoreCase(tempValue))
+
+            if (!DMSConstants.BLANK.equalsIgnoreCase(entry.getValue().toString()))
                 mTagsDataSet.add(tempValue);
 
         }
@@ -83,8 +84,7 @@ public class TagAdapter extends RecyclerView.Adapter<TagAdapter.ViewHolder> {
     public TagAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // Create a new View
         View v = inflater.inflate(R.layout.tag_row_item, parent, false);
-        TagAdapter.ViewHolder vh = new TagAdapter.ViewHolder(v);
-        return vh;
+        return new ViewHolder(v);
     }
 
     @Override
@@ -114,8 +114,6 @@ public class TagAdapter extends RecyclerView.Adapter<TagAdapter.ViewHolder> {
 
             //---------------END
 
-            //---- TO set dataToSet : START
-            //TODO: This is hack, done to fix the issue of docTypeID key remove
             if (dataToShow.startsWith(mContext.getString(R.string.documenttype))) {
                 dataToSet = data;
             } else
