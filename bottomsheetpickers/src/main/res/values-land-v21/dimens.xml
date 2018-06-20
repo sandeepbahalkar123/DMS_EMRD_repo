@@ -16,7 +16,6 @@
   -->
 
 <resources>
-    <dimen name="bsp_numeric_keypad_cell_height">50dp</dimen>
     <dimen name="bsp_fab_margin">8dp</dimen>
     <dimen name="bsp_fab_margin_top">2dp</dimen>
 </resources>

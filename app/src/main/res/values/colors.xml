@@ -46,7 +46,6 @@
     <color name="Gray">#736F6E</color>
     <color name="vitals_dialog_grey">#cccccc</color>
     <color name="range_green">#178a00</color>
-    <color name="green_light">#0fd20b</color>
     <color name="grey_300">#dcdcdc</color>
     <color name="grey_shade">#878787</color>
     <color name="greyish">#4f4f4f</color>
@@ -54,16 +53,13 @@
     <color name="divider">#e5e5e5</color>
     <color name="rating_color">#3676a3</color>
     <color name="toolbar_divider_color">#d5d5d5</color>
-    <color name="view_line">#f4f4f4</color>
     <color name="grey">#b3b3b3</color>
     <color name="about_doctor_color">#575757</color>
     <color name="range_label_color">#545353</color>
     <color name="seek_bar_progress">#01aeff</color>
     <color name="seek_bar_default">#4a4a4a</color>
-    <color name="patient_history_calender_days">#3677a3</color>
     <color name="bg_white_color">#f4f4f4</color>
     <color name="bg_grey_color">#eaeaea</color>
-    <color name="yellow">#FFFF33</color>
     <color name="logo_color">#7f5b5b5b</color>
     <color name="clickHere">#3676a3</color>
     <color name="activity_background">#E4E4E4</color>
@@ -75,14 +71,11 @@
     <color name="apply_blue">#6AB0D3</color>
     <color name="dcr_customer_name">#010101</color>
     <color name="grey_700">#616161</color>
-    <color name="grey_800">#424242</color>
     <color name="grey_200">#E0E0E0</color>
     <color name="refId_color">#8dc63f</color>
     <color name="LightSkyBlue">#82CAFA</color>
-    <color name="cobalt_blue">#0020C2</color>
     <color name="BlueAngel">#0288d1</color>
     <color name="MediumSpringGreen">#348017</color>
-    <color name="BlueDress">#157DEC</color>
     <color name="login_bg">#4FAFDC</color>
     <color name="login_button">#36657A</color>
 

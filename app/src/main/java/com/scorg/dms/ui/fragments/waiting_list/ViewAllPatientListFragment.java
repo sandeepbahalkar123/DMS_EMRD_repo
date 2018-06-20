@@ -19,14 +19,25 @@ import android.widget.Spinner;
 import com.scorg.dms.R;
 import com.scorg.dms.adapters.waiting_list.WaitingListAdapter;
 import com.scorg.dms.adapters.waiting_list.WaitingListSpinnerAdapter;
+import com.scorg.dms.helpers.patient_list.DMSPatientsHelper;
+import com.scorg.dms.interfaces.CustomResponse;
+import com.scorg.dms.interfaces.HelperResponse;
+import com.scorg.dms.model.dms_models.requestmodel.showsearchresultrequestmodel.ShowSearchResultRequestModel;
+import com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemodel.PatientFileData;
+import com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemodel.SearchResult;
+import com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemodel.SearchResultData;
+import com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemodel.ShowSearchResultResponseModel;
 import com.scorg.dms.model.waiting_list.WaitingListDataModel;
 import com.scorg.dms.model.waiting_list.WaitingPatientData;
 import com.scorg.dms.model.waiting_list.WaitingClinicList;
+import com.scorg.dms.ui.activities.dms_patient_list.FileTypeViewerActivity;
 import com.scorg.dms.ui.activities.waiting_list.WaitingMainListActivity;
 import com.scorg.dms.ui.customesViews.CircularImageView;
 import com.scorg.dms.ui.customesViews.CustomTextView;
+import com.scorg.dms.util.DMSConstants;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -38,7 +49,7 @@ import permissions.dispatcher.RuntimePermissions;
  * Created by jeetal on 22/2/18.
  */
 @RuntimePermissions
-public class ViewAllPatientListFragment extends Fragment {
+public class ViewAllPatientListFragment extends Fragment implements WaitingListAdapter.OnItemClickListener, HelperResponse {
 
     @BindView(R.id.clinicListSpinner)
     Spinner clinicListSpinner;
@@ -62,6 +73,7 @@ public class ViewAllPatientListFragment extends Fragment {
     private String phoneNo;
     private WaitingMainListActivity mParentActivity;
     private WaitingListAdapter mWaitingListAdapter;
+    private DMSPatientsHelper mPatientsHelper;
 
     public ViewAllPatientListFragment() {
     }
@@ -83,6 +95,7 @@ public class ViewAllPatientListFragment extends Fragment {
 
     private void init() {
         mParentActivity = (WaitingMainListActivity) getActivity();
+        mPatientsHelper = new DMSPatientsHelper(this.getContext(), this);
 
         clinicListSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -158,10 +171,73 @@ public class ViewAllPatientListFragment extends Fragment {
         } else {
             mRecyclerView.setVisibility(View.VISIBLE);
             noRecords.setVisibility(View.GONE);
-            mWaitingListAdapter = new WaitingListAdapter(this.getContext(), waitingPatientTempList);
+            mWaitingListAdapter = new WaitingListAdapter(this.getContext(), waitingPatientTempList, this);
             LinearLayoutManager linearlayoutManager = new LinearLayoutManager(this.getContext(), LinearLayoutManager.VERTICAL, false);
             mRecyclerView.setLayoutManager(linearlayoutManager);
             mRecyclerView.setAdapter(mWaitingListAdapter);
         }
+    }
+
+
+    @Override
+    public void onItemClick(WaitingPatientData clickItem) {
+
+        ShowSearchResultRequestModel showSearchResultRequestModel = new ShowSearchResultRequestModel();
+        // TODO: hardcoed for now, As patientList And WaitingList API patientID not sync from server
+        showSearchResultRequestModel.setPatientId("07535277");
+        // showSearchResultRequestModel.setPatientId(clickItem.getPatientId());
+
+        mPatientsHelper.doGetPatientList(showSearchResultRequestModel);
+
+    }
+
+    @Override
+    public void onSuccess(String mOldDataTag, CustomResponse customResponse) {
+        switch (mOldDataTag) {
+            case DMSConstants.TASK_PATIENT_LIST: {
+                ShowSearchResultResponseModel showSearchResultResponseModel = (ShowSearchResultResponseModel) customResponse;
+                SearchResultData searchResultData = showSearchResultResponseModel.getSearchResultData();
+
+                if (searchResultData != null) {
+                    List<SearchResult> searchResultList = searchResultData.getSearchResult();
+                    if (!searchResultList.isEmpty()) {
+                        SearchResult searchPatientInformation = searchResultList.get(0);
+                        List<PatientFileData> patientFileDataList = searchPatientInformation.getPatientFileData();
+                        if (patientFileDataList != null) {
+                            if (!patientFileDataList.isEmpty()) {
+                                PatientFileData childElement = patientFileDataList.get(0);
+                                Intent intent = new Intent(getActivity(), FileTypeViewerActivity.class);
+                                Bundle extra = new Bundle();
+                                ArrayList<PatientFileData> dataToSend = new ArrayList<PatientFileData>();
+                                dataToSend.add(childElement);
+                                extra.putSerializable(getString(R.string.compare), dataToSend);
+                                extra.putString(DMSConstants.PATIENT_ADDRESS, searchPatientInformation.getPatientAddress());
+                                extra.putString(DMSConstants.DOCTOR_NAME, searchPatientInformation.getDoctorName());
+                                extra.putString(DMSConstants.ID, childElement.getRespectiveParentPatientID());
+                                extra.putString(DMSConstants.PATIENT_LIST_PARAMS.PATIENT_NAME, "" + searchPatientInformation.getPatientName());
+                                intent.putExtra(DMSConstants.DATA, extra);
+                                startActivity(intent);
+                            }
+                        }
+                    }
+                }
+            }
+            break;
+        }
+    }
+
+    @Override
+    public void onParseError(String mOldDataTag, String errorMessage) {
+
+    }
+
+    @Override
+    public void onServerError(String mOldDataTag, String serverErrorMessage) {
+
+    }
+
+    @Override
+    public void onNoConnectionError(String mOldDataTag, String serverErrorMessage) {
+
     }
 }

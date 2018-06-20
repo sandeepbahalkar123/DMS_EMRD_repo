@@ -49,14 +49,15 @@ import java.util.ArrayList;
 public class WaitingListAdapter
         extends RecyclerView.Adapter<WaitingListAdapter.MyViewHolder> {
     private static final String TAG = "MyDSItemAdapter";
+    private OnItemClickListener onItemClickListener;
     private Context mContext;
     private ArrayList<WaitingPatientData> mWaitingDataList;
 
-    private EventListener mEventListener;
 
-    public WaitingListAdapter(Context context, ArrayList<WaitingPatientData> waitingDataList) {
+    public WaitingListAdapter(Context context, ArrayList<WaitingPatientData> waitingDataList, OnItemClickListener onItemClickListener) {
         this.mContext = context;
         this.mWaitingDataList = waitingDataList;
+        this.onItemClickListener = onItemClickListener;
     }
 
     public interface EventListener {
@@ -194,6 +195,17 @@ public class WaitingListAdapter
                 holder.mBehindViews.setLayoutParams(layoutParams);
             }
         });
+
+        holder.mCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                WaitingPatientData item = mWaitingDataList.get(position);
+
+                onItemClickListener.onItemClick(item);
+            }
+        });
+
+
     }
 
     @Override
@@ -201,13 +213,8 @@ public class WaitingListAdapter
         return mWaitingDataList.size();
     }
 
-    public EventListener getEventListener() {
-        return mEventListener;
+
+    public interface OnItemClickListener {
+        public void onItemClick(WaitingPatientData clickItem);
     }
-
-    public void setEventListener(EventListener eventListener) {
-        mEventListener = eventListener;
-    }
-
-
 }

@@ -12,7 +12,6 @@
         android:background="@color/divider">
 
         <LinearLayout
-            android:id="@+id/appointmentLayoutContainer"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
@@ -40,7 +39,6 @@
 
 
                 <ImageView
-                    android:id="@+id/whiteUnderLine"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp1"
                     android:layout_gravity="center"

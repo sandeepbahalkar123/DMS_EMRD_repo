@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Canvas;
-import android.net.Uri;
+ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -57,7 +57,7 @@ import com.scorg.dms.ui.customesViews.treeViewHolder.arrow_expand.ArrowExpandSel
 import com.scorg.dms.util.CommonMethods;
 import com.scorg.dms.util.Config;
 import com.scorg.dms.util.DMSConstants;
-import com.shockwave.pdfium.PdfDocument;
+import com.shockwave.pdfium.*;
 import com.unnamed.b.atv.model.TreeNode;
 import com.unnamed.b.atv.view.AndroidTreeView;
 
@@ -368,7 +368,7 @@ public class FileTypeViewerActivity extends AppCompatActivity implements View.On
 
             if (mFileTypeOne.getText().toString().equalsIgnoreCase(mFileTypeTwo.getText().toString())) {
                 isComparingBetweenSameFileType = true;
-                doGetMergeArchiveList(mFileTreeResponseData, mFileTypeOne.getText().toString());
+             //   doGetMergeArchiveList(mFileTreeResponseData, mFileTypeOne.getText().toString());
             }
             createAnnotationTreeStructure(mFileTreeResponseData, true);
             //------

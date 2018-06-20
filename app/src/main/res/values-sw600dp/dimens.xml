@@ -14,11 +14,7 @@
     <dimen name="dp30">30dp</dimen>
     <dimen name="dp56">66dp</dimen>
     <dimen name="dp40">40dp</dimen>
-    <dimen name="dp42">42dp</dimen>
     <dimen name="dp50">50dp</dimen>
-    <dimen name="dp46">46dp</dimen>
-    <dimen name="dp48">48dp</dimen>
-    <dimen name="margin_imageview">70dp</dimen>
     <dimen name="dp34">34dp</dimen>
     <dimen name="dp14">14dp</dimen>
     <dimen name="dp18">18dp</dimen>
@@ -36,8 +32,6 @@
     <dimen name="dp28">28dp</dimen>
     <dimen name="dp32">32dp</dimen>
     <dimen name="dp210">210dp</dimen>
-    <dimen name="dp44">44dp</dimen>
-    <dimen name="dp35">35dp</dimen>
     <dimen name="dp120">120dp</dimen>
     <dimen name="dp80">80dp</dimen>
     <dimen name="dp58">58dp</dimen>
@@ -48,7 +42,6 @@
     <dimen name="dp130">130dp</dimen>
     <dimen name="dp222">222dp</dimen>
     <dimen name="dialog_waitinglist_bullet_width_height">14dp</dimen>
-    <dimen name="dialog_waitinglist_okbtn_width">110dp</dimen>
     <dimen name="dp62">92dp</dimen>
 
     <dimen name="sp11">11sp</dimen>
@@ -68,22 +61,13 @@
 
     <!--// DMS //-->
 
-    <dimen name="dp82">123dp</dimen>
-    <dimen name="dp500">750dp</dimen>
-
-    <dimen name="fab_margin_right">48dp</dimen>
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="padding_tiny">5dp</dimen>
-    <dimen name="uhid">8dp</dimen>
     <dimen name="margin_tiny">5dp</dimen>
     <dimen name="button_height">40dp</dimen>
 
-    <dimen name="patientIdWidth">205dp</dimen>
     <dimen name="activity_horizontal_margin">16dp</dimen>
-    <dimen name="activity_vertical_margin">16dp</dimen>
 
-    <dimen name="text_medium">20sp</dimen>
-    <dimen name="filenotfoundmessagetextsize">24sp</dimen>
     <dimen name="dp26">26dp</dimen>
     <dimen name="dp36">36dp</dimen>
     <dimen name="compare_dialog">270dp</dimen>

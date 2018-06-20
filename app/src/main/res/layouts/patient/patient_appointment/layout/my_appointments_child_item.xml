@@ -186,7 +186,6 @@
         </RelativeLayout>
 
         <View
-            android:id="@+id/blueLineDivider"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp1"
             android:layout_marginEnd="@dimen/dp2"
@@ -194,7 +193,6 @@
             android:background="@color/tagColor" />
 
         <LinearLayout
-            android:id="@+id/patientInfoDetailLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/dp8"

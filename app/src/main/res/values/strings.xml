@@ -12,7 +12,6 @@
     <string name="time_select_err">Please select time slot.</string>
     <string name="token_select_time_err_msg">Please select future time slot for the day.</string>
     <string name="mdinner">DINNER</string>
-    <string name="consultation_details">Consultation Details</string>
     <string name="resend_in_text">Resend in</string>
     <string name="resend"><u>Resend OTP</u></string>
     <string name="ok">OK</string>
@@ -27,24 +26,19 @@
     <string name="roboto_bold">roboto_bold.ttf</string>
     <string name="roboto_medium">roboto_medium.ttf</string>
     <string name="roboto_regular">roboto_regular.ttf</string>
-    <string name="bill_invoices">Bill Invoices</string>
-    <string name="case_encounter">Case Encounter</string>
     <string name="gallery">Gallery</string>
     <string name="files">Files</string>
-    <string name="adddocs">Add Documents</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="enter_otp">Enter OTP</string>
+    <string name="enter_word">Enter </string>
     <string name="enter">Enter&#160;</string>
     <string name="read_more"><u>More</u></string>
     <string name="read_less">&#160;<u>
         less</u></string>
     <string name="done">Done</string>
-    <string name="others">Others</string>
     <string name="practices_at_locations">Practices at $$ locations</string>
-    <string name="prescriptionModels">Prescriptions</string>
     <string name="title_activity_zoomview">Zoom View</string>
     <string name="type">type</string>
-    <string name="investigations">Investigations</string>
     <string name="name">Name</string>
     <string name="details">&#160;Details</string>
     <string name="forgot_password">Forgot Password?</string>
@@ -61,14 +55,12 @@
     <string name="error_too_small_password">Password should be 6 characters long. </string>
     <string name="title">Title</string>
     <string name="server_error">Server Error</string>
-    <string name="add_caption">Add Caption</string>
 
 
     <!--//*** Google Map key-->
 
     <string name="enter_otp_for_login">Otp For Login</string>
     <string name="your_health">\"Your Own Healthcare Repository\"</string>
-    <string name="using_otp">Using OTP</string>
     <!-- <strsenderNamename="google_maps_key">AIzaSyDxO-cLqGemArsUCSrn_uIUn5FzTkds4u0</string>-->
 
     <!-- <strsenderNamename="google_maps_key">AIzaSyDxO-cLqGemArsUCSrn_uIUn5FzTkds4u0</string>-->
@@ -86,13 +78,8 @@
     <!--sandeep sir account credentials-->
     <string name="facebook_app_id">1351340758298095</string>
     <string name="fb_login_protocol_scheme">fb1351340758298095</string>
-    <string name="login_confirmation">Login Confirmation</string>
     <string name="dummy_full">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</string>
     <string name="dummy_normal">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</string>
-    <string name="patient_connect">Patient Connect</string>
-    <string name="search">Search</string>
-    <string name="pick_speciality">Pick Speciality</string>
-    <string name="details_note"><![CDATA[Your details will remain 100% private & secure. If you think you have medical emergency, contact your doctor immediately.]]></string>
     <string name="cardiologist">cardiologist</string>
     <string name="ophthalmologist">ophthalmologist</string>
     <string name="gastro">gastro</string>
@@ -114,13 +101,8 @@
     <string name="nephrologist">nephrologist</string>
     <string name="surgeon">surgeon</string>
     <string name="endocrinologist">endocrinologist</string>
-    <string name="title_activity_chat">ChatActivity</string>
-    <string name="type_a_message">Type a message</string>
-    <string name="doc_viewer_not_found">Document viewer not found.</string>
-    <string name="timing"><![CDATA[< slide to cancel]]></string>
     <string name="cancel">Cancel</string>
     <string name="do_you_exit">Do you want to exit ?</string>
-    <string name="title_activity_location_picker">Location Picker</string>
     <string name="apply">Apply</string>
     <string name="filter">Filter</string>
     <string name="reset">Reset</string>
@@ -132,7 +114,6 @@
     <string name="male">Male</string>
     <string name="female">Female</string>
     <string name="age">Age</string>
-    <string name="age_err_msg">Age should not be grater than 100.</string>
     <string name="less">less</string>
     <string name="equal">equal</string>
     <string name="greater">greater</string>
@@ -147,7 +128,6 @@
     <string name="clinic_names">Clinic Names</string>
     <string name="select_clinic">Select Clinic</string>
     <string name="search_hint"><![CDATA[Search by Name, Phone & Patient ID]]></string>
-    <string name="search_hint_patientconnect_to_mypatient"><![CDATA[Search by Name & Patient ID]]></string>
     <string name="home">Home</string>
     <string name="profile">Profile</string>
     <string name="app_logo">AppLogo</string>
@@ -157,9 +137,7 @@
     <string name="id">ID:</string>
     <string name="opd_appointment">Appointment</string>
     <string name="nil">NIL</string>
-    <string name="book">book</string>
     <string name="booked">Booked</string>
-    <string name="completed">completed</string>
     <string name="capitalcompleted">Completed</string>
     <string name="file_extension">file_extension</string>
     <string name="title_activity_selected_docs">Selected Documents</string>
@@ -172,7 +150,6 @@
     <string name="waiting_list">Waiting List</string>
     <string name="bp_max">BpMax</string>
     <string name="bp">BP</string>
-    <string name="colon_sign">:</string>
     <string name="bp_min">BpMin</string>
     <string name="dash">-</string>
     <string name="systolic_pressure">Systolic BP</string>
@@ -180,19 +157,10 @@
     <string name="normal">Normal Level :</string>
     <string name="moderate">Moderate Level :</string>
     <string name="severe">Severe Level :</string>
-    <string name="please_select_patients">Please select patients</string>
     <string name="my_patients">My Patients</string>
     <string name="do_you_logout">Do you want to logout?</string>
     <string name="transgender">Transgender</string>
-    <string name="add_record">Add Records</string>
-    <string name="select_doctor_name">Doctor Name</string>
     <string name="select_date_text">Select Date</string>
-    <string name="enter_date">Enter Date</string>
-    <string name="enter_address">Enter Address</string>
-    <string name="next">Next</string>
-    <string name="addrecords">Add Records</string>
-    <string name="upload">Upload</string>
-    <string name="select_report">Select Report</string>
     <string name="just_now">Just Now</string>
     <string name="services"><u>Services</u></string>
     <string name="about_doctor"><u>About Doctor :</u></string>
@@ -201,50 +169,22 @@
     <string name="active">ACTIVE</string>
     <string name="view_all">VIEW ALL</string>
     <string name="in_time">In Time</string>
-    <string name="select_clinic_location">Select Clinic Location</string>
-    <string name="patients_added_to_waiting_list">Patients added successfully!</string>
-    <string name="patient_limit_exceeded">Patient limit exceeded!</string>
-    <string name="already_exists_in_waiting_list">All patients already exists in waiting list!</string>
-    <string name="added_to_waiting_list">added to waiting list!</string>
     <string name="appointment_completed">Appointment is completed</string>
-    <string name="appointment_cancelled">Appointment is cancelled</string>
-    <string name="confirmed">confirmed</string>
     <string name="Confirmed">Confirmed</string>
     <string name="cancelled">Cancelled</string>
     <string name="no_show">No show</string>
     <string name="other">Other</string>
     <string name="enter_sms_text_here">Enter sms text here</string>
     <string name="location">Location</string>
-    <string name="complete_and_cancelled_status">Complete and cancel status patients cannot be added to waiting list</string>
-    <string name="today_new_patient">Today\s\nNew Patients</string>
     <string name="today_appointment">Today\'s\nAppointments</string>
-    <string name="today_waiting_list">Today\'s\nWaiting List</string>
-    <string name="today_completed_opd">Today\'s\nCompleted OPD</string>
     <string name="waiting_patients"> Waiting\nPatients </string>
     <string name="pending_approval">Pending\nApproval</string>
-    <string name="today_patient">Total\nPatient</string>
-    <string name="completed_opd">Completed OPD</string>
+    <string name="today_patient">Total\nPatients</string>
     <string name="consultation">Consultation</string>
     <string name="follow_up">Follow Up</string>
-    <string name="new_patients">Add New Patient</string>
-    <string name="today_new_patients">New Patients</string>
-    <string name="appointment_completed_button">Appointment\nCompleted</string>
-    <string name="appointment_cancelled_button">Appointment\nCancelled</string>
     <string name="years">yrs -\u0020</string>
-    <string name="skip">Skip</string>
-    <string name="do_you_want_to_restore_backup">Do you want to restore backup?</string>
-    <string name="records_will_upload_when_internet_available">Records will upload when internet is available</string>
-    <string name="uploading">Uploading</string>
     <string name="camera">Camera</string>
 
-
-    <string name="first_name">First Name</string>
-    <string name="middle_name">Middle Name</string>
-    <string name="last_name">Last Name</string>
-    <string name="reference_id">Reference ID.</string>
-    <string name="reference_id_input_err_msg">Reference ID should be alphanumeric, no special characters and no white spaces.</string>
-    <string name="add_patient_offline_msg">No internet connection found, still you can add patient offline.</string>
-    <string name="setting_add_patient_header">Add Patient Offline</string>
 
     <string name="book_appointment">Book Appointment</string>
     <string name="appointment_booked_message">Appointment has already been taken with this doctor.</string>
@@ -258,15 +198,6 @@
     <string name="booking_appointment">Booking Appointment for :-</string>
     <string name="Reschedule">Reschedule</string>
     <string name="view">VIEW</string>
-    <string name="add_profile_image">Add Profile Image</string>
-    <string name="select_this_location">Select this Location</string>
-    <string name="detect_location">Detect my location</string>
-    <string name="do_you_want_to_update">Do you want to update application?</string>
-    <string name="update">Update</string>
-    <string name="later">Later</string>
-    <string name="patient_registration">Patient Registration</string>
-    <string name="cannot_completed_appointment">You cannot complete appointment for future dates.</string>
-    <string name="you_cannot_add_waiting_list">You cannot add future appointments in waiting list</string>
     <string name="waiting_list_message">Oops !! There are no patients currently in the waiting list.</string>
     <string name="company_name">SCORG TECHNOLOGIES Pvt.Ltd.</string>
 
@@ -308,7 +239,6 @@
     <string name="Select">Select</string>
     <string name="admission_date">Admission Date:\u0020</string>
     <string name="discharge_date">Discharge Date:\u0020</string>
-    <string name="more">More</string>
     <string name="opd">OPD</string>
     <string name="ipd">IPD</string>
     <string name="uhid">UHID</string>
@@ -325,7 +255,6 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="error_max_two_reports">You can not select more than two reports to compare</string>
-    <string name="run_only_on_tablet">Oops…, it seems you are running on phone, DMS is only supported to tablets.</string>
 
     <string-array name="select_id">
         <item>Select</item>
@@ -378,8 +307,6 @@
     <string name="comparedocument">Compare Document</string>
     <string name="adddocument">Add Document</string>
     <string name="denied_permission_read_document">Denied permission read Document.</string>
-    <string name="userimage">User Image</string>
-    <string name="username">Username</string>
     <string name="file_one">FileType-1</string>
     <string name="file_two">FileType-2</string>
     <string name="address">Address</string>

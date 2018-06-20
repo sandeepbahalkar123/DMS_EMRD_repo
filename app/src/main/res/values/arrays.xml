@@ -1,28 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Array of ColorStateList -->
-    <array name="colors">
-        <item>@color/tagColor</item>
-        <item>@color/tagColor</item>
-        <item>@color/tagColor</item>
-        <item>@color/tagColor</item>
-        <item>@color/tagColor</item>
-    </array>
-
-    <array name="white_array">
-        <item>@android:color/white</item>
-        <item>@android:color/white</item>
-        <item>@android:color/white</item>
-        <item>@android:color/white</item>
-        <item>@android:color/white</item>
-    </array>
-
-    <array name="labels">
-        <item>@drawable/label</item>
-        <item>@drawable/label</item>
-        <item>@drawable/label</item>
-        <item>@drawable/label</item>
-        <item>@drawable/label</item>
-    </array>
 
 </resources>

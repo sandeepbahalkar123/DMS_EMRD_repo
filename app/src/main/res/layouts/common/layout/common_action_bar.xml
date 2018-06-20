@@ -114,7 +114,6 @@
             tools:visibility="gone" />
 
         <ImageView
-            android:id="@+id/downloadPatients"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"

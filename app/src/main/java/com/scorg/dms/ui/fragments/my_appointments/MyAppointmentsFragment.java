@@ -33,8 +33,14 @@ import com.scorg.dms.adapters.my_appointments.BottomMenuAppointmentAdapter;
 import com.scorg.dms.adapters.waiting_list.ShowWaitingStatusAdapter;
 import com.scorg.dms.bottom_menus.BottomMenu;
 import com.scorg.dms.helpers.myappointments.AppointmentHelper;
+import com.scorg.dms.helpers.patient_list.DMSPatientsHelper;
 import com.scorg.dms.interfaces.CustomResponse;
 import com.scorg.dms.interfaces.HelperResponse;
+import com.scorg.dms.model.dms_models.requestmodel.showsearchresultrequestmodel.ShowSearchResultRequestModel;
+import com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemodel.PatientFileData;
+import com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemodel.SearchResult;
+import com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemodel.SearchResultData;
+import com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemodel.ShowSearchResultResponseModel;
 import com.scorg.dms.model.my_appointments.AppointmentPatientData;
 import com.scorg.dms.model.my_appointments.MyAppointmentsDataModel;
 import com.scorg.dms.model.my_appointments.PatientList;
@@ -43,6 +49,7 @@ import com.scorg.dms.model.waiting_list.new_request_add_to_waiting_list.AddToLis
 import com.scorg.dms.model.waiting_list.new_request_add_to_waiting_list.RequestToAddWaitingList;
 import com.scorg.dms.model.waiting_list.response_add_to_waiting_list.AddToWaitingListBaseModel;
 import com.scorg.dms.model.waiting_list.response_add_to_waiting_list.AddToWaitingResponse;
+import com.scorg.dms.ui.activities.dms_patient_list.FileTypeViewerActivity;
 import com.scorg.dms.ui.activities.my_appointments.MyAppointmentsActivity;
 import com.scorg.dms.ui.activities.waiting_list.WaitingMainListActivity;
 import com.scorg.dms.ui.customesViews.EditTextWithDeleteButton;
@@ -50,6 +57,7 @@ import com.scorg.dms.util.CommonMethods;
 import com.scorg.dms.util.DMSConstants;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -87,6 +95,7 @@ public class MyAppointmentsFragment extends Fragment implements AppointmentListA
 
     private ArrayList<AppointmentPatientData> mAppointmentPatientData;
     private String mUserSelectedDate;
+    private DMSPatientsHelper mPatientsHelper;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
@@ -149,6 +158,12 @@ public class MyAppointmentsFragment extends Fragment implements AppointmentListA
 
     @Override
     public void onClickOfPatientDetails(AppointmentPatientData patientListObject, int clinicId, String text) {
+        ShowSearchResultRequestModel showSearchResultRequestModel = new ShowSearchResultRequestModel();
+        // TODO: hardcoed for now, As patientList And WaitingList API patientID not sync from server
+        showSearchResultRequestModel.setPatientId("07535277");
+        // showSearchResultRequestModel.setPatientId(patientListObject.getPatientId());
+
+        mPatientsHelper.doGetPatientList(showSearchResultRequestModel);
 
     }
 
@@ -175,6 +190,33 @@ public class MyAppointmentsFragment extends Fragment implements AppointmentListA
             AddToWaitingListBaseModel mAddToWaitingListBaseModel = (AddToWaitingListBaseModel) customResponse;
             if (DMSConstants.RESPONSE_OK.equalsIgnoreCase(mAddToWaitingListBaseModel.getCommon().getSuccess())) {
                 showDialogForWaitingStatus(mAddToWaitingListBaseModel.getAddToWaitingModel().getAddToWaitingResponse());
+            }
+        } else if (mOldDataTag.equalsIgnoreCase(DMSConstants.TASK_PATIENT_LIST)) {
+            ShowSearchResultResponseModel showSearchResultResponseModel = (ShowSearchResultResponseModel) customResponse;
+            SearchResultData searchResultData = showSearchResultResponseModel.getSearchResultData();
+
+            if (searchResultData != null) {
+                List<SearchResult> searchResultList = searchResultData.getSearchResult();
+                if (!searchResultList.isEmpty()) {
+                    SearchResult searchPatientInformation = searchResultList.get(0);
+                    List<PatientFileData> patientFileDataList = searchPatientInformation.getPatientFileData();
+                    if (patientFileDataList != null) {
+                        if (!patientFileDataList.isEmpty()) {
+                            PatientFileData childElement = patientFileDataList.get(0);
+                            Intent intent = new Intent(getActivity(), FileTypeViewerActivity.class);
+                            Bundle extra = new Bundle();
+                            ArrayList<PatientFileData> dataToSend = new ArrayList<PatientFileData>();
+                            dataToSend.add(childElement);
+                            extra.putSerializable(getString(R.string.compare), dataToSend);
+                            extra.putString(DMSConstants.PATIENT_ADDRESS, searchPatientInformation.getPatientAddress());
+                            extra.putString(DMSConstants.DOCTOR_NAME, searchPatientInformation.getDoctorName());
+                            extra.putString(DMSConstants.ID, childElement.getRespectiveParentPatientID());
+                            extra.putString(DMSConstants.PATIENT_LIST_PARAMS.PATIENT_NAME, "" + searchPatientInformation.getPatientName());
+                            intent.putExtra(DMSConstants.DATA, extra);
+                            startActivity(intent);
+                        }
+                    }
+                }
             }
         }
     }

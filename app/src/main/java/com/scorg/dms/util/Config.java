@@ -18,6 +18,8 @@ public class Config {
     public static final String SIGN_UP_URL = "authApi/authenticate/signUp";
     public static final String ONE_DAY_VISIT_URL = "api/patient/getPatientOneDayVisit?opdId=";
     public static final String GET_SMS_TEMPLATE = "doctor/api/appointment/getDoctorSmsTemplate?docId=";
+    public static final String LOGOUT = "api/doctors/logDoctorSignOut";
+
 
     public static final String GET_MY_PATIENTS_LIST = "doctor/api/patient/getPatientList";
     public static final String GET_PATIENT_HISTORY = "doctor/api/patient/getPatientOpdHistory";
@@ -72,7 +74,6 @@ public class Config {
     public static final String CHAT_FILE_UPLOAD = "api/upload/chatDoc";
     public static final String GET_PATIENT_CHAT_LIST = "api/chat/getChatTabUsers?user1id=";
 
-    public static final String LOGOUT = "api/doctors/logDoctorSignOut";
     public static final String ACTIVE = "api/doctors/logDoctorActivity";
     public static final String MY_RECORDS_UPLOAD = "api/upload/addOpdAttachments";
     public static final String ADD_NEW_PATIENT_WEB_URL_SUCCESS = "addpatientmobilesuccess";

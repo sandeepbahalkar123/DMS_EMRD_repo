@@ -182,6 +182,7 @@ public class PatientList extends AppCompatActivity implements HelperResponse, Vi
     private int currentPage = 0;
     private int previousTotal = 0;
     private boolean loading = true;
+    private String[] mFileTypeStringArrayExtra;
     //---------
 
     @Override
@@ -348,11 +349,19 @@ public class PatientList extends AppCompatActivity implements HelperResponse, Vi
         mClearPatientNameButton.setBackground(getResources().getDrawable(R.mipmap.user));
         //--------
         // setting adapter for spinner in header view of right drawer
-        String[] stringArrayExtra = getIntent().getStringArrayExtra(DMSConstants.PATIENT_LIST_PARAMS.FILE_TYPE);
-        if (stringArrayExtra == null) {
-            stringArrayExtra = getResources().getStringArray(R.array.select_id);
+        mFileTypeStringArrayExtra = getIntent().getStringArrayExtra(DMSConstants.PATIENT_LIST_PARAMS.FILE_TYPE);
+        if (mFileTypeStringArrayExtra == null) {
+            mFileTypeStringArrayExtra = getResources().getStringArray(R.array.select_id);
+        } else {
+            //TODO, hacked bcaz API not sending UHID, remove else block once received from API.
+            String[] stringArrayExtraTemp = new String[mFileTypeStringArrayExtra.length + 1];
+            for (int cnt = 0; cnt < mFileTypeStringArrayExtra.length; cnt++) {
+                stringArrayExtraTemp[cnt] = mFileTypeStringArrayExtra[cnt];
+            }
+            stringArrayExtraTemp[mFileTypeStringArrayExtra.length] = getString(R.string.uhid);
+            mFileTypeStringArrayExtra = stringArrayExtraTemp;
         }
-        mCustomSpinAdapter = new Custom_Spin_Adapter(this, mArrayId, stringArrayExtra);
+        mCustomSpinAdapter = new Custom_Spin_Adapter(this, mArrayId, mFileTypeStringArrayExtra);
         mSpinSelectedId.setAdapter(mCustomSpinAdapter);
         //------
         onTextChanged();
@@ -685,7 +694,12 @@ public class PatientList extends AppCompatActivity implements HelperResponse, Vi
         if (parent.getId() == R.id.spinner_selectId) {
             int indexSselectedId = parent.getSelectedItemPosition();
             mArrayId = getResources().getStringArray(R.array.select_id);
-            mSelectedId = mArrayId[indexSselectedId];
+            mSelectedId = mFileTypeStringArrayExtra[indexSselectedId];
+
+            if (!(getResources().getString(R.string.Select)).equalsIgnoreCase(mSelectedId)) {
+                mUHIDEditText.setHint(getResources().getString(R.string.enter) + mSelectedId);
+            }
+
             if (mSelectedId.equalsIgnoreCase(getResources().getString(R.string.Select))) {
                 mCustomSpinAdapter = new Custom_Spin_Adapter(mContext, mArrayId, getResources().getStringArray(R.array.admission_date));
                 mSpinnerAmissionDate.setAdapter(mCustomSpinAdapter);
@@ -694,17 +708,14 @@ public class PatientList extends AppCompatActivity implements HelperResponse, Vi
                 mSpinnerAmissionDate.setEnabled(true);
                 mCustomSpinAdapter = new Custom_Spin_Adapter(mContext, mArrayId, getResources().getStringArray(R.array.ipd_array));
                 mSpinnerAmissionDate.setAdapter(mCustomSpinAdapter);
-                mUHIDEditText.setHint(getResources().getString(R.string.error_enter_ipd));
             } else if (mSelectedId.equalsIgnoreCase(getResources().getString(R.string.opd))) {
                 mSpinnerAmissionDate.setEnabled(true);
                 mCustomSpinAdapter = new Custom_Spin_Adapter(mContext, mArrayId, getResources().getStringArray(R.array.opd_array));
                 mSpinnerAmissionDate.setAdapter(mCustomSpinAdapter);
-                mUHIDEditText.setHint(getResources().getString(R.string.error_enter_opd));
             } else if (mSelectedId.equalsIgnoreCase(getResources().getString(R.string.uhid))) {
                 mSpinnerAmissionDate.setEnabled(true);
                 mCustomSpinAdapter = new Custom_Spin_Adapter(mContext, mArrayId, getResources().getStringArray(R.array.admission_date));
                 mSpinnerAmissionDate.setAdapter(mCustomSpinAdapter);
-                mUHIDEditText.setHint(getResources().getString(R.string.error_enter_uhid));
             }
         } else if (parent.getId() == R.id.spinner_admissionDate) {
             int indexSselectedId = parent.getSelectedItemPosition();
@@ -1086,7 +1097,11 @@ public class PatientList extends AppCompatActivity implements HelperResponse, Vi
                     @Override
                     public void onDateSet(DatePickerDialog dialog, String year, String monthOfYear, String dayOfMonth) {
 
-                        String selectedTime = year + "-" + (monthOfYear + 1) + "-" + dayOfMonth;
+                        int month = Integer.parseInt(monthOfYear) + 1;
+                        if (month <= 9) {
+                            monthOfYear = "0" + month;
+                        }
+                        String selectedTime = year + "-" + monthOfYear + "-" + dayOfMonth;
                         if (getString(R.string.from).equalsIgnoreCase(callFrom)) {
 
                             mSelectedFromDate = selectedTime;

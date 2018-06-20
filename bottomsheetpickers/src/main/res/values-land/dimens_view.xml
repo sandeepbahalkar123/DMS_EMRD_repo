@@ -24,7 +24,6 @@
     <dimen name="bsp_numberpad_time_picker_input_ampm_text_size">14sp</dimen>
 
     <!-- Width of the alert dialog in landscape. -->
-    <dimen name="bsp_alert_dialog_width">300dp</dimen>
     <!-- Width of the bottom sheet dialog in landscape. -->
     <dimen name="bsp_bottom_sheet_dialog_width">300dp</dimen>
 </resources>

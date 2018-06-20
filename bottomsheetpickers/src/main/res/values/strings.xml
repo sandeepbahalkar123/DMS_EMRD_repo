@@ -18,7 +18,6 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <!-- DEPRECATED: Use ok_label instead! -->
     <!-- Label for button to confirm chosen date or time [CHAR LIMIT=30] -->
-    <string name="bsp_done_label">Done</string>
     <!--
          Content description for the hour selector in the time picker, which displays
          selectable hours of the day along the inside edge of a circle, as in an analog clock.
@@ -63,7 +62,6 @@
     <string name="bsp_time_separator" translatable="false">:</string>
 
     <!-- DO NOT TRANSLATE -->
-    <string name="bsp_radial_numbers_typeface" translatable="false">sans-serif</string>
     <!-- DO NOT TRANSLATE -->
     <string name="bsp_sans_serif" translatable="false">sans-serif</string>
 

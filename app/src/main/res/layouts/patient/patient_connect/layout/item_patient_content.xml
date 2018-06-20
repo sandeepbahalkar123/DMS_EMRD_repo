@@ -51,59 +51,64 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp40"
+            android:layout_height="match_parent"
             android:orientation="horizontal"
-            android:paddingEnd="@dimen/dp10"
-            android:paddingStart="@dimen/dp10">
+            android:padding="@dimen/dp10">
 
             <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="horizontal">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/ipdAdmissionDate"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:textSize="@dimen/sp14"
-                    tools:text="@string/admission_date" />
+                    android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/ipdAdmissionDateValue"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                    <TextView
+                        android:id="@+id/ipdAdmissionDate"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:textSize="@dimen/sp14"
+                        tools:text="@string/admission_date" />
+
+                    <TextView
+                        android:id="@+id/ipdAdmissionDateValue"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:textSize="@dimen/sp14"
+                        tools:text="@string/visit_date" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:textSize="@dimen/sp14"
-                    tools:text="@string/visit_date" />
-            </LinearLayout>
+                    android:orientation="horizontal">
 
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/ipdDischargeDate"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:textSize="@dimen/sp14"
+                        tools:text="@string/discharge_date" />
 
-                <TextView
-                    android:id="@+id/ipdDischargeDate"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:textSize="@dimen/sp14"
-                    tools:text="@string/discharge_date" />
-
-                <TextView
-                    android:id="@+id/ipdDischargeDateValue"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:textSize="@dimen/sp14"
-                    tools:text="@string/visit_date" />
+                    <TextView
+                        android:id="@+id/ipdDischargeDateValue"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:textSize="@dimen/sp14"
+                        tools:text="@string/visit_date" />
+                </LinearLayout>
             </LinearLayout>
 
             <android.support.v7.widget.AppCompatCheckBox
@@ -112,7 +117,6 @@
                 android:layout_height="match_parent"
                 android:layout_weight=".1"
                 android:button="@drawable/checkboxselecter" />
-
 
         </LinearLayout>
 
