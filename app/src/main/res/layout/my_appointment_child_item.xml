@@ -11,66 +11,9 @@
     <FrameLayout
         android:id="@+id/delete_layout"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:visibility="gone">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="@dimen/dp4"
-            android:layout_marginEnd="@dimen/dp4"
-            android:layout_marginStart="@dimen/dp4"
-            android:background="@drawable/result_white_box_copy"
-            android:orientation="vertical">
-
-            <Button
-                android:id="@+id/appointmentComplete"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:background="@color/transparent"
-                android:text="@string/capitalcompleted"
-                android:textAllCaps="false"
-                android:textColor="@color/tagColor"
-                android:textSize="@dimen/sp12" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginEnd="@dimen/dp3"
-                android:layout_marginStart="@dimen/dp3"
-                android:background="@color/tagColor" />
-
-            <Button
-                android:id="@+id/appointmentCancelled"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:background="@color/transparent"
-                android:text="@string/cancel"
-                android:textAllCaps="false"
-                android:textColor="@color/Red"
-                android:textSize="@dimen/sp12" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginEnd="@dimen/dp3"
-                android:layout_marginStart="@dimen/dp3"
-                android:background="@color/tagColor" />
-
-            <Button
-                android:id="@+id/appointmentReschedule"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:background="@color/transparent"
-                android:text="@string/Reschedule"
-                android:textAllCaps="false"
-                android:textColor="@color/tagColor"
-                android:textSize="@dimen/sp12" />
-
-
-        </LinearLayout>
     </FrameLayout>
 
     <FrameLayout
@@ -88,183 +31,191 @@
             android:background="@drawable/result_white_box"
             android:orientation="vertical">
 
-            <RelativeLayout
+            <LinearLayout
+                android:id="@+id/idAndDetailsLayout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp8">
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-                <ImageView
-                    android:id="@+id/bluelineImageView"
-                    android:layout_width="wrap_content"
+                <RelativeLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:paddingLeft="@dimen/dp2"
-                    android:paddingStart="@dimen/dp2"
-                    android:paddingTop="@dimen/dp2"
-                    app:srcCompat="@drawable/result_blue_line"
-                    tools:ignore="ContentDescription,RtlSymmetry" />
+                    android:layout_marginTop="@dimen/dp8">
 
-                <com.scorg.dms.ui.customesViews.CustomTextView
-                    android:id="@+id/patientIdTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_toEndOf="@id/bluelineImageView"
-                    android:layout_toRightOf="@id/bluelineImageView"
-                    android:paddingLeft="@dimen/dp13"
-                    android:paddingStart="@dimen/dp13"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/sp13"
-                    app:customFont="@string/roboto_medium"
-                    tools:ignore="RtlSymmetry"
-                    tools:text="ID: 23456" />
-
-                <com.scorg.dms.ui.customesViews.CustomTextView
-                    android:id="@+id/appointmentTime"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginEnd="@dimen/dp16"
-                    android:layout_marginRight="@dimen/dp16"
-                    android:background="@drawable/curve_edges_button"
-                    android:gravity="center"
-                    android:padding="@dimen/dp5"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/sp14"
-                    android:visibility="gone"
-                    app:customFont="@string/roboto_bold"
-                    tools:text="03:20 pm"
-                    tools:visibility="invisible" />
-
-                <ImageView
-                    android:id="@+id/waitingIcon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginEnd="13dp"
-                    android:layout_marginRight="13dp"
-                    android:layout_toLeftOf="@+id/appointmentTime"
-                    android:layout_toStartOf="@+id/appointmentTime"
-                    android:visibility="gone"
-                    app:srcCompat="@drawable/waiting"
-                    tools:ignore="ContentDescription"
-                    tools:visibility="visible" />
-
-                <ImageView
-                    android:id="@+id/chatImageView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginEnd="@dimen/dp16"
-                    android:layout_marginRight="@dimen/dp16"
-                    android:visibility="gone"
-                    app:srcCompat="@drawable/chat_icon"
-                    tools:ignore="ContentDescription"
-                    tools:visibility="visible" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/patientDetailsClickLinearLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/dp6">
-
-                <com.scorg.dms.ui.customesViews.CircularImageView
-                    android:id="@+id/patientImageView"
-                    android:layout_width="@dimen/dp67"
-                    android:layout_height="@dimen/dp67"
-                    android:layout_marginLeft="@dimen/dp10"
-                    android:layout_marginStart="@dimen/dp10"
-                    tools:src="@drawable/uren_pic" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/dp11"
-                    android:layout_marginStart="@dimen/dp11"
-                    android:layout_toEndOf="@id/patientImageView"
-                    android:layout_toRightOf="@id/patientImageView"
-                    android:orientation="vertical"
-                    tools:ignore="RelativeOverlap">
+                    <ImageView
+                        android:id="@+id/bluelineImageView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:paddingLeft="@dimen/dp2"
+                        android:paddingStart="@dimen/dp2"
+                        android:paddingTop="@dimen/dp2"
+                        app:srcCompat="@drawable/result_blue_line"
+                        tools:ignore="ContentDescription,RtlSymmetry" />
 
                     <com.scorg.dms.ui.customesViews.CustomTextView
-                        android:id="@+id/patientNameTextView"
+                        android:id="@+id/patientIdTextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:ellipsize="end"
-                        android:maxLines="1"
-                        android:paddingEnd="@dimen/dp6"
-                        android:paddingRight="@dimen/dp6"
+                        android:layout_centerVertical="true"
+                        android:layout_toEndOf="@id/bluelineImageView"
+                        android:layout_toRightOf="@id/bluelineImageView"
+                        android:paddingLeft="@dimen/dp13"
+                        android:paddingStart="@dimen/dp13"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/sp15"
+                        android:textSize="@dimen/sp13"
+                        app:customFont="@string/roboto_medium"
+                        tools:ignore="RtlSymmetry"
+                        tools:text="ID: 23456" />
+
+                    <com.scorg.dms.ui.customesViews.CustomTextView
+                        android:id="@+id/appointmentTime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginEnd="@dimen/dp16"
+                        android:layout_marginRight="@dimen/dp16"
+                        android:background="@drawable/curve_edges_button"
+                        android:gravity="center"
+                        android:padding="@dimen/dp5"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/sp14"
+                        android:visibility="gone"
                         app:customFont="@string/roboto_bold"
-                        tools:text="Mr. Uren Chhadva" />
+                        tools:text="03:20 pm"
+                        tools:visibility="invisible" />
+
+                    <ImageView
+                        android:id="@+id/waitingIcon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="13dp"
+                        android:layout_marginRight="13dp"
+                        android:layout_toLeftOf="@+id/appointmentTime"
+                        android:layout_toStartOf="@+id/appointmentTime"
+                        android:visibility="gone"
+                        app:srcCompat="@drawable/waiting"
+                        tools:ignore="ContentDescription"
+                        tools:visibility="visible" />
+
+                    <ImageView
+                        android:id="@+id/chatImageView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginEnd="@dimen/dp16"
+                        android:layout_marginRight="@dimen/dp16"
+                        android:visibility="gone"
+                        app:srcCompat="@drawable/chat_icon"
+                        tools:ignore="ContentDescription"
+                        tools:visibility="visible" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/patientDetailsClickLinearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dp6">
+
+                    <com.scorg.dms.ui.customesViews.CircularImageView
+                        android:id="@+id/patientImageView"
+                        android:layout_width="@dimen/dp67"
+                        android:layout_height="@dimen/dp67"
+                        android:layout_marginLeft="@dimen/dp10"
+                        android:layout_marginStart="@dimen/dp10"
+                        tools:src="@drawable/uren_pic" />
 
                     <LinearLayout
-                        android:id="@+id/patientDetailsLinearLayout"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/dp11"
+                        android:layout_marginStart="@dimen/dp11"
+                        android:layout_toEndOf="@id/patientImageView"
+                        android:layout_toRightOf="@id/patientImageView"
+                        android:orientation="vertical"
+                        tools:ignore="RelativeOverlap">
 
                         <com.scorg.dms.ui.customesViews.CustomTextView
-                            android:id="@+id/patientAgeTextView"
+                            android:id="@+id/patientNameTextView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:paddingEnd="@dimen/dp6"
+                            android:paddingRight="@dimen/dp6"
                             android:textColor="@color/black"
-                            android:textSize="@dimen/sp12"
-                            app:customFont="@string/roboto_medium"
-                            tools:text="36 yrs - " />
+                            android:textSize="@dimen/sp15"
+                            app:customFont="@string/roboto_bold"
+                            tools:text="Mr. Uren Chhadva" />
+
+                        <LinearLayout
+                            android:id="@+id/patientDetailsLinearLayout"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <com.scorg.dms.ui.customesViews.CustomTextView
+                                android:id="@+id/patientAgeTextView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/sp12"
+                                app:customFont="@string/roboto_medium"
+                                tools:text="36 yrs - " />
+
+                            <com.scorg.dms.ui.customesViews.CustomTextView
+                                android:id="@+id/patientGenderTextView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/rating_color"
+                                android:textSize="@dimen/sp12"
+                                app:customFont="@string/roboto_medium"
+                                tools:text="Male" />
+                        </LinearLayout>
 
                         <com.scorg.dms.ui.customesViews.CustomTextView
-                            android:id="@+id/patientGenderTextView"
+                            android:id="@+id/opdTypeTextView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="@color/rating_color"
                             android:textSize="@dimen/sp12"
                             app:customFont="@string/roboto_medium"
-                            tools:text="Male" />
+                            tools:text="OPD Completed" />
+
+                        <com.scorg.dms.ui.customesViews.CustomTextView
+                            android:id="@+id/patientClinicAddress"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/sp12"
+                            android:visibility="gone"
+                            app:customFont="@string/roboto_medium"
+                            tools:text="OPD Completed" />
                     </LinearLayout>
 
-                    <com.scorg.dms.ui.customesViews.CustomTextView
-                        android:id="@+id/opdTypeTextView"
+                    <CheckBox
+                        android:id="@+id/checkbox"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/rating_color"
-                        android:textSize="@dimen/sp12"
-                        app:customFont="@string/roboto_medium"
-                        tools:text="OPD Completed" />
-
-                    <com.scorg.dms.ui.customesViews.CustomTextView
-                        android:id="@+id/patientClinicAddress"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/sp12"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="@dimen/dp16"
+                        android:layout_marginRight="@dimen/dp16"
+                        android:button="@drawable/checkboxselecter"
+                        android:padding="@dimen/dp4"
                         android:visibility="gone"
-                        app:customFont="@string/roboto_medium"
-                        tools:text="OPD Completed" />
-                </LinearLayout>
-
-                <CheckBox
-                    android:id="@+id/checkbox"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginEnd="@dimen/dp16"
-                    android:layout_marginRight="@dimen/dp16"
-                    android:button="@drawable/checkboxselecter"
-                    android:padding="@dimen/dp4"
-                    android:visibility="gone"
-                    tools:visibility="visible" />
+                        tools:visibility="visible" />
 
 
-            </RelativeLayout>
+                </RelativeLayout>
+            </LinearLayout>
+
 
             <View
                 android:layout_width="match_parent"

@@ -33,6 +33,7 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.amulyakhare.textdrawable.TextDrawable;
@@ -41,6 +42,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.scorg.dms.R;
 import com.scorg.dms.model.my_appointments.AppointmentPatientData;
+import com.scorg.dms.model.waiting_list.WaitingPatientData;
 import com.scorg.dms.ui.customesViews.CircularImageView;
 import com.scorg.dms.ui.customesViews.CustomTextView;
 import com.scorg.dms.ui.customesViews.swipeable_recyclerview.SwipeRevealLayout;
@@ -70,25 +72,19 @@ import static com.scorg.dms.util.DMSConstants.APPOINTMENT_STATUS.OTHER;
 public class AppointmentListAdapter
         extends RecyclerView.Adapter<AppointmentListAdapter.MyViewHolder> implements Filterable {
     private static final String TAG = "AppointmentListAdapter";
+    private OnItemClickListener onItemClickListener;
     private Context mContext;
     private ArrayList<AppointmentPatientData> mAppointmentDataList;
     private ArrayList<AppointmentPatientData> mAppointmentDataListOriginal;
 
-    private EventListener mEventListener;
 
-    public AppointmentListAdapter(Context context, ArrayList<AppointmentPatientData> waitingDataList) {
+    public AppointmentListAdapter(Context context, ArrayList<AppointmentPatientData> waitingDataList, OnItemClickListener onItemClickListener) {
         this.mContext = context;
         this.mAppointmentDataListOriginal = new ArrayList<>();
         this.mAppointmentDataListOriginal.addAll(waitingDataList);
         this.mAppointmentDataList = new ArrayList<>();
         this.mAppointmentDataList.addAll(waitingDataList);
-    }
-
-    public interface EventListener {
-        void onPhoneClick(String phoneNumber);
-
-        void onItemViewClicked(View v, boolean pinned);
-
+        this.onItemClickListener = onItemClickListener;
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
@@ -109,18 +105,18 @@ public class AppointmentListAdapter
         private CustomTextView patientPhoneNumber;
         private CustomTextView outstandingAmountTextView;
         private CustomTextView payableAmountTextView;
+        private LinearLayout idAndDetailsLayout;
         private Button appointmentReschedule;
         private Button appointmentCancel;
         private Button appointmentComplete;
 
         MyViewHolder(View convertView) {
             super(convertView);
-            appointmentReschedule = (Button) convertView.findViewById(R.id.appointmentReschedule);
+            idAndDetailsLayout = (LinearLayout) convertView.findViewById(R.id.idAndDetailsLayout);
             front_layout = (FrameLayout) convertView.findViewById(R.id.front_layout);
             delete_layout = (FrameLayout) convertView.findViewById(R.id.delete_layout);
             waitingIcon = (ImageView) convertView.findViewById(R.id.waitingIcon);
-            appointmentCancel = (Button) convertView.findViewById(R.id.appointmentCancelled);
-            appointmentComplete = (Button) convertView.findViewById(R.id.appointmentComplete);
+
             swipe_layout = (SwipeRevealLayout) convertView.findViewById(R.id.swipe_layout);
             checkbox = (CheckBox) convertView.findViewById(R.id.checkbox);
             patientDetailsClickLinearLayout = (RelativeLayout) convertView.findViewById(R.id.patientDetailsClickLinearLayout);
@@ -284,6 +280,30 @@ public class AppointmentListAdapter
                 layoutParams.height = holder.front_layout.getMeasuredHeight();
                 layoutParams.width = holder.front_layout.getMeasuredWidth() / 2;
                 holder.delete_layout.setLayoutParams(layoutParams);
+
+            }
+        });
+
+
+        holder.idAndDetailsLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onItemClickListener.onClickOfPatientDetails(appointmentPatientDataObject);
+            }
+        });
+        holder.patientPhoneNumber.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String contactNo = appointmentPatientDataObject.getContactNo();
+                if (contactNo != null) {
+                    try {
+                        long i = Long.parseLong(contactNo);
+                        onItemClickListener.onPhoneNoClick(i);
+
+                    } catch (NumberFormatException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
         });
 
@@ -309,14 +329,6 @@ public class AppointmentListAdapter
     @Override
     public int getItemCount() {
         return mAppointmentDataList.size();
-    }
-
-    public EventListener getEventListener() {
-        return mEventListener;
-    }
-
-    public void setEventListener(EventListener eventListener) {
-        mEventListener = eventListener;
     }
 
     // Sorting clicniclist by patientName , patientId , patientPhoneNo
@@ -366,8 +378,8 @@ public class AppointmentListAdapter
 
         void onRecordFound(boolean isListEmpty);
 
-        void onClickOfPatientDetails(AppointmentPatientData patientListObject, int clinicId, String text);
+        void onClickOfPatientDetails(AppointmentPatientData patientListObject);
 
-        void onPhoneNoClick(String patientPhone);
+        void onPhoneNoClick(long patientPhone);
     }
 }

@@ -200,7 +200,7 @@ public class ProfileActivity extends BottomMenuActivity implements BottomMenuAda
 
         doctorName.setText(doctorNameToDisplay);
 
-        String doctorDetails = DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.DOC_INFO, this);
+        /*String doctorDetails = DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.DOC_INFO, this);
         final DocDetail docDetail = new Gson().fromJson(doctorDetails, DocDetail.class);
         if(docDetail.getDocInfo().isEmpty()){
             aboutLayout.setVisibility(View.INVISIBLE);
@@ -237,7 +237,7 @@ public class ProfileActivity extends BottomMenuActivity implements BottomMenuAda
             docPracticesLocationCount.setText(contentExp);
         } else {
             allClinicPracticeLocationMainLayout.setVisibility(View.GONE);
-        }
+        }*/
 
         String mDoctorName = DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.USER_NAME, mContext);
         if (mDoctorName.contains("Dr. ")) {
@@ -262,7 +262,7 @@ public class ProfileActivity extends BottomMenuActivity implements BottomMenuAda
                 .apply(requestOptions).thumbnail(0.5f)
                 .into(profileImage);
 
-        if (mArrayListDoctorLocationModel.size() > 0) {
+       /* if (mArrayListDoctorLocationModel.size() > 0) {
             ArrayList<String> mClinicname = new ArrayList<>();
             for (int i = 0; i < mArrayListDoctorLocationModel.size(); i++) {
                 mClinicname.add(mArrayListDoctorLocationModel.get(i).getClinicName() + ", " + mArrayListDoctorLocationModel.get(i).getArea() + ", " + mArrayListDoctorLocationModel.get(i).getCity());
@@ -307,7 +307,7 @@ public class ProfileActivity extends BottomMenuActivity implements BottomMenuAda
             }
         } else {
             clinicNameSpinnerParentLayout.setVisibility(View.GONE);
-        }
+        }*/
 
 
     }

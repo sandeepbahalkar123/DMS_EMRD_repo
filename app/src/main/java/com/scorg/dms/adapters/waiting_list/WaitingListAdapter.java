@@ -60,13 +60,6 @@ public class WaitingListAdapter
         this.onItemClickListener = onItemClickListener;
     }
 
-    public interface EventListener {
-        void onPhoneClick(String phoneNumber);
-
-        void onItemViewClicked(View v, boolean pinned);
-
-    }
-
     public static class MyViewHolder extends AbstractDraggableSwipeableItemViewHolder {
         FrameLayout mContainer;
         ImageView mDragHandle;
@@ -74,7 +67,7 @@ public class WaitingListAdapter
         LinearLayout mBehindViews;
         ImageButton deleteButton;
 
-        LinearLayout mCardView;
+        LinearLayout idAndDetailsLayout;
         ImageView mBluelineImageView;
         TextView mPatientIdTextView;
         TextView mAppointmentTime;
@@ -100,7 +93,7 @@ public class WaitingListAdapter
             mBehindViews = v.findViewById(R.id.behind_views);
             deleteButton = v.findViewById(R.id.deleteButton);
 
-            mCardView = v.findViewById(R.id.cardView);
+            idAndDetailsLayout = v.findViewById(R.id.idAndDetailsLayout);
             mBluelineImageView = v.findViewById(R.id.bluelineImageView);
             mPatientIdTextView = v.findViewById(R.id.patientIdTextView);
             mAppointmentTime = v.findViewById(R.id.appointmentTime);
@@ -196,7 +189,7 @@ public class WaitingListAdapter
             }
         });
 
-        holder.mCardView.setOnClickListener(new View.OnClickListener() {
+        holder.idAndDetailsLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 WaitingPatientData item = mWaitingDataList.get(position);
@@ -204,8 +197,21 @@ public class WaitingListAdapter
                 onItemClickListener.onItemClick(item);
             }
         });
-
-
+        holder.mPatientPhoneNumber.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                WaitingPatientData item = mWaitingDataList.get(position);
+                String contactNo = item.getContactNo();
+                if (contactNo != null) {
+                    try {
+                        long i = Long.parseLong(contactNo);
+                        onItemClickListener.onPhoneNoClick( i);
+                    } catch (NumberFormatException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
     }
 
     @Override
@@ -216,5 +222,7 @@ public class WaitingListAdapter
 
     public interface OnItemClickListener {
         public void onItemClick(WaitingPatientData clickItem);
+
+        public void onPhoneNoClick(long phoneNumber);
     }
 }

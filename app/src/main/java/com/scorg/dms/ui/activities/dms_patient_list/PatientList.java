@@ -809,24 +809,30 @@ public class PatientList extends AppCompatActivity implements HelperResponse, Vi
                         if (parentAnnotationList.size() > 0) {
 
                             for (AnnotationList tempParentObject : parentAnnotationList) {
-                                //-------
-                                List<DocTypeList> childDocTypeTemp = new ArrayList<DocTypeList>();
-                                List<DocTypeList> childDocTypeList = tempParentObject.getDocTypeList();
-                                for (DocTypeList tempDocTypeObject : childDocTypeList) {
-                                    if (tempDocTypeObject.getTypeName().toLowerCase().startsWith(enteredString.toLowerCase())) {
-                                        childDocTypeTemp.add(tempDocTypeObject);
-                                    }
-                                }
 
-                                if (childDocTypeTemp.size() > 0) {
-                                    AnnotationList annotationListTemp = new AnnotationList();
-//                                annotationListTemp.setSelected(tempParentObject.getSelected());
-                                    annotationListTemp.setCategoryId(tempParentObject.getCategoryId());
-                                    annotationListTemp.setCategoryName(tempParentObject.getCategoryName());
-                                    annotationListTemp.setDocTypeList(childDocTypeTemp);
-                                    annotationTempList.add(annotationListTemp);
+                                //Before filtered only on DocTypeList, AnnotationList filtered added now 20-jun-2018
+                                if (tempParentObject.getCategoryName().toLowerCase().startsWith(enteredString.toLowerCase())) {
+                                    annotationTempList.add(tempParentObject);
+                                } else {
+                                    //-------
+                                    List<DocTypeList> childDocTypeTemp = new ArrayList<DocTypeList>();
+                                    List<DocTypeList> childDocTypeList = tempParentObject.getDocTypeList();
+                                    for (DocTypeList tempDocTypeObject : childDocTypeList) {
+                                        if (tempDocTypeObject.getTypeName().toLowerCase().startsWith(enteredString.toLowerCase())) {
+                                            childDocTypeTemp.add(tempDocTypeObject);
+                                        }
+                                    }
+
+                                    if (childDocTypeTemp.size() > 0) {
+                                        AnnotationList annotationListTemp = new AnnotationList();
+                                        // annotationListTemp.setSelected(tempParentObject.getSelected());
+                                        annotationListTemp.setCategoryId(tempParentObject.getCategoryId());
+                                        annotationListTemp.setCategoryName(tempParentObject.getCategoryName());
+                                        annotationListTemp.setDocTypeList(childDocTypeTemp);
+                                        annotationTempList.add(annotationListTemp);
+                                    }
+                                    //------
                                 }
-                                //------
                             }
                         }
                     }

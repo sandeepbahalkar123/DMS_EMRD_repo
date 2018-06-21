@@ -89,7 +89,7 @@ public class DMSPatientsHelper implements ConnectionListener {
 
                 if (String.valueOf(mOldDataTag).equalsIgnoreCase("" + DMSConstants.TASK_GET_ARCHIVED_LIST)) {
                     //-- THIS IS DONE FOR MERGING OF TREE.
-                    FileTreeResponseModel fileTreeResponseModel = (FileTreeResponseModel) customResponse;
+                   /* FileTreeResponseModel fileTreeResponseModel = (FileTreeResponseModel) customResponse;
                     FileTreeResponseData fileTreeResponseData = fileTreeResponseModel.getFileTreeResponseData();
 
                     String tempList[] = {"0", "1"};
@@ -107,7 +107,7 @@ public class DMSPatientsHelper implements ConnectionListener {
                                 lstDocType.setMergedFileCompareCustomID(new String[]{tempList[k]});
                             }
                         }
-                    }
+                    }*/
                     mHelperResponseManager.onSuccess(mOldDataTag, customResponse);
 
                 } else {

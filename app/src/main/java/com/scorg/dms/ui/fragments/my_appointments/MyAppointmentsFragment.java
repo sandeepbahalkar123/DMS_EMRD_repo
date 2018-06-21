@@ -43,10 +43,6 @@ import com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemode
 import com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemodel.ShowSearchResultResponseModel;
 import com.scorg.dms.model.my_appointments.AppointmentPatientData;
 import com.scorg.dms.model.my_appointments.MyAppointmentsDataModel;
-import com.scorg.dms.model.my_appointments.PatientList;
-import com.scorg.dms.model.my_appointments.request_cancel_or_complete_appointment.RequestAppointmentCancelModel;
-import com.scorg.dms.model.waiting_list.new_request_add_to_waiting_list.AddToList;
-import com.scorg.dms.model.waiting_list.new_request_add_to_waiting_list.RequestToAddWaitingList;
 import com.scorg.dms.model.waiting_list.response_add_to_waiting_list.AddToWaitingListBaseModel;
 import com.scorg.dms.model.waiting_list.response_add_to_waiting_list.AddToWaitingResponse;
 import com.scorg.dms.ui.activities.dms_patient_list.FileTypeViewerActivity;
@@ -142,7 +138,7 @@ public class MyAppointmentsFragment extends Fragment implements AppointmentListA
     }
 
     @Override
-    public void onPhoneNoClick(String patientPhone) {
+    public void onPhoneNoClick(long patientPhone) {
         MyAppointmentsActivity activity = (MyAppointmentsActivity) getActivity();
         activity.callPatient(patientPhone);
     }
@@ -157,7 +153,7 @@ public class MyAppointmentsFragment extends Fragment implements AppointmentListA
     }
 
     @Override
-    public void onClickOfPatientDetails(AppointmentPatientData patientListObject, int clinicId, String text) {
+    public void onClickOfPatientDetails(AppointmentPatientData patientListObject) {
         ShowSearchResultRequestModel showSearchResultRequestModel = new ShowSearchResultRequestModel();
         // TODO: hardcoed for now, As patientList And WaitingList API patientID not sync from server
         showSearchResultRequestModel.setPatientId("07535277");
@@ -283,7 +279,7 @@ public class MyAppointmentsFragment extends Fragment implements AppointmentListA
             LinearLayoutManager linearlayoutManager = new LinearLayoutManager(this.getContext(), LinearLayoutManager.VERTICAL, false);
             recyclerView.setLayoutManager(linearlayoutManager);
             //list is sorted for Booked and Confirmed Status appointments
-            mAppointmentListAdapter = new AppointmentListAdapter(getActivity(), myAppointmentsDataModel.getAppointmentPatientData());
+            mAppointmentListAdapter = new AppointmentListAdapter(getActivity(), myAppointmentsDataModel.getAppointmentPatientData(), this);
             recyclerView.setAdapter(mAppointmentListAdapter);
 
         } else {

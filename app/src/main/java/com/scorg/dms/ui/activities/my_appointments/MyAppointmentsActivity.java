@@ -74,7 +74,7 @@ public class MyAppointmentsActivity extends AppCompatActivity implements HelperR
     private String month;
     private String mYear;
     private MyAppointmentsBaseModel myAppointmentsBaseMainModel;
-    private String phoneNo;
+    private long mClickedPhoneNumber;
     private String mDateSelectedByUser = "";
     public static final int CLOSE_APPOINTMENT_ACTIVITY_AFTER_BOOK_APPOINTMENT = 666;
 
@@ -249,22 +249,17 @@ public class MyAppointmentsActivity extends AppCompatActivity implements HelperR
 
     }
 
-    public void callPatient(String patientPhone) {
-        phoneNo = patientPhone;
+    public void callPatient(long patientPhone) {
+        mClickedPhoneNumber = patientPhone;
         MyAppointmentsActivityPermissionsDispatcher.doCallSupportWithCheck(this);
     }
 
     @NeedsPermission(Manifest.permission.CALL_PHONE)
     void doCallSupport() {
-        callSupport(phoneNo);
-    }
-
-    private void callSupport(String phoneNo) {
         Intent callIntent = new Intent(Intent.ACTION_CALL);
-        callIntent.setData(Uri.parse("tel:" + phoneNo));
+        callIntent.setData(Uri.parse("tel:" + mClickedPhoneNumber));
         startActivity(callIntent);
     }
-
 
     public void onRequestPermssionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);

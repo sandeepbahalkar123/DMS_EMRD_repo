@@ -74,6 +74,7 @@ public class ViewAllPatientListFragment extends Fragment implements WaitingListA
     private WaitingMainListActivity mParentActivity;
     private WaitingListAdapter mWaitingListAdapter;
     private DMSPatientsHelper mPatientsHelper;
+    private long mClickedPhoneNumber;
 
     public ViewAllPatientListFragment() {
     }
@@ -120,18 +121,6 @@ public class ViewAllPatientListFragment extends Fragment implements WaitingListA
         ViewAllPatientListFragment fragment = new ViewAllPatientListFragment();
         fragment.setArguments(bundle);
         return fragment;
-    }
-
-
-    @NeedsPermission(Manifest.permission.CALL_PHONE)
-    void doCallSupport() {
-        callSupport(phoneNo);
-    }
-
-    private void callSupport(String phoneNo) {
-        Intent callIntent = new Intent(Intent.ACTION_CALL);
-        callIntent.setData(Uri.parse("tel:" + phoneNo));
-        startActivity(callIntent);
     }
 
 
@@ -190,6 +179,21 @@ public class ViewAllPatientListFragment extends Fragment implements WaitingListA
         mPatientsHelper.doGetPatientList(showSearchResultRequestModel);
 
     }
+
+
+    @Override
+    public void onPhoneNoClick(long phoneNumber) {
+        mClickedPhoneNumber =phoneNumber;
+        ViewAllPatientListFragmentPermissionsDispatcher.doCallSupportWithCheck(this);
+    }
+
+    @NeedsPermission(Manifest.permission.CALL_PHONE)
+    void doCallSupport() {
+        Intent callIntent = new Intent(Intent.ACTION_CALL);
+        callIntent.setData(Uri.parse("tel:" + mClickedPhoneNumber));
+        startActivity(callIntent);
+    }
+
 
     @Override
     public void onSuccess(String mOldDataTag, CustomResponse customResponse) {

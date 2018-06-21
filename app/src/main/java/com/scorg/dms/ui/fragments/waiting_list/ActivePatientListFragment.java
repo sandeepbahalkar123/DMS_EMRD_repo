@@ -92,10 +92,10 @@ public class ActivePatientListFragment extends Fragment implements WaitingListAd
     private Unbinder unbinder;
     private ArrayList<WaitingClinicList> mWaitingClinicLists = new ArrayList<>();
     private ArrayList<WaitingPatientData> waitingPatientTempList;
-    private String phoneNo;
-    private WaitingMainListActivity mParentActivity;
+     private WaitingMainListActivity mParentActivity;
     private WaitingListAdapter mWaitingListAdapter;
     private DMSPatientsHelper mPatientsHelper;
+    private long mClickedPhoneNumber;
 
     public ActivePatientListFragment() {
     }
@@ -146,19 +146,6 @@ public class ActivePatientListFragment extends Fragment implements WaitingListAd
         return fragment;
     }
 
-
-    @NeedsPermission(Manifest.permission.CALL_PHONE)
-    void doCallSupport() {
-        callSupport(phoneNo);
-    }
-
-    private void callSupport(String phoneNo) {
-        Intent callIntent = new Intent(Intent.ACTION_CALL);
-        callIntent.setData(Uri.parse("tel:" + phoneNo));
-        startActivity(callIntent);
-    }
-
-
     public void onRequestPermssionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         ActivePatientListFragmentPermissionsDispatcher.onRequestPermissionsResult(this, requestCode, grantResults);
@@ -195,7 +182,7 @@ public class ActivePatientListFragment extends Fragment implements WaitingListAd
         } else {
             mRecyclerView.setVisibility(View.VISIBLE);
             noRecords.setVisibility(View.GONE);
-            mWaitingListAdapter = new WaitingListAdapter(this.getContext(), waitingPatientTempList,this);
+            mWaitingListAdapter = new WaitingListAdapter(this.getContext(), waitingPatientTempList, this);
             LinearLayoutManager linearlayoutManager = new LinearLayoutManager(this.getContext(), LinearLayoutManager.VERTICAL, false);
             mRecyclerView.setLayoutManager(linearlayoutManager);
             mRecyclerView.setAdapter(mWaitingListAdapter);
@@ -206,12 +193,26 @@ public class ActivePatientListFragment extends Fragment implements WaitingListAd
     public void onItemClick(WaitingPatientData clickItem) {
 
         ShowSearchResultRequestModel showSearchResultRequestModel = new ShowSearchResultRequestModel();
-       // TODO: hardcoed for now, As patientList And WaitingList API patientID not sync from server
+        // TODO: hardcoed for now, As patientList And WaitingList API patientID not sync from server
         showSearchResultRequestModel.setPatientId("07535277");
         //showSearchResultRequestModel.setPatientId(clickItem.getPatientId());
 
         mPatientsHelper.doGetPatientList(showSearchResultRequestModel);
 
+    }
+
+
+    @Override
+    public void onPhoneNoClick(long phoneNumber) {
+        mClickedPhoneNumber = phoneNumber;
+        ActivePatientListFragmentPermissionsDispatcher.doCallSupportWithCheck(this);
+    }
+
+    @NeedsPermission(Manifest.permission.CALL_PHONE)
+    void doCallSupport() {
+        Intent callIntent = new Intent(Intent.ACTION_CALL);
+        callIntent.setData(Uri.parse("tel:" + mClickedPhoneNumber));
+        startActivity(callIntent);
     }
 
     @Override

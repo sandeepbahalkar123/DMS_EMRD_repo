@@ -5,9 +5,10 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Canvas;
- import android.net.Uri;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -61,6 +62,7 @@ import com.shockwave.pdfium.*;
 import com.unnamed.b.atv.model.TreeNode;
 import com.unnamed.b.atv.view.AndroidTreeView;
 
+import java.io.File;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.ArrayList;
@@ -179,7 +181,7 @@ public class FileTypeViewerActivity extends AppCompatActivity implements View.On
     String patientAddress;
     //---------
     private int mClickedTreeStructureLevel;
-    private String mMergedRequestCalled = DMSConstants.BLANK;
+    private String mMergedRequestCalled = "0";
     private FileTreeResponseData mFileTreeResponseData;
 
     private RelativeLayout mFirstFileTypeProgressDialogLayout;
@@ -241,17 +243,23 @@ public class FileTypeViewerActivity extends AppCompatActivity implements View.On
 
         doBindHeaderViews();
         //-------Listeners-----
+
         mCompareSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 isCompareChecked = isChecked;
             }
         });
+        mCompareSwitch.setChecked(true);
+
 
         mOpenRightDrawer.setOnClickListener(this);
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                final File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/PDFViewCache/");
+                file.delete();
                 finish();
             }
         });
@@ -282,9 +290,14 @@ public class FileTypeViewerActivity extends AppCompatActivity implements View.On
             } else if (mDrawer.isDrawerOpen(GravityCompat.START)) {
                 mDrawer.closeDrawer(GravityCompat.START);
             } else super.onBackPressed();
-        } else
+        } else {
+            final File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/PDFViewCache/");
+            file.delete();
             super.onBackPressed();
+        }
+
     }
+
 
     private void doBindHeaderViews() {
 
@@ -294,7 +307,9 @@ public class FileTypeViewerActivity extends AppCompatActivity implements View.On
         mPatientAddress.setText(patientAddress);
 
         //----------
+
         PatientFileData patientFileData = mSelectedFileTypeDataToCompare.get(0);
+
         mFileOneRefId.setText(String.valueOf(patientFileData.getReferenceId()));
         mAdmissionDateOne.setText(String.valueOf(patientFileData.getAdmissionDate()));
         mDischargeDateOne.setText(String.valueOf(patientFileData.getDischargeDate()));
@@ -308,6 +323,7 @@ public class FileTypeViewerActivity extends AppCompatActivity implements View.On
 
         if (mSelectedFileTypeDataToCompare.size() == 2) {
 
+            mMergedRequestCalled = DMSConstants.BLANK;
             mSecondFileTypePdfViewLayout.setVisibility(View.VISIBLE);
             mRowScrollBoth.setVisibility(View.VISIBLE);
             mFileTwoDrawerLayout.setVisibility(View.VISIBLE);
@@ -339,6 +355,13 @@ public class FileTypeViewerActivity extends AppCompatActivity implements View.On
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        final File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/PDFViewCache/");
+        file.delete();
+        super.onDestroy();
+    }
+
     // To create JSON and get archived list of data.
     private void getLoadArchivedList() {
         //---------------
@@ -368,7 +391,7 @@ public class FileTypeViewerActivity extends AppCompatActivity implements View.On
 
             if (mFileTypeOne.getText().toString().equalsIgnoreCase(mFileTypeTwo.getText().toString())) {
                 isComparingBetweenSameFileType = true;
-             //   doGetMergeArchiveList(mFileTreeResponseData, mFileTypeOne.getText().toString());
+                //   doGetMergeArchiveList(mFileTreeResponseData, mFileTypeOne.getText().toString());
             }
             createAnnotationTreeStructure(mFileTreeResponseData, true);
             //------
@@ -387,15 +410,10 @@ public class FileTypeViewerActivity extends AppCompatActivity implements View.On
                     mFirstFileTypeProgressDialogLayout.setVisibility(View.GONE);
                     fileOneData = fileData;
                     askWriteExtenralStoragePermission(REQUEST_CODE_WRITE_FILE_ONE_PERMISSIONS);
-
-
                 } else if (mMergedRequestCalled.equalsIgnoreCase(("1")) || mOldDataTag.endsWith("1")) {
                     mSecondFileTypeProgressDialogLayout.setVisibility(View.GONE);
                     fileTwoData = fileData;
                     askWriteExtenralStoragePermission(REQUEST_CODE_WRITE_FILE_TWO_PERMISSIONS);
-
-                    loadPDFFromServer(fileData, mSecondPdfView, fileTwoData, "file2", "pdf");
-
                 }
             } else
                 Toast.makeText(mContext, "Document not available", Toast.LENGTH_SHORT).show();
@@ -655,7 +673,6 @@ public class FileTypeViewerActivity extends AppCompatActivity implements View.On
 
             //----- THIS IS TO FIND OUT, WHICH level of treeView clicked
             mClickedTreeStructureLevel = value1.level;
-            mMergedRequestCalled = DMSConstants.BLANK;
 
             //----- Get Object of clicked Element and create map to send  : Start------
             if (value1.objectData instanceof LstDocType) {
@@ -663,44 +680,43 @@ public class FileTypeViewerActivity extends AppCompatActivity implements View.On
                 mPreviousClickedTreeElement.put(mClickedTreeStructureLevel, clickedLstDocTypeElement.getTypeName());
 
                 //--------
-                if (clickedLstDocTypeElement.getMergedFileCompareCustomID().length != 2) {
-                    mMergedRequestCalled = clickedLstDocTypeElement.getMergedFileCompareCustomID()[0];
-                }
                 filePathToFetch = clickedLstDocTypeElement.getEncryptedPDFFilePath();
                 //--------
+
+                switch (mMergedRequestCalled) {
+
+                    case "0":
+
+                        //-- To Grayed out alternate views based on selection :START----
+                        if (isComparingBetweenSameFileType) {
+                            mSecondPdfView.setVisibility(View.GONE);
+                            mSecondFileTypePdfViewLayout.setBackgroundColor(ContextCompat.getColor(this, R.color.Gray));
+                        }
+                        //-- To Grayed out alternate views based on selection : END ----
+
+                        doCallPDFDataService(filePathToFetch, 1, mFirstPdfView, mFirstFileTypeProgressDialogLayout, mFirstFileTypePdfViewLayout, mMergedRequestCalled);
+                        break;
+                    case "1":
+
+                        //-- To Grayed out alternate views based on selection :START----
+                        if (isComparingBetweenSameFileType) {
+                            mFirstPdfView.setVisibility(View.GONE);
+                            mFirstFileTypePdfViewLayout.setBackgroundColor(ContextCompat.getColor(this, R.color.Gray));
+                        }
+                        //-- To Grayed out alternate views based on selection : END ----
+
+                        doCallPDFDataService(filePathToFetch, 1, mSecondPdfView, mSecondFileTypeProgressDialogLayout, mSecondFileTypePdfViewLayout, mMergedRequestCalled);
+                        break;
+                    default:
+                        if (filePathToFetch != null) {
+                            doCallPDFDataService(filePathToFetch, 1, mFirstPdfView, mFirstFileTypeProgressDialogLayout, mFirstFileTypePdfViewLayout, "0");
+                            doCallPDFDataService(filePathToFetch, 1, mSecondPdfView, mSecondFileTypeProgressDialogLayout, mSecondFileTypePdfViewLayout, "1");
+                        }
+                }
             }
             //----- Get Object of clicked Element and create map to send  : End------
 
-            switch (mMergedRequestCalled) {
 
-                case "0":
-
-                    //-- To Grayed out alternate views based on selection :START----
-                    if (isComparingBetweenSameFileType) {
-                        mSecondPdfView.setVisibility(View.GONE);
-                        mSecondFileTypePdfViewLayout.setBackgroundColor(ContextCompat.getColor(this, R.color.Gray));
-                    }
-                    //-- To Grayed out alternate views based on selection : END ----
-
-                    doCallPDFDataService(filePathToFetch, 1, mFirstPdfView, mFirstFileTypeProgressDialogLayout, mFirstFileTypePdfViewLayout, mMergedRequestCalled);
-                    break;
-                case "1":
-
-                    //-- To Grayed out alternate views based on selection :START----
-                    if (isComparingBetweenSameFileType) {
-                        mFirstPdfView.setVisibility(View.GONE);
-                        mFirstFileTypePdfViewLayout.setBackgroundColor(ContextCompat.getColor(this, R.color.Gray));
-                    }
-                    //-- To Grayed out alternate views based on selection : END ----
-
-                    doCallPDFDataService(filePathToFetch, 1, mSecondPdfView, mSecondFileTypeProgressDialogLayout, mSecondFileTypePdfViewLayout, mMergedRequestCalled);
-                    break;
-                default:
-                    if (filePathToFetch != null) {
-                        doCallPDFDataService(filePathToFetch, 1, mFirstPdfView, mFirstFileTypeProgressDialogLayout, mFirstFileTypePdfViewLayout, "1");
-                        doCallPDFDataService(filePathToFetch, 1, mSecondPdfView, mSecondFileTypeProgressDialogLayout, mSecondFileTypePdfViewLayout, "2");
-                    }
-            }
         }
     }
 
