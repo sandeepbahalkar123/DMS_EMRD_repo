@@ -141,7 +141,7 @@ public class DMSPatientsHelper implements ConnectionListener {
 
 
     public void doGetPatientNameList(String enteredPatientName) {
-        ConnectionFactory mConnectionFactory = new ConnectionFactory(mContext, this, null, true, DMSConstants.TASK_GET_PATIENT_NAME_LIST, Request.Method.POST, false);
+        ConnectionFactory mConnectionFactory = new ConnectionFactory(mContext, this, null, false, DMSConstants.TASK_GET_PATIENT_NAME_LIST, Request.Method.POST, false);
 
         SearchPatientNameText s = new SearchPatientNameText();
         s.setSearchPatientName(enteredPatientName);

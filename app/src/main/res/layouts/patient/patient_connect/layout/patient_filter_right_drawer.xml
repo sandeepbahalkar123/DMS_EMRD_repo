@@ -141,7 +141,6 @@
 
                     <EditText
                         android:id="@+id/et_fromdate"
-
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
@@ -171,7 +170,6 @@
 
                     <EditText
                         android:id="@+id/et_todate"
-
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
@@ -185,6 +183,7 @@
                         android:textColor="@color/black"
                         android:textCursorDrawable="@drawable/cursor_color"
                         android:textSize="@dimen/sp13" />
+
                 </android.support.design.widget.TextInputLayout>
 
 
@@ -251,7 +250,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@null"
-
                         android:drawableEnd="@mipmap/annotation"
                         android:drawableRight="@mipmap/annotation"
                         android:ellipsize="end"
