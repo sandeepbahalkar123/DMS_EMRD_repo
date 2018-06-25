@@ -40,7 +40,7 @@ import android.widget.TextView;
 import com.philliphsu.bottomsheetpickers.date.DatePickerDialog;
 import com.scorg.dms.R;
 import com.scorg.dms.adapters.dms_adapters.Custom_Spin_Adapter;
-import com.scorg.dms.adapters.dms_adapters.PatientExpandableListAdapter;
+import com.scorg.dms.adapters.dms_adapters.PatientRecycleViewListAdapter;
 import com.scorg.dms.adapters.dms_adapters.ShowPatientNameAdapter;
 import com.scorg.dms.adapters.dms_adapters.TagAdapter;
 import com.scorg.dms.helpers.patient_list.DMSPatientsHelper;
@@ -57,6 +57,7 @@ import com.scorg.dms.model.dms_models.responsemodel.patientnamelistresponsemodel
 import com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemodel.PatientFileData;
 import com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemodel.SearchResult;
 import com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemodel.ShowSearchResultResponseModel;
+import com.scorg.dms.ui.customesViews.drag_drop_recyclerview_helper.EndlessRecyclerViewScrollListener;
 import com.scorg.dms.ui.customesViews.treeViewHolder.arrow_expand.ArrowExpandIconTreeItemHolder;
 import com.scorg.dms.ui.customesViews.treeViewHolder.arrow_expand.ArrowExpandSelectableHeaderHolder;
 import com.scorg.dms.util.CommonMethods;
@@ -77,13 +78,13 @@ import java.util.Locale;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class PatientList extends AppCompatActivity implements HelperResponse, View.OnClickListener, AdapterView.OnItemSelectedListener, PatientExpandableListAdapter.OnPatientListener, TreeNode.TreeNodeClickListener {
+public class PatientList extends AppCompatActivity implements HelperResponse, View.OnClickListener, AdapterView.OnItemSelectedListener, PatientRecycleViewListAdapter.OnPatientListener, TreeNode.TreeNodeClickListener {
 
     private static final long ANIMATION_DURATION = 500; // in milliseconds
     SimpleDateFormat dfDate = new SimpleDateFormat(DMSConstants.DATE_PATTERN.YYYY_MM_DD, Locale.US);
 
     @BindView(R.id.expandableListView)
-    ExpandableListView mPatientListView;
+    RecyclerView mPatientListView;
 
     @BindView(R.id.openFilterRightDrawerFAB)
     FloatingActionButton mOpenFilterViewFAB;
@@ -172,7 +173,7 @@ public class PatientList extends AppCompatActivity implements HelperResponse, Vi
     private TextView mFileTwoAdmissionDate;
     //    private TextView mFileTwoDischargeDate;
     private Button mCompareButton;
-    private PatientExpandableListAdapter patientExpandableListAdapter;
+    private PatientRecycleViewListAdapter patientExpandableListAdapter;
     private ActionBar mSupportActionBar;
     private DatePickerDialog mDatePickerDialog;
     private ShowPatientNameAdapter mShowPatientNameAdapter;
@@ -207,43 +208,28 @@ public class PatientList extends AppCompatActivity implements HelperResponse, Vi
         bindView();
         doGetPatientList();
 
-        mPatientListView.setOnScrollListener(new AbsListView.OnScrollListener() {
+        LinearLayoutManager linearlayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        mPatientListView.setLayoutManager(linearlayoutManager);
 
+        mPatientListView.addOnScrollListener(new EndlessRecyclerViewScrollListener(linearlayoutManager) {
             @Override
-            public void onScrollStateChanged(AbsListView view, int scrollState) {
-
-            }
-
-            @Override
-            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
 
                 if (NetworkUtil.isInternetAvailable(mContext)) {
-
-
-                    if (loading) {
-                        if (totalItemCount > previousTotal) {
-                            loading = false;
-                            previousTotal = totalItemCount;
-                            currentPage++;
-                        }
-                    }
-                    if (!loading && (totalItemCount - visibleItemCount) <= (firstVisibleItem + visibleThreshold)) {
-                        // I load the next page of gigs using a background task,
-                        // but you can call any function here.
-                        currentPage = currentPage + 1;
-                        doGetPatientList();
-                        loading = true;
-                    }
+                    currentPage = currentPage + 1;
+                    doGetPatientList();
+                    loading = true;
                 }
             }
         });
+
     }
 
     // intialize variables
     private void initializeVariables() {
 
         //--------
-        patientExpandableListAdapter = new PatientExpandableListAdapter(this, new ArrayList<SearchResult>());
+        patientExpandableListAdapter = new PatientRecycleViewListAdapter(this, new ArrayList<SearchResult>());
         mPatientListView.setAdapter(patientExpandableListAdapter);
         //--------
 
@@ -404,11 +390,7 @@ public class PatientList extends AppCompatActivity implements HelperResponse, Vi
             List<SearchResult> searchResult = showSearchResultResponseModel.getSearchResultData().getSearchResult();
 
             patientExpandableListAdapter.addNewItems(searchResult);
-
-            mPatientListView.setGroupIndicator(null);
-            mPatientListView.setChildIndicator(null);
-            mPatientListView.setChildDivider(ContextCompat.getDrawable(this, R.color.transparent));
-            mPatientListView.setDivider(ContextCompat.getDrawable(this, R.color.white));
+            patientExpandableListAdapter.notifyDataSetChanged();
 
             //mPatientListView.setDividerHeight(2);
         } else if (mOldDataTag == DMSConstants.TASK_ANNOTATIONS_LIST) {
@@ -531,7 +513,7 @@ public class PatientList extends AppCompatActivity implements HelperResponse, Vi
             //  on click of Apply in right drawer
             case R.id.apply:
 
-                onCompareDialogShow(null, null, null, null, false);
+                //onCompareDialogShow(null, null, null, null, false);
 
                 String fromDate = mFromDateEditText.getText().toString().trim();
                 String toDate = mToDateEditText.getText().toString().trim();
@@ -840,150 +822,6 @@ public class PatientList extends AppCompatActivity implements HelperResponse, Vi
         });
     }
 
-    @Override
-    public void onCompareDialogShow(final PatientFileData patientFileData1, final PatientFileData patientFileData2, String mCheckedBoxGroupName, final String tempName, boolean isChecked) {
-
-        if (patientFileData2 == null && patientFileData1 == null) {
-            mFileOnePatientID.setText("");
-            mFileOneType.setText(getString(R.string.adddocument));
-            mFileOneIcon.setImageResource(R.drawable.ic_unselected_document);
-            mFileTwoAdmissionDate.setText("");
-            mFileTwoType.setText(getString(R.string.adddocument));
-            mFileTwoIcon.setImageResource(R.drawable.ic_unselected_document);
-            mCompareButton.setTextColor(getResources().getColor(R.color.white));
-            mCompareButton.setBackground(getResources().getDrawable(R.drawable.compare_button_grey_background));
-            mCompareButton.setEnabled(false);
-
-//            mFileOneDischargeDate.setVisibility(View.GONE);
-            mFileOnePatientID.setVisibility(View.GONE);
-
-//            mFileTwoDischargeDate.setVisibility(View.GONE);
-            mFileTwoAdmissionDate.setVisibility(View.GONE);
-
-            if (!isCompareDialogCollapsed && !isChecked) {
-                collapseCompareDialog();
-            }
-        } else if (patientFileData2 == null && patientFileData1 != null) {
-
-            if (getString(R.string.opd).equals(patientFileData1.getFileType())) {
-                String visitOneDate = CommonMethods.formatDateTime(patientFileData1.getAdmissionDate(), DMSConstants.DATE_PATTERN.DD_MM_YYYY_SLASH, DMSConstants.DATE_PATTERN.DD_MM_YYYY_hh_mm, DMSConstants.DATE);
-                mFileOnePatientID.setText("" + patientFileData1.getRespectiveParentPatientID());
-//                mFileOneDischargeDate.setVisibility(View.GONE);
-                mFileOnePatientID.setVisibility(View.VISIBLE);
-            } else if (getString(R.string.ipd).equals(patientFileData1.getFileType())) {
-                String admissionOneDate = CommonMethods.formatDateTime(patientFileData1.getAdmissionDate(), DMSConstants.DATE_PATTERN.DD_MM_YYYY_SLASH, DMSConstants.DATE_PATTERN.DD_MM_YYYY_hh_mm, DMSConstants.DATE);
-                String dischargeOneDate = CommonMethods.formatDateTime(patientFileData1.getDischargeDate(), DMSConstants.DATE_PATTERN.DD_MM_YYYY_SLASH, DMSConstants.DATE_PATTERN.DD_MM_YYYY_hh_mm, DMSConstants.DATE);
-                // mFileOneAdmissionDate.setText("A: " + admissionOneDate + " - D: " + dischargeOneDate);
-                mFileOnePatientID.setText(getString(R.string.patient_id) + patientFileData1.getRespectiveParentPatientID());
-//                mFileOneDischargeDate.setText("D: " + dischargeOneDate);
-//                mFileOneDischargeDate.setVisibility(View.VISIBLE);
-                mFileOnePatientID.setVisibility(View.VISIBLE);
-            }
-
-            mFileOneType.setText(patientFileData1.getFileType() + ":" + patientFileData1.getReferenceId().toString());
-            mFileOneIcon.setImageResource(R.drawable.ic_selected_document);
-            mCompareButton.setTextColor(getResources().getColor(R.color.white));
-            mCompareButton.setBackground(getResources().getDrawable(R.drawable.compare_button_grey_background));
-            mCompareButton.setEnabled(false);
-            if (isCompareDialogCollapsed)
-                expandCompareDialog();
-        } else if (patientFileData2 != null && patientFileData1 == null) {
-
-            if (getString(R.string.opd).equals(patientFileData2.getFileType())) {
-                String visitTwoDate = CommonMethods.formatDateTime(patientFileData2.getAdmissionDate(), DMSConstants.DATE_PATTERN.DD_MM_YYYY_SLASH, DMSConstants.DATE_PATTERN.DD_MM_YYYY_hh_mm, DMSConstants.DATE);
-                mFileTwoPatientID.setText("" + patientFileData2.getRespectiveParentPatientID());
-
-//                mFileTwoDischargeDate.setVisibility(View.GONE);
-                mFileTwoPatientID.setVisibility(View.VISIBLE);
-
-            } else if (getString(R.string.ipd).equals(patientFileData2.getFileType())) {
-                String admissionTwoDate = CommonMethods.formatDateTime(patientFileData2.getAdmissionDate(), DMSConstants.DATE_PATTERN.DD_MM_YYYY_SLASH, DMSConstants.DATE_PATTERN.DD_MM_YYYY_hh_mm, DMSConstants.DATE);
-                String dischargeTwoDate = CommonMethods.formatDateTime(patientFileData2.getDischargeDate(), DMSConstants.DATE_PATTERN.DD_MM_YYYY_SLASH, DMSConstants.DATE_PATTERN.DD_MM_YYYY_hh_mm, DMSConstants.DATE);
-                // mFileTwoAdmissionDate.setText("A: " + admissionTwoDate + " - D: " + dischargeTwoDate);
-                mFileTwoPatientID.setText(getString(R.string.patient_id) + patientFileData2.getRespectiveParentPatientID());
-//                mFileTwoDischargeDate.setText("D: " + dischargeTwoDate);
-
-//                mFileTwoDischargeDate.setVisibility(View.VISIBLE);
-                mFileTwoPatientID.setVisibility(View.VISIBLE);
-            }
-
-            mFileTwoType.setText(patientFileData2.getFileType() + ":" + patientFileData2.getReferenceId().toString());
-            mFileTwoIcon.setImageResource(R.drawable.ic_selected_document);
-            mCompareButton.setTextColor(getResources().getColor(R.color.white));
-            mCompareButton.setBackground(getResources().getDrawable(R.drawable.compare_button_grey_background));
-            mCompareButton.setEnabled(false);
-            if (isCompareDialogCollapsed)
-                expandCompareDialog();
-        } else {
-
-            if (getString(R.string.opd).equals(patientFileData1.getFileType())) {
-                String visitOneDate = CommonMethods.formatDateTime(patientFileData1.getAdmissionDate(), DMSConstants.DATE_PATTERN.DD_MM_YYYY_SLASH, DMSConstants.DATE_PATTERN.DD_MM_YYYY_hh_mm, DMSConstants.DATE);
-                mFileOnePatientID.setText("" + patientFileData1.getRespectiveParentPatientID());
-
-//                mFileOneDischargeDate.setVisibility(View.GONE);
-                mFileOnePatientID.setVisibility(View.VISIBLE);
-
-            } else if (getString(R.string.ipd).equals(patientFileData1.getFileType())) {
-                String admissionOneDate = CommonMethods.formatDateTime(patientFileData1.getAdmissionDate(), DMSConstants.DATE_PATTERN.DD_MM_YYYY_SLASH, DMSConstants.DATE_PATTERN.DD_MM_YYYY_hh_mm, DMSConstants.DATE);
-                String dischargeOneDate = CommonMethods.formatDateTime(patientFileData1.getDischargeDate(), DMSConstants.DATE_PATTERN.DD_MM_YYYY_SLASH, DMSConstants.DATE_PATTERN.DD_MM_YYYY_hh_mm, DMSConstants.DATE);
-                //mFileOneAdmissionDate.setText("A: " + admissionOneDate + " - D: " + dischargeOneDate);
-                mFileOnePatientID.setText(getString(R.string.patient_id) + patientFileData1.getRespectiveParentPatientID());
-//                mFileOneDischargeDate.setText("D: " + dischargeOneDate);
-
-//                mFileOneDischargeDate.setVisibility(View.VISIBLE);
-                mFileOnePatientID.setVisibility(View.VISIBLE);
-            }
-
-            if (getString(R.string.opd).equals(patientFileData2.getFileType())) {
-                String visitTwoDate = CommonMethods.formatDateTime(patientFileData2.getAdmissionDate(), DMSConstants.DATE_PATTERN.DD_MM_YYYY_SLASH, DMSConstants.DATE_PATTERN.DD_MM_YYYY_hh_mm, DMSConstants.DATE);
-                mFileTwoPatientID.setText(patientFileData2.getRespectiveParentPatientID());
-
-//                mFileTwoDischargeDate.setVisibility(View.GONE);
-                mFileTwoPatientID.setVisibility(View.VISIBLE);
-
-            } else if (getString(R.string.ipd).equals(patientFileData2.getFileType())) {
-                String admissionTwoDate = CommonMethods.formatDateTime(patientFileData2.getAdmissionDate(), DMSConstants.DATE_PATTERN.DD_MM_YYYY_SLASH, DMSConstants.DATE_PATTERN.DD_MM_YYYY_hh_mm, DMSConstants.DATE);
-                String dischargeTwoDate = CommonMethods.formatDateTime(patientFileData2.getDischargeDate(), DMSConstants.DATE_PATTERN.DD_MM_YYYY_SLASH, DMSConstants.DATE_PATTERN.DD_MM_YYYY_hh_mm, DMSConstants.DATE);
-                //mFileTwoAdmissionDate.setText("A: " + admissionTwoDate + " - D: " + dischargeTwoDate);
-                mFileTwoPatientID.setText(getString(R.string.patient_id) + patientFileData2.getRespectiveParentPatientID());
-//                mFileTwoDischargeDate.setText("D: " + dischargeTwoDate);
-
-//                mFileTwoDischargeDate.setVisibility(View.VISIBLE);
-                mFileTwoPatientID.setVisibility(View.VISIBLE);
-            }
-
-            mFileOneType.setText(patientFileData1.getFileType() + ":" + patientFileData1.getReferenceId().toString());
-
-            mFileTwoType.setText(patientFileData2.getFileType() + ":" + patientFileData2.getReferenceId().toString());
-
-            mFileOneIcon.setImageResource(R.drawable.ic_selected_document);
-            mFileTwoIcon.setImageResource(R.drawable.ic_selected_document);
-            mCompareButton.setTextColor(getResources().getColor(R.color.white));
-            mCompareButton.setBackground(getResources().getDrawable(R.drawable.compare_button_red_background));
-            mCompareButton.setEnabled(true);
-            mCompareButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(mContext, FileTypeViewerActivity.class);
-                    Bundle extra = new Bundle();
-                    ArrayList<PatientFileData> dataToSend = new ArrayList<PatientFileData>();
-                    dataToSend.add(patientFileData1);
-                    dataToSend.add(patientFileData2);
-                    SearchResult searchPatientInformation = patientExpandableListAdapter.searchPatientInfo(patientFileData1.getRespectiveParentPatientID());
-                    extra.putSerializable(getString(R.string.compare), dataToSend);
-                    extra.putString(DMSConstants.PATIENT_ADDRESS, searchPatientInformation.getPatientAddress());
-                    extra.putString(DMSConstants.DOCTOR_NAME, searchPatientInformation.getDoctorName());
-                    extra.putString(DMSConstants.ID, patientFileData1.getRespectiveParentPatientID());
-                    extra.putString(DMSConstants.PATIENT_LIST_PARAMS.PATIENT_NAME, tempName);
-                    intent.putExtra(DMSConstants.DATA, extra);
-                    startActivity(intent);
-                }
-            });
-            if (isCompareDialogCollapsed && isChecked)
-                expandCompareDialog();
-        }
-    }
-
     public void collapseCompareDialog() {
         isCompareDialogCollapsed = true;
 
@@ -1025,8 +863,8 @@ public class PatientList extends AppCompatActivity implements HelperResponse, Vi
     }
 
     @Override
-    public void onPatientListItemClick(PatientFileData childElement, String patientName) {
-        Intent intent = new Intent(mContext, FileTypeViewerActivity.class);
+    public void onPatientListItemClick(SearchResult groupHeader) {
+       /* Intent intent = new Intent(mContext, FileTypeViewerActivity.class);
         Bundle extra = new Bundle();
         ArrayList<PatientFileData> dataToSend = new ArrayList<PatientFileData>();
         dataToSend.add(childElement);
@@ -1037,7 +875,7 @@ public class PatientList extends AppCompatActivity implements HelperResponse, Vi
         extra.putString(DMSConstants.ID, childElement.getRespectiveParentPatientID());
         extra.putString(DMSConstants.PATIENT_LIST_PARAMS.PATIENT_NAME, "" + patientName);
         intent.putExtra(DMSConstants.DATA, extra);
-        startActivity(intent);
+        startActivity(intent);*/
     }
 
     @Override

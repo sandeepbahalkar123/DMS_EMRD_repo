@@ -17,94 +17,104 @@
         android:background="@drawable/round_background_full_view"
         android:orientation="vertical">
 
-        <RelativeLayout
+        <LinearLayout
+            android:id="@+id/mainContentLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/bluelineImageView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:paddingLeft="@dimen/dp2"
-                android:paddingStart="@dimen/dp2"
-                android:paddingTop="@dimen/dp2"
-                app:srcCompat="@drawable/result_blue_line"
-                tools:ignore="ContentDescription,RtlSymmetry" />
-
-            <com.scorg.dms.ui.customesViews.CustomTextView
-                android:id="@+id/uhid"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_toEndOf="@id/bluelineImageView"
-                android:layout_toRightOf="@id/bluelineImageView"
-                android:padding="@dimen/dp5"
-                android:paddingLeft="@dimen/dp13"
-                android:paddingStart="@dimen/dp13"
-                android:textColor="@color/tagColor"
-                android:textSize="@dimen/sp13"
-                app:customFont="@string/roboto_medium"
-                tools:ignore="RtlSymmetry"
-                tools:text="ID" />
-
-            <com.scorg.dms.ui.customesViews.CustomTextView
-                android:id="@+id/patientId"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_toEndOf="@id/uhid"
-                android:layout_toRightOf="@id/uhid"
-                android:padding="@dimen/dp5"
-                android:paddingLeft="@dimen/dp2"
-                android:paddingStart="@dimen/dp2"
-                android:textColor="@color/tagColor"
-                android:textSize="@dimen/sp13"
-                app:customFont="@string/roboto_medium"
-                tools:ignore="RtlSymmetry"
-                tools:text="23456" />
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/dp6">
-
-            <ImageView
-                android:id="@+id/patientImageView"
-                android:layout_width="@dimen/dp67"
-                android:layout_height="@dimen/dp67"
-                android:layout_marginLeft="@dimen/dp10"
-                android:layout_marginStart="@dimen/dp10"
-                tools:src="@drawable/uren_pic" />
-
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/dp11"
-                android:layout_marginStart="@dimen/dp11"
-                android:layout_toEndOf="@id/patientImageView"
-                android:layout_toRightOf="@id/patientImageView"
-                android:orientation="vertical"
-                tools:ignore="RelativeOverlap">
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/bluelineImageView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:paddingLeft="@dimen/dp2"
+                    android:paddingStart="@dimen/dp2"
+                    android:paddingTop="@dimen/dp2"
+                    app:srcCompat="@drawable/result_blue_line"
+                    tools:ignore="ContentDescription,RtlSymmetry" />
 
                 <com.scorg.dms.ui.customesViews.CustomTextView
-                    android:id="@+id/userName"
+                    android:id="@+id/uhid"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toEndOf="@id/bluelineImageView"
+                    android:layout_toRightOf="@id/bluelineImageView"
+                    android:padding="@dimen/dp5"
+                    android:paddingLeft="@dimen/dp13"
+                    android:paddingStart="@dimen/dp13"
+                    android:textColor="@color/tagColor"
+                    android:textSize="@dimen/sp13"
+                    app:customFont="@string/roboto_medium"
+                    tools:ignore="RtlSymmetry"
+                    tools:text="ID" />
+
+                <com.scorg.dms.ui.customesViews.CustomTextView
+                    android:id="@+id/patientId"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toEndOf="@id/uhid"
+                    android:layout_toRightOf="@id/uhid"
+                    android:padding="@dimen/dp5"
+                    android:paddingLeft="@dimen/dp2"
+                    android:paddingStart="@dimen/dp2"
+                    android:textColor="@color/tagColor"
+                    android:textSize="@dimen/sp13"
+                    app:customFont="@string/roboto_medium"
+                    tools:ignore="RtlSymmetry"
+                    tools:text="23456" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dp6">
+
+                <ImageView
+                    android:id="@+id/patientImageView"
+                    android:layout_width="@dimen/dp67"
+                    android:layout_height="@dimen/dp67"
+                    android:layout_marginLeft="@dimen/dp10"
+                    android:layout_marginStart="@dimen/dp10"
+                    tools:src="@drawable/uren_pic" />
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/sp15"
-                    app:customFont="@string/roboto_bold"
-                    tools:text="Mr. Uren Chhadva" />
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/dp11"
+                    android:layout_marginStart="@dimen/dp11"
+                    android:layout_toEndOf="@id/patientImageView"
+                    android:layout_toRightOf="@id/patientImageView"
+                    android:orientation="vertical"
+                    tools:ignore="RelativeOverlap">
+
+                    <com.scorg.dms.ui.customesViews.CustomTextView
+                        android:id="@+id/userName"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/sp15"
+                        app:customFont="@string/roboto_bold"
+                        tools:text="Mr. Uren Chhadva" />
 
 
-            </LinearLayout>
+                </LinearLayout>
 
-        </RelativeLayout>
+            </RelativeLayout>
+
+        </LinearLayout>
+
 
         <LinearLayout
+            android:visibility="gone"
             android:id="@+id/groupItemCollapseButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

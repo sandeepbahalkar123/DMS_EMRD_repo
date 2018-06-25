@@ -26,15 +26,23 @@
                 android:orientation="horizontal"
                 app:reverseLayout="false" />
 
-            <ExpandableListView
+            <android.support.v7.widget.RecyclerView
                 android:id="@+id/expandableListView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:clipToPadding="false"
-                android:divider="@null"
-                android:groupIndicator="@android:color/holo_red_dark"
-                android:paddingBottom="@dimen/dp58"
-                android:paddingTop="@dimen/dp8" />
+                android:orientation="vertical"
+                app:reverseLayout="false" />
+
+            <!-- <ExpandableListView
+                 android:id="@+id/expandableListView"
+                 android:layout_width="match_parent"
+                 android:layout_height="match_parent"
+                 android:clipToPadding="false"
+                 android:divider="@null"
+                 android:groupIndicator="@android:color/holo_red_dark"
+                 android:paddingBottom="@dimen/dp58"
+                 android:paddingTop="@dimen/dp8"
+                 android:visibility="gone" />-->
 
         </LinearLayout>
 
@@ -189,9 +197,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:visibility="gone"
                     android:textSize="@dimen/sp16"
                     android:textStyle="bold"
+                    android:visibility="gone"
                     tools:text="Admission Date: 12/Sep/1091" />
 
                 <TextView
