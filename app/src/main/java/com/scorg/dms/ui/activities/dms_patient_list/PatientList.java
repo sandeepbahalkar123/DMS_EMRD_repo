@@ -78,6 +78,8 @@ import java.util.Locale;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.scorg.dms.util.DMSConstants.PATIENT_DETAILS;
+
 public class PatientList extends AppCompatActivity implements HelperResponse, View.OnClickListener, AdapterView.OnItemSelectedListener, PatientRecycleViewListAdapter.OnPatientListener, TreeNode.TreeNodeClickListener {
 
     private static final long ANIMATION_DURATION = 500; // in milliseconds
@@ -864,6 +866,12 @@ public class PatientList extends AppCompatActivity implements HelperResponse, Vi
 
     @Override
     public void onPatientListItemClick(SearchResult groupHeader) {
+        Intent intent = new Intent(mContext, PatientDetailsActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(PATIENT_DETAILS, groupHeader);
+        intent.putExtra(DMSConstants.BUNDLE, bundle);
+        startActivity(intent);
+
        /* Intent intent = new Intent(mContext, FileTypeViewerActivity.class);
         Bundle extra = new Bundle();
         ArrayList<PatientFileData> dataToSend = new ArrayList<PatientFileData>();

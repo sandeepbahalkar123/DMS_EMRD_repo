@@ -10,6 +10,7 @@ public class DMSConstants {
     public static final String RESCRIBE_LOG_FILE = "Rescribe_LOG_FILE.txt";
 
 
+    public static final String BUNDLE = "bundle";
     public static final String MT_TABLET = "TABLET";
     public static final String MT_SYRUP = "SYRUP";
     public static final String MT_OINTMENT = "OINTMENT";

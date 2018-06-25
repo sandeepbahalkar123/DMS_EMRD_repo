@@ -204,5 +204,5 @@
         <item name="android:textColor">@color/grey</item>
         <item name="android:textColorHint">@color/grey</item>
         <item name="android:textSize">@dimen/sp13</item>
-     </style>
+    </style>
 </resources>

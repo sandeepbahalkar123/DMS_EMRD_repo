@@ -310,5 +310,6 @@
     <string name="file_one">FileType-1</string>
     <string name="file_two">FileType-2</string>
     <string name="address">Address</string>
+    <string name="title_activity_patient_details">Patient Details</string>
 
 </resources>

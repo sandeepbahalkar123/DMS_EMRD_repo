@@ -151,6 +151,10 @@ public class DMSPatientsHelper implements ConnectionListener {
         mConnectionFactory.createConnection(DMSConstants.TASK_GET_PATIENT_NAME_LIST);
     }
 
+    public void doGetPatientEpisode() {
+
+    }
+
     //--- Ideally, this method should be of type GET, but made as POST.
     // Creating separate class for single used is not proper, hence made it inner class.
     public class SearchPatientNameText implements CustomResponse {

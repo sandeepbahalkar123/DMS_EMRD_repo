@@ -29,7 +29,6 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
@@ -49,13 +48,11 @@
             android:configChanges="orientation|keyboard|screenSize"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
-
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
         <activity
             android:name=".ui.activities.HomePageActivity"
@@ -69,7 +66,6 @@
             android:name=".ui.activities.waiting_list.WaitingMainListActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".ui.activities.MapActivityShowDoctorLocation"
             android:configChanges="orientation|keyboard|screenSize"
@@ -97,13 +93,11 @@
             android:configChanges="orientation|keyboard|screenSize"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".ui.activities.book_appointment.SelectSlotToBookAppointmentBaseActivity"
             android:configChanges="orientation|keyboard|screenSize"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".ui.activities.ProfileActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
@@ -112,7 +106,6 @@
             android:name=".ui.activities.dashboard.SupportActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".ui.activities.dashboard.SettingsActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
@@ -121,11 +114,9 @@
             android:name=".ui.fragments.patient.my_patient.TemplateListForMyPatients"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/AppTheme" />
-
         <activity
             android:name=".ui.fragments.patient.my_patient.SendSmsPatientActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
@@ -135,7 +126,6 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan|adjustResize" />
-
         <activity
             android:name=".ui.activities.my_patients.patient_history.PatientHistoryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
@@ -164,7 +154,6 @@
         <activity
             android:name=".ui.activities.AppGlobalContainerActivity"
             android:label="@string/app_name" />
-
         <activity
             android:name=".ui.activities.zoom_images.ZoomImageViewActivity"
             android:label="@string/title_activity_zoomview"
@@ -174,26 +163,30 @@
             android:label="@string/title_activity_zoomview"
             android:theme="@style/AppTheme.NoActionBar" />
 
-        <!--DMS-->
+        <!-- DMS -->
 
         <activity
-            android:name="com.scorg.dms.ui.activities.dms_patient_list.PatientList"
+            android:name=".ui.activities.dms_patient_list.PatientList"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/patient_list"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.scorg.dms.ui.activities.LoginActivity"
+            android:name=".ui.activities.LoginActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/title_activity_login"
             android:noHistory="true"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.scorg.dms.ui.activities.dms_patient_list.FileTypeViewerActivity"
+            android:name=".ui.activities.dms_patient_list.FileTypeViewerActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/title_activity_login"
             android:theme="@style/AppTheme.NoActionBar" />
 
-        <!--DMS-->
+        <!-- DMS -->
+        <activity
+            android:name=".ui.activities.dms_patient_list.PatientDetailsActivity"
+            android:label="@string/title_activity_patient_details"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

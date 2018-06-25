@@ -1,5 +1,6 @@
 package com.scorg.dms.adapters.dms_adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatImageButton;
@@ -7,9 +8,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseExpandableListAdapter;
-import android.widget.CheckBox;
-import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -18,18 +16,11 @@ import com.amulyakhare.textdrawable.TextDrawable;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.scorg.dms.R;
-import com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemodel.PatientFileData;
 import com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemodel.SearchResult;
 import com.scorg.dms.util.CommonMethods;
-import com.scorg.dms.util.DMSConstants;
 
 import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -40,6 +31,7 @@ import butterknife.ButterKnife;
 
 public class PatientRecycleViewListAdapter extends RecyclerView.Adapter<PatientRecycleViewListAdapter.GroupViewHolder> {
 
+    private static final String TAG = "PatientList";
     private Context _context;
     private OnPatientListener onPatientListener;
 
@@ -59,6 +51,9 @@ public class PatientRecycleViewListAdapter extends RecyclerView.Adapter<PatientR
         ipd = _context.getString(R.string.ipd);
         uhid = _context.getString(R.string.uhid);
 
+        if (context instanceof OnPatientListener) {
+            onPatientListener = (OnPatientListener) context;
+        } else CommonMethods.Log(TAG, "Implement OnPatientListener in Activity");
     }
 
     @Override
@@ -69,6 +64,7 @@ public class PatientRecycleViewListAdapter extends RecyclerView.Adapter<PatientR
         return new GroupViewHolder(itemView);
     }
 
+    @SuppressLint("CheckResult")
     @Override
     public void onBindViewHolder(GroupViewHolder groupViewHolder, final int position) {
 
@@ -160,7 +156,7 @@ public class PatientRecycleViewListAdapter extends RecyclerView.Adapter<PatientR
     }
 
     public interface OnPatientListener {
-       // void onCompareDialogShow(PatientFileData patientFileData1, PatientFileData patientFileData2, String mCheckedBoxGroupName, String tempName, boolean b);
+        // void onCompareDialogShow(PatientFileData patientFileData1, PatientFileData patientFileData2, String mCheckedBoxGroupName, String tempName, boolean b);
 
         void onPatientListItemClick(SearchResult groupHeader);
 

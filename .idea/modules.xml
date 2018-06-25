@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/DMS_EMRD_repo.iml" filepath="$PROJECT_DIR$/DMS_EMRD_repo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/EMRD.iml" filepath="$PROJECT_DIR$/EMRD.iml" />
       <module fileurl="file://$PROJECT_DIR$/advanced_recycler/advanced_recycler.iml" filepath="$PROJECT_DIR$/advanced_recycler/advanced_recycler.iml" />
       <module fileurl="file://$PROJECT_DIR$/android-pdf-viewer/android-pdf-viewer.iml" filepath="$PROJECT_DIR$/android-pdf-viewer/android-pdf-viewer.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
