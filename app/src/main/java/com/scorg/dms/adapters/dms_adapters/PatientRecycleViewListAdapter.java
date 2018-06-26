@@ -2,6 +2,8 @@ package com.scorg.dms.adapters.dms_adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatImageButton;
 import android.support.v7.widget.RecyclerView;
@@ -17,13 +19,18 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.scorg.dms.R;
 import com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemodel.SearchResult;
+import com.scorg.dms.ui.activities.dms_patient_list.PatientDetailsActivity;
+import com.scorg.dms.ui.customesViews.CustomTextView;
 import com.scorg.dms.util.CommonMethods;
+import com.scorg.dms.util.DMSConstants;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.scorg.dms.util.DMSConstants.PATIENT_DETAILS;
 
 /**
  * Created by riteshpandhurkar on 24/2/17.
@@ -109,6 +116,20 @@ public class PatientRecycleViewListAdapter extends RecyclerView.Adapter<PatientR
             }
         });
 
+        groupViewHolder.episodeList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SearchResult groupHeader = _originalListDataHeader.get(position);
+
+                Intent intent = new Intent(_context, PatientDetailsActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(PATIENT_DETAILS, groupHeader);
+                intent.putExtra(DMSConstants.BUNDLE, bundle);
+                _context.startActivity(intent);
+
+            }
+        });
+
     }
 
     @Override
@@ -133,6 +154,8 @@ public class PatientRecycleViewListAdapter extends RecyclerView.Adapter<PatientR
         LinearLayout groupItemCollapseButton;
         @BindView(R.id.patientImageView)
         ImageView patientImageView;
+        @BindView(R.id.episodeList)
+        CustomTextView episodeList;
 
         //@BindView(R.id.divider)
         //View divider;

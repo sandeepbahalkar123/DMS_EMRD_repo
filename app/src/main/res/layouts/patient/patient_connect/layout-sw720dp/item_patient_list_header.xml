@@ -70,17 +70,6 @@
                     tools:ignore="RtlSymmetry"
                     tools:text="23456" />
 
-                <com.scorg.dms.ui.customesViews.CustomTextView
-                    android:id="@+id/episodeList"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_margin="@dimen/dp5"
-                    android:background="@drawable/shape_rounded_corners_sky_blue"
-                    android:padding="@dimen/dp5"
-                    android:text="@string/episode"
-                    android:textColor="@color/white" />
 
             </RelativeLayout>
 
@@ -98,12 +87,14 @@
                     tools:src="@drawable/uren_pic" />
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:id="@+id/detailLayout"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/dp11"
                     android:layout_marginStart="@dimen/dp11"
                     android:layout_toEndOf="@id/patientImageView"
+                    android:layout_toLeftOf="@+id/episodeList"
                     android:layout_toRightOf="@id/patientImageView"
                     android:orientation="vertical"
                     tools:ignore="RelativeOverlap">
@@ -117,8 +108,20 @@
                         app:customFont="@string/roboto_bold"
                         tools:text="Mr. Uren Chhadva" />
 
-
                 </LinearLayout>
+
+                <com.scorg.dms.ui.customesViews.CustomTextView
+                    android:id="@+id/episodeList"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_margin="@dimen/dp5"
+                    android:background="@drawable/shape_rounded_corners_sky_blue"
+                    android:padding="@dimen/dp5"
+                    android:text="@string/episode"
+                    android:textColor="@color/white" />
+
 
             </RelativeLayout>
 

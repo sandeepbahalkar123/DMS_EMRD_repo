@@ -27,6 +27,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.scorg.dms.R;
 import com.scorg.dms.model.dms_models.responsemodel.annotationlistresponsemodel.AnnotationListResponseModel;
+import com.scorg.dms.model.dms_models.responsemodel.episode_list.EpisodeResponseModel;
 import com.scorg.dms.model.dms_models.responsemodel.filetreeresponsemodel.FileTreeResponseModel;
 import com.scorg.dms.model.dms_models.responsemodel.getpdfdataresponsemodel.GetPdfDataResponseModel;
 import com.scorg.dms.model.dms_models.responsemodel.loginresponsemodel.LoginResponseModel;
@@ -624,6 +625,10 @@ public class RequestManager extends ConnectRequest implements Connector, Request
                     case DMSConstants.TASK_GET_PATIENT_NAME_LIST: //This is for get archived list
                         PatientNameListResponseModel patientNameListResponseModel = gson.fromJson(data, PatientNameListResponseModel.class);
                         this.mConnectionListener.onResponse(ConnectionListener.RESPONSE_OK, patientNameListResponseModel, mOldDataTag);
+                        break;
+                    case DMSConstants.TASK_GET_EPISODE_LIST: //This is for get episode list
+                        EpisodeResponseModel episodeResponseModel = gson.fromJson(data, EpisodeResponseModel.class);
+                        this.mConnectionListener.onResponse(ConnectionListener.RESPONSE_OK, episodeResponseModel, mOldDataTag);
                         break;
 
                     default:

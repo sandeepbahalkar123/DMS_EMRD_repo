@@ -93,6 +93,7 @@ public class Config {
     public static final String URL_GET_ARCHIVED_LIST = "/api/getArchived";
     public static final String URL_GET_PDF_DATA = "/api/showfile";
     public static final String URL_CHECK_SERVER_CONNECTION = "/api/connectionCheck";
+    public static final String GET_EPISODE_LIST = "/api/EpisodeList";
 
     public static final String GET_DASHBOARD_DATA = "/api/DoctorDashboard";
     public static final String GET_WAITING_LIST = "/api/WaitingList";

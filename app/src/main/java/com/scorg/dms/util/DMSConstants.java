@@ -127,6 +127,7 @@ public class DMSConstants {
     public static final String TASK_GET_PDF_DATA = DMSConstants.BLANK + "PDF_DATA";
     public static final String TASK_GET_PATIENT_NAME_LIST = DMSConstants.BLANK + 43;
     public static final String TASK_LOGIN_CODE = DMSConstants.BLANK + 44;
+    public static final String TASK_GET_EPISODE_LIST = DMSConstants.BLANK + 45;
 
     //-----------
 

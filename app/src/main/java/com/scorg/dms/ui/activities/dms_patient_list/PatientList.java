@@ -635,30 +635,36 @@ public class PatientList extends AppCompatActivity implements HelperResponse, Vi
         int lstDocTypeChildLeftPadding = (int) (getResources().getDimension(R.dimen.dp50) / getResources().getDisplayMetrics().density);
         int textColor = ContextCompat.getColor(this, R.color.black);
 
-        List<AnnotationList> annotationLists = annotationListData.getAnnotationLists();
+        if (annotationListData != null) {
+            List<AnnotationList> annotationLists = annotationListData.getAnnotationLists();
 
-        for (int i = 0; i < annotationLists.size(); i++) {
-            AnnotationList annotationCategoryObject = annotationLists.get(i);
-            ArrowExpandSelectableHeaderHolder selectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded);
-            selectableHeaderHolder.setOnlyOneNodeExpanded(true);
-            TreeNode folder1 = new TreeNode(new ArrowExpandIconTreeItemHolder.IconTreeItem(R.string.ic_shopping_cart, annotationCategoryObject.getCategoryName(), annotationCategoryObject, i))
-                    .setViewHolder(selectableHeaderHolder);
+            if (annotationLists != null) {
+                for (int i = 0; i < annotationLists.size(); i++) {
+                    AnnotationList annotationCategoryObject = annotationLists.get(i);
+                    ArrowExpandSelectableHeaderHolder selectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded);
+                    selectableHeaderHolder.setOnlyOneNodeExpanded(true);
+                    TreeNode folder1 = new TreeNode(new ArrowExpandIconTreeItemHolder.IconTreeItem(R.string.ic_shopping_cart, annotationCategoryObject.getCategoryName(), annotationCategoryObject, i))
+                            .setViewHolder(selectableHeaderHolder);
 
-            List<DocTypeList> docTypeList = annotationCategoryObject.getDocTypeList();
+                    List<DocTypeList> docTypeList = annotationCategoryObject.getDocTypeList();
 
-            for (int j = 0; j < docTypeList.size(); j++) {
-                DocTypeList docTypeListObject = docTypeList.get(j);
-                String dataToShow = docTypeListObject.getTypeName() + "|" + docTypeListObject.getTypeId();
+                    for (int j = 0; j < docTypeList.size(); j++) {
+                        DocTypeList docTypeListObject = docTypeList.get(j);
+                        String dataToShow = docTypeListObject.getTypeName() + "|" + docTypeListObject.getTypeId();
 
-                ArrowExpandSelectableHeaderHolder lstDocTypeChildSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstDocTypeChildLeftPadding);
-                lstDocTypeChildSelectableHeaderHolder.setOnlyOneNodeExpanded(true);
-                TreeNode lstDocTypeChildFolder = new TreeNode(new ArrowExpandIconTreeItemHolder.IconTreeItem(R.string.ic_shopping_cart, dataToShow, docTypeListObject, i))
-                        .setViewHolder(lstDocTypeChildSelectableHeaderHolder);
+                        ArrowExpandSelectableHeaderHolder lstDocTypeChildSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstDocTypeChildLeftPadding);
+                        lstDocTypeChildSelectableHeaderHolder.setOnlyOneNodeExpanded(true);
+                        TreeNode lstDocTypeChildFolder = new TreeNode(new ArrowExpandIconTreeItemHolder.IconTreeItem(R.string.ic_shopping_cart, dataToShow, docTypeListObject, i))
+                                .setViewHolder(lstDocTypeChildSelectableHeaderHolder);
 
-                folder1.addChildren(lstDocTypeChildFolder);
+                        folder1.addChildren(lstDocTypeChildFolder);
+                    }
+                    root.addChildren(folder1);
+                }
             }
-            root.addChildren(folder1);
+
         }
+
 
         mAndroidTreeView = new AndroidTreeView(this, root);
         mAndroidTreeView.setDefaultAnimation(false);
@@ -866,24 +872,22 @@ public class PatientList extends AppCompatActivity implements HelperResponse, Vi
 
     @Override
     public void onPatientListItemClick(SearchResult groupHeader) {
-        Intent intent = new Intent(mContext, PatientDetailsActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putSerializable(PATIENT_DETAILS, groupHeader);
-        intent.putExtra(DMSConstants.BUNDLE, bundle);
-        startActivity(intent);
 
-       /* Intent intent = new Intent(mContext, FileTypeViewerActivity.class);
+        Intent intent = new Intent(mContext, FileTypeViewerActivity.class);
         Bundle extra = new Bundle();
-        ArrayList<PatientFileData> dataToSend = new ArrayList<PatientFileData>();
-        dataToSend.add(childElement);
-        SearchResult searchPatientInformation = patientExpandableListAdapter.searchPatientInfo(childElement.getRespectiveParentPatientID());
-        extra.putSerializable(getString(R.string.compare), dataToSend);
+        //ArrayList<PatientFileData> dataToSend = new ArrayList<PatientFileData>();
+        //dataToSend.add(childElement);
+        SearchResult searchPatientInformation = patientExpandableListAdapter.searchPatientInfo("" + groupHeader.getPatientId());
+        //todo: filepath(pdf url is not getting in api)
+        // extra.putSerializable(getString(R.string.compare), dataToSend);
+        extra.putSerializable(getString(R.string.compare), new ArrayList<PatientFileData>());
+
         extra.putString(DMSConstants.PATIENT_ADDRESS, searchPatientInformation.getPatientAddress());
         extra.putString(DMSConstants.DOCTOR_NAME, searchPatientInformation.getDoctorName());
-        extra.putString(DMSConstants.ID, childElement.getRespectiveParentPatientID());
+        extra.putString(DMSConstants.ID, searchPatientInformation.getPatientId());
         extra.putString(DMSConstants.PATIENT_LIST_PARAMS.PATIENT_NAME, "" + patientName);
         intent.putExtra(DMSConstants.DATA, extra);
-        startActivity(intent);*/
+        startActivity(intent);
     }
 
     @Override
