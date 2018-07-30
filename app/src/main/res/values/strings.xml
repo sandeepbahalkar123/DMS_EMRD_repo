@@ -277,6 +277,11 @@
         <item>Admission Date</item>
         <item>Discharge Date</item>
     </string-array>
+    <string-array name="get_archived_preference_list">
+        <item>Folder</item>
+        <item>File</item>
+        <item>Date</item>
+    </string-array>
     <string-array name="opd_array">
         <item>Select</item>
         <item>Visit Date</item>

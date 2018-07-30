@@ -16,6 +16,11 @@ public class ArchiveDatum {
     @Expose
     private List<LstDateFolderType> lstDateFolderTypeList = new ArrayList<LstDateFolderType>();
 
+    @SerializedName("lstDocCategories")
+    @Expose
+    private List<LstDocCategory> archiveDataLstDocCategories = new ArrayList<LstDocCategory>();
+
+
     private int totalLstDateFolderTypePageCount = -1;
 
 
@@ -51,11 +56,21 @@ public class ArchiveDatum {
         return totalLstDateFolderTypePageCount;
     }
 
+    public List<LstDocCategory> getArchiveDataLstDocCategories() {
+        return archiveDataLstDocCategories;
+    }
+
+    public void setArchiveDataLstDocCategories(List<LstDocCategory> archiveDataLstDocCategories) {
+        this.archiveDataLstDocCategories = archiveDataLstDocCategories;
+    }
+
     @Override
     public String toString() {
         return "ArchiveDatum{" +
                 "fileType='" + fileType + '\'' +
-                ", lstDateFolderType=" + lstDateFolderTypeList +
+                ", lstDateFolderTypeList=" + lstDateFolderTypeList +
+                ", archiveDataLstDocCategories=" + archiveDataLstDocCategories +
+                ", totalLstDateFolderTypePageCount=" + totalLstDateFolderTypePageCount +
                 '}';
     }
 }

@@ -642,12 +642,26 @@
         android:layout_height="@dimen/dp1"
         android:background="@color/grey_500" />
 
-    <RelativeLayout
-        android:id="@+id/fileTypeTreeViewContainer"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-    </RelativeLayout>
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp36"
+            android:layout_gravity="center"
+            android:entries="@array/get_archived_preference_list"
+            android:gravity="center"></Spinner>
+
+        <RelativeLayout
+            android:id="@+id/fileTypeTreeViewContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </RelativeLayout>
+
+    </LinearLayout>
 
 
 </LinearLayout>

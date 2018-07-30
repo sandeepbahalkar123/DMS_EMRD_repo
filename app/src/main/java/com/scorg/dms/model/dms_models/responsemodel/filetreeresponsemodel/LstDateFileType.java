@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class LstDocType {
+public class LstDateFileType {
 
     @SerializedName("typeId")
     @Expose
@@ -14,6 +14,11 @@ public class LstDocType {
     @SerializedName("typeName")
     @Expose
     private String typeName;
+    @SerializedName("date")
+    @Expose
+    private String date;
+
+
     @SerializedName("pageCount")
     @Expose
     private Integer pageCount;
@@ -23,17 +28,6 @@ public class LstDocType {
     @SerializedName("permission")
     @Expose
     private String permission;
-    @SerializedName("createdDate")
-    @Expose
-    private String createdDate;
-
-    @SerializedName("pageNumber")
-    @Expose
-    private Integer pageNumber;
-
-    @SerializedName("lstdateFileType")
-    @Expose
-    private ArrayList<LstDateFileType> lstDateFileTypeList = new ArrayList<LstDateFileType>();
 
     public Integer getTypeId() {
         return typeId;
@@ -51,14 +45,6 @@ public class LstDocType {
         this.typeName = typeName;
     }
 
-    public String getCreatedDate() {
-        return createdDate;
-    }
-
-    public void setCreatedDate(String createdDate) {
-        this.createdDate = createdDate;
-    }
-
     public Integer getPageCount() {
         return pageCount;
     }
@@ -67,13 +53,6 @@ public class LstDocType {
         this.pageCount = pageCount;
     }
 
-    public Integer getPageNumber() {
-        return pageNumber;
-    }
-
-    public void setPageNumber(Integer pageNumber) {
-        this.pageNumber = pageNumber;
-    }
 
     public Integer getRecordId() {
         return recordId;
@@ -91,25 +70,23 @@ public class LstDocType {
         this.permission = permission;
     }
 
-    public ArrayList<LstDateFileType> getLstDateFileTypeList() {
-        return lstDateFileTypeList;
+    public String getDate() {
+        return date;
     }
 
-    public void setLstDateFileTypeList(ArrayList<LstDateFileType> lstDateFileTypeList) {
-        this.lstDateFileTypeList = lstDateFileTypeList;
+    public void setDate(String date) {
+        this.date = date;
     }
 
     @Override
     public String toString() {
-        return "LstDocType{" +
+        return "LstDateFileType{" +
                 "typeId=" + typeId +
                 ", typeName='" + typeName + '\'' +
+                ", date='" + date + '\'' +
                 ", pageCount=" + pageCount +
                 ", recordId=" + recordId +
                 ", permission='" + permission + '\'' +
-                ", createdDate='" + createdDate + '\'' +
-                ", pageNumber=" + pageNumber +
-                ", lstDateFileTypeList=" + lstDateFileTypeList +
                 '}';
     }
 }

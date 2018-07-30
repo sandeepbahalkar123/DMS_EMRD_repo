@@ -232,7 +232,7 @@ public class FileTypeViewerActivity extends AppCompatActivity implements View.On
         int width = (int) (getResources().getDisplayMetrics().widthPixels / (CommonMethods.isTablet(mContext) ? 1.2 : 1.2));
 
         //---------
-        mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawer = findViewById(R.id.drawer_layout);
         mDrawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, GravityCompat.END);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -265,10 +265,10 @@ public class FileTypeViewerActivity extends AppCompatActivity implements View.On
         });
         //-----------
         mFirstFileTypePdfViewLayout.addView(CommonMethods.loadView(R.layout.mydialog, this));
-        mFirstFileTypeProgressDialogLayout = (RelativeLayout) mFirstFileTypePdfViewLayout.findViewById(R.id.progressBarContainerLayout);
+        mFirstFileTypeProgressDialogLayout = mFirstFileTypePdfViewLayout.findViewById(R.id.progressBarContainerLayout);
         mFirstFileTypeProgressDialogLayout.setVisibility(View.VISIBLE);
         mSecondFileTypePdfViewLayout.addView(CommonMethods.loadView(R.layout.mydialog, this));
-        mSecondFileTypeProgressDialogLayout = (RelativeLayout) mSecondFileTypePdfViewLayout.findViewById(R.id.progressBarContainerLayout);
+        mSecondFileTypeProgressDialogLayout = mSecondFileTypePdfViewLayout.findViewById(R.id.progressBarContainerLayout);
         mSecondFileTypeProgressDialogLayout.setVisibility(View.VISIBLE);
 
         //------RightNavigationView initialize---------
@@ -607,11 +607,9 @@ public class FileTypeViewerActivity extends AppCompatActivity implements View.On
     @Override
     public void onTouch(View v, MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN || event.getAction() == MotionEvent.ACTION_UP) {
-            if (v == mFirstPdfView) {
-                isFirstPdf = true;
-            } else {
+            if (v == mFirstPdfView) isFirstPdf = true;
+            else
                 isFirstPdf = false;
-            }
         }
     }
 
@@ -749,13 +747,13 @@ public class FileTypeViewerActivity extends AppCompatActivity implements View.On
                 break;
 
             case REQUEST_CODE_WRITE_FILE_TWO_PERMISSIONS:
-                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED)
                     // Permission Granted
                     loadPDFFromServer(fileTwoData, mSecondPdfView, "", "file2", "pdf");
-                } else {
+                else
                     // Permission Denied
                     CommonMethods.showToast(mContext, getString(R.string.denied_permission_read_document));
-                }
+
                 break;
 
             default:
