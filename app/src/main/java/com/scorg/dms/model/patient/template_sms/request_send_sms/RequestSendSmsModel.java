@@ -4,12 +4,12 @@ package com.scorg.dms.model.patient.template_sms.request_send_sms;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.scorg.dms.interfaces.CustomResponse;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class RequestSendSmsModel implements CustomResponse, Parcelable {
 

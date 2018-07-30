@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+
 import com.scorg.dms.R;
 import com.scorg.dms.model.select_slot_book_appointment.TimeSlotsInfoList;
 import com.scorg.dms.ui.customesViews.CustomTextView;
@@ -17,6 +18,7 @@ import com.scorg.dms.util.DMSConstants;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 

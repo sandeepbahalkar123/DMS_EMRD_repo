@@ -27,9 +27,9 @@ import com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemode
 import com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemodel.SearchResult;
 import com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemodel.SearchResultData;
 import com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemodel.ShowSearchResultResponseModel;
+import com.scorg.dms.model.waiting_list.WaitingClinicList;
 import com.scorg.dms.model.waiting_list.WaitingListDataModel;
 import com.scorg.dms.model.waiting_list.WaitingPatientData;
-import com.scorg.dms.model.waiting_list.WaitingClinicList;
 import com.scorg.dms.ui.activities.dms_patient_list.FileTypeViewerActivity;
 import com.scorg.dms.ui.activities.waiting_list.WaitingMainListActivity;
 import com.scorg.dms.ui.customesViews.CircularImageView;
@@ -206,7 +206,8 @@ public class ViewAllPatientListFragment extends Fragment implements WaitingListA
                     List<SearchResult> searchResultList = searchResultData.getSearchResult();
                     if (!searchResultList.isEmpty()) {
                         SearchResult searchPatientInformation = searchResultList.get(0);
-                        List<PatientFileData> patientFileDataList = searchPatientInformation.getPatientFileData();
+                        //TODO : as API response chnaged, hence need to fix this too.
+                        /*List<PatientFileData> patientFileDataList = searchPatientInformation.getPatientFileData();
                         if (patientFileDataList != null) {
                             if (!patientFileDataList.isEmpty()) {
                                 PatientFileData childElement = patientFileDataList.get(0);
@@ -222,7 +223,7 @@ public class ViewAllPatientListFragment extends Fragment implements WaitingListA
                                 intent.putExtra(DMSConstants.DATA, extra);
                                 startActivity(intent);
                             }
-                        }
+                        }*/
                     }
                 }
             }

@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Canvas;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -20,7 +19,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.webkit.WebView;
 import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -40,25 +38,24 @@ import com.scorg.dms.R;
 import com.scorg.dms.helpers.patient_list.DMSPatientsHelper;
 import com.scorg.dms.interfaces.CustomResponse;
 import com.scorg.dms.interfaces.HelperResponse;
-import com.scorg.dms.model.Common;
+import com.scorg.dms.model.dms_models.requestmodel.archive.GetArchiveRequestModel;
 import com.scorg.dms.model.dms_models.requestmodel.filetreerequestmodel.FileTreeRequestModel;
 import com.scorg.dms.model.dms_models.requestmodel.filetreerequestmodel.LstSearchParam;
-import com.scorg.dms.model.dms_models.requestmodel.getpdfdatarequestmodel.GetPdfDataRequestModel;
-import com.scorg.dms.model.dms_models.requestmodel.getpdfdatarequestmodel.LstDocTypeRequest;
+import com.scorg.dms.model.dms_models.requestmodel.showfile_data.GetEncryptedPDFRequestModel;
+import com.scorg.dms.model.dms_models.responsemodel.episode_list.PatientEpisodeFileData;
 import com.scorg.dms.model.dms_models.responsemodel.filetreeresponsemodel.ArchiveDatum;
 import com.scorg.dms.model.dms_models.responsemodel.filetreeresponsemodel.FileTreeResponseData;
 import com.scorg.dms.model.dms_models.responsemodel.filetreeresponsemodel.FileTreeResponseModel;
+import com.scorg.dms.model.dms_models.responsemodel.filetreeresponsemodel.LstDateFolderType;
 import com.scorg.dms.model.dms_models.responsemodel.filetreeresponsemodel.LstDocCategory;
 import com.scorg.dms.model.dms_models.responsemodel.filetreeresponsemodel.LstDocType;
 import com.scorg.dms.model.dms_models.responsemodel.getpdfdataresponsemodel.GetPdfDataResponseModel;
-import com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemodel.PatientFileData;
 import com.scorg.dms.preference.DMSPreferencesManager;
 import com.scorg.dms.ui.customesViews.treeViewHolder.arrow_expand.ArrowExpandIconTreeItemHolder;
 import com.scorg.dms.ui.customesViews.treeViewHolder.arrow_expand.ArrowExpandSelectableHeaderHolder;
 import com.scorg.dms.util.CommonMethods;
-import com.scorg.dms.util.Config;
 import com.scorg.dms.util.DMSConstants;
-import com.shockwave.pdfium.*;
+import com.shockwave.pdfium.PdfDocument;
 import com.unnamed.b.atv.model.TreeNode;
 import com.unnamed.b.atv.view.AndroidTreeView;
 
@@ -67,10 +64,8 @@ import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -172,24 +167,28 @@ public class FileTypeViewerActivity extends AppCompatActivity implements View.On
 
     private DMSPatientsHelper mPatientsHelper;
 
-    private boolean isCompareChecked = false;
+    private boolean isCompareChecked = true;
     //---------
-    ArrayList<PatientFileData> mSelectedFileTypeDataToCompare;
+    ArrayList<PatientEpisodeFileData> mSelectedFileTypeDataToCompare;
     String respectivePatientID;
+    String respectiveRecordID;
+    int getArchivedPageNumber = 1;
+    int getArchivedPageMaxRecordToFetch = 20;
     String patientName;
     String doctorName;
     String patientAddress;
     //---------
     private int mClickedTreeStructureLevel;
-    private String mMergedRequestCalled = "0";
     private FileTreeResponseData mFileTreeResponseData;
 
     private RelativeLayout mFirstFileTypeProgressDialogLayout;
     private RelativeLayout mSecondFileTypeProgressDialogLayout;
-    private HashMap<Integer, String> mPreviousClickedTreeElement = null;
+    private HashMap<String, String> mPreviousClickedTreeElement = null;
     private String fileOneData;
     private String fileTwoData;
     private boolean isComparingBetweenSameFileType = false;
+    private ArrayList<String> clickedPDFList = new ArrayList<>();
+    private String mLoadedPDFFileDataPath = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -205,8 +204,9 @@ public class FileTypeViewerActivity extends AppCompatActivity implements View.On
         Bundle extra = getIntent().getBundleExtra(DMSConstants.DATA);
 
         if (extra != null) {
-            mSelectedFileTypeDataToCompare = (ArrayList<PatientFileData>) extra.getSerializable(getString(R.string.compare));
-            respectivePatientID = extra.getString(DMSConstants.ID);
+            mSelectedFileTypeDataToCompare = (ArrayList<PatientEpisodeFileData>) extra.getSerializable(getString(R.string.compare));
+            respectivePatientID = extra.getString(DMSConstants.PATIENT_ID);
+            respectiveRecordID = extra.getString(DMSConstants.RECORD_ID);
             patientName = extra.getString(DMSConstants.PATIENT_LIST_PARAMS.PATIENT_NAME);
             patientAddress = extra.getString(DMSConstants.PATIENT_ADDRESS);
             doctorName = extra.getString(DMSConstants.DOCTOR_NAME);
@@ -229,7 +229,7 @@ public class FileTypeViewerActivity extends AppCompatActivity implements View.On
     }
 
     private void bindView() {
-        int width = (int) (getResources().getDisplayMetrics().widthPixels / (CommonMethods.isTablet(mContext) ? 1.6 : 1.2));
+        int width = (int) (getResources().getDisplayMetrics().widthPixels / (CommonMethods.isTablet(mContext) ? 1.2 : 1.2));
 
         //---------
         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -266,10 +266,10 @@ public class FileTypeViewerActivity extends AppCompatActivity implements View.On
         //-----------
         mFirstFileTypePdfViewLayout.addView(CommonMethods.loadView(R.layout.mydialog, this));
         mFirstFileTypeProgressDialogLayout = (RelativeLayout) mFirstFileTypePdfViewLayout.findViewById(R.id.progressBarContainerLayout);
-        mFirstFileTypeProgressDialogLayout.setVisibility(View.GONE);
+        mFirstFileTypeProgressDialogLayout.setVisibility(View.VISIBLE);
         mSecondFileTypePdfViewLayout.addView(CommonMethods.loadView(R.layout.mydialog, this));
         mSecondFileTypeProgressDialogLayout = (RelativeLayout) mSecondFileTypePdfViewLayout.findViewById(R.id.progressBarContainerLayout);
-        mSecondFileTypeProgressDialogLayout.setVisibility(View.GONE);
+        mSecondFileTypeProgressDialogLayout.setVisibility(View.VISIBLE);
 
         //------RightNavigationView initialize---------
 
@@ -302,43 +302,11 @@ public class FileTypeViewerActivity extends AppCompatActivity implements View.On
     private void doBindHeaderViews() {
 
         mPatientName.setText(patientName);
+        mPatientId.setText(respectivePatientID);
         mDoctorNameTwo.setText(doctorName);
         mDoctorNameOne.setText(doctorName);
         mPatientAddress.setText(patientAddress);
 
-        //----------
-
-        PatientFileData patientFileData = mSelectedFileTypeDataToCompare.get(0);
-
-        mFileOneRefId.setText(String.valueOf(patientFileData.getReferenceId()));
-        mAdmissionDateOne.setText(String.valueOf(patientFileData.getAdmissionDate()));
-        mDischargeDateOne.setText(String.valueOf(patientFileData.getDischargeDate()));
-        mFileTypeOne.setText(String.valueOf(patientFileData.getFileType()));
-        mPatientId.setText(String.valueOf(patientFileData.getRespectiveParentPatientID()));
-        //----------
-
-        if (String.valueOf(patientFileData.getFileType()).equalsIgnoreCase(getResources().getString(R.string.opd)))
-            dischargeDateRow.setVisibility(View.GONE);
-        else dischargeDateRow.setVisibility(View.VISIBLE);
-
-        if (mSelectedFileTypeDataToCompare.size() == 2) {
-
-            mMergedRequestCalled = DMSConstants.BLANK;
-            mSecondFileTypePdfViewLayout.setVisibility(View.VISIBLE);
-            mRowScrollBoth.setVisibility(View.VISIBLE);
-            mFileTwoDrawerLayout.setVisibility(View.VISIBLE);
-
-            patientFileData = mSelectedFileTypeDataToCompare.get(1);
-            mFileTwoRefId.setText(String.valueOf(patientFileData.getReferenceId()));
-            mAdmissionDateTwo.setText(String.valueOf(patientFileData.getAdmissionDate()));
-            mDischargeDateTwo.setText(String.valueOf(patientFileData.getDischargeDate()));
-            mFileTypeTwo.setText(String.valueOf(patientFileData.getFileType()));
-
-            if (String.valueOf(patientFileData.getFileType()).equalsIgnoreCase(getResources().getString(R.string.opd)))
-                dischargeDateRowTwo.setVisibility(View.GONE);
-            else dischargeDateRowTwo.setVisibility(View.VISIBLE);
-
-        }
     }
 
     @Override
@@ -365,21 +333,12 @@ public class FileTypeViewerActivity extends AppCompatActivity implements View.On
     // To create JSON and get archived list of data.
     private void getLoadArchivedList() {
         //---------------
-        FileTreeRequestModel fileTreeRequestModel = new FileTreeRequestModel();
-
-        List<LstSearchParam> lstSearchParamList = new ArrayList<>();
-        if (mSelectedFileTypeDataToCompare != null) {
-            for (PatientFileData tempObject :
-                    mSelectedFileTypeDataToCompare) {
-                LstSearchParam lstSearchParam = new LstSearchParam();
-                lstSearchParam.setPatientId(tempObject.getRespectiveParentPatientID());
-                lstSearchParam.setFileType(tempObject.getFileType());
-                lstSearchParam.setFileTypeRefId("" + tempObject.getReferenceId());
-                lstSearchParamList.add(lstSearchParam);
-            }
-            fileTreeRequestModel.setLstSearchParam(lstSearchParamList);
-            mPatientsHelper.doGetArchivedList(fileTreeRequestModel);
-        }
+        GetArchiveRequestModel model = new GetArchiveRequestModel();
+        model.setPatId(respectivePatientID);
+        model.setRecordId(respectiveRecordID);
+        model.setPageNumber(getArchivedPageNumber);
+        model.setTake(getArchivedPageMaxRecordToFetch);
+        mPatientsHelper.doGetArchivedList(model);
     }
 
 
@@ -396,6 +355,30 @@ public class FileTypeViewerActivity extends AppCompatActivity implements View.On
             createAnnotationTreeStructure(mFileTreeResponseData, true);
             //------
 
+        } else if (String.valueOf(mOldDataTag).equalsIgnoreCase("" + DMSConstants.TASK_GET_PDF_DATA)) {
+
+            GetPdfDataResponseModel data = (GetPdfDataResponseModel) customResponse;
+
+            if (clickedPDFList.size() >= 2) {
+
+                if (clickedPDFList.size() == 3) {
+                    String s = clickedPDFList.get(0);
+                    mPreviousClickedTreeElement.remove(s);
+                    clickedPDFList.remove(0);
+                }
+
+                doCallPDFDataService(mLoadedPDFFileDataPath, 1, mFirstPdfView, mFirstFileTypeProgressDialogLayout, mFirstFileTypePdfViewLayout, "0");
+
+                doCallPDFDataService(data.getGetPdfDataResponseData().getFileData(), 1, mSecondPdfView, mSecondFileTypeProgressDialogLayout, mSecondFileTypePdfViewLayout, "1");
+
+                mLoadedPDFFileDataPath = data.getGetPdfDataResponseData().getFileData();
+
+            }
+            if (clickedPDFList.size() == 1) {
+                mLoadedPDFFileDataPath = data.getGetPdfDataResponseData().getFileData();
+                doCallPDFDataService(mLoadedPDFFileDataPath, 1, mFirstPdfView, mFirstFileTypeProgressDialogLayout, mFirstFileTypePdfViewLayout, "0");
+            }
+
         }
     }
 
@@ -404,13 +387,14 @@ public class FileTypeViewerActivity extends AppCompatActivity implements View.On
         //------
         try {
 
+
             String fileData = CommonMethods.decryptPDFFilePathUsingAESAlgo(filePath);
             if (fileData != null) {
-                if (mMergedRequestCalled.equalsIgnoreCase("0") || mOldDataTag.endsWith("0")) {
+                if (mOldDataTag.endsWith("0")) {
                     mFirstFileTypeProgressDialogLayout.setVisibility(View.GONE);
                     fileOneData = fileData;
                     askWriteExtenralStoragePermission(REQUEST_CODE_WRITE_FILE_ONE_PERMISSIONS);
-                } else if (mMergedRequestCalled.equalsIgnoreCase(("1")) || mOldDataTag.endsWith("1")) {
+                } else if (mOldDataTag.endsWith("1")) {
                     mSecondFileTypeProgressDialogLayout.setVisibility(View.GONE);
                     fileTwoData = fileData;
                     askWriteExtenralStoragePermission(REQUEST_CODE_WRITE_FILE_TWO_PERMISSIONS);
@@ -478,6 +462,7 @@ public class FileTypeViewerActivity extends AppCompatActivity implements View.On
 
         int lstDocCategoryObjectLeftPadding = (int) (getResources().getDimension(R.dimen.dp30) / getResources().getDisplayMetrics().density);
         int lstDocTypeChildLeftPadding = (int) (getResources().getDimension(R.dimen.dp50) / getResources().getDisplayMetrics().density);
+        int lstDateFolderTypeChildLeftPadding = (int) (getResources().getDimension(R.dimen.dp100) / getResources().getDisplayMetrics().density);
         int textColor = ContextCompat.getColor(this, R.color.black);
 
         List<ArchiveDatum> archiveData = fileTreeResponseData.getArchiveData();
@@ -492,59 +477,89 @@ public class FileTypeViewerActivity extends AppCompatActivity implements View.On
             selectableHeaderHolder.setNodeValueColor(textColor);
 
             //---- To bold clicked text in tree
-            if (archiveDatumObject.getFileType().equalsIgnoreCase(mPreviousClickedTreeElement.get(i)))
+            //  if (archiveDatumObject.getFileType().equalsIgnoreCase(mPreviousClickedTreeElement.get(i)))
+            if (archiveDatumObject.getFileType().equalsIgnoreCase(mPreviousClickedTreeElement.get(archiveDatumObject.getFileType())))
                 selectableHeaderHolder.setTreeLabelBold(true);
 
             // Label(pageCount)|NA
-            String dataToShow = archiveDatumObject.getFileType() + " (" + archiveDatumObject.getTotalDocCategoryPageCount() + ")" + "|NA";
+            String dataToShow = archiveDatumObject.getFileType() + " (" + archiveDatumObject.getTotalLstDateFolderTypePageCount() + ")" + "|NA";
 
             TreeNode archiveDatumObjectFolder = new TreeNode(new ArrowExpandIconTreeItemHolder.IconTreeItem(R.string.ic_shopping_cart, dataToShow, archiveDatumObject, i))
                     .setViewHolder(selectableHeaderHolder);
 
-            //---- For list categories loop
-            List<LstDocCategory> lstDocCategories = archiveDatumObject.getLstDocCategories();
+            //---- For list lstDateFolderType loop
+            List<LstDateFolderType> lstDateFolderTypeList = archiveDatumObject.getLstDateFolderTypeList();
 
-            for (int j = 0; j < lstDocCategories.size(); j++) {
-                LstDocCategory lstDocCategoryObject = lstDocCategories.get(j);
+            for (int l = 0; l < lstDateFolderTypeList.size(); l++) {
+                LstDateFolderType lstDateFolderType = lstDateFolderTypeList.get(l);
 
+                //-------NODE LstDateFolderType--------------
                 // Label(pageCount)|id
-                dataToShow = lstDocCategoryObject.getCategoryName() + " (" + lstDocCategoryObject.getTotalDocTypePageCount() + ")" + "|" + lstDocCategoryObject.getCategoryId();
-                ArrowExpandSelectableHeaderHolder docCatSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstDocTypeChildLeftPadding);
-                docCatSelectableHeaderHolder.setOnlyOneNodeExpanded(true);
+                dataToShow = lstDateFolderType.getDateFolderType() + " (" + lstDateFolderType.getPageCount() + ")" + "|NA";
+                ArrowExpandSelectableHeaderHolder lstDateFolderTypeSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstDocTypeChildLeftPadding);
+                lstDateFolderTypeSelectableHeaderHolder.setOnlyOneNodeExpanded(true);
 
-                docCatSelectableHeaderHolder.setNodeValueColor(textColor);
+                lstDateFolderTypeSelectableHeaderHolder.setNodeValueColor(textColor);
 
                 //---- To bold clicked text in tree
-                if (lstDocCategoryObject.getCategoryName().equalsIgnoreCase(mPreviousClickedTreeElement.get(i)))
-                    docCatSelectableHeaderHolder.setTreeLabelBold(true);
+                // if (lstDateFolderType.getDateFolderType().equalsIgnoreCase(mPreviousClickedTreeElement.get(i)))
+                if (lstDateFolderType.getDateFolderType().equalsIgnoreCase(mPreviousClickedTreeElement.get(lstDateFolderType.getDateFolderType())))
+                    lstDateFolderTypeSelectableHeaderHolder.setTreeLabelBold(true);
 
-                TreeNode lstDocCategoryObjectFolder = new TreeNode(new ArrowExpandIconTreeItemHolder.IconTreeItem(R.string.ic_shopping_cart, dataToShow, lstDocCategoryObject, i))
-                        .setViewHolder(docCatSelectableHeaderHolder);
+                TreeNode lstDateFolderTypeObjectFolder = new TreeNode(new ArrowExpandIconTreeItemHolder.IconTreeItem(R.string.ic_shopping_cart, dataToShow, lstDateFolderType, i))
+                        .setViewHolder(lstDateFolderTypeSelectableHeaderHolder);
                 //---
 
-                //for lstDocTypes loop
-                List<LstDocType> lstDocTypesCategoriesChildList = lstDocCategoryObject.getLstDocTypes();
-                for (int k = 0; k < lstDocTypesCategoriesChildList.size(); k++) {
-                    LstDocType lstDocTypeChild = lstDocTypesCategoriesChildList.get(k);
+                //--------------------
+
+                //---- For list categories loop
+                List<LstDocCategory> lstDocCategories = lstDateFolderType.getLstDocCategories();
+
+                for (int j = 0; j < lstDocCategories.size(); j++) {
+                    LstDocCategory lstDocCategoryObject = lstDocCategories.get(j);
 
                     // Label(pageCount)|id
-                    dataToShow = lstDocTypeChild.getTypeName() + " (" + lstDocTypeChild.getPageCount() + ")" + "|" + lstDocTypeChild.getTypeId();
+                    dataToShow = lstDocCategoryObject.getCategoryName() + " (" + lstDocCategoryObject.getTotalDocTypePageCount() + ")" + "|" + lstDocCategoryObject.getCategoryId();
+                    ArrowExpandSelectableHeaderHolder docCatSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstDateFolderTypeChildLeftPadding);
+                    docCatSelectableHeaderHolder.setOnlyOneNodeExpanded(true);
 
-                    //-------
-                    ArrowExpandSelectableHeaderHolder lstDocTypeChildSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstDocTypeChildLeftPadding);
-                    lstDocTypeChildSelectableHeaderHolder.setOnlyOneNodeExpanded(true);
-                    lstDocTypeChildSelectableHeaderHolder.setNodeValueColor(textColor);
+                    docCatSelectableHeaderHolder.setNodeValueColor(textColor);
 
                     //---- To bold clicked text in tree
-                    if (lstDocTypeChild.getTypeName().equalsIgnoreCase(mPreviousClickedTreeElement.get(i)))
-                        lstDocTypeChildSelectableHeaderHolder.setTreeLabelBold(true);
+                    // if (lstDocCategoryObject.getCategoryName().equalsIgnoreCase(mPreviousClickedTreeElement.get(i)))
+                    if (lstDocCategoryObject.getCategoryName().equalsIgnoreCase(mPreviousClickedTreeElement.get(lstDocCategoryObject.getCategoryName())))
+                        docCatSelectableHeaderHolder.setTreeLabelBold(true);
 
-                    TreeNode lstDocTypeChildFolder = new TreeNode(new ArrowExpandIconTreeItemHolder.IconTreeItem(R.string.ic_shopping_cart, dataToShow, lstDocTypeChild, i))
-                            .setViewHolder(lstDocTypeChildSelectableHeaderHolder);
-                    //-------
-                    lstDocCategoryObjectFolder.addChildren(lstDocTypeChildFolder);
+                    TreeNode lstDocCategoryObjectFolder = new TreeNode(new ArrowExpandIconTreeItemHolder.IconTreeItem(R.string.ic_shopping_cart, dataToShow, lstDocCategoryObject, i))
+                            .setViewHolder(docCatSelectableHeaderHolder);
+                    //---
+
+                    //for lstDocTypes loop
+                    List<LstDocType> lstDocTypesCategoriesChildList = lstDocCategoryObject.getLstDocTypes();
+                    for (int k = 0; k < lstDocTypesCategoriesChildList.size(); k++) {
+                        LstDocType lstDocTypeChild = lstDocTypesCategoriesChildList.get(k);
+
+                        // Label(pageCount)|id
+                        dataToShow = lstDocTypeChild.getTypeName() + " (" + lstDocTypeChild.getPageCount() + ")" + "|" + lstDocTypeChild.getTypeId();
+
+                        //-------
+                        ArrowExpandSelectableHeaderHolder lstDocTypeChildSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstDateFolderTypeChildLeftPadding);
+                        lstDocTypeChildSelectableHeaderHolder.setOnlyOneNodeExpanded(true);
+                        lstDocTypeChildSelectableHeaderHolder.setNodeValueColor(textColor);
+
+                        //---- To bold clicked text in tree
+                        // if (lstDocTypeChild.getTypeName().equalsIgnoreCase(mPreviousClickedTreeElement.get(i)))
+                        if (lstDocTypeChild.getTypeName().equalsIgnoreCase(mPreviousClickedTreeElement.get(lstDocTypeChild.getTypeName())))
+                            lstDocTypeChildSelectableHeaderHolder.setTreeLabelBold(true);
+
+                        TreeNode lstDocTypeChildFolder = new TreeNode(new ArrowExpandIconTreeItemHolder.IconTreeItem(R.string.ic_shopping_cart, dataToShow, lstDocTypeChild, i))
+                                .setViewHolder(lstDocTypeChildSelectableHeaderHolder);
+                        //-------
+                        lstDocCategoryObjectFolder.addChildren(lstDocTypeChildFolder);
+                    }
+                    lstDateFolderTypeObjectFolder.addChildren(lstDocCategoryObjectFolder);
                 }
-                archiveDatumObjectFolder.addChildren(lstDocCategoryObjectFolder);
+                archiveDatumObjectFolder.addChildren(lstDateFolderTypeObjectFolder);
             }
             treeRoot.addChildren(archiveDatumObjectFolder);
         }
@@ -665,8 +680,6 @@ public class FileTypeViewerActivity extends AppCompatActivity implements View.On
         mMessageForSecondFile.setVisibility(View.GONE);
         //---
         mDrawer.closeDrawer(GravityCompat.END);
-        //String idToFetch[] = null;
-        String filePathToFetch = null;
 
         if (value instanceof ArrowExpandIconTreeItemHolder.IconTreeItem) {
             ArrowExpandIconTreeItemHolder.IconTreeItem value1 = (ArrowExpandIconTreeItemHolder.IconTreeItem) value;
@@ -677,42 +690,20 @@ public class FileTypeViewerActivity extends AppCompatActivity implements View.On
             //----- Get Object of clicked Element and create map to send  : Start------
             if (value1.objectData instanceof LstDocType) {
                 LstDocType clickedLstDocTypeElement = (LstDocType) value1.objectData;
-                mPreviousClickedTreeElement.put(mClickedTreeStructureLevel, clickedLstDocTypeElement.getTypeName());
-
-                //--------
-                filePathToFetch = clickedLstDocTypeElement.getEncryptedPDFFilePath();
-                //--------
-
-                switch (mMergedRequestCalled) {
-
-                    case "0":
-
-                        //-- To Grayed out alternate views based on selection :START----
-                        if (isComparingBetweenSameFileType) {
-                            mSecondPdfView.setVisibility(View.GONE);
-                            mSecondFileTypePdfViewLayout.setBackgroundColor(ContextCompat.getColor(this, R.color.Gray));
-                        }
-                        //-- To Grayed out alternate views based on selection : END ----
-
-                        doCallPDFDataService(filePathToFetch, 1, mFirstPdfView, mFirstFileTypeProgressDialogLayout, mFirstFileTypePdfViewLayout, mMergedRequestCalled);
-                        break;
-                    case "1":
-
-                        //-- To Grayed out alternate views based on selection :START----
-                        if (isComparingBetweenSameFileType) {
-                            mFirstPdfView.setVisibility(View.GONE);
-                            mFirstFileTypePdfViewLayout.setBackgroundColor(ContextCompat.getColor(this, R.color.Gray));
-                        }
-                        //-- To Grayed out alternate views based on selection : END ----
-
-                        doCallPDFDataService(filePathToFetch, 1, mSecondPdfView, mSecondFileTypeProgressDialogLayout, mSecondFileTypePdfViewLayout, mMergedRequestCalled);
-                        break;
-                    default:
-                        if (filePathToFetch != null) {
-                            doCallPDFDataService(filePathToFetch, 1, mFirstPdfView, mFirstFileTypeProgressDialogLayout, mFirstFileTypePdfViewLayout, "0");
-                            doCallPDFDataService(filePathToFetch, 1, mSecondPdfView, mSecondFileTypeProgressDialogLayout, mSecondFileTypePdfViewLayout, "1");
-                        }
+                clickedPDFList.add("" + clickedLstDocTypeElement.getTypeName());
+                mPreviousClickedTreeElement.put(clickedLstDocTypeElement.getTypeName(), clickedLstDocTypeElement.getTypeName());
+                //----------
+                GetEncryptedPDFRequestModel temp = new GetEncryptedPDFRequestModel();
+                temp.setRecordId(String.valueOf(clickedLstDocTypeElement.getRecordId()));
+                temp.getLstDocTypes().add(clickedLstDocTypeElement);
+                //----------
+                if (clickedPDFList.size() == 1) {
+                    mFirstFileTypeProgressDialogLayout.setVisibility(View.VISIBLE);
+                } else if (clickedPDFList.size() >= 2) {
+                    mSecondFileTypeProgressDialogLayout.setVisibility(View.VISIBLE);
                 }
+                mPatientsHelper.getPdfData(temp, DMSConstants.TASK_GET_PDF_DATA);
+
             }
             //----- Get Object of clicked Element and create map to send  : End------
 
@@ -722,14 +713,6 @@ public class FileTypeViewerActivity extends AppCompatActivity implements View.On
 
 
     private void loadPDFFromServer(String pdfFileURL, PDFView pdfViewToLoad, String base64Pdf, String fileName, String extension) {
-       /* pdfViewToLoad.fromFile(CommonMethods.storeAndGetDocument(this, base64Pdf, fileName, extension))
-                .defaultPage(mPageNumber)
-                .onError(this)
-                .onDraw(this)
-                .onLoad(this)
-                .enableAnnotationRendering(true)
-                .scrollHandle(new DefaultScrollHandle(this))
-                .load();*/
 
         String baseUrl = DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.SERVER_PATH, mContext);
 
@@ -786,6 +769,7 @@ public class FileTypeViewerActivity extends AppCompatActivity implements View.On
         if (size != 0) {
             pdfView.setVisibility(View.VISIBLE);
             progressBarLayout.setVisibility(View.VISIBLE);
+            pdfContainerLayout.setVisibility(View.VISIBLE);
             pdfContainerLayout.setBackgroundResource(R.drawable.pdfdecoration);
         } else {
             pdfView.setVisibility(View.GONE);
@@ -827,195 +811,6 @@ public class FileTypeViewerActivity extends AppCompatActivity implements View.On
         }
         mFirstPdfView.moveTo(mFirstPdfView.getCurrentXOffset(), mFirstPdfView.getCurrentYOffset());
         mSecondPdfView.moveTo(mSecondPdfView.getCurrentXOffset(), mSecondPdfView.getCurrentYOffset());
-    }
-
-
-    private void doGetMergeArchiveList(FileTreeResponseData originalFileTreeResponseData, String fileType) {
-        List<LstDocCategory> mergedALstDocCategoryListData = new ArrayList<LstDocCategory>();
-
-        List<ArchiveDatum> originalArchiveDataList = originalFileTreeResponseData.getArchiveData();
-        //---Merge LstDocCategory into single list-
-        for (ArchiveDatum originalArchiveDataObject :
-                originalArchiveDataList) {
-            if (originalArchiveDataObject.getFileType().equalsIgnoreCase(fileType)) {
-                List<LstDocCategory> lstDocCategories = originalArchiveDataObject.getLstDocCategories();
-                for (LstDocCategory tempObject :
-                        lstDocCategories) {
-                    mergedALstDocCategoryListData.add(tempObject);
-                }
-            }
-        }
-        CommonMethods.Log(TAG, "MERGED mergedALstDocCategoryListData :" + mergedALstDocCategoryListData.toString());
-        //-----------
-        HashMap<LstDocCategory, List<LstDocType>> mergedLstDocTypeHashMap = new HashMap<LstDocCategory, List<LstDocType>>();
-
-        for (int i = 0; i < mergedALstDocCategoryListData.size(); i++) {
-            boolean flag = false;
-            LstDocCategory iLoopLstDocCategory = mergedALstDocCategoryListData.get(i);
-
-            boolean mapInsertedStatus = false;
-
-            for (Map.Entry<LstDocCategory, List<LstDocType>> entry : mergedLstDocTypeHashMap.entrySet()) {
-                LstDocCategory key = entry.getKey();
-                if (iLoopLstDocCategory.getCategoryId() == key.getCategoryId()) {
-                    mapInsertedStatus = true;
-                    break;
-                } else {
-                    mapInsertedStatus = false;
-                }
-            }
-            //---
-
-            //--if already in map, then don't iterate
-            if (!mapInsertedStatus) {
-                for (int j = i + 1; j < mergedALstDocCategoryListData.size(); j++) {
-                    LstDocCategory jLoopLstDocCategory = mergedALstDocCategoryListData.get(j);
-                    if (iLoopLstDocCategory.getCategoryId() == jLoopLstDocCategory.getCategoryId()) {
-                        // got the duplicate element
-
-                        //---***************
-                        List<LstDocType> firstLstDocTypes = iLoopLstDocCategory.getLstDocTypes();
-                        // THIS IS DONE BZCZ, WE ARE ADDING List<LstDocType> into hashmap,
-                        // hence to avoid data redundancy
-                        iLoopLstDocCategory.setLstDocTypes(null);
-
-
-                        //---
-                        List<LstDocType> secondLstDocTypes = jLoopLstDocCategory.getLstDocTypes();
-
-                        List<LstDocType> tempLocalListToAddIntoMap = new ArrayList<>();
-
-                        tempLocalListToAddIntoMap.addAll(firstLstDocTypes);
-                        tempLocalListToAddIntoMap.addAll(secondLstDocTypes);
-
-                        //-- To Merge getMergedFileCompareCustomID--
-                        String[] iLoopMergedFileCompareCustomID = iLoopLstDocCategory.getMergedFileCompareCustomID();
-                        String[] jLoopMergedFileCompareCustomID = jLoopLstDocCategory.getMergedFileCompareCustomID();
-
-                        String[] tempTotal = new String[iLoopMergedFileCompareCustomID.length + jLoopMergedFileCompareCustomID.length];
-
-                        System.arraycopy(iLoopMergedFileCompareCustomID, 0, tempTotal, 0, iLoopMergedFileCompareCustomID.length);
-                        System.arraycopy(jLoopMergedFileCompareCustomID, 0, tempTotal, iLoopMergedFileCompareCustomID.length, jLoopMergedFileCompareCustomID.length);
-
-                        iLoopLstDocCategory.setMergedFileCompareCustomID(tempTotal);
-                        //----
-
-                        HashSet<LstDocType> lstDocTypes = mergeLstDocTypeElement(tempLocalListToAddIntoMap);
-
-                        mergedLstDocTypeHashMap.put(iLoopLstDocCategory, new ArrayList<LstDocType>(lstDocTypes));
-                        //---***************
-                        flag = true;
-                    }
-                }
-
-                if (!flag) {
-                    LstDocCategory firstLstDocCategory = mergedALstDocCategoryListData.get(i);
-                    List<LstDocType> firstLstDocTypes = firstLstDocCategory.getLstDocTypes();
-                    // THIS IS DONE BZCZ, WE ARE ADDING List<LstDocType> into hashmap,
-                    // hence to avoid data redundancy
-                    firstLstDocCategory.setLstDocTypes(null);
-
-                    mergedLstDocTypeHashMap.put(firstLstDocCategory, firstLstDocTypes);
-                }
-            }
-        }
-        CommonMethods.Log(TAG, "COMBINED HASHMAP LIST: " + mergedLstDocTypeHashMap.toString());
-
-        //----final object creation
-        ArchiveDatum archiveDatum = new ArchiveDatum();
-        ArrayList<LstDocCategory> lstDocCategories = new ArrayList<LstDocCategory>();
-        if (mergedLstDocTypeHashMap.isEmpty()) {
-            archiveDatum.setFileType(fileType);
-        } else {
-            for (Map.Entry<LstDocCategory, List<LstDocType>> entry : mergedLstDocTypeHashMap.entrySet()) {
-                LstDocCategory key = entry.getKey();
-                archiveDatum.setFileType(fileType);
-                key.setLstDocTypes(entry.getValue());
-                lstDocCategories.add(key);
-            }
-        }
-        archiveDatum.setLstDocCategories(lstDocCategories);
-        //-- This is done to maintain parent element pattern for both first & second file view.
-        archiveDatum.setMergedFileCompareCustomID(new String[]{"0", "1"});
-
-        ArrayList<ArchiveDatum> lstArchiveDatum = new ArrayList<ArchiveDatum>();
-        lstArchiveDatum.add(archiveDatum);
-
-        mFileTreeResponseData.setArchiveData(lstArchiveDatum);
-        CommonMethods.Log(TAG, "FINAL COMBINED HASHMAP LIST: " + mFileTreeResponseData.toString());
-        //-----
-
-    }
-
-
-    private HashSet<LstDocType> mergeLstDocTypeElement(List<LstDocType> tempLstDocTypeList) {
-
-        HashSet<LstDocType> hashSet = new HashSet<>();
-        for (int i = 0; i < tempLstDocTypeList.size(); i++) {
-            boolean flag = false;
-            LstDocType iLoopLstDocType = tempLstDocTypeList.get(i);
-            for (int j = i + 1; j < tempLstDocTypeList.size(); j++) {
-                LstDocType jLoopLstDocType = tempLstDocTypeList.get(j);
-                if (iLoopLstDocType.getTypeId() == jLoopLstDocType.getTypeId()) {
-                    LstDocType lstDocType = new LstDocType();
-                    lstDocType.setTypeId(iLoopLstDocType.getTypeId());
-                    lstDocType.setTypeName(iLoopLstDocType.getTypeName());
-                    lstDocType.setAbbreviation(iLoopLstDocType.getAbbreviation());
-                    lstDocType.setCreatedDate(iLoopLstDocType.getCreatedDate());
-                    lstDocType.setPageCount(iLoopLstDocType.getPageCount() + jLoopLstDocType.getPageCount());
-                    lstDocType.setPageNumber(iLoopLstDocType.getPageNumber());
-
-                    //-- To Merge getMergedFileCompareCustomID--
-                    String[] iLoopMergedFileCompareCustomID = iLoopLstDocType.getMergedFileCompareCustomID();
-                    String[] jLoopMergedFileCompareCustomID = jLoopLstDocType.getMergedFileCompareCustomID();
-
-                    String[] tempTotal = new String[iLoopMergedFileCompareCustomID.length + jLoopMergedFileCompareCustomID.length];
-
-                    System.arraycopy(iLoopMergedFileCompareCustomID, 0, tempTotal, 0, iLoopMergedFileCompareCustomID.length);
-                    System.arraycopy(jLoopMergedFileCompareCustomID, 0, tempTotal, iLoopMergedFileCompareCustomID.length, jLoopMergedFileCompareCustomID.length);
-
-                    lstDocType.setMergedFileCompareCustomID(tempTotal);
-                    //----
-                    //-------
-                    boolean tempFlag = true;
-                    for (LstDocType tempData :
-                            hashSet) {
-                        if (tempData.getTypeId() == iLoopLstDocType.getTypeId()) {
-                            tempFlag = false;
-                            break;
-                        }
-                    }
-                    if (tempFlag)
-                        hashSet.add(lstDocType);
-                    //----
-                    flag = true;
-                }
-            }
-
-            if (!flag) {
-                LstDocType lstDocType = new LstDocType();
-                lstDocType.setTypeId(iLoopLstDocType.getTypeId());
-                lstDocType.setTypeName(iLoopLstDocType.getTypeName());
-                lstDocType.setAbbreviation(iLoopLstDocType.getAbbreviation());
-                lstDocType.setCreatedDate(iLoopLstDocType.getCreatedDate());
-                lstDocType.setPageCount(iLoopLstDocType.getPageCount());
-                lstDocType.setPageNumber(iLoopLstDocType.getPageNumber());
-                lstDocType.setMergedFileCompareCustomID(iLoopLstDocType.getMergedFileCompareCustomID());
-                //-------
-                boolean tempFlag = true;
-                for (LstDocType tempData :
-                        hashSet) {
-                    if (tempData.getTypeId() == iLoopLstDocType.getTypeId()) {
-                        tempFlag = false;
-                        break;
-                    }
-                }
-                if (tempFlag)
-                    hashSet.add(lstDocType);
-                //----
-            }
-        }
-        return hashSet;
     }
 
 }

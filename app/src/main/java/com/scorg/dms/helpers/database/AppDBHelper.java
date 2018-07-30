@@ -27,11 +27,6 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 
 import static com.scorg.dms.util.DMSConstants.FILE_STATUS.FAILED;
-import static com.scorg.dms.util.DMSConstants.MESSAGE_STATUS.REACHED;
-import static com.scorg.dms.util.DMSConstants.MESSAGE_STATUS.READ;
-import static com.scorg.dms.util.DMSConstants.MESSAGE_STATUS.SEEN;
-import static com.scorg.dms.util.DMSConstants.MESSAGE_STATUS.SENT;
-import static com.scorg.dms.util.DMSConstants.MESSAGE_STATUS.UNREAD;
 
 public class AppDBHelper extends SQLiteOpenHelper {
 

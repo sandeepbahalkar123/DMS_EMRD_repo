@@ -13,7 +13,6 @@ import com.scorg.dms.interfaces.CustomResponse;
 import com.scorg.dms.preference.DMSPreferencesManager;
 import com.scorg.dms.singleton.Device;
 import com.scorg.dms.util.CommonMethods;
-import com.scorg.dms.util.Config;
 import com.scorg.dms.util.DMSConstants;
 
 import java.util.HashMap;

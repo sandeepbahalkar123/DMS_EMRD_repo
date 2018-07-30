@@ -140,15 +140,7 @@ public class DMSConstants {
     public static final String GMAIL_LOGIN = "gmail_login";
     public static final String FACEBOOK_LOGIN = "facebook_login";
 
-    public static final String UPLOADING_STATUS = "uploading_status";
-    public static final String INVESTIGATION_NOTIFICATION_TIME = "9:00 AM";
-    public static final String APPOINTMENT_NOTIFICATION_TIME = "9:00 AM";
-    public static final String GMAIL_PACKAGE = "com.google.android.gm";
-    public static final String EMAIL = "email";
-    public static final String OPD_ID = "opd_id";
-    public static final String MYRECORDDATAMODEL = "myrecorddatamodel";
-    public static final String CAPTION = "caption";
-    public static final String TYPE_OF_LOGIN = "";
+
     public static final String SENDERID = "EMROTP";
     public static final String IS_URL = "isUrl";
     public static final String CHAT_REQUEST = "chat_request";
@@ -161,7 +153,7 @@ public class DMSConstants {
     public static final String PATIENT_VISIT_DATE = "patient_visit_date";
     public static final String PATIENT_ID = "patient_id";
     public static final String NO = "no";
-    public static final String DOCTORS_ID = "doctor_id";
+    public static final String RECORD_ID = "record_id";
     public static final String VISIT_DATE = "visitDate";
     public static final String PATIENT_OBJECT = "patient_object";
     public static final String PATIENT_NAME = "patient_name";

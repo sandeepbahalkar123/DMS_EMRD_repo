@@ -33,6 +33,9 @@ public class ShowSearchResultRequestModel implements CustomResponse {
     @SerializedName("pageNumber")
     @Expose
     private String pageNumber = "";
+    @SerializedName("commonSearch")
+    @Expose
+    private String commonSearch = "";
 
     private String[] DocTypeId = new String[0];
 
@@ -123,6 +126,14 @@ public class ShowSearchResultRequestModel implements CustomResponse {
 
     public void setPageNumber(String pageNumber) {
         this.pageNumber = pageNumber;
+    }
+
+    public String getCommonSearch() {
+        return commonSearch;
+    }
+
+    public void setCommonSearch(String commonSearch) {
+        this.commonSearch = commonSearch;
     }
 
     @Override

@@ -10,10 +10,8 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.scorg.dms.R;
-import com.scorg.dms.model.my_appointments.PatientList;
 import com.scorg.dms.model.patient.template_sms.request_send_sms.PatientInfoList;
 import com.scorg.dms.ui.customesViews.CustomTextView;
-import com.scorg.dms.ui.fragments.patient.my_patient.SendSmsPatientActivity;
 
 import java.util.ArrayList;
 

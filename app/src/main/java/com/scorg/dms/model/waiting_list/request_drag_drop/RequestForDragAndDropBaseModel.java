@@ -1,14 +1,14 @@
 
 package com.scorg.dms.model.waiting_list.request_drag_drop;
 
-import java.util.ArrayList;
-import java.util.ArrayList;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.os.Parcelable.Creator;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.scorg.dms.interfaces.CustomResponse;
+
+import java.util.ArrayList;
 
 public class RequestForDragAndDropBaseModel implements Parcelable,CustomResponse
 {

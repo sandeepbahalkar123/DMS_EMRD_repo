@@ -12,11 +12,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.scorg.dms.R;
-import com.scorg.dms.model.dashboard.AppointmentClinicList;
 import com.scorg.dms.model.dashboard.DashboardDataModel;
 import com.scorg.dms.ui.customesViews.CustomTypefaceSpan;
-import com.scorg.dms.util.CommonMethods;
-import com.scorg.dms.util.DMSConstants;
 
 import java.util.ArrayList;
 

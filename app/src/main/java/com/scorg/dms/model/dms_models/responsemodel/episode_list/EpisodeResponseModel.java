@@ -4,8 +4,6 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.scorg.dms.interfaces.CustomResponse;
 import com.scorg.dms.model.Common;
-import com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemodel.SearchResult;
-import com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemodel.SearchResultData;
 
 import java.io.Serializable;
 import java.util.ArrayList;

@@ -14,6 +14,9 @@ public class PatientEpisodeFileData implements Serializable {
     @SerializedName("FileType")
     @Expose
     private String fileType;
+    @SerializedName("RecordId")
+    @Expose
+    private int recordId;
     @SerializedName("FileTypeRefId")
     @Expose
     private String fileTypeRefId;
@@ -23,6 +26,9 @@ public class PatientEpisodeFileData implements Serializable {
     @SerializedName("DischargeDate")
     @Expose
     private String dischargeDate;
+    @SerializedName("DoctorName")
+    @Expose
+    private String doctorName;
 
     //-- THIS IS ADDED TO MAINTAIN RESPECTIVE PARENT PATIENT ID
     private String respectiveParentPatientID;
@@ -67,5 +73,21 @@ public class PatientEpisodeFileData implements Serializable {
 
     public void setRespectiveParentPatientID(String respectiveParentPatientID) {
         this.respectiveParentPatientID = respectiveParentPatientID;
+    }
+
+    public int getRecordId() {
+        return recordId;
+    }
+
+    public void setRecordId(int recordId) {
+        this.recordId = recordId;
+    }
+
+    public String getDoctorName() {
+        return doctorName;
+    }
+
+    public void setDoctorName(String doctorName) {
+        this.doctorName = doctorName;
     }
 }

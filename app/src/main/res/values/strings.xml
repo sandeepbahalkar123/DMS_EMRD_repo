@@ -164,6 +164,7 @@
     <string name="just_now">Just Now</string>
     <string name="services"><u>Services</u></string>
     <string name="about_doctor"><u>About Doctor :</u></string>
+    <string name="doc_name">Doctor Name:</string>
     <!--<string name="template_list">Template List</string>-->
     <string name="template_list">SMS Templates</string>
     <string name="active">ACTIVE</string>
@@ -312,5 +313,9 @@
     <string name="file_two">FileType-2</string>
     <string name="address">Address</string>
     <string name="title_activity_patient_details">Patient Details</string>
+    <string name="in_uhid">in UHID</string>
+    <string name="in_patient_name">in Patient name</string>
+    <string name="in_ref_id">in Ref Id</string>
+    <string name="in_all">in All</string>
 
 </resources>

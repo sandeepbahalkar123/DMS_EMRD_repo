@@ -12,12 +12,10 @@ import android.widget.ProgressBar;
 
 import com.android.internal.util.Predicate;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
-import droidninja.filepicker.FilePickerConst;
 import droidninja.filepicker.PickerManager;
 import droidninja.filepicker.R;
 import droidninja.filepicker.adapters.SectionsPagerAdapter;

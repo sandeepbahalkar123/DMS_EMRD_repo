@@ -17,7 +17,8 @@
     <color name="black">#000000</color>
     <color name="floating_blue_color">#3676A2</color>
     <color name="Red">#FF0000</color>
-    <color name="tagColor">#04abdf</color>
+    <!--<color name="tagColor">#04abdf</color>-->
+    <color name="tagColor">#1d8fce</color>
     <color name="timing_bg_color">#50a9da</color>
     <color name="statusbar">#0077a7</color>
     <color name="switch_button_color">#9B9B9B</color>

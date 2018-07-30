@@ -6,20 +6,13 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.EditText;
 
-import com.google.gson.Gson;
 import com.scorg.dms.R;
 import com.scorg.dms.helpers.login.LoginHelper;
 import com.scorg.dms.interfaces.CustomResponse;
 import com.scorg.dms.interfaces.HelperResponse;
 import com.scorg.dms.model.dms_models.responsemodel.loginresponsemodel.LoginResponseModel;
-import com.scorg.dms.model.login.DocDetail;
-import com.scorg.dms.model.login.LoginModel;
 import com.scorg.dms.preference.DMSPreferencesManager;
 import com.scorg.dms.util.CommonMethods;
-import com.scorg.dms.util.DMSConstants;
-
-import java.io.IOException;
-import java.io.InputStream;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

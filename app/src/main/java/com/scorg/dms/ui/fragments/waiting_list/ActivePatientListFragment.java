@@ -2,13 +2,10 @@ package com.scorg.dms.ui.fragments.waiting_list;
 
 import android.Manifest;
 import android.content.Intent;
-import android.graphics.drawable.NinePatchDrawable;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -18,18 +15,10 @@ import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
-import android.widget.Toast;
 
-import com.h6ah4i.android.widget.advrecyclerview.animator.DraggableItemAnimator;
-import com.h6ah4i.android.widget.advrecyclerview.animator.GeneralItemAnimator;
-import com.h6ah4i.android.widget.advrecyclerview.draggable.RecyclerViewDragDropManager;
-import com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager;
-import com.h6ah4i.android.widget.advrecyclerview.touchguard.RecyclerViewTouchActionGuardManager;
-import com.h6ah4i.android.widget.advrecyclerview.utils.WrapperAdapterUtils;
 import com.scorg.dms.R;
 import com.scorg.dms.adapters.waiting_list.WaitingListAdapter;
 import com.scorg.dms.adapters.waiting_list.WaitingListSpinnerAdapter;
-import com.scorg.dms.helpers.myappointments.AppointmentHelper;
 import com.scorg.dms.helpers.patient_list.DMSPatientsHelper;
 import com.scorg.dms.interfaces.CustomResponse;
 import com.scorg.dms.interfaces.HelperResponse;
@@ -38,22 +27,13 @@ import com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemode
 import com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemodel.SearchResult;
 import com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemodel.SearchResultData;
 import com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemodel.ShowSearchResultResponseModel;
-import com.scorg.dms.model.patient.template_sms.TemplateBaseModel;
-import com.scorg.dms.model.waiting_list.AbstractDataProvider;
-import com.scorg.dms.model.waiting_list.Active;
-import com.scorg.dms.model.waiting_list.PatientDataActiveWaitingListProvider;
+import com.scorg.dms.model.waiting_list.WaitingClinicList;
 import com.scorg.dms.model.waiting_list.WaitingListDataModel;
 import com.scorg.dms.model.waiting_list.WaitingPatientData;
-import com.scorg.dms.model.waiting_list.WaitingClinicList;
-import com.scorg.dms.model.waiting_list.request_delete_waiting_list.RequestDeleteBaseModel;
-import com.scorg.dms.model.waiting_list.request_drag_drop.RequestForDragAndDropBaseModel;
-import com.scorg.dms.model.waiting_list.request_drag_drop.WaitingListSequence;
-import com.scorg.dms.preference.DMSPreferencesManager;
 import com.scorg.dms.ui.activities.dms_patient_list.FileTypeViewerActivity;
 import com.scorg.dms.ui.activities.waiting_list.WaitingMainListActivity;
 import com.scorg.dms.ui.customesViews.CircularImageView;
 import com.scorg.dms.ui.customesViews.CustomTextView;
-import com.scorg.dms.util.CommonMethods;
 import com.scorg.dms.util.DMSConstants;
 
 import java.util.ArrayList;
@@ -64,8 +44,6 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.RuntimePermissions;
-
-import static com.scorg.dms.util.DMSConstants.LOCATION_ID;
 
 /**
  * Created by jeetal on 22/2/18.
@@ -226,7 +204,8 @@ public class ActivePatientListFragment extends Fragment implements WaitingListAd
                     List<SearchResult> searchResultList = searchResultData.getSearchResult();
                     if (!searchResultList.isEmpty()) {
                         SearchResult searchPatientInformation = searchResultList.get(0);
-                        List<PatientFileData> patientFileDataList = searchPatientInformation.getPatientFileData();
+                        //TODO : as API response chnaged, hence need to fix this too.
+                        /*List<PatientFileData> patientFileDataList = searchPatientInformation.getPatientFileData();
                         if (patientFileDataList != null) {
                             if (!patientFileDataList.isEmpty()) {
                                 PatientFileData childElement = patientFileDataList.get(0);
@@ -242,7 +221,7 @@ public class ActivePatientListFragment extends Fragment implements WaitingListAd
                                 intent.putExtra(DMSConstants.DATA, extra);
                                 startActivity(intent);
                             }
-                        }
+                        }*/
                     }
                 }
             }

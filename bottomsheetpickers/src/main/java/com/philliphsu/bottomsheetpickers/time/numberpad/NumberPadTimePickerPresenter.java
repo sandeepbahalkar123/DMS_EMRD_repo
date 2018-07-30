@@ -2,12 +2,12 @@ package com.philliphsu.bottomsheetpickers.time.numberpad;
 
 import android.support.annotation.NonNull;
 
-import static com.philliphsu.bottomsheetpickers.time.numberpad.Preconditions.checkNotNull;
 import static com.philliphsu.bottomsheetpickers.time.numberpad.AmPmState.AM;
 import static com.philliphsu.bottomsheetpickers.time.numberpad.AmPmState.HRS_24;
 import static com.philliphsu.bottomsheetpickers.time.numberpad.AmPmState.PM;
 import static com.philliphsu.bottomsheetpickers.time.numberpad.AmPmState.UNSPECIFIED;
 import static com.philliphsu.bottomsheetpickers.time.numberpad.DigitwiseTimeModel.MAX_DIGITS;
+import static com.philliphsu.bottomsheetpickers.time.numberpad.Preconditions.checkNotNull;
 
 class NumberPadTimePickerPresenter implements
         INumberPadTimePicker.Presenter,

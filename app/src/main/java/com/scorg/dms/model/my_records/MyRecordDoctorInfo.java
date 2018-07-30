@@ -5,6 +5,7 @@ import com.google.gson.annotations.SerializedName;
 import com.scorg.dms.interfaces.CustomResponse;
 import com.scorg.dms.util.CommonMethods;
 import com.scorg.dms.util.DMSConstants;
+
 import java.io.Serializable;
 
 /**

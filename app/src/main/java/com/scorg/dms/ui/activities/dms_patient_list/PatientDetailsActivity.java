@@ -1,25 +1,26 @@
 package com.scorg.dms.ui.activities.dms_patient_list;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.scorg.dms.R;
 import com.scorg.dms.adapters.dms_adapters.PatientEpisodeRecycleViewListAdapter;
-import com.scorg.dms.adapters.dms_adapters.PatientRecycleViewListAdapter;
 import com.scorg.dms.helpers.patient_list.DMSPatientsHelper;
 import com.scorg.dms.interfaces.CustomResponse;
 import com.scorg.dms.interfaces.HelperResponse;
-import com.scorg.dms.model.Common;
 import com.scorg.dms.model.dms_models.requestmodel.showsearchresultrequestmodel.ShowSearchResultRequestModel;
 import com.scorg.dms.model.dms_models.responsemodel.episode_list.EpisodeResponseModel;
 import com.scorg.dms.model.dms_models.responsemodel.episode_list.PatientEpisodeFileData;
 import com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemodel.SearchResult;
-import com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemodel.ShowSearchResultResponseModel;
+import com.scorg.dms.ui.customesViews.CustomTextView;
 import com.scorg.dms.ui.customesViews.drag_drop_recyclerview_helper.EndlessRecyclerViewScrollListener;
 import com.scorg.dms.util.CommonMethods;
 import com.scorg.dms.util.DMSConstants;
@@ -40,10 +41,14 @@ public class PatientDetailsActivity extends AppCompatActivity implements HelperR
     Toolbar toolbar;
     @BindView(R.id.listOfOPDTypes)
     RecyclerView listOfOPDTypes;
+    @BindView(R.id.patientName)
+    CustomTextView mPatientName;
+    @BindView(R.id.uhidData)
+    CustomTextView mUHIDData;
 
     private DMSPatientsHelper mPatientsHelper;
     private Context mContext;
-    private SearchResult mReceivedPatinetData;
+    private SearchResult mReceivedPatientData;
     private PatientEpisodeRecycleViewListAdapter mPatientEpisodeRecycleViewListAdapter;
     private int currentPage = 0;
     private boolean loading = true;
@@ -55,15 +60,21 @@ public class PatientDetailsActivity extends AppCompatActivity implements HelperR
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ActionBar supportActionBar = getSupportActionBar();
+
         mContext = this;
 
         Bundle bundle = getIntent().getBundleExtra(BUNDLE);
-        mReceivedPatinetData = (SearchResult) bundle.getSerializable(DMSConstants.PATIENT_DETAILS);
+        mReceivedPatientData = (SearchResult) bundle.getSerializable(DMSConstants.PATIENT_DETAILS);
 
         init();
     }
 
     private void init() {
+        //--------------
+        mUHIDData.setText(mReceivedPatientData.getPatientId());
+        mPatientName.setText(mReceivedPatientData.getPatientName());
+        //--------------
         mPatientsHelper = new DMSPatientsHelper(mContext, this);
         //--------
         mPatientEpisodeRecycleViewListAdapter = new PatientEpisodeRecycleViewListAdapter(this, new ArrayList<PatientEpisodeFileData>());
@@ -89,7 +100,7 @@ public class PatientDetailsActivity extends AppCompatActivity implements HelperR
 
     private void doGetPatientEpisode() {
         ShowSearchResultRequestModel showSearchResultRequestModel = new ShowSearchResultRequestModel();
-        showSearchResultRequestModel.setPatientId(mReceivedPatinetData.getPatientId());
+        showSearchResultRequestModel.setPatientId(mReceivedPatientData.getPatientId());
         showSearchResultRequestModel.setPageNumber("" + currentPage);
         mPatientsHelper.doGetPatientEpisodeList(showSearchResultRequestModel);
     }
@@ -129,6 +140,21 @@ public class PatientDetailsActivity extends AppCompatActivity implements HelperR
     @Override
     public void onEpisodeListItemClick(PatientEpisodeFileData groupHeader) {
 
+        Intent intent = new Intent(mContext, FileTypeViewerActivity.class);
+        Bundle extra = new Bundle();
+        ArrayList<PatientEpisodeFileData> dataToSend = new ArrayList<PatientEpisodeFileData>();
+        dataToSend.add(groupHeader);
+        //  SearchResult searchPatientInformation = patientExpandableListAdapter.searchPatientInfo("" + groupHeader.getPatientId());
+        //todo: filepath(pdf url is not getting in api)
+        // extra.putSerializable(getString(R.string.compare), dataToSend);
+        extra.putSerializable(getString(R.string.compare), dataToSend);
+        extra.putString(DMSConstants.PATIENT_ADDRESS, mReceivedPatientData.getPatientAddress());
+        extra.putString(DMSConstants.DOCTOR_NAME, mReceivedPatientData.getDoctorName());
+        extra.putString(DMSConstants.PATIENT_ID, mReceivedPatientData.getPatientId());
+        extra.putString(DMSConstants.PATIENT_LIST_PARAMS.PATIENT_NAME, "" + mReceivedPatientData.getPatientName());
+        extra.putString(DMSConstants.RECORD_ID, String.valueOf(groupHeader.getRecordId()));
+        intent.putExtra(DMSConstants.DATA, extra);
+        startActivity(intent);
     }
 
     @Override
@@ -141,5 +167,17 @@ public class PatientDetailsActivity extends AppCompatActivity implements HelperR
         switch (v.getId()) {
 
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

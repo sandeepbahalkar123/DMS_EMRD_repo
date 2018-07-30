@@ -2,7 +2,6 @@ package com.scorg.dms.model.investigation;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.text.TextWatcher;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

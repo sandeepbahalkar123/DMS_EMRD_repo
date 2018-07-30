@@ -12,13 +12,11 @@ public class ArchiveDatum {
     @SerializedName("fileType")
     @Expose
     private String fileType;
-    @SerializedName("lstDocCategories")
+    @SerializedName("lstDateFolderType")
     @Expose
-    private List<LstDocCategory> lstDocCategories = new ArrayList<LstDocCategory>();
+    private List<LstDateFolderType> lstDateFolderTypeList = new ArrayList<LstDateFolderType>();
 
-    private String[] mergedFileCompareCustomID = null;
-
-    private int totalDocCategoryPageCount = -1;
+    private int totalLstDateFolderTypePageCount = -1;
 
 
     public String getFileType() {
@@ -29,46 +27,35 @@ public class ArchiveDatum {
         this.fileType = fileType;
     }
 
-    public List<LstDocCategory> getLstDocCategories() {
-        return lstDocCategories;
+    public List<LstDateFolderType> getLstDateFolderTypeList() {
+        return lstDateFolderTypeList;
     }
 
-    public void setLstDocCategories(List<LstDocCategory> lstDocCategories) {
-        this.lstDocCategories = lstDocCategories;
+    public void setLstDateFolderTypeList(List<LstDateFolderType> lstDateFolderTypeList) {
+        this.lstDateFolderTypeList = lstDateFolderTypeList;
     }
 
+    public void setTotalLstDateFolderTypePageCount(int totalLstDateFolderTypePageCount) {
+        this.totalLstDateFolderTypePageCount = totalLstDateFolderTypePageCount;
+    }
 
-    public int getTotalDocCategoryPageCount() {
-        if (totalDocCategoryPageCount == -1) {
+    public int getTotalLstDateFolderTypePageCount() {
+        if (totalLstDateFolderTypePageCount == -1) {
             int count = 0;
-            for (LstDocCategory temp :
-                    lstDocCategories) {
-                count = count + temp.getTotalDocTypePageCount();
+            for (LstDateFolderType temp :
+                    lstDateFolderTypeList) {
+                count = count + temp.getPageCount();
             }
-            setTotalDocCategoryPageCount(count);
+            setTotalLstDateFolderTypePageCount(count);
         }
-        return totalDocCategoryPageCount;
-    }
-
-    public void setTotalDocCategoryPageCount(int totalDocCategoryPageCount) {
-        this.totalDocCategoryPageCount = totalDocCategoryPageCount;
-    }
-
-    public String[] getMergedFileCompareCustomID() {
-        return mergedFileCompareCustomID;
-    }
-
-    public void setMergedFileCompareCustomID(String[] mergedFileCompareCustomID) {
-        this.mergedFileCompareCustomID = mergedFileCompareCustomID;
+        return totalLstDateFolderTypePageCount;
     }
 
     @Override
     public String toString() {
         return "ArchiveDatum{" +
                 "fileType='" + fileType + '\'' +
-                ", lstDocCategories=" + lstDocCategories +
-                ", mergedFileCompareCustomID=" + Arrays.toString(mergedFileCompareCustomID) +
-                ", totalDocCategoryPageCount=" + totalDocCategoryPageCount +
+                ", lstDateFolderType=" + lstDateFolderTypeList +
                 '}';
     }
 }

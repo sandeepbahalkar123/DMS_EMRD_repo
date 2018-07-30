@@ -4,15 +4,15 @@ import android.content.Context;
 
 import com.android.volley.Request;
 import com.scorg.dms.R;
-import com.scorg.dms.model.patient.add_new_patient.PatientDetail;
-import com.scorg.dms.model.patient.add_new_patient.SyncPatientsRequest;
-import com.scorg.dms.model.patient.doctor_patients.PatientList;
 import com.scorg.dms.interfaces.ConnectionListener;
 import com.scorg.dms.interfaces.CustomResponse;
 import com.scorg.dms.interfaces.HelperResponse;
 import com.scorg.dms.model.my_appointments.RequestAppointmentData;
 import com.scorg.dms.model.my_appointments.request_cancel_or_complete_appointment.RequestAppointmentCancelModel;
 import com.scorg.dms.model.my_patient_filter.LocationsRequest;
+import com.scorg.dms.model.patient.add_new_patient.PatientDetail;
+import com.scorg.dms.model.patient.add_new_patient.SyncPatientsRequest;
+import com.scorg.dms.model.patient.doctor_patients.PatientList;
 import com.scorg.dms.model.patient.template_sms.request_send_sms.ClinicListForSms;
 import com.scorg.dms.model.patient.template_sms.request_send_sms.RequestSendSmsModel;
 import com.scorg.dms.model.request_appointment_confirmation.RequestAppointmentConfirmationModel;

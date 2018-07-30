@@ -1,15 +1,15 @@
 
 package com.scorg.dms.model.doctor_location;
 
-import java.util.ArrayList;
-import java.util.ArrayList;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.os.Parcelable.Creator;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.scorg.dms.interfaces.CustomResponse;
 import com.scorg.dms.model.Common;
+
+import java.util.ArrayList;
 
 public class DoctorLocationBaseModel implements Parcelable,CustomResponse
 {

@@ -5,12 +5,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.CheckedTextView;
 
 import com.scorg.dms.R;
 import com.scorg.dms.model.my_appointments.ClinicList;
-import com.scorg.dms.model.my_appointments.StatusList;
 import com.scorg.dms.ui.fragments.my_appointments.DrawerForMyAppointment;
 
 import java.util.ArrayList;

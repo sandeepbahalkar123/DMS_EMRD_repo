@@ -6,7 +6,6 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.scorg.dms.model.Common;
 
 import java.util.ArrayList;
 

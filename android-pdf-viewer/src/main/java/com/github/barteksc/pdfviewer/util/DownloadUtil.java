@@ -15,13 +15,12 @@
  */
 package com.github.barteksc.pdfviewer.util;
 
-import java.io.IOException;
-import java.io.InputStream;
-
 import android.support.annotation.NonNull;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 import okhttp3.Call;
 import okhttp3.Callback;

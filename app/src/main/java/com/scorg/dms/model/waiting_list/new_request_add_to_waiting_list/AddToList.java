@@ -1,12 +1,13 @@
 
 package com.scorg.dms.model.waiting_list.new_request_add_to_waiting_list;
 
-import java.util.ArrayList;
-import java.util.ArrayList;
 import android.os.Parcel;
 import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import java.util.ArrayList;
 
 public class AddToList implements Parcelable
 {

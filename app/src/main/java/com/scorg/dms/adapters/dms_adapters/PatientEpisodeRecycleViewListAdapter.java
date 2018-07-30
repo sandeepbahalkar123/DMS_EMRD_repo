@@ -2,25 +2,17 @@ package com.scorg.dms.adapters.dms_adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatImageButton;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.ExpandableListView;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.amulyakhare.textdrawable.TextDrawable;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.scorg.dms.R;
 import com.scorg.dms.model.dms_models.responsemodel.episode_list.PatientEpisodeFileData;
-import com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemodel.PatientFileData;
-import com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemodel.SearchResult;
 import com.scorg.dms.util.CommonMethods;
 import com.scorg.dms.util.DMSConstants;
 
@@ -109,10 +101,11 @@ public class PatientEpisodeRecycleViewListAdapter extends RecyclerView.Adapter<P
         }
 
         if (CommonMethods.isTablet(_context))
-            childViewHolder.ipdCheckBox.setVisibility(View.VISIBLE);
+            childViewHolder.ipdCheckBox.setVisibility(View.GONE);
         else
             childViewHolder.ipdCheckBox.setVisibility(View.GONE);
 
+        childViewHolder.doctorName.setText(childElement.getDoctorName());
 
         //--------------------
 
@@ -123,7 +116,7 @@ public class PatientEpisodeRecycleViewListAdapter extends RecyclerView.Adapter<P
             }
         });
 
-      //  childViewHolder.childCardView.setBackgroundResource(R.drawable.round_background_and_square_side_view);
+        //  childViewHolder.childCardView.setBackgroundResource(R.drawable.round_background_and_square_side_view);
         childViewHolder.childItemCollapseButton.setVisibility(View.GONE);
 
 
@@ -159,6 +152,8 @@ public class PatientEpisodeRecycleViewListAdapter extends RecyclerView.Adapter<P
         TextView ipdDischargeDate;
         @BindView(R.id.ipdDischargeDateValue)
         TextView ipdDischargeDateValue;
+        @BindView(R.id.doctorName)
+        TextView doctorName;
         @BindView(R.id.ipdCheckBox)
         CheckBox ipdCheckBox;
         @BindView(R.id.childItemCollapseButton)

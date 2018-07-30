@@ -3,7 +3,6 @@ package com.scorg.dms.ui.customesViews;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.text.TextPaint;
-import android.text.style.MetricAffectingSpan;
 import android.text.style.TypefaceSpan;
 
 public class CustomTypefaceSpan extends TypefaceSpan {

@@ -1,6 +1,5 @@
 package com.scorg.dms.ui.fragments.my_appointments;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
@@ -10,7 +9,6 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -20,12 +18,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.ExpandableListView;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.scorg.dms.R;
 import com.scorg.dms.adapters.my_appointments.AppointmentListAdapter;
@@ -61,7 +55,6 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 
 import static com.scorg.dms.ui.activities.waiting_list.WaitingMainListActivity.RESULT_CLOSE_ACTIVITY_WAITING_LIST;
-import static com.scorg.dms.util.CommonMethods.toCamelCase;
 import static com.scorg.dms.util.DMSConstants.APPOINTMENT_DATA;
 
 
@@ -195,7 +188,9 @@ public class MyAppointmentsFragment extends Fragment implements AppointmentListA
                 List<SearchResult> searchResultList = searchResultData.getSearchResult();
                 if (!searchResultList.isEmpty()) {
                     SearchResult searchPatientInformation = searchResultList.get(0);
-                    List<PatientFileData> patientFileDataList = searchPatientInformation.getPatientFileData();
+                    //TODO : as API response chnaged, hence need to fix this too.
+
+                    /*List<PatientFileData> patientFileDataList = searchPatientInformation.getPatientFileData();
                     if (patientFileDataList != null) {
                         if (!patientFileDataList.isEmpty()) {
                             PatientFileData childElement = patientFileDataList.get(0);
@@ -211,7 +206,7 @@ public class MyAppointmentsFragment extends Fragment implements AppointmentListA
                             intent.putExtra(DMSConstants.DATA, extra);
                             startActivity(intent);
                         }
-                    }
+                    }*/
                 }
             }
         }

@@ -1,13 +1,13 @@
 
 package com.scorg.dms.model.dashboard;
 
-import java.util.ArrayList;
-import java.util.List;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import java.util.ArrayList;
 
 public class DashboardAppointmentClinicList implements Parcelable
 {

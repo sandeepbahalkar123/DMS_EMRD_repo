@@ -11,21 +11,23 @@ public class LstDocType {
     @SerializedName("typeName")
     @Expose
     private String typeName;
-    @SerializedName("abbreviation")
-    @Expose
-    private String abbreviation;
-    @SerializedName("createdDate")
-    @Expose
-    private String createdDate;
     @SerializedName("pageCount")
     @Expose
     private Integer pageCount;
+    @SerializedName("recordId")
+    @Expose
+    private Integer recordId;
+    @SerializedName("permission")
+    @Expose
+    private String permission;
+    @SerializedName("createdDate")
+    @Expose
+    private String createdDate;
+
     @SerializedName("pageNumber")
     @Expose
     private Integer pageNumber;
-    @SerializedName("filePath")
-    @Expose
-    private String encryptedPDFFilePath;
+
 
 
     private String[] mergedFileCompareCustomID = null;
@@ -44,14 +46,6 @@ public class LstDocType {
 
     public void setTypeName(String typeName) {
         this.typeName = typeName;
-    }
-
-    public String getAbbreviation() {
-        return abbreviation;
-    }
-
-    public void setAbbreviation(String abbreviation) {
-        this.abbreviation = abbreviation;
     }
 
     public String getCreatedDate() {
@@ -86,13 +80,20 @@ public class LstDocType {
         this.mergedFileCompareCustomID = mergedFileCompareCustomID;
     }
 
-
-    public String getEncryptedPDFFilePath() {
-        return encryptedPDFFilePath;
+    public Integer getRecordId() {
+        return recordId;
     }
 
-    public void setEncryptedPDFFilePath(String encryptedPDFFilePath) {
-        this.encryptedPDFFilePath = encryptedPDFFilePath;
+    public void setRecordId(Integer recordId) {
+        this.recordId = recordId;
+    }
+
+    public String getPermission() {
+        return permission;
+    }
+
+    public void setPermission(String permission) {
+        this.permission = permission;
     }
 
     @Override
@@ -100,11 +101,11 @@ public class LstDocType {
         return "LstDocType{" +
                 "typeId=" + typeId +
                 ", typeName='" + typeName + '\'' +
-                ", abbreviation='" + abbreviation + '\'' +
+                ", recordId='" + recordId + '\'' +
                 ", createdDate='" + createdDate + '\'' +
                 ", pageCount=" + pageCount +
                 ", pageNumber=" + pageNumber +
-                ", encryptedPDFFilePath='" + encryptedPDFFilePath + '\'' +
+                ", permission='" + permission + '\'' +
                 '}';
     }
 }

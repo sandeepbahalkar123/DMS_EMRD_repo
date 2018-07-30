@@ -3,27 +3,21 @@ package com.scorg.dms.helpers.patient_list;
 import android.content.Context;
 
 import com.android.volley.Request;
-import com.google.gson.JsonObject;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.scorg.dms.interfaces.ConnectionListener;
 import com.scorg.dms.interfaces.CustomResponse;
 import com.scorg.dms.interfaces.HelperResponse;
+import com.scorg.dms.model.dms_models.requestmodel.archive.GetArchiveRequestModel;
 import com.scorg.dms.model.dms_models.requestmodel.filetreerequestmodel.FileTreeRequestModel;
 import com.scorg.dms.model.dms_models.requestmodel.getpdfdatarequestmodel.GetPdfDataRequestModel;
+import com.scorg.dms.model.dms_models.requestmodel.showfile_data.GetEncryptedPDFRequestModel;
 import com.scorg.dms.model.dms_models.requestmodel.showsearchresultrequestmodel.ShowSearchResultRequestModel;
-import com.scorg.dms.model.dms_models.responsemodel.filetreeresponsemodel.ArchiveDatum;
-import com.scorg.dms.model.dms_models.responsemodel.filetreeresponsemodel.FileTreeResponseData;
-import com.scorg.dms.model.dms_models.responsemodel.filetreeresponsemodel.FileTreeResponseModel;
-import com.scorg.dms.model.dms_models.responsemodel.filetreeresponsemodel.LstDocCategory;
-import com.scorg.dms.model.dms_models.responsemodel.filetreeresponsemodel.LstDocType;
 import com.scorg.dms.network.ConnectRequest;
 import com.scorg.dms.network.ConnectionFactory;
 import com.scorg.dms.util.CommonMethods;
 import com.scorg.dms.util.Config;
 import com.scorg.dms.util.DMSConstants;
-
-import java.util.List;
 
 /**
  * Created by riteshpandhurkar on 1/3/17.
@@ -57,9 +51,8 @@ public class DMSPatientsHelper implements ConnectionListener {
         mConnectionFactory.createConnection(DMSConstants.TASK_ANNOTATIONS_LIST);
     }
 
-    public void doGetArchivedList(FileTreeRequestModel fileTreeRequestModel) {
+    public void doGetArchivedList(GetArchiveRequestModel fileTreeRequestModel) {
 
-        //---------------
 
         ConnectionFactory mConnectionFactory = new ConnectionFactory(mContext, this, null, true, DMSConstants.TASK_GET_ARCHIVED_LIST, Request.Method.POST, false);
         mConnectionFactory.setHeaderParams();
@@ -69,12 +62,12 @@ public class DMSPatientsHelper implements ConnectionListener {
         mConnectionFactory.createConnection(DMSConstants.TASK_GET_ARCHIVED_LIST);
     }
 
-    public void getPdfData(GetPdfDataRequestModel getPdfDataRequestModel, String taskID) {
+    public void getPdfData(GetEncryptedPDFRequestModel getEncryptedPDFRequestModel, String taskID) {
 
         //---------------
         ConnectionFactory mConnectionFactory = new ConnectionFactory(mContext, this, null, false, taskID, Request.Method.POST, false);
         mConnectionFactory.setHeaderParams();
-        mConnectionFactory.setPostParams(getPdfDataRequestModel);
+        mConnectionFactory.setPostParams(getEncryptedPDFRequestModel);
         mConnectionFactory.setUrl(Config.URL_GET_PDF_DATA);
         mConnectionFactory.createConnection(taskID);
     }
@@ -175,5 +168,21 @@ public class DMSPatientsHelper implements ConnectionListener {
             this.searchPatientName = searchPatientName;
         }
     }
+
+    //---------------
+    public class Test implements CustomResponse {
+        @SerializedName("patId")
+        @Expose
+        private String patId = "200145";
+
+        public String getPatId() {
+            return this.patId;
+        }
+
+        public void setPatId(String patId) {
+            this.patId = patId;
+        }
+    }
+    //---------------
 
 }

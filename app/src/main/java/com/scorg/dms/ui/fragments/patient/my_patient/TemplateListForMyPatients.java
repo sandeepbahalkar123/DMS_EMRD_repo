@@ -21,6 +21,7 @@ import com.scorg.dms.ui.customesViews.CustomTextView;
 import com.scorg.dms.util.DMSConstants;
 
 import java.util.ArrayList;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;

@@ -8,6 +8,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
+
 import com.scorg.dms.R;
 import com.scorg.dms.ui.fragments.ForgotPassword;
 import com.scorg.dms.ui.fragments.OTPConfirmationForSignUp;
@@ -15,6 +16,7 @@ import com.scorg.dms.ui.fragments.OtpConfirmationForLogin;
 import com.scorg.dms.ui.fragments.SocialLoginInputMobileForConfirmation;
 
 import java.io.Serializable;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 

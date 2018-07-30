@@ -19,6 +19,18 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
+
+            <AutoCompleteTextView
+                android:id="@+id/autocompleteSearchBox"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:layout_margin="@dimen/dp5"
+                android:background="@drawable/round_background_full_view"
+                android:gravity="center"
+                android:hint="Enter text"
+                android:textCursorDrawable="@drawable/cursor_color" />
+
+
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recycler_view"
                 android:layout_width="wrap_content"
@@ -54,7 +66,7 @@
             android:layout_marginBottom="@dimen/dp10"
             android:layout_marginEnd="@dimen/fab_margin"
             android:layout_marginRight="@dimen/fab_margin"
-            app:backgroundTint="@color/colorPrimaryDark"
+            app:backgroundTint="@color/Red"
             app:srcCompat="@drawable/ic_filter" />
 
     </FrameLayout>

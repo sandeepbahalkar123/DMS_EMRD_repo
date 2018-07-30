@@ -121,12 +121,7 @@ public class PatientRecycleViewListAdapter extends RecyclerView.Adapter<PatientR
             public void onClick(View v) {
                 SearchResult groupHeader = _originalListDataHeader.get(position);
 
-                Intent intent = new Intent(_context, PatientDetailsActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable(PATIENT_DETAILS, groupHeader);
-                intent.putExtra(DMSConstants.BUNDLE, bundle);
-                _context.startActivity(intent);
-
+                onPatientListener.onClickedOfEpisodeListButton(groupHeader);
             }
         });
 
@@ -183,6 +178,7 @@ public class PatientRecycleViewListAdapter extends RecyclerView.Adapter<PatientR
 
         void onPatientListItemClick(SearchResult groupHeader);
 
+        void onClickedOfEpisodeListButton(SearchResult groupHeader);
         void smoothScrollToPosition(int previousPosition);
     }
 

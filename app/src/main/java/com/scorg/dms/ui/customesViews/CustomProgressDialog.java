@@ -4,7 +4,6 @@ import android.app.Dialog;
 import android.content.Context;
 import android.view.Gravity;
 import android.view.WindowManager;
-import android.widget.ProgressBar;
 
 import com.scorg.dms.R;
 
