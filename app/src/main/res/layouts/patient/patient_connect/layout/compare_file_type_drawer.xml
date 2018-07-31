@@ -642,26 +642,94 @@
         android:layout_height="@dimen/dp1"
         android:background="@color/grey_500" />
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <Spinner
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp36"
-            android:layout_gravity="center"
-            android:entries="@array/get_archived_preference_list"
-            android:gravity="center"></Spinner>
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <RelativeLayout
-            android:id="@+id/fileTypeTreeViewContainer"
+            <LinearLayout
+                android:id="@+id/preferenceLayout"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp36"
+                android:layout_marginLeft="@dimen/dp5"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="@string/preference"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/sp13"
+                    android:textStyle="bold" />
+
+                <Spinner
+                    android:id="@+id/archivedPreferenceSpinner"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="2"
+                    android:entries="@array/get_archived_preference_list"
+                    android:gravity="center"></Spinner>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp1"
+                android:background="@color/grey_500" />
+
+            <RelativeLayout
+                android:id="@+id/fileTypeTreeViewContainer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp1"
+                android:background="@color/grey_500" />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@color/tagColor">
 
-        </RelativeLayout>
+            <android.support.v7.widget.AppCompatButton
+                android:layout_width="@dimen/dp0"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@null"
+                android:text="@string/previous"
+                android:textColor="@color/white" />
 
-    </LinearLayout>
+            <TextView
+                android:layout_width="@dimen/dp1"
+                android:layout_height="match_parent"
+                android:background="@color/white" />
+
+            <android.support.v7.widget.AppCompatButton
+                android:layout_width="@dimen/dp0"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@null"
+                android:text="@string/next"
+                android:textColor="@color/white" />
+        </LinearLayout>
+
+    </RelativeLayout>
 
 
 </LinearLayout>

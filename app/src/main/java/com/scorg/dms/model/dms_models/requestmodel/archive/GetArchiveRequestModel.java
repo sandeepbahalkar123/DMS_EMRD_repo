@@ -18,6 +18,9 @@ public class GetArchiveRequestModel implements CustomResponse {
     @SerializedName("take")
     @Expose
     private int take;
+    @SerializedName("preference")
+    @Expose
+    private String preference;
 
     public String getPatId() {
         return patId;
@@ -49,5 +52,13 @@ public class GetArchiveRequestModel implements CustomResponse {
 
     public void setTake(int take) {
         this.take = take;
+    }
+
+    public String getPreference() {
+        return preference;
+    }
+
+    public void setPreference(String preference) {
+        this.preference = preference;
     }
 }

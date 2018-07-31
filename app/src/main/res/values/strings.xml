@@ -256,6 +256,9 @@
     <string name="error_compare_patient">Please select same patient record to compare</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="preference">Select Preference</string>
+    <string name="previous">Previous</string>
+    <string name="next">Next</string>
     <string name="error_max_two_reports">You can not select more than two reports to compare</string>
 
     <string-array name="select_id">

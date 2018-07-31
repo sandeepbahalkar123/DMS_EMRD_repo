@@ -326,6 +326,12 @@ public class DMSConstants {
         public static final String DOC_TYPE_ID = "DocTypeId";
     }
 
+    public static class ArchivedPreference {
+        public static final String FOLDER = "Folder";
+        public static final String DATE = "Date";
+        public static final String FILE = "File";
+    }
+
 }
 
 
