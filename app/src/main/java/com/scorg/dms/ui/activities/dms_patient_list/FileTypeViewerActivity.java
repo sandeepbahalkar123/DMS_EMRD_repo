@@ -97,6 +97,8 @@ public class FileTypeViewerActivity extends AppCompatActivity implements View.On
 
     @BindView(R.id.archivedPreferenceSpinner)
     Spinner mArchivedPreferenceSpinner;
+    @BindView(R.id.preferenceLayout)
+    LinearLayout mPreferenceLayout;
 
     //---------
     @BindView(R.id.firstPdfView)
@@ -319,7 +321,7 @@ public class FileTypeViewerActivity extends AppCompatActivity implements View.On
         switch (v.getId()) {
             case R.id.openRightDrawer:
                 mDrawer.openDrawer(GravityCompat.END);
-                doCreateTreeStucutre();
+                doCreateTreeStructure();
                 break;
         }
     }
@@ -357,7 +359,7 @@ public class FileTypeViewerActivity extends AppCompatActivity implements View.On
                 //   doGetMergeArchiveList(mFileTreeResponseData, mFileTypeOne.getText().toString());
             }
 
-            doCreateTreeStucutre();
+            doCreateTreeStructure();
             //------
 
         } else if (String.valueOf(mOldDataTag).equalsIgnoreCase("" + DMSConstants.TASK_GET_PDF_DATA)) {
@@ -1035,7 +1037,8 @@ public class FileTypeViewerActivity extends AppCompatActivity implements View.On
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 mArchivedSelectedPreference = array[position];
                 mFileTreeResponseData = null;
-                doCreateTreeStucutre();
+                doCreateTreeStructure();
+
             }
 
             @Override
@@ -1045,7 +1048,14 @@ public class FileTypeViewerActivity extends AppCompatActivity implements View.On
         });
     }
 
-    private void doCreateTreeStucutre() {
+    private void doCreateTreeStructure() {
+
+        if (respectiveRecordID != null) {
+            mArchivedSelectedPreference = DMSConstants.ArchivedPreference.DATE;
+            mArchivedPreferenceSpinner.setVisibility(View.GONE);
+            mPreferenceLayout.setVisibility(View.GONE);
+        }
+
         if (mFileTreeResponseData == null)
             getLoadArchivedList();
         else {
