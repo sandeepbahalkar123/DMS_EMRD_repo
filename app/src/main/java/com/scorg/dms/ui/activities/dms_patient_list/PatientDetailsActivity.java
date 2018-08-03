@@ -8,11 +8,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AutoCompleteTextView;
 
 import com.scorg.dms.R;
 import com.scorg.dms.adapters.dms_adapters.PatientEpisodeRecycleViewListAdapter;
+import com.scorg.dms.adapters.dms_adapters.PatientSearchAutoCompleteTextViewAdapter;
 import com.scorg.dms.helpers.patient_list.DMSPatientsHelper;
 import com.scorg.dms.interfaces.CustomResponse;
 import com.scorg.dms.interfaces.HelperResponse;
@@ -45,13 +49,17 @@ public class PatientDetailsActivity extends AppCompatActivity implements HelperR
     CustomTextView mPatientName;
     @BindView(R.id.uhidData)
     CustomTextView mUHIDData;
+    //-----------
+    @BindView(R.id.autoCompleteSearchBox)
+    AutoCompleteTextView mAutoCompleteSearchBox;
+    ArrayList<String> mAutoCompleteSearchBoxList = new ArrayList<>();
+    private PatientSearchAutoCompleteTextViewAdapter mPatientSearchAutoCompleteTextViewAdapter;
+    //----------
 
     private DMSPatientsHelper mPatientsHelper;
     private Context mContext;
     private SearchResult mReceivedPatientData;
     private PatientEpisodeRecycleViewListAdapter mPatientEpisodeRecycleViewListAdapter;
-    private int currentPage = 0;
-    private boolean loading = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,7 +88,7 @@ public class PatientDetailsActivity extends AppCompatActivity implements HelperR
         mPatientEpisodeRecycleViewListAdapter = new PatientEpisodeRecycleViewListAdapter(this, new ArrayList<PatientEpisodeFileData>());
         listOfOPDTypes.setAdapter(mPatientEpisodeRecycleViewListAdapter);
         //--------
-        doGetPatientEpisode();
+        doGetPatientEpisode(0);
         //----------
         LinearLayoutManager linearlayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         listOfOPDTypes.setLayoutManager(linearlayoutManager);
@@ -88,20 +96,44 @@ public class PatientDetailsActivity extends AppCompatActivity implements HelperR
         listOfOPDTypes.addOnScrollListener(new EndlessRecyclerViewScrollListener(linearlayoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
-
-                if (NetworkUtil.isInternetAvailable(mContext)) {
-                    currentPage = currentPage + 1;
-                    doGetPatientEpisode();
-                    loading = true;
-                }
+                    doGetPatientEpisode(page);
             }
         });
+        //------- search autocomplete--------
+        mAutoCompleteSearchBox.setThreshold(0);//start searching from 1 character
+
+        mAutoCompleteSearchBox.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String enteredText = s.toString().trim();
+                mAutoCompleteSearchBoxList.clear();
+                if (enteredText.length() != 0) {
+                    mAutoCompleteSearchBoxList.add(enteredText + PatientSearchAutoCompleteTextViewAdapter.HARDCODED_STRING + getString(R.string.in_ref_id));
+                    mPatientSearchAutoCompleteTextViewAdapter = new PatientSearchAutoCompleteTextViewAdapter(PatientDetailsActivity.this, R.layout.patient_filter_right_drawer, R.id.custom_spinner_txt_view_Id, mAutoCompleteSearchBoxList);
+                    mAutoCompleteSearchBox.setAdapter(mPatientSearchAutoCompleteTextViewAdapter);
+                    mAutoCompleteSearchBox.showDropDown();
+                }
+
+            }
+        });
+
+        //-----------------
     }
 
-    private void doGetPatientEpisode() {
+    private void doGetPatientEpisode(int page) {
         ShowSearchResultRequestModel showSearchResultRequestModel = new ShowSearchResultRequestModel();
         showSearchResultRequestModel.setPatientId(mReceivedPatientData.getPatientId());
-        showSearchResultRequestModel.setPageNumber("" + currentPage);
+        showSearchResultRequestModel.setPageNumber("" + page);
         mPatientsHelper.doGetPatientEpisodeList(showSearchResultRequestModel);
     }
 

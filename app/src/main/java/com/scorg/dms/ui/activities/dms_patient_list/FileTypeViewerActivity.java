@@ -13,6 +13,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatImageButton;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -70,6 +71,7 @@ import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 import static com.github.barteksc.pdfviewer.PDFView.DEFAULT_MID_SCALE;
 import static com.github.barteksc.pdfviewer.PDFView.DEFAULT_MIN_SCALE;
@@ -79,7 +81,7 @@ import static com.github.barteksc.pdfviewer.PDFView.DEFAULT_MIN_SCALE;
  */
 
 
-public class FileTypeViewerActivity extends AppCompatActivity implements View.OnClickListener, HelperResponse, OnLoadCompleteListener, OnErrorListener, OnDrawListener, TreeNode.TreeNodeClickListener {
+public class FileTypeViewerActivity extends AppCompatActivity implements HelperResponse, OnLoadCompleteListener, OnErrorListener, OnDrawListener, TreeNode.TreeNodeClickListener {
 
     private static final String TAG = FileTypeViewerActivity.class.getName();
     private static final int REQUEST_CODE_WRITE_FILE_ONE_PERMISSIONS = 101;
@@ -149,8 +151,16 @@ public class FileTypeViewerActivity extends AppCompatActivity implements View.On
     TextView mFileTypeOne;
     @BindView(R.id.fileTypeTwoFileTypeName)
     TextView mFileTypeTwo;
+    //----------
     @BindView(R.id.fileTypeTreeViewContainer)
     RelativeLayout mFileTypeOneTreeViewContainer;
+    @BindView(R.id.loadPreviousArchiveDataList)
+    AppCompatImageButton mLoadPreviousArchiveDataList;
+    @BindView(R.id.loadNextArchiveDataList)
+    AppCompatImageButton mLoadNextArchiveDataList;
+    @BindView(R.id.loadedArchiveDataMessage)
+    TextView loadedArchiveDataMessage;
+    //----------
     @BindView(R.id.et_uhid)
     Switch mCompareSwitch;
     @BindView(R.id.rowScrollBoth)
@@ -179,7 +189,6 @@ public class FileTypeViewerActivity extends AppCompatActivity implements View.On
     String respectivePatientID;
     String respectiveRecordID;
     int getArchivedPageNumber = 1;
-    int getArchivedPageMaxRecordToFetch = 20;
     String patientName;
     String doctorName;
     String patientAddress;
@@ -259,8 +268,6 @@ public class FileTypeViewerActivity extends AppCompatActivity implements View.On
         });
         mCompareSwitch.setChecked(true);
 
-
-        mOpenRightDrawer.setOnClickListener(this);
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -316,13 +323,33 @@ public class FileTypeViewerActivity extends AppCompatActivity implements View.On
 
     }
 
-    @Override
+    @OnClick({R.id.openRightDrawer, R.id.loadPreviousArchiveDataList, R.id.loadNextArchiveDataList})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.openRightDrawer:
                 mDrawer.openDrawer(GravityCompat.END);
                 doCreateTreeStructure();
                 break;
+            case R.id.loadPreviousArchiveDataList:
+                getArchivedPageNumber = getArchivedPageNumber - 1;
+                if (getArchivedPageNumber == 0) {
+                    CommonMethods.showToast(this, "No Previous data to load");
+                } else {
+                    mFileTreeResponseData = null;
+                    doCreateTreeStructure();
+                }
+                break;
+            case R.id.loadNextArchiveDataList:
+                if (!mFileTreeResponseData.isPagination()) {
+                    CommonMethods.showToast(this, "No Next data to load");
+                } else {
+                    getArchivedPageNumber = getArchivedPageNumber + 1;
+                    mFileTreeResponseData = null;
+                    doCreateTreeStructure();
+                }
+
+                break;
+
         }
     }
 
@@ -339,10 +366,10 @@ public class FileTypeViewerActivity extends AppCompatActivity implements View.On
         //---------------
         GetArchiveRequestModel model = new GetArchiveRequestModel();
         //model.setPatId(respectivePatientID);
-        model.setPatId("" + 200156);
+        //model.setPatId("" + 200156);
+        model.setPatId("" + 143369);
         model.setRecordId(respectiveRecordID);
         model.setPageNumber(getArchivedPageNumber);
-        model.setTake(getArchivedPageMaxRecordToFetch);
         model.setPreference(mArchivedSelectedPreference);
         mPatientsHelper.doGetArchivedList(model);
     }
@@ -356,7 +383,6 @@ public class FileTypeViewerActivity extends AppCompatActivity implements View.On
 
             if (mFileTypeOne.getText().toString().equalsIgnoreCase(mFileTypeTwo.getText().toString())) {
                 isComparingBetweenSameFileType = true;
-                //   doGetMergeArchiveList(mFileTreeResponseData, mFileTypeOne.getText().toString());
             }
 
             doCreateTreeStructure();
@@ -1037,6 +1063,7 @@ public class FileTypeViewerActivity extends AppCompatActivity implements View.On
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 mArchivedSelectedPreference = array[position];
                 mFileTreeResponseData = null;
+                getArchivedPageNumber = 1;
                 doCreateTreeStructure();
 
             }
@@ -1073,6 +1100,21 @@ public class FileTypeViewerActivity extends AppCompatActivity implements View.On
 
                     break;
             }
+
+
+            if (getArchivedPageNumber == 1) {
+                if (mFileTreeResponseData.isPagination()) {
+                    mLoadNextArchiveDataList.setEnabled(true);
+                }
+            } else if (getArchivedPageNumber > 1) {
+                if (mFileTreeResponseData.isPagination()) {
+                    mLoadNextArchiveDataList.setEnabled(true);
+                    mLoadPreviousArchiveDataList.setEnabled(true);
+                } else {
+                    mLoadPreviousArchiveDataList.setEnabled(true);
+                }
+            }
+
         }
 
     }
