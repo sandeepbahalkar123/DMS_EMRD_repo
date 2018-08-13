@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">DMS</string>
+    <string name="app_name">DOCUPHI</string>
     <string name="enter_mobile_no">Mobile No.</string>
     <string name="log_in">Login</string>
     <string name="enter_full_name">Name</string>
@@ -152,6 +152,7 @@
     <string name="bp">BP</string>
     <string name="bp_min">BpMin</string>
     <string name="dash">-</string>
+    <string name="dashboard">dashboard</string>
     <string name="systolic_pressure">Systolic BP</string>
     <string name="diastolic_pressure">Diastolic BP</string>
     <string name="normal">Normal Level :</string>
@@ -178,7 +179,8 @@
     <string name="episode">Episode</string>
     <string name="enter_sms_text_here">Enter sms text here</string>
     <string name="location">Location</string>
-    <string name="today_appointment">Today\'s\nAppointments</string>
+    <string name="today_appointment">Today\'s\nAppointment</string>
+    <string name="today_appointment_no_new_line">Today\'s Appointments</string>
     <string name="waiting_patients"> Waiting\nPatients </string>
     <string name="pending_approval">Pending\nApproval</string>
     <string name="today_patient">Total\nPatients</string>

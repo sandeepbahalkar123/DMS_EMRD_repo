@@ -18,7 +18,8 @@
     <color name="floating_blue_color">#3676A2</color>
     <color name="Red">#FF0000</color>
     <!--<color name="tagColor">#04abdf</color>-->
-    <color name="tagColor">#1d8fce</color>
+    <!--<color name="tagColor">#1d8fce</color>-->
+    <color name="tagColor">#0091d1</color>
     <color name="timing_bg_color">#50a9da</color>
     <color name="statusbar">#0077a7</color>
     <color name="switch_button_color">#9B9B9B</color>
@@ -79,5 +80,6 @@
     <color name="MediumSpringGreen">#348017</color>
     <color name="login_bg">#4FAFDC</color>
     <color name="login_button">#36657A</color>
+    <color name="green">#bbd86b</color>
 
 </resources>

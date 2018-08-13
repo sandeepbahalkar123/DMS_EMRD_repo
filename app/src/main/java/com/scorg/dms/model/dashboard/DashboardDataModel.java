@@ -6,6 +6,7 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.scorg.dms.model.my_appointments.AppointmentPatientData;
 
 import java.util.ArrayList;
 
@@ -47,6 +48,9 @@ public class DashboardDataModel implements Parcelable {
     @SerializedName("appointmentOpdOTAndOtherCount")
     @Expose
     private ArrayList<AppointmentOpdAndOtherCount> appointmentOpdOTAndOtherCountList = new ArrayList<>();
+    @SerializedName("TodaysAppointmentList")
+    @Expose
+    private ArrayList<AppointmentPatientData> appointmentPatientDataList = new ArrayList<>();
     public final static Parcelable.Creator<DashboardDataModel> CREATOR = new Creator<DashboardDataModel>() {
 
 
@@ -70,6 +74,7 @@ public class DashboardDataModel implements Parcelable {
             instance.setEpisodeApiTakeCount(((Integer) in.readValue((Integer.class.getClassLoader()))));
             instance.setViewArchivedApiTakeCount(((Integer) in.readValue((Integer.class.getClassLoader()))));
             instance.setPatientApiTakeCount(((Integer) in.readValue((Integer.class.getClassLoader()))));
+            in.readList(instance.getAppointmentPatientDataList(), (AppointmentPatientData.class.getClassLoader()));
 
             //--------
 
@@ -94,6 +99,8 @@ public class DashboardDataModel implements Parcelable {
         dest.writeValue(getEpisodeApiTakeCount());
         dest.writeValue(getViewArchivedApiTakeCount());
         dest.writeValue(getPatientApiTakeCount());
+        dest.writeList(getAppointmentPatientDataList());
+
         //-------
     }
 
@@ -187,6 +194,14 @@ public class DashboardDataModel implements Parcelable {
 
     public void setPatientApiTakeCount(int patientApiTakeCount) {
         this.patientApiTakeCount = patientApiTakeCount;
+    }
+
+    public ArrayList<AppointmentPatientData> getAppointmentPatientDataList() {
+        return appointmentPatientDataList;
+    }
+
+    public void setAppointmentPatientDataList(ArrayList<AppointmentPatientData> appointmentPatientDataList) {
+        this.appointmentPatientDataList = appointmentPatientDataList;
     }
 
     public static class AppointmentOpdAndOtherCount implements Parcelable {
