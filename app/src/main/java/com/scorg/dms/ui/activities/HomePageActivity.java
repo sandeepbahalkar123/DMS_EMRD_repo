@@ -9,6 +9,8 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,7 +19,9 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -32,6 +36,8 @@ import com.scorg.dms.interfaces.HelperResponse;
 import com.scorg.dms.model.dashboard.DashboardBaseModel;
 import com.scorg.dms.model.dashboard.DashboardDataModel;
 import com.scorg.dms.preference.DMSPreferencesManager;
+import com.scorg.dms.ui.activities.dashboard.SettingsActivity;
+import com.scorg.dms.ui.activities.dashboard.SupportActivity;
 import com.scorg.dms.ui.activities.dms_patient_list.PatientList;
 import com.scorg.dms.ui.activities.my_appointments.MyAppointmentsActivity;
 import com.scorg.dms.ui.activities.waiting_list.WaitingMainListActivity;
@@ -85,6 +91,22 @@ public class HomePageActivity extends AppCompatActivity implements HelperRespons
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
 
+    @BindView(R.id.layoutDrawerSetting)
+    LinearLayout layoutDrawerSetting;
+
+    @BindView(R.id.layoutDrawerSupport)
+    LinearLayout layoutDrawerSupport;
+
+    @BindView(R.id.drawer_layout)
+    DrawerLayout mDrawer;
+
+    @BindView(R.id.layoutDrawerIcon)
+    LinearLayout layoutDrawerIcon;
+
+
+    @BindView(R.id.nav_right_view)
+    FrameLayout mRightNavigationView;
+
     ImageView menuImageView;
     CustomTextView appointmentTextView;
     CustomTextView viewTextView;
@@ -125,7 +147,10 @@ public class HomePageActivity extends AppCompatActivity implements HelperRespons
 
 
     private void initialize() {
-
+        int width = (int) (getResources().getDisplayMetrics().widthPixels / (CommonMethods.isTablet(mContext) ? 1.6 : 2));
+        ViewGroup.LayoutParams layoutParams = mRightNavigationView.getLayoutParams();
+        layoutParams.width = width;
+        mRightNavigationView.setLayoutParams(layoutParams);
         mDashboardHelper = new DashboardHelper(this, this);
         String doctorNameToDisplay;
         if (DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.USER_NAME, mContext).toLowerCase().contains("Dr.")) {
@@ -227,10 +252,11 @@ public class HomePageActivity extends AppCompatActivity implements HelperRespons
                 if (DMSConstants.RESPONSE_OK.equalsIgnoreCase(mDashboardBaseModel.getCommon().getSuccess())) {
                     mDashboardDataModel = mDashboardBaseModel.getDashboardDataModel();
                     if (mDashboardDataModel != null) {
-                        pendingApprovalCount.setText(mDashboardDataModel.getPendingApprovedCount());
+                       pendingApprovalCount.setText(mDashboardDataModel.getPendingApprovedCount());
                         totalPatientsCount.setText(mDashboardDataModel.getTotalPatientCount());
                         todayAppointmentsCount.setText(mDashboardDataModel.getAppointmentCount());
-                        waitingPatientCount.setText(mDashboardDataModel.getWaitingCount());
+                       waitingPatientCount.setText(mDashboardDataModel.getWaitingCount());
+
 
                         LinearLayoutManager linearlayoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
                         recyclerView.setLayoutManager(linearlayoutManager);
@@ -278,7 +304,7 @@ public class HomePageActivity extends AppCompatActivity implements HelperRespons
 
     }
 
-    @OnClick({R.id.totalPatientsCount, R.id.todayAppointmentsCount, R.id.waitingPatientCount})
+    @OnClick({R.id.layoutDrawerIcon,R.id.totalPatientsCount, R.id.todayAppointmentsCount, R.id.waitingPatientCount, R.id.layoutDrawerSetting, R.id.layoutDrawerSupport})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.viewPagerDoctorItem:
@@ -296,7 +322,18 @@ public class HomePageActivity extends AppCompatActivity implements HelperRespons
                 patientList.putExtra(DMSConstants.PATIENT_LIST_PARAMS.FILE_TYPE, mDashboardDataModel.getFileTypes());
                 startActivity(patientList);
                 break;
+            case R.id.layoutDrawerSetting:
+                Intent intentDrawerSetting = new Intent(this, SettingsActivity.class);
+                startActivity(intentDrawerSetting);
+                break;
+            case R.id.layoutDrawerSupport:
+                Intent intentDrawerSupport = new Intent(this, SupportActivity.class);
+                startActivity(intentDrawerSupport);
+                break;
+            case R.id.layoutDrawerIcon:
+                mDrawer.openDrawer(GravityCompat.START);
 
+                break;
         }
     }
 

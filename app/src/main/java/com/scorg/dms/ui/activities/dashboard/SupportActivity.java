@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -31,7 +32,7 @@ import permissions.dispatcher.RuntimePermissions;
  */
 
 @RuntimePermissions
-public class SupportActivity extends BottomMenuActivity implements BottomMenuAdapter.OnBottomMenuClickListener {
+public class SupportActivity extends AppCompatActivity  {
     private static final String TAG = "SupportActivity";
 
     @BindView(R.id.callTextView)
@@ -56,13 +57,13 @@ public class SupportActivity extends BottomMenuActivity implements BottomMenuAda
         setContentView(R.layout.support_base_layout);
         ButterKnife.bind(this);
         initialize();
-        setCurrentActivityTab(getString(R.string.support));
+
     }
 
     private void initialize() {
         mContext = SupportActivity.this;
         titleTextView.setText(getString(R.string.support));
-        backImageView.setVisibility(View.GONE);
+        backImageView.setVisibility(View.VISIBLE);
         String versionString = "v" + CommonMethods.getVersionName(mContext) + "(" + CommonMethods.getVersionCode(mContext) + ")";
         versionText.setText(versionString);
     }
@@ -84,23 +85,6 @@ public class SupportActivity extends BottomMenuActivity implements BottomMenuAda
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         SupportActivityPermissionsDispatcher.onRequestPermissionsResult(this, requestCode, grantResults);
 
-    }
-
-    @Override
-    public void onBottomMenuClick(BottomMenu bottomMenu) {
-
-        if (bottomMenu.getMenuName().equalsIgnoreCase(getString(R.string.settings))) {
-            Intent intent = new Intent(this, SettingsActivity.class);
-            startActivity(intent);
-            finish();
-        } else if (bottomMenu.getMenuName().equalsIgnoreCase(getString(R.string.home))) {
-            finish();
-        } else if (bottomMenu.getMenuName().equalsIgnoreCase(getString(R.string.profile))) {
-            Intent intent = new Intent(this, ProfileActivity.class);
-            startActivity(intent);
-            finish();
-        }
-        super.onBottomMenuClick(bottomMenu);
     }
 
 

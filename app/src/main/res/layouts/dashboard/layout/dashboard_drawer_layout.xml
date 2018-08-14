@@ -25,9 +25,11 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/layoutDrawerHome"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp20"
+        android:padding="@dimen/dp5"
         android:orientation="horizontal">
 
         <ImageView
@@ -47,16 +49,16 @@
 
     <ImageView
         android:layout_width="wrap_content"
-
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp5"
         android:src="@drawable/layer_5" />
 
     <LinearLayout
+        android:id="@+id/layoutDrawerSetting"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
         android:layout_marginTop="@dimen/dp5"
+        android:padding="@dimen/dp5"
         android:orientation="horizontal">
 
         <ImageView
@@ -82,10 +84,11 @@
         android:src="@drawable/layer_5" />
 
     <LinearLayout
+        android:id="@+id/layoutDrawerSupport"
         android:layout_width="match_parent"
-
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp5"
+        android:padding="@dimen/dp5"
         android:orientation="horizontal">
 
         <ImageView
