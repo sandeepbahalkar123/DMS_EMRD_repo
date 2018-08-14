@@ -28,6 +28,7 @@
     <string name="roboto_regular">roboto_regular.ttf</string>
     <string name="gallery">Gallery</string>
     <string name="files">Files</string>
+    <string name="file">File: </string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="enter_otp">Enter OTP</string>
     <string name="enter_word">Enter </string>
@@ -327,5 +328,7 @@
     <string name="in_patient_name">in Patient name</string>
     <string name="in_ref_id">in Ref Id</string>
     <string name="in_all">in All</string>
+    <string name="on">ON</string>
+    <string name="off">OFF</string>
 
 </resources>

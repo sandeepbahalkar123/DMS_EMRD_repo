@@ -166,18 +166,8 @@ public class PatientList extends AppCompatActivity implements HelperResponse, Vi
     private boolean isCompareDialogCollapsed = true;
     private RelativeLayout mCompareDialogLayout;
     private TextView mCompareLabel;
-    private ImageView mFileOneIcon;
-    private TextView mFileOneType;
-    private TextView mFileOneAdmissionDate;
-    private TextView mFileOnePatientID;
-    private TextView mFileTwoPatientID;
 
-    //    private TextView mFileOneDischargeDate;
-    private ImageView mFileTwoIcon;
-    private TextView mFileTwoType;
-    private TextView mFileTwoAdmissionDate;
     //    private TextView mFileTwoDischargeDate;
-    private Button mCompareButton;
     private PatientRecycleViewListAdapter patientExpandableListAdapter;
     private ActionBar mSupportActionBar;
     private DatePickerDialog mDatePickerDialog;
@@ -391,15 +381,6 @@ public class PatientList extends AppCompatActivity implements HelperResponse, Vi
 
         mCompareDialogLayout = (RelativeLayout) findViewById(R.id.compareDialog);
         mCompareLabel = (TextView) findViewById(R.id.compareLabel);
-        mFileOneIcon = (ImageView) findViewById(R.id.fileOneIcon);
-        mFileOneType = (TextView) findViewById(R.id.fileOneType);
-        mFileOneAdmissionDate = (TextView) findViewById(R.id.fileOneAdmissionDate);
-        mFileOnePatientID = (TextView) findViewById(R.id.fileOnePatientID);
-        mFileTwoIcon = (ImageView) findViewById(R.id.fileTwoIcon);
-        mFileTwoType = (TextView) findViewById(R.id.fileTwoType);
-        mFileTwoAdmissionDate = (TextView) findViewById(R.id.fileTwoAdmissionDate);
-        mFileTwoPatientID = (TextView) findViewById(R.id.fileTwoPatientID);
-        mCompareButton = (Button) findViewById(R.id.compareButton);
 
         mCompareLabel.setOnClickListener(new View.OnClickListener() {
             @Override

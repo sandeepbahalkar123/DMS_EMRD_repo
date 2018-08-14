@@ -1,6 +1,7 @@
 package com.scorg.dms.ui.activities.dms_patient_list;
 
 import android.Manifest;
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
@@ -14,6 +15,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatImageButton;
+import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -21,6 +23,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -66,6 +69,7 @@ import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -83,9 +87,12 @@ import static com.github.barteksc.pdfviewer.PDFView.DEFAULT_MIN_SCALE;
 
 public class FileTypeViewerActivity extends AppCompatActivity implements HelperResponse, OnLoadCompleteListener, OnErrorListener, OnDrawListener, TreeNode.TreeNodeClickListener {
 
+    private static final long ANIMATION_DURATION = 500; // in milliseconds
+
     private static final String TAG = FileTypeViewerActivity.class.getName();
     private static final int REQUEST_CODE_WRITE_FILE_ONE_PERMISSIONS = 101;
     private static final int REQUEST_CODE_WRITE_FILE_TWO_PERMISSIONS = 102;
+
     private Integer mPageNumber = 0;
     private boolean isFirstPdf = true;
     private float mCurrentXOffset = -1;
@@ -94,8 +101,38 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
 
     private Context mContext;
 
+
+    //------
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
+
+    //------compare dialog box obj initalize
+    @BindView(R.id.compareDialogParentLayout)
+    LinearLayout mCompareDialogParentLayout;
+    @BindView(R.id.compareDialogSwitch)
+    Switch mOpenCompareDialogSwitch;
+    @BindView(R.id.compareDialog)
+    RelativeLayout mCompareDialogLayout;
+    @BindView(R.id.fileOneRemoveButton)
+    AppCompatImageView mFileOneRemoveButton;
+    @BindView(R.id.fileOnePatientID)
+    TextView mFileOnePatientID;
+    @BindView(R.id.fileOneFileName)
+    TextView mFileOneFileName;
+    @BindView(R.id.fileOneIcon)
+    ImageView mFileOneIcon;
+    @BindView(R.id.fileTwoRemoveButton)
+    AppCompatImageView mFileTwoRemoveButton;
+    @BindView(R.id.fileTwoPatientID)
+    TextView mFileTwoPatientID;
+    @BindView(R.id.fileTwoFileName)
+    TextView mFileTwoFileName;
+    @BindView(R.id.fileTwoIcon)
+    ImageView mFileTwoIcon;
+    @BindView(R.id.compareButton)
+    Button mCompareButton;
+    //---------------------------------------
+
 
     @BindView(R.id.archivedPreferenceSpinner)
     Spinner mArchivedPreferenceSpinner;
@@ -193,18 +230,18 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
     String doctorName;
     String patientAddress;
     //---------
-    private int mClickedTreeStructureLevel;
     private FileTreeResponseData mFileTreeResponseData;
 
     private RelativeLayout mFirstFileTypeProgressDialogLayout;
     private RelativeLayout mSecondFileTypeProgressDialogLayout;
-    private HashMap<String, String> mPreviousClickedTreeElement = null;
+    private LinkedHashMap<String, String> mPreviousClickedTreeElement = null;
     private String fileOneData;
     private String fileTwoData;
     private boolean isComparingBetweenSameFileType = false;
-    private ArrayList<String> clickedPDFList = new ArrayList<>();
     private String mLoadedPDFFileDataPath = null;
     private String mArchivedSelectedPreference = DMSConstants.ArchivedPreference.FOLDER;
+    private boolean isCompareDialogCollapsed;
+    private GetEncryptedPDFRequestModel getEncryptedPDFRequestModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -231,7 +268,7 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
         mContext = getApplicationContext();
         //-------------
         mPatientsHelper = new DMSPatientsHelper(this, this);
-        mPreviousClickedTreeElement = new HashMap<>();
+        mPreviousClickedTreeElement = new LinkedHashMap<>();
 
         bindView();
 
@@ -239,10 +276,52 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
         mDrawer.openDrawer(GravityCompat.END);
         mArchivedPreferenceSpinnerListener();
 
-        //-----------
-
-        //-----------
     }
+
+    public void expandCompareDialog() {
+
+        isCompareDialogCollapsed = false;
+
+        mCompareDialogParentLayout.setVisibility(View.VISIBLE);
+
+        ValueAnimator valueAnimator = ValueAnimator.ofInt(0, (int) getResources().getDimension(R.dimen.compare_dialog));
+        valueAnimator.setDuration(ANIMATION_DURATION);
+        valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            public void onAnimationUpdate(ValueAnimator animation) {
+                Integer value = (Integer) animation.getAnimatedValue();
+
+                LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) mCompareDialogLayout.getLayoutParams();
+                params.height = CommonMethods.convertDpToPixel(value.intValue());
+                mCompareDialogLayout.setLayoutParams(params);
+
+            }
+        });
+
+        valueAnimator.start();
+    }
+
+    public void collapseCompareDialog() {
+        isCompareDialogCollapsed = true;
+
+        mCompareDialogParentLayout.setVisibility(View.GONE);
+
+        ValueAnimator valueAnimator = ValueAnimator.ofInt((int) getResources().getDimension(R.dimen.compare_dialog), 0);
+        valueAnimator.setDuration(ANIMATION_DURATION);
+        valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            public void onAnimationUpdate(ValueAnimator animation) {
+                Integer value = (Integer) animation.getAnimatedValue();
+
+                LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) mCompareDialogLayout.getLayoutParams();
+                params.height = CommonMethods.convertDpToPixel(value.intValue());
+                mCompareDialogLayout.setLayoutParams(params);
+
+            }
+        });
+
+        valueAnimator.start();
+
+    }
+
 
     private void bindView() {
         int width = (int) (getResources().getDisplayMetrics().widthPixels / (CommonMethods.isTablet(mContext) ? 1.2 : 1.2));
@@ -323,7 +402,7 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
 
     }
 
-    @OnClick({R.id.openRightDrawer, R.id.loadPreviousArchiveDataList, R.id.loadNextArchiveDataList})
+    @OnClick({R.id.openRightDrawer, R.id.loadPreviousArchiveDataList, R.id.loadNextArchiveDataList, R.id.compareButton, R.id.compareLabel, R.id.fileOneRemoveButton})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.openRightDrawer:
@@ -349,7 +428,29 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
                 }
 
                 break;
+            case R.id.compareButton:
+                collapseCompareDialog();
+                mPatientsHelper.getPdfData(getEncryptedPDFRequestModel, DMSConstants.TASK_GET_PDF_DATA);
 
+                break;
+            case R.id.compareLabel:
+                if (isCompareDialogCollapsed)
+                    expandCompareDialog();
+                else collapseCompareDialog();
+                break;
+            case R.id.fileOneRemoveButton:
+                String fileToRemove = mFileOneFileName.getText().toString().trim().replace(getString(R.string.file), "").trim();
+                mPreviousClickedTreeElement.remove(fileToRemove);
+                mFileOneFileName.setText("");
+                mFileOnePatientID.setText("");
+
+                break;
+            case R.id.fileTwoRemoveButton:
+                String fileTwoRemove = mFileTwoFileName.getText().toString().trim().replace(getString(R.string.file), "").trim();
+                mPreviousClickedTreeElement.remove(fileTwoRemove);
+                mFileTwoFileName.setText("");
+                mFileTwoPatientID.setText("");
+                break;
         }
     }
 
@@ -365,9 +466,9 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
     private void getLoadArchivedList() {
         //---------------
         GetArchiveRequestModel model = new GetArchiveRequestModel();
-        //model.setPatId(respectivePatientID);
+        model.setPatId(respectivePatientID);
         //model.setPatId("" + 200156);
-        model.setPatId("" + 143369);
+        //model.setPatId("" + 143369);
         model.setRecordId(respectiveRecordID);
         model.setPageNumber(getArchivedPageNumber);
         model.setPreference(mArchivedSelectedPreference);
@@ -392,53 +493,34 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
 
             GetPdfDataResponseModel data = (GetPdfDataResponseModel) customResponse;
 
-            if (clickedPDFList.size() >= 2) {
-
-                if (clickedPDFList.size() == 3) {
-                    String s = clickedPDFList.get(0);
-                    mPreviousClickedTreeElement.remove(s);
-                    clickedPDFList.remove(0);
-                }
-
-                doCallPDFDataService(mLoadedPDFFileDataPath, 1, mFirstPdfView, mFirstFileTypeProgressDialogLayout, mFirstFileTypePdfViewLayout, "0");
-
+            if (mPreviousClickedTreeElement.size() == 2) {
                 doCallPDFDataService(data.getGetPdfDataResponseData().getFileData(), 1, mSecondPdfView, mSecondFileTypeProgressDialogLayout, mSecondFileTypePdfViewLayout, "1");
-
-                mLoadedPDFFileDataPath = data.getGetPdfDataResponseData().getFileData();
-
-            }
-            if (clickedPDFList.size() == 1) {
+            } else if (mPreviousClickedTreeElement.size() == 1) {
                 mLoadedPDFFileDataPath = data.getGetPdfDataResponseData().getFileData();
                 doCallPDFDataService(mLoadedPDFFileDataPath, 1, mFirstPdfView, mFirstFileTypeProgressDialogLayout, mFirstFileTypePdfViewLayout, "0");
             }
-
         }
     }
 
 
     private void doValidateReceivedEncryptedFilePath(String filePath, String mOldDataTag) {
         //------
-        try {
 
+        //  String fileData = CommonMethods.decryptPDFFilePathUsingAESAlgo(filePath);
+        String fileData = filePath;
+        if (fileData != null) {
+            if (mOldDataTag.endsWith("0")) {
+                mFirstFileTypeProgressDialogLayout.setVisibility(View.GONE);
+                fileOneData = fileData;
+                askWriteExtenralStoragePermission(REQUEST_CODE_WRITE_FILE_ONE_PERMISSIONS);
+            } else if (mOldDataTag.endsWith("1")) {
+                mSecondFileTypeProgressDialogLayout.setVisibility(View.GONE);
+                fileTwoData = fileData;
+                askWriteExtenralStoragePermission(REQUEST_CODE_WRITE_FILE_TWO_PERMISSIONS);
+            }
+        } else
+            Toast.makeText(mContext, "Document not available", Toast.LENGTH_SHORT).show();
 
-            String fileData = CommonMethods.decryptPDFFilePathUsingAESAlgo(filePath);
-            if (fileData != null) {
-                if (mOldDataTag.endsWith("0")) {
-                    mFirstFileTypeProgressDialogLayout.setVisibility(View.GONE);
-                    fileOneData = fileData;
-                    askWriteExtenralStoragePermission(REQUEST_CODE_WRITE_FILE_ONE_PERMISSIONS);
-                } else if (mOldDataTag.endsWith("1")) {
-                    mSecondFileTypeProgressDialogLayout.setVisibility(View.GONE);
-                    fileTwoData = fileData;
-                    askWriteExtenralStoragePermission(REQUEST_CODE_WRITE_FILE_TWO_PERMISSIONS);
-                }
-            } else
-                Toast.makeText(mContext, "Document not available", Toast.LENGTH_SHORT).show();
-        } catch (GeneralSecurityException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
         //----
 
@@ -461,7 +543,7 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
 
 
     private void askWriteExtenralStoragePermission(int requestCode) {
-        int hasWriteContactsPermissionCamera = ContextCompat.checkSelfPermission(mContext, android.Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        int hasWriteContactsPermissionCamera = ContextCompat.checkSelfPermission(mContext, Manifest.permission.WRITE_EXTERNAL_STORAGE);
 
         if (hasWriteContactsPermissionCamera != PackageManager.PERMISSION_GRANTED) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -928,24 +1010,47 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
             ArrowExpandIconTreeItemHolder.IconTreeItem value1 = (ArrowExpandIconTreeItemHolder.IconTreeItem) value;
 
             //----- THIS IS TO FIND OUT, WHICH level of treeView clicked
-            mClickedTreeStructureLevel = value1.level;
+            // mClickedTreeStructureLevel = value1.level;
 
             //----- Get Object of clicked Element and create map to send  : Start------
             if (value1.objectData instanceof LstDocType) {
                 LstDocType clickedLstDocTypeElement = (LstDocType) value1.objectData;
-                clickedPDFList.add("" + clickedLstDocTypeElement.getTypeName());
-                mPreviousClickedTreeElement.put(clickedLstDocTypeElement.getTypeName(), clickedLstDocTypeElement.getTypeName());
-                //----------
-                GetEncryptedPDFRequestModel temp = new GetEncryptedPDFRequestModel();
-                temp.setRecordId(String.valueOf(clickedLstDocTypeElement.getRecordId()));
-                temp.getLstDocTypes().add(clickedLstDocTypeElement);
-                //----------
-                if (clickedPDFList.size() == 1) {
-                    mFirstFileTypeProgressDialogLayout.setVisibility(View.VISIBLE);
-                } else if (clickedPDFList.size() >= 2) {
-                    mSecondFileTypeProgressDialogLayout.setVisibility(View.VISIBLE);
+
+                if (!mOpenCompareDialogSwitch.isChecked()) {
+                    mPreviousClickedTreeElement.clear();
                 }
-                mPatientsHelper.getPdfData(temp, DMSConstants.TASK_GET_PDF_DATA);
+                mPreviousClickedTreeElement.put(clickedLstDocTypeElement.getTypeName(), clickedLstDocTypeElement.getTypeName());
+
+                //----------
+                getEncryptedPDFRequestModel = new GetEncryptedPDFRequestModel();
+                getEncryptedPDFRequestModel.setRecordId(String.valueOf(clickedLstDocTypeElement.getRecordId()));
+                getEncryptedPDFRequestModel.getLstDocTypes().add(clickedLstDocTypeElement);
+                //----------
+                switch (mPreviousClickedTreeElement.size()) {
+                    case 1:
+                        mFirstFileTypeProgressDialogLayout.setVisibility(View.VISIBLE);
+                        mPatientsHelper.getPdfData(getEncryptedPDFRequestModel, DMSConstants.TASK_GET_PDF_DATA);
+                        break;
+                    case 2:
+                        if (mOpenCompareDialogSwitch.isChecked()) {
+                            ArrayList<String> tempClickedElements = new ArrayList<>(mPreviousClickedTreeElement.values());
+                            //-----
+                            mFileOnePatientID.setText(getString(R.string.patient_id) + respectivePatientID);
+                            mFileOneFileName.setText(getString(R.string.file) + tempClickedElements.get(0));
+                            //-----
+                            mFileTwoPatientID.setText(getString(R.string.patient_id) + respectivePatientID);
+                            mFileTwoFileName.setText(getString(R.string.file) + tempClickedElements.get(1));
+                            mSecondFileTypeProgressDialogLayout.setVisibility(View.VISIBLE);
+                            expandCompareDialog();
+                            //-----
+                        }
+                        break;
+                    default:
+                        CommonMethods.showToast(this, "Can't compare more than 2 PDFs.");
+                        mPreviousClickedTreeElement.remove(clickedLstDocTypeElement.getTypeName());
+                        expandCompareDialog();
+                        break;
+                }
 
             }
             //----- Get Object of clicked Element and create map to send  : End------
