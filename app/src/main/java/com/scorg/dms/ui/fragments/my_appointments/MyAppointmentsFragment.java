@@ -40,6 +40,7 @@ import com.scorg.dms.model.my_appointments.MyAppointmentsDataModel;
 import com.scorg.dms.model.waiting_list.response_add_to_waiting_list.AddToWaitingListBaseModel;
 import com.scorg.dms.model.waiting_list.response_add_to_waiting_list.AddToWaitingResponse;
 import com.scorg.dms.ui.activities.dms_patient_list.FileTypeViewerActivity;
+import com.scorg.dms.ui.activities.dms_patient_list.PatientDetailsActivity;
 import com.scorg.dms.ui.activities.my_appointments.MyAppointmentsActivity;
 import com.scorg.dms.ui.activities.waiting_list.WaitingMainListActivity;
 import com.scorg.dms.ui.customesViews.EditTextWithDeleteButton;
@@ -56,6 +57,7 @@ import butterknife.Unbinder;
 
 import static com.scorg.dms.ui.activities.waiting_list.WaitingMainListActivity.RESULT_CLOSE_ACTIVITY_WAITING_LIST;
 import static com.scorg.dms.util.DMSConstants.APPOINTMENT_DATA;
+import static com.scorg.dms.util.DMSConstants.PATIENT_DETAILS;
 
 
 /**
@@ -286,6 +288,17 @@ public class MyAppointmentsFragment extends Fragment implements AppointmentListA
 
     @Override
     public void setClickOnMenuItem(int position, BottomMenu bottomMenu) {
+
+    }
+
+    @Override
+    public void onClickedOfEpisodeListButton(SearchResult groupHeader) {
+
+        Intent intent = new Intent(getActivity(), PatientDetailsActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(PATIENT_DETAILS, groupHeader);
+        intent.putExtra(DMSConstants.BUNDLE, bundle);
+        startActivity(intent);
 
     }
 }

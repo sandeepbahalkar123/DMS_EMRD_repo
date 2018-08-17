@@ -56,6 +56,8 @@ import com.scorg.dms.model.dms_models.responsemodel.filetreeresponsemodel.LstDoc
 import com.scorg.dms.model.dms_models.responsemodel.filetreeresponsemodel.LstDocType;
 import com.scorg.dms.model.dms_models.responsemodel.getpdfdataresponsemodel.GetPdfDataResponseModel;
 import com.scorg.dms.preference.DMSPreferencesManager;
+import com.scorg.dms.singleton.Device;
+import com.scorg.dms.ui.activities.ProfileActivity;
 import com.scorg.dms.ui.customesViews.treeViewHolder.arrow_expand.ArrowExpandIconTreeItemHolder;
 import com.scorg.dms.ui.customesViews.treeViewHolder.arrow_expand.ArrowExpandSelectableHeaderHolder;
 import com.scorg.dms.util.CommonMethods;
@@ -216,6 +218,13 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
     @BindView(R.id.dischargeDateRowTwo)
     TableRow dischargeDateRowTwo;
 
+    @BindView(R.id.layoutCompareSwitch)
+    LinearLayout layoutCompareSwitch;
+
+    @BindView(R.id.imageCloseDrawer)
+    AppCompatImageButton imageCloseDrawer;
+
+
     DrawerLayout mDrawer;
 
     private DMSPatientsHelper mPatientsHelper;
@@ -275,6 +284,8 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
         //-----------
         mDrawer.openDrawer(GravityCompat.END);
         mArchivedPreferenceSpinnerListener();
+       if(CommonMethods.isTablet(this))
+           layoutCompareSwitch.setVisibility(View.VISIBLE);
 
     }
 
@@ -402,7 +413,7 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
 
     }
 
-    @OnClick({R.id.openRightDrawer, R.id.loadPreviousArchiveDataList, R.id.loadNextArchiveDataList, R.id.compareButton, R.id.compareLabel, R.id.fileOneRemoveButton})
+    @OnClick({R.id.imageCloseDrawer,R.id.openRightDrawer, R.id.loadPreviousArchiveDataList, R.id.loadNextArchiveDataList, R.id.compareButton, R.id.compareLabel, R.id.fileOneRemoveButton})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.openRightDrawer:
@@ -450,6 +461,9 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
                 mPreviousClickedTreeElement.remove(fileTwoRemove);
                 mFileTwoFileName.setText("");
                 mFileTwoPatientID.setText("");
+                break;
+            case R.id.imageCloseDrawer:
+                mDrawer.closeDrawer(GravityCompat.END);
                 break;
         }
     }

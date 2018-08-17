@@ -76,10 +76,12 @@
     <color name="grey_200">#E0E0E0</color>
     <color name="refId_color">#8dc63f</color>
     <color name="LightSkyBlue">#82CAFA</color>
+    <color name="SkyBlue">#1d8fce</color>
     <color name="BlueAngel">#0288d1</color>
     <color name="MediumSpringGreen">#348017</color>
     <color name="login_bg">#4FAFDC</color>
     <color name="login_button">#36657A</color>
     <color name="green">#bbd86b</color>
+    <color name="green_border">#7cbd20</color>
 
 </resources>

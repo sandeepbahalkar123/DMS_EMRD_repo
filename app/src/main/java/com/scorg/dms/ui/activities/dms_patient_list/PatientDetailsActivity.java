@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
@@ -81,6 +82,8 @@ public class PatientDetailsActivity extends AppCompatActivity implements HelperR
     private void init() {
         //--------------
         mUHIDData.setText(mReceivedPatientData.getPatientId());
+        Log.e("getPatientId","--"+mReceivedPatientData.getPatientId());
+
         mPatientName.setText(mReceivedPatientData.getPatientName());
         //--------------
         mPatientsHelper = new DMSPatientsHelper(mContext, this);
@@ -181,7 +184,7 @@ public class PatientDetailsActivity extends AppCompatActivity implements HelperR
         // extra.putSerializable(getString(R.string.compare), dataToSend);
         extra.putSerializable(getString(R.string.compare), dataToSend);
         extra.putString(DMSConstants.PATIENT_ADDRESS, mReceivedPatientData.getPatientAddress());
-        extra.putString(DMSConstants.DOCTOR_NAME, mReceivedPatientData.getDoctorName());
+        extra.putString(DMSConstants.DOCTOR_NAME, groupHeader.getDoctorName());
         extra.putString(DMSConstants.PATIENT_ID, mReceivedPatientData.getPatientId());
         extra.putString(DMSConstants.PATIENT_LIST_PARAMS.PATIENT_NAME, "" + mReceivedPatientData.getPatientName());
         extra.putString(DMSConstants.RECORD_ID, String.valueOf(groupHeader.getRecordId()));

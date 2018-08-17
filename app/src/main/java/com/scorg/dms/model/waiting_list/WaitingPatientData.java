@@ -27,9 +27,14 @@ public class WaitingPatientData implements Parcelable {
     @SerializedName("AppDate")
     @Expose
     private String appDate;
+
     @SerializedName("ContactNo")
     @Expose
     private String contactNo;
+
+    @SerializedName("PatAddress")
+    @Expose
+    private String PatAddress;
 
     public final static Creator<WaitingPatientData> CREATOR = new Creator<WaitingPatientData>() {
 
@@ -55,6 +60,7 @@ public class WaitingPatientData implements Parcelable {
         this.patientImageUrl = ((String) in.readValue((String.class.getClassLoader())));
         this.appDate = ((String) in.readValue((String.class.getClassLoader())));
         this.contactNo = ((String) in.readValue((String.class.getClassLoader())));
+        this.PatAddress = ((String) in.readValue((String.class.getClassLoader())));
 
     }
 
@@ -66,6 +72,7 @@ public class WaitingPatientData implements Parcelable {
         dest.writeValue(patientImageUrl);
         dest.writeValue(appDate);
         dest.writeValue(contactNo);
+        dest.writeValue(PatAddress);
 
     }
 
@@ -128,5 +135,13 @@ public class WaitingPatientData implements Parcelable {
 
     public void setContactNo(String contactNo) {
         this.contactNo = contactNo;
+    }
+
+    public String getPatAddress() {
+        return PatAddress;
+    }
+
+    public void setPatAddress(String patAddress) {
+        PatAddress = patAddress;
     }
 }

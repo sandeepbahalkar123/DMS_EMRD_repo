@@ -18,14 +18,16 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/recentblue</item>
         <item name="colorPrimaryDark">@color/statusbar</item>
-        <item name="colorAccent">@color/white</item>
+        <item name="colorAccent">@color/recentblue</item>
+        <item name="colorControlActivated">@color/recentblue</item>
+        <item name="android:windowIsTranslucent">true</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
-
+ 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />

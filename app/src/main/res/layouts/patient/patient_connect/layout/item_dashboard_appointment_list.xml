@@ -67,12 +67,14 @@
                     android:id="@+id/episodeList"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/dp5"
-                    android:background="@drawable/shape_rounded_corners_sky_blue"
+                    android:layout_marginRight="@dimen/dp5"
+                    android:layout_marginTop="@dimen/dp10"
+                    android:background="@drawable/shape_rectangle_sky_blue"
                     android:padding="@dimen/dp5"
                     android:text="@string/episode"
                     android:layout_alignParentRight="true"
                     android:textColor="@color/white"
+                    android:textAllCaps="true"
                     android:textSize="@dimen/sp10" />
 
 

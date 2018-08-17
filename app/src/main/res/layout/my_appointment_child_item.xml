@@ -233,7 +233,7 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight=".4"
+                    android:layout_weight=".5"
                     android:gravity="center_horizontal">
 
                     <com.scorg.dms.ui.customesViews.CustomTextView
@@ -257,17 +257,29 @@
                     android:background="@color/tagColor" />
 
                 <LinearLayout
+                    android:id="@+id/layoutAppointmentEpisode"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginEnd="@dimen/dp10"
-                    android:layout_marginLeft="@dimen/dp20"
-                    android:layout_marginRight="@dimen/dp10"
-                    android:layout_marginStart="@dimen/dp20"
-                    android:layout_weight=".6"
+                    android:layout_marginEnd="@dimen/dp5"
+                    android:layout_marginLeft="@dimen/dp5"
+                    android:layout_marginRight="@dimen/dp5"
+                    android:layout_marginStart="@dimen/dp5"
+                    android:layout_weight=".5"
                     android:gravity="center"
                     android:orientation="horizontal"
-                    android:visibility="gone">
+                    android:visibility="visible">
+
+                    <com.scorg.dms.ui.customesViews.CustomTextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/sp11"
+                        android:text="@string/episode"
+                        app:customFont="@string/roboto_medium"
+                        tools:text="@string/episode"/>
 
                     <com.scorg.dms.ui.customesViews.CustomTextView
                         android:id="@+id/outstandingAmountTextView"
@@ -276,6 +288,7 @@
                         android:layout_gravity="center"
                         android:textColor="@color/black"
                         android:textSize="@dimen/sp11"
+                        android:visibility="gone"
                         app:customFont="@string/roboto_medium"
                         tools:text="Outstanding Amount:" />
 
@@ -287,6 +300,7 @@
                         android:textColor="@color/rating_color"
                         android:textSize="@dimen/sp12"
                         app:customFont="@string/roboto_bold"
+                        android:visibility="gone"
                         tools:text=" Rs.450/-" />
                 </LinearLayout>
             </LinearLayout>

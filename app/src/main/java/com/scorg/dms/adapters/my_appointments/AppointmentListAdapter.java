@@ -41,6 +41,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.scorg.dms.R;
+import com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemodel.SearchResult;
 import com.scorg.dms.model.my_appointments.AppointmentPatientData;
 import com.scorg.dms.ui.customesViews.CircularImageView;
 import com.scorg.dms.ui.customesViews.CustomTextView;
@@ -106,6 +107,7 @@ public class AppointmentListAdapter
         private Button appointmentReschedule;
         private Button appointmentCancel;
         private Button appointmentComplete;
+        private LinearLayout layoutAppointmentEpisode;
 
         MyViewHolder(View convertView) {
             super(convertView);
@@ -127,6 +129,7 @@ public class AppointmentListAdapter
             patientPhoneNumber = (CustomTextView) convertView.findViewById(R.id.patientPhoneNumber);
             outstandingAmountTextView = (CustomTextView) convertView.findViewById(R.id.outstandingAmountTextView);
             payableAmountTextView = (CustomTextView) convertView.findViewById(R.id.payableAmountTextView);
+            layoutAppointmentEpisode = (LinearLayout) convertView.findViewById(R.id.layoutAppointmentEpisode);
         }
     }
 
@@ -281,11 +284,22 @@ public class AppointmentListAdapter
             }
         });
 
+        holder.layoutAppointmentEpisode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SearchResult searchResult =new SearchResult();
+                searchResult.setPatientName(appointmentPatientDataObject.getPatientName());
+                 searchResult.setPatientId(appointmentPatientDataObject.getPatientId());
+                searchResult.setPatientAddress(appointmentPatientDataObject.getPatAddress());
+                searchResult.setPatientImageURL(appointmentPatientDataObject.getPatientImageUrl());
+                onItemClickListener.onClickedOfEpisodeListButton(searchResult);
+            }
+        });
 
         holder.idAndDetailsLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onItemClickListener.onClickOfPatientDetails(appointmentPatientDataObject);
+               // onItemClickListener.onClickOfPatientDetails(appointmentPatientDataObject);
             }
         });
         holder.patientPhoneNumber.setOnClickListener(new View.OnClickListener() {
@@ -378,5 +392,7 @@ public class AppointmentListAdapter
         void onClickOfPatientDetails(AppointmentPatientData patientListObject);
 
         void onPhoneNoClick(long patientPhone);
+
+        void onClickedOfEpisodeListButton(SearchResult groupHeader);
     }
 }

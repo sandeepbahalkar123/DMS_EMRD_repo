@@ -66,18 +66,23 @@ public class ArrowExpandSelectableHeaderHolder extends TreeNode.BaseNodeViewHold
         }
 
 
-        arrowView = (PrintView) view.findViewById(R.id.arrow_icon);
+        arrowView = (PrintView) view.findViewById(R.id.icon);
         arrowView.setPadding(20, 10, 10, 10);
         if (node.isLeaf()) {
             arrowView.setVisibility(View.INVISIBLE);
+           // arrowView.setIconText(context.getResources().getString(R.string.ic_shopping_cart));
+
         }
         arrowView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (isOnlyOneNodeExpanded()) {
                     tView.toggleNode(node, isOnlyOneNodeExpanded());
+                   // arrowView.setIconText(context.getResources().getString(R.string.ic_keyboard_arrow_down));
+
                 } else {
                     tView.toggleNode(node, isOnlyOneNodeExpanded());
+                   // arrowView.setIconText(context.getResources().getString(R.string.ic_folder));
                 }
             }
         });

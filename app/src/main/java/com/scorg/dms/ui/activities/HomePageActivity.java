@@ -15,6 +15,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SimpleItemAnimator;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,6 +25,7 @@ import android.view.Window;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.amulyakhare.textdrawable.util.ColorGenerator;
@@ -35,9 +37,11 @@ import com.scorg.dms.interfaces.CustomResponse;
 import com.scorg.dms.interfaces.HelperResponse;
 import com.scorg.dms.model.dashboard.DashboardBaseModel;
 import com.scorg.dms.model.dashboard.DashboardDataModel;
+import com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemodel.SearchResult;
 import com.scorg.dms.preference.DMSPreferencesManager;
 import com.scorg.dms.ui.activities.dashboard.SettingsActivity;
 import com.scorg.dms.ui.activities.dashboard.SupportActivity;
+import com.scorg.dms.ui.activities.dms_patient_list.PatientDetailsActivity;
 import com.scorg.dms.ui.activities.dms_patient_list.PatientList;
 import com.scorg.dms.ui.activities.my_appointments.MyAppointmentsActivity;
 import com.scorg.dms.ui.activities.waiting_list.WaitingMainListActivity;
@@ -55,13 +59,14 @@ import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.RuntimePermissions;
 
 import static com.scorg.dms.util.DMSConstants.ACTIVE_STATUS;
+import static com.scorg.dms.util.DMSConstants.PATIENT_DETAILS;
 
 /**
  * Created by jeetal on 28/6/17.
  */
 
 @RuntimePermissions
-public class HomePageActivity extends AppCompatActivity implements HelperResponse {
+public class HomePageActivity extends AppCompatActivity implements HelperResponse,DashboardAppointmentListAdapter.OnItemClickListener {
 
     private static final String TAG = "Home";
 
@@ -109,12 +114,29 @@ public class HomePageActivity extends AppCompatActivity implements HelperRespons
 
     ImageView menuImageView;
     CustomTextView appointmentTextView;
+    @BindView(R.id.viewTextView)
     CustomTextView viewTextView;
+
+    @BindView(R.id.layoutTotalPatients)
+    RelativeLayout layoutTotalPatients;
+
+    @BindView(R.id.layoutTodayAppointment)
+    RelativeLayout layoutTodayAppointment;
+
+    @BindView(R.id.layoutWaitingPatient)
+    RelativeLayout layoutWaitingPatient;
+
+    @BindView(R.id.layoutPendingApproval)
+    RelativeLayout layoutPendingApproval;
+
+    @BindView(R.id.emptyListView)
+    RelativeLayout emptyListView;
 
     ImageView menuImageWaitingList;
     CustomTextView menuNameTextView;
     ImageView dashboardArrowImageView;
     SwitchButton radioSwitch;
+
     @BindView(R.id.hostViewsLayout)
     LinearLayout hostViewsLayout;
 
@@ -147,20 +169,22 @@ public class HomePageActivity extends AppCompatActivity implements HelperRespons
 
 
     private void initialize() {
-        int width = (int) (getResources().getDisplayMetrics().widthPixels / (CommonMethods.isTablet(mContext) ? 1.6 : 2));
+        int width = (int) (getResources().getDisplayMetrics().widthPixels / (CommonMethods.isTablet(mContext) ? 2.5 : 2));
         ViewGroup.LayoutParams layoutParams = mRightNavigationView.getLayoutParams();
         layoutParams.width = width;
         mRightNavigationView.setLayoutParams(layoutParams);
         mDashboardHelper = new DashboardHelper(this, this);
         String doctorNameToDisplay;
+        String hospitalNameToDisplay;
         if (DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.USER_NAME, mContext).toLowerCase().contains("Dr.")) {
-            doctorNameToDisplay = DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.USER_NAME, mContext);
+            doctorNameToDisplay = DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.DOC_NAME, mContext);
         } else {
-            doctorNameToDisplay = "Dr. " + DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.USER_NAME, mContext);
+            doctorNameToDisplay = "Dr. " + DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.DOC_NAME, mContext);
         }
+        hospitalNameToDisplay = DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.HOSPITAL_NAME, mContext);
 
         doctorNameTextView.setText(doctorNameToDisplay);
-        aboutDoctorTextView.setText("");// TODO: not getting from API right now
+        aboutDoctorTextView.setText(hospitalNameToDisplay);// TODO: not getting from API right now
 
     }
 
@@ -260,8 +284,11 @@ public class HomePageActivity extends AppCompatActivity implements HelperRespons
 
                         LinearLayoutManager linearlayoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
                         recyclerView.setLayoutManager(linearlayoutManager);
-                        mDashBoardAppointmentListAdapter = new DashboardAppointmentListAdapter(mContext, mDashboardDataModel.getAppointmentPatientDataList());
+                        mDashBoardAppointmentListAdapter = new DashboardAppointmentListAdapter(mContext, mDashboardDataModel.getAppointmentPatientDataList(),this);
                         recyclerView.setAdapter(mDashBoardAppointmentListAdapter);
+                        if(mDashboardDataModel.getAppointmentPatientDataList().size()<=0)
+                            emptyListView.setVisibility(View.VISIBLE);
+
 
                         // setLayoutForAppointment(true, mDashboardDataModel.getAppointmentOpdOTAndOtherCountList());
                         // inflate waiting list layout
@@ -304,20 +331,20 @@ public class HomePageActivity extends AppCompatActivity implements HelperRespons
 
     }
 
-    @OnClick({R.id.layoutDrawerIcon,R.id.totalPatientsCount, R.id.todayAppointmentsCount, R.id.waitingPatientCount, R.id.layoutDrawerSetting, R.id.layoutDrawerSupport})
+    @OnClick({R.id.viewTextView,R.id.layoutDrawerIcon,R.id.layoutTotalPatients, R.id.layoutTodayAppointment, R.id.layoutWaitingPatient, R.id.layoutDrawerSetting, R.id.layoutDrawerSupport})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.viewPagerDoctorItem:
                 break;
-            case R.id.todayAppointmentsCount:
+            case R.id.layoutTodayAppointment:
                 Intent myAppointmentsActivity = new Intent(this, MyAppointmentsActivity.class);
                 startActivity(myAppointmentsActivity);
                 break;
-            case R.id.waitingPatientCount:
+            case R.id.layoutWaitingPatient:
                 Intent todayAppointmentsOrWaitingList = new Intent(this, WaitingMainListActivity.class);
                 startActivity(todayAppointmentsOrWaitingList);
                 break;
-            case R.id.totalPatientsCount:
+            case R.id.layoutTotalPatients:
                 Intent patientList = new Intent(this, PatientList.class);
                 patientList.putExtra(DMSConstants.PATIENT_LIST_PARAMS.FILE_TYPE, mDashboardDataModel.getFileTypes());
                 startActivity(patientList);
@@ -332,8 +359,12 @@ public class HomePageActivity extends AppCompatActivity implements HelperRespons
                 break;
             case R.id.layoutDrawerIcon:
                 mDrawer.openDrawer(GravityCompat.START);
-
                 break;
+            case R.id.viewTextView:
+                Intent myAppointmentsActivityView = new Intent(this, MyAppointmentsActivity.class);
+                startActivity(myAppointmentsActivityView);
+                break;
+
         }
     }
 
@@ -347,6 +378,16 @@ public class HomePageActivity extends AppCompatActivity implements HelperRespons
     protected void onDestroy() {
         DMSPreferencesManager.putString(DMSPreferencesManager.DMS_PREFERENCES_KEY.SHOW_UPDATE_DIALOG_ON_SKIPPED, DMSConstants.YES, mContext);
         super.onDestroy();
+    }
+
+    @Override
+    public void onClickedOfEpisodeListButton(SearchResult groupHeader) {
+        Intent intent = new Intent(this, PatientDetailsActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(PATIENT_DETAILS, groupHeader);
+        intent.putExtra(DMSConstants.BUNDLE, bundle);
+        startActivity(intent);
+
     }
 
     //------Set dynamic layout for appointment,waiting and my_patient: START

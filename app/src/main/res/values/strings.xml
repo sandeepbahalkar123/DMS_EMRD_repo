@@ -233,6 +233,8 @@
     <string name="from">From</string>
     <string name="to">To</string>
     <string name="patient_id">Patient ID:</string>
+    <string name="medical_records">Medical Records</string>
+    <string name="complete">Complete</string>
 
     <!-- Strings related to login -->
     <string name="error_empty_fields">Please enter username/password</string>
@@ -259,10 +261,11 @@
     <string name="error_compare_patient">Please select same patient record to compare</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
-    <string name="preference">Select Preference</string>
+    <string name="preference">Preference:</string>
 
     <string name="previous">Previous</string>
     <string name="next">Next</string>
+    <string name="support_bottom_first_line">DOCUPHI is a unique product of</string>
     <string name="error_max_two_reports">You can not select more than two reports to compare</string>
 
     <string-array name="select_id">
@@ -313,6 +316,7 @@
     </string-array>
 
     <!--********Tree view holder icon codes****************-->
+    <string name="ic_folder">&#xe09d;</string>
     <string name="ic_keyboard_arrow_down">&#xe0c5;</string>
     <string name="ic_keyboard_arrow_right">&#xe0c7;</string>
     <string name="ic_shopping_cart">&#xe14f;</string>
@@ -323,7 +327,7 @@
     <string name="denied_permission_read_document">Denied permission read Document.</string>
     <string name="file_one">FileType-1</string>
     <string name="file_two">FileType-2</string>
-    <string name="address">Address</string>
+    <string name="address">Address:</string>
     <string name="title_activity_patient_details">Patient Details</string>
     <string name="in_uhid">in UHID</string>
     <string name="in_patient_name">in Patient name</string>

@@ -83,6 +83,9 @@ public class LoginActivity extends AppCompatActivity implements HelperResponse {
 
         LoginResponseModel model = (LoginResponseModel) customResponse;
 
+        DMSPreferencesManager.putString(DMSPreferencesManager.DMS_PREFERENCES_KEY.DOC_NAME, model.getDoctorName().toString(), mContext);
+        DMSPreferencesManager.putString(DMSPreferencesManager.DMS_PREFERENCES_KEY.HOSPITAL_NAME,model.getHospitalName().toString(), mContext);
+
         Intent intent = new Intent(this, HomePageActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);

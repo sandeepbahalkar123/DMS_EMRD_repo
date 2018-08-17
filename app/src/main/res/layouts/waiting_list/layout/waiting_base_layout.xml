@@ -22,6 +22,7 @@
             android:layout_height="wrap_content"
             app:tabGravity="fill"
             app:tabMaxWidth="@dimen/dp0"
+            android:background="@color/tagColor"
             app:tabMode="fixed"
             app:tabTextAppearance="@style/tabTextSize" />
     </android.support.design.widget.AppBarLayout>

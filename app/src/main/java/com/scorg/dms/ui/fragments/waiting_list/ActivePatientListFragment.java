@@ -31,6 +31,7 @@ import com.scorg.dms.model.waiting_list.WaitingClinicList;
 import com.scorg.dms.model.waiting_list.WaitingListDataModel;
 import com.scorg.dms.model.waiting_list.WaitingPatientData;
 import com.scorg.dms.ui.activities.dms_patient_list.FileTypeViewerActivity;
+import com.scorg.dms.ui.activities.dms_patient_list.PatientDetailsActivity;
 import com.scorg.dms.ui.activities.waiting_list.WaitingMainListActivity;
 import com.scorg.dms.ui.customesViews.CircularImageView;
 import com.scorg.dms.ui.customesViews.CustomTextView;
@@ -44,6 +45,8 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.RuntimePermissions;
+
+import static com.scorg.dms.util.DMSConstants.PATIENT_DETAILS;
 
 /**
  * Created by jeetal on 22/2/18.
@@ -70,7 +73,7 @@ public class ActivePatientListFragment extends Fragment implements WaitingListAd
     private Unbinder unbinder;
     private ArrayList<WaitingClinicList> mWaitingClinicLists = new ArrayList<>();
     private ArrayList<WaitingPatientData> waitingPatientTempList;
-     private WaitingMainListActivity mParentActivity;
+    private WaitingMainListActivity mParentActivity;
     private WaitingListAdapter mWaitingListAdapter;
     private DMSPatientsHelper mPatientsHelper;
     private long mClickedPhoneNumber;
@@ -133,7 +136,8 @@ public class ActivePatientListFragment extends Fragment implements WaitingListAd
     public void onResume() {
         super.onResume();
         WaitingListDataModel waitingListDataModel = mParentActivity.getWaitingListDataModel();
-        waitingPatientTempList = waitingListDataModel.getWaitingPatientDataList();
+        waitingPatientTempList = compare(waitingListDataModel.getWaitingPatientDataList());
+
         mWaitingClinicLists = waitingListDataModel.getWaitingClinicList();
         if (mWaitingClinicLists.size() > 1) {
             clinicListSpinner.setVisibility(View.VISIBLE);
@@ -172,8 +176,8 @@ public class ActivePatientListFragment extends Fragment implements WaitingListAd
 
         ShowSearchResultRequestModel showSearchResultRequestModel = new ShowSearchResultRequestModel();
         // TODO: hardcoed for now, As patientList And WaitingList API patientID not sync from server
-        showSearchResultRequestModel.setPatientId("07535277");
-        //showSearchResultRequestModel.setPatientId(clickItem.getPatientId());
+        //  showSearchResultRequestModel.setPatientId("07535277");
+        showSearchResultRequestModel.setPatientId(clickItem.getPatientId());
 
         mPatientsHelper.doGetPatientList(showSearchResultRequestModel);
 
@@ -184,6 +188,16 @@ public class ActivePatientListFragment extends Fragment implements WaitingListAd
     public void onPhoneNoClick(long phoneNumber) {
         mClickedPhoneNumber = phoneNumber;
         ActivePatientListFragmentPermissionsDispatcher.doCallSupportWithCheck(this);
+    }
+
+    @Override
+    public void onClickedOfEpisodeListButton(SearchResult groupHeader) {
+        Intent intent = new Intent(getActivity(), PatientDetailsActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(PATIENT_DETAILS, groupHeader);
+        intent.putExtra(DMSConstants.BUNDLE, bundle);
+        startActivity(intent);
+
     }
 
     @NeedsPermission(Manifest.permission.CALL_PHONE)
@@ -241,6 +255,22 @@ public class ActivePatientListFragment extends Fragment implements WaitingListAd
 
     @Override
     public void onNoConnectionError(String mOldDataTag, String serverErrorMessage) {
+
+    }
+
+    private ArrayList<WaitingPatientData> compare(ArrayList<WaitingPatientData> waitingPatientData){
+        ArrayList<WaitingPatientData> patientData = new ArrayList<>();
+        if (waitingPatientData.size()!=0)
+            for (int i = 0; i < waitingPatientData.size(); i++) {
+                WaitingPatientData data = waitingPatientData.get(i);
+                if (!data.getWaitingStatus().equalsIgnoreCase(getString(R.string.complete))) {
+                    patientData.add(data);
+                }
+            }
+
+
+        return patientData;
+
 
     }
 }

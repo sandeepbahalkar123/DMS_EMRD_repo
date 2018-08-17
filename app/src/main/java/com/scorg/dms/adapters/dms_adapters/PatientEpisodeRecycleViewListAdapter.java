@@ -66,6 +66,8 @@ public class PatientEpisodeRecycleViewListAdapter extends RecyclerView.Adapter<P
 
         final PatientEpisodeFileData childElement = _originalListDataHeader.get(position);
 
+        childViewHolder.ipdDischargeDateValue.setVisibility(View.GONE);
+
         //---
         if (opd.equalsIgnoreCase(childElement.getFileType())) {
             // Label
@@ -77,7 +79,7 @@ public class PatientEpisodeRecycleViewListAdapter extends RecyclerView.Adapter<P
             childViewHolder.ipd.setText(opd);
             childViewHolder.ipdValue.setText(childElement.getFileTypeRefId());
 
-            String s = CommonMethods.formatDateTime(childElement.getAdmissionDate(), DMSConstants.DATE_PATTERN.DD_MMM_YYYY, DMSConstants.DATE_PATTERN.DD_MM_YYYY_hh_mm, DMSConstants.DATE);
+            String s = CommonMethods.formatDateTime(childElement.getAdmissionDate(), DMSConstants.DATE_PATTERN.DD_MMM_YYYY, DMSConstants.DATE_PATTERN.DD_MM_YYYY, DMSConstants.DATE);
             childViewHolder.ipdAdmissionDateValue.setText(s);
 
         } else {
@@ -89,15 +91,18 @@ public class PatientEpisodeRecycleViewListAdapter extends RecyclerView.Adapter<P
 
             // Label End
 
-            childViewHolder.ipd.setText(ipd);
+            childViewHolder.ipd.setText(childElement.getFileType().toUpperCase());
             childViewHolder.ipdValue.setText(String.valueOf(childElement.getFileTypeRefId()));
 
             String date = CommonMethods.formatDateTime(childElement.getAdmissionDate(), DMSConstants.DATE_PATTERN.DD_MMM_YYYY, DMSConstants.DATE_PATTERN.DD_MM_YYYY, DMSConstants.DATE);
             childViewHolder.ipdAdmissionDateValue.setText(date);
 
-            date = CommonMethods.formatDateTime(childElement.getDischargeDate(), DMSConstants.DATE_PATTERN.DD_MMM_YYYY, DMSConstants.DATE_PATTERN.DD_MM_YYYY, DMSConstants.DATE);
+            if (childElement.getDischargeDate() != null) {
+                date = CommonMethods.formatDateTime(childElement.getDischargeDate(), DMSConstants.DATE_PATTERN.DD_MMM_YYYY, DMSConstants.DATE_PATTERN.DD_MM_YYYY, DMSConstants.DATE);
+                childViewHolder.ipdDischargeDateValue.setText(date);
+                childViewHolder.ipdDischargeDateValue.setVisibility(View.VISIBLE);
+            }
 
-            childViewHolder.ipdDischargeDateValue.setText(date);
         }
 
         if (CommonMethods.isTablet(_context))

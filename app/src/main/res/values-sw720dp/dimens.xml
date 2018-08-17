@@ -9,7 +9,7 @@
     <dimen name="dp8">12dp</dimen>
     <dimen name="dp10">15dp</dimen>
     <dimen name="dp12">18dp</dimen>
-    <dimen name="dp16">24dp</dimen>
+    <dimen name="dp16">26dp</dimen>
     <dimen name="dp20">30dp</dimen>
     <dimen name="dp30">45dp</dimen>
     <dimen name="dp56">84dp</dimen>

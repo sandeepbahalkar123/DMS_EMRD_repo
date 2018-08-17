@@ -119,7 +119,7 @@ public class RequestManager extends ConnectRequest implements Connector, Request
             RequestPool.getInstance(this.mContext).cancellAllPreviousRequestWithSameTag(requestTag);
 
             if (isProgressBarShown) {
-                mProgressDialog.setCancelable(true);
+                mProgressDialog.setCancelable(false);
                 mProgressDialog.show();
             } else {
                 if (mProgressDialog != null && mProgressDialog.isShowing()) {

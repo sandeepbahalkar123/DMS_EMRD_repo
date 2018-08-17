@@ -127,8 +127,8 @@ public class AppointmentHelper implements ConnectionListener {
         RequestAppointmentData mRequestAppointmentData = new RequestAppointmentData();
         mRequestAppointmentData.setDocId(Integer.valueOf(DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.DOC_ID, mContext)));
         String date = CommonMethods.getCurrentDate(DMSConstants.DATE_PATTERN.DD_MM_YYYY_SLASH);
-      //  mRequestAppointmentData.setDate(date);
-        mRequestAppointmentData.setDate("10/05/2018"); // TODO, ADDED FOR DEVELOPMENT, REMOVE IT LATER ON.
+        mRequestAppointmentData.setDate(date);
+        //mRequestAppointmentData.setDate("16/08/2018"); // TODO, ADDED FOR DEVELOPMENT, REMOVE IT LATER ON.
         mConnectionFactory.setPostParams(mRequestAppointmentData);
         mConnectionFactory.setHeaderParams();
         mConnectionFactory.setUrl(Config.GET_WAITING_LIST);

@@ -16,6 +16,7 @@ import com.amulyakhare.textdrawable.TextDrawable;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.scorg.dms.R;
+import com.scorg.dms.adapters.my_appointments.AppointmentListAdapter;
 import com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemodel.SearchResult;
 import com.scorg.dms.model.my_appointments.AppointmentPatientData;
 import com.scorg.dms.ui.customesViews.CustomTextView;
@@ -35,7 +36,7 @@ public class DashboardAppointmentListAdapter extends RecyclerView.Adapter<Dashbo
 
     private static final String TAG = "PatientList";
     private Context _context;
-
+    private DashboardAppointmentListAdapter.OnItemClickListener onItemClickListener;
     private List<AppointmentPatientData> _originalListDataHeader = new ArrayList<>(); // header titles
 
     // @BindString(R.string.opd)
@@ -44,13 +45,13 @@ public class DashboardAppointmentListAdapter extends RecyclerView.Adapter<Dashbo
     private String ipd;
     private String uhid;
 
-    public DashboardAppointmentListAdapter(Context context, List<AppointmentPatientData> searchResult) {
+    public DashboardAppointmentListAdapter(Context context, List<AppointmentPatientData> searchResult,OnItemClickListener onItemClickListener) {
         this._context = context;
         addNewItems(searchResult);
         opd = _context.getString(R.string.opd);
         ipd = _context.getString(R.string.ipd);
         uhid = _context.getString(R.string.uhid);
-
+        this.onItemClickListener = onItemClickListener;
     }
 
     @Override
@@ -65,7 +66,7 @@ public class DashboardAppointmentListAdapter extends RecyclerView.Adapter<Dashbo
     @Override
     public void onBindViewHolder(GroupViewHolder groupViewHolder, final int position) {
 
-        AppointmentPatientData groupHeader = _originalListDataHeader.get(position);
+        final AppointmentPatientData groupHeader = _originalListDataHeader.get(position);
 
         groupViewHolder.userName.setText(groupHeader.getPatientName().trim());
         groupViewHolder.patientId.setText(uhid + " - " + groupHeader.getPatientId().trim());
@@ -82,8 +83,18 @@ public class DashboardAppointmentListAdapter extends RecyclerView.Adapter<Dashbo
                 .load(groupHeader.getPatientImageUrl())
                 .apply(requestOptions)
                 .into(groupViewHolder.patientImageView);
-        //-------------
 
+        groupViewHolder.episodeList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SearchResult searchResult =new SearchResult();
+                searchResult.setPatientName(groupHeader.getPatientName());
+                searchResult.setPatientId(groupHeader.getPatientId());
+                searchResult.setPatientAddress(groupHeader.getPatAddress());
+                searchResult.setPatientImageURL(groupHeader.getPatientImageUrl());
+                onItemClickListener.onClickedOfEpisodeListButton(searchResult);
+            }
+        });
 
     }
 
@@ -119,4 +130,9 @@ public class DashboardAppointmentListAdapter extends RecyclerView.Adapter<Dashbo
         this._originalListDataHeader.addAll(searchResult);
     }
 
+
+    public interface OnItemClickListener {
+
+        void onClickedOfEpisodeListButton(SearchResult groupHeader);
+    }
 }

@@ -31,6 +31,7 @@ import com.scorg.dms.model.waiting_list.WaitingClinicList;
 import com.scorg.dms.model.waiting_list.WaitingListDataModel;
 import com.scorg.dms.model.waiting_list.WaitingPatientData;
 import com.scorg.dms.ui.activities.dms_patient_list.FileTypeViewerActivity;
+import com.scorg.dms.ui.activities.dms_patient_list.PatientDetailsActivity;
 import com.scorg.dms.ui.activities.waiting_list.WaitingMainListActivity;
 import com.scorg.dms.ui.customesViews.CircularImageView;
 import com.scorg.dms.ui.customesViews.CustomTextView;
@@ -44,6 +45,8 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.RuntimePermissions;
+
+import static com.scorg.dms.util.DMSConstants.PATIENT_DETAILS;
 
 /**
  * Created by jeetal on 22/2/18.
@@ -185,6 +188,15 @@ public class ViewAllPatientListFragment extends Fragment implements WaitingListA
     public void onPhoneNoClick(long phoneNumber) {
         mClickedPhoneNumber =phoneNumber;
         ViewAllPatientListFragmentPermissionsDispatcher.doCallSupportWithCheck(this);
+    }
+
+    @Override
+    public void onClickedOfEpisodeListButton(SearchResult groupHeader) {
+        Intent intent = new Intent(getActivity(), PatientDetailsActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(PATIENT_DETAILS, groupHeader);
+        intent.putExtra(DMSConstants.BUNDLE, bundle);
+        startActivity(intent);
     }
 
     @NeedsPermission(Manifest.permission.CALL_PHONE)

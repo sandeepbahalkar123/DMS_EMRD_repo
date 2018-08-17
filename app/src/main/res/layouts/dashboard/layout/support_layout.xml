@@ -85,8 +85,7 @@
             <com.scorg.dms.ui.customesViews.CustomTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
-                android:text="DMS is a unique product of"
+                android:text="@string/support_bottom_first_line"
                 android:textColor="@color/logo_color"
                 android:textSize="@dimen/sp13"
                 app:customFont="@string/roboto_regular"
