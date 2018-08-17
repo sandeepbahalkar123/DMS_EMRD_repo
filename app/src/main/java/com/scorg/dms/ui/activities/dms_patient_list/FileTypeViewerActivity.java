@@ -1,5 +1,8 @@
 package com.scorg.dms.ui.activities.dms_patient_list;
 
+
+//----------- IMPLEMENTED CODE : 16 AUGUST 2018 with differnt pdfview, lenthy code
+
 import android.Manifest;
 import android.animation.ValueAnimator;
 import android.content.Context;
@@ -44,6 +47,7 @@ import com.scorg.dms.R;
 import com.scorg.dms.helpers.patient_list.DMSPatientsHelper;
 import com.scorg.dms.interfaces.CustomResponse;
 import com.scorg.dms.interfaces.HelperResponse;
+import com.scorg.dms.model.Common;
 import com.scorg.dms.model.dms_models.requestmodel.archive.GetArchiveRequestModel;
 import com.scorg.dms.model.dms_models.requestmodel.showfile_data.GetEncryptedPDFRequestModel;
 import com.scorg.dms.model.dms_models.responsemodel.episode_list.PatientEpisodeFileData;
@@ -65,10 +69,7 @@ import com.unnamed.b.atv.model.TreeNode;
 import com.unnamed.b.atv.view.AndroidTreeView;
 
 import java.io.File;
-import java.io.IOException;
-import java.security.GeneralSecurityException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -241,7 +242,8 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
     private String mLoadedPDFFileDataPath = null;
     private String mArchivedSelectedPreference = DMSConstants.ArchivedPreference.FOLDER;
     private boolean isCompareDialogCollapsed;
-    private GetEncryptedPDFRequestModel getEncryptedPDFRequestModel;
+
+    private ArrayList<GetEncryptedPDFRequestModel> mGetEncryptedPDFRequestModelList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -430,7 +432,10 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
                 break;
             case R.id.compareButton:
                 collapseCompareDialog();
-                mPatientsHelper.getPdfData(getEncryptedPDFRequestModel, DMSConstants.TASK_GET_PDF_DATA);
+                if (mGetEncryptedPDFRequestModelList.size() == 2) {
+                    mPatientsHelper.getPdfData(mGetEncryptedPDFRequestModelList.get(0), DMSConstants.TASK_GET_PDF_DATA + "_0");
+                    mPatientsHelper.getPdfData(mGetEncryptedPDFRequestModelList.get(1), DMSConstants.TASK_GET_PDF_DATA + "_1");
+                }
 
                 break;
             case R.id.compareLabel:
@@ -489,15 +494,16 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
             doCreateTreeStructure();
             //------
 
-        } else if (String.valueOf(mOldDataTag).equalsIgnoreCase("" + DMSConstants.TASK_GET_PDF_DATA)) {
+        } else if (String.valueOf(mOldDataTag.toLowerCase()).contains("" + DMSConstants.TASK_GET_PDF_DATA.toLowerCase())) {
 
             GetPdfDataResponseModel data = (GetPdfDataResponseModel) customResponse;
 
-            if (mPreviousClickedTreeElement.size() == 2) {
-                doCallPDFDataService(data.getGetPdfDataResponseData().getFileData(), 1, mSecondPdfView, mSecondFileTypeProgressDialogLayout, mSecondFileTypePdfViewLayout, "1");
-            } else if (mPreviousClickedTreeElement.size() == 1) {
-                mLoadedPDFFileDataPath = data.getGetPdfDataResponseData().getFileData();
-                doCallPDFDataService(mLoadedPDFFileDataPath, 1, mFirstPdfView, mFirstFileTypeProgressDialogLayout, mFirstFileTypePdfViewLayout, "0");
+            if (String.valueOf(mOldDataTag).endsWith("1")) {
+                CommonMethods.Log("SECONDVIEW", "mOldDataTag:" + mOldDataTag);
+                doCallPDFDataService(data.getGetPdfDataResponseData().getFileData(), String.valueOf(mOldDataTag));
+            } else if (String.valueOf(mOldDataTag).endsWith("0")) {
+                CommonMethods.Log("FIRSTVIEW", "mOldDataTag:" + mOldDataTag);
+                doCallPDFDataService(data.getGetPdfDataResponseData().getFileData(), String.valueOf(mOldDataTag));
             }
         }
     }
@@ -554,12 +560,11 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
 
         switch (requestCode) {
             case REQUEST_CODE_WRITE_FILE_ONE_PERMISSIONS:
-                loadPDFFromServer(fileOneData, mFirstPdfView, "", "file1", "pdf");
-
+                loadPDFFromServer(fileOneData, mFirstPdfView);
                 break;
 
             case REQUEST_CODE_WRITE_FILE_TWO_PERMISSIONS:
-                loadPDFFromServer(fileTwoData, mSecondPdfView, "", "file2", "pdf");
+                loadPDFFromServer(fileTwoData, mSecondPdfView);
                 break;
 
             default:
@@ -1016,69 +1021,91 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
             if (value1.objectData instanceof LstDocType) {
                 LstDocType clickedLstDocTypeElement = (LstDocType) value1.objectData;
 
-                if (!mOpenCompareDialogSwitch.isChecked()) {
-                    mPreviousClickedTreeElement.clear();
-                }
-                mPreviousClickedTreeElement.put(clickedLstDocTypeElement.getTypeName(), clickedLstDocTypeElement.getTypeName());
-
                 //----------
-                getEncryptedPDFRequestModel = new GetEncryptedPDFRequestModel();
+                GetEncryptedPDFRequestModel getEncryptedPDFRequestModel = new GetEncryptedPDFRequestModel();
                 getEncryptedPDFRequestModel.setRecordId(String.valueOf(clickedLstDocTypeElement.getRecordId()));
                 getEncryptedPDFRequestModel.getLstDocTypes().add(clickedLstDocTypeElement);
                 //----------
-                switch (mPreviousClickedTreeElement.size()) {
-                    case 1:
-                        mFirstFileTypeProgressDialogLayout.setVisibility(View.VISIBLE);
-                        mPatientsHelper.getPdfData(getEncryptedPDFRequestModel, DMSConstants.TASK_GET_PDF_DATA);
-                        break;
-                    case 2:
-                        if (mOpenCompareDialogSwitch.isChecked()) {
-                            ArrayList<String> tempClickedElements = new ArrayList<>(mPreviousClickedTreeElement.values());
-                            //-----
-                            mFileOnePatientID.setText(getString(R.string.patient_id) + respectivePatientID);
-                            mFileOneFileName.setText(getString(R.string.file) + tempClickedElements.get(0));
-                            //-----
-                            mFileTwoPatientID.setText(getString(R.string.patient_id) + respectivePatientID);
-                            mFileTwoFileName.setText(getString(R.string.file) + tempClickedElements.get(1));
-                            mSecondFileTypeProgressDialogLayout.setVisibility(View.VISIBLE);
-                            expandCompareDialog();
-                            //-----
-                        }
-                        break;
-                    default:
-                        CommonMethods.showToast(this, "Can't compare more than 2 PDFs.");
-                        mPreviousClickedTreeElement.remove(clickedLstDocTypeElement.getTypeName());
+                if (mOpenCompareDialogSwitch.isChecked()) {
+                    if (mGetEncryptedPDFRequestModelList.size() == 2) {
                         expandCompareDialog();
-                        break;
-                }
+                        CommonMethods.showToast(this, "Can not compare more than 2 PDFs");
+                    } else {
+                        mGetEncryptedPDFRequestModelList.add(getEncryptedPDFRequestModel);
+                        mPreviousClickedTreeElement.put(clickedLstDocTypeElement.getTypeName(), clickedLstDocTypeElement.getTypeName().trim());
 
+                        ArrayList<String> tempClickedElements = new ArrayList<>(mPreviousClickedTreeElement.values());
+
+                        expandCompareDialog();
+                        switch (mGetEncryptedPDFRequestModelList.size()) {
+                            case 1:
+                                //-----
+                                mFileOnePatientID.setText(getString(R.string.patient_id) + respectivePatientID);
+                                mFileOneFileName.setText(getString(R.string.file) + tempClickedElements.get(0));
+                                mFirstFileTypeProgressDialogLayout.setVisibility(View.VISIBLE);
+                                break;
+                            case 2:
+                                //-----
+                                mFileOnePatientID.setText(getString(R.string.patient_id) + respectivePatientID);
+                                mFileOneFileName.setText(getString(R.string.file) + tempClickedElements.get(0));
+                                mFirstFileTypeProgressDialogLayout.setVisibility(View.VISIBLE);
+                                //-------
+                                mFileTwoPatientID.setText(getString(R.string.patient_id) + respectivePatientID);
+                                mFileTwoFileName.setText(getString(R.string.file) + tempClickedElements.get(1));
+                                mSecondFileTypePdfViewLayout.setVisibility(View.VISIBLE);
+                                mSecondFileTypeProgressDialogLayout.setVisibility(View.VISIBLE);
+                                break;
+                        }
+                    }
+
+                } else {
+                    mGetEncryptedPDFRequestModelList.clear();
+                    mGetEncryptedPDFRequestModelList.add(getEncryptedPDFRequestModel);
+
+                    mPreviousClickedTreeElement.clear();
+                    mPreviousClickedTreeElement.put(clickedLstDocTypeElement.getTypeName(), clickedLstDocTypeElement.getTypeName().trim());
+
+                    mFirstFileTypeProgressDialogLayout.setVisibility(View.VISIBLE);
+                    //--------
+                    mSecondFileTypePdfViewLayout.setVisibility(View.GONE);
+                    mSecondFileTypeProgressDialogLayout.setVisibility(View.GONE);
+                    //--------
+                    mPatientsHelper.getPdfData(mGetEncryptedPDFRequestModelList.get(0), DMSConstants.TASK_GET_PDF_DATA + "_0");
+                }
             }
             //----- Get Object of clicked Element and create map to send  : End------
-
-
         }
     }
 
 
-    private void loadPDFFromServer(String pdfFileURL, PDFView pdfViewToLoad, String base64Pdf, String fileName, String extension) {
+    private void loadPDFFromServer(String pdfFileURL, PDFView pdfViewToLoad) {
 
         String baseUrl = DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.SERVER_PATH, mContext);
 
         pdfFileURL = baseUrl + pdfFileURL.replace("~", "").trim();
 
-        //Uri.Builder builder = Uri.parse(pdfFileURL.trim()).buildUpon();
-        //Uri build = builder.build();
-
         CommonMethods.Log(TAG, "PDF URL:==-->> " + pdfFileURL);
 
-        pdfViewToLoad.fromUrl(pdfFileURL)
-                .defaultPage(mPageNumber)
-                .onError(this)
-                .onDraw(this)
-                .onLoad(this)
-                .enableAnnotationRendering(true)
-                .scrollHandle(new DefaultScrollHandle(this))
-                .loadFromUrl();
+        if (pdfViewToLoad == mFirstPdfView) {
+            mFirstPdfView.fromUrl(pdfFileURL)
+                    .defaultPage(mPageNumber)
+                    .onError(this)
+                    .onDraw(this)
+                    .onLoad(this)
+                    .enableAnnotationRendering(true)
+                    .scrollHandle(new DefaultScrollHandle(this))
+                    .loadFromUrl();
+        } else if (pdfViewToLoad == mSecondPdfView) {
+            mSecondPdfView.fromUrl(pdfFileURL)
+                    .defaultPage(mPageNumber)
+                    .onError(this)
+                    .onDraw(this)
+                    .onLoad(this)
+                    .enableAnnotationRendering(true)
+                    .scrollHandle(new DefaultScrollHandle(this))
+                    .loadFromUrl();
+        }
+
     }
 
 
@@ -1089,7 +1116,7 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
 
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // Permission Granted
-                    loadPDFFromServer(fileOneData, mFirstPdfView, "", "file1", "pdf");
+                    loadPDFFromServer(fileOneData, mFirstPdfView);
                 } else {
                     // Permission Denied
                     CommonMethods.showToast(mContext, getString(R.string.denied_permission_read_document));
@@ -1099,7 +1126,7 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
             case REQUEST_CODE_WRITE_FILE_TWO_PERMISSIONS:
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED)
                     // Permission Granted
-                    loadPDFFromServer(fileTwoData, mSecondPdfView, "", "file2", "pdf");
+                    loadPDFFromServer(fileTwoData, mSecondPdfView);
                 else
                     // Permission Denied
                     CommonMethods.showToast(mContext, getString(R.string.denied_permission_read_document));
@@ -1112,19 +1139,20 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
     }
 
 
-    private void doCallPDFDataService(String filePathToFetch, int size, PDFView pdfView, RelativeLayout progressBarLayout, FrameLayout pdfContainerLayout, String mTagID) {
+    private void doCallPDFDataService(String filePathToFetch, String mTagID) {
         //-----TO grayed out pdfview based on no element in that view -----
-        if (size != 0) {
-            pdfView.setVisibility(View.VISIBLE);
-            progressBarLayout.setVisibility(View.VISIBLE);
-            pdfContainerLayout.setVisibility(View.VISIBLE);
-            pdfContainerLayout.setBackgroundResource(R.drawable.pdfdecoration);
+        if (String.valueOf(mTagID).endsWith("0")) {
+            mFirstPdfView.setVisibility(View.VISIBLE);
+            mFirstFileTypeProgressDialogLayout.setVisibility(View.VISIBLE);
+            mFirstFileTypePdfViewLayout.setVisibility(View.VISIBLE);
+            mFirstFileTypePdfViewLayout.setBackgroundResource(R.drawable.pdfdecoration);
         } else {
-            pdfView.setVisibility(View.GONE);
-            pdfContainerLayout.setBackgroundColor(ContextCompat.getColor(this, R.color.Gray));
+            mSecondPdfView.setVisibility(View.VISIBLE);
+            mSecondFileTypeProgressDialogLayout.setVisibility(View.VISIBLE);
+            mSecondFileTypePdfViewLayout.setVisibility(View.VISIBLE);
+            mSecondFileTypePdfViewLayout.setBackgroundResource(R.drawable.pdfdecoration);
         }
-
-        doValidateReceivedEncryptedFilePath(filePathToFetch, (DMSConstants.TASK_GET_PDF_DATA + mTagID));
+        doValidateReceivedEncryptedFilePath(filePathToFetch, mTagID);
     }
 
     @Override
