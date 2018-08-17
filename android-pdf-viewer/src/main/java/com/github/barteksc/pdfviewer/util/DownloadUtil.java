@@ -46,8 +46,8 @@ public class DownloadUtil {
     }
 
     /**
-     * @param url 下载连接
-     * @param saveDir 储存下载文件的SDCard目录
+     * @param url      下载连接
+     * @param saveDir  储存下载文件的SDCard目录
      * @param listener 下载监听
      */
     public void download(final String url, final String saveDir, final OnDownloadListener listener) {
@@ -58,6 +58,7 @@ public class DownloadUtil {
                 // 下载失败
                 listener.onDownloadFailed();
             }
+
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 InputStream is = null;
@@ -106,12 +107,11 @@ public class DownloadUtil {
     /**
      * @param saveDir
      * @return
-     * @throws IOException
-     * 判断下载目录是否存在
+     * @throws IOException 判断下载目录是否存在
      */
     private String isExistDir(String saveDir) throws IOException {
         // 下载位置
-        File downloadFile = new File( saveDir);
+        File downloadFile = new File(saveDir);
         if (!downloadFile.mkdirs()) {
             downloadFile.createNewFile();
         }
@@ -121,8 +121,7 @@ public class DownloadUtil {
 
     /**
      * @param url
-     * @return
-     * 从下载连接中解析出文件名
+     * @return 从下载连接中解析出文件名
      */
     @NonNull
     private String getNameFromUrl(String url) {
@@ -136,8 +135,7 @@ public class DownloadUtil {
         void onDownloadSuccess(File fiel);
 
         /**
-         * @param progress
-         * 下载进度
+         * @param progress 下载进度
          */
         void onDownloading(int progress);
 
