@@ -729,15 +729,22 @@
                         android:layout_marginLeft="@dimen/dp5"
                         android:textStyle="bold" />
 
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
                     <Spinner
                         android:id="@+id/archivedPreferenceSpinner"
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
-                        android:layout_weight="2"
                         android:entries="@array/get_archived_preference_list"
                         android:gravity="center"></Spinner>
+
                 </LinearLayout>
+
 
                 <LinearLayout
                     android:id="@+id/layoutCompareSwitch"
@@ -784,6 +791,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:padding="@dimen/dp5"
                 android:layout_marginTop="@dimen/dp5">
 
                 <android.support.v7.widget.AppCompatImageButton
@@ -800,6 +808,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
+                    android:textSize="@dimen/sp14"
                     android:textColor="@color/black"
                     tools:text="this is text" />
 
@@ -808,6 +817,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginRight="@dimen/dp10"
+
                     android:background="@mipmap/right_arrow"
                     android:textColor="@color/white" />
             </LinearLayout>

@@ -252,6 +252,9 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
     private String mLoadedPDFFileDataPath = null;
     private String mArchivedSelectedPreference = DMSConstants.ArchivedPreference.FOLDER;
     private boolean isCompareDialogCollapsed;
+    private int archiveCount=0;
+    private int archiveApiCount=0;
+    private int currentCount=0;
 
     private ArrayList<GetEncryptedPDFRequestModel> mGetEncryptedPDFRequestModelList = new ArrayList<>();
 
@@ -290,6 +293,8 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
         mArchivedPreferenceSpinnerListener();
        if(CommonMethods.isTablet(this))
            layoutCompareSwitch.setVisibility(View.VISIBLE);
+
+
 
     }
 
@@ -351,6 +356,7 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
         toggle.setHomeAsUpIndicator(getResources().getDrawable(R.drawable.back_arrow_a_01));
         toggle.syncState();
 
+        mToolbar.setTitle(getString(R.string.pdf));
         doBindHeaderViews();
         //-------Listeners-----
 
@@ -384,6 +390,37 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
         ViewGroup.LayoutParams layoutParams = mRightNavigationView.getLayoutParams();
         layoutParams.width = width;
         mRightNavigationView.setLayoutParams(layoutParams);
+
+
+        archiveApiCount=DMSPreferencesManager.getInt(DMSPreferencesManager.DMS_PREFERENCES_KEY.ARCHIVE_API_COUNT,this);
+        currentCount=archiveApiCount;
+
+
+        mOpenCompareDialogSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+
+                if (!b){
+
+                    Log.e("hiiiiii","giiiiii");
+                    mGetEncryptedPDFRequestModelList.clear();
+                 //   mGetEncryptedPDFRequestModelList.add(getEncryptedPDFRequestModel);
+
+                    mPreviousClickedTreeElement.clear();
+                  //  mPreviousClickedTreeElement.put(clickedLstDocTypeElement.getTypeName(), clickedLstDocTypeElement.getTypeName().trim());
+
+                    mFirstFileTypeProgressDialogLayout.setVisibility(View.GONE);
+                    //--------
+                    mSecondFileTypePdfViewLayout.setVisibility(View.GONE);
+                    mSecondFileTypeProgressDialogLayout.setVisibility(View.GONE);
+
+                    //--------
+                    //mPatientsHelper.getPdfData(mGetEncryptedPDFRequestModelList.get(0), DMSConstants.TASK_GET_PDF_DATA + "_0");
+
+                }
+
+            }
+        });
 
     }
 
@@ -425,7 +462,10 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
                 doCreateTreeStructure();
                 break;
             case R.id.loadPreviousArchiveDataList:
+                archiveCount=0;
                 getArchivedPageNumber = getArchivedPageNumber - 1;
+                currentCount=currentCount-archiveApiCount;
+
                 if (getArchivedPageNumber == 0) {
                     CommonMethods.showToast(this, "No Previous data to load");
                 } else {
@@ -434,9 +474,11 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
                 }
                 break;
             case R.id.loadNextArchiveDataList:
+                archiveCount=0;
                 if (!mFileTreeResponseData.isPagination()) {
                     CommonMethods.showToast(this, "No Next data to load");
                 } else {
+                    currentCount=currentCount+archiveApiCount;
                     getArchivedPageNumber = getArchivedPageNumber + 1;
                     mFileTreeResponseData = null;
                     doCreateTreeStructure();
@@ -507,7 +549,10 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
                 isComparingBetweenSameFileType = true;
             }
 
+
             doCreateTreeStructure();
+
+
             //------
 
         } else if (String.valueOf(mOldDataTag.toLowerCase()).contains("" + DMSConstants.TASK_GET_PDF_DATA.toLowerCase())) {
@@ -625,6 +670,9 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
 
             //---- For list lstDateFolderType loop
             List<LstDateFolderType> lstDateFolderTypeList = archiveDatumObject.getLstDateFolderTypeList();
+
+            archiveCount=archiveCount+lstDateFolderTypeList.size();
+
 
             for (int l = 0; l < lstDateFolderTypeList.size(); l++) {
                 LstDateFolderType lstDateFolderType = lstDateFolderTypeList.get(l);
@@ -744,6 +792,7 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
 
             //---- For list lstDateFolderType loop
             List<LstDocCategory> archiveDataLstDocCategoriesList = archiveDatumObject.getArchiveDataLstDocCategories();
+            archiveCount=archiveCount+archiveDataLstDocCategoriesList.size();
 
             for (int l = 0; l < archiveDataLstDocCategoriesList.size(); l++) {
                 LstDocCategory lstDocCategory = archiveDataLstDocCategoriesList.get(l);
@@ -839,6 +888,7 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
 
             //---- For list categories loop
             List<LstDocCategory> lstDocCategories = archiveDatumObject.getArchiveDataLstDocCategories();
+            archiveCount=archiveCount+lstDocCategories.size();
 
             for (int j = 0; j < lstDocCategories.size(); j++) {
                 LstDocCategory lstDocCategoryObject = lstDocCategories.get(j);
@@ -1016,6 +1066,8 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
         }
     }
 
+
+
     // End
 
     //-- For treeview annotations
@@ -1075,6 +1127,7 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
                     }
 
                 } else {
+                    Log.e("hiiiiii","giiiiii");
                     mGetEncryptedPDFRequestModelList.clear();
                     mGetEncryptedPDFRequestModelList.add(getEncryptedPDFRequestModel);
 
@@ -1085,6 +1138,7 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
                     //--------
                     mSecondFileTypePdfViewLayout.setVisibility(View.GONE);
                     mSecondFileTypeProgressDialogLayout.setVisibility(View.GONE);
+
                     //--------
                     mPatientsHelper.getPdfData(mGetEncryptedPDFRequestModelList.get(0), DMSConstants.TASK_GET_PDF_DATA + "_0");
                 }
@@ -1238,15 +1292,32 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
             switch (mArchivedSelectedPreference) {
                 case DMSConstants.ArchivedPreference.FOLDER:
                     createAnnotationTreeWithFolderPreferences(mFileTreeResponseData, true);
+                    if(mFileTreeResponseData.isPagination())
+                    {
+                        loadedArchiveDataMessage.setText(""+currentCount+" "+getString(R.string.records_more));
+                    }else {
+                        loadedArchiveDataMessage.setText(""+archiveCount+" "+getString(R.string.records));
+                    }
+
 
                     break;
                 case DMSConstants.ArchivedPreference.FILE:
                     createAnnotationTreeWithFilePreferences(mFileTreeResponseData, true);
-
+                    if(mFileTreeResponseData.isPagination())
+                    {
+                        loadedArchiveDataMessage.setText(""+currentCount+" "+getString(R.string.records_more));
+                    }else {
+                        loadedArchiveDataMessage.setText(""+archiveCount+" "+getString(R.string.records));
+                    }
                     break;
                 case DMSConstants.ArchivedPreference.DATE:
                     createAnnotationTreeWithDatePreferences(mFileTreeResponseData, true);
-
+                    if(mFileTreeResponseData.isPagination())
+                    {
+                        loadedArchiveDataMessage.setText(""+archiveApiCount+" "+getString(R.string.records_more));
+                    }else {
+                        loadedArchiveDataMessage.setText(""+archiveCount+" "+getString(R.string.records));
+                    }
                     break;
             }
 
@@ -1267,4 +1338,5 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
         }
 
     }
+
 }

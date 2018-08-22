@@ -45,6 +45,11 @@ public class AppointmentPatientData implements Parcelable, Cloneable, Comparable
     @Expose
     private String PatAddress;
 
+    @SerializedName("PatId")
+    @Expose
+    private String PatId;
+
+
     private boolean selectedGroupCheckbox;
 
     private String spannableString;
@@ -78,6 +83,7 @@ public class AppointmentPatientData implements Parcelable, Cloneable, Comparable
         this.gender = ((String) in.readValue((String.class.getClassLoader())));
         this.outstandingAmount = ((String) in.readValue((String.class.getClassLoader())));
         this.PatAddress = ((String) in.readValue((String.class.getClassLoader())));
+        this.PatId = ((String) in.readValue((String.class.getClassLoader())));
 
     }
 
@@ -87,6 +93,14 @@ public class AppointmentPatientData implements Parcelable, Cloneable, Comparable
 
     public void setSelectedGroupCheckbox(boolean selectedGroupCheckbox) {
         this.selectedGroupCheckbox = selectedGroupCheckbox;
+    }
+
+    public String getPatId() {
+        return PatId;
+    }
+
+    public void setPatId(String patId) {
+        PatId = patId;
     }
 
     public String getPatientId() {
@@ -202,6 +216,7 @@ public class AppointmentPatientData implements Parcelable, Cloneable, Comparable
         dest.writeValue(gender);
         dest.writeValue(outstandingAmount);
         dest.writeValue(PatAddress);
+        dest.writeValue(PatId);
     }
 
     public int describeContents() {

@@ -187,6 +187,7 @@ public class ViewAllPatientListFragment extends Fragment implements WaitingListA
         extra.putString(DMSConstants.PATIENT_ADDRESS, clickItem.getPatAddress());
         extra.putString(DMSConstants.DOCTOR_NAME, "");
         extra.putString(DMSConstants.PATIENT_ID, clickItem.getPatientId());
+        extra.putString(DMSConstants.PAT_ID, clickItem.getPatId());
         extra.putString(DMSConstants.PATIENT_LIST_PARAMS.PATIENT_NAME, "" + clickItem.getPatientName());
         intent.putExtra(DMSConstants.DATA, extra);
         startActivity(intent);

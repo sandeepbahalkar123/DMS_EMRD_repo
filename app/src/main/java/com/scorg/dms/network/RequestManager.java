@@ -367,7 +367,8 @@ public class RequestManager extends ConnectRequest implements Connector, Request
                     //  loginRequest();
                 } else {
                     mConnectionListener.onResponse(ConnectionListener.SERVER_ERROR, null, mOldDataTag);
-                    CommonMethods.showToast(mContext, mContext.getResources().getString(R.string.server_error));
+                    if (DMSConstants.TASK_LOGIN_CODE != mOldDataTag)
+                        CommonMethods.showToast(mContext, mContext.getResources().getString(R.string.server_error));
                 }
             } else if (error instanceof NetworkError) {
 

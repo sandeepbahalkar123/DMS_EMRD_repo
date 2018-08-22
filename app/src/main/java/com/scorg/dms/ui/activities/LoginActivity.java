@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.EditText;
 
 import com.scorg.dms.R;
@@ -96,16 +97,19 @@ public class LoginActivity extends AppCompatActivity implements HelperResponse {
     @Override
     public void onParseError(String mOldDataTag, String errorMessage) {
         CommonMethods.showToast(this, errorMessage);
+        Log.e("loginResponce","onParseError");
     }
 
     @Override
     public void onServerError(String mOldDataTag, String serverErrorMessage) {
-        CommonMethods.showToast(this, serverErrorMessage);
+        CommonMethods.showToast(this, getString(R.string.invalid_username_password));
+        Log.e("loginResponce","onServerError");
     }
 
     @Override
     public void onNoConnectionError(String mOldDataTag, String serverErrorMessage) {
         CommonMethods.showToast(this, serverErrorMessage);
+        Log.e("loginResponce","onNoConnectionError");
 
     }
 }

@@ -266,6 +266,7 @@ public class DMSPreferencesManager {
         String IS_VALID_IP_CONFIG = "isvalidipconfig";
         String USER_NAME = "user_name";
         String PASSWORD = "password";
+        String ARCHIVE_API_COUNT = "ViewArchivedApiTakeCount";
 
     }
 }

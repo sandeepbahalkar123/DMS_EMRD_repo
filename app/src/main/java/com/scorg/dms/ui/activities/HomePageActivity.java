@@ -280,6 +280,7 @@ public class HomePageActivity extends AppCompatActivity implements HelperRespons
                         totalPatientsCount.setText(mDashboardDataModel.getTotalPatientCount());
                         todayAppointmentsCount.setText(mDashboardDataModel.getAppointmentCount());
                        waitingPatientCount.setText(mDashboardDataModel.getWaitingCount());
+                        DMSPreferencesManager.putInt(DMSPreferencesManager.DMS_PREFERENCES_KEY.ARCHIVE_API_COUNT,mDashboardDataModel.getViewArchivedApiTakeCount() , mContext);
 
 
                         LinearLayoutManager linearlayoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);

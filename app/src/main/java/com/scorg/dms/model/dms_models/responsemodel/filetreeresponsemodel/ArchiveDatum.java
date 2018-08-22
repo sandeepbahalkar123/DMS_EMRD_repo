@@ -65,6 +65,10 @@ public class ArchiveDatum {
         this.archiveDataLstDocCategories = archiveDataLstDocCategories;
     }
 
+    public void setTotalArchiveDataLstDocCategoriesPageCount(int totalArchiveDataLstDocCategoriesPageCount) {
+        this.totalArchiveDataLstDocCategoriesPageCount = totalArchiveDataLstDocCategoriesPageCount;
+    }
+
     public int getTotalArchiveDataLstDocCategoriesPageCount() {
         if (archiveDataLstDocCategories != null) {
             if (totalArchiveDataLstDocCategoriesPageCount == -1) {
@@ -73,7 +77,7 @@ public class ArchiveDatum {
                         archiveDataLstDocCategories) {
                     count = count + temp.getPageCount();
                 }
-                setTotalLstDateFolderTypePageCount(count);
+                setTotalArchiveDataLstDocCategoriesPageCount(count);
             }
         }
 

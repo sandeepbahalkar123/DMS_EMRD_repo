@@ -36,6 +36,12 @@ public class WaitingPatientData implements Parcelable {
     @Expose
     private String PatAddress;
 
+    @SerializedName("PatId")
+    @Expose
+    private String PatId;
+
+
+
     public final static Creator<WaitingPatientData> CREATOR = new Creator<WaitingPatientData>() {
 
 
@@ -61,6 +67,7 @@ public class WaitingPatientData implements Parcelable {
         this.appDate = ((String) in.readValue((String.class.getClassLoader())));
         this.contactNo = ((String) in.readValue((String.class.getClassLoader())));
         this.PatAddress = ((String) in.readValue((String.class.getClassLoader())));
+        this.PatId = ((String) in.readValue((String.class.getClassLoader())));
 
     }
 
@@ -73,6 +80,7 @@ public class WaitingPatientData implements Parcelable {
         dest.writeValue(appDate);
         dest.writeValue(contactNo);
         dest.writeValue(PatAddress);
+        dest.writeValue(PatId);
 
     }
 
@@ -143,5 +151,13 @@ public class WaitingPatientData implements Parcelable {
 
     public void setPatAddress(String patAddress) {
         PatAddress = patAddress;
+    }
+
+    public String getPatId() {
+        return PatId;
+    }
+
+    public void setPatId(String patId) {
+        PatId = patId;
     }
 }

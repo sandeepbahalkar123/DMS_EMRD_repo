@@ -27,7 +27,7 @@
                 android:layout_margin="@dimen/dp5"
                 android:background="@drawable/round_background_full_view"
                 android:gravity="center"
-                android:hint="Enter text"
+                android:hint="@string/patient_list_search_hint"
                 android:textCursorDrawable="@drawable/cursor_color" />
 
 
