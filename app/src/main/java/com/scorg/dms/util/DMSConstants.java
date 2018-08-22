@@ -152,6 +152,7 @@ public class DMSConstants {
     public static final String DOCTOR_IMAGE_URL = "doctor_iamge_url";
     public static final String PATIENT_VISIT_DATE = "patient_visit_date";
     public static final String PATIENT_ID = "patient_id";
+    public static final String PAT_ID = "pat_id";
     public static final String NO = "no";
     public static final String RECORD_ID = "record_id";
     public static final String VISIT_DATE = "visitDate";

@@ -27,6 +27,14 @@ public class SearchResult implements Serializable {
     @Expose
     private String patId;
 
+    @SerializedName("age")
+    @Expose
+    private String age="";
+
+    @SerializedName("gender")
+    @Expose
+    private String gender="";
+
 
     public String getPatientId() {
         return patientId;
@@ -74,5 +82,22 @@ public class SearchResult implements Serializable {
 
     public void setPatId(String patId) {
         this.patId = patId;
+    }
+
+
+    public String getAge() {
+        return age;
+    }
+
+    public void setAge(String age) {
+        this.age = age;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 }

@@ -344,7 +344,7 @@ public class DrawerForMyPatients extends Fragment implements HelperResponse, Sor
                     chooseOptionForSort.setText(mFilterSortByHighLowList.getAmountHighOrLow());
                 else
                     chooseOptionForSort.setText(getString(R.string.choose_one_option));
-                //chooseOptionForSort.setText(mSortByPriceFilterAdapter.getAmountSortList().get(mSortByAmountAdapterPosition).getAmountHighOrLow());
+                //chooseOptionForSort.setSearchValue(mSortByPriceFilterAdapter.getAmountSortList().get(mSortByAmountAdapterPosition).getAmountHighOrLow());
                 break;
             case R.id.resetSortingButton:
                 for (FilterSortByHighLowList filterSortByHighLowListObject : mSortByPriceFilterAdapter.getAmountSortList()) {

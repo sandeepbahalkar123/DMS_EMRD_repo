@@ -20,7 +20,7 @@
             android:orientation="vertical">
 
 
-            <AutoCompleteTextView
+            <android.support.v7.widget.AppCompatAutoCompleteTextView
                 android:id="@+id/autocompleteSearchBox"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp36"
@@ -44,6 +44,14 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 app:reverseLayout="false" />
+
+
+            <include
+                android:id="@+id/emptyListView"
+                layout="@layout/common_no_records_found"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="visible" />
 
             <!-- <ExpandableListView
                  android:id="@+id/expandableListView"

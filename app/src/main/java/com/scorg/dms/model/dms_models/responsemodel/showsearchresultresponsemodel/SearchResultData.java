@@ -17,6 +17,10 @@ public class SearchResultData implements CustomResponse {
     @Expose
     private List<SearchResult> searchResult = new ArrayList<SearchResult>();
 
+    @SerializedName("ispaggination")
+    @Expose
+    private boolean ispaggination;
+
     public List<SearchResult> getSearchResult() {
         return searchResult;
     }
@@ -25,4 +29,11 @@ public class SearchResultData implements CustomResponse {
         this.searchResult = searchResult;
     }
 
+    public boolean isPaggination() {
+        return ispaggination;
+    }
+
+    public void setIspaggination(boolean ispaggination) {
+        this.ispaggination = ispaggination;
+    }
 }

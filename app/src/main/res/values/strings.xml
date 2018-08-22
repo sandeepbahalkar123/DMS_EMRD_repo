@@ -178,6 +178,7 @@
     <string name="no_show">No show</string>
     <string name="other">Other</string>
     <string name="episode">Episode</string>
+    <string name="episode_details">Episode Details</string>
     <string name="enter_sms_text_here">Enter sms text here</string>
     <string name="location">Location</string>
     <string name="today_appointment">Today\'s\nAppointment</string>
@@ -235,6 +236,8 @@
     <string name="patient_id">Patient ID:</string>
     <string name="medical_records">Medical Records</string>
     <string name="complete">Complete</string>
+    <string name="select_date_type">Date type</string>
+    <string name="select_file_type">Select file type</string>
 
     <!-- Strings related to login -->
     <string name="error_empty_fields">Please enter username/password</string>

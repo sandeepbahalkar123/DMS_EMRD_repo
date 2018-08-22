@@ -68,9 +68,11 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+
+
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp36"
+                android:layout_height="wrap_content"
                 android:layout_margin="@dimen/dp5"
                 android:background="@color/white"
                 android:orientation="horizontal">
@@ -107,9 +109,16 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp36"
+                android:layout_height="wrap_content"
                 android:background="@color/grey_200"
-                android:orientation="horizontal">
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp5"
+                    android:textSize="@dimen/sp13"
+                    android:layout_marginRight="@dimen/dp5"
+                    android:text="@string/select_date_type"/>
 
                 <Spinner
                     android:id="@+id/spinner_admissionDate"

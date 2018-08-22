@@ -97,7 +97,7 @@ public class BottomMenuAppointmentAdapter extends RecyclerView.Adapter<BottomMen
             holder.menuBottomIcon.setColorFilter(ContextCompat.getColor(holder.menuBottomIcon.getContext(), R.color.grey), android.graphics.PorterDuff.Mode.MULTIPLY);
         }
 
-        //  holder.timeSlot.setText(doctorObject.ge);
+        //  holder.timeSlot.setSearchValue(doctorObject.ge);
 
     }
 

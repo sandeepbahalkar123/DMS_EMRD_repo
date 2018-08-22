@@ -141,7 +141,7 @@ public class OTPConfirmationForSignUp extends Fragment implements HelperResponse
 
         @Override
         public void onTick(long millisUntilFinished) {
-//			mProgressText.setText(" "+millisUntilFinished / 1000 + " secs" );
+//			mProgressText.setSearchValue(" "+millisUntilFinished / 1000 + " secs" );
             if (getActivity() != null) {
                 if (!getActivity().isFinishing()) {
                     String format = "" + (millisUntilFinished / 1000);

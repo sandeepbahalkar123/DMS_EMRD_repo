@@ -26,7 +26,6 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -55,6 +54,7 @@ import com.scorg.dms.model.dms_models.responsemodel.patientnamelistresponsemodel
 import com.scorg.dms.model.dms_models.responsemodel.patientnamelistresponsemodel.PatientNameListResponseModel;
 import com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemodel.SearchResult;
 import com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemodel.ShowSearchResultResponseModel;
+import com.scorg.dms.model.my_patient_filter.PatientFilter;
 import com.scorg.dms.ui.customesViews.drag_drop_recyclerview_helper.EndlessRecyclerViewScrollListener;
 import com.scorg.dms.ui.customesViews.treeViewHolder.arrow_expand.ArrowExpandIconTreeItemHolder;
 import com.scorg.dms.ui.customesViews.treeViewHolder.arrow_expand.ArrowExpandSelectableHeaderHolder;
@@ -78,7 +78,7 @@ import butterknife.ButterKnife;
 
 import static com.scorg.dms.util.DMSConstants.PATIENT_DETAILS;
 
-public class PatientList extends AppCompatActivity implements HelperResponse, View.OnClickListener, AdapterView.OnItemSelectedListener, PatientRecycleViewListAdapter.OnPatientListener, TreeNode.TreeNodeClickListener {
+public class PatientList extends AppCompatActivity implements HelperResponse, View.OnClickListener, AdapterView.OnItemSelectedListener, PatientRecycleViewListAdapter.OnPatientListener, TreeNode.TreeNodeClickListener,PatientSearchAutoCompleteTextViewAdapter.OnItemClickListener {
 
     private static final long ANIMATION_DURATION = 500; // in milliseconds
     SimpleDateFormat dfDate = new SimpleDateFormat(DMSConstants.DATE_PATTERN.YYYY_MM_DD, Locale.US);
@@ -101,7 +101,7 @@ public class PatientList extends AppCompatActivity implements HelperResponse, Vi
     //--------
     @BindView(R.id.autocompleteSearchBox)
     AutoCompleteTextView mAutoCompleteSearchBox;
-    ArrayList<String> mAutoCompleteSearchBoxList = new ArrayList<>();
+    ArrayList<PatientFilter> mAutoCompleteSearchBoxList = new ArrayList<>();
     //--------
 
     @BindView(R.id.spinner_admissionDate)
@@ -140,6 +140,8 @@ public class PatientList extends AppCompatActivity implements HelperResponse, Vi
     @BindView(R.id.annotationTreeViewContainer)
     RelativeLayout mAnnotationTreeViewContainer;
 
+    @BindView(R.id.emptyListView)
+    RelativeLayout emptyListView;
 
     //----------------
 
@@ -180,6 +182,8 @@ public class PatientList extends AppCompatActivity implements HelperResponse, Vi
     private boolean loading = true;
     private String[] mFileTypeStringArrayExtra;
     private PatientSearchAutoCompleteTextViewAdapter mPatientSearchAutoCompleteTextViewAdapter;
+    private String priv = "";
+    private boolean mIsLoadMorePatients;
     //---------
 
     @Override
@@ -211,7 +215,8 @@ public class PatientList extends AppCompatActivity implements HelperResponse, Vi
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
 
-                if (NetworkUtil.isInternetAvailable(mContext)) {
+                if (NetworkUtil.isInternetAvailable(mContext) && mIsLoadMorePatients) {
+
                     currentPage = currentPage + 1;
                     doGetPatientList();
                     loading = true;
@@ -247,6 +252,7 @@ public class PatientList extends AppCompatActivity implements HelperResponse, Vi
             @Override
             public void handleMessage(Message msg) {
                 patientExpandableListAdapter.removeAll();
+                mIsLoadMorePatients=true;
                 currentPage = 0;
                 doGetPatientList();
             }
@@ -255,8 +261,11 @@ public class PatientList extends AppCompatActivity implements HelperResponse, Vi
 
         //------------
         mTagsAdapter = new TagAdapter(mContext, mAddedTagsForFiltering, mAddedTagsEventHandler);
+
         //------- search autocomplete--------
-        mAutoCompleteSearchBox.setThreshold(0);//start searching from 1 character
+       // mAutoCompleteSearchBox.setThreshold(0);//start searching from 1 character
+
+
 
         mAutoCompleteSearchBox.addTextChangedListener(new TextWatcher() {
             @Override
@@ -271,18 +280,25 @@ public class PatientList extends AppCompatActivity implements HelperResponse, Vi
 
             @Override
             public void afterTextChanged(Editable s) {
+
                 String enteredText = s.toString().trim();
                 mAutoCompleteSearchBoxList.clear();
                 if (enteredText.length() != 0) {
-                    mAutoCompleteSearchBoxList.add(enteredText + PatientSearchAutoCompleteTextViewAdapter.HARDCODED_STRING + getString(R.string.in_uhid));
-                    mAutoCompleteSearchBoxList.add(enteredText + PatientSearchAutoCompleteTextViewAdapter.HARDCODED_STRING + getString(R.string.in_patient_name));
-                    mAutoCompleteSearchBoxList.add(enteredText + PatientSearchAutoCompleteTextViewAdapter.HARDCODED_STRING + getString(R.string.in_ref_id));
-                    mAutoCompleteSearchBoxList.add(enteredText + PatientSearchAutoCompleteTextViewAdapter.HARDCODED_STRING + getString(R.string.in_all));
-                    mPatientSearchAutoCompleteTextViewAdapter = new PatientSearchAutoCompleteTextViewAdapter(PatientList.this, R.layout.patient_filter_right_drawer, R.id.custom_spinner_txt_view_Id, mAutoCompleteSearchBoxList);
-                    mAutoCompleteSearchBox.setAdapter(mPatientSearchAutoCompleteTextViewAdapter);
-                    mAutoCompleteSearchBox.showDropDown();
-                }
+                    mAutoCompleteSearchBoxList.add(new PatientFilter(enteredText ,  getString(R.string.in_uhid)));
+                    mAutoCompleteSearchBoxList.add(new PatientFilter(enteredText , getString(R.string.in_patient_name)));
+                    mAutoCompleteSearchBoxList.add(new PatientFilter(enteredText, getString(R.string.in_ref_id)));
+                    mAutoCompleteSearchBoxList.add(new PatientFilter(enteredText , getString(R.string.in_all)));
 
+                    mPatientSearchAutoCompleteTextViewAdapter = new PatientSearchAutoCompleteTextViewAdapter(PatientList.this, R.layout.patient_filter_right_drawer, R.id.custom_spinner_txt_view_Id, mAutoCompleteSearchBoxList,PatientList.this);
+                    mAutoCompleteSearchBox.setAdapter(mPatientSearchAutoCompleteTextViewAdapter);
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            mAutoCompleteSearchBox.showDropDown();
+                        }
+                    }, 200);
+
+                }
             }
         });
 
@@ -408,8 +424,23 @@ public class PatientList extends AppCompatActivity implements HelperResponse, Vi
             ShowSearchResultResponseModel showSearchResultResponseModel = (ShowSearchResultResponseModel) customResponse;
             List<SearchResult> searchResult = showSearchResultResponseModel.getSearchResultData().getSearchResult();
 
+            mIsLoadMorePatients = showSearchResultResponseModel.getSearchResultData().isPaggination();
             patientExpandableListAdapter.addNewItems(searchResult);
             patientExpandableListAdapter.notifyDataSetChanged();
+            mSearchPatientNameEditText.dismissDropDown();
+            mAutoCompleteSearchBox.dismissDropDown();
+            Log.e("searchResult", "---" + searchResult.size());
+            if (searchResult.size() <= 0) {
+                mPatientListView.setVisibility(View.GONE);
+               // mRecycleTag.setVisibility(View.GONE);
+                emptyListView.setVisibility(View.VISIBLE);
+            } else {
+
+                mPatientListView.setVisibility(View.VISIBLE);
+               // mRecycleTag.setVisibility(View.VISIBLE);
+                emptyListView.setVisibility(View.GONE);
+            }
+
 
             //mPatientListView.setDividerHeight(2);
         } else if (mOldDataTag == DMSConstants.TASK_ANNOTATIONS_LIST) {
@@ -431,6 +462,7 @@ public class PatientList extends AppCompatActivity implements HelperResponse, Vi
             mShowPatientNameAdapter = new ShowPatientNameAdapter(this, R.layout.patient_filter_right_drawer, R.id.custom_spinner_txt_view_Id, mLstPatient);
             mSearchPatientNameEditText.setAdapter(mShowPatientNameAdapter);
             mSearchPatientNameEditText.showDropDown();
+
 
             Log.d(TAG, "" + mLstPatient);
         }
@@ -537,7 +569,7 @@ public class PatientList extends AppCompatActivity implements HelperResponse, Vi
                 String fromDate = mFromDateEditText.getText().toString().trim();
                 String toDate = mToDateEditText.getText().toString().trim();
                 patientExpandableListAdapter.removeAll();
-
+                mSearchPatientNameEditText.dismissDropDown();
                 //*********adding field values in arrayList to generate tags in recycler view
                 //we are adding refrence id and file type value in FILE_TYPE parameter
                 //Reference id = UHID or OPD or IPD number *********//
@@ -594,8 +626,8 @@ public class PatientList extends AppCompatActivity implements HelperResponse, Vi
                 mRecycleTag.setAdapter(mTagsAdapter);
                 mDrawer.closeDrawer(GravityCompat.END);
                 currentPage = 0;
+                mIsLoadMorePatients=true;
                 doGetPatientList();
-
                 break;
 
             case R.id.bt_clear_search_annotation:
@@ -659,6 +691,65 @@ public class PatientList extends AppCompatActivity implements HelperResponse, Vi
                 showSearchResultRequestModel.setCommonSearch("" + mAutoCompleteSearchBox.getText().toString());
             }
         }
+
+        mPatientsHelper.doGetPatientList(showSearchResultRequestModel);
+    }
+
+
+
+
+    private void doGetPatientListFilter(PatientFilter patientFilter) {
+
+
+        ShowSearchResultRequestModel showSearchResultRequestModel = new ShowSearchResultRequestModel();
+
+        String selectedFileType = mTagsAdapter.getUpdatedTagValues(DMSConstants.PATIENT_LIST_PARAMS.FILE_TYPE, "0");
+
+        //THIS IS DONE BCAZ, FILETYPE contains (IPD/OPD/UHID:enteredID)
+        String enteredID = mTagsAdapter.getUpdatedTagValues(DMSConstants.PATIENT_LIST_PARAMS.FILE_TYPE, "1");
+
+        showSearchResultRequestModel.setFileType(selectedFileType);
+
+        if (getString(R.string.uhid).equalsIgnoreCase(selectedFileType)) {
+            showSearchResultRequestModel.setPatientId(enteredID);
+            showSearchResultRequestModel.setReferenceId(DMSConstants.BLANK);
+            showSearchResultRequestModel.setFileType(DMSConstants.BLANK);
+        } else {
+            showSearchResultRequestModel.setPatientId(DMSConstants.BLANK);
+            showSearchResultRequestModel.setReferenceId(enteredID);
+            if (selectedFileType.equalsIgnoreCase(getResources().getString(R.string.Select))) {
+                showSearchResultRequestModel.setFileType(DMSConstants.BLANK);
+            }
+        }
+        showSearchResultRequestModel.setDateType(mTagsAdapter.getUpdatedTagValues(DMSConstants.PATIENT_LIST_PARAMS.DATE_TYPE, null));
+        showSearchResultRequestModel.setFromDate(mTagsAdapter.getUpdatedTagValues(DMSConstants.PATIENT_LIST_PARAMS.FROM_DATE, null));
+        showSearchResultRequestModel.setToDate(mTagsAdapter.getUpdatedTagValues(DMSConstants.PATIENT_LIST_PARAMS.TO_DATE, null));
+        showSearchResultRequestModel.setPatientName(mTagsAdapter.getUpdatedTagValues(DMSConstants.PATIENT_LIST_PARAMS.PATIENT_NAME, null));
+        showSearchResultRequestModel.setAnnotationText(mTagsAdapter.getUpdatedTagValues(DMSConstants.PATIENT_LIST_PARAMS.ANNOTATION_TEXT, null));
+        showSearchResultRequestModel.setPageNumber("" + currentPage);
+
+        showSearchResultRequestModel.setDocTypeId(new String[]{mTagsAdapter.getUpdatedTagValues(getString(R.string.documenttype), null)});
+
+        //------------
+        String enteredSearchBoxValue = patientFilter.getSearchType();
+        //------------
+        if (enteredSearchBoxValue.length() != 0) {
+            if (enteredSearchBoxValue.toLowerCase().equals(getString(R.string.in_uhid).toLowerCase())) {
+                showSearchResultRequestModel.setPatientId(patientFilter.getSearchValue());
+                showSearchResultRequestModel.setReferenceId(DMSConstants.BLANK);
+                showSearchResultRequestModel.setFileType(DMSConstants.BLANK);
+            } else if (enteredSearchBoxValue.toLowerCase().equals(getString(R.string.in_ref_id).toLowerCase())) {
+                showSearchResultRequestModel.setPatientId(DMSConstants.BLANK);
+                showSearchResultRequestModel.setReferenceId(patientFilter.getSearchValue());
+            } else if (enteredSearchBoxValue.toLowerCase().equals(getString(R.string.in_patient_name).toLowerCase())) {
+                showSearchResultRequestModel.setPatientId(DMSConstants.BLANK);
+                showSearchResultRequestModel.setPatientName(patientFilter.getSearchValue());
+            } else if (enteredSearchBoxValue.toLowerCase().equals(getString(R.string.in_all).toLowerCase())) {
+                showSearchResultRequestModel.setCommonSearch(patientFilter.getSearchValue());
+            }
+        }
+
+        mAutoCompleteSearchBox.dismissDropDown();
 
         mPatientsHelper.doGetPatientList(showSearchResultRequestModel);
     }
@@ -729,6 +820,7 @@ public class PatientList extends AppCompatActivity implements HelperResponse, Vi
                 mSpinnerAmissionDate.setAdapter(mCustomSpinAdapter);
                 mSpinnerAmissionDate.setEnabled(true);
             } else if (mSelectedId.equalsIgnoreCase(getResources().getString(R.string.ipd))) {
+                mUHIDEditText.setHint(getResources().getString(R.string.enter) + "ID");
                 mSpinnerAmissionDate.setEnabled(true);
                 mCustomSpinAdapter = new Custom_Spin_Adapter(mContext, mArrayId, getResources().getStringArray(R.array.ipd_array));
                 mSpinnerAmissionDate.setAdapter(mCustomSpinAdapter);
@@ -793,15 +885,18 @@ public class PatientList extends AppCompatActivity implements HelperResponse, Vi
             @Override
             public void afterTextChanged(Editable s) {
                 String enteredString = mSearchPatientNameEditText.getText().toString();
-                if (enteredString.equals("")) {
-                    mClearPatientNameButton.setBackground(getResources().getDrawable(R.mipmap.user));
-                } else {
-                    mClearPatientNameButton.setBackground(getResources().getDrawable(R.mipmap.crosswithcircle));
-                }
-                if (enteredString.trim().length() >= 3) {
-                    mPatientsHelper.doGetPatientNameList(s.toString());
+                if (!enteredString.equals(priv)) {
+                    if (enteredString.equals("")) {
+                        mClearPatientNameButton.setBackground(getResources().getDrawable(R.mipmap.user));
+                    } else {
+                        mClearPatientNameButton.setBackground(getResources().getDrawable(R.mipmap.crosswithcircle));
+                    }
+                    if (enteredString.trim().length() >= 3) {
+                        mPatientsHelper.doGetPatientNameList(s.toString());
+                    }
                 }
 
+                priv = enteredString;
             }
         });
 
@@ -921,7 +1016,9 @@ public class PatientList extends AppCompatActivity implements HelperResponse, Vi
 
         extra.putString(DMSConstants.PATIENT_ADDRESS, groupHeader.getPatientAddress());
         extra.putString(DMSConstants.DOCTOR_NAME, groupHeader.getDoctorName());
-        extra.putString(DMSConstants.PATIENT_ID, groupHeader.getPatId());
+        extra.putString(DMSConstants.PATIENT_ID, groupHeader.getPatientId());
+        extra.putString(DMSConstants.PAT_ID, groupHeader.getPatId());
+
         extra.putString(DMSConstants.PATIENT_LIST_PARAMS.PATIENT_NAME, "" + groupHeader.getPatientName());
         intent.putExtra(DMSConstants.DATA, extra);
         startActivity(intent);
@@ -1043,4 +1140,13 @@ public class PatientList extends AppCompatActivity implements HelperResponse, Vi
 
     }
 
+    @Override
+    public void onSearchAutoCompleteItemClicked(PatientFilter patientFilter) {
+
+        mAutoCompleteSearchBox.setText(patientFilter.getSearchValue());
+        mAutoCompleteSearchBox.dismissDropDown();
+        patientExpandableListAdapter.removeAll();
+        doGetPatientListFilter(patientFilter);
+
+    }
 }

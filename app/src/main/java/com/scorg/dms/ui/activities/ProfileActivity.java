@@ -278,7 +278,7 @@ public class ProfileActivity extends BottomMenuActivity implements BottomMenuAda
                         clinicName.setVisibility(View.GONE);
                     } else {
                         clinicName.setVisibility(View.VISIBLE);
-                        clinicName.setText("" + doctorLocationModel.getClinicName());
+                        clinicName.setSearchValue("" + doctorLocationModel.getClinicName());
                     }
                 }
 

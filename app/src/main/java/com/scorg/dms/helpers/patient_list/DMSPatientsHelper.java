@@ -145,7 +145,7 @@ public class DMSPatientsHelper implements ConnectionListener {
     }
 
     public void doGetPatientEpisodeList(ShowSearchResultRequestModel showSearchResultRequestModel) {
-        ConnectionFactory mConnectionFactory = new ConnectionFactory(mContext, this, null, false, DMSConstants.TASK_GET_EPISODE_LIST, Request.Method.POST, false);
+        ConnectionFactory mConnectionFactory = new ConnectionFactory(mContext, this, null, true, DMSConstants.TASK_GET_EPISODE_LIST, Request.Method.POST, false);
 
         mConnectionFactory.setHeaderParams();
         mConnectionFactory.setPostParams(showSearchResultRequestModel);

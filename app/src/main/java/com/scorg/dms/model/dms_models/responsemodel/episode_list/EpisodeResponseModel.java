@@ -33,6 +33,11 @@ public class EpisodeResponseModel implements CustomResponse, Serializable {
         @Expose
         private List<PatientEpisodeFileData> patientEpisodeFileDataList = new ArrayList<PatientEpisodeFileData>();
 
+        @SerializedName("ispaggination")
+        @Expose
+        private boolean ispaggination;
+
+
         public List<PatientEpisodeFileData> getPatientEpisodeFileDataList() {
             return patientEpisodeFileDataList;
         }
@@ -40,6 +45,15 @@ public class EpisodeResponseModel implements CustomResponse, Serializable {
         public void setPatientEpisodeFileDataList(List<PatientEpisodeFileData> patientEpisodeFileDataList) {
             this.patientEpisodeFileDataList = patientEpisodeFileDataList;
         }
+
+        public boolean isPaggination() {
+            return ispaggination;
+        }
+
+        public void setIspaggination(boolean ispaggination) {
+            this.ispaggination = ispaggination;
+        }
+
     }
 
     public EpisodeDataList getEpisodeDataList() {

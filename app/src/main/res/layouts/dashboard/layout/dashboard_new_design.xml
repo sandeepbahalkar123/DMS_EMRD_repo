@@ -271,6 +271,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/view_all"
+                    android:gravity="center"
                     android:textAllCaps="true"
                     android:textColor="@color/tagColor"
                     android:textSize="@dimen/sp12"

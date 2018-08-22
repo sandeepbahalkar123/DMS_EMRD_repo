@@ -234,6 +234,7 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
     //---------
     ArrayList<PatientEpisodeFileData> mSelectedFileTypeDataToCompare;
     String respectivePatientID;
+    String respectivePatID;
     String respectiveRecordID;
     int getArchivedPageNumber = 1;
     String patientName;
@@ -274,6 +275,7 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
             patientName = extra.getString(DMSConstants.PATIENT_LIST_PARAMS.PATIENT_NAME);
             patientAddress = extra.getString(DMSConstants.PATIENT_ADDRESS);
             doctorName = extra.getString(DMSConstants.DOCTOR_NAME);
+            respectivePatID = extra.getString(DMSConstants.PAT_ID);
         }
 
         mContext = getApplicationContext();
@@ -485,7 +487,7 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
     private void getLoadArchivedList() {
         //---------------
         GetArchiveRequestModel model = new GetArchiveRequestModel();
-        model.setPatId(respectivePatientID);
+        model.setPatId(respectivePatID);
         //model.setPatId("" + 200156);
         //model.setPatId("" + 143369);
         model.setRecordId(respectiveRecordID);

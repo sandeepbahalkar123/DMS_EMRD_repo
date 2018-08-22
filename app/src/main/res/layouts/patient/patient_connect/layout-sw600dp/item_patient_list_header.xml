@@ -73,31 +73,45 @@
 
             </RelativeLayout>
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/dp6">
+                android:layout_marginBottom="@dimen/dp6"
+                android:orientation="horizontal"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:weightSum="3">
 
-                <ImageView
-                    android:id="@+id/patientImageView"
-                    android:layout_width="@dimen/dp67"
-                    android:layout_height="@dimen/dp67"
-                    android:layout_marginLeft="@dimen/dp10"
-                    android:layout_marginStart="@dimen/dp10"
-                    tools:src="@drawable/uren_pic" />
 
                 <LinearLayout
-                    android:id="@+id/detailLayout"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1.1">
+                    <ImageView
+                        android:id="@+id/patientImageView"
+                        android:layout_width="@dimen/dp67"
+                        android:layout_height="@dimen/dp67"
+                        android:layout_marginLeft="@dimen/dp10"
+                        android:layout_marginStart="@dimen/dp10"
+                        tools:src="@drawable/uren_pic" />
+                </LinearLayout>
+
+
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/dp11"
                     android:layout_marginStart="@dimen/dp11"
                     android:layout_toEndOf="@id/patientImageView"
-                    android:layout_toLeftOf="@+id/episodeList"
                     android:layout_toRightOf="@id/patientImageView"
                     android:orientation="vertical"
+                    android:layout_weight="0.8"
                     tools:ignore="RelativeOverlap">
+
 
                     <com.scorg.dms.ui.customesViews.CustomTextView
                         android:id="@+id/userName"
@@ -108,22 +122,47 @@
                         app:customFont="@string/roboto_bold"
                         tools:text="Mr. Uren Chhadva" />
 
+                    <com.scorg.dms.ui.customesViews.CustomTextView
+                        android:id="@+id/userAge"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/sp13"
+                        app:customFont="@string/roboto_bold"
+                        tools:text="Mr. Uren Chhadva"
+                        android:visibility="gone"/>
+                    <com.scorg.dms.ui.customesViews.CustomTextView
+                        android:id="@+id/userGender"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/sp13"
+                        app:customFont="@string/roboto_bold"
+                        tools:text="Mr. Uren Chhadva"
+                        android:visibility="gone"
+                        android:layout_marginBottom="@dimen/dp5"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_weight="1.1">
+                    <com.scorg.dms.ui.customesViews.CustomTextView
+                        android:id="@+id/episodeList"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_margin="@dimen/dp5"
+                        android:background="@drawable/shape_rounded_corners_sky_blue"
+                        android:padding="@dimen/dp5"
+                        android:text="@string/episode"
+                        android:textColor="@color/white" />
+
                 </LinearLayout>
 
-                <com.scorg.dms.ui.customesViews.CustomTextView
-                    android:id="@+id/episodeList"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_margin="@dimen/dp5"
-                    android:background="@drawable/shape_rounded_corners_sky_blue"
-                    android:padding="@dimen/dp5"
-                    android:text="@string/episode"
-                    android:textColor="@color/white" />
-
-
-            </RelativeLayout>
+            </LinearLayout>
 
         </LinearLayout>
 

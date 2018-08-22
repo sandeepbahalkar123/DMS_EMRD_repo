@@ -149,12 +149,28 @@ public class MyAppointmentsFragment extends Fragment implements AppointmentListA
 
     @Override
     public void onClickOfPatientDetails(AppointmentPatientData patientListObject) {
-        ShowSearchResultRequestModel showSearchResultRequestModel = new ShowSearchResultRequestModel();
+       // ShowSearchResultRequestModel showSearchResultRequestModel = new ShowSearchResultRequestModel();
         // TODO: hardcoed for now, As patientList And WaitingList API patientID not sync from server
-        showSearchResultRequestModel.setPatientId("07535277");
+        //showSearchResultRequestModel.setPatientId("07535277");
         // showSearchResultRequestModel.setPatientId(patientListObject.getPatientId());
 
-        mPatientsHelper.doGetPatientList(showSearchResultRequestModel);
+//        mPatientsHelper.doGetPatientList(showSearchResultRequestModel);
+
+        Intent intent = new Intent(getActivity(), FileTypeViewerActivity.class);
+        Bundle extra = new Bundle();
+        //ArrayList<PatientFileData> dataToSend = new ArrayList<PatientFileData>();
+        //dataToSend.add(childElement);
+        //  SearchResult searchPatientInformation = patientExpandableListAdapter.searchPatientInfo("" + groupHeader.getPatientId());
+        //todo: filepath(pdf url is not getting in api)
+        // extra.putSerializable(getString(R.string.compare), dataToSend);
+        // extra.putSerializable(getString(R.string.compare), new ArrayList<PatientFileData>());
+
+        extra.putString(DMSConstants.PATIENT_ADDRESS, patientListObject.getPatAddress());
+        extra.putString(DMSConstants.DOCTOR_NAME, "");
+        extra.putString(DMSConstants.PATIENT_ID, patientListObject.getPatientId());
+        extra.putString(DMSConstants.PATIENT_LIST_PARAMS.PATIENT_NAME, "" + patientListObject.getPatientName());
+        intent.putExtra(DMSConstants.DATA, extra);
+        startActivity(intent);
 
     }
 

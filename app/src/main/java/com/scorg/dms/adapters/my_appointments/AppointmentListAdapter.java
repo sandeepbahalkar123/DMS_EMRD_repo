@@ -90,7 +90,7 @@ public class AppointmentListAdapter
         private FrameLayout delete_layout;
         private FrameLayout front_layout;
         private CheckBox checkbox;
-        private SwipeRevealLayout swipe_layout;
+        private RelativeLayout swipe_layout;
         private RelativeLayout patientDetailsClickLinearLayout;
         private CustomTextView appointmentTime;
         private ImageView waitingIcon;
@@ -116,7 +116,7 @@ public class AppointmentListAdapter
             delete_layout = (FrameLayout) convertView.findViewById(R.id.delete_layout);
             waitingIcon = (ImageView) convertView.findViewById(R.id.waitingIcon);
 
-            swipe_layout = (SwipeRevealLayout) convertView.findViewById(R.id.swipe_layout);
+            swipe_layout = (RelativeLayout) convertView.findViewById(R.id.swipe_layout);
             checkbox = (CheckBox) convertView.findViewById(R.id.checkbox);
             patientDetailsClickLinearLayout = (RelativeLayout) convertView.findViewById(R.id.patientDetailsClickLinearLayout);
             appointmentTime = (CustomTextView) convertView.findViewById(R.id.appointmentTime);
@@ -299,7 +299,7 @@ public class AppointmentListAdapter
         holder.idAndDetailsLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // onItemClickListener.onClickOfPatientDetails(appointmentPatientDataObject);
+                onItemClickListener.onClickOfPatientDetails(appointmentPatientDataObject);
             }
         });
         holder.patientPhoneNumber.setOnClickListener(new View.OnClickListener() {

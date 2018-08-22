@@ -1,4 +1,4 @@
-<com.scorg.dms.ui.customesViews.swipeable_recyclerview.SwipeRevealLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/swipe_layout"
@@ -307,4 +307,4 @@
         </LinearLayout>
     </FrameLayout>
 
-</com.scorg.dms.ui.customesViews.swipeable_recyclerview.SwipeRevealLayout>
+</RelativeLayout>
