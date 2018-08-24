@@ -24,6 +24,7 @@ public class ArrowExpandSelectableHeaderHolder extends TreeNode.BaseNodeViewHold
     private boolean isTreeLabelBold;
     private int leftPadding;
     private boolean isDefaultExpanded;
+    private boolean istViewClickRequired;
     private TextView tvValue;
     private boolean isOnlyOneNodeExpanded;
     private PrintView arrowView;
@@ -31,15 +32,16 @@ public class ArrowExpandSelectableHeaderHolder extends TreeNode.BaseNodeViewHold
     private LinearLayout mainContentLayout;
 
 
-    public ArrowExpandSelectableHeaderHolder(Context context, boolean isDefaultExpanded) {
+    public ArrowExpandSelectableHeaderHolder(Context context, boolean isDefaultExpanded,  boolean istViewClickRequired) {
 
-        this(context, isDefaultExpanded, (int) (context.getResources().getDimension(R.dimen.dp10) / context.getResources().getDisplayMetrics().density));
+        this(context, isDefaultExpanded, (int) (context.getResources().getDimension(R.dimen.dp10) / context.getResources().getDisplayMetrics().density), istViewClickRequired);
     }
 
-    public ArrowExpandSelectableHeaderHolder(Context context, boolean isDefaultExpanded, int leftPadding) {
+    public ArrowExpandSelectableHeaderHolder(Context context, boolean isDefaultExpanded, int leftPadding,boolean istViewClickRequired) {
         super(context);
         this.leftPadding = leftPadding;
         this.isDefaultExpanded = isDefaultExpanded;
+        this.istViewClickRequired = istViewClickRequired;
         nodeValueColor = ContextCompat.getColor(context, R.color.black);
     }
 
@@ -86,6 +88,22 @@ public class ArrowExpandSelectableHeaderHolder extends TreeNode.BaseNodeViewHold
                 }
             }
         });
+        if(istViewClickRequired){
+            tvValue.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (isOnlyOneNodeExpanded()) {
+                        tView.toggleNode(node, isOnlyOneNodeExpanded());
+                        // arrowView.setIconText(context.getResources().getString(R.string.ic_keyboard_arrow_down));
+
+                    } else {
+                        tView.toggleNode(node, isOnlyOneNodeExpanded());
+                        // arrowView.setIconText(context.getResources().getString(R.string.ic_folder));
+                    }
+                }
+            });
+
+        }
 
         nodeSelector = (CheckBox) view.findViewById(R.id.node_selector);
         nodeSelector.setClickable(false);

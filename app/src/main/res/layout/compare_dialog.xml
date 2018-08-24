@@ -42,7 +42,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
             android:layout_above="@+id/compareButton"
             android:layout_below="@+id/deviderView"
             android:gravity="center"
@@ -50,11 +50,11 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="fill_parent"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:padding="@dimen/dp10">
+                android:padding="@dimen/dp5">
 
 
                 <LinearLayout
@@ -65,8 +65,8 @@
 
                     <android.support.v7.widget.AppCompatImageView
                         android:id="@+id/fileOneRemoveButton"
-                        android:layout_width="@dimen/dp26"
-                        android:layout_height="@dimen/dp26"
+                        android:layout_width="@dimen/dp23"
+                        android:layout_height="@dimen/dp23"
                         android:layout_gravity="end|top"
                         android:background="@drawable/blue_dot"
                         android:visibility="visible"
@@ -137,7 +137,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:padding="@dimen/dp10">
+                android:padding="@dimen/dp5">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -147,8 +147,8 @@
 
                     <android.support.v7.widget.AppCompatImageView
                         android:id="@+id/fileTwoRemoveButton"
-                        android:layout_width="@dimen/dp26"
-                        android:layout_height="@dimen/dp26"
+                        android:layout_width="@dimen/dp23"
+                        android:layout_height="@dimen/dp23"
                         android:layout_gravity="end|top"
                         android:background="@drawable/blue_dot"
                         android:visibility="visible"

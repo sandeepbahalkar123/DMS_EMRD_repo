@@ -181,9 +181,9 @@
     <string name="episode_details">Episode Details</string>
     <string name="enter_sms_text_here">Enter sms text here</string>
     <string name="location">Location</string>
-    <string name="today_appointment">Today\'s\nAppointment</string>
+    <string name="today_appointment">Today\'s Appointment/Walk-in</string>
     <string name="today_appointment_no_new_line">Today\'s Appointments</string>
-    <string name="waiting_patients"> Waiting\nPatients </string>
+    <string name="waiting_patients"> Waiting /Admitted Patients</string>
     <string name="pending_approval">Pending\nApproval</string>
     <string name="today_patient">Total\nPatients</string>
     <string name="consultation">Consultation</string>

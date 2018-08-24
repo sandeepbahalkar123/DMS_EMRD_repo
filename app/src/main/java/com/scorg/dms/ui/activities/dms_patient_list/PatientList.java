@@ -78,7 +78,7 @@ import butterknife.ButterKnife;
 
 import static com.scorg.dms.util.DMSConstants.PATIENT_DETAILS;
 
-public class PatientList extends AppCompatActivity implements HelperResponse, View.OnClickListener, AdapterView.OnItemSelectedListener, PatientRecycleViewListAdapter.OnPatientListener, TreeNode.TreeNodeClickListener,PatientSearchAutoCompleteTextViewAdapter.OnItemClickListener {
+public class PatientList extends AppCompatActivity implements HelperResponse, View.OnClickListener, AdapterView.OnItemSelectedListener, PatientRecycleViewListAdapter.OnPatientListener, TreeNode.TreeNodeClickListener, PatientSearchAutoCompleteTextViewAdapter.OnItemClickListener {
 
     private static final long ANIMATION_DURATION = 500; // in milliseconds
     SimpleDateFormat dfDate = new SimpleDateFormat(DMSConstants.DATE_PATTERN.YYYY_MM_DD, Locale.US);
@@ -252,7 +252,7 @@ public class PatientList extends AppCompatActivity implements HelperResponse, Vi
             @Override
             public void handleMessage(Message msg) {
                 patientExpandableListAdapter.removeAll();
-                mIsLoadMorePatients=true;
+                mIsLoadMorePatients = true;
                 currentPage = 0;
                 doGetPatientList();
             }
@@ -263,8 +263,7 @@ public class PatientList extends AppCompatActivity implements HelperResponse, Vi
         mTagsAdapter = new TagAdapter(mContext, mAddedTagsForFiltering, mAddedTagsEventHandler);
 
         //------- search autocomplete--------
-       // mAutoCompleteSearchBox.setThreshold(0);//start searching from 1 character
-
+        // mAutoCompleteSearchBox.setThreshold(0);//start searching from 1 character
 
 
         mAutoCompleteSearchBox.addTextChangedListener(new TextWatcher() {
@@ -284,12 +283,12 @@ public class PatientList extends AppCompatActivity implements HelperResponse, Vi
                 String enteredText = s.toString().trim();
                 mAutoCompleteSearchBoxList.clear();
                 if (enteredText.length() != 0) {
-                    mAutoCompleteSearchBoxList.add(new PatientFilter(enteredText ,  getString(R.string.in_uhid)));
-                    mAutoCompleteSearchBoxList.add(new PatientFilter(enteredText , getString(R.string.in_patient_name)));
+                    mAutoCompleteSearchBoxList.add(new PatientFilter(enteredText, getString(R.string.in_uhid)));
+                    mAutoCompleteSearchBoxList.add(new PatientFilter(enteredText, getString(R.string.in_patient_name)));
                     mAutoCompleteSearchBoxList.add(new PatientFilter(enteredText, getString(R.string.in_ref_id)));
-                    mAutoCompleteSearchBoxList.add(new PatientFilter(enteredText , getString(R.string.in_all)));
+                    mAutoCompleteSearchBoxList.add(new PatientFilter(enteredText, getString(R.string.in_all)));
 
-                    mPatientSearchAutoCompleteTextViewAdapter = new PatientSearchAutoCompleteTextViewAdapter(PatientList.this, R.layout.patient_filter_right_drawer, R.id.custom_spinner_txt_view_Id, mAutoCompleteSearchBoxList,PatientList.this);
+                    mPatientSearchAutoCompleteTextViewAdapter = new PatientSearchAutoCompleteTextViewAdapter(PatientList.this, R.layout.patient_filter_right_drawer, R.id.custom_spinner_txt_view_Id, mAutoCompleteSearchBoxList, PatientList.this);
                     mAutoCompleteSearchBox.setAdapter(mPatientSearchAutoCompleteTextViewAdapter);
                     new Handler().postDelayed(new Runnable() {
                         @Override
@@ -388,7 +387,13 @@ public class PatientList extends AppCompatActivity implements HelperResponse, Vi
             String[] stringArrayExtraTemp = new String[mFileTypeStringArrayExtra.length + 1];
             System.arraycopy(mFileTypeStringArrayExtra, 0, stringArrayExtraTemp, 0, mFileTypeStringArrayExtra.length);
             stringArrayExtraTemp[mFileTypeStringArrayExtra.length] = getString(R.string.uhid);
-            mFileTypeStringArrayExtra = stringArrayExtraTemp;
+            //------
+            // ******THIS IS DONE TO ADD SELECT in SPINNER.
+            String[] newTemp = new String[stringArrayExtraTemp.length + 1];
+            newTemp[0] = "Select";
+            System.arraycopy(stringArrayExtraTemp, 0, newTemp, 1, stringArrayExtraTemp.length);
+            //------
+            mFileTypeStringArrayExtra = newTemp;
         }
         mCustomSpinAdapter = new Custom_Spin_Adapter(this, mArrayId, mFileTypeStringArrayExtra);
         mSpinSelectedId.setAdapter(mCustomSpinAdapter);
@@ -432,12 +437,12 @@ public class PatientList extends AppCompatActivity implements HelperResponse, Vi
             Log.e("searchResult", "---" + searchResult.size());
             if (searchResult.size() <= 0) {
                 mPatientListView.setVisibility(View.GONE);
-               // mRecycleTag.setVisibility(View.GONE);
+                // mRecycleTag.setVisibility(View.GONE);
                 emptyListView.setVisibility(View.VISIBLE);
             } else {
 
                 mPatientListView.setVisibility(View.VISIBLE);
-               // mRecycleTag.setVisibility(View.VISIBLE);
+                // mRecycleTag.setVisibility(View.VISIBLE);
                 emptyListView.setVisibility(View.GONE);
             }
 
@@ -626,7 +631,7 @@ public class PatientList extends AppCompatActivity implements HelperResponse, Vi
                 mRecycleTag.setAdapter(mTagsAdapter);
                 mDrawer.closeDrawer(GravityCompat.END);
                 currentPage = 0;
-                mIsLoadMorePatients=true;
+                mIsLoadMorePatients = true;
                 doGetPatientList();
                 break;
 
@@ -694,8 +699,6 @@ public class PatientList extends AppCompatActivity implements HelperResponse, Vi
 
         mPatientsHelper.doGetPatientList(showSearchResultRequestModel);
     }
-
-
 
 
     private void doGetPatientListFilter(PatientFilter patientFilter) {
@@ -769,7 +772,7 @@ public class PatientList extends AppCompatActivity implements HelperResponse, Vi
             if (annotationLists != null) {
                 for (int i = 0; i < annotationLists.size(); i++) {
                     AnnotationList annotationCategoryObject = annotationLists.get(i);
-                    ArrowExpandSelectableHeaderHolder selectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded);
+                    ArrowExpandSelectableHeaderHolder selectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded,true);
                     selectableHeaderHolder.setOnlyOneNodeExpanded(true);
                     TreeNode folder1 = new TreeNode(new ArrowExpandIconTreeItemHolder.IconTreeItem(R.string.ic_shopping_cart, annotationCategoryObject.getCategoryName(), annotationCategoryObject, i))
                             .setViewHolder(selectableHeaderHolder);
@@ -780,7 +783,7 @@ public class PatientList extends AppCompatActivity implements HelperResponse, Vi
                         DocTypeList docTypeListObject = docTypeList.get(j);
                         String dataToShow = docTypeListObject.getTypeName() + "|" + docTypeListObject.getTypeId();
 
-                        ArrowExpandSelectableHeaderHolder lstDocTypeChildSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstDocTypeChildLeftPadding);
+                        ArrowExpandSelectableHeaderHolder lstDocTypeChildSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstDocTypeChildLeftPadding,true);
                         lstDocTypeChildSelectableHeaderHolder.setOnlyOneNodeExpanded(true);
                         TreeNode lstDocTypeChildFolder = new TreeNode(new ArrowExpandIconTreeItemHolder.IconTreeItem(R.string.ic_shopping_cart, dataToShow, docTypeListObject, i))
                                 .setViewHolder(lstDocTypeChildSelectableHeaderHolder);

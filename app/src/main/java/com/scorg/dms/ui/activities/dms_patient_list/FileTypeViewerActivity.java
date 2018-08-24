@@ -44,6 +44,7 @@ import com.github.barteksc.pdfviewer.listener.OnErrorListener;
 import com.github.barteksc.pdfviewer.listener.OnLoadCompleteListener;
 import com.github.barteksc.pdfviewer.scroll.DefaultScrollHandle;
 import com.scorg.dms.R;
+import com.scorg.dms.adapters.dms_adapters.CustomPreferenceSpinAdapter;
 import com.scorg.dms.helpers.patient_list.DMSPatientsHelper;
 import com.scorg.dms.interfaces.CustomResponse;
 import com.scorg.dms.interfaces.HelperResponse;
@@ -198,8 +199,16 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
     AppCompatImageButton mLoadPreviousArchiveDataList;
     @BindView(R.id.loadNextArchiveDataList)
     AppCompatImageButton mLoadNextArchiveDataList;
+
     @BindView(R.id.loadedArchiveDataMessage)
     TextView loadedArchiveDataMessage;
+
+    @BindView(R.id.labelSecondPdf)
+    TextView labelSecondPdf;
+
+    @BindView(R.id.labelFirstPdf)
+    TextView labelFirstPdf;
+
     //----------
     @BindView(R.id.et_uhid)
     Switch mCompareSwitch;
@@ -401,21 +410,13 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
 
                 if (!b){
-
-                    Log.e("hiiiiii","giiiiii");
-                    mGetEncryptedPDFRequestModelList.clear();
-                 //   mGetEncryptedPDFRequestModelList.add(getEncryptedPDFRequestModel);
-
-                    mPreviousClickedTreeElement.clear();
-                  //  mPreviousClickedTreeElement.put(clickedLstDocTypeElement.getTypeName(), clickedLstDocTypeElement.getTypeName().trim());
-
                     mFirstFileTypeProgressDialogLayout.setVisibility(View.GONE);
                     //--------
                     mSecondFileTypePdfViewLayout.setVisibility(View.GONE);
                     mSecondFileTypeProgressDialogLayout.setVisibility(View.GONE);
+                }else{
 
-                    //--------
-                    //mPatientsHelper.getPdfData(mGetEncryptedPDFRequestModelList.get(0), DMSConstants.TASK_GET_PDF_DATA + "_0");
+                    mSecondFileTypePdfViewLayout.setVisibility(View.VISIBLE);
 
                 }
 
@@ -454,7 +455,7 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
 
     }
 
-    @OnClick({R.id.imageCloseDrawer,R.id.openRightDrawer, R.id.loadPreviousArchiveDataList, R.id.loadNextArchiveDataList, R.id.compareButton, R.id.compareLabel, R.id.fileOneRemoveButton})
+    @OnClick({R.id.imageCloseDrawer,R.id.openRightDrawer, R.id.loadPreviousArchiveDataList, R.id.loadNextArchiveDataList, R.id.compareButton, R.id.compareLabel, R.id.fileOneRemoveButton,R.id.fileTwoRemoveButton})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.openRightDrawer:
@@ -501,6 +502,8 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
             case R.id.fileOneRemoveButton:
                 String fileToRemove = mFileOneFileName.getText().toString().trim().replace(getString(R.string.file), "").trim();
                 mPreviousClickedTreeElement.remove(fileToRemove);
+                if(mGetEncryptedPDFRequestModelList.size()!=0)
+                    mGetEncryptedPDFRequestModelList.remove(0);
                 mFileOneFileName.setText("");
                 mFileOnePatientID.setText("");
 
@@ -508,6 +511,8 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
             case R.id.fileTwoRemoveButton:
                 String fileTwoRemove = mFileTwoFileName.getText().toString().trim().replace(getString(R.string.file), "").trim();
                 mPreviousClickedTreeElement.remove(fileTwoRemove);
+                if(mGetEncryptedPDFRequestModelList.size()==2)
+                mGetEncryptedPDFRequestModelList.remove(1);
                 mFileTwoFileName.setText("");
                 mFileTwoPatientID.setText("");
                 break;
@@ -653,7 +658,7 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
         for (int i = 0; i < size; i++) {
             ArchiveDatum archiveDatumObject = archiveData.get(i);
 
-            ArrowExpandSelectableHeaderHolder selectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded);
+            ArrowExpandSelectableHeaderHolder selectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded,true);
             selectableHeaderHolder.setOnlyOneNodeExpanded(true);
             selectableHeaderHolder.setNodeValueColor(textColor);
 
@@ -680,7 +685,7 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
                 //-------NODE LstDateFolderType--------------
                 // Label(pageCount)|id
                 dataToShow = lstDateFolderType.getDateFolderType() + " (" + lstDateFolderType.getPageCount() + ")" + "|NA";
-                ArrowExpandSelectableHeaderHolder lstDateFolderTypeSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstDocTypeChildLeftPadding);
+                ArrowExpandSelectableHeaderHolder lstDateFolderTypeSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstDocTypeChildLeftPadding,true);
                 lstDateFolderTypeSelectableHeaderHolder.setOnlyOneNodeExpanded(true);
 
                 lstDateFolderTypeSelectableHeaderHolder.setNodeValueColor(textColor);
@@ -704,7 +709,7 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
 
                     // Label(pageCount)|id
                     dataToShow = lstDocCategoryObject.getCategoryName() + " (" + lstDocCategoryObject.getTotalDocTypePageCount() + ")" + "|" + lstDocCategoryObject.getCategoryId();
-                    ArrowExpandSelectableHeaderHolder docCatSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstDateFolderTypeChildLeftPadding);
+                    ArrowExpandSelectableHeaderHolder docCatSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstDateFolderTypeChildLeftPadding,true);
                     docCatSelectableHeaderHolder.setOnlyOneNodeExpanded(true);
 
                     docCatSelectableHeaderHolder.setNodeValueColor(textColor);
@@ -727,7 +732,7 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
                         dataToShow = lstDocTypeChild.getTypeName() + " (" + lstDocTypeChild.getPageCount() + ")" + "|" + lstDocTypeChild.getTypeId();
 
                         //-------
-                        ArrowExpandSelectableHeaderHolder lstDocTypeChildSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstDateFolderTypeChildLeftPadding);
+                        ArrowExpandSelectableHeaderHolder lstDocTypeChildSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstDateFolderTypeChildLeftPadding,false);
                         lstDocTypeChildSelectableHeaderHolder.setOnlyOneNodeExpanded(true);
                         lstDocTypeChildSelectableHeaderHolder.setNodeValueColor(textColor);
 
@@ -775,7 +780,7 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
         for (int i = 0; i < size; i++) {
             ArchiveDatum archiveDatumObject = archiveData.get(i);
 
-            ArrowExpandSelectableHeaderHolder selectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded);
+            ArrowExpandSelectableHeaderHolder selectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded,true);
             selectableHeaderHolder.setOnlyOneNodeExpanded(true);
             selectableHeaderHolder.setNodeValueColor(textColor);
 
@@ -800,7 +805,7 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
                 //-------NODE LstDateFolderType--------------
                 // Label(pageCount)|id
                 dataToShow = lstDocCategory.getCategoryName() + " (" + lstDocCategory.getPageCount() + ")" + "|NA";
-                ArrowExpandSelectableHeaderHolder lstDateFolderTypeSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstDocTypeChildLeftPadding);
+                ArrowExpandSelectableHeaderHolder lstDateFolderTypeSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstDocTypeChildLeftPadding,true);
                 lstDateFolderTypeSelectableHeaderHolder.setOnlyOneNodeExpanded(true);
 
                 lstDateFolderTypeSelectableHeaderHolder.setNodeValueColor(textColor);
@@ -825,7 +830,7 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
                     dataToShow = lstDocTypeChild.getTypeName() + " (" + lstDocTypeChild.getPageCount() + ")" + "|" + lstDocTypeChild.getTypeId();
 
                     //-------
-                    ArrowExpandSelectableHeaderHolder lstDocTypeChildSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstDateFolderTypeChildLeftPadding);
+                    ArrowExpandSelectableHeaderHolder lstDocTypeChildSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstDateFolderTypeChildLeftPadding,false);
                     lstDocTypeChildSelectableHeaderHolder.setOnlyOneNodeExpanded(true);
                     lstDocTypeChildSelectableHeaderHolder.setNodeValueColor(textColor);
 
@@ -871,7 +876,7 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
         for (int i = 0; i < size; i++) {
             ArchiveDatum archiveDatumObject = archiveData.get(i);
 
-            ArrowExpandSelectableHeaderHolder selectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded);
+            ArrowExpandSelectableHeaderHolder selectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded,true);
             selectableHeaderHolder.setOnlyOneNodeExpanded(true);
             selectableHeaderHolder.setNodeValueColor(textColor);
 
@@ -895,7 +900,7 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
 
                 // Label(pageCount)|id
                 dataToShow = lstDocCategoryObject.getCategoryName() + " (" + lstDocCategoryObject.getTotalDocTypePageCount() + ")" + "|" + lstDocCategoryObject.getCategoryId();
-                ArrowExpandSelectableHeaderHolder docCatSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstDocTypeChildLeftPadding);
+                ArrowExpandSelectableHeaderHolder docCatSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstDocTypeChildLeftPadding,true);
                 docCatSelectableHeaderHolder.setOnlyOneNodeExpanded(true);
 
                 docCatSelectableHeaderHolder.setNodeValueColor(textColor);
@@ -918,7 +923,7 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
                     dataToShow = lstDocTypeChild.getTypeName() + " (" + lstDocTypeChild.getPageCount() + ")" + "|" + lstDocTypeChild.getTypeId();
 
                     //-------
-                    ArrowExpandSelectableHeaderHolder lstDocTypeChildSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstDateFolderTypeChildLeftPadding);
+                    ArrowExpandSelectableHeaderHolder lstDocTypeChildSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstDateFolderTypeChildLeftPadding,true);
                     lstDocTypeChildSelectableHeaderHolder.setOnlyOneNodeExpanded(true);
                     lstDocTypeChildSelectableHeaderHolder.setNodeValueColor(textColor);
 
@@ -939,7 +944,7 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
                         dataToShow = lstDateFileTypeLastChild.getTypeName() + " (" + lstDateFileTypeLastChild.getPageCount() + ")" + "|" + lstDateFileTypeLastChild.getTypeId();
 
                         //-------
-                        ArrowExpandSelectableHeaderHolder lstDateFileTypeLastChildSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstDateFolderTypeChildLeftPadding);
+                        ArrowExpandSelectableHeaderHolder lstDateFileTypeLastChildSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstDateFolderTypeChildLeftPadding,false);
                         lstDateFileTypeLastChildSelectableHeaderHolder.setOnlyOneNodeExpanded(true);
                         lstDateFileTypeLastChildSelectableHeaderHolder.setNodeValueColor(textColor);
 
@@ -1111,17 +1116,20 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
                                 mFileOnePatientID.setText(getString(R.string.patient_id) + respectivePatientID);
                                 mFileOneFileName.setText(getString(R.string.file) + tempClickedElements.get(0));
                                 mFirstFileTypeProgressDialogLayout.setVisibility(View.VISIBLE);
+                                labelFirstPdf.setText(tempClickedElements.get(0));
                                 break;
                             case 2:
                                 //-----
                                 mFileOnePatientID.setText(getString(R.string.patient_id) + respectivePatientID);
                                 mFileOneFileName.setText(getString(R.string.file) + tempClickedElements.get(0));
                                 mFirstFileTypeProgressDialogLayout.setVisibility(View.VISIBLE);
+                                labelFirstPdf.setText(tempClickedElements.get(0));
                                 //-------
                                 mFileTwoPatientID.setText(getString(R.string.patient_id) + respectivePatientID);
                                 mFileTwoFileName.setText(getString(R.string.file) + tempClickedElements.get(1));
                                 mSecondFileTypePdfViewLayout.setVisibility(View.VISIBLE);
                                 mSecondFileTypeProgressDialogLayout.setVisibility(View.VISIBLE);
+                                labelSecondPdf.setText(tempClickedElements.get(1));
                                 break;
                         }
                     }
@@ -1133,7 +1141,7 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
 
                     mPreviousClickedTreeElement.clear();
                     mPreviousClickedTreeElement.put(clickedLstDocTypeElement.getTypeName(), clickedLstDocTypeElement.getTypeName().trim());
-
+                    labelFirstPdf.setText(clickedLstDocTypeElement.getTypeName());
                     mFirstFileTypeProgressDialogLayout.setVisibility(View.VISIBLE);
                     //--------
                     mSecondFileTypePdfViewLayout.setVisibility(View.GONE);
@@ -1260,7 +1268,12 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
     }
 
     private void mArchivedPreferenceSpinnerListener() {
+
         final String[] array = getResources().getStringArray(R.array.get_archived_preference_list);
+            int [] prefImageList= new int[]{R.drawable.ic_pref_folder, R.drawable.ic_pref_file,R.drawable.ic_pref_date};
+
+        CustomPreferenceSpinAdapter preferenceSpinAdapter =new CustomPreferenceSpinAdapter(this,array,prefImageList);
+        mArchivedPreferenceSpinner.setAdapter(preferenceSpinAdapter);
         mArchivedPreferenceSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
