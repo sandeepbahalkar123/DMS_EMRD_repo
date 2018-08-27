@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -27,17 +28,17 @@ public class ArrowExpandSelectableHeaderHolder extends TreeNode.BaseNodeViewHold
     private boolean istViewClickRequired;
     private TextView tvValue;
     private boolean isOnlyOneNodeExpanded;
-    private PrintView arrowView;
+    private ImageView arrowView;
     private CheckBox nodeSelector;
     private LinearLayout mainContentLayout;
 
 
-    public ArrowExpandSelectableHeaderHolder(Context context, boolean isDefaultExpanded,  boolean istViewClickRequired) {
+    public ArrowExpandSelectableHeaderHolder(Context context, boolean isDefaultExpanded, boolean istViewClickRequired) {
 
         this(context, isDefaultExpanded, (int) (context.getResources().getDimension(R.dimen.dp10) / context.getResources().getDisplayMetrics().density), istViewClickRequired);
     }
 
-    public ArrowExpandSelectableHeaderHolder(Context context, boolean isDefaultExpanded, int leftPadding,boolean istViewClickRequired) {
+    public ArrowExpandSelectableHeaderHolder(Context context, boolean isDefaultExpanded, int leftPadding, boolean istViewClickRequired) {
         super(context);
         this.leftPadding = leftPadding;
         this.isDefaultExpanded = isDefaultExpanded;
@@ -68,27 +69,27 @@ public class ArrowExpandSelectableHeaderHolder extends TreeNode.BaseNodeViewHold
         }
 
 
-        arrowView = (PrintView) view.findViewById(R.id.icon);
+        arrowView = (ImageView) view.findViewById(R.id.icon);
         arrowView.setPadding(20, 10, 10, 10);
         if (node.isLeaf()) {
-            arrowView.setVisibility(View.INVISIBLE);
-           // arrowView.setIconText(context.getResources().getString(R.string.ic_shopping_cart));
-
+            //arrowView.setVisibility(View.INVISIBLE);
+            // arrowView.setIconText(context.getResources().getString(R.string.ic_shopping_cart));
+            arrowView.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_tree_file));
         }
         arrowView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (isOnlyOneNodeExpanded()) {
                     tView.toggleNode(node, isOnlyOneNodeExpanded());
-                   // arrowView.setIconText(context.getResources().getString(R.string.ic_keyboard_arrow_down));
+                    // arrowView.setIconText(context.getResources().getString(R.string.ic_keyboard_arrow_down));
 
                 } else {
                     tView.toggleNode(node, isOnlyOneNodeExpanded());
-                   // arrowView.setIconText(context.getResources().getString(R.string.ic_folder));
+                    // arrowView.setIconText(context.getResources().getString(R.string.ic_folder));
                 }
             }
         });
-        if(istViewClickRequired){
+        if (istViewClickRequired) {
             tvValue.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -163,7 +164,10 @@ public class ArrowExpandSelectableHeaderHolder extends TreeNode.BaseNodeViewHold
 
     @Override
     public void toggle(boolean active) {
-        arrowView.setIconText(context.getResources().getString(active ? R.string.ic_keyboard_arrow_down : R.string.ic_keyboard_arrow_right));
+        //  arrowView.setIconText(context.getResources().getString(active ? R.string.ic_keyboard_arrow_down : R.string.ic_keyboard_arrow_right));
+        if(!mNode.isLeaf())
+        arrowView.setImageDrawable(context.getResources().getDrawable(active ? R.drawable.ic_tree_folder_open : R.drawable.ic_tree_close_folder));
+
     }
 
     @Override
