@@ -266,8 +266,8 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
     private int currentCount = 0;
 
     private ArrayList<GetEncryptedPDFRequestModel> mGetEncryptedPDFRequestModelList = new ArrayList<>();
-    private int recordIdFirstPdf=0;
-    private int recordIdSecondPdf =0;
+    private int recordIdFirstPdf = 0;
+    private int recordIdSecondPdf = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -505,6 +505,7 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
                 for (Integer key : mPreviousClickedTreeElement.keySet()) {
                     if (mPreviousClickedTreeElement.get(key).equalsIgnoreCase(fileToRemove)) {
                         mPreviousClickedTreeElement.remove(key);
+                        break;
                     }
                 }
 
@@ -519,6 +520,7 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
                 for (Integer key : mPreviousClickedTreeElement.keySet()) {
                     if (mPreviousClickedTreeElement.get(key).equalsIgnoreCase(fileTwoRemove)) {
                         mPreviousClickedTreeElement.remove(key);
+                        break;
                     }
                 }
                 if (mGetEncryptedPDFRequestModelList.size() == 2)
@@ -748,7 +750,7 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
 
                         //---- To bold clicked text in tree
                         // if (lstDocTypeChild.getTypeName().equalsIgnoreCase(mPreviousClickedTreeElement.get(i)))
-                        if (String.valueOf(lstDocTypeChild.getRecordDetailId()).equalsIgnoreCase(mPreviousClickedTreeElement.get(lstDocTypeChild.getRecordDetailId())))
+                        if (lstDocTypeChild.getTypeName().equalsIgnoreCase(mPreviousClickedTreeElement.get(lstDocTypeChild.getRecordDetailId())))
                             lstDocTypeChildSelectableHeaderHolder.setTreeLabelBold(true);
 
                         TreeNode lstDocTypeChildFolder = new TreeNode(new ArrowExpandIconTreeItemHolder.IconTreeItem(R.string.ic_shopping_cart, dataToShow, lstDocTypeChild, i))
@@ -846,7 +848,7 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
 
                     //---- To bold clicked text in tree
                     // if (lstDocTypeChild.getTypeName().equalsIgnoreCase(mPreviousClickedTreeElement.get(i)))
-                    if (String.valueOf(lstDocTypeChild.getRecordDetailId()).equalsIgnoreCase(mPreviousClickedTreeElement.get(lstDocTypeChild.getRecordDetailId())))
+                    if (lstDocTypeChild.getTypeName().equalsIgnoreCase(mPreviousClickedTreeElement.get(lstDocTypeChild.getRecordDetailId())))
                         lstDocTypeChildSelectableHeaderHolder.setTreeLabelBold(true);
 
                     TreeNode lstDocTypeChildFolder = new TreeNode(new ArrowExpandIconTreeItemHolder.IconTreeItem(R.string.ic_shopping_cart, dataToShow, lstDocTypeChild, i))
@@ -960,7 +962,7 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
 
                         //---- To bold clicked text in tree
                         // if (lstDocTypeChild.getTypeName().equalsIgnoreCase(mPreviousClickedTreeElement.get(i)))
-                        if (String.valueOf(lstDateFileTypeLastChild.getRecordDetailId()).equalsIgnoreCase(mPreviousClickedTreeElement.get(lstDateFileTypeLastChild.getRecordDetailId())))
+                        if (lstDateFileTypeLastChild.getTypeName().equalsIgnoreCase(mPreviousClickedTreeElement.get(lstDateFileTypeLastChild.getRecordDetailId())))
                             lstDateFileTypeLastChildSelectableHeaderHolder.setTreeLabelBold(true);
 
                         TreeNode lstDateFileTypeLastChildSelectableHeaderFolder = new TreeNode(new ArrowExpandIconTreeItemHolder.IconTreeItem(R.string.ic_shopping_cart, dataToShow, lstDateFileTypeLastChild, i))
@@ -1125,7 +1127,7 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
                                 mFileOnePatientID.setText(getString(R.string.patient_id) + respectivePatientID);
                                 mFileOneFileName.setText(getString(R.string.file) + tempClickedElements.get(0));
                                 mFirstFileTypeProgressDialogLayout.setVisibility(View.VISIBLE);
-                                recordIdFirstPdf= clickedLstDocTypeElement.getRecordDetailId();
+                                recordIdFirstPdf = clickedLstDocTypeElement.getRecordDetailId();
                                 labelFirstPdf.setText(tempClickedElements.get(0));
                                 break;
                             case 2:
@@ -1133,13 +1135,13 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
                                 mFileOnePatientID.setText(getString(R.string.patient_id) + respectivePatientID);
                                 mFileOneFileName.setText(getString(R.string.file) + tempClickedElements.get(0));
                                 mFirstFileTypeProgressDialogLayout.setVisibility(View.VISIBLE);
-                                recordIdFirstPdf= clickedLstDocTypeElement.getRecordDetailId();
+                                recordIdFirstPdf = clickedLstDocTypeElement.getRecordDetailId();
                                 labelFirstPdf.setText(tempClickedElements.get(0));
                                 //-------
                                 mFileTwoPatientID.setText(getString(R.string.patient_id) + respectivePatientID);
                                 mFileTwoFileName.setText(getString(R.string.file) + tempClickedElements.get(1));
                                 mSecondFileTypePdfViewLayout.setVisibility(View.VISIBLE);
-                                recordIdSecondPdf= clickedLstDocTypeElement.getRecordDetailId();
+                                recordIdSecondPdf = clickedLstDocTypeElement.getRecordDetailId();
 
                                 mSecondFileTypeProgressDialogLayout.setVisibility(View.VISIBLE);
                                 labelSecondPdf.setText(tempClickedElements.get(1));
@@ -1155,7 +1157,7 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
                     mPreviousClickedTreeElement.clear();
                     mPreviousClickedTreeElement.put(clickedLstDocTypeElement.getRecordDetailId(), clickedLstDocTypeElement.getTypeName().trim());
                     labelFirstPdf.setText(clickedLstDocTypeElement.getTypeName());
-                    recordIdFirstPdf= clickedLstDocTypeElement.getRecordDetailId();
+                    recordIdFirstPdf = clickedLstDocTypeElement.getRecordDetailId();
                     mFirstFileTypeProgressDialogLayout.setVisibility(View.VISIBLE);
                     //--------
                     mSecondFileTypePdfViewLayout.setVisibility(View.GONE);
