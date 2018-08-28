@@ -29,6 +29,10 @@ public class LstDateFileType {
     @Expose
     private String permission;
 
+    @SerializedName("recordDetailId")
+    @Expose
+    private Integer recordDetailId;
+
     public Integer getTypeId() {
         return typeId;
     }
@@ -78,6 +82,15 @@ public class LstDateFileType {
         this.date = date;
     }
 
+
+    public Integer getRecordDetailId() {
+        return recordDetailId;
+    }
+
+    public void setRecordDetailId(Integer recordDetailId) {
+        this.recordDetailId = recordDetailId;
+    }
+
     @Override
     public String toString() {
         return "LstDateFileType{" +
@@ -87,6 +100,7 @@ public class LstDateFileType {
                 ", pageCount=" + pageCount +
                 ", recordId=" + recordId +
                 ", permission='" + permission + '\'' +
+                ", recordDetailId=" + recordDetailId +
                 '}';
     }
 }

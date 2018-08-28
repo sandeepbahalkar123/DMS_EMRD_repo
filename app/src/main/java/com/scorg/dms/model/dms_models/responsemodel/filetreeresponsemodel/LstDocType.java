@@ -31,6 +31,10 @@ public class LstDocType {
     @Expose
     private Integer pageNumber;
 
+    @SerializedName("recordDetailId")
+    @Expose
+    private Integer recordDetailId;
+
     @SerializedName("lstdateFileType")
     @Expose
     private ArrayList<LstDateFileType> lstDateFileTypeList = new ArrayList<LstDateFileType>();
@@ -99,6 +103,14 @@ public class LstDocType {
         this.lstDateFileTypeList = lstDateFileTypeList;
     }
 
+    public Integer getRecordDetailId() {
+        return recordDetailId;
+    }
+
+    public void setRecordDetailId(Integer recordDetailId) {
+        this.recordDetailId = recordDetailId;
+    }
+
     @Override
     public String toString() {
         return "LstDocType{" +
@@ -109,6 +121,7 @@ public class LstDocType {
                 ", permission='" + permission + '\'' +
                 ", createdDate='" + createdDate + '\'' +
                 ", pageNumber=" + pageNumber +
+                ", recordDetailId=" + recordDetailId +
                 ", lstDateFileTypeList=" + lstDateFileTypeList +
                 '}';
     }

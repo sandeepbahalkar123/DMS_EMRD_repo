@@ -254,18 +254,20 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
 
     private RelativeLayout mFirstFileTypeProgressDialogLayout;
     private RelativeLayout mSecondFileTypeProgressDialogLayout;
-    private LinkedHashMap<String, String> mPreviousClickedTreeElement = null;
+    private LinkedHashMap<Integer, String> mPreviousClickedTreeElement = null;
     private String fileOneData;
     private String fileTwoData;
     private boolean isComparingBetweenSameFileType = false;
     private String mLoadedPDFFileDataPath = null;
     private String mArchivedSelectedPreference = DMSConstants.ArchivedPreference.FOLDER;
     private boolean isCompareDialogCollapsed;
-    private int archiveCount=0;
-    private int archiveApiCount=0;
-    private int currentCount=0;
+    private int archiveCount = 0;
+    private int archiveApiCount = 0;
+    private int currentCount = 0;
 
     private ArrayList<GetEncryptedPDFRequestModel> mGetEncryptedPDFRequestModelList = new ArrayList<>();
+    private int recordIdFirstPdf=0;
+    private int recordIdSecondPdf =0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -300,9 +302,8 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
         //-----------
         mDrawer.openDrawer(GravityCompat.END);
         mArchivedPreferenceSpinnerListener();
-       if(CommonMethods.isTablet(this))
-           layoutCompareSwitch.setVisibility(View.VISIBLE);
-
+        if (CommonMethods.isTablet(this))
+            layoutCompareSwitch.setVisibility(View.VISIBLE);
 
 
     }
@@ -401,20 +402,20 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
         mRightNavigationView.setLayoutParams(layoutParams);
 
 
-        archiveApiCount=DMSPreferencesManager.getInt(DMSPreferencesManager.DMS_PREFERENCES_KEY.ARCHIVE_API_COUNT,this);
-        currentCount=archiveApiCount;
+        archiveApiCount = DMSPreferencesManager.getInt(DMSPreferencesManager.DMS_PREFERENCES_KEY.ARCHIVE_API_COUNT, this);
+        currentCount = archiveApiCount;
 
 
         mOpenCompareDialogSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
 
-                if (!b){
+                if (!b) {
                     mFirstFileTypeProgressDialogLayout.setVisibility(View.GONE);
                     //--------
                     mSecondFileTypePdfViewLayout.setVisibility(View.GONE);
                     mSecondFileTypeProgressDialogLayout.setVisibility(View.GONE);
-                }else{
+                } else {
 
                     mSecondFileTypePdfViewLayout.setVisibility(View.VISIBLE);
 
@@ -455,7 +456,7 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
 
     }
 
-    @OnClick({R.id.imageCloseDrawer,R.id.openRightDrawer, R.id.loadPreviousArchiveDataList, R.id.loadNextArchiveDataList, R.id.compareButton, R.id.compareLabel, R.id.fileOneRemoveButton,R.id.fileTwoRemoveButton})
+    @OnClick({R.id.imageCloseDrawer, R.id.openRightDrawer, R.id.loadPreviousArchiveDataList, R.id.loadNextArchiveDataList, R.id.compareButton, R.id.compareLabel, R.id.fileOneRemoveButton, R.id.fileTwoRemoveButton})
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.openRightDrawer:
@@ -463,9 +464,9 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
                 doCreateTreeStructure();
                 break;
             case R.id.loadPreviousArchiveDataList:
-                archiveCount=0;
+                archiveCount = 0;
                 getArchivedPageNumber = getArchivedPageNumber - 1;
-                currentCount=currentCount-archiveApiCount;
+                currentCount = currentCount - archiveApiCount;
 
                 if (getArchivedPageNumber == 0) {
                     CommonMethods.showToast(this, "No Previous data to load");
@@ -475,11 +476,11 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
                 }
                 break;
             case R.id.loadNextArchiveDataList:
-                archiveCount=0;
+                archiveCount = 0;
                 if (!mFileTreeResponseData.isPagination()) {
                     CommonMethods.showToast(this, "No Next data to load");
                 } else {
-                    currentCount=currentCount+archiveApiCount;
+                    currentCount = currentCount + archiveApiCount;
                     getArchivedPageNumber = getArchivedPageNumber + 1;
                     mFileTreeResponseData = null;
                     doCreateTreeStructure();
@@ -501,8 +502,13 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
                 break;
             case R.id.fileOneRemoveButton:
                 String fileToRemove = mFileOneFileName.getText().toString().trim().replace(getString(R.string.file), "").trim();
-                mPreviousClickedTreeElement.remove(fileToRemove);
-                if(mGetEncryptedPDFRequestModelList.size()!=0)
+                for (Integer key : mPreviousClickedTreeElement.keySet()) {
+                    if (mPreviousClickedTreeElement.get(key).equalsIgnoreCase(fileToRemove)) {
+                        mPreviousClickedTreeElement.remove(key);
+                    }
+                }
+
+                if (mGetEncryptedPDFRequestModelList.size() != 0)
                     mGetEncryptedPDFRequestModelList.remove(0);
                 mFileOneFileName.setText("");
                 mFileOnePatientID.setText("");
@@ -510,9 +516,13 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
                 break;
             case R.id.fileTwoRemoveButton:
                 String fileTwoRemove = mFileTwoFileName.getText().toString().trim().replace(getString(R.string.file), "").trim();
-                mPreviousClickedTreeElement.remove(fileTwoRemove);
-                if(mGetEncryptedPDFRequestModelList.size()==2)
-                mGetEncryptedPDFRequestModelList.remove(1);
+                for (Integer key : mPreviousClickedTreeElement.keySet()) {
+                    if (mPreviousClickedTreeElement.get(key).equalsIgnoreCase(fileTwoRemove)) {
+                        mPreviousClickedTreeElement.remove(key);
+                    }
+                }
+                if (mGetEncryptedPDFRequestModelList.size() == 2)
+                    mGetEncryptedPDFRequestModelList.remove(1);
                 mFileTwoFileName.setText("");
                 mFileTwoPatientID.setText("");
                 break;
@@ -658,7 +668,7 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
         for (int i = 0; i < size; i++) {
             ArchiveDatum archiveDatumObject = archiveData.get(i);
 
-            ArrowExpandSelectableHeaderHolder selectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded,true);
+            ArrowExpandSelectableHeaderHolder selectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, true);
             selectableHeaderHolder.setOnlyOneNodeExpanded(true);
             selectableHeaderHolder.setNodeValueColor(textColor);
 
@@ -676,7 +686,7 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
             //---- For list lstDateFolderType loop
             List<LstDateFolderType> lstDateFolderTypeList = archiveDatumObject.getLstDateFolderTypeList();
 
-            archiveCount=archiveCount+lstDateFolderTypeList.size();
+            archiveCount = archiveCount + lstDateFolderTypeList.size();
 
 
             for (int l = 0; l < lstDateFolderTypeList.size(); l++) {
@@ -685,7 +695,7 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
                 //-------NODE LstDateFolderType--------------
                 // Label(pageCount)|id
                 dataToShow = lstDateFolderType.getDateFolderType() + " (" + lstDateFolderType.getPageCount() + ")" + "|NA";
-                ArrowExpandSelectableHeaderHolder lstDateFolderTypeSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstDocTypeChildLeftPadding,true);
+                ArrowExpandSelectableHeaderHolder lstDateFolderTypeSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstDocTypeChildLeftPadding, true);
                 lstDateFolderTypeSelectableHeaderHolder.setOnlyOneNodeExpanded(true);
 
                 lstDateFolderTypeSelectableHeaderHolder.setNodeValueColor(textColor);
@@ -709,7 +719,7 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
 
                     // Label(pageCount)|id
                     dataToShow = lstDocCategoryObject.getCategoryName() + " (" + lstDocCategoryObject.getTotalDocTypePageCount() + ")" + "|" + lstDocCategoryObject.getCategoryId();
-                    ArrowExpandSelectableHeaderHolder docCatSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstDateFolderTypeChildLeftPadding,true);
+                    ArrowExpandSelectableHeaderHolder docCatSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstDateFolderTypeChildLeftPadding, true);
                     docCatSelectableHeaderHolder.setOnlyOneNodeExpanded(true);
 
                     docCatSelectableHeaderHolder.setNodeValueColor(textColor);
@@ -732,13 +742,13 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
                         dataToShow = lstDocTypeChild.getTypeName() + " (" + lstDocTypeChild.getPageCount() + ")" + "|" + lstDocTypeChild.getTypeId();
 
                         //-------
-                        ArrowExpandSelectableHeaderHolder lstDocTypeChildSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstDateFolderTypeChildLeftPadding,false);
+                        ArrowExpandSelectableHeaderHolder lstDocTypeChildSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstDateFolderTypeChildLeftPadding, false);
                         lstDocTypeChildSelectableHeaderHolder.setOnlyOneNodeExpanded(true);
                         lstDocTypeChildSelectableHeaderHolder.setNodeValueColor(textColor);
 
                         //---- To bold clicked text in tree
                         // if (lstDocTypeChild.getTypeName().equalsIgnoreCase(mPreviousClickedTreeElement.get(i)))
-                        if (lstDocTypeChild.getTypeName().equalsIgnoreCase(mPreviousClickedTreeElement.get(lstDocTypeChild.getTypeName())))
+                        if (String.valueOf(lstDocTypeChild.getRecordDetailId()).equalsIgnoreCase(mPreviousClickedTreeElement.get(lstDocTypeChild.getRecordDetailId())))
                             lstDocTypeChildSelectableHeaderHolder.setTreeLabelBold(true);
 
                         TreeNode lstDocTypeChildFolder = new TreeNode(new ArrowExpandIconTreeItemHolder.IconTreeItem(R.string.ic_shopping_cart, dataToShow, lstDocTypeChild, i))
@@ -780,7 +790,7 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
         for (int i = 0; i < size; i++) {
             ArchiveDatum archiveDatumObject = archiveData.get(i);
 
-            ArrowExpandSelectableHeaderHolder selectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded,true);
+            ArrowExpandSelectableHeaderHolder selectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, true);
             selectableHeaderHolder.setOnlyOneNodeExpanded(true);
             selectableHeaderHolder.setNodeValueColor(textColor);
 
@@ -797,7 +807,7 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
 
             //---- For list lstDateFolderType loop
             List<LstDocCategory> archiveDataLstDocCategoriesList = archiveDatumObject.getArchiveDataLstDocCategories();
-            archiveCount=archiveCount+archiveDataLstDocCategoriesList.size();
+            archiveCount = archiveCount + archiveDataLstDocCategoriesList.size();
 
             for (int l = 0; l < archiveDataLstDocCategoriesList.size(); l++) {
                 LstDocCategory lstDocCategory = archiveDataLstDocCategoriesList.get(l);
@@ -805,7 +815,7 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
                 //-------NODE LstDateFolderType--------------
                 // Label(pageCount)|id
                 dataToShow = lstDocCategory.getCategoryName() + " (" + lstDocCategory.getPageCount() + ")" + "|NA";
-                ArrowExpandSelectableHeaderHolder lstDateFolderTypeSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstDocTypeChildLeftPadding,true);
+                ArrowExpandSelectableHeaderHolder lstDateFolderTypeSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstDocTypeChildLeftPadding, true);
                 lstDateFolderTypeSelectableHeaderHolder.setOnlyOneNodeExpanded(true);
 
                 lstDateFolderTypeSelectableHeaderHolder.setNodeValueColor(textColor);
@@ -830,13 +840,13 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
                     dataToShow = lstDocTypeChild.getTypeName() + " (" + lstDocTypeChild.getPageCount() + ")" + "|" + lstDocTypeChild.getTypeId();
 
                     //-------
-                    ArrowExpandSelectableHeaderHolder lstDocTypeChildSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstDateFolderTypeChildLeftPadding,false);
+                    ArrowExpandSelectableHeaderHolder lstDocTypeChildSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstDateFolderTypeChildLeftPadding, false);
                     lstDocTypeChildSelectableHeaderHolder.setOnlyOneNodeExpanded(true);
                     lstDocTypeChildSelectableHeaderHolder.setNodeValueColor(textColor);
 
                     //---- To bold clicked text in tree
                     // if (lstDocTypeChild.getTypeName().equalsIgnoreCase(mPreviousClickedTreeElement.get(i)))
-                    if (lstDocTypeChild.getTypeName().equalsIgnoreCase(mPreviousClickedTreeElement.get(lstDocTypeChild.getTypeName())))
+                    if (String.valueOf(lstDocTypeChild.getRecordDetailId()).equalsIgnoreCase(mPreviousClickedTreeElement.get(lstDocTypeChild.getRecordDetailId())))
                         lstDocTypeChildSelectableHeaderHolder.setTreeLabelBold(true);
 
                     TreeNode lstDocTypeChildFolder = new TreeNode(new ArrowExpandIconTreeItemHolder.IconTreeItem(R.string.ic_shopping_cart, dataToShow, lstDocTypeChild, i))
@@ -876,7 +886,7 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
         for (int i = 0; i < size; i++) {
             ArchiveDatum archiveDatumObject = archiveData.get(i);
 
-            ArrowExpandSelectableHeaderHolder selectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded,true);
+            ArrowExpandSelectableHeaderHolder selectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, true);
             selectableHeaderHolder.setOnlyOneNodeExpanded(true);
             selectableHeaderHolder.setNodeValueColor(textColor);
 
@@ -893,14 +903,14 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
 
             //---- For list categories loop
             List<LstDocCategory> lstDocCategories = archiveDatumObject.getArchiveDataLstDocCategories();
-            archiveCount=archiveCount+lstDocCategories.size();
+            archiveCount = archiveCount + lstDocCategories.size();
 
             for (int j = 0; j < lstDocCategories.size(); j++) {
                 LstDocCategory lstDocCategoryObject = lstDocCategories.get(j);
 
                 // Label(pageCount)|id
                 dataToShow = lstDocCategoryObject.getCategoryName() + " (" + lstDocCategoryObject.getTotalDocTypePageCount() + ")" + "|" + lstDocCategoryObject.getCategoryId();
-                ArrowExpandSelectableHeaderHolder docCatSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstDocTypeChildLeftPadding,true);
+                ArrowExpandSelectableHeaderHolder docCatSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstDocTypeChildLeftPadding, true);
                 docCatSelectableHeaderHolder.setOnlyOneNodeExpanded(true);
 
                 docCatSelectableHeaderHolder.setNodeValueColor(textColor);
@@ -923,7 +933,7 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
                     dataToShow = lstDocTypeChild.getTypeName() + " (" + lstDocTypeChild.getPageCount() + ")" + "|" + lstDocTypeChild.getTypeId();
 
                     //-------
-                    ArrowExpandSelectableHeaderHolder lstDocTypeChildSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstDateFolderTypeChildLeftPadding,true);
+                    ArrowExpandSelectableHeaderHolder lstDocTypeChildSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstDateFolderTypeChildLeftPadding, true);
                     lstDocTypeChildSelectableHeaderHolder.setOnlyOneNodeExpanded(true);
                     lstDocTypeChildSelectableHeaderHolder.setNodeValueColor(textColor);
 
@@ -944,13 +954,13 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
                         dataToShow = lstDateFileTypeLastChild.getTypeName() + " (" + lstDateFileTypeLastChild.getPageCount() + ")" + "|" + lstDateFileTypeLastChild.getTypeId();
 
                         //-------
-                        ArrowExpandSelectableHeaderHolder lstDateFileTypeLastChildSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstDateFolderTypeChildLeftPadding,false);
+                        ArrowExpandSelectableHeaderHolder lstDateFileTypeLastChildSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstDateFolderTypeChildLeftPadding, false);
                         lstDateFileTypeLastChildSelectableHeaderHolder.setOnlyOneNodeExpanded(true);
                         lstDateFileTypeLastChildSelectableHeaderHolder.setNodeValueColor(textColor);
 
                         //---- To bold clicked text in tree
                         // if (lstDocTypeChild.getTypeName().equalsIgnoreCase(mPreviousClickedTreeElement.get(i)))
-                        if (lstDateFileTypeLastChild.getTypeName().equalsIgnoreCase(mPreviousClickedTreeElement.get(lstDateFileTypeLastChild.getTypeName())))
+                        if (String.valueOf(lstDateFileTypeLastChild.getRecordDetailId()).equalsIgnoreCase(mPreviousClickedTreeElement.get(lstDateFileTypeLastChild.getRecordDetailId())))
                             lstDateFileTypeLastChildSelectableHeaderHolder.setTreeLabelBold(true);
 
                         TreeNode lstDateFileTypeLastChildSelectableHeaderFolder = new TreeNode(new ArrowExpandIconTreeItemHolder.IconTreeItem(R.string.ic_shopping_cart, dataToShow, lstDateFileTypeLastChild, i))
@@ -1072,7 +1082,6 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
     }
 
 
-
     // End
 
     //-- For treeview annotations
@@ -1105,7 +1114,7 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
                         CommonMethods.showToast(this, "Can not compare more than 2 PDFs");
                     } else {
                         mGetEncryptedPDFRequestModelList.add(getEncryptedPDFRequestModel);
-                        mPreviousClickedTreeElement.put(clickedLstDocTypeElement.getTypeName(), clickedLstDocTypeElement.getTypeName().trim());
+                        mPreviousClickedTreeElement.put(clickedLstDocTypeElement.getRecordDetailId(), clickedLstDocTypeElement.getTypeName().trim());
 
                         ArrayList<String> tempClickedElements = new ArrayList<>(mPreviousClickedTreeElement.values());
 
@@ -1116,6 +1125,7 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
                                 mFileOnePatientID.setText(getString(R.string.patient_id) + respectivePatientID);
                                 mFileOneFileName.setText(getString(R.string.file) + tempClickedElements.get(0));
                                 mFirstFileTypeProgressDialogLayout.setVisibility(View.VISIBLE);
+                                recordIdFirstPdf= clickedLstDocTypeElement.getRecordDetailId();
                                 labelFirstPdf.setText(tempClickedElements.get(0));
                                 break;
                             case 2:
@@ -1123,11 +1133,14 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
                                 mFileOnePatientID.setText(getString(R.string.patient_id) + respectivePatientID);
                                 mFileOneFileName.setText(getString(R.string.file) + tempClickedElements.get(0));
                                 mFirstFileTypeProgressDialogLayout.setVisibility(View.VISIBLE);
+                                recordIdFirstPdf= clickedLstDocTypeElement.getRecordDetailId();
                                 labelFirstPdf.setText(tempClickedElements.get(0));
                                 //-------
                                 mFileTwoPatientID.setText(getString(R.string.patient_id) + respectivePatientID);
                                 mFileTwoFileName.setText(getString(R.string.file) + tempClickedElements.get(1));
                                 mSecondFileTypePdfViewLayout.setVisibility(View.VISIBLE);
+                                recordIdSecondPdf= clickedLstDocTypeElement.getRecordDetailId();
+
                                 mSecondFileTypeProgressDialogLayout.setVisibility(View.VISIBLE);
                                 labelSecondPdf.setText(tempClickedElements.get(1));
                                 break;
@@ -1135,13 +1148,14 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
                     }
 
                 } else {
-                    Log.e("hiiiiii","giiiiii");
+                    Log.e("hiiiiii", "giiiiii");
                     mGetEncryptedPDFRequestModelList.clear();
                     mGetEncryptedPDFRequestModelList.add(getEncryptedPDFRequestModel);
 
                     mPreviousClickedTreeElement.clear();
-                    mPreviousClickedTreeElement.put(clickedLstDocTypeElement.getTypeName(), clickedLstDocTypeElement.getTypeName().trim());
+                    mPreviousClickedTreeElement.put(clickedLstDocTypeElement.getRecordDetailId(), clickedLstDocTypeElement.getTypeName().trim());
                     labelFirstPdf.setText(clickedLstDocTypeElement.getTypeName());
+                    recordIdFirstPdf= clickedLstDocTypeElement.getRecordDetailId();
                     mFirstFileTypeProgressDialogLayout.setVisibility(View.VISIBLE);
                     //--------
                     mSecondFileTypePdfViewLayout.setVisibility(View.GONE);
@@ -1270,9 +1284,9 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
     private void mArchivedPreferenceSpinnerListener() {
 
         final String[] array = getResources().getStringArray(R.array.get_archived_preference_list);
-            int [] prefImageList= new int[]{R.drawable.ic_pref_folder, R.drawable.ic_pref_file,R.drawable.ic_pref_date};
+        int[] prefImageList = new int[]{R.drawable.ic_pref_folder, R.drawable.ic_pref_file, R.drawable.ic_pref_date};
 
-        CustomPreferenceSpinAdapter preferenceSpinAdapter =new CustomPreferenceSpinAdapter(this,array,prefImageList);
+        CustomPreferenceSpinAdapter preferenceSpinAdapter = new CustomPreferenceSpinAdapter(this, array, prefImageList);
         mArchivedPreferenceSpinner.setAdapter(preferenceSpinAdapter);
         mArchivedPreferenceSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -1305,31 +1319,28 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
             switch (mArchivedSelectedPreference) {
                 case DMSConstants.ArchivedPreference.FOLDER:
                     createAnnotationTreeWithFolderPreferences(mFileTreeResponseData, true);
-                    if(mFileTreeResponseData.isPagination())
-                    {
-                        loadedArchiveDataMessage.setText(""+currentCount+" "+getString(R.string.records_more));
-                    }else {
-                        loadedArchiveDataMessage.setText(""+archiveCount+" "+getString(R.string.records));
+                    if (mFileTreeResponseData.isPagination()) {
+                        loadedArchiveDataMessage.setText("" + currentCount + " " + getString(R.string.records_more));
+                    } else {
+                        loadedArchiveDataMessage.setText("" + archiveCount + " " + getString(R.string.records));
                     }
 
 
                     break;
                 case DMSConstants.ArchivedPreference.FILE:
                     createAnnotationTreeWithFilePreferences(mFileTreeResponseData, true);
-                    if(mFileTreeResponseData.isPagination())
-                    {
-                        loadedArchiveDataMessage.setText(""+currentCount+" "+getString(R.string.records_more));
-                    }else {
-                        loadedArchiveDataMessage.setText(""+archiveCount+" "+getString(R.string.records));
+                    if (mFileTreeResponseData.isPagination()) {
+                        loadedArchiveDataMessage.setText("" + currentCount + " " + getString(R.string.records_more));
+                    } else {
+                        loadedArchiveDataMessage.setText("" + archiveCount + " " + getString(R.string.records));
                     }
                     break;
                 case DMSConstants.ArchivedPreference.DATE:
                     createAnnotationTreeWithDatePreferences(mFileTreeResponseData, true);
-                    if(mFileTreeResponseData.isPagination())
-                    {
-                        loadedArchiveDataMessage.setText(""+archiveApiCount+" "+getString(R.string.records_more));
-                    }else {
-                        loadedArchiveDataMessage.setText(""+archiveCount+" "+getString(R.string.records));
+                    if (mFileTreeResponseData.isPagination()) {
+                        loadedArchiveDataMessage.setText("" + archiveApiCount + " " + getString(R.string.records_more));
+                    } else {
+                        loadedArchiveDataMessage.setText("" + archiveCount + " " + getString(R.string.records));
                     }
                     break;
             }
