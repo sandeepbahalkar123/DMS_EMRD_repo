@@ -44,6 +44,7 @@ import com.scorg.dms.ui.activities.dashboard.SupportActivity;
 import com.scorg.dms.ui.activities.dms_patient_list.PatientDetailsActivity;
 import com.scorg.dms.ui.activities.dms_patient_list.PatientList;
 import com.scorg.dms.ui.activities.my_appointments.MyAppointmentsActivity;
+import com.scorg.dms.ui.activities.pending_approval_list.PendingApprovalMainListActivity;
 import com.scorg.dms.ui.activities.waiting_list.WaitingMainListActivity;
 import com.scorg.dms.ui.customesViews.CustomTextView;
 import com.scorg.dms.ui.customesViews.SwitchButton;
@@ -344,6 +345,11 @@ public class HomePageActivity extends AppCompatActivity implements HelperRespons
             case R.id.layoutWaitingPatient:
                 Intent todayAppointmentsOrWaitingList = new Intent(this, WaitingMainListActivity.class);
                 startActivity(todayAppointmentsOrWaitingList);
+                break;
+
+            case R.id.layoutPendingApproval:
+                Intent pendingApprovalList = new Intent(this, PendingApprovalMainListActivity.class);
+                startActivity(pendingApprovalList);
                 break;
             case R.id.layoutTotalPatients:
                 Intent patientList = new Intent(this, PatientList.class);

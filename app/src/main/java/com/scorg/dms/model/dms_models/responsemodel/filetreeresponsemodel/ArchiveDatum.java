@@ -12,6 +12,11 @@ public class ArchiveDatum {
     @SerializedName("fileType")
     @Expose
     private String fileType;
+
+    @SerializedName("confidentialState")
+    @Expose
+    private int confidentialState;
+
     @SerializedName("lstDateFolderType")
     @Expose
     private List<LstDateFolderType> lstDateFolderTypeList = new ArrayList<LstDateFolderType>();
@@ -84,6 +89,14 @@ public class ArchiveDatum {
         return totalArchiveDataLstDocCategoriesPageCount;
     }
 
+    public int getConfidentialState() {
+        return confidentialState;
+    }
+
+    public void setConfidentialState(int confidentialState) {
+        this.confidentialState = confidentialState;
+    }
+
     @Override
     public String toString() {
         return "ArchiveDatum{" +
@@ -91,6 +104,7 @@ public class ArchiveDatum {
                 ", lstDateFolderTypeList=" + lstDateFolderTypeList +
                 ", archiveDataLstDocCategories=" + archiveDataLstDocCategories +
                 ", totalLstDateFolderTypePageCount=" + totalLstDateFolderTypePageCount +
+                ", confidentialState=" + confidentialState +
                 '}';
     }
 }

@@ -12,9 +12,15 @@ public class LstDateFolderType {
     @SerializedName("dateFolderType")
     @Expose
     private String dateFolderType;
+
     @SerializedName("pageCount")
     @Expose
     private int pageCount;
+
+    @SerializedName("confidentialState")
+    @Expose
+    private int confidentialState;
+
     @SerializedName("lstDocCategories")
     @Expose
     private List<LstDocCategory> lstDocCategories = new ArrayList<LstDocCategory>();
@@ -61,12 +67,21 @@ public class LstDateFolderType {
         this.totalDocCategoryPageCount = totalDocCategoryPageCount;
     }
 
+    public int getConfidentialState() {
+        return confidentialState;
+    }
+
+    public void setConfidentialState(int confidentialState) {
+        this.confidentialState = confidentialState;
+    }
+
     @Override
     public String toString() {
         return "LstDateFolderType{" +
                 "dateFolderType='" + dateFolderType + '\'' +
                 ", lstDocCategories=" + lstDocCategories +
                 ", totalDocCategoryPageCount=" + totalDocCategoryPageCount +
+                ", confidentialState=" + confidentialState +
                 '}';
     }
 }
