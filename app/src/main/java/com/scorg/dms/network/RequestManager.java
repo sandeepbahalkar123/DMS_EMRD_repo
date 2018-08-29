@@ -58,6 +58,7 @@ import com.scorg.dms.model.patient.patient_connect.ChatPatientConnectModel;
 import com.scorg.dms.model.patient.patient_connect.PatientConnectBaseModel;
 import com.scorg.dms.model.patient.patient_history.PatientHistoryBaseModel;
 import com.scorg.dms.model.patient.template_sms.TemplateBaseModel;
+import com.scorg.dms.model.pending_approval_list.RequestedArchivedBaseModel;
 import com.scorg.dms.model.request_appointment_confirmation.ResponseAppointmentConfirmationModel;
 import com.scorg.dms.model.requestmodel.login.LoginRequestModel;
 import com.scorg.dms.model.select_slot_book_appointment.TimeSlotListBaseModel;
@@ -629,6 +630,11 @@ public class RequestManager extends ConnectRequest implements Connector, Request
                     case DMSConstants.TASK_GET_EPISODE_LIST: //This is for get episode list
                         EpisodeResponseModel episodeResponseModel = gson.fromJson(data, EpisodeResponseModel.class);
                         this.mConnectionListener.onResponse(ConnectionListener.RESPONSE_OK, episodeResponseModel, mOldDataTag);
+                        break;
+
+                    case DMSConstants.TASK_PENDING_APPROVAL_LIST: //This is for get episode list
+                        RequestedArchivedBaseModel requestedArchivedBaseModel = gson.fromJson(data, RequestedArchivedBaseModel.class);
+                        this.mConnectionListener.onResponse(ConnectionListener.RESPONSE_OK, requestedArchivedBaseModel, mOldDataTag);
                         break;
 
                     default:

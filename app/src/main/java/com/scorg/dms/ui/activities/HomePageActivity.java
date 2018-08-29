@@ -8,15 +8,11 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SimpleItemAnimator;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -44,14 +40,12 @@ import com.scorg.dms.ui.activities.dashboard.SupportActivity;
 import com.scorg.dms.ui.activities.dms_patient_list.PatientDetailsActivity;
 import com.scorg.dms.ui.activities.dms_patient_list.PatientList;
 import com.scorg.dms.ui.activities.my_appointments.MyAppointmentsActivity;
-import com.scorg.dms.ui.activities.pending_approval_list.PendingApprovalMainListActivity;
+import com.scorg.dms.ui.activities.pending_approval_list.RequestedArchivedMainListActivity;
 import com.scorg.dms.ui.activities.waiting_list.WaitingMainListActivity;
 import com.scorg.dms.ui.customesViews.CustomTextView;
 import com.scorg.dms.ui.customesViews.SwitchButton;
 import com.scorg.dms.util.CommonMethods;
 import com.scorg.dms.util.DMSConstants;
-
-import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -333,7 +327,7 @@ public class HomePageActivity extends AppCompatActivity implements HelperRespons
 
     }
 
-    @OnClick({R.id.viewTextView,R.id.layoutDrawerIcon,R.id.layoutTotalPatients, R.id.layoutTodayAppointment, R.id.layoutWaitingPatient, R.id.layoutDrawerSetting, R.id.layoutDrawerSupport})
+    @OnClick({R.id.viewTextView,R.id.layoutDrawerIcon,R.id.layoutTotalPatients, R.id.layoutTodayAppointment, R.id.layoutWaitingPatient, R.id.layoutDrawerSetting, R.id.layoutDrawerSupport,R.id.layoutPendingApproval})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.viewPagerDoctorItem:
@@ -348,7 +342,7 @@ public class HomePageActivity extends AppCompatActivity implements HelperRespons
                 break;
 
             case R.id.layoutPendingApproval:
-                Intent pendingApprovalList = new Intent(this, PendingApprovalMainListActivity.class);
+                Intent pendingApprovalList = new Intent(this, RequestedArchivedMainListActivity.class);
                 startActivity(pendingApprovalList);
                 break;
             case R.id.layoutTotalPatients:

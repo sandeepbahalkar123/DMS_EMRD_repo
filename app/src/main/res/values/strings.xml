@@ -149,6 +149,7 @@
     <string name="select_all">Select All</string>
     <string name="send_sms">Send SMS</string>
     <string name="waiting_list">Waiting List</string>
+    <string name="approval_list">Approval List</string>
     <string name="bp_max">BpMax</string>
     <string name="bp">BP</string>
     <string name="bp_min">BpMin</string>
@@ -170,6 +171,8 @@
     <!--<string name="template_list">Template List</string>-->
     <string name="template_list">SMS Templates</string>
     <string name="active">ACTIVE</string>
+    <string name="pending">PENDING</string>
+    <string name="submitted">SUBMITTED</string>
     <string name="view_all">VIEW ALL</string>
     <string name="in_time">In Time</string>
     <string name="appointment_completed">Appointment is completed</string>

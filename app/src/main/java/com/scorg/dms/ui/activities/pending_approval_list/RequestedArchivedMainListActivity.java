@@ -14,15 +14,14 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 
 import com.scorg.dms.R;
-import com.scorg.dms.helpers.myappointments.AppointmentHelper;
+import com.scorg.dms.helpers.pending_approval.PendingApprovalHelper;
 import com.scorg.dms.interfaces.CustomResponse;
 import com.scorg.dms.interfaces.HelperResponse;
-import com.scorg.dms.model.waiting_list.WaitingClinicList;
-import com.scorg.dms.model.waiting_list.WaitingListBaseModel;
-import com.scorg.dms.model.waiting_list.WaitingListDataModel;
+import com.scorg.dms.model.pending_approval_list.RequestedArchivedBaseModel;
+import com.scorg.dms.model.pending_approval_list.PendingApprovalDataModel;
 import com.scorg.dms.ui.customesViews.CustomTextView;
-import com.scorg.dms.ui.fragments.waiting_list.ActivePatientListFragment;
-import com.scorg.dms.ui.fragments.waiting_list.ViewAllPatientListFragment;
+import com.scorg.dms.ui.fragments.approval_list.ApprovalListFragment;
+import com.scorg.dms.ui.fragments.approval_list.PendingListFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,9 +34,9 @@ import butterknife.OnClick;
  * Created by jeetal on 22/2/18.
  */
 
-public class PendingApprovalMainListActivity extends AppCompatActivity implements HelperResponse {
+public class RequestedArchivedMainListActivity extends AppCompatActivity implements HelperResponse {
 
-    public static final int RESULT_CLOSE_ACTIVITY_WAITING_LIST = 040;
+    public static final int RESULT_CLOSE_ACTIVITY_PENDINGAPPROVAL_LIST = 040;
     @BindView(R.id.backImageView)
     ImageView backImageView;
     @BindView(R.id.titleTextView)
@@ -57,11 +56,10 @@ public class PendingApprovalMainListActivity extends AppCompatActivity implement
     String[] mFragmentTitleList = new String[2];
     @BindView(R.id.leftFab)
     FloatingActionButton leftFab;
-    private ActivePatientListFragment mActivePatientListFragment;
-    private ViewAllPatientListFragment mViewAllPatientListFragment;
-    private ArrayList<WaitingClinicList> mWaitingClinicList;
-    private AppointmentHelper mAppointmentHelper;
-    private WaitingListDataModel mWaitingListDataModel;
+    private PendingListFragment mPendingListFragment;
+    private ApprovalListFragment mApprovalListFragment;
+    private PendingApprovalHelper mPendingApprovalHelper;
+    private PendingApprovalDataModel pendingApprovalDataModel;
 
 
     @Override
@@ -69,29 +67,33 @@ public class PendingApprovalMainListActivity extends AppCompatActivity implement
         super.onCreate(savedInstanceState);
         setContentView(R.layout.waiting_base_layout);
         ButterKnife.bind(this);
-        mFragmentTitleList[0] = getString(R.string.active);
-        mFragmentTitleList[1] = getString(R.string.view_all);
-        mAppointmentHelper = new AppointmentHelper(this, this);
-        mAppointmentHelper.doGetWaitingList();
+        mFragmentTitleList[0] = getString(R.string.pending);
+        mFragmentTitleList[1] = getString(R.string.submitted);
+      //  mPendingApprovalHelper= new PendingApprovalHelper(this,this);
+       // mPendingApprovalHelper.doGetPendingApprovalData(1,true);
+
+        setupViewPager(viewpager);
+        tabs.setupWithViewPager(viewpager);
+
     }
 
     private void setupViewPager(ViewPager viewPager) {
-        titleTextView.setText(getString(R.string.waiting_list));
+        titleTextView.setText(getString(R.string.approval_list));
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        mActivePatientListFragment = ActivePatientListFragment.newInstance(new Bundle());
-        mViewAllPatientListFragment = ViewAllPatientListFragment.newInstance(new Bundle());
-        adapter.addFragment(mActivePatientListFragment, getString(R.string.active));
-        adapter.addFragment(mViewAllPatientListFragment, getString(R.string.view_all));
+        mPendingListFragment = PendingListFragment.newInstance(new Bundle());
+        mApprovalListFragment = ApprovalListFragment.newInstance(new Bundle());
+        adapter.addFragment(mPendingListFragment, getString(R.string.pending));
+        adapter.addFragment(mApprovalListFragment, getString(R.string.submitted));
         viewPager.setAdapter(adapter);
     }
 
     @Override
     public void onSuccess(String mOldDataTag, CustomResponse customResponse) {
         if (customResponse != null) {
-            WaitingListBaseModel waitingListBaseModel = (WaitingListBaseModel) customResponse;
-            mWaitingListDataModel = waitingListBaseModel.getWaitingListDataModel();
-            setupViewPager(viewpager);
-            tabs.setupWithViewPager(viewpager);
+           RequestedArchivedBaseModel requestedArchivedBaseModel = (RequestedArchivedBaseModel)customResponse;
+            //pendingApprovalDataModel =requestedArchivedBaseModel.g();
+            ///setupViewPager(viewpager);
+          //  tabs.setupWithViewPager(viewpager);
         }
     }
 
@@ -163,17 +165,17 @@ public class PendingApprovalMainListActivity extends AppCompatActivity implement
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == RESULT_CLOSE_ACTIVITY_WAITING_LIST) {
+        if (requestCode == RESULT_CLOSE_ACTIVITY_PENDINGAPPROVAL_LIST) {
             finish();
         }
     }
 
 
-    public WaitingListDataModel getWaitingListDataModel() {
-        return mWaitingListDataModel;
+    public PendingApprovalDataModel getPendingApprovalDataModel() {
+        return pendingApprovalDataModel;
     }
 
-    public void setWaitingListDataModel(WaitingListDataModel mWaitingListDataModel) {
-        this.mWaitingListDataModel = mWaitingListDataModel;
+    public void setPendingApprovalDataModel(PendingApprovalDataModel pendingApprovalDataModel) {
+        this.pendingApprovalDataModel = pendingApprovalDataModel;
     }
 }

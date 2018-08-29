@@ -189,7 +189,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
-            android:name=".ui.activities.pending_approval_list.PendingApprovalMainListActivity"
+            android:name=".ui.activities.pending_approval_list.RequestedArchivedMainListActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />
 
