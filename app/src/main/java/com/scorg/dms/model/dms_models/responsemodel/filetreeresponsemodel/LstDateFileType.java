@@ -32,6 +32,9 @@ public class LstDateFileType {
     @SerializedName("recordDetailId")
     @Expose
     private Integer recordDetailId;
+    @SerializedName("confidentialState")
+    @Expose
+    private Integer confidentialState;
 
     public Integer getTypeId() {
         return typeId;
@@ -91,6 +94,15 @@ public class LstDateFileType {
         this.recordDetailId = recordDetailId;
     }
 
+
+    public Integer getConfidentialState() {
+        return confidentialState;
+    }
+
+    public void setConfidentialState(Integer confidentialState) {
+        this.confidentialState = confidentialState;
+    }
+
     @Override
     public String toString() {
         return "LstDateFileType{" +
@@ -101,6 +113,7 @@ public class LstDateFileType {
                 ", recordId=" + recordId +
                 ", permission='" + permission + '\'' +
                 ", recordDetailId=" + recordDetailId +
+                ", confidentialState=" + confidentialState +
                 '}';
     }
 }

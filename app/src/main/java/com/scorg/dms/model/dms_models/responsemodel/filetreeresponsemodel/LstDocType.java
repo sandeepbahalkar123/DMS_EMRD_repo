@@ -34,6 +34,9 @@ public class LstDocType {
     @SerializedName("recordDetailId")
     @Expose
     private Integer recordDetailId;
+    @SerializedName("confidentialState")
+    @Expose
+    private Integer confidentialState;
 
     @SerializedName("lstdateFileType")
     @Expose
@@ -111,6 +114,14 @@ public class LstDocType {
         this.recordDetailId = recordDetailId;
     }
 
+    public Integer getConfidentialState() {
+        return confidentialState;
+    }
+
+    public void setConfidentialState(Integer confidentialState) {
+        this.confidentialState = confidentialState;
+    }
+
     @Override
     public String toString() {
         return "LstDocType{" +
@@ -122,6 +133,7 @@ public class LstDocType {
                 ", createdDate='" + createdDate + '\'' +
                 ", pageNumber=" + pageNumber +
                 ", recordDetailId=" + recordDetailId +
+                ", confidentialState=" + confidentialState +
                 ", lstDateFileTypeList=" + lstDateFileTypeList +
                 '}';
     }
