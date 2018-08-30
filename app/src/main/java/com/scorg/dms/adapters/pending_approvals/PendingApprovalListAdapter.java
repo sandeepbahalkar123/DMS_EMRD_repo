@@ -38,7 +38,6 @@ import com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemode
 import com.scorg.dms.model.pending_approval_list.RequestedArchivedDetailList;
 import com.scorg.dms.model.waiting_list.WaitingPatientData;
 import com.scorg.dms.util.CommonMethods;
-import com.scorg.dms.util.DMSConstants;
 
 import java.util.ArrayList;
 
@@ -48,18 +47,20 @@ import java.util.ArrayList;
  * <p>
  * MESSAGE ==> Explicitly disable long press,swipe and click listener. And do needful to make this work.
  */
-public class PendingListAdapter
-        extends RecyclerView.Adapter<PendingListAdapter.MyViewHolder> {
+public class PendingApprovalListAdapter
+        extends RecyclerView.Adapter<PendingApprovalListAdapter.MyViewHolder> {
     private static final String TAG = "MyDSItemAdapter";
     private OnItemClickListener onItemClickListener;
     private Context mContext;
     private ArrayList<RequestedArchivedDetailList> mRequestedArchivedDetailLists;
+    private boolean isPending;
 
 
-    public PendingListAdapter(Context context, ArrayList<RequestedArchivedDetailList> requestedArchivedDetailLists, OnItemClickListener onItemClickListener) {
+    public PendingApprovalListAdapter(Context context, ArrayList<RequestedArchivedDetailList> requestedArchivedDetailLists, OnItemClickListener onItemClickListener,boolean isPending) {
         this.mContext = context;
         this.mRequestedArchivedDetailLists = requestedArchivedDetailLists;
         this.onItemClickListener = onItemClickListener;
+        this.isPending=isPending;
     }
 
     public static class MyViewHolder extends AbstractDraggableSwipeableItemViewHolder {
@@ -92,10 +93,8 @@ public class PendingListAdapter
             super(v);
             mContainer = v.findViewById(R.id.container);
             mDragHandle = v.findViewById(R.id.dragHandle);
-
             mBehindViews = v.findViewById(R.id.behind_views);
             deleteButton = v.findViewById(R.id.deleteButton);
-
             idAndDetailsLayout = v.findViewById(R.id.idAndDetailsLayout);
             mBluelineImageView = v.findViewById(R.id.bluelineImageView);
             mPatientIdTextView = v.findViewById(R.id.patientIdTextView);
@@ -147,30 +146,11 @@ public class PendingListAdapter
 //            name = item.getSalutation() + " " + name;
 //        }
         holder.mPatientNameTextView.setText(name);
-        //-------------
-//        if (!item.getAppDate().equals("")) {
-//            holder.mAppointmentTime.setVisibility(View.VISIBLE);
-//            String waitingTime = CommonMethods.formatDateTime(item.getAppDate().split("T")[1], DMSConstants.DATE_PATTERN.hh_mm_a, DMSConstants.DATE_PATTERN.HH_mm_ss, DMSConstants.TIME).toLowerCase();
-//            holder.mAppointmentTime.setText(holder.mPatientIdTextView.getResources().getString(R.string.in_time) + " - " + waitingTime);
-//        } else {
-//            holder.mAppointmentTime.setVisibility(View.INVISIBLE);
-//        }
-        //-------------
-//        if (!item.getAppDate().equals("")) {
-//            holder.mAppointmentTimeTextView.setVisibility(View.VISIBLE);
-//            holder.mAppointmentLabelTextView.setVisibility(View.VISIBLE);
-//            String appointmentScheduleTime = CommonMethods.formatDateTime(item.getAppDate().split("T")[1], DMSConstants.DATE_PATTERN.hh_mm_a, DMSConstants.DATE_PATTERN.HH_mm_ss, DMSConstants.TIME).toLowerCase();
-//            holder.mAppointmentTimeTextView.setText(appointmentScheduleTime);
-//        } else {
-//            holder.mAppointmentTimeTextView.setVisibility(View.INVISIBLE);
-//            holder.mAppointmentLabelTextView.setVisibility(View.INVISIBLE);
-//        }
-        //-------------
-       // holder.mPatientPhoneNumber.setText(item.getContactNo());
-        //-------------
+
+
         holder.mTokenNumber.setVisibility(View.GONE);
         //-------------
-        holder.mTypeStatus.setText(" " + item.getCurrentStatus());
+        holder.mTypeStatus.setText(" " + CommonMethods.toCamelCase(item.getCurrentStatus()));
         //-------------
         TextDrawable textDrawable = CommonMethods.getTextDrawable(holder.mPatientImageView.getContext(), item.getPatientName());
         RequestOptions requestOptions = new RequestOptions();
@@ -185,20 +165,9 @@ public class PendingListAdapter
                 .apply(requestOptions)
                 .into(holder.mPatientImageView);
         //-------------
-        ViewTreeObserver vto = holder.mContainer.getViewTreeObserver();
-//        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-//            @Override
-//            public void onGlobalLayout() {
-//                holder.mContainer.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-//                ViewGroup.LayoutParams layoutParams = holder.mBehindViews.getLayoutParams();
-//                layoutParams.height = holder.mContainer.getMeasuredHeight();
-//                layoutParams.width = holder.mContainer.getMeasuredWidth();
-//                holder.mBehindViews.setLayoutParams(layoutParams);
-//            }
-//        });
 
-
-
+        if(isPending)
+            holder.btn_cancel_request.setVisibility(View.VISIBLE);
 
         holder.btn_cancel_request.setOnClickListener(new View.OnClickListener() {
             @Override

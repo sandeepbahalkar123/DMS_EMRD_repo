@@ -17,13 +17,17 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 
 import com.scorg.dms.R;
+import com.scorg.dms.adapters.pending_approvals.PendingApprovalListAdapter;
 import com.scorg.dms.adapters.waiting_list.WaitingListAdapter;
 import com.scorg.dms.helpers.patient_list.DMSPatientsHelper;
+import com.scorg.dms.helpers.pending_approval.PendingApprovalHelper;
 import com.scorg.dms.interfaces.CustomResponse;
 import com.scorg.dms.interfaces.HelperResponse;
 import com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemodel.SearchResult;
 import com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemodel.SearchResultData;
 import com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemodel.ShowSearchResultResponseModel;
+import com.scorg.dms.model.pending_approval_list.RequestedArchivedBaseModel;
+import com.scorg.dms.model.pending_approval_list.RequestedArchivedDetailList;
 import com.scorg.dms.model.waiting_list.WaitingClinicList;
 import com.scorg.dms.model.waiting_list.WaitingPatientData;
 import com.scorg.dms.ui.activities.dms_patient_list.FileTypeViewerActivity;
@@ -48,7 +52,7 @@ import static com.scorg.dms.util.DMSConstants.PATIENT_DETAILS;
  * Created by jeetal on 22/2/18.
  */
 @RuntimePermissions
-public class ApprovalListFragment extends Fragment implements WaitingListAdapter.OnItemClickListener, HelperResponse {
+public class ApprovalListFragment extends Fragment implements PendingApprovalListAdapter.OnItemClickListener, HelperResponse {
 
     @BindView(R.id.clinicListSpinner)
     Spinner clinicListSpinner;
@@ -67,13 +71,12 @@ public class ApprovalListFragment extends Fragment implements WaitingListAdapter
     LinearLayout noRecords;
 
     private Unbinder unbinder;
-    private ArrayList<WaitingClinicList> mWaitingClinicLists = new ArrayList<>();
-    private ArrayList<WaitingPatientData> waitingPatientTempList;
     private String phoneNo;
     private RequestedArchivedMainListActivity mParentActivity;
-    private WaitingListAdapter mWaitingListAdapter;
-    private DMSPatientsHelper mPatientsHelper;
     private long mClickedPhoneNumber;
+    private PendingApprovalHelper mPendingApprovalHelper;
+    private PendingApprovalListAdapter mPendingListAdapter;
+    private ArrayList<RequestedArchivedDetailList> requestedArchivedDetailList;
 
     public ApprovalListFragment() {
     }
@@ -95,23 +98,8 @@ public class ApprovalListFragment extends Fragment implements WaitingListAdapter
 
     private void init() {
         mParentActivity = (RequestedArchivedMainListActivity) getActivity();
-        mPatientsHelper = new DMSPatientsHelper(this.getContext(), this);
-
-        clinicListSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if (waitingPatientTempList != null) {
-                    mRecyclerView.setVisibility(View.VISIBLE);
-                    mRecyclerView.setClipToPadding(false);
-                    setViewAdapter();
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
+        mPendingApprovalHelper= new PendingApprovalHelper(mParentActivity,this);
+        mPendingApprovalHelper.doGetPendingApprovalData(1,false);
 
     }
 
@@ -153,16 +141,16 @@ public class ApprovalListFragment extends Fragment implements WaitingListAdapter
 
     private void setViewAdapter() {
 
-        if (waitingPatientTempList.isEmpty()) {
+        if (requestedArchivedDetailList.isEmpty()) {
             mRecyclerView.setVisibility(View.GONE);
             noRecords.setVisibility(View.VISIBLE);
         } else {
             mRecyclerView.setVisibility(View.VISIBLE);
             noRecords.setVisibility(View.GONE);
-            mWaitingListAdapter = new WaitingListAdapter(this.getContext(), waitingPatientTempList, this);
+            mPendingListAdapter = new PendingApprovalListAdapter(this.getContext(),requestedArchivedDetailList , this,false);
             LinearLayoutManager linearlayoutManager = new LinearLayoutManager(this.getContext(), LinearLayoutManager.VERTICAL, false);
             mRecyclerView.setLayoutManager(linearlayoutManager);
-            mRecyclerView.setAdapter(mWaitingListAdapter);
+            mRecyclerView.setAdapter(mPendingListAdapter);
         }
     }
 
@@ -246,6 +234,15 @@ public class ApprovalListFragment extends Fragment implements WaitingListAdapter
                 }
             }
             break;
+
+            case DMSConstants.TASK_PENDING_APPROVAL_LIST:{
+                if (customResponse != null) {
+                    RequestedArchivedBaseModel requestedArchivedBaseModel = (RequestedArchivedBaseModel)customResponse;
+                    requestedArchivedDetailList= (ArrayList<RequestedArchivedDetailList>) requestedArchivedBaseModel.getRequestedArchivedDetailList();
+                    setViewAdapter();
+                }
+
+            }
         }
     }
 

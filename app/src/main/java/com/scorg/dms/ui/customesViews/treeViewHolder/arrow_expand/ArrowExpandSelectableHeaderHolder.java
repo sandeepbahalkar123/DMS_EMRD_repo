@@ -9,6 +9,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.github.johnkil.print.PrintView;
@@ -28,21 +29,23 @@ public class ArrowExpandSelectableHeaderHolder extends TreeNode.BaseNodeViewHold
     private boolean istViewClickRequired;
     private TextView tvValue;
     private boolean isOnlyOneNodeExpanded;
-    private ImageView arrowView;
+    private ImageView arrowView, icon_lock;
     private CheckBox nodeSelector;
     private LinearLayout mainContentLayout;
+    private int confidentialState;
 
 
-    public ArrowExpandSelectableHeaderHolder(Context context, boolean isDefaultExpanded, boolean istViewClickRequired) {
+    public ArrowExpandSelectableHeaderHolder(Context context, boolean isDefaultExpanded, boolean istViewClickRequired, int confidentialState) {
 
-        this(context, isDefaultExpanded, (int) (context.getResources().getDimension(R.dimen.dp10) / context.getResources().getDisplayMetrics().density), istViewClickRequired);
+        this(context, isDefaultExpanded, (int) (context.getResources().getDimension(R.dimen.dp10) / context.getResources().getDisplayMetrics().density), istViewClickRequired, confidentialState);
     }
 
-    public ArrowExpandSelectableHeaderHolder(Context context, boolean isDefaultExpanded, int leftPadding, boolean istViewClickRequired) {
+    public ArrowExpandSelectableHeaderHolder(Context context, boolean isDefaultExpanded, int leftPadding, boolean istViewClickRequired, int confidentialState) {
         super(context);
         this.leftPadding = leftPadding;
         this.isDefaultExpanded = isDefaultExpanded;
         this.istViewClickRequired = istViewClickRequired;
+        this.confidentialState = confidentialState;
         nodeValueColor = ContextCompat.getColor(context, R.color.black);
     }
 
@@ -52,6 +55,7 @@ public class ArrowExpandSelectableHeaderHolder extends TreeNode.BaseNodeViewHold
         final View view = inflater.inflate(R.layout.treeview_arrow_expandable_header, null, false);
 
         mainContentLayout = (LinearLayout) view.findViewById(R.id.mainContentLayout);
+        icon_lock = (ImageView) view.findViewById(R.id.icon_lock);
         mainContentLayout.setPadding(leftPadding, 0, 0, 0);
 
         tvValue = (TextView) view.findViewById(R.id.node_value);
@@ -72,8 +76,6 @@ public class ArrowExpandSelectableHeaderHolder extends TreeNode.BaseNodeViewHold
         arrowView = (ImageView) view.findViewById(R.id.icon);
         arrowView.setPadding(20, 10, 10, 10);
         if (node.isLeaf()) {
-            //arrowView.setVisibility(View.INVISIBLE);
-            // arrowView.setIconText(context.getResources().getString(R.string.ic_shopping_cart));
             arrowView.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_tree_file));
         }
         arrowView.setOnClickListener(new View.OnClickListener() {
@@ -81,11 +83,9 @@ public class ArrowExpandSelectableHeaderHolder extends TreeNode.BaseNodeViewHold
             public void onClick(View view) {
                 if (isOnlyOneNodeExpanded()) {
                     tView.toggleNode(node, isOnlyOneNodeExpanded());
-                    // arrowView.setIconText(context.getResources().getString(R.string.ic_keyboard_arrow_down));
 
                 } else {
                     tView.toggleNode(node, isOnlyOneNodeExpanded());
-                    // arrowView.setIconText(context.getResources().getString(R.string.ic_folder));
                 }
             }
         });
@@ -95,11 +95,9 @@ public class ArrowExpandSelectableHeaderHolder extends TreeNode.BaseNodeViewHold
                 public void onClick(View view) {
                     if (isOnlyOneNodeExpanded()) {
                         tView.toggleNode(node, isOnlyOneNodeExpanded());
-                        // arrowView.setIconText(context.getResources().getString(R.string.ic_keyboard_arrow_down));
 
                     } else {
                         tView.toggleNode(node, isOnlyOneNodeExpanded());
-                        // arrowView.setIconText(context.getResources().getString(R.string.ic_folder));
                     }
                 }
             });
@@ -157,6 +155,15 @@ public class ArrowExpandSelectableHeaderHolder extends TreeNode.BaseNodeViewHold
                     getSelected());
         }
 
+        if(confidentialState==2||confidentialState==3 || confidentialState==4){
+            icon_lock.setVisibility(View.VISIBLE);
+            if(confidentialState==4){
+                icon_lock.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_unlock));
+            }
+        }
+
+
+
 
         return view;
     }
@@ -165,14 +172,15 @@ public class ArrowExpandSelectableHeaderHolder extends TreeNode.BaseNodeViewHold
     @Override
     public void toggle(boolean active) {
         //  arrowView.setIconText(context.getResources().getString(active ? R.string.ic_keyboard_arrow_down : R.string.ic_keyboard_arrow_right));
-        if(!mNode.isLeaf())
-        arrowView.setImageDrawable(context.getResources().getDrawable(active ? R.drawable.ic_tree_folder_open : R.drawable.ic_tree_close_folder));
+        if (!mNode.isLeaf())
+            arrowView.setImageDrawable(context.getResources().getDrawable(active ? R.drawable.ic_tree_folder_open : R.drawable.ic_tree_close_folder));
 
     }
 
     @Override
     public void toggleSelectionMode(boolean editModeEnabled) {
         nodeSelector.setVisibility(editModeEnabled ? View.VISIBLE : View.INVISIBLE);
+        icon_lock.setVisibility(editModeEnabled ? View.INVISIBLE : View.VISIBLE);
         nodeSelector.setChecked(mNode.isSelected());
     }
 

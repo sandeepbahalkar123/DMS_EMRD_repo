@@ -17,8 +17,7 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 
 import com.scorg.dms.R;
-import com.scorg.dms.adapters.pending_approvals.PendingListAdapter;
-import com.scorg.dms.adapters.waiting_list.WaitingListAdapter;
+import com.scorg.dms.adapters.pending_approvals.PendingApprovalListAdapter;
 import com.scorg.dms.helpers.pending_approval.PendingApprovalHelper;
 import com.scorg.dms.interfaces.CustomResponse;
 import com.scorg.dms.interfaces.HelperResponse;
@@ -27,7 +26,6 @@ import com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemode
 import com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemodel.ShowSearchResultResponseModel;
 import com.scorg.dms.model.pending_approval_list.RequestedArchivedBaseModel;
 import com.scorg.dms.model.pending_approval_list.RequestedArchivedDetailList;
-import com.scorg.dms.model.waiting_list.WaitingClinicList;
 import com.scorg.dms.model.waiting_list.WaitingPatientData;
 import com.scorg.dms.ui.activities.dms_patient_list.FileTypeViewerActivity;
 import com.scorg.dms.ui.activities.dms_patient_list.PatientDetailsActivity;
@@ -51,7 +49,7 @@ import static com.scorg.dms.util.DMSConstants.PATIENT_DETAILS;
  * Created by jeetal on 22/2/18.
  */
 @RuntimePermissions
-public class PendingListFragment extends Fragment implements PendingListAdapter.OnItemClickListener, HelperResponse {
+public class PendingListFragment extends Fragment implements PendingApprovalListAdapter.OnItemClickListener, HelperResponse {
 
     @BindView(R.id.clinicListSpinner)
     Spinner clinicListSpinner;
@@ -74,7 +72,7 @@ public class PendingListFragment extends Fragment implements PendingListAdapter.
 
     private ArrayList<RequestedArchivedDetailList> requestedArchivedDetailList;
     private RequestedArchivedMainListActivity mParentActivity;
-    private PendingListAdapter mPendingListAdapter;
+    private PendingApprovalListAdapter mPendingListAdapter;
     private long mClickedPhoneNumber;
     private PendingApprovalHelper mPendingApprovalHelper;
     public PendingListFragment() {
@@ -100,21 +98,6 @@ public class PendingListFragment extends Fragment implements PendingListAdapter.
         mParentActivity = (RequestedArchivedMainListActivity) getActivity();
          mPendingApprovalHelper= new PendingApprovalHelper(mParentActivity,this);
          mPendingApprovalHelper.doGetPendingApprovalData(1,true);
-        clinicListSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if (requestedArchivedDetailList != null) {
-                    mRecyclerView.setVisibility(View.VISIBLE);
-                    mRecyclerView.setClipToPadding(false);
-                    setAdapter();
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
 
     }
 
@@ -162,7 +145,7 @@ public class PendingListFragment extends Fragment implements PendingListAdapter.
         } else {
             mRecyclerView.setVisibility(View.VISIBLE);
             noRecords.setVisibility(View.GONE);
-            mPendingListAdapter = new PendingListAdapter(this.getContext(),requestedArchivedDetailList , this);
+            mPendingListAdapter = new PendingApprovalListAdapter(this.getContext(),requestedArchivedDetailList , this,true);
             LinearLayoutManager linearlayoutManager = new LinearLayoutManager(this.getContext(), LinearLayoutManager.VERTICAL, false);
             mRecyclerView.setLayoutManager(linearlayoutManager);
             mRecyclerView.setAdapter(mPendingListAdapter);
@@ -251,12 +234,10 @@ public class PendingListFragment extends Fragment implements PendingListAdapter.
             }
             break;
             case DMSConstants.TASK_PENDING_APPROVAL_LIST:{
-
                 if (customResponse != null) {
                     RequestedArchivedBaseModel requestedArchivedBaseModel = (RequestedArchivedBaseModel)customResponse;
                     requestedArchivedDetailList= (ArrayList<RequestedArchivedDetailList>) requestedArchivedBaseModel.getRequestedArchivedDetailList();
                     setAdapter();
-
                 }
 
             }
@@ -278,19 +259,4 @@ public class PendingListFragment extends Fragment implements PendingListAdapter.
 
     }
 
-    private ArrayList<WaitingPatientData> compare(ArrayList<WaitingPatientData> waitingPatientData){
-        ArrayList<WaitingPatientData> patientData = new ArrayList<>();
-        if (waitingPatientData.size()!=0)
-            for (int i = 0; i < waitingPatientData.size(); i++) {
-                WaitingPatientData data = waitingPatientData.get(i);
-                if (!data.getWaitingStatus().equalsIgnoreCase(getString(R.string.complete))) {
-                    patientData.add(data);
-                }
-            }
-
-
-        return patientData;
-
-
-    }
 }

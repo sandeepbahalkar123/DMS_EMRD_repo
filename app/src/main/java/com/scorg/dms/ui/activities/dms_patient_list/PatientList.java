@@ -772,7 +772,7 @@ public class PatientList extends AppCompatActivity implements HelperResponse, Vi
             if (annotationLists != null) {
                 for (int i = 0; i < annotationLists.size(); i++) {
                     AnnotationList annotationCategoryObject = annotationLists.get(i);
-                    ArrowExpandSelectableHeaderHolder selectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded,true);
+                    ArrowExpandSelectableHeaderHolder selectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded,true,0);
                     selectableHeaderHolder.setOnlyOneNodeExpanded(true);
                     TreeNode folder1 = new TreeNode(new ArrowExpandIconTreeItemHolder.IconTreeItem(R.string.ic_shopping_cart, annotationCategoryObject.getCategoryName(), annotationCategoryObject, i))
                             .setViewHolder(selectableHeaderHolder);
@@ -783,7 +783,7 @@ public class PatientList extends AppCompatActivity implements HelperResponse, Vi
                         DocTypeList docTypeListObject = docTypeList.get(j);
                         String dataToShow = docTypeListObject.getTypeName() + "|" + docTypeListObject.getTypeId();
 
-                        ArrowExpandSelectableHeaderHolder lstDocTypeChildSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstDocTypeChildLeftPadding,true);
+                        ArrowExpandSelectableHeaderHolder lstDocTypeChildSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstDocTypeChildLeftPadding,true,0);
                         lstDocTypeChildSelectableHeaderHolder.setOnlyOneNodeExpanded(true);
                         TreeNode lstDocTypeChildFolder = new TreeNode(new ArrowExpandIconTreeItemHolder.IconTreeItem(R.string.ic_shopping_cart, dataToShow, docTypeListObject, i))
                                 .setViewHolder(lstDocTypeChildSelectableHeaderHolder);
