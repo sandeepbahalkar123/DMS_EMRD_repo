@@ -1107,74 +1107,90 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
 
             //----- THIS IS TO FIND OUT, WHICH level of treeView clicked
             // mClickedTreeStructureLevel = value1.level;
-
-            //----- Get Object of clicked Element and create map to send  : Start------
             if (value1.objectData instanceof LstDocType) {
                 LstDocType clickedLstDocTypeElement = (LstDocType) value1.objectData;
-                //----------
-                GetEncryptedPDFRequestModel getEncryptedPDFRequestModel = new GetEncryptedPDFRequestModel();
-                getEncryptedPDFRequestModel.setRecordId(String.valueOf(clickedLstDocTypeElement.getRecordId()));
-                getEncryptedPDFRequestModel.getLstDocTypes().add(clickedLstDocTypeElement);
-                //----------
-                if (mOpenCompareDialogSwitch.isChecked()) {
-                    if (mGetEncryptedPDFRequestModelList.size() == 2) {
-                        expandCompareDialog();
-                        CommonMethods.showToast(this, "Can not compare more than 2 PDFs");
-                    } else {
-                        mGetEncryptedPDFRequestModelList.add(getEncryptedPDFRequestModel);
-                        mPreviousClickedTreeElement.put(clickedLstDocTypeElement.getRecordDetailId(), clickedLstDocTypeElement.getTypeName().trim());
+                doClickedOperationOnTreeItem(clickedLstDocTypeElement);
+            } else if (value1.objectData instanceof LstDateFileType) {
+                LstDateFileType clickedLstDocTypeElement = (LstDateFileType) value1.objectData;
+                LstDocType tempClickedLstDocTypeElement = new LstDocType();
+                tempClickedLstDocTypeElement.setTypeId(clickedLstDocTypeElement.getTypeId());
+                tempClickedLstDocTypeElement.setTypeName(clickedLstDocTypeElement.getTypeName());
+                tempClickedLstDocTypeElement.setPageCount(clickedLstDocTypeElement.getPageCount());
+                tempClickedLstDocTypeElement.setRecordId(clickedLstDocTypeElement.getRecordId());
+                tempClickedLstDocTypeElement.setRecordDetailId(clickedLstDocTypeElement.getRecordDetailId());
+                tempClickedLstDocTypeElement.setPermission(clickedLstDocTypeElement.getPermission());
+                tempClickedLstDocTypeElement.setConfidentialState(clickedLstDocTypeElement.getConfidentialState());
+                doClickedOperationOnTreeItem(tempClickedLstDocTypeElement);
+            }
+        }
+    }
 
-                        ArrayList<String> tempClickedElements = new ArrayList<>(mPreviousClickedTreeElement.values());
+    private void doClickedOperationOnTreeItem(LstDocType clickedLstDocTypeElement) {
+        //----- Get Object of clicked Element and create map to send  : Start------
 
-                        expandCompareDialog();
-                        switch (mGetEncryptedPDFRequestModelList.size()) {
-                            case 1:
-                                //-----
-                                mFileOnePatientID.setText(getString(R.string.patient_id) + respectivePatientID);
-                                mFileOneFileName.setText(getString(R.string.file) + tempClickedElements.get(0));
-                                mFirstFileTypeProgressDialogLayout.setVisibility(View.VISIBLE);
-                                recordIdFirstPdf = clickedLstDocTypeElement.getRecordDetailId();
-                                labelFirstPdf.setText(tempClickedElements.get(0));
-                                break;
-                            case 2:
-                                //-----
-                                mFileOnePatientID.setText(getString(R.string.patient_id) + respectivePatientID);
-                                mFileOneFileName.setText(getString(R.string.file) + tempClickedElements.get(0));
-                                mFirstFileTypeProgressDialogLayout.setVisibility(View.VISIBLE);
-                                recordIdFirstPdf = clickedLstDocTypeElement.getRecordDetailId();
-                                labelFirstPdf.setText(tempClickedElements.get(0));
-                                //-------
-                                mFileTwoPatientID.setText(getString(R.string.patient_id) + respectivePatientID);
-                                mFileTwoFileName.setText(getString(R.string.file) + tempClickedElements.get(1));
-                                mSecondFileTypePdfViewLayout.setVisibility(View.VISIBLE);
-                                recordIdSecondPdf = clickedLstDocTypeElement.getRecordDetailId();
+        //----------
+        GetEncryptedPDFRequestModel getEncryptedPDFRequestModel = new GetEncryptedPDFRequestModel();
+        getEncryptedPDFRequestModel.setRecordId(String.valueOf(clickedLstDocTypeElement.getRecordId()));
+        getEncryptedPDFRequestModel.getLstDocTypes().add(clickedLstDocTypeElement);
+        //----------
+        if (mOpenCompareDialogSwitch.isChecked()) {
+            if (mGetEncryptedPDFRequestModelList.size() == 2) {
+                expandCompareDialog();
+                CommonMethods.showToast(this, "Can not compare more than 2 PDFs");
+            } else {
+                mGetEncryptedPDFRequestModelList.add(getEncryptedPDFRequestModel);
+                mPreviousClickedTreeElement.put(clickedLstDocTypeElement.getRecordDetailId(), clickedLstDocTypeElement.getTypeName().trim());
 
-                                mSecondFileTypeProgressDialogLayout.setVisibility(View.VISIBLE);
-                                labelSecondPdf.setText(tempClickedElements.get(1));
-                                break;
-                        }
-                    }
+                ArrayList<String> tempClickedElements = new ArrayList<>(mPreviousClickedTreeElement.values());
 
-                } else {
-                    Log.e("hiiiiii", "giiiiii");
-                    mGetEncryptedPDFRequestModelList.clear();
-                    mGetEncryptedPDFRequestModelList.add(getEncryptedPDFRequestModel);
+                expandCompareDialog();
+                switch (mGetEncryptedPDFRequestModelList.size()) {
+                    case 1:
+                        //-----
+                        mFileOnePatientID.setText(getString(R.string.patient_id) + respectivePatientID);
+                        mFileOneFileName.setText(getString(R.string.file) + tempClickedElements.get(0));
+                        mFirstFileTypeProgressDialogLayout.setVisibility(View.VISIBLE);
+                        recordIdFirstPdf = clickedLstDocTypeElement.getRecordDetailId();
+                        labelFirstPdf.setText(tempClickedElements.get(0));
+                        break;
+                    case 2:
+                        //-----
+                        mFileOnePatientID.setText(getString(R.string.patient_id) + respectivePatientID);
+                        mFileOneFileName.setText(getString(R.string.file) + tempClickedElements.get(0));
+                        mFirstFileTypeProgressDialogLayout.setVisibility(View.VISIBLE);
+                        recordIdFirstPdf = clickedLstDocTypeElement.getRecordDetailId();
+                        labelFirstPdf.setText(tempClickedElements.get(0));
+                        //-------
+                        mFileTwoPatientID.setText(getString(R.string.patient_id) + respectivePatientID);
+                        mFileTwoFileName.setText(getString(R.string.file) + tempClickedElements.get(1));
+                        mSecondFileTypePdfViewLayout.setVisibility(View.VISIBLE);
+                        recordIdSecondPdf = clickedLstDocTypeElement.getRecordDetailId();
 
-                    mPreviousClickedTreeElement.clear();
-                    mPreviousClickedTreeElement.put(clickedLstDocTypeElement.getRecordDetailId(), clickedLstDocTypeElement.getTypeName().trim());
-                    labelFirstPdf.setText(clickedLstDocTypeElement.getTypeName());
-                    recordIdFirstPdf = clickedLstDocTypeElement.getRecordDetailId();
-                    mFirstFileTypeProgressDialogLayout.setVisibility(View.VISIBLE);
-                    //--------
-                    mSecondFileTypePdfViewLayout.setVisibility(View.GONE);
-                    mSecondFileTypeProgressDialogLayout.setVisibility(View.GONE);
-
-                    //--------
-                    mPatientsHelper.getPdfData(mGetEncryptedPDFRequestModelList.get(0), DMSConstants.TASK_GET_PDF_DATA + "_0");
+                        mSecondFileTypeProgressDialogLayout.setVisibility(View.VISIBLE);
+                        labelSecondPdf.setText(tempClickedElements.get(1));
+                        break;
                 }
             }
-            //----- Get Object of clicked Element and create map to send  : End------
+
+        } else {
+            Log.e("hiiiiii", "giiiiii");
+            mGetEncryptedPDFRequestModelList.clear();
+            mGetEncryptedPDFRequestModelList.add(getEncryptedPDFRequestModel);
+
+            mPreviousClickedTreeElement.clear();
+            mPreviousClickedTreeElement.put(clickedLstDocTypeElement.getRecordDetailId(), clickedLstDocTypeElement.getTypeName().trim());
+            labelFirstPdf.setText(clickedLstDocTypeElement.getTypeName());
+            recordIdFirstPdf = clickedLstDocTypeElement.getRecordDetailId();
+            mFirstFileTypeProgressDialogLayout.setVisibility(View.VISIBLE);
+            //--------
+            mSecondFileTypePdfViewLayout.setVisibility(View.GONE);
+            mSecondFileTypeProgressDialogLayout.setVisibility(View.GONE);
+
+            //--------
+            mPatientsHelper.getPdfData(mGetEncryptedPDFRequestModelList.get(0), DMSConstants.TASK_GET_PDF_DATA + "_0");
         }
+
+        //----- Get Object of clicked Element and create map to send  : End------
     }
 
 
