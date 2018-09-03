@@ -83,5 +83,6 @@
     <color name="login_button">#36657A</color>
     <color name="green">#bbd86b</color>
     <color name="green_border">#7cbd20</color>
+    <color name="current_status">#183670</color>
 
 </resources>

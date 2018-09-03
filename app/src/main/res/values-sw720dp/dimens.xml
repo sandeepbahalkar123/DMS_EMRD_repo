@@ -55,6 +55,8 @@
     <dimen name="sp22">22sp</dimen>
     <dimen name="sp20">30sp</dimen>
     <dimen name="sp10">15sp</dimen>
+    <dimen name="sp9">13sp</dimen>
+    <dimen name="sp8">11sp</dimen>
     <dimen name="sp24">36sp</dimen>
     <dimen name="sp13">19sp</dimen>
     <dimen name="sp19">28sp</dimen>

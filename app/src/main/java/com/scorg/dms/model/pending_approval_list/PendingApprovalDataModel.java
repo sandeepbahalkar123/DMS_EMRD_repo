@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class PendingApprovalDataModel {
 
-    @SerializedName("data")
+    @SerializedName("lstpendingreuest")
     @Expose
     private List<RequestedArchivedDetailList> requestedArchivedDetailList = null;
 

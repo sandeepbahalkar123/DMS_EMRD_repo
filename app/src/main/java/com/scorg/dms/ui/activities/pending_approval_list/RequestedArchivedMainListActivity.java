@@ -20,7 +20,7 @@ import com.scorg.dms.interfaces.HelperResponse;
 import com.scorg.dms.model.pending_approval_list.RequestedArchivedBaseModel;
 import com.scorg.dms.model.pending_approval_list.PendingApprovalDataModel;
 import com.scorg.dms.ui.customesViews.CustomTextView;
-import com.scorg.dms.ui.fragments.approval_list.ApprovalListFragment;
+import com.scorg.dms.ui.fragments.approval_list.AllRequestListFragment;
 import com.scorg.dms.ui.fragments.approval_list.PendingListFragment;
 
 import java.util.ArrayList;
@@ -57,7 +57,7 @@ public class RequestedArchivedMainListActivity extends AppCompatActivity impleme
     @BindView(R.id.leftFab)
     FloatingActionButton leftFab;
     private PendingListFragment mPendingListFragment;
-    private ApprovalListFragment mApprovalListFragment;
+    private AllRequestListFragment mAllRequestListFragment;
     private PendingApprovalHelper mPendingApprovalHelper;
     private PendingApprovalDataModel pendingApprovalDataModel;
 
@@ -67,8 +67,8 @@ public class RequestedArchivedMainListActivity extends AppCompatActivity impleme
         super.onCreate(savedInstanceState);
         setContentView(R.layout.waiting_base_layout);
         ButterKnife.bind(this);
-        mFragmentTitleList[0] = getString(R.string.pending);
-        mFragmentTitleList[1] = getString(R.string.submitted);
+        mFragmentTitleList[0] = getString(R.string.pending_request);
+        mFragmentTitleList[1] = getString(R.string.all_request);
       //  mPendingApprovalHelper= new PendingApprovalHelper(this,this);
        // mPendingApprovalHelper.doGetPendingApprovalData(1,true);
 
@@ -78,12 +78,12 @@ public class RequestedArchivedMainListActivity extends AppCompatActivity impleme
     }
 
     private void setupViewPager(ViewPager viewPager) {
-        titleTextView.setText(getString(R.string.approval_list));
+        titleTextView.setText(getString(R.string.request_list));
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         mPendingListFragment = PendingListFragment.newInstance(new Bundle());
-        mApprovalListFragment = ApprovalListFragment.newInstance(new Bundle());
-        adapter.addFragment(mPendingListFragment, getString(R.string.pending));
-        adapter.addFragment(mApprovalListFragment, getString(R.string.submitted));
+        mAllRequestListFragment = AllRequestListFragment.newInstance(new Bundle());
+        adapter.addFragment(mPendingListFragment, getString(R.string.pending_request));
+        adapter.addFragment(mAllRequestListFragment, getString(R.string.all_request));
         viewPager.setAdapter(adapter);
     }
 

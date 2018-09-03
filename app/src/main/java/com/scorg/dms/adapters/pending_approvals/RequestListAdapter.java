@@ -22,7 +22,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -47,8 +46,8 @@ import java.util.ArrayList;
  * <p>
  * MESSAGE ==> Explicitly disable long press,swipe and click listener. And do needful to make this work.
  */
-public class PendingApprovalListAdapter
-        extends RecyclerView.Adapter<PendingApprovalListAdapter.MyViewHolder> {
+public class RequestListAdapter
+        extends RecyclerView.Adapter<RequestListAdapter.MyViewHolder> {
     private static final String TAG = "MyDSItemAdapter";
     private OnItemClickListener onItemClickListener;
     private Context mContext;
@@ -56,7 +55,7 @@ public class PendingApprovalListAdapter
     private boolean isPending;
 
 
-    public PendingApprovalListAdapter(Context context, ArrayList<RequestedArchivedDetailList> requestedArchivedDetailLists, OnItemClickListener onItemClickListener,boolean isPending) {
+    public RequestListAdapter(Context context, ArrayList<RequestedArchivedDetailList> requestedArchivedDetailLists, OnItemClickListener onItemClickListener, boolean isPending) {
         this.mContext = context;
         this.mRequestedArchivedDetailLists = requestedArchivedDetailLists;
         this.onItemClickListener = onItemClickListener;
@@ -77,16 +76,17 @@ public class PendingApprovalListAdapter
         ImageView mPatientImageView;
         TextView mPatientNameTextView;
         LinearLayout mPatientDetailsLinearLayout;
-        TextView mStatusTextView;
-        TextView mTypeStatus;
+        TextView textRequestId;
+        TextView textCurrentStatus;
         LinearLayout mAppointmentDetailsLinearLayout;
         LinearLayout btn_cancel_request;
         TextView mAppointmentLabelTextView;
         TextView mAppointmentTimeTextView;
-        TextView mPatientPhoneNumber;
+        TextView textRequester;
         View mSeparatorView;
-        TextView mTokenLabelTextView;
-        TextView mTokenNumber;
+        TextView textProcessBy;
+        TextView textMyElapsedTime;
+        TextView textCurrentStage;
 
 
         MyViewHolder(View v) {
@@ -102,15 +102,16 @@ public class PendingApprovalListAdapter
             mPatientImageView = v.findViewById(R.id.patientImageView);
             mPatientNameTextView = v.findViewById(R.id.patientNameTextView);
             mPatientDetailsLinearLayout = v.findViewById(R.id.patientDetailsLinearLayout);
-            mStatusTextView = v.findViewById(R.id.statusTextView);
-            mTypeStatus = v.findViewById(R.id.typeStatus);
+            textRequestId = v.findViewById(R.id.textRequestId);
+            textCurrentStatus = v.findViewById(R.id.textCurrentStatus);
             mAppointmentDetailsLinearLayout = v.findViewById(R.id.appointmentDetailsLinearLayout);
             mAppointmentLabelTextView = v.findViewById(R.id.appointmentLabelTextView);
             mAppointmentTimeTextView = v.findViewById(R.id.appointmentTimeTextView);
-            mPatientPhoneNumber = v.findViewById(R.id.patientPhoneNumber);
+            textRequester = v.findViewById(R.id.textRequester);
             mSeparatorView = v.findViewById(R.id.separatorView);
-            mTokenLabelTextView = v.findViewById(R.id.tokenLabelTextView);
-            mTokenNumber = v.findViewById(R.id.tokenNumber);
+            textProcessBy = v.findViewById(R.id.textProcessBy);
+            textMyElapsedTime = v.findViewById(R.id.textMyElapsedTime);
+            textCurrentStage = v.findViewById(R.id.textCurrentStage);
             btn_cancel_request = v.findViewById(R.id.btn_cancel_request);
         }
 
@@ -128,7 +129,7 @@ public class PendingApprovalListAdapter
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        final View v = inflater.inflate(R.layout.item_list_requested_archive_pending, parent, false);
+        final View v = inflater.inflate(R.layout.list_item_requested_archive, parent, false);
         return new MyViewHolder(v);
     }
 
@@ -142,29 +143,19 @@ public class PendingApprovalListAdapter
         holder.mPatientIdTextView.setText(holder.mPatientIdTextView.getResources().getString(R.string.uhid) + " " + dataToShowInPatientID);
         //-------------
         String name = CommonMethods.toCamelCase(item.getPatientName());
-//        if (item.() != null) {
-//            name = item.getSalutation() + " " + name;
-//        }
+        if (item.getSalutation() != null) {
+            name = item.getSalutation() + " " + name;
+        }
         holder.mPatientNameTextView.setText(name);
 
 
-        holder.mTokenNumber.setVisibility(View.GONE);
+        holder.textMyElapsedTime.setText(item.getMyElapsedTime());
         //-------------
-        holder.mTypeStatus.setText(" " + CommonMethods.toCamelCase(item.getCurrentStatus()));
-        //-------------
-        TextDrawable textDrawable = CommonMethods.getTextDrawable(holder.mPatientImageView.getContext(), item.getPatientName());
-        RequestOptions requestOptions = new RequestOptions();
-        requestOptions.dontAnimate();
-        requestOptions.override(holder.mPatientImageView.getResources().getDimensionPixelSize(R.dimen.dp67));
-        requestOptions.circleCrop();
-        requestOptions.placeholder(textDrawable);
-        requestOptions.error(textDrawable);
-
-        Glide.with(holder.mPatientImageView.getContext())
-                .load(item.getPatientName())
-                .apply(requestOptions)
-                .into(holder.mPatientImageView);
-        //-------------
+        holder.textCurrentStatus.setText(" " + CommonMethods.toCamelCase(item.getCurrentStatus()));
+        holder.textProcessBy.setText(item.getStageChangeBy());
+        holder.textRequester.setText(item.getRequesterName());
+        holder.textRequestId.setText(""+item.getRequestID());
+        holder.textCurrentStage.setText(item.getCurrentStage());
 
         if(isPending)
             holder.btn_cancel_request.setVisibility(View.VISIBLE);

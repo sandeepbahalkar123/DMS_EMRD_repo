@@ -16,7 +16,7 @@ public class RequestedArchivedBaseModel implements CustomResponse {
 
     @SerializedName("data")
     @Expose
-    private List<RequestedArchivedDetailList> requestedArchivedDetailList;
+    private PendingApprovalDataModel pendingApprovalDataModel;
 
 
     public RequestedArchivedBaseModel() {
@@ -30,11 +30,11 @@ public class RequestedArchivedBaseModel implements CustomResponse {
         this.common = common;
     }
 
-    public List<RequestedArchivedDetailList> getRequestedArchivedDetailList() {
-        return requestedArchivedDetailList;
+    public PendingApprovalDataModel getPendingApprovalDataModel() {
+        return pendingApprovalDataModel;
     }
 
-    public void setRequestedArchivedDetailList(List<RequestedArchivedDetailList> requestedArchivedDetailList) {
-        this.requestedArchivedDetailList = requestedArchivedDetailList;
+    public void setPendingApprovalDataModel(PendingApprovalDataModel pendingApprovalDataModel) {
+        this.pendingApprovalDataModel = pendingApprovalDataModel;
     }
 }

@@ -11,13 +11,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 
 import com.scorg.dms.R;
-import com.scorg.dms.adapters.pending_approvals.PendingApprovalListAdapter;
+import com.scorg.dms.adapters.pending_approvals.RequestListAdapter;
 import com.scorg.dms.helpers.pending_approval.PendingApprovalHelper;
 import com.scorg.dms.interfaces.CustomResponse;
 import com.scorg.dms.interfaces.HelperResponse;
@@ -49,7 +48,7 @@ import static com.scorg.dms.util.DMSConstants.PATIENT_DETAILS;
  * Created by jeetal on 22/2/18.
  */
 @RuntimePermissions
-public class PendingListFragment extends Fragment implements PendingApprovalListAdapter.OnItemClickListener, HelperResponse {
+public class PendingListFragment extends Fragment implements RequestListAdapter.OnItemClickListener, HelperResponse {
 
     @BindView(R.id.clinicListSpinner)
     Spinner clinicListSpinner;
@@ -72,7 +71,7 @@ public class PendingListFragment extends Fragment implements PendingApprovalList
 
     private ArrayList<RequestedArchivedDetailList> requestedArchivedDetailList;
     private RequestedArchivedMainListActivity mParentActivity;
-    private PendingApprovalListAdapter mPendingListAdapter;
+    private RequestListAdapter mPendingListAdapter;
     private long mClickedPhoneNumber;
     private PendingApprovalHelper mPendingApprovalHelper;
     public PendingListFragment() {
@@ -145,7 +144,7 @@ public class PendingListFragment extends Fragment implements PendingApprovalList
         } else {
             mRecyclerView.setVisibility(View.VISIBLE);
             noRecords.setVisibility(View.GONE);
-            mPendingListAdapter = new PendingApprovalListAdapter(this.getContext(),requestedArchivedDetailList , this,true);
+            mPendingListAdapter = new RequestListAdapter(this.getContext(),requestedArchivedDetailList , this,true);
             LinearLayoutManager linearlayoutManager = new LinearLayoutManager(this.getContext(), LinearLayoutManager.VERTICAL, false);
             mRecyclerView.setLayoutManager(linearlayoutManager);
             mRecyclerView.setAdapter(mPendingListAdapter);
@@ -236,7 +235,7 @@ public class PendingListFragment extends Fragment implements PendingApprovalList
             case DMSConstants.TASK_PENDING_APPROVAL_LIST:{
                 if (customResponse != null) {
                     RequestedArchivedBaseModel requestedArchivedBaseModel = (RequestedArchivedBaseModel)customResponse;
-                    requestedArchivedDetailList= (ArrayList<RequestedArchivedDetailList>) requestedArchivedBaseModel.getRequestedArchivedDetailList();
+                    requestedArchivedDetailList= (ArrayList<RequestedArchivedDetailList>) requestedArchivedBaseModel.getPendingApprovalDataModel().getRequestedArchivedDetailList();
                     setAdapter();
                 }
 

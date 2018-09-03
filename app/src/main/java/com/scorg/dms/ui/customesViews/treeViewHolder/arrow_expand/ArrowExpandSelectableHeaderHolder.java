@@ -16,6 +16,7 @@ import com.github.johnkil.print.PrintView;
 import com.scorg.dms.R;
 import com.scorg.dms.model.dms_models.responsemodel.annotationlistresponsemodel.AnnotationList;
 import com.scorg.dms.model.dms_models.responsemodel.annotationlistresponsemodel.DocTypeList;
+import com.scorg.dms.util.CommonMethods;
 import com.unnamed.b.atv.model.TreeNode;
 
 /**
@@ -78,6 +79,21 @@ public class ArrowExpandSelectableHeaderHolder extends TreeNode.BaseNodeViewHold
         if (node.isLeaf()) {
             arrowView.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_tree_file));
         }
+
+
+        icon_lock.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(confidentialState==2 || confidentialState ==3){
+
+                    CommonMethods.showDialog("click icon unlock confi","123",context);
+                }
+
+
+
+            }
+        });
+
         arrowView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

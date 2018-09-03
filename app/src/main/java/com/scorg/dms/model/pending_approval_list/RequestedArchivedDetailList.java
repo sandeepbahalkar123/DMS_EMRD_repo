@@ -71,7 +71,7 @@ public class RequestedArchivedDetailList {
     private Object stageChangeGroup;
     @SerializedName("StageChangeBy")
     @Expose
-    private Object stageChangeBy;
+    private String stageChangeBy;
     @SerializedName("StageChangeDate")
     @Expose
     private String stageChangeDate;
@@ -83,7 +83,7 @@ public class RequestedArchivedDetailList {
     private String lastUpdated;
     @SerializedName("MyElapsedTime")
     @Expose
-    private Object myElapsedTime;
+    private String myElapsedTime;
     @SerializedName("ApproveStatus")
     @Expose
     private Object approveStatus;
@@ -92,7 +92,7 @@ public class RequestedArchivedDetailList {
     private String fileRefID;
     @SerializedName("RequesterName")
     @Expose
-    private Object requesterName;
+    private String requesterName;
     @SerializedName("isfilelvl")
     @Expose
     private Boolean isfilelvl;
@@ -102,6 +102,10 @@ public class RequestedArchivedDetailList {
     @SerializedName("DoctypeName")
     @Expose
     private String doctypeName;
+
+    @SerializedName("salutation")
+    @Expose
+    private String salutation;
 
     public Integer getProcessID() {
         return processID;
@@ -271,11 +275,11 @@ public class RequestedArchivedDetailList {
         this.stageChangeGroup = stageChangeGroup;
     }
 
-    public Object getStageChangeBy() {
+    public String getStageChangeBy() {
         return stageChangeBy;
     }
 
-    public void setStageChangeBy(Object stageChangeBy) {
+    public void setStageChangeBy(String stageChangeBy) {
         this.stageChangeBy = stageChangeBy;
     }
 
@@ -303,13 +307,7 @@ public class RequestedArchivedDetailList {
         this.lastUpdated = lastUpdated;
     }
 
-    public Object getMyElapsedTime() {
-        return myElapsedTime;
-    }
 
-    public void setMyElapsedTime(Object myElapsedTime) {
-        this.myElapsedTime = myElapsedTime;
-    }
 
     public Object getApproveStatus() {
         return approveStatus;
@@ -327,11 +325,11 @@ public class RequestedArchivedDetailList {
         this.fileRefID = fileRefID;
     }
 
-    public Object getRequesterName() {
+    public String getRequesterName() {
         return requesterName;
     }
 
-    public void setRequesterName(Object requesterName) {
+    public void setRequesterName(String requesterName) {
         this.requesterName = requesterName;
     }
 
@@ -359,4 +357,19 @@ public class RequestedArchivedDetailList {
         this.doctypeName = doctypeName;
     }
 
+    public String getMyElapsedTime() {
+        return myElapsedTime;
+    }
+
+    public void setMyElapsedTime(String myElapsedTime) {
+        this.myElapsedTime = myElapsedTime;
+    }
+
+    public String getSalutation() {
+        return salutation;
+    }
+
+    public void setSalutation(String salutation) {
+        this.salutation = salutation;
+    }
 }

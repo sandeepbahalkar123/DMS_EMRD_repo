@@ -346,9 +346,11 @@ public class HomePageActivity extends AppCompatActivity implements HelperRespons
                 startActivity(pendingApprovalList);
                 break;
             case R.id.layoutTotalPatients:
-                Intent patientList = new Intent(this, PatientList.class);
-                patientList.putExtra(DMSConstants.PATIENT_LIST_PARAMS.FILE_TYPE, mDashboardDataModel.getFileTypes());
-                startActivity(patientList);
+                if (mDashboardDataModel != null) {
+                    Intent patientList = new Intent(this, PatientList.class);
+                    patientList.putExtra(DMSConstants.PATIENT_LIST_PARAMS.FILE_TYPE, mDashboardDataModel.getFileTypes());
+                    startActivity(patientList);
+                }
                 break;
             case R.id.layoutDrawerSetting:
                 Intent intentDrawerSetting = new Intent(this, SettingsActivity.class);

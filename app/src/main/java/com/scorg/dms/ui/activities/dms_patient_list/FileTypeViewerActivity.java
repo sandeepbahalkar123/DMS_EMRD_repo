@@ -969,7 +969,7 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
 
                         //---- To bold clicked text in tree
                         // if (lstDocTypeChild.getTypeName().equalsIgnoreCase(mPreviousClickedTreeElement.get(i)))
-                        if (lstDateFileTypeLastChild.getTypeName().equalsIgnoreCase(mPreviousClickedTreeElement.get(lstDateFileTypeLastChild.getTypeName())))
+                        if (lstDateFileTypeLastChild.getTypeName().equalsIgnoreCase(mPreviousClickedTreeElement.get(lstDateFileTypeLastChild.getRecordDetailId())))
                             lstDateFileTypeLastChildSelectableHeaderHolder.setTreeLabelBold(true);
 
                         TreeNode lstDateFileTypeLastChildSelectableHeaderFolder = new TreeNode(new ArrowExpandIconTreeItemHolder.IconTreeItem(R.string.ic_shopping_cart, dataToShow, lstDateFileTypeLastChild, i))
