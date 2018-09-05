@@ -30,6 +30,10 @@ public class PatientEpisodeFileData implements Serializable {
     @Expose
     private String doctorName;
 
+    @SerializedName("PatId")
+    @Expose
+    private String patId;
+
     //-- THIS IS ADDED TO MAINTAIN RESPECTIVE PARENT PATIENT ID
     private String respectiveParentPatientID;
 
@@ -89,5 +93,13 @@ public class PatientEpisodeFileData implements Serializable {
 
     public void setDoctorName(String doctorName) {
         this.doctorName = doctorName;
+    }
+
+    public String getPatId() {
+        return patId;
+    }
+
+    public void setPatId(String patId) {
+        this.patId = patId;
     }
 }

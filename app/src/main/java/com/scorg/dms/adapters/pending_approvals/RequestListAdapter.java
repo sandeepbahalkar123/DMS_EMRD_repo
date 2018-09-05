@@ -19,6 +19,7 @@ package com.scorg.dms.adapters.pending_approvals;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,7 +60,7 @@ public class RequestListAdapter
         this.mContext = context;
         this.mRequestedArchivedDetailLists = requestedArchivedDetailLists;
         this.onItemClickListener = onItemClickListener;
-        this.isPending=isPending;
+        this.isPending = isPending;
     }
 
     public static class MyViewHolder extends AbstractDraggableSwipeableItemViewHolder {
@@ -140,7 +141,7 @@ public class RequestListAdapter
 
         //-------------
         String dataToShowInPatientID = String.valueOf(item.getPatientID());
-        holder.mPatientIdTextView.setText(holder.mPatientIdTextView.getResources().getString(R.string.uhid) + " " + dataToShowInPatientID);
+        holder.mPatientIdTextView.setText(holder.mPatientIdTextView.getResources().getString(R.string.uhid) + "-" + dataToShowInPatientID);
         //-------------
         String name = CommonMethods.toCamelCase(item.getPatientName());
         if (item.getSalutation() != null) {
@@ -152,18 +153,27 @@ public class RequestListAdapter
         holder.textMyElapsedTime.setText(item.getMyElapsedTime());
         //-------------
         holder.textCurrentStatus.setText(" " + CommonMethods.toCamelCase(item.getCurrentStatus()));
-        holder.textProcessBy.setText(item.getStageChangeBy());
-        holder.textRequester.setText(item.getRequesterName());
-        holder.textRequestId.setText(""+item.getRequestID());
+       Log.e("getStageChangeBy",""+item.getStageChangeBy());
+        if (item.getStageChangeBy() != null && !item.getStageChangeBy().isEmpty()) {
+            holder.textProcessBy.setText(item.getStageChangeBy());
+        } else {
+            holder.textProcessBy.setVisibility(View.GONE);
+        }
+        if (item.getRequestInitiatorName() == null) {
+            holder.textRequestId.setVisibility(View.GONE);
+        } else {
+            holder.textRequester.setText(item.getRequestInitiatorName());
+        }
+        holder.textRequestId.setText("" + item.getRequestID());
         holder.textCurrentStage.setText(item.getCurrentStage());
 
-        if(isPending)
+        if (isPending)
             holder.btn_cancel_request.setVisibility(View.VISIBLE);
 
         holder.btn_cancel_request.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SearchResult searchResult =new SearchResult();
+                SearchResult searchResult = new SearchResult();
                 onItemClickListener.onClickedOfEpisodeListButton(searchResult);
             }
         });
@@ -180,6 +190,7 @@ public class RequestListAdapter
         public void onItemClick(WaitingPatientData clickItem);
 
         public void onPhoneNoClick(long phoneNumber);
+
         void onClickedOfEpisodeListButton(SearchResult groupHeader);
     }
 }

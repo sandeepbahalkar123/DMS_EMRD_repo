@@ -17,15 +17,6 @@
         android:paddingLeft="@dimen/dp10"
         android:paddingStart="@dimen/dp10">
 
-        <com.github.johnkil.print.PrintView
-            android:id="@+id/arrow_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            app:iconColor="@color/black"
-            app:iconFont="fonts/material-icon-font.ttf"
-            app:iconSize="@dimen/dp22"
-            app:iconText="@string/ic_folder" />
 
         <CheckBox
             android:id="@+id/node_selector"
@@ -44,23 +35,8 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="5dp"
-            android:layout_toRightOf="@id/arrow_icon"
+            android:layout_toRightOf="@id/node_selector"
             android:src="@drawable/ic_tree_close_folder" />
-
-
-        <!--<com.github.johnkil.print.PrintView-->
-        <!--android:id="@+id/icon"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_alignWithParentIfMissing="true"-->
-        <!--android:layout_centerHorizontal="true"-->
-        <!--android:layout_centerVertical="true"-->
-        <!--android:layout_marginLeft="5dp"-->
-        <!--android:layout_toRightOf="@id/arrow_icon"-->
-        <!--app:iconColor="#12558C"-->
-        <!--app:iconFont="fonts/material-icon-font.ttf"-->
-        <!--app:iconSize="24dp"-->
-        <!--app:iconText="@string/ic_keyboard_arrow_right" />-->
 
         <TextView
             android:id="@+id/node_value"
@@ -72,14 +48,17 @@
             android:layout_weight="1"
             android:textColor="@color/black"
             android:textSize="@dimen/sp14"
-            tools:text="asdasd" />
+            android:fontFamily="@string/roboto_medium"
+            tools:text="Discharge Summary (Hand written format)" />
 
         <ImageView
             android:id="@+id/icon_lock"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="gone"
-            android:src="@drawable/ic_lock" />
+            android:src="@drawable/ic_lock"
+            android:layout_marginRight="@dimen/dp5"
+            android:layout_marginEnd="@dimen/dp5"/>
 
     </LinearLayout>
 </RelativeLayout>

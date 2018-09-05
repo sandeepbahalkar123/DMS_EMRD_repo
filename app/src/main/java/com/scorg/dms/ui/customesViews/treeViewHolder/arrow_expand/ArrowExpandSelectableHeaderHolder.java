@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.github.johnkil.print.PrintView;
 import com.scorg.dms.R;
+import com.scorg.dms.adapters.dms_adapters.PatientEpisodeRecycleViewListAdapter;
 import com.scorg.dms.model.dms_models.responsemodel.annotationlistresponsemodel.AnnotationList;
 import com.scorg.dms.model.dms_models.responsemodel.annotationlistresponsemodel.DocTypeList;
 import com.scorg.dms.util.CommonMethods;
@@ -34,6 +35,7 @@ public class ArrowExpandSelectableHeaderHolder extends TreeNode.BaseNodeViewHold
     private CheckBox nodeSelector;
     private LinearLayout mainContentLayout;
     private int confidentialState;
+    private ArrowExpandSelectableHeaderHolderLockIconClickListener lockIconClickListener;
 
 
     public ArrowExpandSelectableHeaderHolder(Context context, boolean isDefaultExpanded, boolean istViewClickRequired, int confidentialState) {
@@ -48,6 +50,10 @@ public class ArrowExpandSelectableHeaderHolder extends TreeNode.BaseNodeViewHold
         this.istViewClickRequired = istViewClickRequired;
         this.confidentialState = confidentialState;
         nodeValueColor = ContextCompat.getColor(context, R.color.black);
+
+        if (context instanceof ArrowExpandSelectableHeaderHolderLockIconClickListener) {
+            lockIconClickListener = (ArrowExpandSelectableHeaderHolderLockIconClickListener) context;
+        }
     }
 
     @Override
@@ -84,13 +90,9 @@ public class ArrowExpandSelectableHeaderHolder extends TreeNode.BaseNodeViewHold
         icon_lock.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(confidentialState==2 || confidentialState ==3){
-
-                    CommonMethods.showDialog("click icon unlock confi","123",context);
+                if (confidentialState == 2 || confidentialState == 3) {
+                    lockIconClickListener.onLockIconClick(node.getValue(), true);
                 }
-
-
-
             }
         });
 
@@ -171,14 +173,12 @@ public class ArrowExpandSelectableHeaderHolder extends TreeNode.BaseNodeViewHold
                     getSelected());
         }
 
-        if(confidentialState==2||confidentialState==3 || confidentialState==4){
+        if (confidentialState == 2 || confidentialState == 3 || confidentialState == 4) {
             icon_lock.setVisibility(View.VISIBLE);
-            if(confidentialState==4){
+            if (confidentialState == 4) {
                 icon_lock.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_unlock));
             }
         }
-
-
 
 
         return view;
@@ -222,6 +222,11 @@ public class ArrowExpandSelectableHeaderHolder extends TreeNode.BaseNodeViewHold
 
     public void setTreeLabelBold(boolean treeLabelBold) {
         isTreeLabelBold = treeLabelBold;
+    }
+
+
+    public interface ArrowExpandSelectableHeaderHolderLockIconClickListener {
+        void onLockIconClick(Object value, boolean isLeaf);
     }
 
 }

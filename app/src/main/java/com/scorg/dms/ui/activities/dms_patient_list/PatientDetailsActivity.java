@@ -201,6 +201,7 @@ public class PatientDetailsActivity extends AppCompatActivity implements HelperR
         extra.putString(DMSConstants.PATIENT_ADDRESS, mReceivedPatientData.getPatientAddress());
         extra.putString(DMSConstants.DOCTOR_NAME, groupHeader.getDoctorName());
         extra.putString(DMSConstants.PATIENT_ID, mReceivedPatientData.getPatientId());
+        extra.putString(DMSConstants.PAT_ID, groupHeader.getPatId());
         extra.putString(DMSConstants.PATIENT_LIST_PARAMS.PATIENT_NAME, "" + mReceivedPatientData.getPatientName());
         extra.putString(DMSConstants.RECORD_ID, String.valueOf(groupHeader.getRecordId()));
         intent.putExtra(DMSConstants.DATA, extra);

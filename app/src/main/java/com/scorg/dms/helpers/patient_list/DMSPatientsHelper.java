@@ -9,6 +9,7 @@ import com.scorg.dms.interfaces.ConnectionListener;
 import com.scorg.dms.interfaces.CustomResponse;
 import com.scorg.dms.interfaces.HelperResponse;
 import com.scorg.dms.model.dms_models.requestmodel.archive.GetArchiveRequestModel;
+import com.scorg.dms.model.dms_models.requestmodel.archive.RaiseUnlockRequestModel;
 import com.scorg.dms.model.dms_models.requestmodel.filetreerequestmodel.FileTreeRequestModel;
 import com.scorg.dms.model.dms_models.requestmodel.getpdfdatarequestmodel.GetPdfDataRequestModel;
 import com.scorg.dms.model.dms_models.requestmodel.showfile_data.GetEncryptedPDFRequestModel;
@@ -62,6 +63,17 @@ public class DMSPatientsHelper implements ConnectionListener {
         mConnectionFactory.createConnection(DMSConstants.TASK_GET_ARCHIVED_LIST);
     }
 
+
+    public void raiseUnlockRequestArchivedFile(RaiseUnlockRequestModel unlockRequestModel) {
+
+        ConnectionFactory mConnectionFactory = new ConnectionFactory(mContext, this, null, true, DMSConstants.TASK_RAISE_REQUEST_CONFIDENTIAL, Request.Method.POST, false);
+        mConnectionFactory.setHeaderParams();
+        mConnectionFactory.setPostParams(unlockRequestModel);
+        mConnectionFactory.setUrl(Config.URL_RAISE_REQUEST_CONFIDENTIAL);
+        mConnectionFactory.createConnection(DMSConstants.TASK_RAISE_REQUEST_CONFIDENTIAL);
+    }
+
+
     public void getPdfData(GetEncryptedPDFRequestModel getEncryptedPDFRequestModel, String taskID) {
 
         //---------------
@@ -81,26 +93,7 @@ public class DMSPatientsHelper implements ConnectionListener {
             case ConnectionListener.RESPONSE_OK:
 
                 if (String.valueOf(mOldDataTag).equalsIgnoreCase("" + DMSConstants.TASK_GET_ARCHIVED_LIST)) {
-                    //-- THIS IS DONE FOR MERGING OF TREE.
-                   /* FileTreeResponseModel fileTreeResponseModel = (FileTreeResponseModel) customResponse;
-                    FileTreeResponseData fileTreeResponseData = fileTreeResponseModel.getFileTreeResponseData();
 
-                    String tempList[] = {"0", "1"};
-
-                    for (int k = 0; k < fileTreeResponseData.getArchiveData().size(); k++) {
-                        ArchiveDatum dataTemp = fileTreeResponseData.getArchiveData().get(k);
-                        dataTemp.setMergedFileCompareCustomID(new String[]{tempList[k]});
-                        List<LstDocCategory> lstDocCategories = dataTemp.getLstDocCategories();
-                        for (int i = 0; i < lstDocCategories.size(); i++) {
-                            LstDocCategory dataTempLstDocCategory = lstDocCategories.get(i);
-                            dataTempLstDocCategory.setMergedFileCompareCustomID(new String[]{tempList[k]});
-                            List<LstDocType> lstDocTypeList = dataTempLstDocCategory.getLstDocTypes();
-                            for (int j = 0; j < lstDocTypeList.size(); j++) {
-                                LstDocType lstDocType = lstDocTypeList.get(j);
-                                lstDocType.setMergedFileCompareCustomID(new String[]{tempList[k]});
-                            }
-                        }
-                    }*/
                     mHelperResponseManager.onSuccess(mOldDataTag, customResponse);
 
                 } else {

@@ -36,6 +36,10 @@ public class LstDateFileType {
     @Expose
     private Integer confidentialState;
 
+    @SerializedName("fileTypeRefId")
+    @Expose
+    private String fileTypeRefId;
+
     public Integer getTypeId() {
         return typeId;
     }
@@ -114,6 +118,16 @@ public class LstDateFileType {
                 ", permission='" + permission + '\'' +
                 ", recordDetailId=" + recordDetailId +
                 ", confidentialState=" + confidentialState +
+                ", fileTypeRefId='" + fileTypeRefId + '\'' +
                 '}';
     }
+
+    public String getFileTypeRefId() {
+        return fileTypeRefId;
+    }
+
+    public void setFileTypeRefId(String fileTypeRefId) {
+        this.fileTypeRefId = fileTypeRefId;
+    }
+
 }

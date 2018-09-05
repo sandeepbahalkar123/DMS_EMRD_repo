@@ -38,6 +38,11 @@ public class LstDocType {
     @Expose
     private Integer confidentialState;
 
+    @SerializedName("fileTypeRefId")
+    @Expose
+    private String fileTypeRefId;
+
+
 
     @SerializedName("lstdateFileType")
     @Expose
@@ -123,6 +128,14 @@ public class LstDocType {
         this.confidentialState = confidentialState;
     }
 
+    public String getFileTypeRefId() {
+        return fileTypeRefId;
+    }
+
+    public void setFileTypeRefId(String fileTypeRefId) {
+        this.fileTypeRefId = fileTypeRefId;
+    }
+
     @Override
     public String toString() {
         return "LstDocType{" +
@@ -135,6 +148,7 @@ public class LstDocType {
                 ", pageNumber=" + pageNumber +
                 ", recordDetailId=" + recordDetailId +
                 ", confidentialState=" + confidentialState +
+                ", fileTypeRefId='" + fileTypeRefId + '\'' +
                 ", lstDateFileTypeList=" + lstDateFileTypeList +
                 '}';
     }

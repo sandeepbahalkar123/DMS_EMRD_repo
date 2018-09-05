@@ -34,6 +34,7 @@ import com.scorg.dms.model.CommonBaseModelContainer;
 import com.scorg.dms.model.case_details.CaseDetailsModel;
 import com.scorg.dms.model.completed_opd.CompletedOpdBaseModel;
 import com.scorg.dms.model.dashboard.DashboardBaseModel;
+import com.scorg.dms.model.dms_models.requestmodel.archive.UnlockRequestResponseBaseMode;
 import com.scorg.dms.model.dms_models.responsemodel.annotationlistresponsemodel.AnnotationListResponseModel;
 import com.scorg.dms.model.dms_models.responsemodel.episode_list.EpisodeResponseModel;
 import com.scorg.dms.model.dms_models.responsemodel.filetreeresponsemodel.FileTreeResponseModel;
@@ -632,9 +633,14 @@ public class RequestManager extends ConnectRequest implements Connector, Request
                         this.mConnectionListener.onResponse(ConnectionListener.RESPONSE_OK, episodeResponseModel, mOldDataTag);
                         break;
 
-                    case DMSConstants.TASK_PENDING_APPROVAL_LIST: //This is for get episode list
+                    case DMSConstants.TASK_PENDING_APPROVAL_LIST: //This is for get pending approval list
                         RequestedArchivedBaseModel requestedArchivedBaseModel = gson.fromJson(data, RequestedArchivedBaseModel.class);
                         this.mConnectionListener.onResponse(ConnectionListener.RESPONSE_OK, requestedArchivedBaseModel, mOldDataTag);
+                        break;
+
+                    case DMSConstants.TASK_RAISE_REQUEST_CONFIDENTIAL: //This is for unlock confidential file /folder
+                        UnlockRequestResponseBaseMode unlockRequestResponseBaseMode = gson.fromJson(data, UnlockRequestResponseBaseMode.class);
+                        this.mConnectionListener.onResponse(ConnectionListener.RESPONSE_OK, unlockRequestResponseBaseMode, mOldDataTag);
                         break;
 
                     default:
