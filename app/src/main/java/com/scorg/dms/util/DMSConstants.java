@@ -130,6 +130,7 @@ public class DMSConstants {
     public static final String TASK_GET_EPISODE_LIST = DMSConstants.BLANK + 45;
     public static final String TASK_PENDING_APPROVAL_LIST = DMSConstants.BLANK + 46;
     public static final String TASK_RAISE_REQUEST_CONFIDENTIAL = DMSConstants.BLANK + 47;
+    public static final String TASK_CANCEL_REQUEST_CONFIDENTIAL = DMSConstants.BLANK + 48;
 
     //-----------
 

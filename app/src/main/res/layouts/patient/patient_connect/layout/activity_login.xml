@@ -40,6 +40,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/user_name"
+                    android:textColorHint="@color/SkyBlue"
                     android:focusedByDefault="true"
                     android:inputType="textCapWords"
                     android:textCursorDrawable="@drawable/cursor_color"
@@ -61,6 +62,7 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/password"
                     android:inputType="textPassword"
+                    android:textColorHint="@color/SkyBlue"
                     android:textCursorDrawable="@drawable/cursor_color"
                     android:textSize="@dimen/sp14" />
 

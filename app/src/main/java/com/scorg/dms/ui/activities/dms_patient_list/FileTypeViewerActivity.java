@@ -5,10 +5,8 @@ package com.scorg.dms.ui.activities.dms_patient_list;
 
 import android.Manifest;
 import android.animation.ValueAnimator;
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Canvas;
@@ -54,10 +52,9 @@ import com.scorg.dms.adapters.dms_adapters.CustomPreferenceSpinAdapter;
 import com.scorg.dms.helpers.patient_list.DMSPatientsHelper;
 import com.scorg.dms.interfaces.CustomResponse;
 import com.scorg.dms.interfaces.HelperResponse;
-import com.scorg.dms.model.Common;
 import com.scorg.dms.model.dms_models.requestmodel.archive.GetArchiveRequestModel;
 import com.scorg.dms.model.dms_models.requestmodel.archive.RaiseUnlockRequestModel;
-import com.scorg.dms.model.dms_models.requestmodel.archive.UnlockRequestResponseBaseMode;
+import com.scorg.dms.model.dms_models.requestmodel.archive.UnlockRequestResponseBaseModel;
 import com.scorg.dms.model.dms_models.requestmodel.showfile_data.GetEncryptedPDFRequestModel;
 import com.scorg.dms.model.dms_models.responsemodel.episode_list.PatientEpisodeFileData;
 import com.scorg.dms.model.dms_models.responsemodel.filetreeresponsemodel.ArchiveDatum;
@@ -68,10 +65,8 @@ import com.scorg.dms.model.dms_models.responsemodel.filetreeresponsemodel.LstDat
 import com.scorg.dms.model.dms_models.responsemodel.filetreeresponsemodel.LstDocCategory;
 import com.scorg.dms.model.dms_models.responsemodel.filetreeresponsemodel.LstDocType;
 import com.scorg.dms.model.dms_models.responsemodel.getpdfdataresponsemodel.GetPdfDataResponseModel;
+import com.scorg.dms.model.pending_approval_list.PendingRequestCancelModel;
 import com.scorg.dms.preference.DMSPreferencesManager;
-import com.scorg.dms.singleton.Device;
-import com.scorg.dms.ui.activities.ProfileActivity;
-import com.scorg.dms.ui.activities.SplashScreenActivity;
 import com.scorg.dms.ui.customesViews.treeViewHolder.arrow_expand.ArrowExpandIconTreeItemHolder;
 import com.scorg.dms.ui.customesViews.treeViewHolder.arrow_expand.ArrowExpandSelectableHeaderHolder;
 import com.scorg.dms.util.CommonMethods;
@@ -100,7 +95,7 @@ import static com.github.barteksc.pdfviewer.PDFView.DEFAULT_MIN_SCALE;
  */
 
 
-public class FileTypeViewerActivity extends AppCompatActivity implements HelperResponse, OnLoadCompleteListener, OnErrorListener, OnDrawListener, TreeNode.TreeNodeClickListener,ArrowExpandSelectableHeaderHolder.ArrowExpandSelectableHeaderHolderLockIconClickListener {
+public class FileTypeViewerActivity extends AppCompatActivity implements HelperResponse, OnLoadCompleteListener, OnErrorListener, OnDrawListener, TreeNode.TreeNodeClickListener, ArrowExpandSelectableHeaderHolder.ArrowExpandSelectableHeaderHolderLockIconClickListener {
 
     private static final long ANIMATION_DURATION = 500; // in milliseconds
 
@@ -594,12 +589,12 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
                 CommonMethods.Log("FIRSTVIEW", "mOldDataTag:" + mOldDataTag);
                 doCallPDFDataService(data.getGetPdfDataResponseData().getFileData(), String.valueOf(mOldDataTag));
             }
-        }else if(String.valueOf(mOldDataTag).contains(""+DMSConstants.TASK_RAISE_REQUEST_CONFIDENTIAL)){
+        } else if (String.valueOf(mOldDataTag).contains("" + DMSConstants.TASK_RAISE_REQUEST_CONFIDENTIAL)) {
 
-            UnlockRequestResponseBaseMode unlockRequestResponseBaseMode = (UnlockRequestResponseBaseMode) customResponse;
+            UnlockRequestResponseBaseModel unlockRequestResponseBaseMode = (UnlockRequestResponseBaseModel) customResponse;
 
-            String msg= unlockRequestResponseBaseMode.getRequestResponseResultUnlock().getResult();
-            CommonMethods.showToast(this,msg);
+            String msg = unlockRequestResponseBaseMode.getRequestResponseResultUnlock().getResult();
+            CommonMethods.showToast(this, msg);
 
             CommonMethods.Log("TASK_RAISE_REQUEST_CONFIDENTIAL", "mOldDataTag:" + mOldDataTag);
 
@@ -690,9 +685,9 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
         for (int i = 0; i < size; i++) {
             ArchiveDatum archiveDatumObject = archiveData.get(i);
 
-            confidentialState=archiveDatumObject.getConfidentialState();
+            confidentialState = archiveDatumObject.getConfidentialState();
 
-            ArrowExpandSelectableHeaderHolder selectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, true,confidentialState );
+            ArrowExpandSelectableHeaderHolder selectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, true, confidentialState);
             selectableHeaderHolder.setOnlyOneNodeExpanded(true);
             selectableHeaderHolder.setNodeValueColor(textColor);
 
@@ -718,9 +713,9 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
 
                 //-------NODE LstDateFolderType--------------
                 // Label(pageCount)|id
-                 confidentialState=lstDateFolderType.getConfidentialState();
+                confidentialState = lstDateFolderType.getConfidentialState();
                 dataToShow = lstDateFolderType.getDateFolderType() + " (" + lstDateFolderType.getPageCount() + ")" + "|NA";
-                ArrowExpandSelectableHeaderHolder lstDateFolderTypeSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstDocTypeChildLeftPadding, true,confidentialState);
+                ArrowExpandSelectableHeaderHolder lstDateFolderTypeSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstDocTypeChildLeftPadding, true, confidentialState);
                 lstDateFolderTypeSelectableHeaderHolder.setOnlyOneNodeExpanded(true);
 
                 lstDateFolderTypeSelectableHeaderHolder.setNodeValueColor(textColor);
@@ -743,10 +738,10 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
                     LstDocCategory lstDocCategoryObject = lstDocCategories.get(j);
 
                     // Label(pageCount)|id
-                    confidentialState=lstDocCategoryObject.getConfidentialState();
+                    confidentialState = lstDocCategoryObject.getConfidentialState();
 
                     dataToShow = lstDocCategoryObject.getCategoryName() + " (" + lstDocCategoryObject.getTotalDocTypePageCount() + ")" + "|" + lstDocCategoryObject.getCategoryId();
-                    ArrowExpandSelectableHeaderHolder docCatSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstDateFolderTypeChildLeftPadding, true,confidentialState);
+                    ArrowExpandSelectableHeaderHolder docCatSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstDateFolderTypeChildLeftPadding, true, confidentialState);
                     docCatSelectableHeaderHolder.setOnlyOneNodeExpanded(true);
 
                     docCatSelectableHeaderHolder.setNodeValueColor(textColor);
@@ -768,10 +763,10 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
                         // Label(pageCount)|id
                         dataToShow = lstDocTypeChild.getTypeName() + " (" + lstDocTypeChild.getPageCount() + ")" + "|" + lstDocTypeChild.getTypeId();
 
-                        confidentialState=lstDocTypeChild.getConfidentialState();
+                        confidentialState = lstDocTypeChild.getConfidentialState();
 
                         //-------
-                        ArrowExpandSelectableHeaderHolder lstDocTypeChildSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstDateFolderTypeChildLeftPadding, false,confidentialState);
+                        ArrowExpandSelectableHeaderHolder lstDocTypeChildSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstDateFolderTypeChildLeftPadding, false, confidentialState);
                         lstDocTypeChildSelectableHeaderHolder.setOnlyOneNodeExpanded(true);
                         lstDocTypeChildSelectableHeaderHolder.setNodeValueColor(textColor);
 
@@ -819,7 +814,7 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
         for (int i = 0; i < size; i++) {
             ArchiveDatum archiveDatumObject = archiveData.get(i);
 
-            ArrowExpandSelectableHeaderHolder selectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, true,0);
+            ArrowExpandSelectableHeaderHolder selectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, true, 0);
             selectableHeaderHolder.setOnlyOneNodeExpanded(true);
             selectableHeaderHolder.setNodeValueColor(textColor);
 
@@ -844,7 +839,7 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
                 //-------NODE LstDateFolderType--------------
                 // Label(pageCount)|id
                 dataToShow = lstDocCategory.getCategoryName() + " (" + lstDocCategory.getPageCount() + ")" + "|NA";
-                ArrowExpandSelectableHeaderHolder lstDateFolderTypeSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstDocTypeChildLeftPadding, true,0);
+                ArrowExpandSelectableHeaderHolder lstDateFolderTypeSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstDocTypeChildLeftPadding, true, 0);
                 lstDateFolderTypeSelectableHeaderHolder.setOnlyOneNodeExpanded(true);
 
                 lstDateFolderTypeSelectableHeaderHolder.setNodeValueColor(textColor);
@@ -869,7 +864,7 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
                     dataToShow = lstDocTypeChild.getTypeName() + " (" + lstDocTypeChild.getPageCount() + ")" + "|" + lstDocTypeChild.getTypeId();
 
                     //-------
-                    ArrowExpandSelectableHeaderHolder lstDocTypeChildSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstDateFolderTypeChildLeftPadding, false,0);
+                    ArrowExpandSelectableHeaderHolder lstDocTypeChildSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstDateFolderTypeChildLeftPadding, false, 0);
                     lstDocTypeChildSelectableHeaderHolder.setOnlyOneNodeExpanded(true);
                     lstDocTypeChildSelectableHeaderHolder.setNodeValueColor(textColor);
 
@@ -915,7 +910,7 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
         for (int i = 0; i < size; i++) {
             ArchiveDatum archiveDatumObject = archiveData.get(i);
 
-            ArrowExpandSelectableHeaderHolder selectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, true,0);
+            ArrowExpandSelectableHeaderHolder selectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, true, 0);
             selectableHeaderHolder.setOnlyOneNodeExpanded(true);
             selectableHeaderHolder.setNodeValueColor(textColor);
 
@@ -939,7 +934,7 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
 
                 // Label(pageCount)|id
                 dataToShow = lstDocCategoryObject.getCategoryName() + " (" + lstDocCategoryObject.getTotalDocTypePageCount() + ")" + "|" + lstDocCategoryObject.getCategoryId();
-                ArrowExpandSelectableHeaderHolder docCatSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstDocTypeChildLeftPadding, true,0);
+                ArrowExpandSelectableHeaderHolder docCatSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstDocTypeChildLeftPadding, true, 0);
                 docCatSelectableHeaderHolder.setOnlyOneNodeExpanded(true);
 
                 docCatSelectableHeaderHolder.setNodeValueColor(textColor);
@@ -962,7 +957,7 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
                     dataToShow = lstDocTypeChild.getTypeName() + " (" + lstDocTypeChild.getPageCount() + ")" + "|" + lstDocTypeChild.getTypeId();
 
                     //-------
-                    ArrowExpandSelectableHeaderHolder lstDocTypeChildSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstDateFolderTypeChildLeftPadding, true,0);
+                    ArrowExpandSelectableHeaderHolder lstDocTypeChildSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstDateFolderTypeChildLeftPadding, true, 0);
                     lstDocTypeChildSelectableHeaderHolder.setOnlyOneNodeExpanded(true);
                     lstDocTypeChildSelectableHeaderHolder.setNodeValueColor(textColor);
 
@@ -983,7 +978,7 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
                         dataToShow = lstDateFileTypeLastChild.getTypeName() + " (" + lstDateFileTypeLastChild.getPageCount() + ")" + "|" + lstDateFileTypeLastChild.getTypeId();
 
                         //-------
-                        ArrowExpandSelectableHeaderHolder lstDateFileTypeLastChildSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstDateFolderTypeChildLeftPadding, false,0);
+                        ArrowExpandSelectableHeaderHolder lstDateFileTypeLastChildSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstDateFolderTypeChildLeftPadding, false, 0);
                         lstDateFileTypeLastChildSelectableHeaderHolder.setOnlyOneNodeExpanded(true);
                         lstDateFileTypeLastChildSelectableHeaderHolder.setNodeValueColor(textColor);
 
@@ -1421,38 +1416,36 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
 
             if (value1.objectData instanceof LstDocType) {
                 LstDocType clickedLstDocTypeElement = (LstDocType) value1.objectData;
-                String val= clickedLstDocTypeElement.getFileTypeRefId()+"_"+clickedLstDocTypeElement.getTypeId()+"_"+clickedLstDocTypeElement.getRecordId();
+                String val = clickedLstDocTypeElement.getFileTypeRefId() + "_" + clickedLstDocTypeElement.getTypeId() + "_" + clickedLstDocTypeElement.getRecordId();
                 arrayCheckList.add(val);
                 jsonArrayCheckList.put(val);
-                String [] stringArray = arrayCheckList.toArray(new String[arrayCheckList.size()]);
+                String[] stringArray = arrayCheckList.toArray(new String[arrayCheckList.size()]);
                 unlockRequestModel.setRequestTypeId("3");
                 unlockRequestModel.setCheckList(stringArray);
                 showDialogRaiseRequest(unlockRequestModel);
             } else if (value1.objectData instanceof LstDateFileType) {
                 LstDateFileType clickedLstDocTypeElement = (LstDateFileType) value1.objectData;
-                String val= clickedLstDocTypeElement.getFileTypeRefId()+"_"+clickedLstDocTypeElement.getTypeId()+"_"+clickedLstDocTypeElement.getRecordId();
+                String val = clickedLstDocTypeElement.getFileTypeRefId() + "_" + clickedLstDocTypeElement.getTypeId() + "_" + clickedLstDocTypeElement.getRecordId();
                 arrayCheckList.add(val);
-                Log.e("CheckList","--"+arrayCheckList);
-                String [] stringArray = arrayCheckList.toArray(new String[arrayCheckList.size()]);
+                Log.e("CheckList", "--" + arrayCheckList);
+                String[] stringArray = arrayCheckList.toArray(new String[arrayCheckList.size()]);
                 unlockRequestModel.setRequestTypeId("3");
                 unlockRequestModel.setCheckList(stringArray);
                 showDialogRaiseRequest(unlockRequestModel);
-            }else if ( value1.objectData instanceof LstDocCategory){
+            } else if (value1.objectData instanceof LstDocCategory) {
                 LstDocCategory lstDocCategory = (LstDocCategory) value1.objectData;
                 for (int i = 0; i < lstDocCategory.getLstDocTypes().size(); i++) {
                     LstDocType data = lstDocCategory.getLstDocTypes().get(i);
                     //FileTypeRefId_typeID_RecordID
-                    String val= data.getFileTypeRefId()+"_"+data.getTypeId()+"_"+data.getRecordId();
+                    String val = data.getFileTypeRefId() + "_" + data.getTypeId() + "_" + data.getRecordId();
                     arrayCheckList.add(val);
                 }
-                Log.e("CheckList","--"+arrayCheckList);
-                String [] stringArray = arrayCheckList.toArray(new String[arrayCheckList.size()]);
+                Log.e("CheckList", "--" + arrayCheckList);
+                String[] stringArray = arrayCheckList.toArray(new String[arrayCheckList.size()]);
                 unlockRequestModel.setRequestTypeId("3");
                 unlockRequestModel.setCheckList(stringArray);
                 showDialogRaiseRequest(unlockRequestModel);
             }
-
-
 
 
         }
@@ -1460,36 +1453,29 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
     }
 
 
-
-
     private void showDialogRaiseRequest(final RaiseUnlockRequestModel unlockRequestModel) {
-
-
         final Dialog dialog = new Dialog(this);
-
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.change_ip_address_dialog);
+        dialog.setContentView(R.layout.dialog_alert);
         dialog.setCanceledOnTouchOutside(false);
         dialog.setCancelable(false);
-
-        ((TextView) dialog.findViewById(R.id.textview_ipaddress_label)).setText("Unlock Request");
-        ((TextView) dialog.findViewById(R.id.textview_change_ip_address)).setText("Do you want to unlock this file");
-        dialog.findViewById(R.id.button_yes).setOnClickListener(new View.OnClickListener() {
+        ((TextView) dialog.findViewById(R.id.textview_sucess)).setText(getResources().getString(R.string.do_you_want_to_unlock));
+        dialog.findViewById(R.id.button_ok).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                dialog.dismiss();
                 mPatientsHelper.raiseUnlockRequestArchivedFile(unlockRequestModel);
-                dialog.dismiss();
+
             }
         });
-        dialog.findViewById(R.id.button_no).setOnClickListener(new View.OnClickListener() {
+        dialog.findViewById(R.id.button_cancel).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
 
             }
         });
-
         dialog.show();
     }
 }

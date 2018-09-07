@@ -173,8 +173,7 @@ public class RequestListAdapter
         holder.btn_cancel_request.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SearchResult searchResult = new SearchResult();
-                onItemClickListener.onClickedOfEpisodeListButton(searchResult);
+                onItemClickListener.onClickedOfCancelRequestButton(item);
             }
         });
 
@@ -191,6 +190,6 @@ public class RequestListAdapter
 
         public void onPhoneNoClick(long phoneNumber);
 
-        void onClickedOfEpisodeListButton(SearchResult groupHeader);
+        void onClickedOfCancelRequestButton(RequestedArchivedDetailList archivedDetailList);
     }
 }

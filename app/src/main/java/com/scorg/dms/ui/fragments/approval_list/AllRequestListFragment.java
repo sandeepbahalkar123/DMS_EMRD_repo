@@ -181,12 +181,8 @@ public class AllRequestListFragment extends Fragment implements RequestListAdapt
     }
 
     @Override
-    public void onClickedOfEpisodeListButton(SearchResult groupHeader) {
-        Intent intent = new Intent(getActivity(), PatientDetailsActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putSerializable(PATIENT_DETAILS, groupHeader);
-        intent.putExtra(DMSConstants.BUNDLE, bundle);
-        startActivity(intent);
+    public void onClickedOfCancelRequestButton(RequestedArchivedDetailList archivedDetailList) {
+
     }
 
     @NeedsPermission(Manifest.permission.CALL_PHONE)

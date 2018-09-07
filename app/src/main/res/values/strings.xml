@@ -104,6 +104,8 @@
     <string name="endocrinologist">endocrinologist</string>
     <string name="cancel">Cancel</string>
     <string name="do_you_exit">Do you want to exit ?</string>
+    <string name="do_you_want_to_cancel">Do you want to cancel the request ?</string>
+    <string name="do_you_want_to_unlock">Do you want to unlock this ?</string>
     <string name="apply">Apply</string>
     <string name="filter">Filter</string>
     <string name="reset">Reset</string>

@@ -15,6 +15,7 @@ import com.scorg.dms.model.patient.add_new_patient.SyncPatientsRequest;
 import com.scorg.dms.model.patient.doctor_patients.PatientList;
 import com.scorg.dms.model.patient.template_sms.request_send_sms.ClinicListForSms;
 import com.scorg.dms.model.patient.template_sms.request_send_sms.RequestSendSmsModel;
+import com.scorg.dms.model.pending_approval_list.PendingRequestCancelModel;
 import com.scorg.dms.model.pending_approval_list.RequestPendingApprovalData;
 import com.scorg.dms.model.request_appointment_confirmation.RequestAppointmentConfirmationModel;
 import com.scorg.dms.model.request_appointment_confirmation.Reschedule;
@@ -92,6 +93,14 @@ public class PendingApprovalHelper implements ConnectionListener {
         mConnectionFactory.setHeaderParams();
         mConnectionFactory.setUrl(Config.URL_PENDING_APPROVAL_LIST);
         mConnectionFactory.createConnection(DMSConstants.TASK_PENDING_APPROVAL_LIST);
+    }
+
+    public void cancelRequest(PendingRequestCancelModel requestCancelModel) {
+        ConnectionFactory mConnectionFactory = new ConnectionFactory(mContext, this, null, true, DMSConstants.TASK_CANCEL_REQUEST_CONFIDENTIAL, Request.Method.POST, true);
+        mConnectionFactory.setPostParams(requestCancelModel);
+        mConnectionFactory.setHeaderParams();
+        mConnectionFactory.setUrl(Config.URL_CANCEL_REQUEST_CONFIDENTIAL);
+        mConnectionFactory.createConnection(DMSConstants.TASK_CANCEL_REQUEST_CONFIDENTIAL);
     }
 
 }

@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 import com.scorg.dms.interfaces.CustomResponse;
 import com.scorg.dms.model.Common;
 
-public class UnlockRequestResponseBaseMode implements CustomResponse {
+public class UnlockRequestResponseBaseModel implements CustomResponse {
 
     @SerializedName("common")
     @Expose

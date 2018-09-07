@@ -34,7 +34,7 @@ import com.scorg.dms.model.CommonBaseModelContainer;
 import com.scorg.dms.model.case_details.CaseDetailsModel;
 import com.scorg.dms.model.completed_opd.CompletedOpdBaseModel;
 import com.scorg.dms.model.dashboard.DashboardBaseModel;
-import com.scorg.dms.model.dms_models.requestmodel.archive.UnlockRequestResponseBaseMode;
+import com.scorg.dms.model.dms_models.requestmodel.archive.UnlockRequestResponseBaseModel;
 import com.scorg.dms.model.dms_models.responsemodel.annotationlistresponsemodel.AnnotationListResponseModel;
 import com.scorg.dms.model.dms_models.responsemodel.episode_list.EpisodeResponseModel;
 import com.scorg.dms.model.dms_models.responsemodel.filetreeresponsemodel.FileTreeResponseModel;
@@ -59,6 +59,7 @@ import com.scorg.dms.model.patient.patient_connect.ChatPatientConnectModel;
 import com.scorg.dms.model.patient.patient_connect.PatientConnectBaseModel;
 import com.scorg.dms.model.patient.patient_history.PatientHistoryBaseModel;
 import com.scorg.dms.model.patient.template_sms.TemplateBaseModel;
+import com.scorg.dms.model.pending_approval_list.CancelUnlockRequestResponseBaseModel;
 import com.scorg.dms.model.pending_approval_list.RequestedArchivedBaseModel;
 import com.scorg.dms.model.request_appointment_confirmation.ResponseAppointmentConfirmationModel;
 import com.scorg.dms.model.requestmodel.login.LoginRequestModel;
@@ -639,8 +640,13 @@ public class RequestManager extends ConnectRequest implements Connector, Request
                         break;
 
                     case DMSConstants.TASK_RAISE_REQUEST_CONFIDENTIAL: //This is for unlock confidential file /folder
-                        UnlockRequestResponseBaseMode unlockRequestResponseBaseMode = gson.fromJson(data, UnlockRequestResponseBaseMode.class);
-                        this.mConnectionListener.onResponse(ConnectionListener.RESPONSE_OK, unlockRequestResponseBaseMode, mOldDataTag);
+                        UnlockRequestResponseBaseModel unlockRequestResponseBaseModel = gson.fromJson(data, UnlockRequestResponseBaseModel.class);
+                        this.mConnectionListener.onResponse(ConnectionListener.RESPONSE_OK, unlockRequestResponseBaseModel, mOldDataTag);
+                        break;
+
+                    case DMSConstants.TASK_CANCEL_REQUEST_CONFIDENTIAL: //This is for unlock confidential file /folder
+                        CancelUnlockRequestResponseBaseModel cancelUnlockRequestResponseBaseModel = gson.fromJson(data, CancelUnlockRequestResponseBaseModel.class);
+                        this.mConnectionListener.onResponse(ConnectionListener.RESPONSE_OK, cancelUnlockRequestResponseBaseModel, mOldDataTag);
                         break;
 
                     default:

@@ -1,7 +1,11 @@
 package com.scorg.dms.ui.fragments.approval_list;
 
 import android.Manifest;
+import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -11,9 +15,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.scorg.dms.R;
 import com.scorg.dms.adapters.pending_approvals.RequestListAdapter;
@@ -23,14 +29,19 @@ import com.scorg.dms.interfaces.HelperResponse;
 import com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemodel.SearchResult;
 import com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemodel.SearchResultData;
 import com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemodel.ShowSearchResultResponseModel;
+import com.scorg.dms.model.pending_approval_list.CancelUnlockRequestResponseBaseModel;
+import com.scorg.dms.model.pending_approval_list.PendingRequestCancelModel;
 import com.scorg.dms.model.pending_approval_list.RequestedArchivedBaseModel;
 import com.scorg.dms.model.pending_approval_list.RequestedArchivedDetailList;
 import com.scorg.dms.model.waiting_list.WaitingPatientData;
+import com.scorg.dms.preference.DMSPreferencesManager;
+import com.scorg.dms.ui.activities.SplashScreenActivity;
 import com.scorg.dms.ui.activities.dms_patient_list.FileTypeViewerActivity;
 import com.scorg.dms.ui.activities.dms_patient_list.PatientDetailsActivity;
 import com.scorg.dms.ui.activities.pending_approval_list.RequestedArchivedMainListActivity;
 import com.scorg.dms.ui.customesViews.CircularImageView;
 import com.scorg.dms.ui.customesViews.CustomTextView;
+import com.scorg.dms.util.CommonMethods;
 import com.scorg.dms.util.DMSConstants;
 
 import java.util.ArrayList;
@@ -74,6 +85,7 @@ public class PendingListFragment extends Fragment implements RequestListAdapter.
     private RequestListAdapter mPendingListAdapter;
     private long mClickedPhoneNumber;
     private PendingApprovalHelper mPendingApprovalHelper;
+
     public PendingListFragment() {
     }
 
@@ -95,8 +107,8 @@ public class PendingListFragment extends Fragment implements RequestListAdapter.
 
     private void init() {
         mParentActivity = (RequestedArchivedMainListActivity) getActivity();
-         mPendingApprovalHelper= new PendingApprovalHelper(mParentActivity,this);
-         mPendingApprovalHelper.doGetPendingApprovalData(1,true);
+        mPendingApprovalHelper = new PendingApprovalHelper(mParentActivity, this);
+        mPendingApprovalHelper.doGetPendingApprovalData(1, true);
 
     }
 
@@ -109,7 +121,7 @@ public class PendingListFragment extends Fragment implements RequestListAdapter.
 
     public void onRequestPermssionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-       // ActivePatientListFragmentPermissionsDispatcher.onRequestPermissionsResult(this, requestCode, grantResults);
+        // ActivePatientListFragmentPermissionsDispatcher.onRequestPermissionsResult(this, requestCode, grantResults);
     }
 
     @Override
@@ -144,7 +156,7 @@ public class PendingListFragment extends Fragment implements RequestListAdapter.
         } else {
             mRecyclerView.setVisibility(View.VISIBLE);
             noRecords.setVisibility(View.GONE);
-            mPendingListAdapter = new RequestListAdapter(this.getContext(),requestedArchivedDetailList , this,true);
+            mPendingListAdapter = new RequestListAdapter(this.getContext(), requestedArchivedDetailList, this, true);
             LinearLayoutManager linearlayoutManager = new LinearLayoutManager(this.getContext(), LinearLayoutManager.VERTICAL, false);
             mRecyclerView.setLayoutManager(linearlayoutManager);
             mRecyclerView.setAdapter(mPendingListAdapter);
@@ -183,12 +195,43 @@ public class PendingListFragment extends Fragment implements RequestListAdapter.
     }
 
     @Override
-    public void onClickedOfEpisodeListButton(SearchResult groupHeader) {
-        Intent intent = new Intent(getActivity(), PatientDetailsActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putSerializable(PATIENT_DETAILS, groupHeader);
-        intent.putExtra(DMSConstants.BUNDLE, bundle);
-        startActivity(intent);
+    public void onClickedOfCancelRequestButton(final RequestedArchivedDetailList archivedDetailLists) {
+
+        final Dialog dialog = new Dialog(getContext());
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_alert);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setCancelable(false);
+        ((TextView) dialog.findViewById(R.id.textview_sucess)).setText(getContext().getResources().getString(R.string.do_you_want_to_cancel));
+        dialog.findViewById(R.id.button_ok).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                PendingRequestCancelModel requestCancelModel = new PendingRequestCancelModel();
+                requestCancelModel.setRequestId(String.valueOf(archivedDetailLists.getRequestID()));
+                requestCancelModel.setWorkFlowId("3");// this value will be get in API
+                requestCancelModel.setStatusName("CANCEL");
+                requestCancelModel.setStageId(String.valueOf(archivedDetailLists.getCurrentStageID()));
+                requestCancelModel.setComments("");
+                requestCancelModel.setValidity("");
+                requestCancelModel.setIsWorkFlowProcess("true");
+                requestCancelModel.setStartDate("");
+                requestCancelModel.setEnddate("");
+                requestCancelModel.setListOfDates("");
+                requestCancelModel.setFileRefId(archivedDetailLists.getFileRefID());
+                mPendingApprovalHelper.cancelRequest(requestCancelModel);
+            }
+        });
+        dialog.findViewById(R.id.button_cancel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+
+            }
+        });
+
+        dialog.show();
 
     }
 
@@ -232,11 +275,21 @@ public class PendingListFragment extends Fragment implements RequestListAdapter.
                 }
             }
             break;
-            case DMSConstants.TASK_PENDING_APPROVAL_LIST:{
+            case DMSConstants.TASK_PENDING_APPROVAL_LIST: {
                 if (customResponse != null) {
-                    RequestedArchivedBaseModel requestedArchivedBaseModel = (RequestedArchivedBaseModel)customResponse;
-                    requestedArchivedDetailList= (ArrayList<RequestedArchivedDetailList>) requestedArchivedBaseModel.getPendingApprovalDataModel().getRequestedArchivedDetailList();
+                    RequestedArchivedBaseModel requestedArchivedBaseModel = (RequestedArchivedBaseModel) customResponse;
+                    requestedArchivedDetailList = (ArrayList<RequestedArchivedDetailList>) requestedArchivedBaseModel.getPendingApprovalDataModel().getRequestedArchivedDetailList();
                     setAdapter();
+                }
+
+            }
+            break;
+            case DMSConstants.TASK_CANCEL_REQUEST_CONFIDENTIAL: {
+                if (customResponse != null) {
+                    CancelUnlockRequestResponseBaseModel cancelUnlockRequestResponseBaseModel = (CancelUnlockRequestResponseBaseModel) customResponse;
+                    if (cancelUnlockRequestResponseBaseModel.getCommon().getStatusCode() == 200)
+                        CommonMethods.showToast(getActivity(), "Successfully Canceled");
+                    mPendingApprovalHelper.doGetPendingApprovalData(1, true);
                 }
 
             }

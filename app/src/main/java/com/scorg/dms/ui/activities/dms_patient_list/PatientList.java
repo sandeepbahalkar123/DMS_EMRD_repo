@@ -420,7 +420,27 @@ public class PatientList extends AppCompatActivity implements HelperResponse, Vi
         mAnnotationTreeViewContainer.addView(CommonMethods.loadView(R.layout.mydialog, this));
         mFirstFileTypeProgressDialogLayout = (RelativeLayout) mAnnotationTreeViewContainer.findViewById(R.id.progressBarContainerLayout);
 
+        mDrawer.addDrawerListener(new DrawerLayout.DrawerListener() {
+            @Override
+            public void onDrawerSlide(View drawerView, float slideOffset) {
 
+            }
+
+            @Override
+            public void onDrawerOpened(View drawerView) {
+
+            }
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                mSearchPatientNameEditText.dismissDropDown();
+            }
+
+            @Override
+            public void onDrawerStateChanged(int newState) {
+
+            }
+        });
     }
 
     @Override
@@ -887,19 +907,21 @@ public class PatientList extends AppCompatActivity implements HelperResponse, Vi
 
             @Override
             public void afterTextChanged(Editable s) {
-                String enteredString = mSearchPatientNameEditText.getText().toString();
-                if (!enteredString.equals(priv)) {
-                    if (enteredString.equals("")) {
-                        mClearPatientNameButton.setBackground(getResources().getDrawable(R.mipmap.user));
-                    } else {
-                        mClearPatientNameButton.setBackground(getResources().getDrawable(R.mipmap.crosswithcircle));
+                if (mDrawer.isDrawerOpen(GravityCompat.END)) {
+                    String enteredString = mSearchPatientNameEditText.getText().toString();
+                    if (!enteredString.equals(priv)) {
+                        if (enteredString.equals("")) {
+                            mClearPatientNameButton.setBackground(getResources().getDrawable(R.mipmap.user));
+                        } else {
+                            mClearPatientNameButton.setBackground(getResources().getDrawable(R.mipmap.crosswithcircle));
+                        }
+                        if (enteredString.trim().length() >= 3) {
+                            mPatientsHelper.doGetPatientNameList(s.toString());
+                        }
                     }
-                    if (enteredString.trim().length() >= 3) {
-                        mPatientsHelper.doGetPatientNameList(s.toString());
-                    }
-                }
 
-                priv = enteredString;
+                    priv = enteredString;
+                }
             }
         });
 

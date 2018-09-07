@@ -69,9 +69,6 @@ public class RequestedArchivedMainListActivity extends AppCompatActivity impleme
         ButterKnife.bind(this);
         mFragmentTitleList[0] = getString(R.string.pending_request);
         mFragmentTitleList[1] = getString(R.string.all_request);
-      //  mPendingApprovalHelper= new PendingApprovalHelper(this,this);
-       // mPendingApprovalHelper.doGetPendingApprovalData(1,true);
-
         setupViewPager(viewpager);
         tabs.setupWithViewPager(viewpager);
 
@@ -91,9 +88,6 @@ public class RequestedArchivedMainListActivity extends AppCompatActivity impleme
     public void onSuccess(String mOldDataTag, CustomResponse customResponse) {
         if (customResponse != null) {
            RequestedArchivedBaseModel requestedArchivedBaseModel = (RequestedArchivedBaseModel)customResponse;
-            //pendingApprovalDataModel =requestedArchivedBaseModel.g();
-            ///setupViewPager(viewpager);
-          //  tabs.setupWithViewPager(viewpager);
         }
     }
 
