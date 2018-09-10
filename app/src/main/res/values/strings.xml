@@ -245,6 +245,7 @@
     <string name="complete">Complete</string>
     <string name="select_date_type">Date type</string>
     <string name="select_file_type">Select file type</string>
+    <string name="request_raised_success"> Request raised successfully.</string>
 
     <!-- Strings related to login -->
     <string name="error_empty_fields">Please enter username/password</string>

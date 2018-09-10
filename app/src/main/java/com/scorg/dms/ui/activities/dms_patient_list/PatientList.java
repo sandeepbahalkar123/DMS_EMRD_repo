@@ -185,7 +185,7 @@ public class PatientList extends AppCompatActivity implements HelperResponse, Vi
     private String priv = "";
     private boolean mIsLoadMorePatients;
     //---------
-
+    ArrayList<Object> selectedAnnotations;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -223,7 +223,7 @@ public class PatientList extends AppCompatActivity implements HelperResponse, Vi
                 }
             }
         });
-
+       // selectedAnnotations= getSelectedAnnotations();
     }
 
     // intialize variables
@@ -786,14 +786,20 @@ public class PatientList extends AppCompatActivity implements HelperResponse, Vi
         int lstDocTypeChildLeftPadding = (int) (getResources().getDimension(R.dimen.dp50) / getResources().getDisplayMetrics().density);
         int textColor = ContextCompat.getColor(this, R.color.black);
 
+
         if (annotationListData != null) {
             List<AnnotationList> annotationLists = annotationListData.getAnnotationLists();
 
             if (annotationLists != null) {
                 for (int i = 0; i < annotationLists.size(); i++) {
+
+
+
                     AnnotationList annotationCategoryObject = annotationLists.get(i);
                     ArrowExpandSelectableHeaderHolder selectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded,true,0);
                     selectableHeaderHolder.setOnlyOneNodeExpanded(true);
+
+
                     TreeNode folder1 = new TreeNode(new ArrowExpandIconTreeItemHolder.IconTreeItem(R.string.ic_shopping_cart, annotationCategoryObject.getCategoryName(), annotationCategoryObject, i))
                             .setViewHolder(selectableHeaderHolder);
 

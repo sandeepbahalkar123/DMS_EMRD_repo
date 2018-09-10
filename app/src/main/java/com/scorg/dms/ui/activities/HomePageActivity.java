@@ -94,6 +94,9 @@ public class HomePageActivity extends AppCompatActivity implements HelperRespons
     @BindView(R.id.layoutDrawerSetting)
     LinearLayout layoutDrawerSetting;
 
+    @BindView(R.id.layoutDrawerHome)
+    LinearLayout layoutDrawerHome;
+
     @BindView(R.id.layoutDrawerSupport)
     LinearLayout layoutDrawerSupport;
 
@@ -325,26 +328,32 @@ public class HomePageActivity extends AppCompatActivity implements HelperRespons
 
     }
 
-    @OnClick({R.id.viewTextView,R.id.layoutDrawerIcon,R.id.layoutTotalPatients, R.id.layoutTodayAppointment, R.id.layoutWaitingPatient, R.id.layoutDrawerSetting, R.id.layoutDrawerSupport,R.id.layoutPendingApproval})
+    @OnClick({R.id.viewTextView,R.id.layoutDrawerIcon,R.id.layoutTotalPatients, R.id.layoutTodayAppointment, R.id.layoutWaitingPatient, R.id.layoutDrawerSetting, R.id.layoutDrawerSupport,R.id.layoutPendingApproval,R.id.layoutDrawerHome})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.viewPagerDoctorItem:
                 break;
             case R.id.layoutTodayAppointment:
-                Intent myAppointmentsActivity = new Intent(this, MyAppointmentsActivity.class);
-                startActivity(myAppointmentsActivity);
+                if(!mDashboardDataModel.getAppointmentCount().equalsIgnoreCase("0") && mDashboardDataModel != null) {
+                    Intent myAppointmentsActivity = new Intent(this, MyAppointmentsActivity.class);
+                    startActivity(myAppointmentsActivity);
+                }
                 break;
             case R.id.layoutWaitingPatient:
-                Intent todayAppointmentsOrWaitingList = new Intent(this, WaitingMainListActivity.class);
-                startActivity(todayAppointmentsOrWaitingList);
+               if(!mDashboardDataModel.getWaitingCount().equalsIgnoreCase("0") && mDashboardDataModel != null) {
+                   Intent todayAppointmentsOrWaitingList = new Intent(this, WaitingMainListActivity.class);
+                   startActivity(todayAppointmentsOrWaitingList);
+               }
                 break;
 
             case R.id.layoutPendingApproval:
-                Intent pendingApprovalList = new Intent(this, RequestedArchivedMainListActivity.class);
-                startActivity(pendingApprovalList);
+                if(!mDashboardDataModel.getPendingApprovedCount().equalsIgnoreCase("0") && mDashboardDataModel != null) {
+                    Intent pendingApprovalList = new Intent(this, RequestedArchivedMainListActivity.class);
+                    startActivity(pendingApprovalList);
+                }
                 break;
             case R.id.layoutTotalPatients:
-                if (mDashboardDataModel != null) {
+                if (!mDashboardDataModel.getTotalPatientCount().equalsIgnoreCase("0") && mDashboardDataModel != null) {
                     Intent patientList = new Intent(this, PatientList.class);
                     patientList.putExtra(DMSConstants.PATIENT_LIST_PARAMS.FILE_TYPE, mDashboardDataModel.getFileTypes());
                     startActivity(patientList);
@@ -362,8 +371,12 @@ public class HomePageActivity extends AppCompatActivity implements HelperRespons
                 mDrawer.openDrawer(GravityCompat.START);
                 break;
             case R.id.viewTextView:
-                Intent myAppointmentsActivityView = new Intent(this, MyAppointmentsActivity.class);
-                startActivity(myAppointmentsActivityView);
+                if(!mDashboardDataModel.getAppointmentCount().equalsIgnoreCase("0") && mDashboardDataModel != null) {
+                    Intent myAppointmentsActivity = new Intent(this, MyAppointmentsActivity.class);
+                    startActivity(myAppointmentsActivity);
+                }
+                break;
+            case R.id.layoutDrawerHome:
                 break;
 
         }

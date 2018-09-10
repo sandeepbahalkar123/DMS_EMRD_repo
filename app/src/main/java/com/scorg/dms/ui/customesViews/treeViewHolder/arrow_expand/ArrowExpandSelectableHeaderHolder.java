@@ -219,6 +219,9 @@ public class ArrowExpandSelectableHeaderHolder extends TreeNode.BaseNodeViewHold
     public void setOnlyOneNodeExpanded(boolean expandedOrCollapsed) {
         isOnlyOneNodeExpanded = expandedOrCollapsed;
     }
+    public void setCheckbox(boolean isCheck){
+            nodeSelector.setChecked(isCheck);
+    }
 
     public void setTreeLabelBold(boolean treeLabelBold) {
         isTreeLabelBold = treeLabelBold;

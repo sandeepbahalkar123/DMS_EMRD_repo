@@ -99,7 +99,7 @@ public class PendingListFragment extends Fragment implements RequestListAdapter.
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View mRootView = inflater.inflate(R.layout.waiting_content_layout, container, false);
+        View mRootView = inflater.inflate(R.layout.pending_approval_content_layout, container, false);
         unbinder = ButterKnife.bind(this, mRootView);
         init();
         return mRootView;

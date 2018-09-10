@@ -1336,6 +1336,7 @@ public class PDFView extends RelativeLayout {
 
 
         public void loadFromUrl() {
+            PDFView.this.animationManager.stopAll();
             //final String SDPath = getCacheTempFilePath() + "/PDFViewCache/";
             final String SDPath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/PDFViewCache/";
             int index = fileUrl.lastIndexOf("/");
