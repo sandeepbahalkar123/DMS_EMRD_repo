@@ -14,8 +14,8 @@
         android:layout_centerVertical="true"
         android:gravity="center"
         android:orientation="horizontal"
-        android:paddingLeft="@dimen/dp10"
-        android:paddingStart="@dimen/dp10">
+        android:paddingLeft="@dimen/dp5"
+        android:paddingStart="@dimen/dp5">
 
 
         <CheckBox
@@ -34,7 +34,8 @@
             android:layout_alignWithParentIfMissing="true"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="@dimen/dp5"
+            android:layout_marginRight="@dimen/dp5"
             android:layout_toRightOf="@id/node_selector"
             android:src="@drawable/ic_tree_close_folder" />
 
@@ -56,9 +57,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="gone"
+            android:padding="@dimen/dp5"
             android:src="@drawable/ic_lock"
             android:layout_marginRight="@dimen/dp5"
-            android:layout_marginEnd="@dimen/dp5"/>
+            android:layout_marginEnd="@dimen/dp5"
+            tools:visibility="visible"/>
 
     </LinearLayout>
 </RelativeLayout>

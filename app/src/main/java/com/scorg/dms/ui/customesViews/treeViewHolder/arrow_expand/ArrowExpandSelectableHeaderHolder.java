@@ -3,6 +3,7 @@ package com.scorg.dms.ui.customesViews.treeViewHolder.arrow_expand;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CheckBox;
@@ -36,19 +37,20 @@ public class ArrowExpandSelectableHeaderHolder extends TreeNode.BaseNodeViewHold
     private LinearLayout mainContentLayout;
     private int confidentialState;
     private ArrowExpandSelectableHeaderHolderLockIconClickListener lockIconClickListener;
+    private boolean isChecked;
 
+    public ArrowExpandSelectableHeaderHolder(Context context, boolean isDefaultExpanded, boolean istViewClickRequired, int confidentialState,boolean isChecked) {
 
-    public ArrowExpandSelectableHeaderHolder(Context context, boolean isDefaultExpanded, boolean istViewClickRequired, int confidentialState) {
-
-        this(context, isDefaultExpanded, (int) (context.getResources().getDimension(R.dimen.dp10) / context.getResources().getDisplayMetrics().density), istViewClickRequired, confidentialState);
+        this(context, isDefaultExpanded, (int) (context.getResources().getDimension(R.dimen.dp10) / context.getResources().getDisplayMetrics().density), istViewClickRequired, confidentialState,isChecked);
     }
 
-    public ArrowExpandSelectableHeaderHolder(Context context, boolean isDefaultExpanded, int leftPadding, boolean istViewClickRequired, int confidentialState) {
+    public ArrowExpandSelectableHeaderHolder(Context context, boolean isDefaultExpanded, int leftPadding, boolean istViewClickRequired, int confidentialState,boolean isChecked) {
         super(context);
         this.leftPadding = leftPadding;
         this.isDefaultExpanded = isDefaultExpanded;
         this.istViewClickRequired = istViewClickRequired;
         this.confidentialState = confidentialState;
+        this.isChecked = isChecked;
         nodeValueColor = ContextCompat.getColor(context, R.color.black);
 
         if (context instanceof ArrowExpandSelectableHeaderHolderLockIconClickListener) {
@@ -180,6 +182,12 @@ public class ArrowExpandSelectableHeaderHolder extends TreeNode.BaseNodeViewHold
             }
         }
 
+        Log.e("node name -","--"+value.text.toString());
+        Log.e("is checked--","--"+node.isSelected());
+        if(isChecked){
+            Log.e("isChecked -","--"+isChecked);
+            nodeSelector.setChecked(isChecked);
+        }
 
         return view;
     }
@@ -220,7 +228,7 @@ public class ArrowExpandSelectableHeaderHolder extends TreeNode.BaseNodeViewHold
         isOnlyOneNodeExpanded = expandedOrCollapsed;
     }
     public void setCheckbox(boolean isCheck){
-            nodeSelector.setChecked(isCheck);
+            nodeSelector.setChecked(mNode.isSelected());
     }
 
     public void setTreeLabelBold(boolean treeLabelBold) {

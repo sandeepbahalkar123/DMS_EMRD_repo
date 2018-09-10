@@ -786,19 +786,18 @@ public class PatientList extends AppCompatActivity implements HelperResponse, Vi
         int lstDocTypeChildLeftPadding = (int) (getResources().getDimension(R.dimen.dp50) / getResources().getDisplayMetrics().density);
         int textColor = ContextCompat.getColor(this, R.color.black);
 
-
+        boolean isChecked=false;
         if (annotationListData != null) {
             List<AnnotationList> annotationLists = annotationListData.getAnnotationLists();
 
             if (annotationLists != null) {
                 for (int i = 0; i < annotationLists.size(); i++) {
-
-
-
                     AnnotationList annotationCategoryObject = annotationLists.get(i);
-                    ArrowExpandSelectableHeaderHolder selectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded,true,0);
+                    Log.e("annotationCategry",""+annotationCategoryObject.getSelected());
+                    Log.e("annotationCategryname",""+annotationCategoryObject.getCategoryName());
+                     isChecked=annotationCategoryObject.getSelected();
+                    ArrowExpandSelectableHeaderHolder selectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded,true,0,isChecked);
                     selectableHeaderHolder.setOnlyOneNodeExpanded(true);
-
 
                     TreeNode folder1 = new TreeNode(new ArrowExpandIconTreeItemHolder.IconTreeItem(R.string.ic_shopping_cart, annotationCategoryObject.getCategoryName(), annotationCategoryObject, i))
                             .setViewHolder(selectableHeaderHolder);
@@ -808,12 +807,14 @@ public class PatientList extends AppCompatActivity implements HelperResponse, Vi
                     for (int j = 0; j < docTypeList.size(); j++) {
                         DocTypeList docTypeListObject = docTypeList.get(j);
                         String dataToShow = docTypeListObject.getTypeName() + "|" + docTypeListObject.getTypeId();
-
-                        ArrowExpandSelectableHeaderHolder lstDocTypeChildSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstDocTypeChildLeftPadding,true,0);
+                        
+                        Log.e("docTypeListObject",""+docTypeListObject.getSelected());
+                        Log.e("docTypeListObjectname",""+docTypeListObject.getTypeName());
+                         isChecked=annotationCategoryObject.getSelected();
+                        ArrowExpandSelectableHeaderHolder lstDocTypeChildSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstDocTypeChildLeftPadding,true,0,isChecked);
                         lstDocTypeChildSelectableHeaderHolder.setOnlyOneNodeExpanded(true);
                         TreeNode lstDocTypeChildFolder = new TreeNode(new ArrowExpandIconTreeItemHolder.IconTreeItem(R.string.ic_shopping_cart, dataToShow, docTypeListObject, i))
                                 .setViewHolder(lstDocTypeChildSelectableHeaderHolder);
-
                         folder1.addChildren(lstDocTypeChildFolder);
                     }
                     root.addChildren(folder1);
@@ -1082,7 +1083,7 @@ public class PatientList extends AppCompatActivity implements HelperResponse, Vi
 
     @Override
     public void onClick(TreeNode node, Object value, View nodeView) {
-
+        Log.e("onClick","onClick");
         CheckBox nodeSelector = (CheckBox) nodeView.findViewById(R.id.node_selector);
         if (nodeSelector.isChecked()) {
             nodeSelector.setChecked(false);
@@ -1091,6 +1092,8 @@ public class PatientList extends AppCompatActivity implements HelperResponse, Vi
         }
 
         if (!node.isLeaf()) {
+            Log.e("onClick","node isLeaf");
+
             for (TreeNode n : node.getChildren()) {
                 mAndroidTreeView.selectNode(n, nodeSelector.isChecked());
             }
@@ -1118,7 +1121,6 @@ public class PatientList extends AppCompatActivity implements HelperResponse, Vi
 
 
     private void doConfigDatePickerDialog(final String callFrom, Date mFromDate) {
-
         //---------
         Calendar selectedTimeSlotDateCal = Calendar.getInstance();
         mDatePickerDialog = DatePickerDialog.newInstance(

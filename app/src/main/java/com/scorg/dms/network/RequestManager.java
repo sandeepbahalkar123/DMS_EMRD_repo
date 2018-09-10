@@ -447,17 +447,26 @@ public class RequestManager extends ConnectRequest implements Connector, Request
             if (isTokenExpired) {
                 // This success response is for refresh token
                 // Need to Add
-                LoginModel loginModel = gson.fromJson(data, LoginModel.class);
-                if (loginModel.getCommon().getStatusCode().equals(SUCCESS)) {
-                    DMSPreferencesManager.putString(DMSPreferencesManager.DMS_PREFERENCES_KEY.AUTHTOKEN, loginModel.getDoctorLoginData().getAuthToken(), mContext);
-                    DMSPreferencesManager.putString(DMSPreferencesManager.DMS_PREFERENCES_KEY.LOGIN_STATUS, DMSConstants.YES, mContext);
-                    DMSPreferencesManager.putString(DMSPreferencesManager.DMS_PREFERENCES_KEY.DOC_ID, String.valueOf(loginModel.getDoctorLoginData().getDocDetail().getDocId()), mContext);
+                LoginResponseModel loginResponseModel = gson.fromJson(data, LoginResponseModel.class);
+                DMSPreferencesManager.putString(DMSConstants.LOGIN_SUCCESS, DMSConstants.TRUE, mContext);
+                DMSPreferencesManager.putString(DMSConstants.ACCESS_TOKEN, loginResponseModel.getAccessToken(), mContext);
+                DMSPreferencesManager.putString(DMSConstants.TOKEN_TYPE, loginResponseModel.getTokenType(), mContext);
+                DMSPreferencesManager.putString(DMSConstants.REFRESH_TOKEN, loginResponseModel.getRefreshToken(), mContext);
+                DMSPreferencesManager.putString(DMSConstants.USERNAME, DMSPreferencesManager.getString(DMSConstants.USERNAME,mContext), mContext);
+                DMSPreferencesManager.putString(DMSConstants.PASSWORD, DMSPreferencesManager.getString(DMSConstants.PASSWORD,mContext), mContext);
+                DMSPreferencesManager.putString(DMSPreferencesManager.DMS_PREFERENCES_KEY.DOC_ID, String.valueOf(loginResponseModel.getDoctorId()), mContext);
+                DMSPreferencesManager.putString(DMSPreferencesManager.DMS_PREFERENCES_KEY.USER_GENDER, loginResponseModel.getUserGender(), mContext);
+                DMSPreferencesManager.putString(DMSPreferencesManager.DMS_PREFERENCES_KEY.DOC_NAME, loginResponseModel.getDoctorName(), mContext);
+                DMSPreferencesManager.putString(DMSPreferencesManager.DMS_PREFERENCES_KEY.HOSPITAL_NAME, loginResponseModel.getHospitalName(), mContext);
 
-                    mHeaderParams.put(DMSConstants.AUTHORIZATION_TOKEN, loginModel.getDoctorLoginData().getAuthToken());
-                    connect();
-                } else {
-                    CommonMethods.showToast(mContext, loginModel.getCommon().getStatusMessage());
+                String authorizationString = "";
+                String contentType = DMSPreferencesManager.getString(DMSConstants.LOGIN_SUCCESS, mContext);
+                if (contentType.equalsIgnoreCase(DMSConstants.TRUE)) {
+                    authorizationString = DMSPreferencesManager.getString(DMSConstants.TOKEN_TYPE, mContext)
+                            + " " + DMSPreferencesManager.getString(DMSConstants.ACCESS_TOKEN, mContext);
                 }
+                mHeaderParams.put(DMSConstants.AUTHORIZATION, authorizationString);
+                connect();
 
             } else {
                 // This success response is for respective api's
@@ -734,25 +743,26 @@ public class RequestManager extends ConnectRequest implements Connector, Request
 
     private void loginRequest() {
         CommonMethods.Log(TAG, "Refresh token while sending refresh token api: ");
-        String url = Config.BASE_URL + Config.LOGIN_URL;
+        String baseUrl = DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.SERVER_PATH, mContext);
+        String url = baseUrl + Config.URL_LOGIN;
 
-        LoginRequestModel loginRequestModel = new LoginRequestModel();
-
-        loginRequestModel.setEmailId(DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.EMAIL, mContext));
-        loginRequestModel.setPassword(DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.PASSWORD, mContext));
-        if (!(DMSConstants.BLANK.equalsIgnoreCase(loginRequestModel.getEmailId()) &&
-                DMSConstants.BLANK.equalsIgnoreCase(loginRequestModel.getPassword()))) {
+        if (!(DMSConstants.BLANK.equalsIgnoreCase(DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.USER_NAME, mContext)) &&
+                DMSConstants.BLANK.equalsIgnoreCase(DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.PASSWORD, mContext)))) {
             Map<String, String> headerParams = new HashMap<>();
-            headerParams.putAll(mHeaderParams);
             Device device = Device.getInstance(mContext);
-
-            headerParams.put(DMSConstants.CONTENT_TYPE, DMSConstants.APPLICATION_JSON);
+            headerParams.put(DMSConstants.CONTENT_TYPE, DMSConstants.APPLICATION_URL_ENCODED);
             headerParams.put(DMSConstants.DEVICEID, device.getDeviceId());
             headerParams.put(DMSConstants.OS, device.getOS());
-            headerParams.put(DMSConstants.OSVERSION, device.getOSVersion());
+            headerParams.put(DMSConstants.DMS_OSVERSION, device.getOSVersion());
             headerParams.put(DMSConstants.DEVICE_TYPE, device.getDeviceType());
             CommonMethods.Log(TAG, "setHeaderParams:" + headerParams.toString());
-            jsonRequest(url, Request.Method.POST, headerParams, loginRequestModel, true);
+            Map<String, String> postParams = new HashMap<String, String>();
+            postParams.put(DMSConstants.GRANT_TYPE_KEY, DMSConstants.REFRESH_TOKEN);
+            postParams.put(DMSConstants.REFRESH_TOKEN, DMSPreferencesManager.getString(DMSConstants.REFRESH_TOKEN, mContext));
+            postParams.put(DMSConstants.CLIENT_ID_KEY, DMSConstants.CLIENT_ID_VALUE);
+            CommonMethods.Log(TAG, "setPostParams:" + postParams.toString());
+
+            stringRequest(url, Request.Method.POST, headerParams, postParams, true);
         } else {
             mConnectionListener.onResponse(ConnectionListener.PARSE_ERR0R, null, mOldDataTag);
         }

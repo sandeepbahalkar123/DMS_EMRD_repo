@@ -26,7 +26,7 @@ public class DMSConstants {
     public static final String DMS_OSVERSION = "OS-Version";
     public static final String DEVICE_TYPE = "DeviceType";
     public static final String APP_NAME = "appName";
-    public static final String ACCESS_TOKEN = "accessToken";
+    public static final String ACCESS_TOKEN = "access_token";
     public static final String TOKEN_TYPE = "token_type";
     public static final String REFRESH_TOKEN = "refresh_token";
     public static final String LDPI = "/LDPI/";

@@ -77,8 +77,7 @@ public class ConnectionFactory extends ConnectRequest {
 
         headerParams.put(DMSConstants.OS, device.getOS());
         headerParams.put(DMSConstants.DMS_OSVERSION, device.getOSVersion());
-        //  headerParams.put(DMSConstants.DEVICETYPE, device.getDeviceType());
-//        headerParams.put(DMSConstants.ACCESS_TOKEN, "");
+          headerParams.put(DMSConstants.DEVICE_TYPE, device.getDeviceType());
         CommonMethods.Log(TAG, "setHeaderParams:" + headerParams.toString());
         this.mHeaderParams = headerParams;
     }

@@ -14,6 +14,7 @@ import com.scorg.dms.interfaces.HelperResponse;
 import com.scorg.dms.model.dms_models.responsemodel.loginresponsemodel.LoginResponseModel;
 import com.scorg.dms.preference.DMSPreferencesManager;
 import com.scorg.dms.util.CommonMethods;
+import com.scorg.dms.util.DMSConstants;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,6 +35,8 @@ public class LoginActivity extends AppCompatActivity implements HelperResponse {
     EditText mPassword;
 
     private LoginHelper mLoginHelper;
+    String userName="";
+    String password="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,14 +59,16 @@ public class LoginActivity extends AppCompatActivity implements HelperResponse {
         }
     }
 
+
+
     /**
      * Return true if fields empty/validation failed, else false.
      *
      * @return
      */
     private boolean validate() {
-        String userName = mUserName.getText().toString();
-        String password = mPassword.getText().toString();
+        userName = mUserName.getText().toString();
+        password = mPassword.getText().toString();
         String message = null;
         if (userName.isEmpty() || password.isEmpty()) {
             message = getString(R.string.error_empty_fields);
@@ -79,19 +84,23 @@ public class LoginActivity extends AppCompatActivity implements HelperResponse {
 
     @Override
     public void onSuccess(String mOldDataTag, CustomResponse customResponse) {
-        DMSPreferencesManager.putString(DMSPreferencesManager.DMS_PREFERENCES_KEY.USER_NAME, mUserName.getText().toString(), mContext);
-        DMSPreferencesManager.putString(DMSPreferencesManager.DMS_PREFERENCES_KEY.PASSWORD, mPassword.getText().toString(), mContext);
 
         LoginResponseModel model = (LoginResponseModel) customResponse;
-
-        DMSPreferencesManager.putString(DMSPreferencesManager.DMS_PREFERENCES_KEY.DOC_NAME, model.getDoctorName().toString(), mContext);
-        DMSPreferencesManager.putString(DMSPreferencesManager.DMS_PREFERENCES_KEY.HOSPITAL_NAME,model.getHospitalName().toString(), mContext);
+        DMSPreferencesManager.putString(DMSConstants.LOGIN_SUCCESS, DMSConstants.TRUE, mContext);
+        DMSPreferencesManager.putString(DMSConstants.ACCESS_TOKEN, model.getAccessToken(), mContext);
+        DMSPreferencesManager.putString(DMSConstants.TOKEN_TYPE, model.getTokenType(), mContext);
+        DMSPreferencesManager.putString(DMSConstants.REFRESH_TOKEN, model.getRefreshToken(), mContext);
+        DMSPreferencesManager.putString(DMSConstants.USERNAME, userName, mContext);
+        DMSPreferencesManager.putString(DMSConstants.PASSWORD, password, mContext);
+        DMSPreferencesManager.putString(DMSPreferencesManager.DMS_PREFERENCES_KEY.DOC_ID, String.valueOf(model.getDoctorId()), mContext);
+        DMSPreferencesManager.putString(DMSPreferencesManager.DMS_PREFERENCES_KEY.USER_GENDER, model.getUserGender(), mContext);
+        DMSPreferencesManager.putString(DMSPreferencesManager.DMS_PREFERENCES_KEY.DOC_NAME, model.getDoctorName(), mContext);
+        DMSPreferencesManager.putString(DMSPreferencesManager.DMS_PREFERENCES_KEY.HOSPITAL_NAME, model.getHospitalName(), mContext);
 
         Intent intent = new Intent(this, HomePageActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
-
     }
 
     @Override
