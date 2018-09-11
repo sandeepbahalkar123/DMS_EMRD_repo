@@ -23,15 +23,11 @@ import android.widget.TextView;
 
 import com.scorg.dms.R;
 import com.scorg.dms.adapters.my_appointments.AppointmentListAdapter;
-import com.scorg.dms.adapters.my_appointments.BottomMenuAppointmentAdapter;
 import com.scorg.dms.adapters.waiting_list.ShowWaitingStatusAdapter;
-import com.scorg.dms.bottom_menus.BottomMenu;
 import com.scorg.dms.helpers.myappointments.AppointmentHelper;
 import com.scorg.dms.helpers.patient_list.DMSPatientsHelper;
 import com.scorg.dms.interfaces.CustomResponse;
 import com.scorg.dms.interfaces.HelperResponse;
-import com.scorg.dms.model.dms_models.requestmodel.showsearchresultrequestmodel.ShowSearchResultRequestModel;
-import com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemodel.PatientFileData;
 import com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemodel.SearchResult;
 import com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemodel.SearchResultData;
 import com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemodel.ShowSearchResultResponseModel;
@@ -64,7 +60,7 @@ import static com.scorg.dms.util.DMSConstants.PATIENT_DETAILS;
  * Created by jeetal on 31/1/18.
  */
 
-public class MyAppointmentsFragment extends Fragment implements AppointmentListAdapter.OnItemClickListener, BottomMenuAppointmentAdapter.OnMenuBottomItemClickListener, HelperResponse {
+public class MyAppointmentsFragment extends Fragment implements AppointmentListAdapter.OnItemClickListener, HelperResponse {
 
 
     @BindView(R.id.searchEditText)
@@ -303,10 +299,7 @@ public class MyAppointmentsFragment extends Fragment implements AppointmentListA
 
     }
 
-    @Override
-    public void setClickOnMenuItem(int position, BottomMenu bottomMenu) {
 
-    }
 
     @Override
     public void onClickedOfEpisodeListButton(SearchResult groupHeader) {

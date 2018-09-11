@@ -13,10 +13,6 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.scorg.dms.R;
-import com.scorg.dms.bottom_menus.BottomMenu;
-import com.scorg.dms.bottom_menus.BottomMenuActivity;
-import com.scorg.dms.bottom_menus.BottomMenuAdapter;
-import com.scorg.dms.ui.activities.ProfileActivity;
 import com.scorg.dms.ui.customesViews.CustomTextView;
 import com.scorg.dms.util.CommonMethods;
 

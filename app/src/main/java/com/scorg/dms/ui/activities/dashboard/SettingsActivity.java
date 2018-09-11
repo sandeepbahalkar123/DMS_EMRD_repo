@@ -14,21 +14,15 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.scorg.dms.R;
-import com.scorg.dms.bottom_menus.BottomMenu;
-import com.scorg.dms.bottom_menus.BottomMenuActivity;
-import com.scorg.dms.bottom_menus.BottomMenuAdapter;
 import com.scorg.dms.helpers.database.AppDBHelper;
 import com.scorg.dms.helpers.login.LoginHelper;
 import com.scorg.dms.interfaces.CustomResponse;
 import com.scorg.dms.interfaces.HelperResponse;
 import com.scorg.dms.preference.DMSPreferencesManager;
-import com.scorg.dms.ui.activities.ProfileActivity;
 import com.scorg.dms.ui.activities.SplashScreenActivity;
 import com.scorg.dms.ui.customesViews.CustomTextView;
 import com.scorg.dms.util.CommonMethods;
 import com.scorg.dms.util.DMSConstants;
-
-import net.gotev.uploadservice.UploadService;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -139,9 +133,6 @@ public class SettingsActivity extends AppCompatActivity implements  HelperRespon
 
 
     private void logout() {
-
-        // cancel all uploadings.
-        UploadService.stopAllUploads();
 
         String mobileNoGmail = "";
         String passwordGmail = "";
