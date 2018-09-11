@@ -182,10 +182,7 @@ public class ArrowExpandSelectableHeaderHolder extends TreeNode.BaseNodeViewHold
             }
         }
 
-        Log.e("node name -","--"+value.text.toString());
-        Log.e("is checked--","--"+node.isSelected());
         if(isChecked){
-            Log.e("isChecked -","--"+isChecked);
             nodeSelector.setChecked(isChecked);
         }
 

@@ -185,7 +185,6 @@ public class PatientList extends AppCompatActivity implements HelperResponse, Vi
     private String priv = "";
     private boolean mIsLoadMorePatients;
     //---------
-    ArrayList<Object> selectedAnnotations;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -347,7 +346,6 @@ public class PatientList extends AppCompatActivity implements HelperResponse, Vi
                     createAnnotationTreeStructure(mAnnotationListData, false);
                 }
             }
-
             @Override
             public void onDrawerClosed(View drawerView) {
             }
@@ -362,7 +360,6 @@ public class PatientList extends AppCompatActivity implements HelperResponse, Vi
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, true);
         layoutManager.setReverseLayout(true);
         mRecycleTag.setLayoutManager(layoutManager);
-
 
         //---------
         mSpinSelectedId.setOnItemSelectedListener(this);
@@ -472,6 +469,7 @@ public class PatientList extends AppCompatActivity implements HelperResponse, Vi
 
             AnnotationListResponseModel annotationListResponseModel = (AnnotationListResponseModel) customResponse;
             mAnnotationListData = annotationListResponseModel.getAnnotationListData();
+
             createAnnotationTreeStructure(mAnnotationListData, false);
             mFirstFileTypeProgressDialogLayout.setVisibility(View.GONE);
         } else if (mOldDataTag == DMSConstants.TASK_GET_PATIENT_NAME_LIST) {
@@ -635,6 +633,13 @@ public class PatientList extends AppCompatActivity implements HelperResponse, Vi
 
                 //----------
                 ArrayList<Object> selectedAnnotations = getSelectedAnnotations();
+
+                Log.e("selectedAnnotations--",""+selectedAnnotations.size());
+
+                if (selectedAnnotations.size()<=0)
+                {
+                    mAddedTagsForFiltering.clear();
+                }
                 for (Object dataValue :
                         selectedAnnotations) {
                     //--- hashMap PatientNameListData : childName|id
@@ -793,8 +798,6 @@ public class PatientList extends AppCompatActivity implements HelperResponse, Vi
             if (annotationLists != null) {
                 for (int i = 0; i < annotationLists.size(); i++) {
                     AnnotationList annotationCategoryObject = annotationLists.get(i);
-                    Log.e("annotationCategry",""+annotationCategoryObject.getSelected());
-                    Log.e("annotationCategryname",""+annotationCategoryObject.getCategoryName());
                      isChecked=annotationCategoryObject.getSelected();
                     ArrowExpandSelectableHeaderHolder selectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded,true,0,isChecked);
                     selectableHeaderHolder.setOnlyOneNodeExpanded(true);
@@ -807,9 +810,6 @@ public class PatientList extends AppCompatActivity implements HelperResponse, Vi
                     for (int j = 0; j < docTypeList.size(); j++) {
                         DocTypeList docTypeListObject = docTypeList.get(j);
                         String dataToShow = docTypeListObject.getTypeName() + "|" + docTypeListObject.getTypeId();
-                        
-                        Log.e("docTypeListObject",""+docTypeListObject.getSelected());
-                        Log.e("docTypeListObjectname",""+docTypeListObject.getTypeName());
                          isChecked=annotationCategoryObject.getSelected();
                         ArrowExpandSelectableHeaderHolder lstDocTypeChildSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstDocTypeChildLeftPadding,true,0,isChecked);
                         lstDocTypeChildSelectableHeaderHolder.setOnlyOneNodeExpanded(true);
@@ -1083,8 +1083,9 @@ public class PatientList extends AppCompatActivity implements HelperResponse, Vi
 
     @Override
     public void onClick(TreeNode node, Object value, View nodeView) {
-        Log.e("onClick","onClick");
         CheckBox nodeSelector = (CheckBox) nodeView.findViewById(R.id.node_selector);
+
+
         if (nodeSelector.isChecked()) {
             nodeSelector.setChecked(false);
         } else {
@@ -1092,21 +1093,33 @@ public class PatientList extends AppCompatActivity implements HelperResponse, Vi
         }
 
         if (!node.isLeaf()) {
-            Log.e("onClick","node isLeaf");
 
             for (TreeNode n : node.getChildren()) {
                 mAndroidTreeView.selectNode(n, nodeSelector.isChecked());
             }
+
             for (DocTypeList docTypeList : ((AnnotationList) ((ArrowExpandIconTreeItemHolder.IconTreeItem) value).objectData).getDocTypeList()) {
                 docTypeList.setSelected(nodeSelector.isChecked());
             }
         }
 
         DocTypeList docTypeListTemp = null;
-        if (((ArrowExpandIconTreeItemHolder.IconTreeItem) value).objectData instanceof DocTypeList)
+        if (((ArrowExpandIconTreeItemHolder.IconTreeItem) value).objectData instanceof DocTypeList) {
             docTypeListTemp = (DocTypeList) ((ArrowExpandIconTreeItemHolder.IconTreeItem) value).objectData;
+        }
 
-        for (AnnotationList annotationCategoryObject : mAnnotationListData.getAnnotationLists()) {
+        AnnotationList annotationListTemp =null;
+        if (((ArrowExpandIconTreeItemHolder.IconTreeItem) value).objectData instanceof AnnotationList) {
+
+            annotationListTemp = (AnnotationList) ((ArrowExpandIconTreeItemHolder.IconTreeItem) value).objectData;
+        }
+            for (AnnotationList annotationCategoryObject : mAnnotationListData.getAnnotationLists()) {
+                if (annotationCategoryObject.getCategoryId().equals(annotationListTemp.getCategoryId())) {
+                    annotationCategoryObject.setSelected(nodeSelector.isChecked());
+                    node.setSelected(nodeSelector.isChecked());
+                }
+
+
             List<DocTypeList> docTypeList = annotationCategoryObject.getDocTypeList();
             if (docTypeListTemp != null)
                 for (DocTypeList docTypeListObject : docTypeList) {

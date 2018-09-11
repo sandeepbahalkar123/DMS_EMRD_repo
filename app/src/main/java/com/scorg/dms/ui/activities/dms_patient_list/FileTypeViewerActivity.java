@@ -1289,11 +1289,13 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
             mFirstFileTypeProgressDialogLayout.setVisibility(View.VISIBLE);
             mFirstFileTypePdfViewLayout.setVisibility(View.VISIBLE);
             mFirstFileTypePdfViewLayout.setBackgroundResource(R.drawable.pdfdecoration);
+            mFirstPdfView.zoomTo(DEFAULT_MIN_SCALE);
         } else {
             mSecondPdfView.setVisibility(View.VISIBLE);
             mSecondFileTypeProgressDialogLayout.setVisibility(View.VISIBLE);
             mSecondFileTypePdfViewLayout.setVisibility(View.VISIBLE);
             mSecondFileTypePdfViewLayout.setBackgroundResource(R.drawable.pdfdecoration);
+            mSecondPdfView.zoomTo(DEFAULT_MIN_SCALE);
         }
         doValidateReceivedEncryptedFilePath(filePathToFetch, mTagID);
     }
@@ -1315,8 +1317,8 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
                 mFirstPdfView.zoomTo(5.0f);
                 mSecondPdfView.zoomTo(5.0f);
             } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
-                mFirstPdfView.zoomTo(DEFAULT_MID_SCALE);
-                mSecondPdfView.zoomTo(DEFAULT_MID_SCALE);
+                mFirstPdfView.zoomTo(DEFAULT_MIN_SCALE);
+                mSecondPdfView.zoomTo(DEFAULT_MIN_SCALE);
             }
         } else {
             // Checks the orientation of the screen

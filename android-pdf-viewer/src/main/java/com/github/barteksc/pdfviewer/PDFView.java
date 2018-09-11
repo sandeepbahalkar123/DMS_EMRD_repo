@@ -180,7 +180,7 @@ public class PDFView extends RelativeLayout {
     /**
      * The zoom level, always >= 1
      */
-    private float zoom = 1f;
+    private float zoom = 1.0f;
 
     /**
      * True if the PDFView has been recycled
@@ -494,7 +494,7 @@ public class PDFView extends RelativeLayout {
         scrollHandle = null;
         isScrollHandleInit = false;
         currentXOffset = currentYOffset = 0;
-        zoom = DEFAULT_MID_SCALE;
+        zoom = DEFAULT_MIN_SCALE;
         recycled = true;
         state = State.DEFAULT;
     }

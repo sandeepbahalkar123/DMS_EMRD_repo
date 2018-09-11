@@ -334,26 +334,26 @@ public class HomePageActivity extends AppCompatActivity implements HelperRespons
             case R.id.viewPagerDoctorItem:
                 break;
             case R.id.layoutTodayAppointment:
-                if(!mDashboardDataModel.getAppointmentCount().equalsIgnoreCase("0") && mDashboardDataModel != null) {
+                if( mDashboardDataModel != null && !mDashboardDataModel.getAppointmentCount().equalsIgnoreCase("0") ) {
                     Intent myAppointmentsActivity = new Intent(this, MyAppointmentsActivity.class);
                     startActivity(myAppointmentsActivity);
                 }
                 break;
             case R.id.layoutWaitingPatient:
-               if(!mDashboardDataModel.getWaitingCount().equalsIgnoreCase("0") && mDashboardDataModel != null) {
+               if( mDashboardDataModel != null && !mDashboardDataModel.getWaitingCount().equalsIgnoreCase("0") ) {
                    Intent todayAppointmentsOrWaitingList = new Intent(this, WaitingMainListActivity.class);
                    startActivity(todayAppointmentsOrWaitingList);
                }
                 break;
 
             case R.id.layoutPendingApproval:
-                if(!mDashboardDataModel.getPendingApprovedCount().equalsIgnoreCase("0") && mDashboardDataModel != null) {
+                if( mDashboardDataModel != null && !mDashboardDataModel.getPendingApprovedCount().equalsIgnoreCase("0") ) {
                     Intent pendingApprovalList = new Intent(this, RequestedArchivedMainListActivity.class);
                     startActivity(pendingApprovalList);
                 }
                 break;
             case R.id.layoutTotalPatients:
-                if (!mDashboardDataModel.getTotalPatientCount().equalsIgnoreCase("0") && mDashboardDataModel != null) {
+                if (mDashboardDataModel != null && !mDashboardDataModel.getTotalPatientCount().equalsIgnoreCase("0") ) {
                     Intent patientList = new Intent(this, PatientList.class);
                     patientList.putExtra(DMSConstants.PATIENT_LIST_PARAMS.FILE_TYPE, mDashboardDataModel.getFileTypes());
                     startActivity(patientList);
