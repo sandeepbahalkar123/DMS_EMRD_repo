@@ -4,6 +4,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class LstDocCategory {
@@ -14,6 +15,16 @@ public class LstDocCategory {
     @SerializedName("categoryName")
     @Expose
     private String categoryName;
+
+    @SerializedName("pageCount")
+    @Expose
+    private int pageCount;
+
+    @SerializedName("confidentialState")
+    @Expose
+    private int confidentialState;
+
+
     @SerializedName("lstDocTypes")
     @Expose
     private List<LstDocType> lstDocTypes = new ArrayList<LstDocType>();
@@ -76,13 +87,33 @@ public class LstDocCategory {
         this.mergedFileCompareCustomID = mergedFileCompareCustomID;
     }
 
+    public int getPageCount() {
+        return pageCount;
+    }
+
+    public void setPageCount(int pageCount) {
+        this.pageCount = pageCount;
+    }
+
+
+    public int getConfidentialState() {
+        return confidentialState;
+    }
+
+    public void setConfidentialState(int confidentialState) {
+        this.confidentialState = confidentialState;
+    }
+
     @Override
     public String toString() {
         return "LstDocCategory{" +
                 "categoryId=" + categoryId +
                 ", categoryName='" + categoryName + '\'' +
+                ", pageCount=" + pageCount +
+                ", confidentialState=" + confidentialState +
                 ", lstDocTypes=" + lstDocTypes +
                 ", totalDocTypePageCount=" + totalDocTypePageCount +
+                ", mergedFileCompareCustomID=" + Arrays.toString(mergedFileCompareCustomID) +
                 '}';
     }
 }

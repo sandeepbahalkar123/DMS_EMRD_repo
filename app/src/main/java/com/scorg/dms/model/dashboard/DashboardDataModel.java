@@ -6,7 +6,7 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.scorg.dms.model.Common;
+import com.scorg.dms.model.my_appointments.AppointmentPatientData;
 
 import java.util.ArrayList;
 
@@ -28,6 +28,19 @@ public class DashboardDataModel implements Parcelable {
     @Expose
     private String[] fileTypes;
 
+    @SerializedName("ResultApiTakeCount")
+    @Expose
+    private Integer resultApiTakeCount;
+    @SerializedName("EpisodeApiTakeCount")
+    @Expose
+    private Integer episodeApiTakeCount;
+    @SerializedName("ViewArchivedApiTakeCount")
+    @Expose
+    private Integer viewArchivedApiTakeCount;
+    @SerializedName("PatientApiTakeCount")
+    @Expose
+    private Integer patientApiTakeCount;
+
     /* @SerializedName("appointmentOpdOTAndOtherCount")
      @Expose
      private AppointmentOpdAndOtherCount appointmentOpdOTAndOtherCount;
@@ -35,6 +48,9 @@ public class DashboardDataModel implements Parcelable {
     @SerializedName("appointmentOpdOTAndOtherCount")
     @Expose
     private ArrayList<AppointmentOpdAndOtherCount> appointmentOpdOTAndOtherCountList = new ArrayList<>();
+    @SerializedName("TodaysAppointmentList")
+    @Expose
+    private ArrayList<AppointmentPatientData> appointmentPatientDataList = new ArrayList<>();
     public final static Parcelable.Creator<DashboardDataModel> CREATOR = new Creator<DashboardDataModel>() {
 
 
@@ -49,10 +65,18 @@ public class DashboardDataModel implements Parcelable {
             instance.setWaitingCount(((String) in.readValue((String.class.getClassLoader()))));
             instance.setFileTypes(in.createStringArray());
 
-            instance.setFileTypes(in.createStringArray());
             // instance.setAppointmentOpdOTAndOtherCount((AppointmentOpdAndOtherCount) in.readValue(AppointmentOpdAndOtherCount.class.getClassLoader()));
 
             in.readList(instance.getAppointmentOpdOTAndOtherCountList(), (AppointmentOpdAndOtherCount.class.getClassLoader()));
+
+            //--------
+            instance.setResultApiTakeCount(((Integer) in.readValue((Integer.class.getClassLoader()))));
+            instance.setEpisodeApiTakeCount(((Integer) in.readValue((Integer.class.getClassLoader()))));
+            instance.setViewArchivedApiTakeCount(((Integer) in.readValue((Integer.class.getClassLoader()))));
+            instance.setPatientApiTakeCount(((Integer) in.readValue((Integer.class.getClassLoader()))));
+            in.readList(instance.getAppointmentPatientDataList(), (AppointmentPatientData.class.getClassLoader()));
+
+            //--------
 
             return instance;
         }
@@ -70,6 +94,14 @@ public class DashboardDataModel implements Parcelable {
         dest.writeValue(getWaitingCount());
         dest.writeStringArray(getFileTypes());
         dest.writeList(getAppointmentOpdOTAndOtherCountList());
+        //-------
+        dest.writeValue(getResultApiTakeCount());
+        dest.writeValue(getEpisodeApiTakeCount());
+        dest.writeValue(getViewArchivedApiTakeCount());
+        dest.writeValue(getPatientApiTakeCount());
+        dest.writeList(getAppointmentPatientDataList());
+
+        //-------
     }
 
     public int describeContents() {
@@ -130,6 +162,46 @@ public class DashboardDataModel implements Parcelable {
 
     public void setAppointmentOpdOTAndOtherCountList(ArrayList<AppointmentOpdAndOtherCount> appointmentOpdOTAndOtherCount) {
         this.appointmentOpdOTAndOtherCountList = appointmentOpdOTAndOtherCount;
+    }
+
+    public int getResultApiTakeCount() {
+        return resultApiTakeCount;
+    }
+
+    public void setResultApiTakeCount(int resultApiTakeCount) {
+        this.resultApiTakeCount = resultApiTakeCount;
+    }
+
+    public int getEpisodeApiTakeCount() {
+        return episodeApiTakeCount;
+    }
+
+    public void setEpisodeApiTakeCount(int episodeApiTakeCount) {
+        this.episodeApiTakeCount = episodeApiTakeCount;
+    }
+
+    public int getViewArchivedApiTakeCount() {
+        return viewArchivedApiTakeCount;
+    }
+
+    public void setViewArchivedApiTakeCount(int viewArchivedApiTakeCount) {
+        this.viewArchivedApiTakeCount = viewArchivedApiTakeCount;
+    }
+
+    public int getPatientApiTakeCount() {
+        return patientApiTakeCount;
+    }
+
+    public void setPatientApiTakeCount(int patientApiTakeCount) {
+        this.patientApiTakeCount = patientApiTakeCount;
+    }
+
+    public ArrayList<AppointmentPatientData> getAppointmentPatientDataList() {
+        return appointmentPatientDataList;
+    }
+
+    public void setAppointmentPatientDataList(ArrayList<AppointmentPatientData> appointmentPatientDataList) {
+        this.appointmentPatientDataList = appointmentPatientDataList;
     }
 
     public static class AppointmentOpdAndOtherCount implements Parcelable {

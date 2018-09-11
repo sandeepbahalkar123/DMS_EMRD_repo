@@ -193,7 +193,7 @@ public class PatientDetailAdapter extends BaseExpandableListAdapter {
                 vitalImage.setImageResource(CommonMethods.getVitalIcons(mListDataHeader.get(groupPosition).getVitals().get(mPosition).getIcon()));
 
                 //---*************** Show vaital_display_name instead of unitName (EXCEPT BP CASE) : START
-                //  vital_name.setText(mListDataHeader.get(groupPosition).getVitals().get(mPosition).getUnitName());
+                //  vital_name.setSearchValue(mListDataHeader.get(groupPosition).getVitals().get(mPosition).getUnitName());
                 vital_name.setText(mListDataHeader.get(groupPosition).getVitals().get(mPosition).getDisplayName());
                 //---*************** Show vaital_display_name instead of unitName : END
 
@@ -392,7 +392,7 @@ public class PatientDetailAdapter extends BaseExpandableListAdapter {
                     groupViewHolder.mDetailFirstPoint.setText(text.substring(0, TEXT_LIMIT - 1) + "...");
                 else groupViewHolder.mDetailFirstPoint.setText(text);
             }
-            //groupViewHolder.mDetailFirstPoint.setText(setStringLength(mVisitDetailList.get(0).getSenderName()));// + ".......");
+            //groupViewHolder.mDetailFirstPoint.setSearchValue(setStringLength(mVisitDetailList.get(0).getSenderName()));// + ".......");
 
         }
         return convertView;
@@ -668,7 +668,7 @@ public class PatientDetailAdapter extends BaseExpandableListAdapter {
             showVitalRangeLayout.setVisibility(View.GONE);
             noOfVitalsDialog.setText(unitValue);
             //---*************** Show vaital_display_name instead of unitName : START
-            //vitalName.setText(unitName);
+            //vitalName.setSearchValue(unitName);
             vitalName.setText(vitalDisplayName);
             //---*************** Show vaital_display_name instead of unitName : END
             if (category.equalsIgnoreCase(context.getString(R.string.severeRange))) {

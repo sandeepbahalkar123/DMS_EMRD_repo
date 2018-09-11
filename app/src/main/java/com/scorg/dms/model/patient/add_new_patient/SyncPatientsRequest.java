@@ -1,11 +1,10 @@
 package com.scorg.dms.model.patient.add_new_patient;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.scorg.dms.interfaces.CustomResponse;
+
+import java.util.ArrayList;
 
 public class SyncPatientsRequest implements CustomResponse {
 

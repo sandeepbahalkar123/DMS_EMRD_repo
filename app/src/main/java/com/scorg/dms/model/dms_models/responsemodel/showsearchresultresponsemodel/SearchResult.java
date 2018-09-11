@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 import java.util.List;
 
-public class SearchResult implements Serializable{
+public class SearchResult implements Serializable {
 
     @SerializedName("patientAddress")
     @Expose
@@ -23,9 +23,18 @@ public class SearchResult implements Serializable{
     @SerializedName("patientImageURL")
     @Expose
     private String patientImageURL;
-    @SerializedName("patientFileData")
+    @SerializedName("patId")
     @Expose
-    private List<PatientFileData> patientFileData = null;
+    private String patId;
+
+    @SerializedName("age")
+    @Expose
+    private String age="";
+
+    @SerializedName("gender")
+    @Expose
+    private String gender="";
+
 
     public String getPatientId() {
         return patientId;
@@ -43,13 +52,6 @@ public class SearchResult implements Serializable{
         this.patientName = patientName;
     }
 
-    public List<PatientFileData> getPatientFileData() {
-        return patientFileData;
-    }
-
-    public void setPatientFileData(List<PatientFileData> patientFileData) {
-        this.patientFileData = patientFileData;
-    }
     public String getDoctorName() {
         return doctorName;
     }
@@ -72,5 +74,30 @@ public class SearchResult implements Serializable{
 
     public void setPatientImageURL(String patientImageURL) {
         this.patientImageURL = patientImageURL;
+    }
+
+    public String getPatId() {
+        return patId;
+    }
+
+    public void setPatId(String patId) {
+        this.patId = patId;
+    }
+
+
+    public String getAge() {
+        return age;
+    }
+
+    public void setAge(String age) {
+        this.age = age;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 }

@@ -17,7 +17,9 @@
     <color name="black">#000000</color>
     <color name="floating_blue_color">#3676A2</color>
     <color name="Red">#FF0000</color>
-    <color name="tagColor">#04abdf</color>
+    <!--<color name="tagColor">#04abdf</color>-->
+    <!--<color name="tagColor">#1d8fce</color>-->
+    <color name="tagColor">#0091d1</color>
     <color name="timing_bg_color">#50a9da</color>
     <color name="statusbar">#0077a7</color>
     <color name="switch_button_color">#9B9B9B</color>
@@ -74,9 +76,13 @@
     <color name="grey_200">#E0E0E0</color>
     <color name="refId_color">#8dc63f</color>
     <color name="LightSkyBlue">#82CAFA</color>
+    <color name="SkyBlue">#1d8fce</color>
     <color name="BlueAngel">#0288d1</color>
     <color name="MediumSpringGreen">#348017</color>
     <color name="login_bg">#4FAFDC</color>
     <color name="login_button">#36657A</color>
+    <color name="green">#bbd86b</color>
+    <color name="green_border">#7cbd20</color>
+    <color name="current_status">#183670</color>
 
 </resources>

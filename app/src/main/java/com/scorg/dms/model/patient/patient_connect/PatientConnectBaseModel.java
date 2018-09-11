@@ -5,7 +5,6 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.scorg.dms.interfaces.CustomResponse;
 import com.scorg.dms.model.Common;
-import com.scorg.dms.model.patient.patient_connect.PatientData;
 
 import java.util.ArrayList;
 

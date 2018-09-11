@@ -3,11 +3,11 @@ package com.scorg.dms.helpers.login;
 import android.content.Context;
 
 import com.android.volley.Request;
-import com.scorg.dms.model.dms_models.responsemodel.loginresponsemodel.LoginResponseModel;
 import com.scorg.dms.interfaces.ConnectionListener;
 import com.scorg.dms.interfaces.CustomResponse;
 import com.scorg.dms.interfaces.HelperResponse;
 import com.scorg.dms.model.dms_models.responsemodel.iptestresponsemodel.IpTestResponseModel;
+import com.scorg.dms.model.dms_models.responsemodel.loginresponsemodel.LoginResponseModel;
 import com.scorg.dms.model.login.ActiveRequest;
 import com.scorg.dms.model.login.SignUpModel;
 import com.scorg.dms.model.requestmodel.login.LoginRequestModel;
@@ -49,19 +49,7 @@ public class LoginHelper implements ConnectionListener {
             case ConnectionListener.RESPONSE_OK:
                 switch (mOldDataTag) {
                     case DMSConstants.TASK_LOGIN_CODE:
-
                         LoginResponseModel model = (LoginResponseModel) customResponse;
-                        DMSPreferencesManager.putString(DMSConstants.LOGIN_SUCCESS, DMSConstants.TRUE, mContext);
-                        DMSPreferencesManager.putString(DMSConstants.ACCESS_TOKEN, model.getAccessToken(), mContext);
-                        DMSPreferencesManager.putString(DMSConstants.TOKEN_TYPE, model.getTokenType(), mContext);
-                        DMSPreferencesManager.putString(DMSConstants.REFRESH_TOKEN, model.getRefreshToken(), mContext);
-                        DMSPreferencesManager.putString(DMSConstants.USERNAME, userName, mContext);
-                        DMSPreferencesManager.putString(DMSConstants.PASSWORD, password, mContext);
-                        DMSPreferencesManager.putString(DMSPreferencesManager.DMS_PREFERENCES_KEY.DOC_ID, String.valueOf(model.getDoctorId()), mContext);
-                        DMSPreferencesManager.putString(DMSPreferencesManager.DMS_PREFERENCES_KEY.USER_GENDER, model.getUserGender(), mContext);
-                        DMSPreferencesManager.putString(DMSPreferencesManager.DMS_PREFERENCES_KEY.DOC_NAME, model.getDoctorName(), mContext);
-                        DMSPreferencesManager.putString(DMSPreferencesManager.DMS_PREFERENCES_KEY.HOSPITAL_NAME, model.getHospitalName(), mContext);
-
                         CommonMethods.Log(TAG, "Refersh token after login response: " + model.getRefreshToken());
                         mHelperResponseManager.onSuccess(mOldDataTag, model);
 

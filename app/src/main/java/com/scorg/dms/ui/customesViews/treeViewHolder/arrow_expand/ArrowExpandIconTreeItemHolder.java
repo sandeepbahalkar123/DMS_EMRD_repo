@@ -32,7 +32,7 @@ public class ArrowExpandIconTreeItemHolder extends TreeNode.BaseNodeViewHolder<A
 
     @Override
     public void toggle(boolean active) {
-        //  arrowView.setIconText(context.getResources().getString(active ? R.string.ic_keyboard_arrow_down : R.string.ic_keyboard_arrow_right));
+          arrowView.setIconText(context.getResources().getString(active ? R.string.ic_folder : R.string.ic_folder));
     }
 
     public static class IconTreeItem {

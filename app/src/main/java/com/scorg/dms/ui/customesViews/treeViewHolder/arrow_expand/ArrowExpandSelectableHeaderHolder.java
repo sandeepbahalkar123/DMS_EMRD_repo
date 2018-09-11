@@ -3,17 +3,22 @@ package com.scorg.dms.ui.customesViews.treeViewHolder.arrow_expand;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.github.johnkil.print.PrintView;
 import com.scorg.dms.R;
+import com.scorg.dms.adapters.dms_adapters.PatientEpisodeRecycleViewListAdapter;
 import com.scorg.dms.model.dms_models.responsemodel.annotationlistresponsemodel.AnnotationList;
 import com.scorg.dms.model.dms_models.responsemodel.annotationlistresponsemodel.DocTypeList;
+import com.scorg.dms.util.CommonMethods;
 import com.unnamed.b.atv.model.TreeNode;
 
 /**
@@ -24,23 +29,33 @@ public class ArrowExpandSelectableHeaderHolder extends TreeNode.BaseNodeViewHold
     private boolean isTreeLabelBold;
     private int leftPadding;
     private boolean isDefaultExpanded;
+    private boolean istViewClickRequired;
     private TextView tvValue;
     private boolean isOnlyOneNodeExpanded;
-    private PrintView arrowView;
+    private ImageView arrowView, icon_lock;
     private CheckBox nodeSelector;
     private LinearLayout mainContentLayout;
+    private int confidentialState;
+    private ArrowExpandSelectableHeaderHolderLockIconClickListener lockIconClickListener;
+    private boolean isChecked;
 
+    public ArrowExpandSelectableHeaderHolder(Context context, boolean isDefaultExpanded, boolean istViewClickRequired, int confidentialState,boolean isChecked) {
 
-    public ArrowExpandSelectableHeaderHolder(Context context, boolean isDefaultExpanded) {
-
-        this(context, isDefaultExpanded, (int) (context.getResources().getDimension(R.dimen.dp10) / context.getResources().getDisplayMetrics().density));
+        this(context, isDefaultExpanded, (int) (context.getResources().getDimension(R.dimen.dp10) / context.getResources().getDisplayMetrics().density), istViewClickRequired, confidentialState,isChecked);
     }
 
-    public ArrowExpandSelectableHeaderHolder(Context context, boolean isDefaultExpanded, int leftPadding) {
+    public ArrowExpandSelectableHeaderHolder(Context context, boolean isDefaultExpanded, int leftPadding, boolean istViewClickRequired, int confidentialState,boolean isChecked) {
         super(context);
         this.leftPadding = leftPadding;
         this.isDefaultExpanded = isDefaultExpanded;
+        this.istViewClickRequired = istViewClickRequired;
+        this.confidentialState = confidentialState;
+        this.isChecked = isChecked;
         nodeValueColor = ContextCompat.getColor(context, R.color.black);
+
+        if (context instanceof ArrowExpandSelectableHeaderHolderLockIconClickListener) {
+            lockIconClickListener = (ArrowExpandSelectableHeaderHolderLockIconClickListener) context;
+        }
     }
 
     @Override
@@ -49,6 +64,7 @@ public class ArrowExpandSelectableHeaderHolder extends TreeNode.BaseNodeViewHold
         final View view = inflater.inflate(R.layout.treeview_arrow_expandable_header, null, false);
 
         mainContentLayout = (LinearLayout) view.findViewById(R.id.mainContentLayout);
+        icon_lock = (ImageView) view.findViewById(R.id.icon_lock);
         mainContentLayout.setPadding(leftPadding, 0, 0, 0);
 
         tvValue = (TextView) view.findViewById(R.id.node_value);
@@ -66,21 +82,47 @@ public class ArrowExpandSelectableHeaderHolder extends TreeNode.BaseNodeViewHold
         }
 
 
-        arrowView = (PrintView) view.findViewById(R.id.arrow_icon);
+        arrowView = (ImageView) view.findViewById(R.id.icon);
         arrowView.setPadding(20, 10, 10, 10);
         if (node.isLeaf()) {
-            arrowView.setVisibility(View.INVISIBLE);
+            arrowView.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_tree_file));
         }
+
+
+        icon_lock.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (confidentialState == 2 || confidentialState == 3) {
+                    lockIconClickListener.onLockIconClick(node.getValue(), true);
+                }
+            }
+        });
+
         arrowView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (isOnlyOneNodeExpanded()) {
                     tView.toggleNode(node, isOnlyOneNodeExpanded());
+
                 } else {
                     tView.toggleNode(node, isOnlyOneNodeExpanded());
                 }
             }
         });
+        if (istViewClickRequired) {
+            tvValue.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (isOnlyOneNodeExpanded()) {
+                        tView.toggleNode(node, isOnlyOneNodeExpanded());
+
+                    } else {
+                        tView.toggleNode(node, isOnlyOneNodeExpanded());
+                    }
+                }
+            });
+
+        }
 
         nodeSelector = (CheckBox) view.findViewById(R.id.node_selector);
         nodeSelector.setClickable(false);
@@ -133,6 +175,16 @@ public class ArrowExpandSelectableHeaderHolder extends TreeNode.BaseNodeViewHold
                     getSelected());
         }
 
+        if (confidentialState == 2 || confidentialState == 3 || confidentialState == 4) {
+            icon_lock.setVisibility(View.VISIBLE);
+            if (confidentialState == 4) {
+                icon_lock.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_unlock));
+            }
+        }
+
+        if(isChecked){
+            nodeSelector.setChecked(isChecked);
+        }
 
         return view;
     }
@@ -140,12 +192,16 @@ public class ArrowExpandSelectableHeaderHolder extends TreeNode.BaseNodeViewHold
 
     @Override
     public void toggle(boolean active) {
-        arrowView.setIconText(context.getResources().getString(active ? R.string.ic_keyboard_arrow_down : R.string.ic_keyboard_arrow_right));
+        //  arrowView.setIconText(context.getResources().getString(active ? R.string.ic_keyboard_arrow_down : R.string.ic_keyboard_arrow_right));
+        if (!mNode.isLeaf())
+            arrowView.setImageDrawable(context.getResources().getDrawable(active ? R.drawable.ic_tree_folder_open : R.drawable.ic_tree_close_folder));
+
     }
 
     @Override
     public void toggleSelectionMode(boolean editModeEnabled) {
         nodeSelector.setVisibility(editModeEnabled ? View.VISIBLE : View.INVISIBLE);
+        icon_lock.setVisibility(editModeEnabled ? View.INVISIBLE : View.VISIBLE);
         nodeSelector.setChecked(mNode.isSelected());
     }
 
@@ -168,9 +224,17 @@ public class ArrowExpandSelectableHeaderHolder extends TreeNode.BaseNodeViewHold
     public void setOnlyOneNodeExpanded(boolean expandedOrCollapsed) {
         isOnlyOneNodeExpanded = expandedOrCollapsed;
     }
+    public void setCheckbox(boolean isCheck){
+            nodeSelector.setChecked(mNode.isSelected());
+    }
 
     public void setTreeLabelBold(boolean treeLabelBold) {
         isTreeLabelBold = treeLabelBold;
+    }
+
+
+    public interface ArrowExpandSelectableHeaderHolderLockIconClickListener {
+        void onLockIconClick(Object value, boolean isLeaf);
     }
 
 }

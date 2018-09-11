@@ -8,11 +8,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+
 import com.scorg.dms.R;
-import com.scorg.dms.model.patient.template_sms.TemplateList;
 import com.scorg.dms.model.my_appointments.PatientList;
 import com.scorg.dms.ui.customesViews.CustomTextView;
+
 import java.util.ArrayList;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 

@@ -13,7 +13,6 @@ import com.scorg.dms.interfaces.CustomResponse;
 import com.scorg.dms.preference.DMSPreferencesManager;
 import com.scorg.dms.singleton.Device;
 import com.scorg.dms.util.CommonMethods;
-import com.scorg.dms.util.Config;
 import com.scorg.dms.util.DMSConstants;
 
 import java.util.HashMap;
@@ -78,8 +77,7 @@ public class ConnectionFactory extends ConnectRequest {
 
         headerParams.put(DMSConstants.OS, device.getOS());
         headerParams.put(DMSConstants.DMS_OSVERSION, device.getOSVersion());
-        //  headerParams.put(DMSConstants.DEVICETYPE, device.getDeviceType());
-//        headerParams.put(DMSConstants.ACCESS_TOKEN, "");
+          headerParams.put(DMSConstants.DEVICE_TYPE, device.getDeviceType());
         CommonMethods.Log(TAG, "setHeaderParams:" + headerParams.toString());
         this.mHeaderParams = headerParams;
     }

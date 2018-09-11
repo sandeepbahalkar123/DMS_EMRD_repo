@@ -27,10 +27,11 @@ import com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemode
 import com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemodel.SearchResult;
 import com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemodel.SearchResultData;
 import com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemodel.ShowSearchResultResponseModel;
+import com.scorg.dms.model.waiting_list.WaitingClinicList;
 import com.scorg.dms.model.waiting_list.WaitingListDataModel;
 import com.scorg.dms.model.waiting_list.WaitingPatientData;
-import com.scorg.dms.model.waiting_list.WaitingClinicList;
 import com.scorg.dms.ui.activities.dms_patient_list.FileTypeViewerActivity;
+import com.scorg.dms.ui.activities.dms_patient_list.PatientDetailsActivity;
 import com.scorg.dms.ui.activities.waiting_list.WaitingMainListActivity;
 import com.scorg.dms.ui.customesViews.CircularImageView;
 import com.scorg.dms.ui.customesViews.CustomTextView;
@@ -44,6 +45,8 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.RuntimePermissions;
+
+import static com.scorg.dms.util.DMSConstants.PATIENT_DETAILS;
 
 /**
  * Created by jeetal on 22/2/18.
@@ -171,13 +174,23 @@ public class ViewAllPatientListFragment extends Fragment implements WaitingListA
     @Override
     public void onItemClick(WaitingPatientData clickItem) {
 
-        ShowSearchResultRequestModel showSearchResultRequestModel = new ShowSearchResultRequestModel();
-        // TODO: hardcoed for now, As patientList And WaitingList API patientID not sync from server
-        showSearchResultRequestModel.setPatientId("07535277");
-        // showSearchResultRequestModel.setPatientId(clickItem.getPatientId());
 
-        mPatientsHelper.doGetPatientList(showSearchResultRequestModel);
+        Intent intent = new Intent(getActivity(), FileTypeViewerActivity.class);
+        Bundle extra = new Bundle();
+        //ArrayList<PatientFileData> dataToSend = new ArrayList<PatientFileData>();
+        //dataToSend.add(childElement);
+        //  SearchResult searchPatientInformation = patientExpandableListAdapter.searchPatientInfo("" + groupHeader.getPatientId());
+        //todo: filepath(pdf url is not getting in api)
+        // extra.putSerializable(getString(R.string.compare), dataToSend);
+        // extra.putSerializable(getString(R.string.compare), new ArrayList<PatientFileData>());
 
+        extra.putString(DMSConstants.PATIENT_ADDRESS, clickItem.getPatAddress());
+        extra.putString(DMSConstants.DOCTOR_NAME, "");
+        extra.putString(DMSConstants.PATIENT_ID, clickItem.getPatientId());
+        extra.putString(DMSConstants.PAT_ID, clickItem.getPatId());
+        extra.putString(DMSConstants.PATIENT_LIST_PARAMS.PATIENT_NAME, "" + clickItem.getPatientName());
+        intent.putExtra(DMSConstants.DATA, extra);
+        startActivity(intent);
     }
 
 
@@ -185,6 +198,15 @@ public class ViewAllPatientListFragment extends Fragment implements WaitingListA
     public void onPhoneNoClick(long phoneNumber) {
         mClickedPhoneNumber =phoneNumber;
         ViewAllPatientListFragmentPermissionsDispatcher.doCallSupportWithCheck(this);
+    }
+
+    @Override
+    public void onClickedOfEpisodeListButton(SearchResult groupHeader) {
+        Intent intent = new Intent(getActivity(), PatientDetailsActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(PATIENT_DETAILS, groupHeader);
+        intent.putExtra(DMSConstants.BUNDLE, bundle);
+        startActivity(intent);
     }
 
     @NeedsPermission(Manifest.permission.CALL_PHONE)
@@ -206,7 +228,8 @@ public class ViewAllPatientListFragment extends Fragment implements WaitingListA
                     List<SearchResult> searchResultList = searchResultData.getSearchResult();
                     if (!searchResultList.isEmpty()) {
                         SearchResult searchPatientInformation = searchResultList.get(0);
-                        List<PatientFileData> patientFileDataList = searchPatientInformation.getPatientFileData();
+                        //TODO : as API response chnaged, hence need to fix this too.
+                        /*List<PatientFileData> patientFileDataList = searchPatientInformation.getPatientFileData();
                         if (patientFileDataList != null) {
                             if (!patientFileDataList.isEmpty()) {
                                 PatientFileData childElement = patientFileDataList.get(0);
@@ -222,7 +245,7 @@ public class ViewAllPatientListFragment extends Fragment implements WaitingListA
                                 intent.putExtra(DMSConstants.DATA, extra);
                                 startActivity(intent);
                             }
-                        }
+                        }*/
                     }
                 }
             }

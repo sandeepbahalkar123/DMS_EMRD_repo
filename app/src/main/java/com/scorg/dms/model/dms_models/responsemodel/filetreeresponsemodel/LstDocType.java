@@ -3,6 +3,9 @@ package com.scorg.dms.model.dms_models.responsemodel.filetreeresponsemodel;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class LstDocType {
 
     @SerializedName("typeId")
@@ -11,24 +14,39 @@ public class LstDocType {
     @SerializedName("typeName")
     @Expose
     private String typeName;
-    @SerializedName("abbreviation")
-    @Expose
-    private String abbreviation;
-    @SerializedName("createdDate")
-    @Expose
-    private String createdDate;
     @SerializedName("pageCount")
     @Expose
     private Integer pageCount;
+    @SerializedName("recordId")
+    @Expose
+    private Integer recordId;
+    @SerializedName("permission")
+    @Expose
+    private String permission;
+    @SerializedName("createdDate")
+    @Expose
+    private String createdDate;
+
     @SerializedName("pageNumber")
     @Expose
     private Integer pageNumber;
-    @SerializedName("filePath")
+
+    @SerializedName("recordDetailId")
     @Expose
-    private String encryptedPDFFilePath;
+    private Integer recordDetailId;
+    @SerializedName("confidentialState")
+    @Expose
+    private Integer confidentialState;
+
+    @SerializedName("fileTypeRefId")
+    @Expose
+    private String fileTypeRefId;
 
 
-    private String[] mergedFileCompareCustomID = null;
+
+    @SerializedName("lstdateFileType")
+    @Expose
+    private ArrayList<LstDateFileType> lstDateFileTypeList = new ArrayList<LstDateFileType>();
 
     public Integer getTypeId() {
         return typeId;
@@ -44,14 +62,6 @@ public class LstDocType {
 
     public void setTypeName(String typeName) {
         this.typeName = typeName;
-    }
-
-    public String getAbbreviation() {
-        return abbreviation;
-    }
-
-    public void setAbbreviation(String abbreviation) {
-        this.abbreviation = abbreviation;
     }
 
     public String getCreatedDate() {
@@ -78,21 +88,52 @@ public class LstDocType {
         this.pageNumber = pageNumber;
     }
 
-    public String[] getMergedFileCompareCustomID() {
-        return mergedFileCompareCustomID;
+    public Integer getRecordId() {
+        return recordId;
     }
 
-    public void setMergedFileCompareCustomID(String[] mergedFileCompareCustomID) {
-        this.mergedFileCompareCustomID = mergedFileCompareCustomID;
+    public void setRecordId(Integer recordId) {
+        this.recordId = recordId;
     }
 
-
-    public String getEncryptedPDFFilePath() {
-        return encryptedPDFFilePath;
+    public String getPermission() {
+        return permission;
     }
 
-    public void setEncryptedPDFFilePath(String encryptedPDFFilePath) {
-        this.encryptedPDFFilePath = encryptedPDFFilePath;
+    public void setPermission(String permission) {
+        this.permission = permission;
+    }
+
+    public ArrayList<LstDateFileType> getLstDateFileTypeList() {
+        return lstDateFileTypeList;
+    }
+
+    public void setLstDateFileTypeList(ArrayList<LstDateFileType> lstDateFileTypeList) {
+        this.lstDateFileTypeList = lstDateFileTypeList;
+    }
+
+    public Integer getRecordDetailId() {
+        return recordDetailId;
+    }
+
+    public void setRecordDetailId(Integer recordDetailId) {
+        this.recordDetailId = recordDetailId;
+    }
+
+    public Integer getConfidentialState() {
+        return confidentialState;
+    }
+
+    public void setConfidentialState(Integer confidentialState) {
+        this.confidentialState = confidentialState;
+    }
+
+    public String getFileTypeRefId() {
+        return fileTypeRefId;
+    }
+
+    public void setFileTypeRefId(String fileTypeRefId) {
+        this.fileTypeRefId = fileTypeRefId;
     }
 
     @Override
@@ -100,11 +141,15 @@ public class LstDocType {
         return "LstDocType{" +
                 "typeId=" + typeId +
                 ", typeName='" + typeName + '\'' +
-                ", abbreviation='" + abbreviation + '\'' +
-                ", createdDate='" + createdDate + '\'' +
                 ", pageCount=" + pageCount +
+                ", recordId=" + recordId +
+                ", permission='" + permission + '\'' +
+                ", createdDate='" + createdDate + '\'' +
                 ", pageNumber=" + pageNumber +
-                ", encryptedPDFFilePath='" + encryptedPDFFilePath + '\'' +
+                ", recordDetailId=" + recordDetailId +
+                ", confidentialState=" + confidentialState +
+                ", fileTypeRefId='" + fileTypeRefId + '\'' +
+                ", lstDateFileTypeList=" + lstDateFileTypeList +
                 '}';
     }
 }

@@ -64,19 +64,18 @@ public class BottomMenuAdapter extends RecyclerView.Adapter<BottomMenuAdapter.Li
                 mBottomMenuListClickListener.onBottomMenuClick(bottomMenu);
             }
         });
-        if(bottomMenu.getMenuName().equalsIgnoreCase(mContext.getString(R.string.home))){
-            holder.menuBottomIcon.setImageDrawable(ContextCompat.getDrawable(mContext,R.drawable.home));
+        if (bottomMenu.getMenuName().equalsIgnoreCase(mContext.getString(R.string.home))) {
+            holder.menuBottomIcon.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.home));
 
-        }else if(bottomMenu.getMenuName().equalsIgnoreCase(mContext.getString(R.string.profile))){
-            holder.menuBottomIcon.setImageDrawable(ContextCompat.getDrawable(mContext,R.drawable.profile_icon));
-        }else if(bottomMenu.getMenuName().equalsIgnoreCase(mContext.getString(R.string.app_logo))){
-            holder.menuBottomIcon.setImageDrawable(ContextCompat.getDrawable(mContext,R.drawable.logo));
-        }else if(bottomMenu.getMenuName().equalsIgnoreCase(mContext.getString(R.string.support))){
-            holder.menuBottomIcon.setImageDrawable(ContextCompat.getDrawable(mContext,R.drawable.support));
-        }else if(bottomMenu.getMenuName().equalsIgnoreCase(mContext.getString(R.string.settings))){
-            holder.menuBottomIcon.setImageDrawable(ContextCompat.getDrawable(mContext,R.drawable.settings));
+        } else if (bottomMenu.getMenuName().equalsIgnoreCase(mContext.getString(R.string.profile))) {
+            holder.menuBottomIcon.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.profile_icon));
+        } else if (bottomMenu.getMenuName().equalsIgnoreCase(mContext.getString(R.string.app_logo))) {
+            holder.menuBottomIcon.setImageDrawable(ContextCompat.getDrawable(mContext, R.mipmap.ic_launcher));
+        } else if (bottomMenu.getMenuName().equalsIgnoreCase(mContext.getString(R.string.support))) {
+            holder.menuBottomIcon.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.support));
+        } else if (bottomMenu.getMenuName().equalsIgnoreCase(mContext.getString(R.string.settings))) {
+            holder.menuBottomIcon.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.settings));
         }
-
 
 
 //for app logo

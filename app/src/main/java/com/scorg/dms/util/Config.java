@@ -99,6 +99,9 @@ public class Config {
     public static final String GET_WAITING_LIST = "/api/WaitingList";
     public static final String GET_MY_APPOINTMENTS_LIST = "/api/Appointment";
     public static final String URL_PATIENT_LIST = "/api/Result";
+    public static final String URL_PENDING_APPROVAL_LIST = "/api/PendingApprovalList";
+    public static final String URL_RAISE_REQUEST_CONFIDENTIAL = "/api/RaiseRequest";
+    public static final String URL_CANCEL_REQUEST_CONFIDENTIAL = "/api/UpdateRequest";
 
 }
 

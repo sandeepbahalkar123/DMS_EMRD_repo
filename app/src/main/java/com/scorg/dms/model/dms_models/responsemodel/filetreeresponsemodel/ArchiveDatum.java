@@ -12,13 +12,22 @@ public class ArchiveDatum {
     @SerializedName("fileType")
     @Expose
     private String fileType;
+
+    @SerializedName("confidentialState")
+    @Expose
+    private int confidentialState;
+
+    @SerializedName("lstDateFolderType")
+    @Expose
+    private List<LstDateFolderType> lstDateFolderTypeList = new ArrayList<LstDateFolderType>();
+
     @SerializedName("lstDocCategories")
     @Expose
-    private List<LstDocCategory> lstDocCategories = new ArrayList<LstDocCategory>();
+    private List<LstDocCategory> archiveDataLstDocCategories = new ArrayList<LstDocCategory>();
 
-    private String[] mergedFileCompareCustomID = null;
 
-    private int totalDocCategoryPageCount = -1;
+    private int totalLstDateFolderTypePageCount = -1;
+    private int totalArchiveDataLstDocCategoriesPageCount = -1;
 
 
     public String getFileType() {
@@ -29,46 +38,73 @@ public class ArchiveDatum {
         this.fileType = fileType;
     }
 
-    public List<LstDocCategory> getLstDocCategories() {
-        return lstDocCategories;
+    public List<LstDateFolderType> getLstDateFolderTypeList() {
+        return lstDateFolderTypeList;
     }
 
-    public void setLstDocCategories(List<LstDocCategory> lstDocCategories) {
-        this.lstDocCategories = lstDocCategories;
+    public void setLstDateFolderTypeList(List<LstDateFolderType> lstDateFolderTypeList) {
+        this.lstDateFolderTypeList = lstDateFolderTypeList;
     }
 
+    public void setTotalLstDateFolderTypePageCount(int totalLstDateFolderTypePageCount) {
+        this.totalLstDateFolderTypePageCount = totalLstDateFolderTypePageCount;
+    }
 
-    public int getTotalDocCategoryPageCount() {
-        if (totalDocCategoryPageCount == -1) {
+    public int getTotalLstDateFolderTypePageCount() {
+        if (totalLstDateFolderTypePageCount == -1) {
             int count = 0;
-            for (LstDocCategory temp :
-                    lstDocCategories) {
-                count = count + temp.getTotalDocTypePageCount();
+            for (LstDateFolderType temp :
+                    lstDateFolderTypeList) {
+                count = count + temp.getPageCount();
             }
-            setTotalDocCategoryPageCount(count);
+            setTotalLstDateFolderTypePageCount(count);
         }
-        return totalDocCategoryPageCount;
+        return totalLstDateFolderTypePageCount;
     }
 
-    public void setTotalDocCategoryPageCount(int totalDocCategoryPageCount) {
-        this.totalDocCategoryPageCount = totalDocCategoryPageCount;
+    public List<LstDocCategory> getArchiveDataLstDocCategories() {
+        return archiveDataLstDocCategories;
     }
 
-    public String[] getMergedFileCompareCustomID() {
-        return mergedFileCompareCustomID;
+    public void setArchiveDataLstDocCategories(List<LstDocCategory> archiveDataLstDocCategories) {
+        this.archiveDataLstDocCategories = archiveDataLstDocCategories;
     }
 
-    public void setMergedFileCompareCustomID(String[] mergedFileCompareCustomID) {
-        this.mergedFileCompareCustomID = mergedFileCompareCustomID;
+    public void setTotalArchiveDataLstDocCategoriesPageCount(int totalArchiveDataLstDocCategoriesPageCount) {
+        this.totalArchiveDataLstDocCategoriesPageCount = totalArchiveDataLstDocCategoriesPageCount;
+    }
+
+    public int getTotalArchiveDataLstDocCategoriesPageCount() {
+        if (archiveDataLstDocCategories != null) {
+            if (totalArchiveDataLstDocCategoriesPageCount == -1) {
+                int count = 0;
+                for (LstDocCategory temp :
+                        archiveDataLstDocCategories) {
+                    count = count + temp.getPageCount();
+                }
+                setTotalArchiveDataLstDocCategoriesPageCount(count);
+            }
+        }
+
+        return totalArchiveDataLstDocCategoriesPageCount;
+    }
+
+    public int getConfidentialState() {
+        return confidentialState;
+    }
+
+    public void setConfidentialState(int confidentialState) {
+        this.confidentialState = confidentialState;
     }
 
     @Override
     public String toString() {
         return "ArchiveDatum{" +
                 "fileType='" + fileType + '\'' +
-                ", lstDocCategories=" + lstDocCategories +
-                ", mergedFileCompareCustomID=" + Arrays.toString(mergedFileCompareCustomID) +
-                ", totalDocCategoryPageCount=" + totalDocCategoryPageCount +
+                ", lstDateFolderTypeList=" + lstDateFolderTypeList +
+                ", archiveDataLstDocCategories=" + archiveDataLstDocCategories +
+                ", totalLstDateFolderTypePageCount=" + totalLstDateFolderTypePageCount +
+                ", confidentialState=" + confidentialState +
                 '}';
     }
 }

@@ -4,8 +4,6 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.scorg.dms.interfaces.CustomResponse;
 import com.scorg.dms.model.Common;
-import com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemodel.SearchResult;
-import com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemodel.SearchResultData;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -35,6 +33,11 @@ public class EpisodeResponseModel implements CustomResponse, Serializable {
         @Expose
         private List<PatientEpisodeFileData> patientEpisodeFileDataList = new ArrayList<PatientEpisodeFileData>();
 
+        @SerializedName("ispaggination")
+        @Expose
+        private boolean ispaggination;
+
+
         public List<PatientEpisodeFileData> getPatientEpisodeFileDataList() {
             return patientEpisodeFileDataList;
         }
@@ -42,6 +45,15 @@ public class EpisodeResponseModel implements CustomResponse, Serializable {
         public void setPatientEpisodeFileDataList(List<PatientEpisodeFileData> patientEpisodeFileDataList) {
             this.patientEpisodeFileDataList = patientEpisodeFileDataList;
         }
+
+        public boolean isPaggination() {
+            return ispaggination;
+        }
+
+        public void setIspaggination(boolean ispaggination) {
+            this.ispaggination = ispaggination;
+        }
+
     }
 
     public EpisodeDataList getEpisodeDataList() {

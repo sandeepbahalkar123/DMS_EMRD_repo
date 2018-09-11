@@ -9,6 +9,7 @@ import android.os.Build;
 import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
 import android.view.ViewGroup.LayoutParams;
+
 import com.scorg.dms.R;
 
 public class JCropImageView extends AppCompatImageView {

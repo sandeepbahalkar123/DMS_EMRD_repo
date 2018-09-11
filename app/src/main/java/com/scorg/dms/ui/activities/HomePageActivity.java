@@ -3,68 +3,51 @@ package com.scorg.dms.ui.activities;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.AppCompatButton;
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SimpleItemAnimator;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
-import android.view.WindowManager;
-import android.widget.CompoundButton;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.amulyakhare.textdrawable.TextDrawable;
 import com.amulyakhare.textdrawable.util.ColorGenerator;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.request.RequestOptions;
-import com.google.gson.Gson;
 import com.scorg.dms.R;
-import com.scorg.dms.adapters.dashboard.DashBoardAppointmentListAdapter;
-import com.scorg.dms.adapters.dashboard.DashBoardWaitingList;
-import com.scorg.dms.bottom_menus.BottomMenu;
-import com.scorg.dms.bottom_menus.BottomMenuActivity;
-import com.scorg.dms.model.dashboard.DashboardDataModel;
-import com.scorg.dms.preference.DMSPreferencesManager;
-import com.scorg.dms.ui.activities.dms_patient_list.PatientList;
+import com.scorg.dms.adapters.dms_adapters.DashboardAppointmentListAdapter;
 import com.scorg.dms.helpers.dashboard.DashboardHelper;
 import com.scorg.dms.helpers.login.LoginHelper;
 import com.scorg.dms.interfaces.CustomResponse;
 import com.scorg.dms.interfaces.HelperResponse;
-import com.scorg.dms.model.dashboard.CalendarTypeList;
 import com.scorg.dms.model.dashboard.DashboardBaseModel;
-import com.scorg.dms.model.dashboard.DashboardDetails;
-import com.scorg.dms.model.doctor_location.DoctorLocationBaseModel;
-import com.scorg.dms.model.login.ActiveRequest;
-import com.scorg.dms.model.login.DocDetail;
-import com.scorg.dms.singleton.DMSApplication;
+import com.scorg.dms.model.dashboard.DashboardDataModel;
+import com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemodel.SearchResult;
+import com.scorg.dms.preference.DMSPreferencesManager;
 import com.scorg.dms.ui.activities.dashboard.SettingsActivity;
 import com.scorg.dms.ui.activities.dashboard.SupportActivity;
+import com.scorg.dms.ui.activities.dms_patient_list.PatientDetailsActivity;
+import com.scorg.dms.ui.activities.dms_patient_list.PatientList;
 import com.scorg.dms.ui.activities.my_appointments.MyAppointmentsActivity;
+import com.scorg.dms.ui.activities.pending_approval_list.RequestedArchivedMainListActivity;
 import com.scorg.dms.ui.activities.waiting_list.WaitingMainListActivity;
-import com.scorg.dms.ui.customesViews.CircularImageView;
 import com.scorg.dms.ui.customesViews.CustomTextView;
 import com.scorg.dms.ui.customesViews.SwitchButton;
 import com.scorg.dms.util.CommonMethods;
 import com.scorg.dms.util.DMSConstants;
-
-import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -73,13 +56,14 @@ import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.RuntimePermissions;
 
 import static com.scorg.dms.util.DMSConstants.ACTIVE_STATUS;
+import static com.scorg.dms.util.DMSConstants.PATIENT_DETAILS;
 
 /**
  * Created by jeetal on 28/6/17.
  */
 
 @RuntimePermissions
-public class HomePageActivity extends BottomMenuActivity implements HelperResponse {
+public class HomePageActivity extends AppCompatActivity implements HelperResponse,DashboardAppointmentListAdapter.OnItemClickListener {
 
     private static final String TAG = "Home";
 
@@ -106,26 +90,56 @@ public class HomePageActivity extends BottomMenuActivity implements HelperRespon
     @BindView(R.id.aboutDoctorTextView)
     CustomTextView aboutDoctorTextView;
 
-    @BindView(R.id.doctorInfoLayout)
-    LinearLayout doctorInfoLayout;
+    @BindView(R.id.recyclerView)
+    RecyclerView recyclerView;
 
-    @BindView(R.id.dashBoradBgframeLayout)
-    RelativeLayout dashBoradBgframeLayout;
-    @BindView(R.id.nestedScrollView)
-    NestedScrollView nestedScrollView;
+    @BindView(R.id.layoutDrawerSetting)
+    LinearLayout layoutDrawerSetting;
+
+    @BindView(R.id.layoutDrawerHome)
+    LinearLayout layoutDrawerHome;
+
+    @BindView(R.id.layoutDrawerSupport)
+    LinearLayout layoutDrawerSupport;
+
+    @BindView(R.id.drawer_layout)
+    DrawerLayout mDrawer;
+
+    @BindView(R.id.layoutDrawerIcon)
+    LinearLayout layoutDrawerIcon;
+
+
+    @BindView(R.id.nav_right_view)
+    FrameLayout mRightNavigationView;
 
     ImageView menuImageView;
     CustomTextView appointmentTextView;
+    @BindView(R.id.viewTextView)
     CustomTextView viewTextView;
-    RecyclerView recyclerView;
+
+    @BindView(R.id.layoutTotalPatients)
+    RelativeLayout layoutTotalPatients;
+
+    @BindView(R.id.layoutTodayAppointment)
+    RelativeLayout layoutTodayAppointment;
+
+    @BindView(R.id.layoutWaitingPatient)
+    RelativeLayout layoutWaitingPatient;
+
+    @BindView(R.id.layoutPendingApproval)
+    RelativeLayout layoutPendingApproval;
+
+    @BindView(R.id.emptyListView)
+    RelativeLayout emptyListView;
+
     ImageView menuImageWaitingList;
     CustomTextView menuNameTextView;
     ImageView dashboardArrowImageView;
     SwitchButton radioSwitch;
+
     @BindView(R.id.hostViewsLayout)
     LinearLayout hostViewsLayout;
-    @BindView(R.id.doctorDashboardImage)
-    CircularImageView doctorDashboardImage;
+
 
     private Context mContext;
     private String docId;
@@ -135,7 +149,7 @@ public class HomePageActivity extends BottomMenuActivity implements HelperRespon
     private DashboardDataModel mDashboardDataModel;
     private ColorGenerator mColorGenerator;
 
-    private DashBoardAppointmentListAdapter mDashBoardAppointmentListAdapter;
+    private DashboardAppointmentListAdapter mDashBoardAppointmentListAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -149,31 +163,36 @@ public class HomePageActivity extends BottomMenuActivity implements HelperRespon
         docId = DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.DOC_ID, mContext);
         loginHelper = new LoginHelper(mContext, HomePageActivity.this);
         initialize();
-        setCurrentActivityTab(getString(R.string.home));
+
         //drawerConfiguration();
     }
 
 
     private void initialize() {
-
+        int width = (int) (getResources().getDisplayMetrics().widthPixels / (CommonMethods.isTablet(mContext) ? 2.5 : 2));
+        ViewGroup.LayoutParams layoutParams = mRightNavigationView.getLayoutParams();
+        layoutParams.width = width;
+        mRightNavigationView.setLayoutParams(layoutParams);
         mDashboardHelper = new DashboardHelper(this, this);
         String doctorNameToDisplay;
+        String hospitalNameToDisplay;
         if (DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.USER_NAME, mContext).toLowerCase().contains("Dr.")) {
-            doctorNameToDisplay = DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.USER_NAME, mContext);
+            doctorNameToDisplay = DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.DOC_NAME, mContext);
         } else {
-            doctorNameToDisplay = "Dr. " + DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.USER_NAME, mContext);
+            doctorNameToDisplay = "Dr. " + DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.DOC_NAME, mContext);
         }
+        hospitalNameToDisplay = DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.HOSPITAL_NAME, mContext);
 
         doctorNameTextView.setText(doctorNameToDisplay);
-        aboutDoctorTextView.setText("");// TODO: not getting from API right now
-        setUpImage();
+        aboutDoctorTextView.setText(hospitalNameToDisplay);// TODO: not getting from API right now
+
     }
 
     @Override
     protected void onResume() {
         if (mDashboardDataModel == null)
             mDashboardHelper.doGetDashboardResponse();
-        setUpImage();
+
         super.onResume();
     }
 
@@ -200,8 +219,6 @@ public class HomePageActivity extends BottomMenuActivity implements HelperRespon
         dialog.setContentView(R.layout.dialog_exit);
         dialog.setCanceledOnTouchOutside(false);
         dialog.setCancelable(false);
-
-
         dialog.findViewById(R.id.button_ok).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -257,47 +274,31 @@ public class HomePageActivity extends BottomMenuActivity implements HelperRespon
                 if (DMSConstants.RESPONSE_OK.equalsIgnoreCase(mDashboardBaseModel.getCommon().getSuccess())) {
                     mDashboardDataModel = mDashboardBaseModel.getDashboardDataModel();
                     if (mDashboardDataModel != null) {
-                        pendingApprovalCount.setText(mDashboardDataModel.getPendingApprovedCount());
+                       pendingApprovalCount.setText(mDashboardDataModel.getPendingApprovedCount());
                         totalPatientsCount.setText(mDashboardDataModel.getTotalPatientCount());
                         todayAppointmentsCount.setText(mDashboardDataModel.getAppointmentCount());
-                        waitingPatientCount.setText(mDashboardDataModel.getWaitingCount());
+                       waitingPatientCount.setText(mDashboardDataModel.getWaitingCount());
+                        DMSPreferencesManager.putInt(DMSPreferencesManager.DMS_PREFERENCES_KEY.ARCHIVE_API_COUNT,mDashboardDataModel.getViewArchivedApiTakeCount() , mContext);
 
-                        setLayoutForAppointment(true, mDashboardDataModel.getAppointmentOpdOTAndOtherCountList());
+
+                        LinearLayoutManager linearlayoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
+                        recyclerView.setLayoutManager(linearlayoutManager);
+                        mDashBoardAppointmentListAdapter = new DashboardAppointmentListAdapter(mContext, mDashboardDataModel.getAppointmentPatientDataList(),this);
+                        recyclerView.setAdapter(mDashBoardAppointmentListAdapter);
+                        if(mDashboardDataModel.getAppointmentPatientDataList().size()<=0)
+                            emptyListView.setVisibility(View.VISIBLE);
+
+
+                        // setLayoutForAppointment(true, mDashboardDataModel.getAppointmentOpdOTAndOtherCountList());
                         // inflate waiting list layout
-                        setLayoutForWaitingList(mDashboardDataModel.getWaitingCount());
+                        // setLayoutForWaitingList(mDashboardDataModel.getWaitingCount());
 
-                        setLayoutForMyPatients();
+                        //setLayoutForMyPatients();
                     }
                 }
                 break;
         }
 
-    }
-
-    @SuppressLint("CheckResult")
-    private void setUpImage() {
-        String mDoctorName = DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.USER_NAME, mContext);
-        if (mDoctorName.contains("Dr. ")) {
-            mDoctorName = mDoctorName.replace("Dr. ", "");
-        }
-        int color2 = mColorGenerator.getColor(mDoctorName);
-        TextDrawable drawable = TextDrawable.builder()
-                .beginConfig()
-                .width(Math.round(getResources().getDimension(R.dimen.dp40))) // width in px
-                .height(Math.round(getResources().getDimension(R.dimen.dp40))) // height in px
-                .endConfig()
-                .buildRound(("" + mDoctorName.charAt(0)).toUpperCase(), color2);
-        RequestOptions requestOptions = new RequestOptions();
-        requestOptions.dontAnimate();
-        requestOptions.placeholder(drawable);
-        requestOptions.error(drawable);
-        requestOptions.skipMemoryCache(true);
-        requestOptions.diskCacheStrategy(DiskCacheStrategy.NONE);
-
-        Glide.with(mContext)
-                .load(DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.PROFILE_PHOTO, mContext))
-                .apply(requestOptions).thumbnail(0.5f)
-                .into(doctorDashboardImage);
     }
 
     @Override
@@ -329,41 +330,57 @@ public class HomePageActivity extends BottomMenuActivity implements HelperRespon
 
     }
 
-    @OnClick({R.id.totalPatientsCount, R.id.todayAppointmentsCount, R.id.waitingPatientCount, R.id.doctorDashboardImage})
+    @OnClick({R.id.viewTextView,R.id.layoutDrawerIcon,R.id.layoutTotalPatients, R.id.layoutTodayAppointment, R.id.layoutWaitingPatient, R.id.layoutDrawerSetting, R.id.layoutDrawerSupport,R.id.layoutPendingApproval,R.id.layoutDrawerHome})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.viewPagerDoctorItem:
                 break;
-            case R.id.todayAppointmentsCount:
-                Intent myAppointmentsActivity = new Intent(this, MyAppointmentsActivity.class);
-                startActivity(myAppointmentsActivity);
+            case R.id.layoutTodayAppointment:
+                if( mDashboardDataModel != null && !mDashboardDataModel.getAppointmentCount().equalsIgnoreCase("0") ) {
+                    Intent myAppointmentsActivity = new Intent(this, MyAppointmentsActivity.class);
+                    startActivity(myAppointmentsActivity);
+                }
                 break;
-            case R.id.waitingPatientCount:
-                Intent todayAppointmentsOrWaitingList = new Intent(this, WaitingMainListActivity.class);
-                startActivity(todayAppointmentsOrWaitingList);
+            case R.id.layoutWaitingPatient:
+               if( mDashboardDataModel != null && !mDashboardDataModel.getWaitingCount().equalsIgnoreCase("0") ) {
+                   Intent todayAppointmentsOrWaitingList = new Intent(this, WaitingMainListActivity.class);
+                   startActivity(todayAppointmentsOrWaitingList);
+               }
                 break;
-            case R.id.totalPatientsCount:
-                Intent patientList = new Intent(this, PatientList.class);
-                patientList.putExtra(DMSConstants.PATIENT_LIST_PARAMS.FILE_TYPE, mDashboardDataModel.getFileTypes());
-                startActivity(patientList);
-                break;
-            case R.id.doctorDashboardImage:
-                break;
-        }
-    }
 
-    @Override
-    public void onBottomMenuClick(BottomMenu bottomMenu) {
+            case R.id.layoutPendingApproval:
+                if( mDashboardDataModel != null && !mDashboardDataModel.getPendingApprovedCount().equalsIgnoreCase("0") ) {
+                    Intent pendingApprovalList = new Intent(this, RequestedArchivedMainListActivity.class);
+                    startActivity(pendingApprovalList);
+                }
+                break;
+            case R.id.layoutTotalPatients:
+                if (mDashboardDataModel != null && !mDashboardDataModel.getTotalPatientCount().equalsIgnoreCase("0") ) {
+                    Intent patientList = new Intent(this, PatientList.class);
+                    patientList.putExtra(DMSConstants.PATIENT_LIST_PARAMS.FILE_TYPE, mDashboardDataModel.getFileTypes());
+                    startActivity(patientList);
+                }
+                break;
+            case R.id.layoutDrawerSetting:
+                Intent intentDrawerSetting = new Intent(this, SettingsActivity.class);
+                startActivity(intentDrawerSetting);
+                break;
+            case R.id.layoutDrawerSupport:
+                Intent intentDrawerSupport = new Intent(this, SupportActivity.class);
+                startActivity(intentDrawerSupport);
+                break;
+            case R.id.layoutDrawerIcon:
+                mDrawer.openDrawer(GravityCompat.START);
+                break;
+            case R.id.viewTextView:
+                if(!mDashboardDataModel.getAppointmentCount().equalsIgnoreCase("0") && mDashboardDataModel != null) {
+                    Intent myAppointmentsActivity = new Intent(this, MyAppointmentsActivity.class);
+                    startActivity(myAppointmentsActivity);
+                }
+                break;
+            case R.id.layoutDrawerHome:
+                break;
 
-        if (bottomMenu.getMenuName().equalsIgnoreCase(getString(R.string.support))) {
-            Intent intent = new Intent(this, SupportActivity.class);
-            startActivity(intent);
-        } else if (bottomMenu.getMenuName().equalsIgnoreCase(getString(R.string.settings))) {
-            Intent intent = new Intent(this, SettingsActivity.class);
-            startActivity(intent);
-        } else if (bottomMenu.getMenuName().equalsIgnoreCase(getString(R.string.profile))) {
-            Intent intent = new Intent(this, ProfileActivity.class);
-            startActivity(intent);
         }
     }
 
@@ -379,7 +396,18 @@ public class HomePageActivity extends BottomMenuActivity implements HelperRespon
         super.onDestroy();
     }
 
+    @Override
+    public void onClickedOfEpisodeListButton(SearchResult groupHeader) {
+        Intent intent = new Intent(this, PatientDetailsActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(PATIENT_DETAILS, groupHeader);
+        intent.putExtra(DMSConstants.BUNDLE, bundle);
+        startActivity(intent);
+
+    }
+
     //------Set dynamic layout for appointment,waiting and my_patient: START
+/*
 
     private void setLayoutForAppointment(boolean isRecyclerViewRequired, ArrayList<DashboardDataModel.AppointmentOpdAndOtherCount> calendarTypeList) {
         LayoutInflater inflater = LayoutInflater.from(mContext);
@@ -479,6 +507,7 @@ public class HomePageActivity extends BottomMenuActivity implements HelperRespon
         dashboardArrowImageView.setVisibility(View.VISIBLE);
     }
 
+*/
 
     //------Set dynamic layout for appointment,waiting and my_patient: END
 }

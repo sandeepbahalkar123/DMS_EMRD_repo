@@ -29,7 +29,6 @@ import com.scorg.dms.ui.activities.HomePageActivity;
 import com.scorg.dms.util.CommonMethods;
 import com.scorg.dms.util.DMSConstants;
 
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -142,7 +141,7 @@ public class OTPConfirmationForSignUp extends Fragment implements HelperResponse
 
         @Override
         public void onTick(long millisUntilFinished) {
-//			mProgressText.setText(" "+millisUntilFinished / 1000 + " secs" );
+//			mProgressText.setSearchValue(" "+millisUntilFinished / 1000 + " secs" );
             if (getActivity() != null) {
                 if (!getActivity().isFinishing()) {
                     String format = "" + (millisUntilFinished / 1000);

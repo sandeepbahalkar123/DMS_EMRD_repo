@@ -26,24 +26,23 @@ import com.android.volley.toolbox.StringRequest;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.scorg.dms.R;
-import com.scorg.dms.model.dms_models.responsemodel.annotationlistresponsemodel.AnnotationListResponseModel;
-import com.scorg.dms.model.dms_models.responsemodel.episode_list.EpisodeResponseModel;
-import com.scorg.dms.model.dms_models.responsemodel.filetreeresponsemodel.FileTreeResponseModel;
-import com.scorg.dms.model.dms_models.responsemodel.getpdfdataresponsemodel.GetPdfDataResponseModel;
-import com.scorg.dms.model.dms_models.responsemodel.loginresponsemodel.LoginResponseModel;
-import com.scorg.dms.model.dms_models.responsemodel.patientnamelistresponsemodel.PatientNameListResponseModel;
-import com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemodel.ShowSearchResultResponseModel;
 import com.scorg.dms.helpers.database.AppDBHelper;
-import com.scorg.dms.model.dms_models.responsemodel.iptestresponsemodel.IpTestResponseModel;
-import com.scorg.dms.model.patient.doctor_patients.MyPatientBaseModel;
 import com.scorg.dms.interfaces.ConnectionListener;
 import com.scorg.dms.interfaces.Connector;
 import com.scorg.dms.interfaces.CustomResponse;
 import com.scorg.dms.model.CommonBaseModelContainer;
 import com.scorg.dms.model.case_details.CaseDetailsModel;
-
 import com.scorg.dms.model.completed_opd.CompletedOpdBaseModel;
 import com.scorg.dms.model.dashboard.DashboardBaseModel;
+import com.scorg.dms.model.dms_models.requestmodel.archive.UnlockRequestResponseBaseModel;
+import com.scorg.dms.model.dms_models.responsemodel.annotationlistresponsemodel.AnnotationListResponseModel;
+import com.scorg.dms.model.dms_models.responsemodel.episode_list.EpisodeResponseModel;
+import com.scorg.dms.model.dms_models.responsemodel.filetreeresponsemodel.FileTreeResponseModel;
+import com.scorg.dms.model.dms_models.responsemodel.getpdfdataresponsemodel.GetPdfDataResponseModel;
+import com.scorg.dms.model.dms_models.responsemodel.iptestresponsemodel.IpTestResponseModel;
+import com.scorg.dms.model.dms_models.responsemodel.loginresponsemodel.LoginResponseModel;
+import com.scorg.dms.model.dms_models.responsemodel.patientnamelistresponsemodel.PatientNameListResponseModel;
+import com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemodel.ShowSearchResultResponseModel;
 import com.scorg.dms.model.doctor_connect.DoctorConnectBaseModel;
 import com.scorg.dms.model.doctor_connect_chat.DoctorConnectChatBaseModel;
 import com.scorg.dms.model.doctor_connect_search.DoctorConnectSearchBaseModel;
@@ -54,11 +53,14 @@ import com.scorg.dms.model.login.SignUpModel;
 import com.scorg.dms.model.my_appointments.MyAppointmentsBaseModel;
 import com.scorg.dms.model.my_patient_filter.LocationsModel;
 import com.scorg.dms.model.new_patient.NewPatientBaseModel;
+import com.scorg.dms.model.patient.doctor_patients.MyPatientBaseModel;
 import com.scorg.dms.model.patient.doctor_patients.sync_resp.SyncPatientsModel;
 import com.scorg.dms.model.patient.patient_connect.ChatPatientConnectModel;
 import com.scorg.dms.model.patient.patient_connect.PatientConnectBaseModel;
 import com.scorg.dms.model.patient.patient_history.PatientHistoryBaseModel;
 import com.scorg.dms.model.patient.template_sms.TemplateBaseModel;
+import com.scorg.dms.model.pending_approval_list.CancelUnlockRequestResponseBaseModel;
+import com.scorg.dms.model.pending_approval_list.RequestedArchivedBaseModel;
 import com.scorg.dms.model.request_appointment_confirmation.ResponseAppointmentConfirmationModel;
 import com.scorg.dms.model.requestmodel.login.LoginRequestModel;
 import com.scorg.dms.model.select_slot_book_appointment.TimeSlotListBaseModel;
@@ -120,7 +122,7 @@ public class RequestManager extends ConnectRequest implements Connector, Request
             RequestPool.getInstance(this.mContext).cancellAllPreviousRequestWithSameTag(requestTag);
 
             if (isProgressBarShown) {
-                mProgressDialog.setCancelable(true);
+                mProgressDialog.setCancelable(false);
                 mProgressDialog.show();
             } else {
                 if (mProgressDialog != null && mProgressDialog.isShowing()) {
@@ -368,7 +370,8 @@ public class RequestManager extends ConnectRequest implements Connector, Request
                     //  loginRequest();
                 } else {
                     mConnectionListener.onResponse(ConnectionListener.SERVER_ERROR, null, mOldDataTag);
-                    CommonMethods.showToast(mContext, mContext.getResources().getString(R.string.server_error));
+                    if (DMSConstants.TASK_LOGIN_CODE != mOldDataTag)
+                        CommonMethods.showToast(mContext, mContext.getResources().getString(R.string.server_error));
                 }
             } else if (error instanceof NetworkError) {
 
@@ -444,17 +447,26 @@ public class RequestManager extends ConnectRequest implements Connector, Request
             if (isTokenExpired) {
                 // This success response is for refresh token
                 // Need to Add
-                LoginModel loginModel = gson.fromJson(data, LoginModel.class);
-                if (loginModel.getCommon().getStatusCode().equals(SUCCESS)) {
-                    DMSPreferencesManager.putString(DMSPreferencesManager.DMS_PREFERENCES_KEY.AUTHTOKEN, loginModel.getDoctorLoginData().getAuthToken(), mContext);
-                    DMSPreferencesManager.putString(DMSPreferencesManager.DMS_PREFERENCES_KEY.LOGIN_STATUS, DMSConstants.YES, mContext);
-                    DMSPreferencesManager.putString(DMSPreferencesManager.DMS_PREFERENCES_KEY.DOC_ID, String.valueOf(loginModel.getDoctorLoginData().getDocDetail().getDocId()), mContext);
+                LoginResponseModel loginResponseModel = gson.fromJson(data, LoginResponseModel.class);
+                DMSPreferencesManager.putString(DMSConstants.LOGIN_SUCCESS, DMSConstants.TRUE, mContext);
+                DMSPreferencesManager.putString(DMSConstants.ACCESS_TOKEN, loginResponseModel.getAccessToken(), mContext);
+                DMSPreferencesManager.putString(DMSConstants.TOKEN_TYPE, loginResponseModel.getTokenType(), mContext);
+                DMSPreferencesManager.putString(DMSConstants.REFRESH_TOKEN, loginResponseModel.getRefreshToken(), mContext);
+                DMSPreferencesManager.putString(DMSConstants.USERNAME, DMSPreferencesManager.getString(DMSConstants.USERNAME,mContext), mContext);
+                DMSPreferencesManager.putString(DMSConstants.PASSWORD, DMSPreferencesManager.getString(DMSConstants.PASSWORD,mContext), mContext);
+                DMSPreferencesManager.putString(DMSPreferencesManager.DMS_PREFERENCES_KEY.DOC_ID, String.valueOf(loginResponseModel.getDoctorId()), mContext);
+                DMSPreferencesManager.putString(DMSPreferencesManager.DMS_PREFERENCES_KEY.USER_GENDER, loginResponseModel.getUserGender(), mContext);
+                DMSPreferencesManager.putString(DMSPreferencesManager.DMS_PREFERENCES_KEY.DOC_NAME, loginResponseModel.getDoctorName(), mContext);
+                DMSPreferencesManager.putString(DMSPreferencesManager.DMS_PREFERENCES_KEY.HOSPITAL_NAME, loginResponseModel.getHospitalName(), mContext);
 
-                    mHeaderParams.put(DMSConstants.AUTHORIZATION_TOKEN, loginModel.getDoctorLoginData().getAuthToken());
-                    connect();
-                } else {
-                    CommonMethods.showToast(mContext, loginModel.getCommon().getStatusMessage());
+                String authorizationString = "";
+                String contentType = DMSPreferencesManager.getString(DMSConstants.LOGIN_SUCCESS, mContext);
+                if (contentType.equalsIgnoreCase(DMSConstants.TRUE)) {
+                    authorizationString = DMSPreferencesManager.getString(DMSConstants.TOKEN_TYPE, mContext)
+                            + " " + DMSPreferencesManager.getString(DMSConstants.ACCESS_TOKEN, mContext);
                 }
+                mHeaderParams.put(DMSConstants.AUTHORIZATION, authorizationString);
+                connect();
 
             } else {
                 // This success response is for respective api's
@@ -631,6 +643,21 @@ public class RequestManager extends ConnectRequest implements Connector, Request
                         this.mConnectionListener.onResponse(ConnectionListener.RESPONSE_OK, episodeResponseModel, mOldDataTag);
                         break;
 
+                    case DMSConstants.TASK_PENDING_APPROVAL_LIST: //This is for get pending approval list
+                        RequestedArchivedBaseModel requestedArchivedBaseModel = gson.fromJson(data, RequestedArchivedBaseModel.class);
+                        this.mConnectionListener.onResponse(ConnectionListener.RESPONSE_OK, requestedArchivedBaseModel, mOldDataTag);
+                        break;
+
+                    case DMSConstants.TASK_RAISE_REQUEST_CONFIDENTIAL: //This is for unlock confidential file /folder
+                        UnlockRequestResponseBaseModel unlockRequestResponseBaseModel = gson.fromJson(data, UnlockRequestResponseBaseModel.class);
+                        this.mConnectionListener.onResponse(ConnectionListener.RESPONSE_OK, unlockRequestResponseBaseModel, mOldDataTag);
+                        break;
+
+                    case DMSConstants.TASK_CANCEL_REQUEST_CONFIDENTIAL: //This is for unlock confidential file /folder
+                        CancelUnlockRequestResponseBaseModel cancelUnlockRequestResponseBaseModel = gson.fromJson(data, CancelUnlockRequestResponseBaseModel.class);
+                        this.mConnectionListener.onResponse(ConnectionListener.RESPONSE_OK, cancelUnlockRequestResponseBaseModel, mOldDataTag);
+                        break;
+
                     default:
                         //This is for get PDF PatientNameListData
                         if (mOldDataTag.startsWith(DMSConstants.TASK_GET_PDF_DATA)) {
@@ -716,25 +743,26 @@ public class RequestManager extends ConnectRequest implements Connector, Request
 
     private void loginRequest() {
         CommonMethods.Log(TAG, "Refresh token while sending refresh token api: ");
-        String url = Config.BASE_URL + Config.LOGIN_URL;
+        String baseUrl = DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.SERVER_PATH, mContext);
+        String url = baseUrl + Config.URL_LOGIN;
 
-        LoginRequestModel loginRequestModel = new LoginRequestModel();
-
-        loginRequestModel.setEmailId(DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.EMAIL, mContext));
-        loginRequestModel.setPassword(DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.PASSWORD, mContext));
-        if (!(DMSConstants.BLANK.equalsIgnoreCase(loginRequestModel.getEmailId()) &&
-                DMSConstants.BLANK.equalsIgnoreCase(loginRequestModel.getPassword()))) {
+        if (!(DMSConstants.BLANK.equalsIgnoreCase(DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.USER_NAME, mContext)) &&
+                DMSConstants.BLANK.equalsIgnoreCase(DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.PASSWORD, mContext)))) {
             Map<String, String> headerParams = new HashMap<>();
-            headerParams.putAll(mHeaderParams);
             Device device = Device.getInstance(mContext);
-
-            headerParams.put(DMSConstants.CONTENT_TYPE, DMSConstants.APPLICATION_JSON);
+            headerParams.put(DMSConstants.CONTENT_TYPE, DMSConstants.APPLICATION_URL_ENCODED);
             headerParams.put(DMSConstants.DEVICEID, device.getDeviceId());
             headerParams.put(DMSConstants.OS, device.getOS());
-            headerParams.put(DMSConstants.OSVERSION, device.getOSVersion());
+            headerParams.put(DMSConstants.DMS_OSVERSION, device.getOSVersion());
             headerParams.put(DMSConstants.DEVICE_TYPE, device.getDeviceType());
             CommonMethods.Log(TAG, "setHeaderParams:" + headerParams.toString());
-            jsonRequest(url, Request.Method.POST, headerParams, loginRequestModel, true);
+            Map<String, String> postParams = new HashMap<String, String>();
+            postParams.put(DMSConstants.GRANT_TYPE_KEY, DMSConstants.REFRESH_TOKEN);
+            postParams.put(DMSConstants.REFRESH_TOKEN, DMSPreferencesManager.getString(DMSConstants.REFRESH_TOKEN, mContext));
+            postParams.put(DMSConstants.CLIENT_ID_KEY, DMSConstants.CLIENT_ID_VALUE);
+            CommonMethods.Log(TAG, "setPostParams:" + postParams.toString());
+
+            stringRequest(url, Request.Method.POST, headerParams, postParams, true);
         } else {
             mConnectionListener.onResponse(ConnectionListener.PARSE_ERR0R, null, mOldDataTag);
         }

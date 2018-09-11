@@ -17,13 +17,12 @@ import com.scorg.dms.R;
 import com.scorg.dms.helpers.myappointments.AppointmentHelper;
 import com.scorg.dms.interfaces.CustomResponse;
 import com.scorg.dms.interfaces.HelperResponse;
-import com.scorg.dms.model.waiting_list.WaitingListBaseModel;
 import com.scorg.dms.model.waiting_list.WaitingClinicList;
+import com.scorg.dms.model.waiting_list.WaitingListBaseModel;
 import com.scorg.dms.model.waiting_list.WaitingListDataModel;
 import com.scorg.dms.ui.customesViews.CustomTextView;
 import com.scorg.dms.ui.fragments.waiting_list.ActivePatientListFragment;
 import com.scorg.dms.ui.fragments.waiting_list.ViewAllPatientListFragment;
-import com.scorg.dms.util.DMSConstants;
 
 import java.util.ArrayList;
 import java.util.List;

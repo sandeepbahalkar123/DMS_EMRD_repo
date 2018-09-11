@@ -9,8 +9,6 @@ import android.support.v4.content.CursorLoader;
 
 import droidninja.filepicker.FilePickerConst;
 
-import static android.provider.MediaStore.MediaColumns.MIME_TYPE;
-
 public class PhotoDirectoryLoader extends CursorLoader {
 
   final String[] IMAGE_PROJECTION = {

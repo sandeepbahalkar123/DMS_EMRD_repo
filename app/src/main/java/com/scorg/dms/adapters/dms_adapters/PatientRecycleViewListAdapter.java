@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatImageButton;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -104,6 +105,19 @@ public class PatientRecycleViewListAdapter extends RecyclerView.Adapter<PatientR
                 .apply(requestOptions)
                 .into(groupViewHolder.patientImageView);
         //-------------
+//        Log.e("age","=="+groupHeader.getAge());
+//        Log.e("gender","=="+groupHeader.getGender());
+
+        if (groupHeader.getAge()!= null) {
+            groupViewHolder.userAge.setVisibility(View.VISIBLE);
+            groupViewHolder.userAge.setText(groupHeader.getAge().concat(" Year"));
+        }
+
+
+        if (groupHeader.getGender() != null) {
+            groupViewHolder.userGender.setVisibility(View.VISIBLE);
+            groupViewHolder.userGender.setText(groupHeader.getGender());
+        }
 
         groupViewHolder.mainContentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -121,12 +135,7 @@ public class PatientRecycleViewListAdapter extends RecyclerView.Adapter<PatientR
             public void onClick(View v) {
                 SearchResult groupHeader = _originalListDataHeader.get(position);
 
-                Intent intent = new Intent(_context, PatientDetailsActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable(PATIENT_DETAILS, groupHeader);
-                intent.putExtra(DMSConstants.BUNDLE, bundle);
-                _context.startActivity(intent);
-
+                onPatientListener.onClickedOfEpisodeListButton(groupHeader);
             }
         });
 
@@ -144,6 +153,14 @@ public class PatientRecycleViewListAdapter extends RecyclerView.Adapter<PatientR
         LinearLayout mainContentLayout;
         @BindView(R.id.userName)
         TextView userName;
+
+        @BindView(R.id.userAge)
+        TextView userAge;
+
+        @BindView(R.id.userGender)
+        TextView userGender;
+
+
         @BindView(R.id.uhid)
         TextView uhid;
         @BindView(R.id.patientId)
@@ -183,6 +200,7 @@ public class PatientRecycleViewListAdapter extends RecyclerView.Adapter<PatientR
 
         void onPatientListItemClick(SearchResult groupHeader);
 
+        void onClickedOfEpisodeListButton(SearchResult groupHeader);
         void smoothScrollToPosition(int previousPosition);
     }
 

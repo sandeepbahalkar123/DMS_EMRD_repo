@@ -10,9 +10,7 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
-import droidninja.filepicker.FilePickerConst;
 import droidninja.filepicker.PickerManager;
-import droidninja.filepicker.R;
 import droidninja.filepicker.cursors.PhotoDirectoryLoader;
 import droidninja.filepicker.models.PhotoDirectory;
 

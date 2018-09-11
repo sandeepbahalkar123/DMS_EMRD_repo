@@ -65,7 +65,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
 
-                app:srcCompat="@drawable/layer_5" />
+                app:srcCompat="@drawable/logout" />
 
         </RelativeLayout>
 

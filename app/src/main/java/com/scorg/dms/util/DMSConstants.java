@@ -26,7 +26,7 @@ public class DMSConstants {
     public static final String DMS_OSVERSION = "OS-Version";
     public static final String DEVICE_TYPE = "DeviceType";
     public static final String APP_NAME = "appName";
-    public static final String ACCESS_TOKEN = "accessToken";
+    public static final String ACCESS_TOKEN = "access_token";
     public static final String TOKEN_TYPE = "token_type";
     public static final String REFRESH_TOKEN = "refresh_token";
     public static final String LDPI = "/LDPI/";
@@ -128,6 +128,9 @@ public class DMSConstants {
     public static final String TASK_GET_PATIENT_NAME_LIST = DMSConstants.BLANK + 43;
     public static final String TASK_LOGIN_CODE = DMSConstants.BLANK + 44;
     public static final String TASK_GET_EPISODE_LIST = DMSConstants.BLANK + 45;
+    public static final String TASK_PENDING_APPROVAL_LIST = DMSConstants.BLANK + 46;
+    public static final String TASK_RAISE_REQUEST_CONFIDENTIAL = DMSConstants.BLANK + 47;
+    public static final String TASK_CANCEL_REQUEST_CONFIDENTIAL = DMSConstants.BLANK + 48;
 
     //-----------
 
@@ -140,15 +143,7 @@ public class DMSConstants {
     public static final String GMAIL_LOGIN = "gmail_login";
     public static final String FACEBOOK_LOGIN = "facebook_login";
 
-    public static final String UPLOADING_STATUS = "uploading_status";
-    public static final String INVESTIGATION_NOTIFICATION_TIME = "9:00 AM";
-    public static final String APPOINTMENT_NOTIFICATION_TIME = "9:00 AM";
-    public static final String GMAIL_PACKAGE = "com.google.android.gm";
-    public static final String EMAIL = "email";
-    public static final String OPD_ID = "opd_id";
-    public static final String MYRECORDDATAMODEL = "myrecorddatamodel";
-    public static final String CAPTION = "caption";
-    public static final String TYPE_OF_LOGIN = "";
+
     public static final String SENDERID = "EMROTP";
     public static final String IS_URL = "isUrl";
     public static final String CHAT_REQUEST = "chat_request";
@@ -160,8 +155,9 @@ public class DMSConstants {
     public static final String DOCTOR_IMAGE_URL = "doctor_iamge_url";
     public static final String PATIENT_VISIT_DATE = "patient_visit_date";
     public static final String PATIENT_ID = "patient_id";
+    public static final String PAT_ID = "pat_id";
     public static final String NO = "no";
-    public static final String DOCTORS_ID = "doctor_id";
+    public static final String RECORD_ID = "record_id";
     public static final String VISIT_DATE = "visitDate";
     public static final String PATIENT_OBJECT = "patient_object";
     public static final String PATIENT_NAME = "patient_name";
@@ -332,6 +328,12 @@ public class DMSConstants {
         public static final String TO_DATE = "toDate";
         public static final String ANNOTATION_TEXT = "annotationText";
         public static final String DOC_TYPE_ID = "DocTypeId";
+    }
+
+    public static class ArchivedPreference {
+        public static final String FOLDER = "Folder";
+        public static final String DATE = "Date";
+        public static final String FILE = "File";
     }
 
 }

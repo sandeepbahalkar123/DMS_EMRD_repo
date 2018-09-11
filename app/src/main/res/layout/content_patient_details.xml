@@ -8,9 +8,92 @@
     tools:context=".ui.activities.dms_patient_list.PatientDetailsActivity"
     tools:showIn="@layout/activity_patient_details">
 
+
+    <LinearLayout
+        android:id="@+id/mainDataLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/tagColor"        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp36"
+            android:orientation="horizontal">
+
+            <com.scorg.dms.ui.customesViews.CustomTextView
+                android:layout_width="@dimen/dp0"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="right|center"
+                android:paddingRight="@dimen/dp5"
+                android:text="@string/uhid"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp17"
+                app:hintTextAppearance="@style/editTextInputLayout" />
+
+            <com.scorg.dms.ui.customesViews.CustomTextView
+                android:id="@+id/uhidData"
+                android:layout_width="@dimen/dp0"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="left|center"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp17" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp1"
+            android:background="@color/white"></View>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp36"
+            android:orientation="horizontal">
+
+            <com.scorg.dms.ui.customesViews.CustomTextView
+                android:layout_width="@dimen/dp0"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="right|center"
+                android:paddingRight="@dimen/dp5"
+                android:text="@string/patient_name"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp17"
+                app:hintTextAppearance="@style/editTextInputLayout" />
+
+            <com.scorg.dms.ui.customesViews.CustomTextView
+                android:id="@+id/patientName"
+                android:layout_width="@dimen/dp0"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="left|center"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp17" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp1"
+            android:background="@color/white"></View>
+
+        <AutoCompleteTextView
+            android:id="@+id/autoCompleteSearchBox"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp36"
+            android:layout_margin="@dimen/dp5"
+            android:background="@drawable/round_background_full_view"
+            android:gravity="center"
+            android:hint="Enter text"
+            android:textCursorDrawable="@drawable/cursor_color" />
+    </LinearLayout>
+
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/listOfOPDTypes"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_below="@+id/mainDataLayout" />
 
 </RelativeLayout>

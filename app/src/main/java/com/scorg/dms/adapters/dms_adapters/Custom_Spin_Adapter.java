@@ -53,7 +53,7 @@ public class Custom_Spin_Adapter extends BaseAdapter {
         TextView txt_data = (TextView) view.findViewById(R.id.custom_spinner_txt_view_txtField);
 
         txt_data.setText(choice[position]);
-        //  txt_id.setText(ids[position]);
+        //  txt_id.setSearchValue(ids[position]);
         txt_id.setVisibility(View.GONE);
         return view;
     }

@@ -44,7 +44,6 @@ import butterknife.OnClick;
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.RuntimePermissions;
 
-import static com.scorg.dms.util.DMSConstants.APPOINTMENT_STATUS.CONFIRM;
 import static com.scorg.dms.util.DMSConstants.SUCCESS;
 
 /**

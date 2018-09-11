@@ -3,6 +3,7 @@ package com.scorg.dms.model.my_records;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.scorg.dms.interfaces.CustomResponse;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 

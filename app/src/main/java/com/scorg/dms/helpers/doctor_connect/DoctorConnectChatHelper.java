@@ -5,7 +5,6 @@ import android.content.Context;
 import com.scorg.dms.interfaces.ConnectionListener;
 import com.scorg.dms.interfaces.CustomResponse;
 import com.scorg.dms.interfaces.HelperResponse;
-
 import com.scorg.dms.network.ConnectRequest;
 import com.scorg.dms.util.CommonMethods;
 import com.scorg.dms.util.DMSConstants;

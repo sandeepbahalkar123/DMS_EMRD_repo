@@ -4,15 +4,15 @@ import android.content.Context;
 
 import com.android.volley.Request;
 import com.scorg.dms.R;
-import com.scorg.dms.model.patient.add_new_patient.PatientDetail;
-import com.scorg.dms.model.patient.add_new_patient.SyncPatientsRequest;
-import com.scorg.dms.model.patient.doctor_patients.PatientList;
 import com.scorg.dms.interfaces.ConnectionListener;
 import com.scorg.dms.interfaces.CustomResponse;
 import com.scorg.dms.interfaces.HelperResponse;
 import com.scorg.dms.model.my_appointments.RequestAppointmentData;
 import com.scorg.dms.model.my_appointments.request_cancel_or_complete_appointment.RequestAppointmentCancelModel;
 import com.scorg.dms.model.my_patient_filter.LocationsRequest;
+import com.scorg.dms.model.patient.add_new_patient.PatientDetail;
+import com.scorg.dms.model.patient.add_new_patient.SyncPatientsRequest;
+import com.scorg.dms.model.patient.doctor_patients.PatientList;
 import com.scorg.dms.model.patient.template_sms.request_send_sms.ClinicListForSms;
 import com.scorg.dms.model.patient.template_sms.request_send_sms.RequestSendSmsModel;
 import com.scorg.dms.model.request_appointment_confirmation.RequestAppointmentConfirmationModel;
@@ -127,8 +127,8 @@ public class AppointmentHelper implements ConnectionListener {
         RequestAppointmentData mRequestAppointmentData = new RequestAppointmentData();
         mRequestAppointmentData.setDocId(Integer.valueOf(DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.DOC_ID, mContext)));
         String date = CommonMethods.getCurrentDate(DMSConstants.DATE_PATTERN.DD_MM_YYYY_SLASH);
-      //  mRequestAppointmentData.setDate(date);
-        mRequestAppointmentData.setDate("10/05/2018"); // TODO, ADDED FOR DEVELOPMENT, REMOVE IT LATER ON.
+        mRequestAppointmentData.setDate(date);
+        //mRequestAppointmentData.setDate("16/08/2018"); // TODO, ADDED FOR DEVELOPMENT, REMOVE IT LATER ON.
         mConnectionFactory.setPostParams(mRequestAppointmentData);
         mConnectionFactory.setHeaderParams();
         mConnectionFactory.setUrl(Config.GET_WAITING_LIST);

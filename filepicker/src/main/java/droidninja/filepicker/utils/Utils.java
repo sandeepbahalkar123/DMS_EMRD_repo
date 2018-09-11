@@ -2,21 +2,13 @@ package droidninja.filepicker.utils;
 
 import android.content.Context;
 import android.graphics.Point;
-import android.support.annotation.ColorRes;
-import android.support.annotation.IdRes;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.view.menu.ActionMenuItemView;
-import android.support.v7.widget.ActionMenuView;
-import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.view.Display;
-import android.view.View;
 import android.view.WindowManager;
-import android.webkit.MimeTypeMap;
 
 import com.android.internal.util.Predicate;
+
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 

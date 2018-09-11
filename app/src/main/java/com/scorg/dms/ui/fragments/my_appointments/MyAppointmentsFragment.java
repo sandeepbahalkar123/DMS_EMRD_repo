@@ -1,6 +1,5 @@
 package com.scorg.dms.ui.fragments.my_appointments;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
@@ -10,7 +9,6 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -20,12 +18,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.ExpandableListView;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.scorg.dms.R;
 import com.scorg.dms.adapters.my_appointments.AppointmentListAdapter;
@@ -46,6 +40,7 @@ import com.scorg.dms.model.my_appointments.MyAppointmentsDataModel;
 import com.scorg.dms.model.waiting_list.response_add_to_waiting_list.AddToWaitingListBaseModel;
 import com.scorg.dms.model.waiting_list.response_add_to_waiting_list.AddToWaitingResponse;
 import com.scorg.dms.ui.activities.dms_patient_list.FileTypeViewerActivity;
+import com.scorg.dms.ui.activities.dms_patient_list.PatientDetailsActivity;
 import com.scorg.dms.ui.activities.my_appointments.MyAppointmentsActivity;
 import com.scorg.dms.ui.activities.waiting_list.WaitingMainListActivity;
 import com.scorg.dms.ui.customesViews.EditTextWithDeleteButton;
@@ -61,8 +56,8 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 
 import static com.scorg.dms.ui.activities.waiting_list.WaitingMainListActivity.RESULT_CLOSE_ACTIVITY_WAITING_LIST;
-import static com.scorg.dms.util.CommonMethods.toCamelCase;
 import static com.scorg.dms.util.DMSConstants.APPOINTMENT_DATA;
+import static com.scorg.dms.util.DMSConstants.PATIENT_DETAILS;
 
 
 /**
@@ -154,12 +149,29 @@ public class MyAppointmentsFragment extends Fragment implements AppointmentListA
 
     @Override
     public void onClickOfPatientDetails(AppointmentPatientData patientListObject) {
-        ShowSearchResultRequestModel showSearchResultRequestModel = new ShowSearchResultRequestModel();
+       // ShowSearchResultRequestModel showSearchResultRequestModel = new ShowSearchResultRequestModel();
         // TODO: hardcoed for now, As patientList And WaitingList API patientID not sync from server
-        showSearchResultRequestModel.setPatientId("07535277");
+        //showSearchResultRequestModel.setPatientId("07535277");
         // showSearchResultRequestModel.setPatientId(patientListObject.getPatientId());
 
-        mPatientsHelper.doGetPatientList(showSearchResultRequestModel);
+//        mPatientsHelper.doGetPatientList(showSearchResultRequestModel);
+
+        Intent intent = new Intent(getActivity(), FileTypeViewerActivity.class);
+        Bundle extra = new Bundle();
+        //ArrayList<PatientFileData> dataToSend = new ArrayList<PatientFileData>();
+        //dataToSend.add(childElement);
+        //  SearchResult searchPatientInformation = patientExpandableListAdapter.searchPatientInfo("" + groupHeader.getPatientId());
+        //todo: filepath(pdf url is not getting in api)
+        // extra.putSerializable(getString(R.string.compare), dataToSend);
+        // extra.putSerializable(getString(R.string.compare), new ArrayList<PatientFileData>());
+
+        extra.putString(DMSConstants.PATIENT_ADDRESS, patientListObject.getPatAddress());
+        extra.putString(DMSConstants.DOCTOR_NAME, "");
+        extra.putString(DMSConstants.PATIENT_ID, patientListObject.getPatientId());
+        extra.putString(DMSConstants.PAT_ID, patientListObject.getPatId());
+        extra.putString(DMSConstants.PATIENT_LIST_PARAMS.PATIENT_NAME, "" + patientListObject.getPatientName());
+        intent.putExtra(DMSConstants.DATA, extra);
+        startActivity(intent);
 
     }
 
@@ -195,7 +207,9 @@ public class MyAppointmentsFragment extends Fragment implements AppointmentListA
                 List<SearchResult> searchResultList = searchResultData.getSearchResult();
                 if (!searchResultList.isEmpty()) {
                     SearchResult searchPatientInformation = searchResultList.get(0);
-                    List<PatientFileData> patientFileDataList = searchPatientInformation.getPatientFileData();
+                    //TODO : as API response chnaged, hence need to fix this too.
+
+                    /*List<PatientFileData> patientFileDataList = searchPatientInformation.getPatientFileData();
                     if (patientFileDataList != null) {
                         if (!patientFileDataList.isEmpty()) {
                             PatientFileData childElement = patientFileDataList.get(0);
@@ -211,7 +225,7 @@ public class MyAppointmentsFragment extends Fragment implements AppointmentListA
                             intent.putExtra(DMSConstants.DATA, extra);
                             startActivity(intent);
                         }
-                    }
+                    }*/
                 }
             }
         }
@@ -291,6 +305,17 @@ public class MyAppointmentsFragment extends Fragment implements AppointmentListA
 
     @Override
     public void setClickOnMenuItem(int position, BottomMenu bottomMenu) {
+
+    }
+
+    @Override
+    public void onClickedOfEpisodeListButton(SearchResult groupHeader) {
+
+        Intent intent = new Intent(getActivity(), PatientDetailsActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(PATIENT_DETAILS, groupHeader);
+        intent.putExtra(DMSConstants.BUNDLE, bundle);
+        startActivity(intent);
 
     }
 }

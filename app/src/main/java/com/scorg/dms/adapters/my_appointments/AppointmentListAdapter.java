@@ -41,8 +41,8 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.scorg.dms.R;
+import com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemodel.SearchResult;
 import com.scorg.dms.model.my_appointments.AppointmentPatientData;
-import com.scorg.dms.model.waiting_list.WaitingPatientData;
 import com.scorg.dms.ui.customesViews.CircularImageView;
 import com.scorg.dms.ui.customesViews.CustomTextView;
 import com.scorg.dms.ui.customesViews.swipeable_recyclerview.SwipeRevealLayout;
@@ -54,11 +54,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static com.scorg.dms.util.CommonMethods.toCamelCase;
-import static com.scorg.dms.util.DMSConstants.APPOINTMENT_STATUS.BOOKED;
 import static com.scorg.dms.util.DMSConstants.APPOINTMENT_STATUS.BOOKED_STATUS;
 import static com.scorg.dms.util.DMSConstants.APPOINTMENT_STATUS.CANCEL;
 import static com.scorg.dms.util.DMSConstants.APPOINTMENT_STATUS.COMPLETED;
-import static com.scorg.dms.util.DMSConstants.APPOINTMENT_STATUS.CONFIRM;
 import static com.scorg.dms.util.DMSConstants.APPOINTMENT_STATUS.CONFIRM_STATUS;
 import static com.scorg.dms.util.DMSConstants.APPOINTMENT_STATUS.NO_SHOW;
 import static com.scorg.dms.util.DMSConstants.APPOINTMENT_STATUS.OTHER;
@@ -92,7 +90,7 @@ public class AppointmentListAdapter
         private FrameLayout delete_layout;
         private FrameLayout front_layout;
         private CheckBox checkbox;
-        private SwipeRevealLayout swipe_layout;
+        private RelativeLayout swipe_layout;
         private RelativeLayout patientDetailsClickLinearLayout;
         private CustomTextView appointmentTime;
         private ImageView waitingIcon;
@@ -109,6 +107,7 @@ public class AppointmentListAdapter
         private Button appointmentReschedule;
         private Button appointmentCancel;
         private Button appointmentComplete;
+        private LinearLayout layoutAppointmentEpisode;
 
         MyViewHolder(View convertView) {
             super(convertView);
@@ -117,7 +116,7 @@ public class AppointmentListAdapter
             delete_layout = (FrameLayout) convertView.findViewById(R.id.delete_layout);
             waitingIcon = (ImageView) convertView.findViewById(R.id.waitingIcon);
 
-            swipe_layout = (SwipeRevealLayout) convertView.findViewById(R.id.swipe_layout);
+            swipe_layout = (RelativeLayout) convertView.findViewById(R.id.swipe_layout);
             checkbox = (CheckBox) convertView.findViewById(R.id.checkbox);
             patientDetailsClickLinearLayout = (RelativeLayout) convertView.findViewById(R.id.patientDetailsClickLinearLayout);
             appointmentTime = (CustomTextView) convertView.findViewById(R.id.appointmentTime);
@@ -130,6 +129,7 @@ public class AppointmentListAdapter
             patientPhoneNumber = (CustomTextView) convertView.findViewById(R.id.patientPhoneNumber);
             outstandingAmountTextView = (CustomTextView) convertView.findViewById(R.id.outstandingAmountTextView);
             payableAmountTextView = (CustomTextView) convertView.findViewById(R.id.payableAmountTextView);
+            layoutAppointmentEpisode = (LinearLayout) convertView.findViewById(R.id.layoutAppointmentEpisode);
         }
     }
 
@@ -284,6 +284,17 @@ public class AppointmentListAdapter
             }
         });
 
+        holder.layoutAppointmentEpisode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SearchResult searchResult =new SearchResult();
+                searchResult.setPatientName(appointmentPatientDataObject.getPatientName());
+                 searchResult.setPatientId(appointmentPatientDataObject.getPatientId());
+                searchResult.setPatientAddress(appointmentPatientDataObject.getPatAddress());
+                searchResult.setPatientImageURL(appointmentPatientDataObject.getPatientImageUrl());
+                onItemClickListener.onClickedOfEpisodeListButton(searchResult);
+            }
+        });
 
         holder.idAndDetailsLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -381,5 +392,7 @@ public class AppointmentListAdapter
         void onClickOfPatientDetails(AppointmentPatientData patientListObject);
 
         void onPhoneNoClick(long patientPhone);
+
+        void onClickedOfEpisodeListButton(SearchResult groupHeader);
     }
 }

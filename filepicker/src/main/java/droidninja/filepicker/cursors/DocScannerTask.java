@@ -14,7 +14,6 @@ import droidninja.filepicker.PickerManager;
 import droidninja.filepicker.cursors.loadercallbacks.FileResultCallback;
 import droidninja.filepicker.models.Document;
 import droidninja.filepicker.models.FileType;
-import droidninja.filepicker.utils.Utils;
 
 import static android.provider.BaseColumns._ID;
 import static android.provider.MediaStore.MediaColumns.DATA;

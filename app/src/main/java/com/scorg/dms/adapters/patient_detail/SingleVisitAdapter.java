@@ -27,8 +27,8 @@ import com.scorg.dms.model.case_details.PatientHistory;
 import com.scorg.dms.model.case_details.Range;
 import com.scorg.dms.model.case_details.VisitCommonData;
 import com.scorg.dms.model.case_details.Vital;
-import com.scorg.dms.ui.activities.zoom_images.MultipleImageWithSwipeAndZoomActivity;
 import com.scorg.dms.ui.activities.patient_details.WebViewActivity;
+import com.scorg.dms.ui.activities.zoom_images.MultipleImageWithSwipeAndZoomActivity;
 import com.scorg.dms.util.CommonMethods;
 import com.scorg.dms.util.DMSConstants;
 

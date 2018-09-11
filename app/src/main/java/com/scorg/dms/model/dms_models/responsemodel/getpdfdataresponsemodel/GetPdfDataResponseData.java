@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class GetPdfDataResponseData {
 
-    @SerializedName("fileData")
+    @SerializedName("fileInformation")
     @Expose
     private String fileData;
 

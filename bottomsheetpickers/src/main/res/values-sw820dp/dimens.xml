@@ -14,8 +14,7 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2"
-           xmlns:android="http://schemas.android.com/apk/res/android" >
+<resources>
 
     <dimen name="bsp_time_label_size">90sp</dimen>
     <dimen name="bsp_extra_time_label_margin">-30dp</dimen>

@@ -12,12 +12,24 @@ public class FileTreeResponseData {
     @Expose
     private List<ArchiveDatum> archiveData = new ArrayList<ArchiveDatum>();
 
+    @SerializedName("ispaggination")
+    @Expose
+    private boolean isPagination;
+
     public List<ArchiveDatum> getArchiveData() {
         return archiveData;
     }
 
     public void setArchiveData(List<ArchiveDatum> archiveData) {
         this.archiveData = archiveData;
+    }
+
+    public boolean isPagination() {
+        return isPagination;
+    }
+
+    public void setPagination(boolean pagination) {
+        isPagination = pagination;
     }
 
     @Override

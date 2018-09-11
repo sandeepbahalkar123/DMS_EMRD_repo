@@ -6,9 +6,9 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Window;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -21,12 +21,10 @@ import com.scorg.dms.helpers.database.AppDBHelper;
 import com.scorg.dms.helpers.login.LoginHelper;
 import com.scorg.dms.interfaces.CustomResponse;
 import com.scorg.dms.interfaces.HelperResponse;
-import com.scorg.dms.model.login.ActiveRequest;
 import com.scorg.dms.preference.DMSPreferencesManager;
 import com.scorg.dms.ui.activities.ProfileActivity;
 import com.scorg.dms.ui.activities.SplashScreenActivity;
 import com.scorg.dms.ui.customesViews.CustomTextView;
-import com.scorg.dms.ui.customesViews.SwitchButton;
 import com.scorg.dms.util.CommonMethods;
 import com.scorg.dms.util.DMSConstants;
 
@@ -40,7 +38,7 @@ import butterknife.OnClick;
  * Created by jeetal on 9/2/18.
  */
 
-public class SettingsActivity extends BottomMenuActivity implements BottomMenuAdapter.OnBottomMenuClickListener, HelperResponse {
+public class SettingsActivity extends AppCompatActivity implements  HelperResponse {
     private static final String TAG = "SettingsActivity";
     @BindView(R.id.backImageView)
     ImageView backImageView;
@@ -70,7 +68,7 @@ public class SettingsActivity extends BottomMenuActivity implements BottomMenuAd
         setContentView(R.layout.settings_base_layout);
         ButterKnife.bind(this);
         initialize();
-        setCurrentActivityTab(getString(R.string.settings));
+
     }
 
     private void initialize() {
@@ -79,28 +77,9 @@ public class SettingsActivity extends BottomMenuActivity implements BottomMenuAd
         appDBHelper = new AppDBHelper(mContext);
         loginHelper = new LoginHelper(mContext, this);
         titleTextView.setText(getString(R.string.settings));
-        backImageView.setVisibility(View.GONE);
+        backImageView.setVisibility(View.VISIBLE);
 
     }
-
-
-    @Override
-    public void onBottomMenuClick(BottomMenu bottomMenu) {
-
-        if (bottomMenu.getMenuName().equalsIgnoreCase(getString(R.string.support))) {
-            Intent intent = new Intent(this, SupportActivity.class);
-            startActivity(intent);
-            finish();
-        } else if (bottomMenu.getMenuName().equalsIgnoreCase(getString(R.string.home))) {
-            finish();
-        } else if (bottomMenu.getMenuName().equalsIgnoreCase(getString(R.string.profile))) {
-            Intent intent = new Intent(this, ProfileActivity.class);
-            startActivity(intent);
-            finish();
-        }
-        super.onBottomMenuClick(bottomMenu);
-    }
-
 
     @Override
     public void onBackPressed() {

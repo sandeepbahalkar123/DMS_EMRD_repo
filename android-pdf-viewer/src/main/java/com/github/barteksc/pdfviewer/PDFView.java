@@ -29,7 +29,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.os.HandlerThread;
-import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -181,7 +180,7 @@ public class PDFView extends RelativeLayout {
     /**
      * The zoom level, always >= 1
      */
-    private float zoom = 1f;
+    private float zoom = 1.0f;
 
     /**
      * True if the PDFView has been recycled
@@ -495,7 +494,7 @@ public class PDFView extends RelativeLayout {
         scrollHandle = null;
         isScrollHandleInit = false;
         currentXOffset = currentYOffset = 0;
-        zoom = DEFAULT_MID_SCALE;
+        zoom = DEFAULT_MIN_SCALE;
         recycled = true;
         state = State.DEFAULT;
     }
@@ -1337,27 +1336,32 @@ public class PDFView extends RelativeLayout {
 
 
         public void loadFromUrl() {
+            PDFView.this.animationManager.stopAll();
             //final String SDPath = getCacheTempFilePath() + "/PDFViewCache/";
             final String SDPath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/PDFViewCache/";
             int index = fileUrl.lastIndexOf("/");
             String fileName = fileUrl.substring(index);
             final File file = new File(SDPath, fileName);
+            Log.e("PDFVIEW", "LOAD_FROM_URL:_file.name():" + file.getName() + "|file.exists():>" + file.exists());
             if (file.exists()) {
                 //文件存在
                 if (onFileDownloadCompleteListener != null) {
                     onFileDownloadCompleteListener.onDownloadComplete(file);
                 }
-                PDFView.this.fromFile(file);
-                load();
+                PDFView.this.fromFile(file)
+                        .load();
             } else {
                 DownloadUtil.get().download(fileUrl, SDPath, new DownloadUtil.OnDownloadListener() {
                     @Override
                     public void onDownloadSuccess(File file) {
+                        Log.e("PDFVIEW", "onDownloadSuccess|file.name()+" + file.getName());
+
                         if (onFileDownloadCompleteListener != null) {
                             onFileDownloadCompleteListener.onDownloadComplete(file);
                         }
-                        PDFView.this.fromFile(file);
-                        load();
+                        PDFView.this.fromFile(file)
+                                .load();
+
                     }
 
                     @Override
@@ -1367,7 +1371,10 @@ public class PDFView extends RelativeLayout {
 
                     @Override
                     public void onDownloadFailed() {
+                        Log.e("PDFVIEW", "onDownloadFailed|file.name()+" + file.getName());
 
+                        PDFView.this.fromFile(file)
+                                .load();
                     }
                 });
             }

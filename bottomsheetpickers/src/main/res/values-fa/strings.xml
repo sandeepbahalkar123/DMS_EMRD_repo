@@ -15,8 +15,7 @@
      limitations under the License.
  -->
 
-<resources xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="bsp_hour_picker_description" msgid="7586639618712934060">"لغزنده دایره‌ای ساعت"</string>
     <string name="bsp_minute_picker_description" msgid="6024811202872705251">"لغزنده دایره‌ای دقیقه"</string>
     <string name="bsp_select_hours" msgid="7651068754188418859">"انتخاب ساعت"</string>

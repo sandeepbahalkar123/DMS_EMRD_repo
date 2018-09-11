@@ -34,6 +34,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractDraggableSwipeableItemViewHolder;
 import com.scorg.dms.R;
+import com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemodel.SearchResult;
 import com.scorg.dms.model.waiting_list.WaitingPatientData;
 import com.scorg.dms.util.CommonMethods;
 import com.scorg.dms.util.DMSConstants;
@@ -77,6 +78,7 @@ public class WaitingListAdapter
         TextView mStatusTextView;
         TextView mTypeStatus;
         LinearLayout mAppointmentDetailsLinearLayout;
+        LinearLayout layoutWaitingEpisode;
         TextView mAppointmentLabelTextView;
         TextView mAppointmentTimeTextView;
         TextView mPatientPhoneNumber;
@@ -109,6 +111,7 @@ public class WaitingListAdapter
             mSeparatorView = v.findViewById(R.id.separatorView);
             mTokenLabelTextView = v.findViewById(R.id.tokenLabelTextView);
             mTokenNumber = v.findViewById(R.id.tokenNumber);
+            layoutWaitingEpisode = v.findViewById(R.id.layoutWaitingEpisode);
         }
 
         @Override
@@ -132,13 +135,17 @@ public class WaitingListAdapter
     @SuppressLint("CheckResult")
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
-        WaitingPatientData item = mWaitingDataList.get(position);
+        final WaitingPatientData item = mWaitingDataList.get(position);
 
         //-------------
         String dataToShowInPatientID = String.valueOf(item.getPatientId());
         holder.mPatientIdTextView.setText(holder.mPatientIdTextView.getResources().getString(R.string.uhid) + " " + dataToShowInPatientID);
         //-------------
-        holder.mPatientNameTextView.setText(item.getSalutation() + CommonMethods.toCamelCase(item.getPatientName()));
+        String name = CommonMethods.toCamelCase(item.getPatientName());
+        if (item.getSalutation() != null) {
+            name = item.getSalutation() + " " + name;
+        }
+        holder.mPatientNameTextView.setText(name);
         //-------------
         if (!item.getAppDate().equals("")) {
             holder.mAppointmentTime.setVisibility(View.VISIBLE);
@@ -205,13 +212,27 @@ public class WaitingListAdapter
                 if (contactNo != null) {
                     try {
                         long i = Long.parseLong(contactNo);
-                        onItemClickListener.onPhoneNoClick( i);
+                        onItemClickListener.onPhoneNoClick(i);
                     } catch (NumberFormatException e) {
                         e.printStackTrace();
                     }
                 }
             }
         });
+
+
+        holder.layoutWaitingEpisode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SearchResult searchResult =new SearchResult();
+                searchResult.setPatientName(item.getPatientName());
+                searchResult.setPatientId(item.getPatientId());
+                searchResult.setPatientAddress(item.getPatAddress());
+                searchResult.setPatientImageURL(item.getPatientImageUrl());
+                onItemClickListener.onClickedOfEpisodeListButton(searchResult);
+            }
+        });
+
     }
 
     @Override
@@ -224,5 +245,6 @@ public class WaitingListAdapter
         public void onItemClick(WaitingPatientData clickItem);
 
         public void onPhoneNoClick(long phoneNumber);
+        void onClickedOfEpisodeListButton(SearchResult groupHeader);
     }
 }

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">DMS</string>
+    <string name="app_name">DOCUPHI</string>
     <string name="enter_mobile_no">Mobile No.</string>
     <string name="log_in">Login</string>
     <string name="enter_full_name">Name</string>
@@ -28,6 +28,7 @@
     <string name="roboto_regular">roboto_regular.ttf</string>
     <string name="gallery">Gallery</string>
     <string name="files">Files</string>
+    <string name="file">File: </string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="enter_otp">Enter OTP</string>
     <string name="enter_word">Enter </string>
@@ -103,6 +104,8 @@
     <string name="endocrinologist">endocrinologist</string>
     <string name="cancel">Cancel</string>
     <string name="do_you_exit">Do you want to exit ?</string>
+    <string name="do_you_want_to_cancel">Do you want to cancel the request ?</string>
+    <string name="do_you_want_to_unlock">Do you want to unlock this ?</string>
     <string name="apply">Apply</string>
     <string name="filter">Filter</string>
     <string name="reset">Reset</string>
@@ -148,10 +151,12 @@
     <string name="select_all">Select All</string>
     <string name="send_sms">Send SMS</string>
     <string name="waiting_list">Waiting List</string>
+    <string name="request_list">Request List</string>
     <string name="bp_max">BpMax</string>
     <string name="bp">BP</string>
     <string name="bp_min">BpMin</string>
     <string name="dash">-</string>
+    <string name="dashboard">dashboard</string>
     <string name="systolic_pressure">Systolic BP</string>
     <string name="diastolic_pressure">Diastolic BP</string>
     <string name="normal">Normal Level :</string>
@@ -164,9 +169,12 @@
     <string name="just_now">Just Now</string>
     <string name="services"><u>Services</u></string>
     <string name="about_doctor"><u>About Doctor :</u></string>
+    <string name="doc_name">Doctor Name:</string>
     <!--<string name="template_list">Template List</string>-->
     <string name="template_list">SMS Templates</string>
     <string name="active">ACTIVE</string>
+    <string name="pending_request">PENDING REQUESTS</string>
+    <string name="all_request">ALL REQUESTS</string>
     <string name="view_all">VIEW ALL</string>
     <string name="in_time">In Time</string>
     <string name="appointment_completed">Appointment is completed</string>
@@ -175,10 +183,12 @@
     <string name="no_show">No show</string>
     <string name="other">Other</string>
     <string name="episode">Episode</string>
+    <string name="episode_details">Episode Details</string>
     <string name="enter_sms_text_here">Enter sms text here</string>
     <string name="location">Location</string>
-    <string name="today_appointment">Today\'s\nAppointments</string>
-    <string name="waiting_patients"> Waiting\nPatients </string>
+    <string name="today_appointment">Today\'s Appointment/Walk-in</string>
+    <string name="today_appointment_no_new_line">Today\'s Appointments</string>
+    <string name="waiting_patients"> Waiting /Admitted Patients</string>
     <string name="pending_approval">Pending\nApproval</string>
     <string name="today_patient">Total\nPatients</string>
     <string name="consultation">Consultation</string>
@@ -228,7 +238,14 @@
     <string name="discharge">Discharge</string>
     <string name="from">From</string>
     <string name="to">To</string>
+    <string name="requester">Requester-</string>
+    <string name="processed_by">Processed By-</string>
     <string name="patient_id">Patient ID:</string>
+    <string name="medical_records">Medical Records</string>
+    <string name="complete">Complete</string>
+    <string name="select_date_type">Date type</string>
+    <string name="select_file_type">Select file type</string>
+    <string name="request_raised_success"> Request raised successfully.</string>
 
     <!-- Strings related to login -->
     <string name="error_empty_fields">Please enter username/password</string>
@@ -255,7 +272,17 @@
     <string name="error_compare_patient">Please select same patient record to compare</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="preference">Preference:</string>
+    <string name="records_more">Records and more</string>
+    <string name="records">Records</string>
+
+    <string name="previous">Previous</string>
+    <string name="next">Next</string>
+    <string name="support_bottom_first_line">DOCUPHI is a unique product of</string>
     <string name="error_max_two_reports">You can not select more than two reports to compare</string>
+    <string name="invalid_username_password"> Invalid username/password</string>
+    <string name="pdf">PDF</string>
+    <string name="patient_list_search_hint">Search UHID,Ref id,Patient name</string>
 
     <string-array name="select_id">
         <item>Select</item>
@@ -275,6 +302,11 @@
         <item>Select</item>
         <item>Admission Date</item>
         <item>Discharge Date</item>
+    </string-array>
+    <string-array name="get_archived_preference_list">
+        <item>Folder</item>
+        <item>File</item>
+        <item>Date</item>
     </string-array>
     <string-array name="opd_array">
         <item>Select</item>
@@ -300,6 +332,7 @@
     </string-array>
 
     <!--********Tree view holder icon codes****************-->
+    <string name="ic_folder">&#xe09d;</string>
     <string name="ic_keyboard_arrow_down">&#xe0c5;</string>
     <string name="ic_keyboard_arrow_right">&#xe0c7;</string>
     <string name="ic_shopping_cart">&#xe14f;</string>
@@ -310,7 +343,13 @@
     <string name="denied_permission_read_document">Denied permission read Document.</string>
     <string name="file_one">FileType-1</string>
     <string name="file_two">FileType-2</string>
-    <string name="address">Address</string>
+    <string name="address">Address:</string>
     <string name="title_activity_patient_details">Patient Details</string>
+    <string name="in_uhid">in UHID</string>
+    <string name="in_patient_name">in Patient name</string>
+    <string name="in_ref_id">in Ref Id</string>
+    <string name="in_all">in All</string>
+    <string name="on">ON</string>
+    <string name="off">OFF</string>
 
 </resources>

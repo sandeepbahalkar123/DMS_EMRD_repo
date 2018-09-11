@@ -5,7 +5,6 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.scorg.dms.model.my_appointments.PatientList;
 
 /**
  * Created by jeetal on 14/2/18.
