@@ -14,7 +14,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.scorg.dms.R;
-import com.scorg.dms.helpers.database.AppDBHelper;
 import com.scorg.dms.helpers.login.LoginHelper;
 import com.scorg.dms.interfaces.CustomResponse;
 import com.scorg.dms.interfaces.HelperResponse;
@@ -51,7 +50,6 @@ public class SettingsActivity extends AppCompatActivity implements  HelperRespon
     @BindView(R.id.selectMenuLayout)
     RelativeLayout selectMenuLayout;
 
-    private AppDBHelper appDBHelper;
     private Context mContext;
     private LoginHelper loginHelper;
     private String docId;
@@ -68,7 +66,6 @@ public class SettingsActivity extends AppCompatActivity implements  HelperRespon
     private void initialize() {
         mContext = SettingsActivity.this;
         docId = DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.DOC_ID, mContext);
-        appDBHelper = new AppDBHelper(mContext);
         loginHelper = new LoginHelper(mContext, this);
         titleTextView.setText(getString(R.string.settings));
         backImageView.setVisibility(View.VISIBLE);
@@ -179,7 +176,6 @@ public class SettingsActivity extends AppCompatActivity implements  HelperRespon
         DMSPreferencesManager.putString(DMSPreferencesManager.DMS_PREFERENCES_KEY.PASSWORD_FACEBOOK, passwordFacebook, mContext);
         DMSPreferencesManager.putString(getString(R.string.logout), "" + 1, mContext);
 
-        appDBHelper.deleteDatabase();
 
 //        Intent intent = new Intent(mContext, LoginActivity.class);
 //        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);

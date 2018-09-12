@@ -6,7 +6,6 @@ package com.scorg.dms.network;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.database.Cursor;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -26,7 +25,6 @@ import com.android.volley.toolbox.StringRequest;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.scorg.dms.R;
-import com.scorg.dms.helpers.database.AppDBHelper;
 import com.scorg.dms.interfaces.ConnectionListener;
 import com.scorg.dms.interfaces.Connector;
 import com.scorg.dms.interfaces.CustomResponse;
@@ -73,22 +71,16 @@ import com.scorg.dms.util.CommonMethods;
 import com.scorg.dms.util.Config;
 import com.scorg.dms.util.DMSConstants;
 import com.scorg.dms.util.NetworkUtil;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.io.UnsupportedEncodingException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-
-import static com.scorg.dms.util.DMSConstants.SUCCESS;
 
 public class RequestManager extends ConnectRequest implements Connector, RequestTimer.RequestTimerListener {
     private final String TAG = this.getClass().getName();
     private static final int CONNECTION_TIME_OUT = 1000 * 60;
     private static final int N0OF_RETRY = 0;
-    private AppDBHelper dbHelper;
     private String requestTag;
     private int connectionType;
 
@@ -111,7 +103,6 @@ public class RequestManager extends ConnectRequest implements Connector, Request
         this.mProgressDialog = new CustomProgressDialog(mContext);
         this.connectionType = connectionType;
         this.isOffline = isOffline;
-        this.dbHelper = new AppDBHelper(mContext);
     }
 
     @Override
@@ -138,16 +129,7 @@ public class RequestManager extends ConnectRequest implements Connector, Request
                 jsonRequest();
             }
         } else {
-
-            if (isOffline) {
-                if (getOfflineData() != null)
-                    succesResponse(getOfflineData(), false);
-                else
-                    mConnectionListener.onResponse(ConnectionListener.NO_INTERNET, null, mOldDataTag);
-            } else {
                 mConnectionListener.onResponse(ConnectionListener.NO_INTERNET, null, mOldDataTag);
-            }
-
             if (mViewById != null)
                 CommonMethods.showSnack(mViewById, mContext.getString(R.string.internet));
             else
@@ -176,8 +158,6 @@ public class RequestManager extends ConnectRequest implements Connector, Request
                     @Override
                     public void onResponse(JSONObject response) {
                         succesResponse(response.toString(), isTokenExpired);
-                        if (isOffline)
-                            dbHelper.insertData(mDataTag, response.toString());
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -226,8 +206,6 @@ public class RequestManager extends ConnectRequest implements Connector, Request
                     @Override
                     public void onResponse(JSONObject response) {
                         succesResponse(response.toString(), false);
-                        if (isOffline)
-                            dbHelper.insertData(mDataTag, response.toString());
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -262,8 +240,6 @@ public class RequestManager extends ConnectRequest implements Connector, Request
                     @Override
                     public void onResponse(String response) {
                         succesResponse(response, isTokenExpired);
-                        if (isOffline)
-                            dbHelper.insertData(mDataTag, response);
                     }
                 },
                 new Response.ErrorListener() {
@@ -321,16 +297,6 @@ public class RequestManager extends ConnectRequest implements Connector, Request
                         tokenRefreshRequest();
                     }
                 }
-
-//                if (error.getMessage().equalsIgnoreCase("java.io.IOException: No authentication challenges found") || error.getMessage().equalsIgnoreCase("invalid_grant")) {
-//                    if (mViewById != null)
-//                        CommonMethods.showSnack(mViewById, mContext.getString(R.string.authentication));
-//                    else
-//                        CommonMethods.showToast(mContext, mContext.getString(R.string.authentication));
-//                } else if (error.getMessage().equalsIgnoreCase("javax.net.ssl.SSLHandshakeException: java.security.cert.CertPathValidatorException: Trust anchor for certification path not found.")) {
-//                    showErrorDialog("Something went wrong.");
-//                }
-
                 if (mViewById != null)
                     CommonMethods.showSnack(mViewById, mContext.getString(R.string.timeout));
                 else
@@ -342,10 +308,7 @@ public class RequestManager extends ConnectRequest implements Connector, Request
                     /*if (!isTokenExpired) {
                         tokenRefreshRequest();
                     }*/
-                } else {
-                    if (getOfflineData() != null)
-                        succesResponse(getOfflineData(), false);
-                }
+                } else {}
 
                 if (mViewById != null)
                     CommonMethods.showSnack(mViewById, mContext.getString(R.string.internet));
@@ -355,32 +318,14 @@ public class RequestManager extends ConnectRequest implements Connector, Request
 
             } else if (error instanceof ServerError) {
                 if (isTokenExpired) {
-                    // Redirect to SplashScreen then Login
-//                    Intent intent = new Intent(mContext, LoginActivity.class);
-//                    mContext.startActivity(intent);
-//                    ((AppCompatActivity) mContext).finishAffinity();
 
-//                    DMSPreferencesManager.clearSharedPref(mContext);
-//                    Intent intent = new Intent(mContext, SplashScreenActivity.class);
-//                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                    mContext.startActivity(intent);
-
-                    //  loginRequest();
                 } else {
                     mConnectionListener.onResponse(ConnectionListener.SERVER_ERROR, null, mOldDataTag);
                     if (DMSConstants.TASK_LOGIN_CODE != mOldDataTag)
                         CommonMethods.showToast(mContext, mContext.getResources().getString(R.string.server_error));
                 }
             } else if (error instanceof NetworkError) {
-
-                if (isOffline) {
-                    succesResponse(getOfflineData(), false);
-                } else {
                     mConnectionListener.onResponse(ConnectionListener.NO_INTERNET, null, mOldDataTag);
-                }
-
                 if (mViewById != null)
                     CommonMethods.showSnack(mViewById, mContext.getString(R.string.internet));
                 else
@@ -400,50 +345,11 @@ public class RequestManager extends ConnectRequest implements Connector, Request
 
     }
 
-    private String getOfflineData() {
-        if (dbHelper.dataTableNumberOfRows(this.mDataTag) > 0) {
-            Cursor cursor = dbHelper.getData(this.mDataTag);
-            cursor.moveToFirst();
-            return cursor.getString(cursor.getColumnIndex(AppDBHelper.COLUMN_DATA));
-        } else {
-            return null;
-        }
-    }
-
-    private String fixEncoding(String response) {
-        try {
-            byte[] u = response.getBytes("ISO-8859-1");
-            response = new String(u, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-            return null;
-        }
-        return response;
-    }
-
     @Override
     public void parseJson(String data, boolean isTokenExpired) {
         try {
             CommonMethods.Log(TAG, data);
             Gson gson = new Gson();
-
-            /*
-            // DONT KNOW, WHY THIS IS ADDED, HENCED COMMENTED.
-            JSONObject jsonObject;
-            try {
-                jsonObject = new JSONObject(data);
-                Common common = gson.fromJson(jsonObject.optString("common"), Common.class);
-                if (!common.getStatusCode().equals(SUCCESS)) {
-                    CommonMethods.showToast(mContext, common.getStatusMessage());
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }*/
-
-            /*MessageModel messageModel = gson.fromJson(data, MessageModel.class);
-            if (!messageModel.getCommon().getStatusCode().equals(DMSConstants.SUCCESS))
-                CommonMethods.showToast(mContext, messageModel.getCommon().getStatusMessage());*/
-
             if (isTokenExpired) {
                 // This success response is for refresh token
                 // Need to Add
@@ -470,14 +376,7 @@ public class RequestManager extends ConnectRequest implements Connector, Request
 
             } else {
                 // This success response is for respective api's
-
                 switch (this.mDataTag) {
-                    // Need to add
-                  /*  case DMSConstants.TASK_LOGIN: //This is for get archived list
-                        LoginModel loginModel = gson.fromJson(data, LoginModel.class);
-                        this.mConnectionListener.onResponse(ConnectionListener.RESPONSE_OK, loginModel, mOldDataTag);
-                        break;*/
-
 
                     case DMSConstants.TASK_LOGIN_CODE: //This is LOGIN
                         LoginResponseModel mLoginResponseModel = new Gson().fromJson(data, LoginResponseModel.class);
