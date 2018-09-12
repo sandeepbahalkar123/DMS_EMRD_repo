@@ -9,8 +9,6 @@
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/bottomsheetpickers/bottomsheetpickers.iml" filepath="$PROJECT_DIR$/bottomsheetpickers/bottomsheetpickers.iml" />
       <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
-      <module fileurl="file://$PROJECT_DIR$/materialdrawer/materialdrawer.iml" filepath="$PROJECT_DIR$/materialdrawer/materialdrawer.iml" />
-      <module fileurl="file://$PROJECT_DIR$/slideview/slideview.iml" filepath="$PROJECT_DIR$/slideview/slideview.iml" />
     </modules>
   </component>
 </project>

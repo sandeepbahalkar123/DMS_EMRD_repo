@@ -1,1 +1,1 @@
-include ':app',':bottomsheetpickers',':materialdrawer',':slideview',':advanced_recycler',':library',':android-pdf-viewer'
+include ':app',':bottomsheetpickers',':advanced_recycler',':library',':android-pdf-viewer'
