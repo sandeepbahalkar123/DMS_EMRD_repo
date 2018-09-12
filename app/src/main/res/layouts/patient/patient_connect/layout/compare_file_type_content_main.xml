@@ -121,7 +121,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:visibility="gone">
-
         <include layout="@layout/compare_dialog" />
 
     </LinearLayout>

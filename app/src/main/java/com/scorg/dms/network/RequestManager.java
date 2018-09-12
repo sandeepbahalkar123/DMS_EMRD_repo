@@ -6,6 +6,7 @@ package com.scorg.dms.network;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -68,6 +69,8 @@ import com.scorg.dms.model.waiting_list.WaitingListBaseModel;
 import com.scorg.dms.model.waiting_list.response_add_to_waiting_list.AddToWaitingListBaseModel;
 import com.scorg.dms.preference.DMSPreferencesManager;
 import com.scorg.dms.singleton.Device;
+import com.scorg.dms.ui.activities.LoginActivity;
+import com.scorg.dms.ui.activities.SplashScreenActivity;
 import com.scorg.dms.ui.customesViews.CustomProgressDialog;
 import com.scorg.dms.util.CommonMethods;
 import com.scorg.dms.util.Config;
@@ -313,6 +316,7 @@ public class RequestManager extends ConnectRequest implements Connector, Request
 //            error = error1;
 //            CommonMethods.Log("Error Message", error.getMessage() + "\n error Localize message" + error.getLocalizedMessage());
             CommonMethods.Log(TAG, "Goes into error response condition");
+            CommonMethods.Log(TAG, "error--"+error.getMessage());
 
             if (error instanceof TimeoutError) {
 
@@ -354,20 +358,12 @@ public class RequestManager extends ConnectRequest implements Connector, Request
                 }
 
             } else if (error instanceof ServerError) {
-                if (isTokenExpired) {
-                    // Redirect to SplashScreen then Login
-//                    Intent intent = new Intent(mContext, LoginActivity.class);
-//                    mContext.startActivity(intent);
-//                    ((AppCompatActivity) mContext).finishAffinity();
-
-//                    DMSPreferencesManager.clearSharedPref(mContext);
-//                    Intent intent = new Intent(mContext, SplashScreenActivity.class);
-//                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                    mContext.startActivity(intent);
-
-                    //  loginRequest();
+                if (isTokenExpired) {// this is refresh token 400 http response code when password changed happened at web app side.
+                    DMSPreferencesManager.clearSharedPref(mContext);
+                    // Redirect to Login screen
+                    Intent intent = new Intent(mContext, LoginActivity.class);
+                    mContext.startActivity(intent);
+                    ((AppCompatActivity) mContext).finishAffinity();
                 } else {
                     mConnectionListener.onResponse(ConnectionListener.SERVER_ERROR, null, mOldDataTag);
                     if (DMSConstants.TASK_LOGIN_CODE != mOldDataTag)

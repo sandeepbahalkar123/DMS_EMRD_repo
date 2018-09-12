@@ -161,10 +161,13 @@ public class PatientDetailsActivity extends AppCompatActivity implements HelperR
             EpisodeResponseModel.EpisodeDataList episodeDataList = showSearchResultResponseModel.getEpisodeDataList();
             mIsLoadMoreEpisode= showSearchResultResponseModel.getEpisodeDataList().isPaggination();
             mAutoCompleteSearchBox.dismissDropDown();
-            if (episodeDataList != null) {
+            if (episodeDataList != null ) {
                 List<PatientEpisodeFileData> patientEpisodeFileDataList = episodeDataList.getPatientEpisodeFileDataList();
-                mPatientEpisodeRecycleViewListAdapter.addNewItems(patientEpisodeFileDataList);
-                mPatientEpisodeRecycleViewListAdapter.notifyDataSetChanged();
+
+                if(patientEpisodeFileDataList.size()!=0) {
+                    mPatientEpisodeRecycleViewListAdapter.addNewItems(patientEpisodeFileDataList);
+                    mPatientEpisodeRecycleViewListAdapter.notifyDataSetChanged();
+                }
             } else {
                 CommonMethods.showToast(this, "No data found");
                 finish();

@@ -396,10 +396,10 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
         //-----------
         mFirstFileTypePdfViewLayout.addView(CommonMethods.loadView(R.layout.mydialog, this));
         mFirstFileTypeProgressDialogLayout = mFirstFileTypePdfViewLayout.findViewById(R.id.progressBarContainerLayout);
-        mFirstFileTypeProgressDialogLayout.setVisibility(View.VISIBLE);
+        mFirstFileTypeProgressDialogLayout.setVisibility(View.GONE);
         mSecondFileTypePdfViewLayout.addView(CommonMethods.loadView(R.layout.mydialog, this));
         mSecondFileTypeProgressDialogLayout = mSecondFileTypePdfViewLayout.findViewById(R.id.progressBarContainerLayout);
-        mSecondFileTypeProgressDialogLayout.setVisibility(View.VISIBLE);
+        mSecondFileTypeProgressDialogLayout.setVisibility(View.GONE);
 
         //------RightNavigationView initialize---------
 

@@ -71,7 +71,7 @@ dependencies {
     implementation project(':advanced_recycler')
     implementation project(':materialdrawer')
     // For drawer layout
-    implementation project(':slideview')
+   // implementation project(':slideview')
 
     implementation(project(':bottomsheetpickers')) {
         exclude group: 'com.android.support', module: 'appcompat-v7'
