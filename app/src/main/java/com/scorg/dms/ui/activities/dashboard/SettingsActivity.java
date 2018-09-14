@@ -107,9 +107,6 @@ public class SettingsActivity extends AppCompatActivity implements  HelperRespon
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                /*ActiveRequest activeRequest = new ActiveRequest();
-                activeRequest.setId(Integer.parseInt(docId));
-                loginHelper.doLogout(activeRequest);*/
                 DMSPreferencesManager.putString(DMSPreferencesManager.DMS_PREFERENCES_KEY.IS_EXIT, DMSConstants.BLANK, mContext);
                 logout();
 

@@ -7,32 +7,13 @@ import com.scorg.dms.R;
 import com.scorg.dms.interfaces.ConnectionListener;
 import com.scorg.dms.interfaces.CustomResponse;
 import com.scorg.dms.interfaces.HelperResponse;
-import com.scorg.dms.model.my_appointments.RequestAppointmentData;
-import com.scorg.dms.model.my_appointments.request_cancel_or_complete_appointment.RequestAppointmentCancelModel;
-import com.scorg.dms.model.my_patient_filter.LocationsRequest;
-import com.scorg.dms.model.patient.add_new_patient.PatientDetail;
-import com.scorg.dms.model.patient.add_new_patient.SyncPatientsRequest;
-import com.scorg.dms.model.patient.doctor_patients.PatientList;
-import com.scorg.dms.model.patient.template_sms.request_send_sms.ClinicListForSms;
-import com.scorg.dms.model.patient.template_sms.request_send_sms.RequestSendSmsModel;
 import com.scorg.dms.model.pending_approval_list.PendingRequestCancelModel;
 import com.scorg.dms.model.pending_approval_list.RequestPendingApprovalData;
-import com.scorg.dms.model.request_appointment_confirmation.RequestAppointmentConfirmationModel;
-import com.scorg.dms.model.request_appointment_confirmation.Reschedule;
-import com.scorg.dms.model.request_patients.RequestSearchPatients;
-import com.scorg.dms.model.waiting_list.new_request_add_to_waiting_list.RequestToAddWaitingList;
-import com.scorg.dms.model.waiting_list.request_delete_waiting_list.RequestDeleteBaseModel;
-import com.scorg.dms.model.waiting_list.request_drag_drop.RequestForDragAndDropBaseModel;
 import com.scorg.dms.network.ConnectRequest;
 import com.scorg.dms.network.ConnectionFactory;
-import com.scorg.dms.preference.DMSPreferencesManager;
 import com.scorg.dms.util.CommonMethods;
 import com.scorg.dms.util.Config;
 import com.scorg.dms.util.DMSConstants;
-
-import java.util.ArrayList;
-
-import static com.scorg.dms.util.DMSConstants.TASK_GET_TIME_SLOTS_TO_BOOK_APPOINTMENT;
 
 
 
