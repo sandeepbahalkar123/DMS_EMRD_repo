@@ -52,7 +52,6 @@ import butterknife.OnClick;
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.RuntimePermissions;
 
-import static com.scorg.dms.util.DMSConstants.ACTIVE_STATUS;
 import static com.scorg.dms.util.DMSConstants.PATIENT_DETAILS;
 
 /**
@@ -257,14 +256,6 @@ public class HomePageActivity extends AppCompatActivity implements HelperRespons
     @Override
     public void onSuccess(String mOldDataTag, CustomResponse customResponse) {
         switch (mOldDataTag) {
-            case DMSConstants.LOGOUT:
-                //if user turns on radio button
-                CommonMethods.Log(TAG, "logout");
-                break;
-            case ACTIVE_STATUS:
-                CommonMethods.Log(ACTIVE_STATUS, "active");
-                break;
-
             case DMSConstants.TASK_GET_DASHBOARD_RESPONSE:
                 DashboardBaseModel mDashboardBaseModel = (DashboardBaseModel) customResponse;
                 if (DMSConstants.RESPONSE_OK.equalsIgnoreCase(mDashboardBaseModel.getCommon().getSuccess())) {

@@ -128,58 +128,21 @@ public class SettingsActivity extends AppCompatActivity implements  HelperRespon
 
 
     private void logout() {
-
-        String mobileNoGmail = "";
-        String passwordGmail = "";
-        String mobileNoFacebook = "";
-        String passwordFacebook = "";
-        String gmailLogin = "";
-        String facebookLogin = "";
         int version_code;
         boolean isLaterClicked;
         boolean isSkippedClicked;
-
-        //Logout functionality
-        if (DMSPreferencesManager.getString(DMSConstants.GMAIL_LOGIN, mContext).equalsIgnoreCase(getString(R.string.login_with_gmail))) {
-            gmailLogin = DMSPreferencesManager.getString(DMSConstants.GMAIL_LOGIN, mContext);
-            mobileNoGmail = DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.MOBILE_NUMBER_GMAIL, mContext);
-            passwordGmail = DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.PASSWORD_GMAIL, mContext);
-        }
-
-        if (DMSPreferencesManager.getString(DMSConstants.FACEBOOK_LOGIN, mContext).equalsIgnoreCase(getString(R.string.login_with_facebook))) {
-            facebookLogin = DMSPreferencesManager.getString(DMSConstants.FACEBOOK_LOGIN, mContext);
-            mobileNoFacebook = DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.MOBILE_NUMBER_FACEBOOK, mContext);
-            passwordFacebook = DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.PASSWORD_FACEBOOK, mContext);
-        }
-
         version_code = DMSPreferencesManager.getInt(DMSPreferencesManager.DMS_PREFERENCES_KEY.VERSION_CODE_FROM_SERVER, mContext);
         isLaterClicked = DMSPreferencesManager.getBoolean(DMSPreferencesManager.DMS_PREFERENCES_KEY.isLaterClicked, mContext);
         isSkippedClicked = DMSPreferencesManager.getBoolean(DMSPreferencesManager.DMS_PREFERENCES_KEY.isSkippedClicked, mContext);
         DMSPreferencesManager.clearSharedPref(mContext);
 
         DMSPreferencesManager.putInt(DMSPreferencesManager.DMS_PREFERENCES_KEY.VERSION_CODE_FROM_SERVER, version_code, mContext);
-        DMSPreferencesManager.putString(DMSConstants.GMAIL_LOGIN, gmailLogin, mContext);
         if (isLaterClicked) {
             DMSPreferencesManager.putString(DMSPreferencesManager.DMS_PREFERENCES_KEY.SHOW_UPDATE_DIALOG, DMSConstants.YES, mContext);
         }
         if (isSkippedClicked) {
             DMSPreferencesManager.putString(DMSPreferencesManager.DMS_PREFERENCES_KEY.SHOW_UPDATE_DIALOG, DMSConstants.NO, mContext);
         }
-        DMSPreferencesManager.putBoolean(DMSPreferencesManager.DMS_PREFERENCES_KEY.isSkippedClicked, isSkippedClicked, mContext);
-        DMSPreferencesManager.putBoolean(DMSPreferencesManager.DMS_PREFERENCES_KEY.isLaterClicked, isLaterClicked, mContext);
-        DMSPreferencesManager.putString(DMSConstants.FACEBOOK_LOGIN, facebookLogin, mContext);
-        DMSPreferencesManager.putString(DMSPreferencesManager.DMS_PREFERENCES_KEY.MOBILE_NUMBER_GMAIL, mobileNoGmail, mContext);
-        DMSPreferencesManager.putString(DMSPreferencesManager.DMS_PREFERENCES_KEY.PASSWORD_GMAIL, passwordGmail, mContext);
-        DMSPreferencesManager.putString(DMSPreferencesManager.DMS_PREFERENCES_KEY.MOBILE_NUMBER_FACEBOOK, mobileNoFacebook, mContext);
-        DMSPreferencesManager.putString(DMSPreferencesManager.DMS_PREFERENCES_KEY.PASSWORD_FACEBOOK, passwordFacebook, mContext);
-        DMSPreferencesManager.putString(getString(R.string.logout), "" + 1, mContext);
-
-
-//        Intent intent = new Intent(mContext, LoginActivity.class);
-//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-//        startActivity(intent);
-//        finish();
-
         //-------------
         String mServerPath = DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.SERVER_PATH, mContext);
         String isValidConfig = DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.IS_VALID_IP_CONFIG, mContext);
@@ -197,10 +160,10 @@ public class SettingsActivity extends AppCompatActivity implements  HelperRespon
 
     @Override
     public void onSuccess(String mOldDataTag, CustomResponse customResponse) {
-        if (mOldDataTag.equals(DMSConstants.LOGOUT))
-            if (DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.IS_EXIT, mContext).equalsIgnoreCase(DMSConstants.BLANK)) {
-                logout();
-            }
+//        if (mOldDataTag.equals(DMSConstants.LOGOUT))
+//            if (DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.IS_EXIT, mContext).equalsIgnoreCase(DMSConstants.BLANK)) {
+//                logout();
+//            }
     }
 
     @Override

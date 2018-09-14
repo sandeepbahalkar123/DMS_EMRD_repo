@@ -29,9 +29,6 @@ import com.scorg.dms.R;
 import com.scorg.dms.interfaces.ConnectionListener;
 import com.scorg.dms.interfaces.Connector;
 import com.scorg.dms.interfaces.CustomResponse;
-import com.scorg.dms.model.CommonBaseModelContainer;
-import com.scorg.dms.model.case_details.CaseDetailsModel;
-import com.scorg.dms.model.completed_opd.CompletedOpdBaseModel;
 import com.scorg.dms.model.dashboard.DashboardBaseModel;
 import com.scorg.dms.model.dms_models.requestmodel.archive.UnlockRequestResponseBaseModel;
 import com.scorg.dms.model.dms_models.responsemodel.annotationlistresponsemodel.AnnotationListResponseModel;
@@ -42,40 +39,22 @@ import com.scorg.dms.model.dms_models.responsemodel.iptestresponsemodel.IpTestRe
 import com.scorg.dms.model.dms_models.responsemodel.loginresponsemodel.LoginResponseModel;
 import com.scorg.dms.model.dms_models.responsemodel.patientnamelistresponsemodel.PatientNameListResponseModel;
 import com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemodel.ShowSearchResultResponseModel;
-import com.scorg.dms.model.doctor_connect.DoctorConnectBaseModel;
-import com.scorg.dms.model.doctor_connect_chat.DoctorConnectChatBaseModel;
-import com.scorg.dms.model.doctor_connect_search.DoctorConnectSearchBaseModel;
-import com.scorg.dms.model.doctor_location.DoctorLocationBaseModel;
-import com.scorg.dms.model.login.ActiveStatusModel;
-import com.scorg.dms.model.login.LoginModel;
-import com.scorg.dms.model.login.SignUpModel;
 import com.scorg.dms.model.my_appointments.MyAppointmentsBaseModel;
-import com.scorg.dms.model.my_patient_filter.LocationsModel;
-import com.scorg.dms.model.new_patient.NewPatientBaseModel;
-import com.scorg.dms.model.patient.doctor_patients.MyPatientBaseModel;
-import com.scorg.dms.model.patient.doctor_patients.sync_resp.SyncPatientsModel;
-import com.scorg.dms.model.patient.patient_connect.ChatPatientConnectModel;
-import com.scorg.dms.model.patient.patient_connect.PatientConnectBaseModel;
-import com.scorg.dms.model.patient.patient_history.PatientHistoryBaseModel;
-import com.scorg.dms.model.patient.template_sms.TemplateBaseModel;
 import com.scorg.dms.model.pending_approval_list.CancelUnlockRequestResponseBaseModel;
 import com.scorg.dms.model.pending_approval_list.RequestedArchivedBaseModel;
-import com.scorg.dms.model.request_appointment_confirmation.ResponseAppointmentConfirmationModel;
-import com.scorg.dms.model.requestmodel.login.LoginRequestModel;
-import com.scorg.dms.model.select_slot_book_appointment.TimeSlotListBaseModel;
 import com.scorg.dms.model.waiting_list.WaitingListBaseModel;
-import com.scorg.dms.model.waiting_list.response_add_to_waiting_list.AddToWaitingListBaseModel;
 import com.scorg.dms.preference.DMSPreferencesManager;
 import com.scorg.dms.singleton.Device;
 import com.scorg.dms.ui.activities.LoginActivity;
-import com.scorg.dms.ui.activities.SplashScreenActivity;
 import com.scorg.dms.ui.customesViews.CustomProgressDialog;
 import com.scorg.dms.util.CommonMethods;
 import com.scorg.dms.util.Config;
 import com.scorg.dms.util.DMSConstants;
 import com.scorg.dms.util.NetworkUtil;
+
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -132,7 +111,7 @@ public class RequestManager extends ConnectRequest implements Connector, Request
                 jsonRequest();
             }
         } else {
-                mConnectionListener.onResponse(ConnectionListener.NO_INTERNET, null, mOldDataTag);
+            mConnectionListener.onResponse(ConnectionListener.NO_INTERNET, null, mOldDataTag);
             if (mViewById != null)
                 CommonMethods.showSnack(mViewById, mContext.getString(R.string.internet));
             else
@@ -292,7 +271,7 @@ public class RequestManager extends ConnectRequest implements Connector, Request
 //            error = error1;
 //            CommonMethods.Log("Error Message", error.getMessage() + "\n error Localize message" + error.getLocalizedMessage());
             CommonMethods.Log(TAG, "Goes into error response condition");
-            CommonMethods.Log(TAG, "error--"+error.getMessage());
+            CommonMethods.Log(TAG, "error--" + error.getMessage());
 
             if (error instanceof TimeoutError) {
 
@@ -312,7 +291,8 @@ public class RequestManager extends ConnectRequest implements Connector, Request
                     /*if (!isTokenExpired) {
                         tokenRefreshRequest();
                     }*/
-                } else {}
+                } else {
+                }
 
                 if (mViewById != null)
                     CommonMethods.showSnack(mViewById, mContext.getString(R.string.internet));
@@ -333,7 +313,7 @@ public class RequestManager extends ConnectRequest implements Connector, Request
                         CommonMethods.showToast(mContext, mContext.getResources().getString(R.string.server_error));
                 }
             } else if (error instanceof NetworkError) {
-                    mConnectionListener.onResponse(ConnectionListener.NO_INTERNET, null, mOldDataTag);
+                mConnectionListener.onResponse(ConnectionListener.NO_INTERNET, null, mOldDataTag);
                 if (mViewById != null)
                     CommonMethods.showSnack(mViewById, mContext.getString(R.string.internet));
                 else
@@ -366,8 +346,8 @@ public class RequestManager extends ConnectRequest implements Connector, Request
                 DMSPreferencesManager.putString(DMSConstants.ACCESS_TOKEN, loginResponseModel.getAccessToken(), mContext);
                 DMSPreferencesManager.putString(DMSConstants.TOKEN_TYPE, loginResponseModel.getTokenType(), mContext);
                 DMSPreferencesManager.putString(DMSConstants.REFRESH_TOKEN, loginResponseModel.getRefreshToken(), mContext);
-                DMSPreferencesManager.putString(DMSConstants.USERNAME, DMSPreferencesManager.getString(DMSConstants.USERNAME,mContext), mContext);
-                DMSPreferencesManager.putString(DMSConstants.PASSWORD, DMSPreferencesManager.getString(DMSConstants.PASSWORD,mContext), mContext);
+                DMSPreferencesManager.putString(DMSConstants.USERNAME, DMSPreferencesManager.getString(DMSConstants.USERNAME, mContext), mContext);
+                DMSPreferencesManager.putString(DMSConstants.PASSWORD, DMSPreferencesManager.getString(DMSConstants.PASSWORD, mContext), mContext);
                 DMSPreferencesManager.putString(DMSPreferencesManager.DMS_PREFERENCES_KEY.DOC_ID, String.valueOf(loginResponseModel.getDoctorId()), mContext);
                 DMSPreferencesManager.putString(DMSPreferencesManager.DMS_PREFERENCES_KEY.USER_GENDER, loginResponseModel.getUserGender(), mContext);
                 DMSPreferencesManager.putString(DMSPreferencesManager.DMS_PREFERENCES_KEY.DOC_NAME, loginResponseModel.getDoctorName(), mContext);
@@ -390,161 +370,49 @@ public class RequestManager extends ConnectRequest implements Connector, Request
                         LoginResponseModel mLoginResponseModel = new Gson().fromJson(data, LoginResponseModel.class);
                         this.mConnectionListener.onResponse(ConnectionListener.RESPONSE_OK, mLoginResponseModel, mOldDataTag);
                         break;
-                    case DMSConstants.TASK_LOGIN_WITH_PASSWORD: //This is for get archived list
-                        LoginModel loginWithPasswordModel = new Gson().fromJson(data, LoginModel.class);
-                        this.mConnectionListener.onResponse(ConnectionListener.RESPONSE_OK, loginWithPasswordModel, mOldDataTag);
-                        break;
-                    case DMSConstants.TASK_LOGIN_WITH_OTP: //This is for get archived list
-                        LoginModel loginWithOtpModel = new Gson().fromJson(data, LoginModel.class);
-                        this.mConnectionListener.onResponse(ConnectionListener.RESPONSE_OK, loginWithOtpModel, mOldDataTag);
-                        break;
-                    case DMSConstants.TASK_SIGN_UP: //This is for get sign-up
-                        this.mConnectionListener.onResponse(ConnectionListener.RESPONSE_OK, new Gson().fromJson(data, SignUpModel.class), mOldDataTag);
-                        break;
-                    case DMSConstants.TASK_VERIFY_SIGN_UP_OTP: //This is for to verify sign-up otp
-                        this.mConnectionListener.onResponse(ConnectionListener.RESPONSE_OK, new Gson().fromJson(data, LoginModel.class), mOldDataTag);
-                        break;
 
-                    case DMSConstants.TASK_DOCTOR_CONNECT_CHAT: //This is for get archived list
-                        DoctorConnectChatBaseModel doctorConnectChatBaseModel = new Gson().fromJson(data, DoctorConnectChatBaseModel.class);
-                        this.mConnectionListener.onResponse(ConnectionListener.RESPONSE_OK, doctorConnectChatBaseModel, mOldDataTag);
-                        break;
-                    case DMSConstants.TASK_DOCTOR_CONNECT: //This is for get archived list
-                        DoctorConnectBaseModel doctorConnectBaseModel = new Gson().fromJson(data, DoctorConnectBaseModel.class);
-                        this.mConnectionListener.onResponse(ConnectionListener.RESPONSE_OK, doctorConnectBaseModel, mOldDataTag);
-                        break;
-                    case DMSConstants.TASK_DOCTOR_FILTER_DOCTOR_SPECIALITY_LIST: //This is for get archived list
-                        DoctorConnectSearchBaseModel doctorConnectSearchBaseModel = new Gson().fromJson(data, DoctorConnectSearchBaseModel.class);
-                        this.mConnectionListener.onResponse(ConnectionListener.RESPONSE_OK, doctorConnectSearchBaseModel, mOldDataTag);
-                        break;
-                    case DMSConstants.TASK_GET_PATIENT_LIST: //This is for get archived list
-                        PatientConnectBaseModel patientConnectBaseModel = new Gson().fromJson(data, PatientConnectBaseModel.class);
-                        this.mConnectionListener.onResponse(ConnectionListener.RESPONSE_OK, patientConnectBaseModel, mOldDataTag);
-                        break;
-
-                    case DMSConstants.GET_PATIENT_CHAT_LIST: //This is for get archived list
-                        ChatPatientConnectModel patientConnectModel = new Gson().fromJson(data, ChatPatientConnectModel.class);
-                        this.mConnectionListener.onResponse(ConnectionListener.RESPONSE_OK, patientConnectModel, mOldDataTag);
-                        break;
-
-                    case DMSConstants.ACTIVE_STATUS: //This is for get archived list
-                        ActiveStatusModel activeStatusModel = new Gson().fromJson(data, ActiveStatusModel.class);
-                        this.mConnectionListener.onResponse(ConnectionListener.RESPONSE_OK, activeStatusModel, mOldDataTag);
-                        break;
-
-                    case DMSConstants.LOGOUT: //This is for get archived list
-                        ActiveStatusModel activeStatusLogout = new Gson().fromJson(data, ActiveStatusModel.class);
-                        this.mConnectionListener.onResponse(ConnectionListener.RESPONSE_OK, activeStatusLogout, mOldDataTag);
-                        break;
-                    case DMSConstants.TASK_GET_APPOINTMENT_DATA: //This is for get archived list
+                    case DMSConstants.TASK_GET_APPOINTMENT_DATA: //This is for get appointment list
                         MyAppointmentsBaseModel mMyAppointmentsBaseModel = new Gson().fromJson(data, MyAppointmentsBaseModel.class);
                         this.mConnectionListener.onResponse(ConnectionListener.RESPONSE_OK, mMyAppointmentsBaseModel, mOldDataTag);
                         break;
-                    case DMSConstants.TASK_GET_PATIENT_DATA: //This is for get archived list
-                        MyPatientBaseModel mMyPatientBaseModel = new Gson().fromJson(data, MyPatientBaseModel.class);
-                        this.mConnectionListener.onResponse(ConnectionListener.RESPONSE_OK, mMyPatientBaseModel, mOldDataTag);
-                        break;
-                    case DMSConstants.TASK_ONE_DAY_VISIT: //This is for get archived list
-                        CaseDetailsModel mCaseDetailsModel = new Gson().fromJson(data, CaseDetailsModel.class);
-                        this.mConnectionListener.onResponse(ConnectionListener.RESPONSE_OK, mCaseDetailsModel, mOldDataTag);
-                        break;
-                    case DMSConstants.TASK_GET_DOCTOR_SMS_TEMPLATE: //This is for get archived list
-                        TemplateBaseModel mTemplateBaseModel = new Gson().fromJson(data, TemplateBaseModel.class);
-                        this.mConnectionListener.onResponse(ConnectionListener.RESPONSE_OK, mTemplateBaseModel, mOldDataTag);
-                        break;
-                    case DMSConstants.TASK_REQUEST_SEND_SMS: //This is for get archived list
-                        TemplateBaseModel mTemplateBaseModelforCommon = new Gson().fromJson(data, TemplateBaseModel.class);
-                        this.mConnectionListener.onResponse(ConnectionListener.RESPONSE_OK, mTemplateBaseModelforCommon, mOldDataTag);
-                        break;
-                    case DMSConstants.TASK_GET_WAITING_LIST: //This is for get archived list
+
+                    case DMSConstants.TASK_GET_WAITING_LIST: //This is for get waiting list
                         WaitingListBaseModel mWaitingListBaseModel = new Gson().fromJson(data, WaitingListBaseModel.class);
                         this.mConnectionListener.onResponse(ConnectionListener.RESPONSE_OK, mWaitingListBaseModel, mOldDataTag);
                         break;
-                    case DMSConstants.TASK_GET_SEARCH_RESULT_MY_PATIENT: //This is for get archived list
-                        MyPatientBaseModel mMyPatientBaseModelSearch = new Gson().fromJson(data, MyPatientBaseModel.class);
-                        this.mConnectionListener.onResponse(ConnectionListener.RESPONSE_OK, mMyPatientBaseModelSearch, mOldDataTag);
-                        break;
-                    case DMSConstants.TASK_PATIENT_HISTORY: //This is for get archived list
-                        PatientHistoryBaseModel mPatientHistoryBaseModel = new Gson().fromJson(data, PatientHistoryBaseModel.class);
-                        this.mConnectionListener.onResponse(ConnectionListener.RESPONSE_OK, mPatientHistoryBaseModel, mOldDataTag);
-                        break;
-                    case DMSConstants.TASK_ADD_TO_WAITING_LIST: //This is for get archived list
-                        AddToWaitingListBaseModel mAddToWaitingListBaseModel = new Gson().fromJson(data, AddToWaitingListBaseModel.class);
-                        this.mConnectionListener.onResponse(ConnectionListener.RESPONSE_OK, mAddToWaitingListBaseModel, mOldDataTag);
-                        break;
-                    case DMSConstants.TASK_GET_LOCATION_LIST: //This is for get archived list
-                        DoctorLocationBaseModel mDoctorLocationBaseModel = new Gson().fromJson(data, DoctorLocationBaseModel.class);
-                        this.mConnectionListener.onResponse(ConnectionListener.RESPONSE_OK, mDoctorLocationBaseModel, mOldDataTag);
-                        break;
-                    case DMSConstants.TASK_GET_DASHBOARD_RESPONSE: //This is for get archived list
+
+                    case DMSConstants.TASK_GET_DASHBOARD_RESPONSE: //This is for get dashboard response
                         DashboardBaseModel mDashboardBaseModel = new Gson().fromJson(data, DashboardBaseModel.class);
                         this.mConnectionListener.onResponse(ConnectionListener.RESPONSE_OK, mDashboardBaseModel, mOldDataTag);
                         break;
-                    case DMSConstants.TASK_DELETE_WAITING_LIST: //This is for get archived list
-                        TemplateBaseModel mDeleteWaitingList = new Gson().fromJson(data, TemplateBaseModel.class);
-                        this.mConnectionListener.onResponse(ConnectionListener.RESPONSE_OK, mDeleteWaitingList, mOldDataTag);
-                        break;
-                    case DMSConstants.TASK_APPOINTMENT_CANCEL_OR_COMPLETE: //This is for get archived list
-                        TemplateBaseModel mCompleteCancel = new Gson().fromJson(data, TemplateBaseModel.class);
-                        this.mConnectionListener.onResponse(ConnectionListener.RESPONSE_OK, mCompleteCancel, mOldDataTag);
-                        break;
-                    case DMSConstants.TASK_DARG_DROP: //This is for get archived list
-                        TemplateBaseModel mDragAndDrop = new Gson().fromJson(data, TemplateBaseModel.class);
-                        this.mConnectionListener.onResponse(ConnectionListener.RESPONSE_OK, mDragAndDrop, mOldDataTag);
-                        break;
-                    case DMSConstants.TASK_GET_COMPLETED_OPD: //This is for get archived list
-                        CompletedOpdBaseModel mCompletedOpdBaseModel = new Gson().fromJson(data, CompletedOpdBaseModel.class);
-                        this.mConnectionListener.onResponse(ConnectionListener.RESPONSE_OK, mCompletedOpdBaseModel, mOldDataTag);
-                        break;
-                    case DMSConstants.TASK_GET_NEW_PATIENT_LIST: //This is for get archived list
-                        NewPatientBaseModel mNewPatientBaseModel = new Gson().fromJson(data, NewPatientBaseModel.class);
-                        this.mConnectionListener.onResponse(ConnectionListener.RESPONSE_OK, mNewPatientBaseModel, mOldDataTag);
-                        break;
 
-                    case DMSConstants.TASK_GET_DOCTOR_PATIENT_CITY: //This is for get archived list
-                        LocationsModel locationsModel = new Gson().fromJson(data, LocationsModel.class);
-                        this.mConnectionListener.onResponse(ConnectionListener.RESPONSE_OK, locationsModel, mOldDataTag);
-                        break;
-                    case DMSConstants.TASK_DELETE_PATIENT_OPD_ATTCHMENTS: //This is for delete attachments
-                        CommonBaseModelContainer commonModel = new Gson().fromJson(data, CommonBaseModelContainer.class);
-                        this.mConnectionListener.onResponse(ConnectionListener.RESPONSE_OK, commonModel, mOldDataTag);
-                        break;
-                    case DMSConstants.TASK_GET_TIME_SLOTS_TO_BOOK_APPOINTMENT: //This is for delete attachments
-                        TimeSlotListBaseModel mTimeSlotListBaseModel = new Gson().fromJson(data, TimeSlotListBaseModel.class);
-                        this.mConnectionListener.onResponse(ConnectionListener.RESPONSE_OK, mTimeSlotListBaseModel, mOldDataTag);
-                        break;
-                    case DMSConstants.TASK_CONFIRM_APPOINTMENT: //This is for delete attachments
-                        ResponseAppointmentConfirmationModel mResponseAppointmentConfirmationModel = new Gson().fromJson(data, ResponseAppointmentConfirmationModel.class);
-                        this.mConnectionListener.onResponse(ConnectionListener.RESPONSE_OK, mResponseAppointmentConfirmationModel, mOldDataTag);
-                        break;
-                    case DMSConstants.TASK_ADD_NEW_PATIENT: //This is for delete attachments
-                        SyncPatientsModel model = new Gson().fromJson(data, SyncPatientsModel.class);
-                        this.mConnectionListener.onResponse(ConnectionListener.RESPONSE_OK, model, mOldDataTag);
-                        break;
-
-                    case DMSConstants.TASK_PATIENT_LIST: //This is for patient list
+                    case DMSConstants.TASK_PATIENT_LIST: //This is for get total patient list
                         ShowSearchResultResponseModel showSearchResultResponseModel = gson.fromJson(data, ShowSearchResultResponseModel.class);
                         this.mConnectionListener.onResponse(ConnectionListener.RESPONSE_OK, showSearchResultResponseModel, mOldDataTag);
                         break;
+
                     case DMSConstants.TASK_ANNOTATIONS_LIST: //This is for annotation list
                         AnnotationListResponseModel annotationListResponseModel = gson.fromJson(data, AnnotationListResponseModel.class);
                         this.mConnectionListener.onResponse(ConnectionListener.RESPONSE_OK, annotationListResponseModel, mOldDataTag);
                         break;
+
                     case DMSConstants.TASK_GET_ARCHIVED_LIST: //This is for get archived list
                         FileTreeResponseModel fileTreeResponseModel = gson.fromJson(data, FileTreeResponseModel.class);
                         this.mConnectionListener.onResponse(ConnectionListener.RESPONSE_OK, fileTreeResponseModel, mOldDataTag);
                         break;
 
-                    case DMSConstants.TASK_CHECK_SERVER_CONNECTION: //This is for get archived list
+                    case DMSConstants.TASK_CHECK_SERVER_CONNECTION: //This is for chck connection to server
                         //this is done bcaz, No common key is added in response from API.
                         String editedResponse = "{ \"common\":" + data + "}";
                         IpTestResponseModel ipTestResponseModel = gson.fromJson(editedResponse, IpTestResponseModel.class);
                         this.mConnectionListener.onResponse(ConnectionListener.RESPONSE_OK, ipTestResponseModel, mOldDataTag);
                         break;
-                    case DMSConstants.TASK_GET_PATIENT_NAME_LIST: //This is for get archived list
+
+                    case DMSConstants.TASK_GET_PATIENT_NAME_LIST: //This is for get patient list on the basis of search string
                         PatientNameListResponseModel patientNameListResponseModel = gson.fromJson(data, PatientNameListResponseModel.class);
                         this.mConnectionListener.onResponse(ConnectionListener.RESPONSE_OK, patientNameListResponseModel, mOldDataTag);
                         break;
+
                     case DMSConstants.TASK_GET_EPISODE_LIST: //This is for get episode list
                         EpisodeResponseModel episodeResponseModel = gson.fromJson(data, EpisodeResponseModel.class);
                         this.mConnectionListener.onResponse(ConnectionListener.RESPONSE_OK, episodeResponseModel, mOldDataTag);
@@ -560,7 +428,7 @@ public class RequestManager extends ConnectRequest implements Connector, Request
                         this.mConnectionListener.onResponse(ConnectionListener.RESPONSE_OK, unlockRequestResponseBaseModel, mOldDataTag);
                         break;
 
-                    case DMSConstants.TASK_CANCEL_REQUEST_CONFIDENTIAL: //This is for unlock confidential file /folder
+                    case DMSConstants.TASK_CANCEL_REQUEST_CONFIDENTIAL: //This is for cancel request for unlock confidential file /folder
                         CancelUnlockRequestResponseBaseModel cancelUnlockRequestResponseBaseModel = gson.fromJson(data, CancelUnlockRequestResponseBaseModel.class);
                         this.mConnectionListener.onResponse(ConnectionListener.RESPONSE_OK, cancelUnlockRequestResponseBaseModel, mOldDataTag);
                         break;

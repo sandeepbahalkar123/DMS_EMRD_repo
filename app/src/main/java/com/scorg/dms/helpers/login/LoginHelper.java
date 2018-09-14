@@ -59,25 +59,6 @@ public class LoginHelper implements ConnectionListener {
                         mHelperResponseManager.onSuccess(mOldDataTag, ipTestResponseModel);
 
                         break;
-                    case DMSConstants.TASK_SIGN_UP:
-                        SignUpModel signUpModel = (SignUpModel) customResponse;
-                        mHelperResponseManager.onSuccess(mOldDataTag, signUpModel);
-                        break;
-                    case DMSConstants.TASK_VERIFY_SIGN_UP_OTP:
-                        mHelperResponseManager.onSuccess(mOldDataTag, customResponse);
-                        break;
-                    case DMSConstants.TASK_LOGIN_WITH_PASSWORD:
-                        mHelperResponseManager.onSuccess(mOldDataTag, customResponse);
-                        break;
-                    case DMSConstants.TASK_LOGIN_WITH_OTP:
-                        mHelperResponseManager.onSuccess(mOldDataTag, customResponse);
-                        break;
-                    case DMSConstants.LOGOUT:
-                        mHelperResponseManager.onSuccess(mOldDataTag, customResponse);
-                        break;
-                    case DMSConstants.ACTIVE_STATUS:
-                        mHelperResponseManager.onSuccess(mOldDataTag, customResponse);
-                        break;
                 }
                 break;
             case ConnectionListener.PARSE_ERR0R:
@@ -135,58 +116,6 @@ public class LoginHelper implements ConnectionListener {
 //        onResponse(ConnectionListener.RESPONSE_OK, i, DMSConstants.TASK_CHECK_SERVER_CONNECTION);
     }
 
-    //-------DMS LOGIN AND IP CHECK APIS. : END
 
-
-    //-------RESCRIBE EXITING APIs : START
-
-    //Do login using Otp
-    public void doLoginByOTP(String otp) {
-        ConnectionFactory mConnectionFactory = new ConnectionFactory(mContext, this, null, true, DMSConstants.TASK_LOGIN_WITH_OTP, Request.Method.POST, true);
-        mConnectionFactory.setHeaderParams();
-        LoginRequestModel loginRequestModel = new LoginRequestModel();
-        //    loginRequestModel.setMobileNumber(otp);  TODO NOT CONFIRMED ABOUT THIS.
-        mConnectionFactory.setPostParams(loginRequestModel);
-        mConnectionFactory.setUrl(Config.LOGIN_WITH_OTP_URL);
-        mConnectionFactory.createConnection(DMSConstants.TASK_LOGIN_WITH_OTP);
-    }
-
-    //Verify Otp sent
-    public void doVerifyGeneratedSignUpOTP(SignUpVerifyOTPRequestModel requestModel) {
-        ConnectionFactory mConnectionFactory = new ConnectionFactory(mContext, this, null, true, DMSConstants.TASK_VERIFY_SIGN_UP_OTP, Request.Method.POST, false);
-        mConnectionFactory.setHeaderParams();
-        mConnectionFactory.setPostParams(requestModel);
-        mConnectionFactory.setUrl(Config.VERIFY_SIGN_UP_OTP);
-        mConnectionFactory.createConnection(DMSConstants.TASK_VERIFY_SIGN_UP_OTP);
-    }
-
-    //SignUp
-    public void doSignUp(SignUpRequestModel signUpRequestModel) {
-        ConnectionFactory mConnectionFactory = new ConnectionFactory(mContext, this, null, true, DMSConstants.TASK_SIGN_UP, Request.Method.POST, false);
-        mConnectionFactory.setHeaderParams();
-        mConnectionFactory.setPostParams(signUpRequestModel);
-        mConnectionFactory.setUrl(Config.SIGN_UP_URL);
-        mConnectionFactory.createConnection(DMSConstants.TASK_SIGN_UP);
-    }
-
-    // Logout
-    public void doLogout(ActiveRequest activeRequest) {
-        ConnectionFactory mConnectionFactory = new ConnectionFactory(mContext, this, null, true, DMSConstants.LOGOUT, Request.Method.POST, false);
-        mConnectionFactory.setHeaderParams();
-        mConnectionFactory.setPostParams(activeRequest);
-        mConnectionFactory.setUrl(Config.LOGOUT);
-        mConnectionFactory.createConnection(DMSConstants.LOGOUT);
-    }
-
-    // ActiveStatus
-    public void doActiveStatus(ActiveRequest activeRequest) {
-        ConnectionFactory mConnectionFactory = new ConnectionFactory(mContext, this, null, true, DMSConstants.ACTIVE_STATUS, Request.Method.POST, false);
-        mConnectionFactory.setHeaderParams();
-        mConnectionFactory.setPostParams(activeRequest);
-        mConnectionFactory.setUrl(Config.ACTIVE);
-        mConnectionFactory.createConnection(DMSConstants.ACTIVE_STATUS);
-    }
-
-    //-------RESCRIBE EXITING APIs : END
 
 }
