@@ -113,22 +113,7 @@
             tools:ignore="RtlHardcoded,RtlSymmetry"
             tools:visibility="gone" />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginTop="@dimen/dp14"
-            android:gravity="right"
-            android:paddingBottom="@dimen/dp10"
-            android:paddingEnd="@dimen/dp16"
-            android:paddingRight="@dimen/dp16"
-            android:paddingTop="@dimen/dp10"
-            android:visibility="gone"
-            app:srcCompat="@drawable/sync_patients"
-            tools:ignore="RtlHardcoded,RtlSymmetry"
-            tools:visibility="visible" />
+
 
     </RelativeLayout>
 

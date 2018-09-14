@@ -89,7 +89,7 @@
                 android:textColor="@color/logo_color"
                 android:textSize="@dimen/sp13"
                 app:customFont="@string/roboto_regular"
-                app:srcCompat="@drawable/scrog_product" />
+                 />
 
             <com.scorg.dms.ui.customesViews.CustomTextView
                 android:layout_width="wrap_content"
@@ -99,7 +99,7 @@
                 android:textColor="@color/logo_color"
                 android:textSize="@dimen/sp13"
                 app:customFont="@string/roboto_regular"
-                app:srcCompat="@drawable/scrog_product" />
+               />
 
             <com.scorg.dms.ui.customesViews.CustomTextView
                 android:id="@+id/versionText"
@@ -110,7 +110,7 @@
                 android:textSize="@dimen/sp13"
                 tools:text="v1.1(4)"
                 app:customFont="@string/roboto_regular"
-                app:srcCompat="@drawable/scrog_product" />
+                 />
 
         </LinearLayout>
     </LinearLayout>

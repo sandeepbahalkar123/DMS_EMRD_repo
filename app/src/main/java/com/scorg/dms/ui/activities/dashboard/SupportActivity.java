@@ -70,9 +70,13 @@ public class SupportActivity extends AppCompatActivity  {
     }
 
     private void callSupport() {
-        Intent callIntent = new Intent(Intent.ACTION_CALL);
-        callIntent.setData(Uri.parse("tel:9921385816"));
-        startActivity(callIntent);
+        try {
+            Intent callIntent = new Intent(Intent.ACTION_CALL);
+            callIntent.setData(Uri.parse("tel:9921385816"));
+            startActivity(callIntent);
+        }catch(SecurityException e){
+            Toast.makeText(mContext,e.getMessage(),Toast.LENGTH_LONG).show();
+        }
     }
 
 
