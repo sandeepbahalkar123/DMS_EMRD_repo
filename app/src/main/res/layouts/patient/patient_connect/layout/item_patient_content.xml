@@ -53,7 +53,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingBottom="@dimen/dp5"
             android:paddingLeft="@dimen/dp10"
             android:paddingTop="@dimen/dp5">
 
@@ -79,11 +78,13 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
-            android:padding="@dimen/dp10">
+           >
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/dp10"
+                android:layout_marginBottom="@dimen/dp5"
                 android:orientation="vertical">
 
                 <LinearLayout

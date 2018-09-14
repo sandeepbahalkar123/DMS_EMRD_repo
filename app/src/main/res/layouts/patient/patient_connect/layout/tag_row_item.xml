@@ -26,7 +26,7 @@
             android:textSize="@dimen/sp12"
             android:layout_marginStart="@dimen/dp5"
             android:gravity="start|center_vertical"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:paddingLeft="@dimen/dp5"
             android:paddingStart="@dimen/dp5"
             android:textStyle="bold" />
@@ -38,7 +38,7 @@
             android:layout_gravity="end|center_vertical"
             android:layout_margin="@dimen/dp5"
             android:layout_weight="2"
-            android:background="@mipmap/crosswithcircle"
+            android:background="@drawable/icon_text_field_clear_btn"
             android:paddingRight="@dimen/padding_very_tiny"
             android:paddingEnd="@dimen/padding_very_tiny"
             android:singleLine="true"

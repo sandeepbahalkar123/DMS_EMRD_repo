@@ -64,6 +64,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.TimeZone;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -260,7 +261,18 @@ public class CommonMethods {
     {
         Calendar c = Calendar.getInstance();
         SimpleDateFormat df = new SimpleDateFormat(yyyyMmDd, Locale.US);
+        df.setTimeZone(TimeZone.getTimeZone("UTC"));/// this line add to set UTC time zone to date
         return df.format(c.getTime());
+
+//        Date myDate = new Date();
+//        Calendar calendar = Calendar.getInstance();
+//        calendar.setTime(myDate);
+//        Date time = calendar.getTime();
+//        SimpleDateFormat outputFmt = new SimpleDateFormat(yyyyMmDd,Locale.US);
+//        outputFmt.setTimeZone(TimeZone.getTimeZone("UTC"));
+//        String dateAsString = outputFmt.format(time);
+//        System.out.println(dateAsString);
+//        return dateAsString;
     }
 
     public static void showSnack(Context mContext, View mViewById, String msg) {

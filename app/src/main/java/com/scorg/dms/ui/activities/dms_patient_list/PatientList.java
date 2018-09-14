@@ -1189,10 +1189,13 @@ public class PatientList extends AppCompatActivity implements HelperResponse, Vi
     @Override
     public void onSearchAutoCompleteItemClicked(PatientFilter patientFilter) {
 
-        mAutoCompleteSearchBox.setText(patientFilter.getSearchValue());
         mAutoCompleteSearchBox.dismissDropDown();
+        mAutoCompleteSearchBox.setText(patientFilter.getSearchValue());
+        mAutoCompleteSearchBox.setSelection(mAutoCompleteSearchBox.getText().length());
+
         patientExpandableListAdapter.removeAll();
         doGetPatientListFilter(patientFilter);
+        mAutoCompleteSearchBox.setSelection(mAutoCompleteSearchBox.getText().length());
 
     }
 }

@@ -123,7 +123,7 @@
                 <Spinner
                     android:id="@+id/spinner_admissionDate"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp36"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dp5"
                     android:layout_marginRight="@dimen/dp5"
                     android:gravity="center"
@@ -133,7 +133,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp36"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/dp5"
                 android:background="@color/grey_200"
                 android:baselineAligned="false"
@@ -141,17 +141,18 @@
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="0dp"
-                    android:layout_height="@dimen/dp36"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginLeft="@dimen/dp5"
                     android:layout_marginStart="@dimen/dp5"
+                    android:layout_marginBottom="@dimen/dp5"
                     android:layout_weight="1"
                     app:hintTextAppearance="@style/editTextInputLayout">
 
                     <EditText
                         android:id="@+id/et_fromdate"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:background="@null"
                         android:drawableEnd="@mipmap/calendar"
@@ -168,19 +169,20 @@
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="0dp"
-                    android:layout_height="@dimen/dp36"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginEnd="@dimen/dp5"
                     android:layout_marginLeft="@dimen/dp2"
                     android:layout_marginRight="@dimen/dp5"
                     android:layout_marginStart="@dimen/dp2"
+                    android:layout_marginBottom="@dimen/dp5"
                     android:layout_weight="1"
                     app:hintTextAppearance="@style/editTextInputLayout">
 
                     <EditText
                         android:id="@+id/et_todate"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:background="@null"
                         android:drawableEnd="@mipmap/calendar"
@@ -214,7 +216,6 @@
 
                     <AutoCompleteTextView
                         android:id="@+id/et_searchPatientName"
-
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
@@ -241,7 +242,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp36"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/dp5"
                 android:background="@color/grey_200"
                 android:orientation="vertical">
@@ -252,6 +253,7 @@
                     android:layout_gravity="center"
                     android:layout_marginLeft="@dimen/dp5"
                     android:layout_marginRight="@dimen/dp5"
+                    android:layout_marginBottom="@dimen/dp5"
                     app:hintTextAppearance="@style/editTextInputLayout">
 
                     <EditText
@@ -273,7 +275,7 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp36"
+                android:layout_height="wrap_content"
                 android:background="@color/white">
 
                 <android.support.design.widget.TextInputLayout
