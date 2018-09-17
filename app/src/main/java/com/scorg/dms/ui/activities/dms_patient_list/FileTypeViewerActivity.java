@@ -568,14 +568,18 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
     public void onSuccess(String mOldDataTag, CustomResponse customResponse) {
         if (String.valueOf(mOldDataTag).equalsIgnoreCase("" + DMSConstants.TASK_GET_ARCHIVED_LIST)) {
             FileTreeResponseModel fileTreeResponseModel = (FileTreeResponseModel) customResponse;
-            mFileTreeResponseData = fileTreeResponseModel.getFileTreeResponseData();
+            if (!fileTreeResponseModel.getCommon().getStatusCode().equals(DMSConstants.SUCCESS)) {
+                CommonMethods.showToast(mContext, fileTreeResponseModel.getCommon().getStatusMessage());
+            } else {
+                mFileTreeResponseData = fileTreeResponseModel.getFileTreeResponseData();
 
-            if (mFileTypeOne.getText().toString().equalsIgnoreCase(mFileTypeTwo.getText().toString())) {
-                isComparingBetweenSameFileType = true;
+                if (mFileTypeOne.getText().toString().equalsIgnoreCase(mFileTypeTwo.getText().toString())) {
+                    isComparingBetweenSameFileType = true;
+                }
+
+
+                doCreateTreeStructure();
             }
-
-
-            doCreateTreeStructure();
 
 
             //------
@@ -688,7 +692,7 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
 
             confidentialState = archiveDatumObject.getConfidentialState();
 
-            ArrowExpandSelectableHeaderHolder selectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, true, confidentialState,false);
+            ArrowExpandSelectableHeaderHolder selectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, true, confidentialState, false);
             selectableHeaderHolder.setOnlyOneNodeExpanded(true);
             selectableHeaderHolder.setNodeValueColor(textColor);
 
@@ -716,7 +720,7 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
                 // Label(pageCount)|id
                 confidentialState = lstDateFolderType.getConfidentialState();
                 dataToShow = lstDateFolderType.getDateFolderType() + " (" + lstDateFolderType.getPageCount() + ")" + "|NA";
-                ArrowExpandSelectableHeaderHolder lstDateFolderTypeSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstDocTypeChildLeftPadding, true, confidentialState,false);
+                ArrowExpandSelectableHeaderHolder lstDateFolderTypeSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstDocTypeChildLeftPadding, true, confidentialState, false);
                 lstDateFolderTypeSelectableHeaderHolder.setOnlyOneNodeExpanded(true);
 
                 lstDateFolderTypeSelectableHeaderHolder.setNodeValueColor(textColor);
@@ -742,7 +746,7 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
                     confidentialState = lstDocCategoryObject.getConfidentialState();
 
                     dataToShow = lstDocCategoryObject.getCategoryName() + " (" + lstDocCategoryObject.getTotalDocTypePageCount() + ")" + "|" + lstDocCategoryObject.getCategoryId();
-                    ArrowExpandSelectableHeaderHolder docCatSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstDateFolderTypeChildLeftPadding, true, confidentialState,false);
+                    ArrowExpandSelectableHeaderHolder docCatSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstDateFolderTypeChildLeftPadding, true, confidentialState, false);
                     docCatSelectableHeaderHolder.setOnlyOneNodeExpanded(true);
 
                     docCatSelectableHeaderHolder.setNodeValueColor(textColor);
@@ -767,7 +771,7 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
                         confidentialState = lstDocTypeChild.getConfidentialState();
 
                         //-------
-                        ArrowExpandSelectableHeaderHolder lstDocTypeChildSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstDateFolderTypeChildLeftPadding, false, confidentialState,false);
+                        ArrowExpandSelectableHeaderHolder lstDocTypeChildSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstDateFolderTypeChildLeftPadding, false, confidentialState, false);
                         lstDocTypeChildSelectableHeaderHolder.setOnlyOneNodeExpanded(true);
                         lstDocTypeChildSelectableHeaderHolder.setNodeValueColor(textColor);
 
@@ -815,7 +819,7 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
         for (int i = 0; i < size; i++) {
             ArchiveDatum archiveDatumObject = archiveData.get(i);
             confidentialState = archiveDatumObject.getConfidentialState();
-            ArrowExpandSelectableHeaderHolder selectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, true, confidentialState,false);
+            ArrowExpandSelectableHeaderHolder selectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, true, confidentialState, false);
             selectableHeaderHolder.setOnlyOneNodeExpanded(true);
             selectableHeaderHolder.setNodeValueColor(textColor);
 
@@ -841,7 +845,7 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
                 // Label(pageCount)|id
                 confidentialState = lstDocCategory.getConfidentialState();
                 dataToShow = lstDocCategory.getCategoryName() + " (" + lstDocCategory.getPageCount() + ")" + "|NA";
-                ArrowExpandSelectableHeaderHolder lstDateFolderTypeSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstDocTypeChildLeftPadding, true, confidentialState,false);
+                ArrowExpandSelectableHeaderHolder lstDateFolderTypeSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstDocTypeChildLeftPadding, true, confidentialState, false);
                 lstDateFolderTypeSelectableHeaderHolder.setOnlyOneNodeExpanded(true);
 
                 lstDateFolderTypeSelectableHeaderHolder.setNodeValueColor(textColor);
@@ -866,7 +870,7 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
                     dataToShow = lstDocTypeChild.getTypeName() + " (" + lstDocTypeChild.getPageCount() + ")" + "|" + lstDocTypeChild.getTypeId();
                     confidentialState = lstDocTypeChild.getConfidentialState();
                     //-------
-                    ArrowExpandSelectableHeaderHolder lstDocTypeChildSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstDateFolderTypeChildLeftPadding, false, confidentialState,false);
+                    ArrowExpandSelectableHeaderHolder lstDocTypeChildSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstDateFolderTypeChildLeftPadding, false, confidentialState, false);
                     lstDocTypeChildSelectableHeaderHolder.setOnlyOneNodeExpanded(true);
                     lstDocTypeChildSelectableHeaderHolder.setNodeValueColor(textColor);
 
@@ -913,7 +917,7 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
             ArchiveDatum archiveDatumObject = archiveData.get(i);
 
             confidentialState = archiveDatumObject.getConfidentialState();
-            ArrowExpandSelectableHeaderHolder selectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, true, confidentialState,false);
+            ArrowExpandSelectableHeaderHolder selectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, true, confidentialState, false);
             selectableHeaderHolder.setOnlyOneNodeExpanded(true);
             selectableHeaderHolder.setNodeValueColor(textColor);
 
@@ -938,7 +942,7 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
                 // Label(pageCount)|id
                 confidentialState = lstDocCategoryObject.getConfidentialState();
                 dataToShow = lstDocCategoryObject.getCategoryName() + " (" + lstDocCategoryObject.getTotalDocTypePageCount() + ")" + "|" + lstDocCategoryObject.getCategoryId();
-                ArrowExpandSelectableHeaderHolder docCatSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstDocTypeChildLeftPadding, true, confidentialState,false);
+                ArrowExpandSelectableHeaderHolder docCatSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstDocTypeChildLeftPadding, true, confidentialState, false);
                 docCatSelectableHeaderHolder.setOnlyOneNodeExpanded(true);
 
                 docCatSelectableHeaderHolder.setNodeValueColor(textColor);
@@ -962,7 +966,7 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
                     confidentialState = lstDocTypeChild.getConfidentialState();
 
                     //-------
-                    ArrowExpandSelectableHeaderHolder lstDocTypeChildSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstDateFolderTypeChildLeftPadding, true, confidentialState,false);
+                    ArrowExpandSelectableHeaderHolder lstDocTypeChildSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstDateFolderTypeChildLeftPadding, true, confidentialState, false);
                     lstDocTypeChildSelectableHeaderHolder.setOnlyOneNodeExpanded(true);
                     lstDocTypeChildSelectableHeaderHolder.setNodeValueColor(textColor);
 
@@ -984,7 +988,7 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
                         confidentialState = lstDateFileTypeLastChild.getConfidentialState();
 
                         //-------
-                        ArrowExpandSelectableHeaderHolder lstDateFileTypeLastChildSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstDateFolderTypeChildLeftPadding, false, confidentialState,false);
+                        ArrowExpandSelectableHeaderHolder lstDateFileTypeLastChildSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstDateFolderTypeChildLeftPadding, false, confidentialState, false);
                         lstDateFileTypeLastChildSelectableHeaderHolder.setOnlyOneNodeExpanded(true);
                         lstDateFileTypeLastChildSelectableHeaderHolder.setNodeValueColor(textColor);
 
@@ -1219,9 +1223,14 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
 
         String baseUrl = DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.SERVER_PATH, mContext);
 
+        String[] separated = pdfFileURL.split(",");
+        pdfFileURL =  separated[0]; // this will contain PDF Path
 
-        pdfFileURL =pdfFileURL.replace(",Confidential","");
+
         pdfFileURL = baseUrl + pdfFileURL.replace("~", "").trim();
+
+
+
 
 
         CommonMethods.Log(TAG, "PDF URL:==-->> " + pdfFileURL);

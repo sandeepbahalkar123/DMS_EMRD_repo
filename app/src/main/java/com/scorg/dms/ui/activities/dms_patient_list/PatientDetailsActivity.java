@@ -158,19 +158,24 @@ public class PatientDetailsActivity extends AppCompatActivity implements HelperR
     public void onSuccess(String mOldDataTag, CustomResponse customResponse) {
         if (mOldDataTag == DMSConstants.TASK_GET_EPISODE_LIST) {
             EpisodeResponseModel showSearchResultResponseModel = (EpisodeResponseModel) customResponse;
-            EpisodeResponseModel.EpisodeDataList episodeDataList = showSearchResultResponseModel.getEpisodeDataList();
-            mIsLoadMoreEpisode= showSearchResultResponseModel.getEpisodeDataList().isPaggination();
-            mAutoCompleteSearchBox.dismissDropDown();
-            if (episodeDataList != null ) {
-                List<PatientEpisodeFileData> patientEpisodeFileDataList = episodeDataList.getPatientEpisodeFileDataList();
+            if(!showSearchResultResponseModel.getCommon().getStatusCode().equals(DMSConstants.SUCCESS)){
+                CommonMethods.showToast(mContext,showSearchResultResponseModel.getCommon().getStatusMessage());
+            }
+            else {
+                EpisodeResponseModel.EpisodeDataList episodeDataList = showSearchResultResponseModel.getEpisodeDataList();
+                mIsLoadMoreEpisode = showSearchResultResponseModel.getEpisodeDataList().isPaggination();
+                mAutoCompleteSearchBox.dismissDropDown();
+                if (episodeDataList != null) {
+                    List<PatientEpisodeFileData> patientEpisodeFileDataList = episodeDataList.getPatientEpisodeFileDataList();
 
-                if(patientEpisodeFileDataList.size()!=0) {
-                    mPatientEpisodeRecycleViewListAdapter.addNewItems(patientEpisodeFileDataList);
-                    mPatientEpisodeRecycleViewListAdapter.notifyDataSetChanged();
+                    if (patientEpisodeFileDataList.size() != 0) {
+                        mPatientEpisodeRecycleViewListAdapter.addNewItems(patientEpisodeFileDataList);
+                        mPatientEpisodeRecycleViewListAdapter.notifyDataSetChanged();
+                    }
+                } else {
+                    CommonMethods.showToast(this, "No data found");
+                    finish();
                 }
-            } else {
-                CommonMethods.showToast(this, "No data found");
-                finish();
             }
         }
     }

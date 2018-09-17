@@ -271,8 +271,6 @@ public class RequestManager extends ConnectRequest implements Connector, Request
 //            error = error1;
 //            CommonMethods.Log("Error Message", error.getMessage() + "\n error Localize message" + error.getLocalizedMessage());
             CommonMethods.Log(TAG, "Goes into error response condition");
-            CommonMethods.Log(TAG, "error--" + error.getMessage());
-
             if (error instanceof TimeoutError) {
 
                 if (error.getMessage().equalsIgnoreCase("java.io.IOException: No authentication challenges found") || error.getMessage().equalsIgnoreCase("invalid_grant")) {
