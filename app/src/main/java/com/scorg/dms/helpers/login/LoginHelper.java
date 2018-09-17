@@ -8,14 +8,8 @@ import com.scorg.dms.interfaces.CustomResponse;
 import com.scorg.dms.interfaces.HelperResponse;
 import com.scorg.dms.model.dms_models.responsemodel.iptestresponsemodel.IpTestResponseModel;
 import com.scorg.dms.model.dms_models.responsemodel.loginresponsemodel.LoginResponseModel;
-import com.scorg.dms.model.login.ActiveRequest;
-import com.scorg.dms.model.login.SignUpModel;
-import com.scorg.dms.model.requestmodel.login.LoginRequestModel;
-import com.scorg.dms.model.requestmodel.login.SignUpRequestModel;
-import com.scorg.dms.model.requestmodel.login.SignUpVerifyOTPRequestModel;
 import com.scorg.dms.network.ConnectRequest;
 import com.scorg.dms.network.ConnectionFactory;
-import com.scorg.dms.preference.DMSPreferencesManager;
 import com.scorg.dms.util.CommonMethods;
 import com.scorg.dms.util.Config;
 import com.scorg.dms.util.DMSConstants;
@@ -58,25 +52,6 @@ public class LoginHelper implements ConnectionListener {
                         IpTestResponseModel ipTestResponseModel = (IpTestResponseModel) customResponse;
                         mHelperResponseManager.onSuccess(mOldDataTag, ipTestResponseModel);
 
-                        break;
-                    case DMSConstants.TASK_SIGN_UP:
-                        SignUpModel signUpModel = (SignUpModel) customResponse;
-                        mHelperResponseManager.onSuccess(mOldDataTag, signUpModel);
-                        break;
-                    case DMSConstants.TASK_VERIFY_SIGN_UP_OTP:
-                        mHelperResponseManager.onSuccess(mOldDataTag, customResponse);
-                        break;
-                    case DMSConstants.TASK_LOGIN_WITH_PASSWORD:
-                        mHelperResponseManager.onSuccess(mOldDataTag, customResponse);
-                        break;
-                    case DMSConstants.TASK_LOGIN_WITH_OTP:
-                        mHelperResponseManager.onSuccess(mOldDataTag, customResponse);
-                        break;
-                    case DMSConstants.LOGOUT:
-                        mHelperResponseManager.onSuccess(mOldDataTag, customResponse);
-                        break;
-                    case DMSConstants.ACTIVE_STATUS:
-                        mHelperResponseManager.onSuccess(mOldDataTag, customResponse);
                         break;
                 }
                 break;
@@ -135,58 +110,6 @@ public class LoginHelper implements ConnectionListener {
 //        onResponse(ConnectionListener.RESPONSE_OK, i, DMSConstants.TASK_CHECK_SERVER_CONNECTION);
     }
 
-    //-------DMS LOGIN AND IP CHECK APIS. : END
 
-
-    //-------RESCRIBE EXITING APIs : START
-
-    //Do login using Otp
-    public void doLoginByOTP(String otp) {
-        ConnectionFactory mConnectionFactory = new ConnectionFactory(mContext, this, null, true, DMSConstants.TASK_LOGIN_WITH_OTP, Request.Method.POST, true);
-        mConnectionFactory.setHeaderParams();
-        LoginRequestModel loginRequestModel = new LoginRequestModel();
-        //    loginRequestModel.setMobileNumber(otp);  TODO NOT CONFIRMED ABOUT THIS.
-        mConnectionFactory.setPostParams(loginRequestModel);
-        mConnectionFactory.setUrl(Config.LOGIN_WITH_OTP_URL);
-        mConnectionFactory.createConnection(DMSConstants.TASK_LOGIN_WITH_OTP);
-    }
-
-    //Verify Otp sent
-    public void doVerifyGeneratedSignUpOTP(SignUpVerifyOTPRequestModel requestModel) {
-        ConnectionFactory mConnectionFactory = new ConnectionFactory(mContext, this, null, true, DMSConstants.TASK_VERIFY_SIGN_UP_OTP, Request.Method.POST, false);
-        mConnectionFactory.setHeaderParams();
-        mConnectionFactory.setPostParams(requestModel);
-        mConnectionFactory.setUrl(Config.VERIFY_SIGN_UP_OTP);
-        mConnectionFactory.createConnection(DMSConstants.TASK_VERIFY_SIGN_UP_OTP);
-    }
-
-    //SignUp
-    public void doSignUp(SignUpRequestModel signUpRequestModel) {
-        ConnectionFactory mConnectionFactory = new ConnectionFactory(mContext, this, null, true, DMSConstants.TASK_SIGN_UP, Request.Method.POST, false);
-        mConnectionFactory.setHeaderParams();
-        mConnectionFactory.setPostParams(signUpRequestModel);
-        mConnectionFactory.setUrl(Config.SIGN_UP_URL);
-        mConnectionFactory.createConnection(DMSConstants.TASK_SIGN_UP);
-    }
-
-    // Logout
-    public void doLogout(ActiveRequest activeRequest) {
-        ConnectionFactory mConnectionFactory = new ConnectionFactory(mContext, this, null, true, DMSConstants.LOGOUT, Request.Method.POST, false);
-        mConnectionFactory.setHeaderParams();
-        mConnectionFactory.setPostParams(activeRequest);
-        mConnectionFactory.setUrl(Config.LOGOUT);
-        mConnectionFactory.createConnection(DMSConstants.LOGOUT);
-    }
-
-    // ActiveStatus
-    public void doActiveStatus(ActiveRequest activeRequest) {
-        ConnectionFactory mConnectionFactory = new ConnectionFactory(mContext, this, null, true, DMSConstants.ACTIVE_STATUS, Request.Method.POST, false);
-        mConnectionFactory.setHeaderParams();
-        mConnectionFactory.setPostParams(activeRequest);
-        mConnectionFactory.setUrl(Config.ACTIVE);
-        mConnectionFactory.createConnection(DMSConstants.ACTIVE_STATUS);
-    }
-
-    //-------RESCRIBE EXITING APIs : END
 
 }

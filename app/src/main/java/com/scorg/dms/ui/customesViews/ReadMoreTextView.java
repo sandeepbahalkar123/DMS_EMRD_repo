@@ -35,7 +35,7 @@ import com.scorg.dms.R;
 /**
  * Created by borja on 17/4/16.
  */
-public class ReadMoreTextView extends TextView {
+public class ReadMoreTextView extends android.support.v7.widget.AppCompatTextView {
 
     private static final int TRIM_MODE_LINES = 0;
     private static final int TRIM_MODE_LENGTH = 1;

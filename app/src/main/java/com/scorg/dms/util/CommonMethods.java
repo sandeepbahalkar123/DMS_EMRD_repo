@@ -78,7 +78,7 @@ import javax.crypto.spec.SecretKeySpec;
 
 public class CommonMethods {
 
-    private static final String TAG = "Rescribe/CommonMethods";
+    private static final String TAG = "DOCUPHI/CommonMethods";
     private static boolean encryptionIsOn = true;
     private static String aBuffer = "";
     private static CheckIpConnection mCheckIpConnection;
