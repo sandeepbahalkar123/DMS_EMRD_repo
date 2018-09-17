@@ -89,7 +89,7 @@ public class SettingsActivity extends AppCompatActivity implements  HelperRespon
                 break;
 
             case R.id.change_ip_address:
-                CommonMethods.showDialog(DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.SERVER_PATH, mContext), getString(R.string.change_ip), this);
+                CommonMethods.showDialog("Current IP:-\n"+DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.SERVER_PATH, mContext)+"\n\n", getString(R.string.change_ip), this);
                 break;
         }
     }
@@ -189,10 +189,9 @@ public class SettingsActivity extends AppCompatActivity implements  HelperRespon
         DMSPreferencesManager.putString(DMSPreferencesManager.DMS_PREFERENCES_KEY.SERVER_PATH, mServerPath, mContext);
         DMSPreferencesManager.putString(DMSPreferencesManager.DMS_PREFERENCES_KEY.IS_VALID_IP_CONFIG, isValidConfig, mContext);
         Intent intent = new Intent(mContext, SplashScreenActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
+        ((AppCompatActivity) mContext).finishAffinity();
+
         //-------------
     }
 

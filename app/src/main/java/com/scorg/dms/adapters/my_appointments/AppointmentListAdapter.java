@@ -255,7 +255,7 @@ public class AppointmentListAdapter
         String appDate = appointmentPatientDataObject.getAppDate();
         if (appDate != null) {
             holder.appointmentTime.setVisibility(View.VISIBLE);
-            holder.appointmentTime.setText(CommonMethods.formatDateTime(appDate.split("T")[1], DMSConstants.DATE_PATTERN.hh_mm_a, DMSConstants.DATE_PATTERN.HH_mm_ss, DMSConstants.TIME).toLowerCase());
+            holder.appointmentTime.setText(CommonMethods.formatDateTime(appDate, DMSConstants.DATE_PATTERN.hh_mm_a, DMSConstants.DATE_PATTERN.UTC_PATTERN, DMSConstants.TIME).toLowerCase());
         }
         //-------
         TextDrawable textDrawable = CommonMethods.getTextDrawable(mContext, appointmentPatientDataObject.getPatientName());

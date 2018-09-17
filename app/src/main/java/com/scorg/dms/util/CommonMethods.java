@@ -515,47 +515,26 @@ public class CommonMethods {
      * @return formated date or time
      */
     public static String formatDateTime(String selectedDateTime, String requestedFormat, String currentDateFormat, String formatString) {
-
-
-        if (formatString.equalsIgnoreCase(DMSConstants.TIME)) {
-            // SimpleDateFormat ft = new SimpleDateFormat(DMSConstants.DATE_PATTERN.HH_MM, Locale.US);
-            SimpleDateFormat ft = new SimpleDateFormat(currentDateFormat, Locale.US);
-
-            Date dateObj = null;
-
-            try {
-                dateObj = ft.parse(selectedDateTime);
-            } catch (ParseException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+            String ourDate="";
+            try
+            {
+                SimpleDateFormat ft = new SimpleDateFormat(currentDateFormat, Locale.US);
+                ft.setTimeZone(TimeZone.getTimeZone("UTC"));
+                Date value = ft.parse(selectedDateTime);
+                SimpleDateFormat dateFormatter = new SimpleDateFormat(requestedFormat, Locale.US); //this format changeable
+                dateFormatter.setTimeZone(TimeZone.getDefault());
+                ourDate = dateFormatter.format(value);
             }
-
-            long millis = dateObj.getTime();
-            SimpleDateFormat simpleDateFormatObj = new SimpleDateFormat(requestedFormat, Locale.US);
-            return simpleDateFormatObj.format(millis);
-
-        }//if
-
-        else if (formatString.equalsIgnoreCase(DMSConstants.DATE)) {
-            SimpleDateFormat ft = new SimpleDateFormat(currentDateFormat, Locale.US);
-
-            Date dateObj = null;
-
-            try {
-                dateObj = ft.parse(selectedDateTime);
-
-            } catch (ParseException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+            catch (Exception e)
+            {
+                if (formatString.equalsIgnoreCase(DMSConstants.TIME)) {
+                    ourDate="00:00 am";
+                }
+                else if (formatString.equalsIgnoreCase(DMSConstants.DATE)) {
+                    ourDate="00-00-000";
+                }
             }
-
-            SimpleDateFormat simpleDateFormatObj = new SimpleDateFormat(requestedFormat, Locale.US);
-            return simpleDateFormatObj.format(dateObj);
-
-
-        }
-        return null;
-
+            return ourDate;
     }
 
 
@@ -873,13 +852,12 @@ public class CommonMethods {
 
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.change_ip_address_dialog);
+        dialog.setContentView(R.layout.dialog_exit);
         dialog.setCanceledOnTouchOutside(false);
         dialog.setCancelable(false);
 
-        ((TextView) dialog.findViewById(R.id.textview_ipaddress_label)).setText(msg);
-        ((TextView) dialog.findViewById(R.id.textview_change_ip_address)).setText(changeIpAddress);
-        dialog.findViewById(R.id.button_yes).setOnClickListener(new View.OnClickListener() {
+        ((TextView) dialog.findViewById(R.id.textview_sucess)).setText(msg+changeIpAddress);
+        dialog.findViewById(R.id.button_ok).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
@@ -889,7 +867,7 @@ public class CommonMethods {
 
             }
         });
-        dialog.findViewById(R.id.button_no).setOnClickListener(new View.OnClickListener() {
+        dialog.findViewById(R.id.button_cancel).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
