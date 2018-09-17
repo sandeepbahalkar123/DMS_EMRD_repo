@@ -104,20 +104,14 @@ public class DashboardAppointmentListAdapter extends RecyclerView.Adapter<Dashbo
     }
 
     static class GroupViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.cardView)
-        LinearLayout cardView;
         @BindView(R.id.userName)
         CustomTextView userName;
-
         @BindView(R.id.patientId)
         CustomTextView patientId;
         @BindView(R.id.patientImageView)
         ImageView patientImageView;
         @BindView(R.id.episodeList)
         CustomTextView episodeList;
-
-        //@BindView(R.id.divider)
-        //View divider;
 
         GroupViewHolder(View view) {
             super(view);
