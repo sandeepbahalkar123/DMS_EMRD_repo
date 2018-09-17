@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string formatted="false" name="attachments_title_text">附件 (%d/%d)</string>
+    <string name="done">完成</string>
+    <string name="no_camera_exists">没有相机的应用程序！</string>
+    <string name="no_files_found">找不到文件</string>
+    <string name="select_doc_text">选择文档</string>
+    <string name="select_photo_text">选择照片</string>
+</resources>

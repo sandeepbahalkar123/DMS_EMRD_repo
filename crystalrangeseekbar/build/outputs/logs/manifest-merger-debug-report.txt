@@ -1,0 +1,39 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /Users/ganeshs/AndroidStudioProjects/DMS_EMRD_repo/crystalrangeseekbar/src/main/AndroidManifest.xml:1:1-8:12
+INJECTED from /Users/ganeshs/AndroidStudioProjects/DMS_EMRD_repo/crystalrangeseekbar/src/main/AndroidManifest.xml:1:1-8:12
+INJECTED from /Users/ganeshs/AndroidStudioProjects/DMS_EMRD_repo/crystalrangeseekbar/src/main/AndroidManifest.xml:1:1-8:12
+INJECTED from /Users/ganeshs/AndroidStudioProjects/DMS_EMRD_repo/crystalrangeseekbar/src/main/AndroidManifest.xml:1:1-8:12
+INJECTED from /Users/ganeshs/AndroidStudioProjects/DMS_EMRD_repo/crystalrangeseekbar/src/main/AndroidManifest.xml:1:1-8:12
+INJECTED from /Users/ganeshs/AndroidStudioProjects/DMS_EMRD_repo/crystalrangeseekbar/src/main/AndroidManifest.xml:1:1-8:12
+INJECTED from /Users/ganeshs/AndroidStudioProjects/DMS_EMRD_repo/crystalrangeseekbar/src/main/AndroidManifest.xml:1:1-8:12
+	package
+		ADDED from /Users/ganeshs/AndroidStudioProjects/DMS_EMRD_repo/crystalrangeseekbar/src/main/AndroidManifest.xml:2:5-46
+		INJECTED from /Users/ganeshs/AndroidStudioProjects/DMS_EMRD_repo/crystalrangeseekbar/src/main/AndroidManifest.xml
+		INJECTED from /Users/ganeshs/AndroidStudioProjects/DMS_EMRD_repo/crystalrangeseekbar/src/main/AndroidManifest.xml
+	android:versionName
+		INJECTED from /Users/ganeshs/AndroidStudioProjects/DMS_EMRD_repo/crystalrangeseekbar/src/main/AndroidManifest.xml
+		ADDED from /Users/ganeshs/AndroidStudioProjects/DMS_EMRD_repo/crystalrangeseekbar/src/main/AndroidManifest.xml:1:1-8:12
+		INJECTED from /Users/ganeshs/AndroidStudioProjects/DMS_EMRD_repo/crystalrangeseekbar/src/main/AndroidManifest.xml
+	android:versionCode
+		INJECTED from /Users/ganeshs/AndroidStudioProjects/DMS_EMRD_repo/crystalrangeseekbar/src/main/AndroidManifest.xml
+		ADDED from /Users/ganeshs/AndroidStudioProjects/DMS_EMRD_repo/crystalrangeseekbar/src/main/AndroidManifest.xml:1:1-8:12
+		INJECTED from /Users/ganeshs/AndroidStudioProjects/DMS_EMRD_repo/crystalrangeseekbar/src/main/AndroidManifest.xml
+	xmlns:android
+		ADDED from /Users/ganeshs/AndroidStudioProjects/DMS_EMRD_repo/crystalrangeseekbar/src/main/AndroidManifest.xml:1:11-69
+application
+ADDED from /Users/ganeshs/AndroidStudioProjects/DMS_EMRD_repo/crystalrangeseekbar/src/main/AndroidManifest.xml:4:5-6:19
+uses-sdk
+INJECTED from /Users/ganeshs/AndroidStudioProjects/DMS_EMRD_repo/crystalrangeseekbar/src/main/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /Users/ganeshs/AndroidStudioProjects/DMS_EMRD_repo/crystalrangeseekbar/src/main/AndroidManifest.xml
+INJECTED from /Users/ganeshs/AndroidStudioProjects/DMS_EMRD_repo/crystalrangeseekbar/src/main/AndroidManifest.xml
+INJECTED from /Users/ganeshs/AndroidStudioProjects/DMS_EMRD_repo/crystalrangeseekbar/src/main/AndroidManifest.xml
+INJECTED from /Users/ganeshs/AndroidStudioProjects/DMS_EMRD_repo/crystalrangeseekbar/src/main/AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from /Users/ganeshs/AndroidStudioProjects/DMS_EMRD_repo/crystalrangeseekbar/src/main/AndroidManifest.xml
+		ADDED from /Users/ganeshs/AndroidStudioProjects/DMS_EMRD_repo/crystalrangeseekbar/src/main/AndroidManifest.xml
+		INJECTED from /Users/ganeshs/AndroidStudioProjects/DMS_EMRD_repo/crystalrangeseekbar/src/main/AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from /Users/ganeshs/AndroidStudioProjects/DMS_EMRD_repo/crystalrangeseekbar/src/main/AndroidManifest.xml
+		ADDED from /Users/ganeshs/AndroidStudioProjects/DMS_EMRD_repo/crystalrangeseekbar/src/main/AndroidManifest.xml
+		INJECTED from /Users/ganeshs/AndroidStudioProjects/DMS_EMRD_repo/crystalrangeseekbar/src/main/AndroidManifest.xml

@@ -1,0 +1,37 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /Users/ganeshs/AndroidStudioProjects/DMS_EMRD_repo/materialdrawer/src/main/AndroidManifest.xml:26:1-27:12
+INJECTED from /Users/ganeshs/AndroidStudioProjects/DMS_EMRD_repo/materialdrawer/src/main/AndroidManifest.xml:26:1-27:12
+INJECTED from /Users/ganeshs/AndroidStudioProjects/DMS_EMRD_repo/materialdrawer/src/main/AndroidManifest.xml:26:1-27:12
+INJECTED from /Users/ganeshs/AndroidStudioProjects/DMS_EMRD_repo/materialdrawer/src/main/AndroidManifest.xml:26:1-27:12
+INJECTED from /Users/ganeshs/AndroidStudioProjects/DMS_EMRD_repo/materialdrawer/src/main/AndroidManifest.xml:26:1-27:12
+INJECTED from /Users/ganeshs/AndroidStudioProjects/DMS_EMRD_repo/materialdrawer/src/main/AndroidManifest.xml:26:1-27:12
+INJECTED from /Users/ganeshs/AndroidStudioProjects/DMS_EMRD_repo/materialdrawer/src/main/AndroidManifest.xml:26:1-27:12
+	package
+		ADDED from /Users/ganeshs/AndroidStudioProjects/DMS_EMRD_repo/materialdrawer/src/main/AndroidManifest.xml:26:11-62
+		INJECTED from /Users/ganeshs/AndroidStudioProjects/DMS_EMRD_repo/materialdrawer/src/main/AndroidManifest.xml
+		INJECTED from /Users/ganeshs/AndroidStudioProjects/DMS_EMRD_repo/materialdrawer/src/main/AndroidManifest.xml
+	android:versionName
+		INJECTED from /Users/ganeshs/AndroidStudioProjects/DMS_EMRD_repo/materialdrawer/src/main/AndroidManifest.xml
+		ADDED from /Users/ganeshs/AndroidStudioProjects/DMS_EMRD_repo/materialdrawer/src/main/AndroidManifest.xml:26:1-27:12
+		INJECTED from /Users/ganeshs/AndroidStudioProjects/DMS_EMRD_repo/materialdrawer/src/main/AndroidManifest.xml
+	xmlns:android
+		ADDED from /Users/ganeshs/AndroidStudioProjects/DMS_EMRD_repo/materialdrawer/src/main/AndroidManifest.xml:26:1-27:12
+	android:versionCode
+		INJECTED from /Users/ganeshs/AndroidStudioProjects/DMS_EMRD_repo/materialdrawer/src/main/AndroidManifest.xml
+		ADDED from /Users/ganeshs/AndroidStudioProjects/DMS_EMRD_repo/materialdrawer/src/main/AndroidManifest.xml:26:1-27:12
+		INJECTED from /Users/ganeshs/AndroidStudioProjects/DMS_EMRD_repo/materialdrawer/src/main/AndroidManifest.xml
+uses-sdk
+INJECTED from /Users/ganeshs/AndroidStudioProjects/DMS_EMRD_repo/materialdrawer/src/main/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /Users/ganeshs/AndroidStudioProjects/DMS_EMRD_repo/materialdrawer/src/main/AndroidManifest.xml
+INJECTED from /Users/ganeshs/AndroidStudioProjects/DMS_EMRD_repo/materialdrawer/src/main/AndroidManifest.xml
+INJECTED from /Users/ganeshs/AndroidStudioProjects/DMS_EMRD_repo/materialdrawer/src/main/AndroidManifest.xml
+INJECTED from /Users/ganeshs/AndroidStudioProjects/DMS_EMRD_repo/materialdrawer/src/main/AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from /Users/ganeshs/AndroidStudioProjects/DMS_EMRD_repo/materialdrawer/src/main/AndroidManifest.xml
+		ADDED from /Users/ganeshs/AndroidStudioProjects/DMS_EMRD_repo/materialdrawer/src/main/AndroidManifest.xml
+		INJECTED from /Users/ganeshs/AndroidStudioProjects/DMS_EMRD_repo/materialdrawer/src/main/AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from /Users/ganeshs/AndroidStudioProjects/DMS_EMRD_repo/materialdrawer/src/main/AndroidManifest.xml
+		ADDED from /Users/ganeshs/AndroidStudioProjects/DMS_EMRD_repo/materialdrawer/src/main/AndroidManifest.xml
+		INJECTED from /Users/ganeshs/AndroidStudioProjects/DMS_EMRD_repo/materialdrawer/src/main/AndroidManifest.xml
