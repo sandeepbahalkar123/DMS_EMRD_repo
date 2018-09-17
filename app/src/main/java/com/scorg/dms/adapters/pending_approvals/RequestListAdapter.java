@@ -32,7 +32,7 @@ import android.widget.TextView;
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractDraggableSwipeableItemViewHolder;
+//import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractDraggableSwipeableItemViewHolder;
 import com.scorg.dms.R;
 import com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemodel.SearchResult;
 import com.scorg.dms.model.pending_approval_list.RequestedArchivedDetailList;
@@ -63,7 +63,7 @@ public class RequestListAdapter
         this.isPending = isPending;
     }
 
-    public static class MyViewHolder extends AbstractDraggableSwipeableItemViewHolder {
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
         FrameLayout mContainer;
         LinearLayout mBehindViews;
         LinearLayout idAndDetailsLayout;
@@ -110,10 +110,10 @@ public class RequestListAdapter
             btn_cancel_request = v.findViewById(R.id.btn_cancel_request);
         }
 
-        @Override
-        public View getSwipeableContainerView() {
-            return mContainer;
-        }
+//        @Override
+//        public View getSwipeableContainerView() {
+//            return mContainer;
+//        }
     }
 
     @Override

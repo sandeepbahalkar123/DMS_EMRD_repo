@@ -70,7 +70,6 @@ dependencies {
     })
     implementation project(':library')
     implementation project(':android-pdf-viewer')
-    implementation project(':advanced_recycler')
     implementation(project(':bottomsheetpickers')) {
         exclude group: 'com.android.support', module: 'appcompat-v7'
         exclude group: 'com.android.support', module: 'design'

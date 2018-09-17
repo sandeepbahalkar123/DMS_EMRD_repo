@@ -32,7 +32,7 @@ import android.widget.TextView;
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractDraggableSwipeableItemViewHolder;
+//import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractDraggableSwipeableItemViewHolder;
 import com.scorg.dms.R;
 import com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemodel.SearchResult;
 import com.scorg.dms.model.waiting_list.WaitingPatientData;
@@ -61,7 +61,7 @@ public class WaitingListAdapter
         this.onItemClickListener = onItemClickListener;
     }
 
-    public static class MyViewHolder extends AbstractDraggableSwipeableItemViewHolder {
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
         FrameLayout mContainer;
         LinearLayout mBehindViews;
         LinearLayout idAndDetailsLayout;
@@ -106,10 +106,10 @@ public class WaitingListAdapter
             layoutWaitingEpisode = v.findViewById(R.id.layoutWaitingEpisode);
         }
 
-        @Override
-        public View getSwipeableContainerView() {
-            return mContainer;
-        }
+//        @Override
+//        public View getSwipeableContainerView() {
+//            return mContainer;
+//        }
     }
 
     @Override
