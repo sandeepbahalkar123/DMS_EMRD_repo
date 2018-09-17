@@ -60,7 +60,7 @@ import static com.scorg.dms.util.DMSConstants.PATIENT_DETAILS;
  * Created by jeetal on 31/1/18.
  */
 
-public class MyAppointmentsFragment extends Fragment implements AppointmentListAdapter.OnItemClickListener, HelperResponse {
+public class MyAppointmentsFragment extends Fragment implements AppointmentListAdapter.OnItemClickListener {
 
 
     @BindView(R.id.searchEditText)
@@ -73,8 +73,6 @@ public class MyAppointmentsFragment extends Fragment implements AppointmentListA
     RelativeLayout emptyListView;
     @BindView(R.id.rightFab)
     FloatingActionButton rightFab;
-    @BindView(R.id.leftFab)
-    FloatingActionButton leftFab;
 
     Unbinder unbinder;
     private AppointmentListAdapter mAppointmentListAdapter;
@@ -94,8 +92,6 @@ public class MyAppointmentsFragment extends Fragment implements AppointmentListA
     }
 
     private void init() {
-        mAppointmentHelper = new AppointmentHelper(getActivity(), this);
-
         searchEditText.addTextChangedListener(new EditTextWithDeleteButton.TextChangedListener() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -188,97 +184,8 @@ public class MyAppointmentsFragment extends Fragment implements AppointmentListA
         }
     }
 
-    @Override
-    public void onSuccess(String mOldDataTag, CustomResponse customResponse) {
-        if (mOldDataTag.equalsIgnoreCase(DMSConstants.TASK_GET_APPOINTMENT_DATA)) {
-            AddToWaitingListBaseModel mAddToWaitingListBaseModel = (AddToWaitingListBaseModel) customResponse;
-            if (DMSConstants.RESPONSE_OK.equalsIgnoreCase(mAddToWaitingListBaseModel.getCommon().getSuccess())) {
-                showDialogForWaitingStatus(mAddToWaitingListBaseModel.getAddToWaitingModel().getAddToWaitingResponse());
-            }
-        } else if (mOldDataTag.equalsIgnoreCase(DMSConstants.TASK_PATIENT_LIST)) {
-            ShowSearchResultResponseModel showSearchResultResponseModel = (ShowSearchResultResponseModel) customResponse;
-            SearchResultData searchResultData = showSearchResultResponseModel.getSearchResultData();
 
-            if (searchResultData != null) {
-                List<SearchResult> searchResultList = searchResultData.getSearchResult();
-                if (!searchResultList.isEmpty()) {
-                    SearchResult searchPatientInformation = searchResultList.get(0);
-                    //TODO : as API response chnaged, hence need to fix this too.
 
-                    /*List<PatientFileData> patientFileDataList = searchPatientInformation.getPatientFileData();
-                    if (patientFileDataList != null) {
-                        if (!patientFileDataList.isEmpty()) {
-                            PatientFileData childElement = patientFileDataList.get(0);
-                            Intent intent = new Intent(getActivity(), FileTypeViewerActivity.class);
-                            Bundle extra = new Bundle();
-                            ArrayList<PatientFileData> dataToSend = new ArrayList<PatientFileData>();
-                            dataToSend.add(childElement);
-                            extra.putSerializable(getString(R.string.compare), dataToSend);
-                            extra.putString(DMSConstants.PATIENT_ADDRESS, searchPatientInformation.getPatientAddress());
-                            extra.putString(DMSConstants.DOCTOR_NAME, searchPatientInformation.getDoctorName());
-                            extra.putString(DMSConstants.ID, childElement.getRespectiveParentPatientID());
-                            extra.putString(DMSConstants.PATIENT_LIST_PARAMS.PATIENT_NAME, "" + searchPatientInformation.getPatientName());
-                            intent.putExtra(DMSConstants.DATA, extra);
-                            startActivity(intent);
-                        }
-                    }*/
-                }
-            }
-        }
-    }
-
-    private void showDialogForWaitingStatus(ArrayList<AddToWaitingResponse> addToWaitingResponse) {
-        final Dialog dialog = new Dialog(getActivity());
-
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.waiting_status_list_dialog);
-        dialog.setCancelable(true);
-
-        RecyclerView recyclerViewBottom = (RecyclerView) dialog.findViewById(R.id.recyclerViewBottom);
-        LinearLayoutManager linearlayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
-        recyclerViewBottom.setLayoutManager(linearlayoutManager);
-        ShowWaitingStatusAdapter mShowWaitingStatusAdapter = new ShowWaitingStatusAdapter(getActivity(), addToWaitingResponse);
-        recyclerViewBottom.setAdapter(mShowWaitingStatusAdapter);
-        TextView okButton = (TextView) dialog.findViewById(R.id.okButton);
-        okButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-                Intent intent = new Intent(getActivity(), WaitingMainListActivity.class);
-                startActivity(intent);
-                getActivity().finish();
-                getActivity().setResult(RESULT_CLOSE_ACTIVITY_WAITING_LIST);
-            }
-        });
-
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-        lp.copyFrom(dialog.getWindow().getAttributes());
-        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
-        lp.gravity = Gravity.CENTER;
-        dialog.getWindow().setAttributes(lp);
-        dialog.setCanceledOnTouchOutside(true);
-        dialog.show();
-
-    }
-
-    @Override
-    public void onParseError(String mOldDataTag, String errorMessage) {
-        CommonMethods.showToast(getActivity(), errorMessage);
-
-    }
-
-    @Override
-    public void onServerError(String mOldDataTag, String serverErrorMessage) {
-        CommonMethods.showToast(getActivity(), serverErrorMessage);
-    }
-
-    @Override
-    public void onNoConnectionError(String mOldDataTag, String serverErrorMessage) {
-        CommonMethods.showToast(getActivity(), serverErrorMessage);
-    }
 
     public void setFilteredData(MyAppointmentsDataModel myAppointmentsDataModel) {
 

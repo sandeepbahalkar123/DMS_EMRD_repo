@@ -55,8 +55,6 @@ public class WaitingMainListActivity extends AppCompatActivity implements Helper
     @BindView(R.id.viewpager)
     ViewPager viewpager;
     String[] mFragmentTitleList = new String[2];
-    @BindView(R.id.leftFab)
-    FloatingActionButton leftFab;
     private ActivePatientListFragment mActivePatientListFragment;
     private ViewAllPatientListFragment mViewAllPatientListFragment;
     private ArrayList<WaitingClinicList> mWaitingClinicList;
@@ -110,7 +108,7 @@ public class WaitingMainListActivity extends AppCompatActivity implements Helper
 
     }
 
-    @OnClick({R.id.backImageView, R.id.titleTextView, R.id.userInfoTextView, R.id.leftFab})
+    @OnClick({R.id.backImageView, R.id.titleTextView, R.id.userInfoTextView})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.backImageView:
@@ -119,9 +117,6 @@ public class WaitingMainListActivity extends AppCompatActivity implements Helper
             case R.id.titleTextView:
                 break;
             case R.id.userInfoTextView:
-                break;
-            case R.id.leftFab:
-
                 break;
         }
     }

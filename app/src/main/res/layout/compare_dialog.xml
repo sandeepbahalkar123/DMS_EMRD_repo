@@ -210,7 +210,7 @@
             android:layout_marginLeft="@dimen/dp10"
             android:layout_marginRight="@dimen/dp10"
             android:layout_marginStart="@dimen/dp10"
-            android:background="@drawable/compare_button_red_background"
+            android:background="@drawable/compare_button_themecolor_background"
             android:gravity="center"
             android:padding="@dimen/dp10"
             android:text="@string/comparedocument"

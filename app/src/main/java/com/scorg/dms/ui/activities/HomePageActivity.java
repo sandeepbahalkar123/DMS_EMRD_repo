@@ -43,7 +43,6 @@ import com.scorg.dms.ui.activities.my_appointments.MyAppointmentsActivity;
 import com.scorg.dms.ui.activities.pending_approval_list.RequestedArchivedMainListActivity;
 import com.scorg.dms.ui.activities.waiting_list.WaitingMainListActivity;
 import com.scorg.dms.ui.customesViews.CustomTextView;
-import com.scorg.dms.ui.customesViews.SwitchButton;
 import com.scorg.dms.util.CommonMethods;
 import com.scorg.dms.util.DMSConstants;
 
@@ -133,7 +132,6 @@ public class HomePageActivity extends AppCompatActivity implements HelperRespons
     ImageView menuImageWaitingList;
     CustomTextView menuNameTextView;
     ImageView dashboardArrowImageView;
-    SwitchButton radioSwitch;
 
     @BindView(R.id.hostViewsLayout)
     LinearLayout hostViewsLayout;
@@ -469,7 +467,6 @@ public class HomePageActivity extends AppCompatActivity implements HelperRespons
         menuImageWaitingList = (ImageView) inflatedLayoutWaitingList.findViewById(R.id.menuImageView);
         menuNameTextView = (CustomTextView) inflatedLayoutWaitingList.findViewById(R.id.menuNameTextView);
         dashboardArrowImageView = (ImageView) inflatedLayoutWaitingList.findViewById(R.id.dashboardArrowImageView);
-        radioSwitch = (SwitchButton) inflatedLayoutWaitingList.findViewById(R.id.radioSwitch);
         menuImageWaitingList.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.patientwaitinglist));
         menuNameTextView.setText(getString(R.string.waiting_list) + " - " + waitingListCount);
         dashboardArrowImageView.setVisibility(View.VISIBLE);
@@ -490,7 +487,6 @@ public class HomePageActivity extends AppCompatActivity implements HelperRespons
         menuImageWaitingList = (ImageView) inflaterMyPatientsLayout.findViewById(R.id.menuImageView);
         menuNameTextView = (CustomTextView) inflaterMyPatientsLayout.findViewById(R.id.menuNameTextView);
         dashboardArrowImageView = (ImageView) inflaterMyPatientsLayout.findViewById(R.id.dashboardArrowImageView);
-        radioSwitch = (SwitchButton) inflaterMyPatientsLayout.findViewById(R.id.radioSwitch);
         menuImageWaitingList.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.patient));
         menuNameTextView.setText(getString(R.string.my_patients));
         menuOptionLinearLayout.setOnClickListener(new View.OnClickListener() {

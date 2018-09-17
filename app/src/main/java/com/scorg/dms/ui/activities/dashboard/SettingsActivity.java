@@ -41,8 +41,6 @@ public class SettingsActivity extends AppCompatActivity implements  HelperRespon
     CustomTextView userInfoTextView;
     @BindView(R.id.dateTextview)
     CustomTextView dateTextview;
-    @BindView(R.id.menuIcon)
-    ImageView menuIcon;
     @BindView(R.id.logout)
     CustomTextView logout;
     @BindView(R.id.dashboardArrowIcon)
