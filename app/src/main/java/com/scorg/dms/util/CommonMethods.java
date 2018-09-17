@@ -64,6 +64,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.TimeZone;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -163,106 +164,9 @@ public class CommonMethods {
         listView.requestLayout();
     }
 
-    public static int getVitalIcons(String vitalDetailName) {
 
-        // Drawable abbreviation = ContextCompat.getDrawable(context, R.drawable.ellipse_2);
-        int abbreviation = R.drawable.defaulticon;
-        if (vitalDetailName.equalsIgnoreCase("bp"))
-            abbreviation = R.drawable.bp;
-        else if (vitalDetailName.equalsIgnoreCase("weight"))
-            abbreviation = R.drawable.weight;
-        else if (vitalDetailName.equalsIgnoreCase("height"))
-            abbreviation = R.drawable.height;
-        else if (vitalDetailName.equalsIgnoreCase("bmi"))
-            abbreviation = R.drawable.bmi;
-        else if (vitalDetailName.equalsIgnoreCase("totalcholesterolhdlcholesterol"))
-            abbreviation = R.drawable.totalcholesterolhdlcholesterol;
-        else if (vitalDetailName.equalsIgnoreCase("ldlhdl"))
-            abbreviation = R.drawable.ldlhdl;
-        else if (vitalDetailName.equalsIgnoreCase("triglycerides"))
-            abbreviation = R.drawable.triglycerides;
-        else if (vitalDetailName.equalsIgnoreCase("hdlcholesterol"))
-            abbreviation = R.drawable.hdlcholesterol;
-        else if (vitalDetailName.equalsIgnoreCase("ldlcholesterol"))
-            abbreviation = R.drawable.ldlcholesterol;
-        else if (vitalDetailName.equalsIgnoreCase("totalcholesterol"))
-            abbreviation = R.drawable.totalcholesterol;
-        else if (vitalDetailName.equalsIgnoreCase("gfr"))
-            abbreviation = R.drawable.gfr;
-        else if (vitalDetailName.equalsIgnoreCase("bun"))
-            abbreviation = R.drawable.bun;
-        else if (vitalDetailName.equalsIgnoreCase("creatinine"))
-            abbreviation = R.drawable.creatinine;
-        else if (vitalDetailName.equalsIgnoreCase("respiratoryrate"))
-            abbreviation = R.drawable.respiratoryrate;
-        else if (vitalDetailName.equalsIgnoreCase("heartrate"))
-            abbreviation = R.drawable.heartrate;
-        else if (vitalDetailName.equalsIgnoreCase("temperature"))
-            abbreviation = R.drawable.temperature;
-        else if (vitalDetailName.equalsIgnoreCase("fbs"))
-            abbreviation = R.drawable.fbs;
-        else if (vitalDetailName.equalsIgnoreCase("ppbs"))
-            abbreviation = R.drawable.ppbs;
-        else if (vitalDetailName.equalsIgnoreCase("spo_2"))
-            abbreviation = R.drawable.spo_2;
-        else if (vitalDetailName.equalsIgnoreCase("platelet"))
-            abbreviation = R.drawable.platelet;
-        else if (vitalDetailName.equalsIgnoreCase("esr"))
-            abbreviation = R.drawable.esr;
-        else if (vitalDetailName.equalsIgnoreCase("hb"))
-            abbreviation = R.drawable.hb;
 
-        return abbreviation;
-    }
 
-    public static int getCaseStudyIcons(String caseStudyName) {
-
-        // Drawable abbreviation = ContextCompat.getDrawable(context, R.drawable.ellipse_2);
-        caseStudyName = caseStudyName.toLowerCase();
-        int abbreviation = R.drawable.commonicon;
-        if (caseStudyName.contains("complaint"))
-            abbreviation = R.drawable.complaints;
-        else if (caseStudyName.contains("vital"))
-            abbreviation = R.drawable.vitals;
-        else if (caseStudyName.contains("remark"))
-            abbreviation = R.drawable.remarks;
-        else if (caseStudyName.contains("diagnosis"))
-            abbreviation = R.drawable.diagnosis;
-        else if (caseStudyName.contains("prescription"))
-            abbreviation = R.drawable.prescription;
-        else if (caseStudyName.contains("investigation"))
-            abbreviation = R.drawable.investigations;
-        else if (caseStudyName.contains("advice"))
-            abbreviation = R.drawable.advice;
-        else if (caseStudyName.contains("treatment plan"))
-            abbreviation = R.drawable.treatment_plan;
-        else if (caseStudyName.contains("surgery"))
-            abbreviation = R.drawable.surgery;
-        else if (caseStudyName.contains("vaccination"))
-            abbreviation = R.drawable.vaccination;
-        else if (caseStudyName.contains("general precaution"))
-            abbreviation = R.drawable.generalprecautions;
-        else if (caseStudyName.contains("pre-operative precaution"))
-            abbreviation = R.drawable.preoperativeprecautions;
-        else if (caseStudyName.contains("post-operative care"))
-            abbreviation = R.drawable.postoperativecare;
-        else if (caseStudyName.contains("pain score") || caseStudyName.contains("pain scale"))
-            abbreviation = R.drawable.painscore;
-        else if (caseStudyName.contains("exercise"))
-            abbreviation = R.drawable.exercise;
-        else if (caseStudyName.contains("finding"))
-            abbreviation = R.drawable.finding;
-        else if (caseStudyName.contains("allergie"))
-            abbreviation = R.drawable.allergy;
-        else if (caseStudyName.contains("attachment"))
-            abbreviation = R.drawable.attachment;
-        else if (caseStudyName.contains("systemic examination") || caseStudyName.contains("examination"))
-            abbreviation = R.drawable.examination;
-        else if (caseStudyName.contains("operative procedure") || caseStudyName.contains("procedure"))
-            abbreviation = R.drawable.procedure;
-
-        return abbreviation;
-    }
 
 
     /**
@@ -357,7 +261,18 @@ public class CommonMethods {
     {
         Calendar c = Calendar.getInstance();
         SimpleDateFormat df = new SimpleDateFormat(yyyyMmDd, Locale.US);
+        df.setTimeZone(TimeZone.getTimeZone("UTC"));/// this line add to set UTC time zone to date
         return df.format(c.getTime());
+
+//        Date myDate = new Date();
+//        Calendar calendar = Calendar.getInstance();
+//        calendar.setTime(myDate);
+//        Date time = calendar.getTime();
+//        SimpleDateFormat outputFmt = new SimpleDateFormat(yyyyMmDd,Locale.US);
+//        outputFmt.setTimeZone(TimeZone.getTimeZone("UTC"));
+//        String dateAsString = outputFmt.format(time);
+//        System.out.println(dateAsString);
+//        return dateAsString;
     }
 
     public static void showSnack(Context mContext, View mViewById, String msg) {
@@ -600,47 +515,26 @@ public class CommonMethods {
      * @return formated date or time
      */
     public static String formatDateTime(String selectedDateTime, String requestedFormat, String currentDateFormat, String formatString) {
-
-
-        if (formatString.equalsIgnoreCase(DMSConstants.TIME)) {
-            // SimpleDateFormat ft = new SimpleDateFormat(DMSConstants.DATE_PATTERN.HH_MM, Locale.US);
-            SimpleDateFormat ft = new SimpleDateFormat(currentDateFormat, Locale.US);
-
-            Date dateObj = null;
-
-            try {
-                dateObj = ft.parse(selectedDateTime);
-            } catch (ParseException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+            String ourDate="";
+            try
+            {
+                SimpleDateFormat ft = new SimpleDateFormat(currentDateFormat, Locale.US);
+                ft.setTimeZone(TimeZone.getTimeZone("UTC"));
+                Date value = ft.parse(selectedDateTime);
+                SimpleDateFormat dateFormatter = new SimpleDateFormat(requestedFormat, Locale.US); //this format changeable
+                dateFormatter.setTimeZone(TimeZone.getDefault());
+                ourDate = dateFormatter.format(value);
             }
-
-            long millis = dateObj.getTime();
-            SimpleDateFormat simpleDateFormatObj = new SimpleDateFormat(requestedFormat, Locale.US);
-            return simpleDateFormatObj.format(millis);
-
-        }//if
-
-        else if (formatString.equalsIgnoreCase(DMSConstants.DATE)) {
-            SimpleDateFormat ft = new SimpleDateFormat(currentDateFormat, Locale.US);
-
-            Date dateObj = null;
-
-            try {
-                dateObj = ft.parse(selectedDateTime);
-
-            } catch (ParseException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+            catch (Exception e)
+            {
+                if (formatString.equalsIgnoreCase(DMSConstants.TIME)) {
+                    ourDate="00:00 am";
+                }
+                else if (formatString.equalsIgnoreCase(DMSConstants.DATE)) {
+                    ourDate="00-00-000";
+                }
             }
-
-            SimpleDateFormat simpleDateFormatObj = new SimpleDateFormat(requestedFormat, Locale.US);
-            return simpleDateFormatObj.format(dateObj);
-
-
-        }
-        return null;
-
+            return ourDate;
     }
 
 
@@ -706,49 +600,6 @@ public class CommonMethods {
     }
 
 
-    public static int getDoctorSpecialistIcons(String caseStudyName, Context mContext) {
-
-        // Drawable abbreviation = ContextCompat.getDrawable(context, R.drawable.ellipse_2);
-        int abbreviation = R.drawable.gynecologist;
-        if (caseStudyName.equalsIgnoreCase(mContext.getString(R.string.cardiologist)))
-            abbreviation = R.drawable.cardiologist;
-        else if (caseStudyName.equalsIgnoreCase(mContext.getString(R.string.ophthalmologist)))
-            abbreviation = R.drawable.ophthalmologist;
-        else if (caseStudyName.equalsIgnoreCase(mContext.getString(R.string.gastro)))
-            abbreviation = R.drawable.gastro;
-        else if (caseStudyName.equalsIgnoreCase(mContext.getString(R.string.physiotherapist)))
-            abbreviation = R.drawable.physiotherapist;
-        else if (caseStudyName.equalsIgnoreCase(mContext.getString(R.string.orthopaedic)))
-            abbreviation = R.drawable.orthopaedic;
-        else if (caseStudyName.equalsIgnoreCase(mContext.getString(R.string.ent)))
-            abbreviation = R.drawable.ent;
-        else if (caseStudyName.equalsIgnoreCase(mContext.getString(R.string.dentist)))
-            abbreviation = R.drawable.dentist;
-        else if (caseStudyName.equalsIgnoreCase(mContext.getString(R.string.gynecologist)))
-            abbreviation = R.drawable.gynecologist;
-        else if (caseStudyName.equalsIgnoreCase(mContext.getString(R.string.paediatric)))
-            abbreviation = R.drawable.paediatric;
-        else if (caseStudyName.equalsIgnoreCase(mContext.getString(R.string.dermatologist)))
-            abbreviation = R.drawable.dermatologist;
-        else if (caseStudyName.equalsIgnoreCase(mContext.getString(R.string.neurologist)))
-            abbreviation = R.drawable.neurologist;
-        else if (caseStudyName.equalsIgnoreCase(mContext.getString(R.string.physician)))
-            abbreviation = R.drawable.physician;
-        else if (caseStudyName.equalsIgnoreCase(mContext.getString(R.string.psychiatrist)))
-            abbreviation = R.drawable.psychiatrist;
-        else if (caseStudyName.equalsIgnoreCase(mContext.getString(R.string.oncologist)))
-            abbreviation = R.drawable.oncologist;
-        else if (caseStudyName.equalsIgnoreCase(mContext.getString(R.string.urologist)))
-            abbreviation = R.drawable.urologist;
-        else if (caseStudyName.equalsIgnoreCase(mContext.getString(R.string.nephrologist)))
-            abbreviation = R.drawable.nephrologist;
-        else if (caseStudyName.equalsIgnoreCase(mContext.getString(R.string.surgeon)))
-            abbreviation = R.drawable.surgeon;
-        else if (caseStudyName.equalsIgnoreCase(mContext.getString(R.string.endocrinologist)))
-            abbreviation = R.drawable.endocrinologist;
-
-        return abbreviation;
-    }
 
     public static int displayAgeAnalysis(DateTime dateToday, DateTime birthdayDate) {
         Period dateDifferencePeriod = displayBirthdayResult(dateToday, birthdayDate);
@@ -1001,13 +852,12 @@ public class CommonMethods {
 
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.change_ip_address_dialog);
+        dialog.setContentView(R.layout.dialog_exit);
         dialog.setCanceledOnTouchOutside(false);
         dialog.setCancelable(false);
 
-        ((TextView) dialog.findViewById(R.id.textview_ipaddress_label)).setText(msg);
-        ((TextView) dialog.findViewById(R.id.textview_change_ip_address)).setText(changeIpAddress);
-        dialog.findViewById(R.id.button_yes).setOnClickListener(new View.OnClickListener() {
+        ((TextView) dialog.findViewById(R.id.textview_sucess)).setText(msg+changeIpAddress);
+        dialog.findViewById(R.id.button_ok).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
@@ -1017,7 +867,7 @@ public class CommonMethods {
 
             }
         });
-        dialog.findViewById(R.id.button_no).setOnClickListener(new View.OnClickListener() {
+        dialog.findViewById(R.id.button_cancel).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();

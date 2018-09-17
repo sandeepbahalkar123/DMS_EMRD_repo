@@ -114,7 +114,6 @@ public class AppointmentListAdapter
             idAndDetailsLayout = (LinearLayout) convertView.findViewById(R.id.idAndDetailsLayout);
             front_layout = (FrameLayout) convertView.findViewById(R.id.front_layout);
             delete_layout = (FrameLayout) convertView.findViewById(R.id.delete_layout);
-            waitingIcon = (ImageView) convertView.findViewById(R.id.waitingIcon);
 
             swipe_layout = (RelativeLayout) convertView.findViewById(R.id.swipe_layout);
             checkbox = (CheckBox) convertView.findViewById(R.id.checkbox);
@@ -225,14 +224,12 @@ public class AppointmentListAdapter
         } else if (appointmentPatientDataObject.getAppointmentStatus().equals(COMPLETED)) {
             holder.opdTypeTextView.setText(mContext.getString(R.string.opd_appointment) + " " + mContext.getString(R.string.capitalcompleted));
             holder.opdTypeTextView.setTextColor(ContextCompat.getColor(mContext, R.color.complete_color));
-            holder.waitingIcon.setVisibility(View.INVISIBLE);
         } else if (appointmentPatientDataObject.getAppointmentStatus().equalsIgnoreCase(CONFIRM_STATUS)) {
             holder.opdTypeTextView.setText(mContext.getString(R.string.opd_appointment) + " " + appointmentPatientDataObject.getAppointmentStatus());
             holder.opdTypeTextView.setTextColor(ContextCompat.getColor(mContext, R.color.confirm_color));
         } else if (appointmentPatientDataObject.getAppointmentStatus().equals(CANCEL)) {
             holder.opdTypeTextView.setText(mContext.getString(R.string.opd_appointment) + " " + appointmentPatientDataObject.getAppointmentStatus());
             holder.opdTypeTextView.setTextColor(ContextCompat.getColor(mContext, R.color.cancel_color));
-            holder.waitingIcon.setVisibility(View.INVISIBLE);
         } else if (appointmentPatientDataObject.getAppointmentStatus().equals(NO_SHOW)) {
             holder.opdTypeTextView.setText(mContext.getString(R.string.opd_appointment) + " " + appointmentPatientDataObject.getAppointmentStatus());
             holder.opdTypeTextView.setTextColor(ContextCompat.getColor(mContext, R.color.no_show_color));
@@ -255,7 +252,7 @@ public class AppointmentListAdapter
         String appDate = appointmentPatientDataObject.getAppDate();
         if (appDate != null) {
             holder.appointmentTime.setVisibility(View.VISIBLE);
-            holder.appointmentTime.setText(CommonMethods.formatDateTime(appDate.split("T")[1], DMSConstants.DATE_PATTERN.hh_mm_a, DMSConstants.DATE_PATTERN.HH_mm_ss, DMSConstants.TIME).toLowerCase());
+            holder.appointmentTime.setText(CommonMethods.formatDateTime(appDate, DMSConstants.DATE_PATTERN.hh_mm_a, DMSConstants.DATE_PATTERN.UTC_PATTERN, DMSConstants.TIME).toLowerCase());
         }
         //-------
         TextDrawable textDrawable = CommonMethods.getTextDrawable(mContext, appointmentPatientDataObject.getPatientName());

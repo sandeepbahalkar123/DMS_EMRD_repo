@@ -13,10 +13,6 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.scorg.dms.R;
-import com.scorg.dms.bottom_menus.BottomMenu;
-import com.scorg.dms.bottom_menus.BottomMenuActivity;
-import com.scorg.dms.bottom_menus.BottomMenuAdapter;
-import com.scorg.dms.ui.activities.ProfileActivity;
 import com.scorg.dms.ui.customesViews.CustomTextView;
 import com.scorg.dms.util.CommonMethods;
 
@@ -74,9 +70,13 @@ public class SupportActivity extends AppCompatActivity  {
     }
 
     private void callSupport() {
-        Intent callIntent = new Intent(Intent.ACTION_CALL);
-        callIntent.setData(Uri.parse("tel:9921385816"));
-        startActivity(callIntent);
+        try {
+            Intent callIntent = new Intent(Intent.ACTION_CALL);
+            callIntent.setData(Uri.parse("tel:9921385816"));
+            startActivity(callIntent);
+        }catch(SecurityException e){
+            Toast.makeText(mContext,e.getMessage(),Toast.LENGTH_LONG).show();
+        }
     }
 
 

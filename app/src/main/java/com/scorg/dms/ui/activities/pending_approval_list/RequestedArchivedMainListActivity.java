@@ -54,8 +54,6 @@ public class RequestedArchivedMainListActivity extends AppCompatActivity impleme
     @BindView(R.id.viewpager)
     ViewPager viewpager;
     String[] mFragmentTitleList = new String[2];
-    @BindView(R.id.leftFab)
-    FloatingActionButton leftFab;
     private PendingListFragment mPendingListFragment;
     private AllRequestListFragment mAllRequestListFragment;
     private PendingApprovalHelper mPendingApprovalHelper;
@@ -106,7 +104,7 @@ public class RequestedArchivedMainListActivity extends AppCompatActivity impleme
 
     }
 
-    @OnClick({R.id.backImageView, R.id.titleTextView, R.id.userInfoTextView, R.id.leftFab})
+    @OnClick({R.id.backImageView, R.id.titleTextView, R.id.userInfoTextView})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.backImageView:
@@ -116,9 +114,7 @@ public class RequestedArchivedMainListActivity extends AppCompatActivity impleme
                 break;
             case R.id.userInfoTextView:
                 break;
-            case R.id.leftFab:
 
-                break;
         }
     }
 

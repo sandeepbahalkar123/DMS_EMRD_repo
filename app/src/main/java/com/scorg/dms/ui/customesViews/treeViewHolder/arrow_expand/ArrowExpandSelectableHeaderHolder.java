@@ -83,7 +83,7 @@ public class ArrowExpandSelectableHeaderHolder extends TreeNode.BaseNodeViewHold
 
 
         arrowView = (ImageView) view.findViewById(R.id.icon);
-        arrowView.setPadding(20, 10, 10, 10);
+        //arrowView.setPadding(20, 10, 10, 10);
         if (node.isLeaf()) {
             arrowView.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_tree_file));
         }
@@ -223,9 +223,6 @@ public class ArrowExpandSelectableHeaderHolder extends TreeNode.BaseNodeViewHold
 
     public void setOnlyOneNodeExpanded(boolean expandedOrCollapsed) {
         isOnlyOneNodeExpanded = expandedOrCollapsed;
-    }
-    public void setCheckbox(boolean isCheck){
-            nodeSelector.setChecked(mNode.isSelected());
     }
 
     public void setTreeLabelBold(boolean treeLabelBold) {

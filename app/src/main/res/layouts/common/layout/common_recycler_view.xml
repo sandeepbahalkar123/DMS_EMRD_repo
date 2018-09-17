@@ -24,20 +24,6 @@
         android:visibility="gone" />
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/leftFab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_gravity="bottom|right"
-        android:layout_marginBottom="@dimen/fab_margin"
-        android:layout_marginLeft="@dimen/fab_margin"
-        android:layout_marginStart="@dimen/fab_margin"
-        android:visibility="gone"
-        app:backgroundTint="@color/floating_blue_color"
-        app:srcCompat="@drawable/ic_add_action" />
-
-    <android.support.design.widget.FloatingActionButton
         android:id="@+id/rightFab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -49,7 +49,8 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp36"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp5"
             android:orientation="horizontal">
 
             <com.scorg.dms.ui.customesViews.CustomTextView
@@ -70,7 +71,8 @@
                 android:layout_weight="1"
                 android:gravity="left|center"
                 android:textColor="@color/white"
-                android:textSize="@dimen/sp17" />
+                android:textSize="@dimen/sp17"
+                tools:text="Yogesh"/>
         </LinearLayout>
 
         <View
@@ -85,7 +87,7 @@
             android:layout_margin="@dimen/dp5"
             android:background="@drawable/round_background_full_view"
             android:gravity="center"
-            android:hint="Enter text"
+            android:hint="@string/patient_details_search_hint"
             android:textCursorDrawable="@drawable/cursor_color" />
     </LinearLayout>
 

@@ -65,11 +65,7 @@ public class RequestListAdapter
 
     public static class MyViewHolder extends AbstractDraggableSwipeableItemViewHolder {
         FrameLayout mContainer;
-        ImageView mDragHandle;
-
         LinearLayout mBehindViews;
-        ImageButton deleteButton;
-
         LinearLayout idAndDetailsLayout;
         ImageView mBluelineImageView;
         TextView mPatientIdTextView;
@@ -93,9 +89,7 @@ public class RequestListAdapter
         MyViewHolder(View v) {
             super(v);
             mContainer = v.findViewById(R.id.container);
-            mDragHandle = v.findViewById(R.id.dragHandle);
             mBehindViews = v.findViewById(R.id.behind_views);
-            deleteButton = v.findViewById(R.id.deleteButton);
             idAndDetailsLayout = v.findViewById(R.id.idAndDetailsLayout);
             mBluelineImageView = v.findViewById(R.id.bluelineImageView);
             mPatientIdTextView = v.findViewById(R.id.patientIdTextView);

@@ -14,21 +14,14 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.scorg.dms.R;
-import com.scorg.dms.bottom_menus.BottomMenu;
-import com.scorg.dms.bottom_menus.BottomMenuActivity;
-import com.scorg.dms.bottom_menus.BottomMenuAdapter;
-import com.scorg.dms.helpers.database.AppDBHelper;
 import com.scorg.dms.helpers.login.LoginHelper;
 import com.scorg.dms.interfaces.CustomResponse;
 import com.scorg.dms.interfaces.HelperResponse;
 import com.scorg.dms.preference.DMSPreferencesManager;
-import com.scorg.dms.ui.activities.ProfileActivity;
 import com.scorg.dms.ui.activities.SplashScreenActivity;
 import com.scorg.dms.ui.customesViews.CustomTextView;
 import com.scorg.dms.util.CommonMethods;
 import com.scorg.dms.util.DMSConstants;
-
-import net.gotev.uploadservice.UploadService;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -48,8 +41,6 @@ public class SettingsActivity extends AppCompatActivity implements  HelperRespon
     CustomTextView userInfoTextView;
     @BindView(R.id.dateTextview)
     CustomTextView dateTextview;
-    @BindView(R.id.menuIcon)
-    ImageView menuIcon;
     @BindView(R.id.logout)
     CustomTextView logout;
     @BindView(R.id.dashboardArrowIcon)
@@ -57,7 +48,6 @@ public class SettingsActivity extends AppCompatActivity implements  HelperRespon
     @BindView(R.id.selectMenuLayout)
     RelativeLayout selectMenuLayout;
 
-    private AppDBHelper appDBHelper;
     private Context mContext;
     private LoginHelper loginHelper;
     private String docId;
@@ -74,7 +64,6 @@ public class SettingsActivity extends AppCompatActivity implements  HelperRespon
     private void initialize() {
         mContext = SettingsActivity.this;
         docId = DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.DOC_ID, mContext);
-        appDBHelper = new AppDBHelper(mContext);
         loginHelper = new LoginHelper(mContext, this);
         titleTextView.setText(getString(R.string.settings));
         backImageView.setVisibility(View.VISIBLE);
@@ -98,7 +87,7 @@ public class SettingsActivity extends AppCompatActivity implements  HelperRespon
                 break;
 
             case R.id.change_ip_address:
-                CommonMethods.showDialog(DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.SERVER_PATH, mContext), getString(R.string.change_ip), this);
+                CommonMethods.showDialog("Current IP:-\n"+DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.SERVER_PATH, mContext)+"\n\n", getString(R.string.change_ip), this);
                 break;
         }
     }
@@ -139,9 +128,6 @@ public class SettingsActivity extends AppCompatActivity implements  HelperRespon
 
 
     private void logout() {
-
-        // cancel all uploadings.
-        UploadService.stopAllUploads();
 
         String mobileNoGmail = "";
         String passwordGmail = "";
@@ -188,7 +174,6 @@ public class SettingsActivity extends AppCompatActivity implements  HelperRespon
         DMSPreferencesManager.putString(DMSPreferencesManager.DMS_PREFERENCES_KEY.PASSWORD_FACEBOOK, passwordFacebook, mContext);
         DMSPreferencesManager.putString(getString(R.string.logout), "" + 1, mContext);
 
-        appDBHelper.deleteDatabase();
 
 //        Intent intent = new Intent(mContext, LoginActivity.class);
 //        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -202,10 +187,9 @@ public class SettingsActivity extends AppCompatActivity implements  HelperRespon
         DMSPreferencesManager.putString(DMSPreferencesManager.DMS_PREFERENCES_KEY.SERVER_PATH, mServerPath, mContext);
         DMSPreferencesManager.putString(DMSPreferencesManager.DMS_PREFERENCES_KEY.IS_VALID_IP_CONFIG, isValidConfig, mContext);
         Intent intent = new Intent(mContext, SplashScreenActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
+        ((AppCompatActivity) mContext).finishAffinity();
+
         //-------------
     }
 

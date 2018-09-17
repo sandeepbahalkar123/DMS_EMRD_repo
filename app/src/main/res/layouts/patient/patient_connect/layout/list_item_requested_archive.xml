@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/transparent"
+    android:paddingEnd="@dimen/dp4"
+    android:paddingStart="@dimen/dp4">
+
+    <FrameLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/transparent">
+
+        <LinearLayout
+            android:id="@+id/cardView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp2"
+            android:background="@drawable/round_background_full_view"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/idAndDetailsLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp5"
+                android:layout_marginBottom="@dimen/dp5"
+                android:orientation="vertical">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.4"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:orientation="vertical">
+
+                        <com.scorg.dms.ui.customesViews.CustomTextView
+                            android:id="@+id/textRequestId"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="123"
+                            android:textSize="@dimen/sp11"
+                            android:gravity="center"
+                            app:customFont="@string/roboto_medium"
+                            android:textAllCaps="true"
+                            android:layout_marginBottom="@dimen/dp5"
+                            android:textColor="@color/tagColor"/>
+
+                        <com.scorg.dms.ui.customesViews.CustomTextView
+                            android:id="@+id/textCurrentStage"
+                            android:layout_width="@dimen/dp60"
+                            android:layout_height="@dimen/dp60"
+                            tools:text="File in progress"
+                            android:background="@drawable/circular_bullet_light_green"
+                            android:gravity="center"
+                            android:padding="@dimen/dp5"
+                            android:textSize="@dimen/sp8"
+                            app:customFont="@string/roboto_medium"
+                            android:textAllCaps="true"
+                            android:textColor="@color/tagColor"/>
+
+                        <com.scorg.dms.ui.customesViews.CustomTextView
+                            android:id="@+id/textCurrentStatus"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="INPROGRESS"
+                            android:textSize="@dimen/sp11"
+                            android:gravity="center"
+                            android:layout_marginTop="@dimen/dp5"
+                            app:customFont="@string/roboto_bold"
+                            android:textAllCaps="true"
+                            android:textColor="@color/current_status"/>
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="0.5dp"
+                        android:layout_height="fill_parent"
+                        android:background="@color/tagColor"/>
+
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_weight="0.6"
+                        tools:ignore="RelativeOverlap">
+
+                        <RelativeLayout
+                            android:id="@+id/viewUHID"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                            <ImageView
+                                android:id="@+id/bluelineImageView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:paddingTop="@dimen/dp2"
+                                app:srcCompat="@drawable/result_blue_line"
+                                tools:ignore="ContentDescription,RtlSymmetry" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:gravity="center"
+                             >
+
+                                <com.scorg.dms.ui.customesViews.CustomTextView
+                                    android:id="@+id/patientIdTextView"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/dp5"
+                                    android:layout_marginStart="@dimen/dp5"
+                                    android:textColor="@color/statusbar"
+                                    android:textSize="@dimen/sp13"
+                                    android:padding="@dimen/dp3"
+                                    app:customFont="@string/roboto_medium"
+                                    tools:ignore="RtlSymmetry"
+                                    tools:text="ID: 23456"
+                                    />
+
+                            </LinearLayout>
+
+                        </RelativeLayout>
+                        <LinearLayout
+                            android:id="@+id/viewPatientName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:padding="@dimen/dp3"
+                            android:layout_below="@+id/viewUHID"
+                            android:layout_marginLeft="@dimen/dp5"
+                            android:layout_marginStart="@dimen/dp5">
+                        <com.scorg.dms.ui.customesViews.CustomTextView
+                            android:id="@+id/patientNameTextView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/sp14"
+                            app:customFont="@string/roboto_bold"
+                            tools:text="Mr. Uren Chhadva"
+
+                            />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/viewRequester"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:padding="@dimen/dp3"
+                            android:layout_below="@+id/viewPatientName"
+                            android:layout_marginLeft="@dimen/dp5"
+                            android:layout_marginStart="@dimen/dp5">
+
+                            <com.scorg.dms.ui.customesViews.CustomTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/requester"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/sp12"
+                                app:customFont="@string/roboto_medium" />
+
+                            <com.scorg.dms.ui.customesViews.CustomTextView
+                                android:id="@+id/textRequester"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/tagColor"
+                                android:textSize="@dimen/sp12"
+                                app:customFont="@string/roboto_medium"
+                                tools:text="Doctor" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/viewProcessBy"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:padding="@dimen/dp3"
+                            android:layout_marginLeft="@dimen/dp5"
+                            android:layout_marginStart="@dimen/dp5"
+                            android:layout_below="@+id/viewRequester">
+
+                            <com.scorg.dms.ui.customesViews.CustomTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/processed_by"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/sp12"
+                                app:customFont="@string/roboto_medium" />
+
+                            <com.scorg.dms.ui.customesViews.CustomTextView
+                                android:id="@+id/textProcessBy"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/tagColor"
+                                android:textSize="@dimen/sp12"
+                                app:customFont="@string/roboto_medium"
+                                tools:text="Admin" />
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:id="@+id/viewMyElapsedTime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:padding="@dimen/dp3"
+                            android:layout_marginLeft="@dimen/dp5"
+                            android:layout_marginStart="@dimen/dp5"
+                            android:layout_below="@+id/viewProcessBy">
+
+                            <com.scorg.dms.ui.customesViews.CustomTextView
+                                android:id="@+id/textMyElapsedTime"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                tools:text="1 hrs 12 mins ago"
+                                android:textColor="@color/grey"
+                                android:textSize="@dimen/sp12"
+                                app:customFont="@string/roboto_medium" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/btn_cancel_request"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:visibility="gone"
+                            android:layout_below="@+id/viewProcessBy"
+                            android:layout_marginRight="@dimen/dp5"
+                            android:layout_marginBottom="@dimen/dp10">
+                            <com.scorg.dms.ui.customesViews.CustomTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/shape_rectangle_red_border"
+                                android:padding="@dimen/dp5"
+                                android:text="@string/cancel"
+                                android:layout_gravity="right"
+                                app:customFont="@string/roboto_medium"
+                                android:textSize="@dimen/sp14"
+                                android:textAllCaps="true"
+                                android:layout_marginRight="@dimen/dp10"
+                                android:textColor="@color/Red"/>
+
+                        </LinearLayout>
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </FrameLayout>
+
+</RelativeLayout>

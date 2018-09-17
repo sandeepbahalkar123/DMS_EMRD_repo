@@ -12,13 +12,7 @@
             <option value="$PROJECT_DIR$/android-pdf-viewer" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/bottomsheetpickers" />
-            <option value="$PROJECT_DIR$/crystalrangeseekbar" />
-            <option value="$PROJECT_DIR$/fabmenu" />
-            <option value="$PROJECT_DIR$/filepicker" />
             <option value="$PROJECT_DIR$/library" />
-            <option value="$PROJECT_DIR$/materialdrawer" />
-            <option value="$PROJECT_DIR$/slideview" />
-            <option value="$PROJECT_DIR$/uploadservice" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

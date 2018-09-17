@@ -69,17 +69,12 @@
    public void *(android.view.View);
 }
 
--keep class com.google.**
--dontwarn com.google.**
+
 
 -keep class com.ngapps.ganeshshirole.monthpicker.**
 -dontwarn com.ngapps.ganeshshirole.monthpicker.**
 
--keep class droidninja.filepicker.**
--dontwarn droidninja.filepicker.**
 
--keep class com.crystal.**
--dontwarn com.crystal.**
 
 -keep class ng.max.slideview.**
 -dontwarn ng.max.slideview.**

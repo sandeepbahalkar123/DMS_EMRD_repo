@@ -1,4 +1,4 @@
-package com.scorg.dms.dms.views.treeViewHolder;
+package com.scorg.dms.ui.customesViews.treeViewHolder;
 
 import android.content.Context;
 import android.view.LayoutInflater;

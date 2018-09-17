@@ -269,7 +269,8 @@ public class DMSConstants {
         String DD_MMM = "dd MMM";
         String MM = "MM";
         String MMM = "MMM";
-        String UTC_PATTERN = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
+       // String UTC_PATTERN = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
+        String UTC_PATTERN = "yyyy-MM-dd'T'HH:mm:ss'Z'";
         String YYYY_MM_DD = "yyyy-MM-dd";
         String DD_MM_YYYY = "dd-MM-yyyy";
         String DD_MM_YYYY_SLASH = "dd/MM/yyyy";
@@ -278,7 +279,7 @@ public class DMSConstants {
         String TOTIMEZONE = "Asia/Kolkata";
         String EEEE_dd_MMM_yyyy_hh_mm_a = "EEEE dd MMM yyyy | hh:mm a";
         String HH_mm_ss = "HH:mm:ss";
-        String DD_MM_YYYY_hh_mm = "dd/MM/yyyy hh:mm aa";
+        String DD_MM_YYYY_hh_mm = "dd-MM-yyyy hh:mm aa";
         String HH_MM = "hh:mm";
         String HH_mm = "HH:mm";
         String DD_MMM_YYYY = "dd MMM, yyyy";

@@ -2,8 +2,6 @@ package com.scorg.dms.ui.activities.my_appointments;
 
 import android.Manifest;
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -29,7 +27,6 @@ import com.scorg.dms.model.my_appointments.MyAppointmentsDataModel;
 import com.scorg.dms.model.my_appointments.PatientList;
 import com.scorg.dms.model.my_appointments.StatusList;
 import com.scorg.dms.ui.customesViews.CustomTextView;
-import com.scorg.dms.ui.fragments.my_appointments.DrawerForMyAppointment;
 import com.scorg.dms.ui.fragments.my_appointments.MyAppointmentsFragment;
 import com.scorg.dms.util.CommonMethods;
 import com.scorg.dms.util.DMSConstants;
@@ -50,7 +47,7 @@ import static com.scorg.dms.util.DMSConstants.SUCCESS;
  * Created by jeetal on 31/1/18.
  */
 @RuntimePermissions
-public class MyAppointmentsActivity extends AppCompatActivity implements HelperResponse, DrawerForMyAppointment.OnDrawerInteractionListener, DatePickerDialog.OnDateSetListener {
+public class MyAppointmentsActivity extends AppCompatActivity implements HelperResponse, DatePickerDialog.OnDateSetListener {
     @BindView(R.id.backImageView)
     ImageView backImageView;
     @BindView(R.id.titleTextView)
@@ -90,8 +87,8 @@ public class MyAppointmentsActivity extends AppCompatActivity implements HelperR
         titleTextView.setText(getString(R.string.appointments));
         setDateInToolbar();
         //Call api for AppointmentData
-        String date = CommonMethods.getCurrentDate(DMSConstants.DATE_PATTERN.DD_MM_YYYY_SLASH);
-
+        String date = CommonMethods.getCurrentDate(DMSConstants.DATE_PATTERN.UTC_PATTERN);
+        System.out.println(date);
         mAppointmentHelper = new AppointmentHelper(this, this);
         mAppointmentHelper.doGetAppointmentData(date);
     }
@@ -132,12 +129,10 @@ public class MyAppointmentsActivity extends AppCompatActivity implements HelperR
                     myAppointmentsDM.setAppointmentPatientData(getBookedAndConfirmed(myAppointmentsBaseMainModel.getMyAppointmentsDataModel().getAppointmentPatientData()));
 
                     mMyAppointmentsFragment = MyAppointmentsFragment.newInstance(myAppointmentsDM, mDateSelectedByUser);
-                    getSupportFragmentManager().beginTransaction().replace(R.id.viewContainer, mMyAppointmentsFragment).commit();
+                   getSupportFragmentManager().beginTransaction().replace(R.id.viewContainer, mMyAppointmentsFragment).commit();
 
                     Bundle bundle = new Bundle();
                     bundle.putParcelable(DMSConstants.APPOINTMENT_DATA, myAppointmentsBaseMainModel.getMyAppointmentsDataModel());
-                    DrawerForMyAppointment mDrawerForMyAppointment = DrawerForMyAppointment.newInstance(bundle);
-                    getSupportFragmentManager().beginTransaction().replace(R.id.nav_view, mDrawerForMyAppointment).commit();
                 }
             }
         }
@@ -194,42 +189,6 @@ public class MyAppointmentsActivity extends AppCompatActivity implements HelperR
         }
     }
 
-    @Override
-    public void onApply(ArrayList<StatusList> statusLists, ArrayList<ClinicList> clinicLists, boolean drawerRequired) {
-        drawerLayout.closeDrawers();
-
-        if (statusLists.isEmpty() && clinicLists.isEmpty()) {
-            MyAppointmentsDataModel myAppointmentsDM = new MyAppointmentsDataModel();
-            myAppointmentsDM.setAppointmentPatientData(getBookedAndConfirmed(myAppointmentsBaseMainModel.getMyAppointmentsDataModel().getAppointmentPatientData()));
-            mMyAppointmentsFragment.setFilteredData(myAppointmentsDM);
-        } else {
-
-            ArrayList<AppointmentPatientData> mAppointmentPatientData = new ArrayList<>();
-            ArrayList<AppointmentPatientData> mFilterAppointmentPatientData = new ArrayList<>();
-
-            if (statusLists.isEmpty()) {
-                mAppointmentPatientData.addAll(myAppointmentsBaseMainModel.getMyAppointmentsDataModel().getAppointmentPatientData());
-            } else {
-                for (AppointmentPatientData appointmentObject : myAppointmentsBaseMainModel.getMyAppointmentsDataModel().getAppointmentPatientData()) {
-
-                    ArrayList<PatientList> mPatientListArrayList = new ArrayList<>();
-                    AppointmentPatientData tempAppointmentPatientDataObject = null;
-                    try {
-                        tempAppointmentPatientDataObject = (AppointmentPatientData) appointmentObject.clone();
-                    } catch (CloneNotSupportedException e) {
-                        e.printStackTrace();
-                    }
-
-                }
-            }
-
-            MyAppointmentsDataModel myAppointmentsDataModel = new MyAppointmentsDataModel();
-            myAppointmentsDataModel.setAppointmentPatientData(mFilterAppointmentPatientData);
-            myAppointmentsDataModel.setClinicList(myAppointmentsBaseMainModel.getMyAppointmentsDataModel().getClinicList());
-
-            mMyAppointmentsFragment.setFilteredData(myAppointmentsDataModel);
-        }
-    }
 
     private ArrayList<AppointmentPatientData> getBookedAndConfirmed(ArrayList<AppointmentPatientData> mAppointmentPatientData) {
 
@@ -243,26 +202,19 @@ public class MyAppointmentsActivity extends AppCompatActivity implements HelperR
         return mAppointListForBookAndConfirm;
     }
 
-    @Override
-    public void onReset(boolean drawerRequired) {
 
-    }
 
     public void callPatient(long patientPhone) {
         mClickedPhoneNumber = patientPhone;
-        MyAppointmentsActivityPermissionsDispatcher.doCallSupportWithCheck(this);
     }
 
     @NeedsPermission(Manifest.permission.CALL_PHONE)
     void doCallSupport() {
-        Intent callIntent = new Intent(Intent.ACTION_CALL);
-        callIntent.setData(Uri.parse("tel:" + mClickedPhoneNumber));
-        startActivity(callIntent);
+
     }
 
     public void onRequestPermssionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        MyAppointmentsActivityPermissionsDispatcher.onRequestPermissionsResult(this, requestCode, grantResults);
     }
 
     @Override

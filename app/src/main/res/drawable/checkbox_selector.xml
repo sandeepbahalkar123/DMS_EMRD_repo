@@ -3,13 +3,14 @@
 
     <item
         android:state_enabled="false"
-        android:drawable="@drawable/dms_ic_action_check_box_outline_blank" />
+
+        android:drawable="@drawable/ic_checkbox_uncheck" />
 
     <item
         android:state_checked="true"
-        android:drawable="@drawable/dms_ic_action_check_box" />
+        android:drawable="@drawable/ic_checkbox_checked" />
 
     <item
-        android:drawable="@drawable/dms_ic_action_check_box_outline_blank" />
+        android:drawable="@drawable/ic_checkbox_uncheck" />
 
 </selector>

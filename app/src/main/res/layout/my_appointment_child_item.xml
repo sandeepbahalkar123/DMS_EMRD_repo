@@ -86,33 +86,6 @@
                         tools:text="03:20 pm"
                         tools:visibility="invisible" />
 
-                    <ImageView
-                        android:id="@+id/waitingIcon"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginEnd="13dp"
-                        android:layout_marginRight="13dp"
-                        android:layout_toLeftOf="@+id/appointmentTime"
-                        android:layout_toStartOf="@+id/appointmentTime"
-                        android:visibility="gone"
-                        app:srcCompat="@drawable/waiting"
-                        tools:ignore="ContentDescription"
-                        tools:visibility="visible" />
-
-                    <ImageView
-                        android:id="@+id/chatImageView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginEnd="@dimen/dp16"
-                        android:layout_marginRight="@dimen/dp16"
-                        android:visibility="gone"
-                        app:srcCompat="@drawable/chat_icon"
-                        tools:ignore="ContentDescription"
-                        tools:visibility="visible" />
-
                 </RelativeLayout>
 
                 <RelativeLayout

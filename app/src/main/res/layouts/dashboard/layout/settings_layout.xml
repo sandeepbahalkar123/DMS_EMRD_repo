@@ -35,18 +35,6 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp56">
 
-            <ImageView
-                android:id="@+id/menuIcon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/dp10"
-                android:layout_marginStart="@dimen/dp10"
-                android:adjustViewBounds="true"
-                android:padding="@dimen/dp10"
-                android:visibility="gone"
-                app:srcCompat="@drawable/dashboard_arrow" />
-
             <com.scorg.dms.ui.customesViews.CustomTextView
                 android:id="@+id/logout"
                 android:layout_width="wrap_content"
@@ -64,7 +52,6 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-
                 app:srcCompat="@drawable/logout" />
 
         </RelativeLayout>

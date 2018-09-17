@@ -5,9 +5,6 @@ import android.graphics.Typeface;
 import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
 
-import com.facebook.FacebookSdk;
-import com.facebook.appevents.AppEventsLogger;
-import com.scorg.dms.helpers.database.AppDBHelper;
 import com.scorg.dms.model.doctor_location.DoctorLocationModel;
 
 import java.util.ArrayList;
@@ -47,9 +44,6 @@ public class DMSApplication extends MultiDexApplication {
         super.onCreate();
         //------------
         MultiDex.install(this);
-        AppDBHelper.getInstance(this);
-        FacebookSdk.sdkInitialize(getApplicationContext());
-        AppEventsLogger.activateApp(this);
 //        new NukeSSLCerts().nuke(); // disable all ssl certificates (dangerous)
         //--------------
     }
