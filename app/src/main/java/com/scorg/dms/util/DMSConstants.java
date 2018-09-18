@@ -50,7 +50,6 @@ public class DMSConstants {
     public static final String TASK_GET_APPOINTMENT_DATA = BLANK + 16;
     public static final String TASK_GET_WAITING_LIST = DMSConstants.BLANK + 24;
     public static final String TASK_GET_DASHBOARD_RESPONSE = DMSConstants.BLANK + 28;
-    public static final String TASK_GET_TIME_SLOTS_TO_BOOK_APPOINTMENT = DMSConstants.BLANK + 37;
     public static final String TASK_CHECK_SERVER_CONNECTION = DMSConstants.BLANK + 39;
     public static final String TASK_PATIENT_LIST = DMSConstants.BLANK + 40;
     public static final String TASK_ANNOTATIONS_LIST = DMSConstants.BLANK + 41;
@@ -73,8 +72,6 @@ public class DMSConstants {
     public static final String NO = "no";
     public static final String RECORD_ID = "record_id";
     public static final String PATIENT_DETAILS = "patient_details";
-    public static String BUTTON_TEXT_COLOR = "#FFFFFF";
-    public static String TEXT_COLOR = "#000000";
     public interface APPOINTMENT_STATUS {
         int BOOKED = 1;
         int CONFIRM = 2;
@@ -121,30 +118,6 @@ public class DMSConstants {
         int TWO_SECONDS = 2000;
         int THREE_SECONDS = 3000;
     }
-
-    public interface FILE {
-        String IMG = "img";
-        String DOC = "doc";
-        String VID = "vid";
-        String AUD = "aud";
-        String LOC = "loc";
-    }
-
-    public interface FILE_EMOJI {
-        String IMG_FILE = "🏞 Image";
-        String DOC_FILE = "📒 Document";
-        String VID_FILE = "📹 Video";
-        String AUD_FILE = "🔊 Audio";
-        String LOC_FILE = "📍 Location";
-    }
-
-    public interface PATIENT_OPDS_STATUS {
-        String OPD_COMPLETED = "opd completed";
-        String OPD_SAVED = "opd saved";
-        String ONLY_ATTACHMENTS = "only attachments";
-        String NO_SHOW = "no show";
-    }
-
 
     public static class PATIENT_LIST_PARAMS {
         public static final String PATIENT_NAME = "patientName";

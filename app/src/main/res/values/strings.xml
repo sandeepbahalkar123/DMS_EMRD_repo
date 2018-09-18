@@ -23,9 +23,9 @@
     <string name="call">CALL</string>
     <string name="email">EMAIL</string>
     <string name="notification">Notification</string>
-    <string name="roboto_bold">roboto_bold.ttf</string>
-    <string name="roboto_medium">roboto_medium.ttf</string>
-    <string name="roboto_regular">roboto_regular.ttf</string>
+    <!--<string name="roboto_bold">roboto_bold.ttf</string>-->
+    <!--<string name="roboto_medium">roboto_medium.ttf</string>-->
+    <!--<string name="roboto_regular">roboto_regular.ttf</string>-->
     <string name="gallery">Gallery</string>
     <string name="files">Files</string>
     <string name="file">File: </string>
@@ -262,6 +262,7 @@
     <string name="uhid">UHID</string>
     <string name="patient_list">Patient List</string>
     <string name="compare">Compare</string>
+    <string name="both_scroll">Both Scroll</string>
     <string name="from_date">From:</string>
     <string name="to_date">To:</string>
     <string name="patient_name">Patient Name:</string>

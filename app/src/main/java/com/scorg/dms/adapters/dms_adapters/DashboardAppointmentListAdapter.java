@@ -2,24 +2,19 @@ package com.scorg.dms.adapters.dms_adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.AppCompatImageButton;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.scorg.dms.R;
-import com.scorg.dms.adapters.my_appointments.AppointmentListAdapter;
 import com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemodel.SearchResult;
 import com.scorg.dms.model.my_appointments.AppointmentPatientData;
-import com.scorg.dms.ui.customesViews.CustomTextView;
 import com.scorg.dms.util.CommonMethods;
 
 import java.util.ArrayList;
@@ -104,20 +99,14 @@ public class DashboardAppointmentListAdapter extends RecyclerView.Adapter<Dashbo
     }
 
     static class GroupViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.cardView)
-        LinearLayout cardView;
         @BindView(R.id.userName)
-        CustomTextView userName;
-
+        TextView userName;
         @BindView(R.id.patientId)
-        CustomTextView patientId;
+        TextView patientId;
         @BindView(R.id.patientImageView)
         ImageView patientImageView;
         @BindView(R.id.episodeList)
-        CustomTextView episodeList;
-
-        //@BindView(R.id.divider)
-        //View divider;
+        TextView episodeList;
 
         GroupViewHolder(View view) {
             super(view);

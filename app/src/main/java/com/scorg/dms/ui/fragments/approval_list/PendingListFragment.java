@@ -1,7 +1,6 @@
 package com.scorg.dms.ui.fragments.approval_list;
 
 import android.Manifest;
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
@@ -34,13 +33,9 @@ import com.scorg.dms.model.pending_approval_list.PendingRequestCancelModel;
 import com.scorg.dms.model.pending_approval_list.RequestedArchivedBaseModel;
 import com.scorg.dms.model.pending_approval_list.RequestedArchivedDetailList;
 import com.scorg.dms.model.waiting_list.WaitingPatientData;
-import com.scorg.dms.preference.DMSPreferencesManager;
-import com.scorg.dms.ui.activities.SplashScreenActivity;
 import com.scorg.dms.ui.activities.dms_patient_list.FileTypeViewerActivity;
-import com.scorg.dms.ui.activities.dms_patient_list.PatientDetailsActivity;
 import com.scorg.dms.ui.activities.pending_approval_list.RequestedArchivedMainListActivity;
 import com.scorg.dms.ui.customesViews.CircularImageView;
-import com.scorg.dms.ui.customesViews.CustomTextView;
 import com.scorg.dms.util.CommonMethods;
 import com.scorg.dms.util.DMSConstants;
 
@@ -52,8 +47,6 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.RuntimePermissions;
-
-import static com.scorg.dms.util.DMSConstants.PATIENT_DETAILS;
 
 /**
  * Created by jeetal on 22/2/18.
@@ -68,9 +61,9 @@ public class PendingListFragment extends Fragment implements RequestListAdapter.
     @BindView(R.id.bulletImageView)
     CircularImageView bulletImageView;
     @BindView(R.id.clinicNameTextView)
-    CustomTextView clinicNameTextView;
+    TextView clinicNameTextView;
     @BindView(R.id.clinicAddress)
-    CustomTextView clinicAddress;
+    TextView clinicAddress;
     @BindView(R.id.hospitalDetailsLinearLayout)
     RelativeLayout hospitalDetailsLinearLayout;
 

@@ -79,9 +79,6 @@
 -keep class ng.max.slideview.**
 -dontwarn ng.max.slideview.**
 
--keep class com.shockwave.**
--dontwarn class com.shockwave.**
-
 -dontwarn org.apache.commons.**
 -keep class org.apache.http.** { *; }
 -dontwarn org.apache.http.**

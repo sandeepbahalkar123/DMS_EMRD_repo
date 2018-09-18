@@ -310,12 +310,16 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
         mPreviousClickedTreeElement = new LinkedHashMap<>();
 
         bindView();
+        mFirstPdfView.fromAsset("NO_DOCUMENT_LOADED.pdf").load();
+        mSecondPdfView.fromAsset("NO_DOCUMENT_LOADED.pdf").load();
 
         //-----------
         mDrawer.openDrawer(GravityCompat.END);
         mArchivedPreferenceSpinnerListener();
-        if (CommonMethods.isTablet(this))
+        if (CommonMethods.isTablet(this)) {
+            Log.e("isTablet","true");
             layoutCompareSwitch.setVisibility(View.VISIBLE);
+        }
 
 
     }
@@ -1230,8 +1234,11 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
     private void loadPDFFromServer(String pdfFileURL, final PDFView pdfViewToLoad) {
 
         String baseUrl = DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.SERVER_PATH, mContext);
-        String[] separated = pdfFileURL.split(",");
-        pdfFileURL =  separated[0]; // this will contain PDF Path
+        if(pdfFileURL.contains(",")) {
+            String[] separated = pdfFileURL.split(",");
+            pdfFileURL =  separated[0];
+        }
+      // this will contain PDF Path
         pdfFileURL = baseUrl + pdfFileURL.replace("~", "").trim();
         CommonMethods.Log(TAG, "PDF URL:==-->> " + pdfFileURL);
 
@@ -1279,6 +1286,7 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
                     .scrollHandle(new DefaultScrollHandle(this))
                     .load();
             mFirstPdfView.zoomTo(DEFAULT_MIN_SCALE);
+
         } else if (pdfViewToLoad == mSecondPdfView) {
             mSecondPdfView.fromFile(file)
                     .defaultPage(mPageNumber)
@@ -1287,6 +1295,7 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
                     .onLoad(this)
                     .enableAnnotationRendering(true)
                     .scrollHandle(new DefaultScrollHandle(this))
+
                     .load();
             mSecondPdfView.zoomTo(DEFAULT_MIN_SCALE);
         }

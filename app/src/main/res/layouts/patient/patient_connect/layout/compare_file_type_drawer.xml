@@ -752,17 +752,17 @@
 
 
                 <LinearLayout
+                    android:id="@+id/layoutCompareSwitch"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:visibility="gone"
                     android:orientation="vertical">
 
                     <LinearLayout
-                        android:id="@+id/layoutCompareSwitch"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:visibility="gone"
                         android:weightSum="2"
                         tools:visibility="visible">
 
@@ -808,7 +808,7 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:gravity="center_vertical"
-                            android:text="@string/compare"
+                            android:text="@string/both_scroll"
                             android:textColor="@color/black"
                             android:textSize="@dimen/sp13"
                             android:textStyle="bold" />

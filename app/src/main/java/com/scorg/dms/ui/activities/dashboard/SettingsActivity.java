@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.scorg.dms.R;
 import com.scorg.dms.helpers.login.LoginHelper;
@@ -19,13 +18,13 @@ import com.scorg.dms.interfaces.CustomResponse;
 import com.scorg.dms.interfaces.HelperResponse;
 import com.scorg.dms.preference.DMSPreferencesManager;
 import com.scorg.dms.ui.activities.SplashScreenActivity;
-import com.scorg.dms.ui.customesViews.CustomTextView;
 import com.scorg.dms.util.CommonMethods;
 import com.scorg.dms.util.DMSConstants;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import android.widget.TextView;
 
 /**
  * Created by jeetal on 9/2/18.
@@ -36,13 +35,13 @@ public class SettingsActivity extends AppCompatActivity implements  HelperRespon
     @BindView(R.id.backImageView)
     ImageView backImageView;
     @BindView(R.id.titleTextView)
-    CustomTextView titleTextView;
+    TextView titleTextView;
     @BindView(R.id.userInfoTextView)
-    CustomTextView userInfoTextView;
+    TextView userInfoTextView;
     @BindView(R.id.dateTextview)
-    CustomTextView dateTextview;
+    TextView dateTextview;
     @BindView(R.id.logout)
-    CustomTextView logout;
+    TextView logout;
     @BindView(R.id.dashboardArrowIcon)
     ImageView dashboardArrowIcon;
     @BindView(R.id.selectMenuLayout)
@@ -87,7 +86,7 @@ public class SettingsActivity extends AppCompatActivity implements  HelperRespon
                 break;
 
             case R.id.change_ip_address:
-                CommonMethods.showDialog("Current IP:-\n"+DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.SERVER_PATH, mContext)+"\n\n", getString(R.string.change_ip), this);
+                CommonMethods.showDialog("Current IP address:\n"+DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.SERVER_PATH, mContext)+"\n\n", getString(R.string.change_ip), this);
                 break;
         }
     }
@@ -101,46 +100,26 @@ public class SettingsActivity extends AppCompatActivity implements  HelperRespon
         textView.setText(getString(R.string.do_you_logout));
         dialog.setCanceledOnTouchOutside(false);
         dialog.setCancelable(false);
-
-
         dialog.findViewById(R.id.button_ok).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
                 DMSPreferencesManager.putString(DMSPreferencesManager.DMS_PREFERENCES_KEY.IS_EXIT, DMSConstants.BLANK, mContext);
                 logout();
-
             }
         });
         dialog.findViewById(R.id.button_cancel).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-
             }
         });
-
         dialog.show();
     }
 
 
     private void logout() {
-        int version_code;
-        boolean isLaterClicked;
-        boolean isSkippedClicked;
-        version_code = DMSPreferencesManager.getInt(DMSPreferencesManager.DMS_PREFERENCES_KEY.VERSION_CODE_FROM_SERVER, mContext);
-        isLaterClicked = DMSPreferencesManager.getBoolean(DMSPreferencesManager.DMS_PREFERENCES_KEY.isLaterClicked, mContext);
-        isSkippedClicked = DMSPreferencesManager.getBoolean(DMSPreferencesManager.DMS_PREFERENCES_KEY.isSkippedClicked, mContext);
         DMSPreferencesManager.clearSharedPref(mContext);
-
-        DMSPreferencesManager.putInt(DMSPreferencesManager.DMS_PREFERENCES_KEY.VERSION_CODE_FROM_SERVER, version_code, mContext);
-        if (isLaterClicked) {
-            DMSPreferencesManager.putString(DMSPreferencesManager.DMS_PREFERENCES_KEY.SHOW_UPDATE_DIALOG, DMSConstants.YES, mContext);
-        }
-        if (isSkippedClicked) {
-            DMSPreferencesManager.putString(DMSPreferencesManager.DMS_PREFERENCES_KEY.SHOW_UPDATE_DIALOG, DMSConstants.NO, mContext);
-        }
-        //-------------
         String mServerPath = DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.SERVER_PATH, mContext);
         String isValidConfig = DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.IS_VALID_IP_CONFIG, mContext);
         DMSPreferencesManager.clearSharedPref(mContext);
@@ -149,17 +128,11 @@ public class SettingsActivity extends AppCompatActivity implements  HelperRespon
         Intent intent = new Intent(mContext, SplashScreenActivity.class);
         startActivity(intent);
         ((AppCompatActivity) mContext).finishAffinity();
-
-        //-------------
     }
 
 
     @Override
     public void onSuccess(String mOldDataTag, CustomResponse customResponse) {
-//        if (mOldDataTag.equals(DMSConstants.LOGOUT))
-//            if (DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.IS_EXIT, mContext).equalsIgnoreCase(DMSConstants.BLANK)) {
-//                logout();
-//            }
     }
 
     @Override

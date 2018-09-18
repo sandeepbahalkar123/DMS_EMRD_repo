@@ -37,26 +37,26 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <com.scorg.dms.ui.customesViews.CustomTextView
+                    <TextView
                         android:id="@+id/welcomeTextView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/welcome"
                         android:textColor="@color/green"
                         android:textSize="@dimen/sp18"
-                        app:customFont="@string/roboto_bold" />
+                        android:fontFamily="@font/roboto_bold" />
 
-                    <com.scorg.dms.ui.customesViews.CustomTextView
+                    <TextView
                         android:id="@+id/doctorNameTextView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/welcomeTextView"
                         android:textColor="@color/white"
                         android:textSize="@dimen/sp18"
-                        app:customFont="@string/roboto_bold"
+                        android:fontFamily="@font/roboto_bold"
                         tools:text="Dr. Rahul Kalyanpur" />
 
-                    <com.scorg.dms.ui.customesViews.CustomTextView
+                    <TextView
                         android:id="@+id/aboutDoctorTextView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -66,7 +66,7 @@
                         android:text="MBBS, MD - Medicine, Neurology"
                         android:textColor="@color/white"
                         android:textSize="@dimen/sp12"
-                        app:customFont="@string/roboto_medium" />
+                        android:fontFamily="@font/roboto_medium" />
 
 
                 </LinearLayout>
@@ -95,18 +95,18 @@
                             android:paddingBottom="@dimen/dp16"
                             android:paddingTop="@dimen/dp16">
 
-                            <com.scorg.dms.ui.customesViews.CustomTextView
+                            <TextView
                                 android:id="@+id/totalPatientsCount"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerHorizontal="true"
                                 android:textColor="@color/timing_bg_color"
                                 android:textSize="@dimen/sp20"
-                                app:customFont="@string/roboto_bold"
+                                android:fontFamily="@font/roboto_bold"
                                 tools:text="21"
                                 android:gravity="center"/>
 
-                            <com.scorg.dms.ui.customesViews.CustomTextView
+                            <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_below="@id/totalPatientsCount"
@@ -115,7 +115,7 @@
                                 android:textColor="@color/dashboard_text_color"
                                 android:textSize="@dimen/sp12"
                                 android:gravity="center"
-                                app:customFont="@string/roboto_medium" />
+                                android:fontFamily="@font/roboto_medium" />
                         </RelativeLayout>
 
                         <RelativeLayout
@@ -128,18 +128,18 @@
                             android:paddingBottom="@dimen/dp16"
                             android:paddingTop="@dimen/dp16">
 
-                            <com.scorg.dms.ui.customesViews.CustomTextView
+                            <TextView
                                 android:id="@+id/todayAppointmentsCount"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerHorizontal="true"
                                 android:textColor="@color/timing_bg_color"
                                 android:textSize="@dimen/sp20"
-                                app:customFont="@string/roboto_bold"
+                                android:fontFamily="@font/roboto_bold"
                                 tools:text="21"
                                 android:gravity="center"/>
 
-                            <com.scorg.dms.ui.customesViews.CustomTextView
+                            <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_below="@id/todayAppointmentsCount"
@@ -148,7 +148,7 @@
                                 android:text="@string/today_appointment"
                                 android:textColor="@color/dashboard_text_color"
                                 android:textSize="@dimen/sp12"
-                                app:customFont="@string/roboto_medium" />
+                                android:fontFamily="@font/roboto_medium" />
                         </RelativeLayout>
 
                         <RelativeLayout
@@ -161,18 +161,18 @@
                             android:paddingBottom="@dimen/dp16"
                             android:paddingTop="@dimen/dp16">
 
-                            <com.scorg.dms.ui.customesViews.CustomTextView
+                            <TextView
                                 android:id="@+id/waitingPatientCount"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerHorizontal="true"
                                 android:textColor="@color/timing_bg_color"
                                 android:textSize="@dimen/sp20"
-                                app:customFont="@string/roboto_bold"
+                                android:fontFamily="@font/roboto_bold"
                                 tools:text="21"
                                 android:gravity="center"/>
 
-                            <com.scorg.dms.ui.customesViews.CustomTextView
+                            <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_below="@id/waitingPatientCount"
@@ -181,7 +181,7 @@
                                 android:text="@string/waiting_patients"
                                 android:textColor="@color/dashboard_text_color"
                                 android:textSize="@dimen/sp12"
-                                app:customFont="@string/roboto_medium" />
+                                android:fontFamily="@font/roboto_medium" />
                         </RelativeLayout>
 
                         <RelativeLayout
@@ -194,18 +194,18 @@
                             android:paddingBottom="@dimen/dp16"
                             android:paddingTop="@dimen/dp16">
 
-                            <com.scorg.dms.ui.customesViews.CustomTextView
+                            <TextView
                                 android:id="@+id/pendingApprovalCount"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerHorizontal="true"
                                 android:textColor="@color/timing_bg_color"
                                 android:textSize="@dimen/sp20"
-                                app:customFont="@string/roboto_bold"
+                                android:fontFamily="@font/roboto_bold"
                                 tools:text="21"
                                 android:gravity="center"/>
 
-                            <com.scorg.dms.ui.customesViews.CustomTextView
+                            <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_below="@id/pendingApprovalCount"
@@ -214,7 +214,7 @@
                                 android:text="@string/pending_approval"
                                 android:textColor="@color/dashboard_text_color"
                                 android:textSize="@dimen/sp12"
-                                app:customFont="@string/roboto_medium" />
+                                android:fontFamily="@font/roboto_medium" />
                         </RelativeLayout>
 
                     </LinearLayout>
@@ -256,7 +256,7 @@
 
 
 
-                <com.scorg.dms.ui.customesViews.CustomTextView
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
@@ -264,10 +264,10 @@
                     android:text="@string/today_appointment_no_new_line"
                     android:textColor="@color/tagColor"
                     android:textSize="@dimen/sp16"
-                    app:customFont="@string/roboto_medium"
+                    android:fontFamily="@font/roboto_medium"
                     tools:text="@string/today_appointment_no_new_line" />
 
-                <com.scorg.dms.ui.customesViews.CustomTextView
+                <TextView
                     android:id="@+id/viewTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -276,7 +276,7 @@
                     android:textAllCaps="true"
                     android:textColor="@color/tagColor"
                     android:textSize="@dimen/sp12"
-                    app:customFont="@string/roboto_bold"
+                    android:fontFamily="@font/roboto_bold"
                     tools:text="@string/view_all"
                     android:layout_weight="1.2"/>
 

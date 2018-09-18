@@ -27,7 +27,6 @@ import com.scorg.dms.model.dms_models.responsemodel.episode_list.EpisodeResponse
 import com.scorg.dms.model.dms_models.responsemodel.episode_list.PatientEpisodeFileData;
 import com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemodel.SearchResult;
 import com.scorg.dms.model.my_patient_filter.PatientFilter;
-import com.scorg.dms.ui.customesViews.CustomTextView;
 import com.scorg.dms.ui.customesViews.drag_drop_recyclerview_helper.EndlessRecyclerViewScrollListener;
 import com.scorg.dms.util.CommonMethods;
 import com.scorg.dms.util.DMSConstants;
@@ -42,6 +41,9 @@ import butterknife.OnClick;
 
 import static com.scorg.dms.util.DMSConstants.BUNDLE;
 
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+
 public class PatientDetailsActivity extends AppCompatActivity implements HelperResponse, PatientEpisodeRecycleViewListAdapter.OnEpisodeClickListener, PatientSearchAutoCompleteTextViewAdapter.OnItemClickListener {
 
     @BindView(R.id.toolbar)
@@ -49,12 +51,15 @@ public class PatientDetailsActivity extends AppCompatActivity implements HelperR
     @BindView(R.id.listOfOPDTypes)
     RecyclerView listOfOPDTypes;
     @BindView(R.id.patientName)
-    CustomTextView mPatientName;
+    TextView mPatientName;
     @BindView(R.id.uhidData)
-    CustomTextView mUHIDData;
+    TextView mUHIDData;
     //-----------
     @BindView(R.id.autoCompleteSearchBox)
     AutoCompleteTextView mAutoCompleteSearchBox;
+
+    @BindView(R.id.emptyListView)
+    RelativeLayout emptyListView;
 
     ArrayList<PatientFilter> mAutoCompleteSearchBoxList = new ArrayList<>();
     private PatientSearchAutoCompleteTextViewAdapter mPatientSearchAutoCompleteTextViewAdapter;
@@ -138,11 +143,13 @@ public class PatientDetailsActivity extends AppCompatActivity implements HelperR
                         }
                     }, 200);
 
+                }else {
+                    doGetPatientEpisode("",0);
                 }
 
             }
         });
-
+        emptyListView.setVisibility(View.GONE);
         //-----------------
     }
 
@@ -165,15 +172,21 @@ public class PatientDetailsActivity extends AppCompatActivity implements HelperR
                 EpisodeResponseModel.EpisodeDataList episodeDataList = showSearchResultResponseModel.getEpisodeDataList();
                 mIsLoadMoreEpisode = showSearchResultResponseModel.getEpisodeDataList().isPaggination();
                 mAutoCompleteSearchBox.dismissDropDown();
-                if (episodeDataList != null) {
+                if (episodeDataList != null ) {
                     List<PatientEpisodeFileData> patientEpisodeFileDataList = episodeDataList.getPatientEpisodeFileDataList();
 
                     if (patientEpisodeFileDataList.size() != 0) {
                         mPatientEpisodeRecycleViewListAdapter.addNewItems(patientEpisodeFileDataList);
                         mPatientEpisodeRecycleViewListAdapter.notifyDataSetChanged();
+                        emptyListView.setVisibility(View.GONE);
                     }
+                    else {
+                        emptyListView.setVisibility(View.VISIBLE);
+                    }
+
                 } else {
-                    CommonMethods.showToast(this, "No data found");
+                    emptyListView.setVisibility(View.VISIBLE);
+                  //  CommonMethods.showToast(this, "No data found");
                     finish();
                 }
             }
@@ -246,8 +259,7 @@ public class PatientDetailsActivity extends AppCompatActivity implements HelperR
         mAutoCompleteSearchBox.setText(patientFilter.getSearchValue());
         doGetPatientEpisode(patientFilter.getSearchValue(),0);
         mAutoCompleteSearchBox.dismissDropDown();
+        mAutoCompleteSearchBox.setSelection(mAutoCompleteSearchBox.getText().length());
+
     }
-
-
-
 }
