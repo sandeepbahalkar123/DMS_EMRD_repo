@@ -258,7 +258,9 @@ public class HomePageActivity extends AppCompatActivity implements HelperRespons
         switch (mOldDataTag) {
             case DMSConstants.TASK_GET_DASHBOARD_RESPONSE:
                 DashboardBaseModel mDashboardBaseModel = (DashboardBaseModel) customResponse;
-                if (DMSConstants.RESPONSE_OK.equalsIgnoreCase(mDashboardBaseModel.getCommon().getSuccess())) {
+                if (!mDashboardBaseModel.getCommon().getStatusCode().equals(DMSConstants.SUCCESS)) {
+                    CommonMethods.showToast(mContext, mDashboardBaseModel.getCommon().getStatusMessage());
+                }else if (DMSConstants.RESPONSE_OK.equalsIgnoreCase(mDashboardBaseModel.getCommon().getSuccess())) {
                     mDashboardDataModel = mDashboardBaseModel.getDashboardDataModel();
                     if (mDashboardDataModel != null) {
                        pendingApprovalCount.setText(mDashboardDataModel.getPendingApprovedCount());

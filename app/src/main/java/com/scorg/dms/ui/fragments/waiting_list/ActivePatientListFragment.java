@@ -275,7 +275,7 @@ public class ActivePatientListFragment extends Fragment implements WaitingListAd
         if (waitingPatientData.size()!=0)
             for (int i = 0; i < waitingPatientData.size(); i++) {
                 WaitingPatientData data = waitingPatientData.get(i);
-                if (!data.getWaitingStatus().equalsIgnoreCase(getString(R.string.complete))) {
+                if (!data.getWaitingStatus().toLowerCase().contains(getString(R.string.complete).toLowerCase())) {
                     patientData.add(data);
                 }
             }
