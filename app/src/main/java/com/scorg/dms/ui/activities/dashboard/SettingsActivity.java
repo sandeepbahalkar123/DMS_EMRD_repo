@@ -75,7 +75,7 @@ public class SettingsActivity extends AppCompatActivity implements  HelperRespon
         super.onBackPressed();
     }
 
-    @OnClick({R.id.backImageView, R.id.selectMenuLayout, R.id.change_ip_address})
+    @OnClick({R.id.clearImageCache, R.id.backImageView, R.id.selectMenuLayout, R.id.change_ip_address})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.backImageView:
@@ -87,6 +87,10 @@ public class SettingsActivity extends AppCompatActivity implements  HelperRespon
 
             case R.id.change_ip_address:
                 CommonMethods.showDialog("Current IP address:\n"+DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.SERVER_PATH, mContext)+"\n\n", getString(R.string.change_ip), this);
+                break;
+
+            case R.id.clearImageCache:
+                DMSPreferencesManager.putString(DMSPreferencesManager.CACHE_TIME, CommonMethods.getCurrentDate("ddMMyyyyhhmmss"), mContext);
                 break;
         }
     }

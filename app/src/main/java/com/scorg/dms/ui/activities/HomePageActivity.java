@@ -37,6 +37,7 @@ import com.scorg.dms.model.dashboard.DashboardBaseModel;
 import com.scorg.dms.model.dashboard.DashboardDataModel;
 import com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemodel.SearchResult;
 import com.scorg.dms.preference.DMSPreferencesManager;
+import com.scorg.dms.singleton.DMSApplication;
 import com.scorg.dms.ui.activities.dashboard.SettingsActivity;
 import com.scorg.dms.ui.activities.dashboard.SupportActivity;
 import com.scorg.dms.ui.activities.dms_patient_list.PatientDetailsActivity;
@@ -53,7 +54,6 @@ import butterknife.OnClick;
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.RuntimePermissions;
 import com.scorg.dms.R;
-
 import static com.scorg.dms.util.DMSConstants.PATIENT_DETAILS;
 
 /**
@@ -136,6 +136,21 @@ public class HomePageActivity extends AppCompatActivity implements HelperRespons
     @BindView(R.id.hostViewsLayout)
     LinearLayout hostViewsLayout;
 
+    @BindView(R.id.loginLogo)
+    ImageView loginLogo;
+
+    @BindView(R.id.actionBarLogo)
+    ImageView actionBarLogo;
+
+    @BindView(R.id.settingLogo)
+    ImageView settingLogo;
+    @BindView(R.id.homeLogo)
+    ImageView homeLogo;
+    @BindView(R.id.supportLogo)
+    ImageView supportLogo;
+    @BindView(R.id.patientLogo)
+    ImageView patientLogo;
+
 
     private Context mContext;
     private String docId;
@@ -153,16 +168,13 @@ public class HomePageActivity extends AppCompatActivity implements HelperRespons
         setContentView(R.layout.home_page_layout);
         ButterKnife.bind(this);
         mContext = HomePageActivity.this;
-
         mColorGenerator = ColorGenerator.MATERIAL;
         HomePageActivityPermissionsDispatcher.getPermissionWithCheck(HomePageActivity.this);
         docId = DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.DOC_ID, mContext);
         loginHelper = new LoginHelper(mContext, HomePageActivity.this);
         initialize();
-
         //drawerConfiguration();
     }
-
 
     private void initialize() {
         int width = (int) (getResources().getDisplayMetrics().widthPixels / (CommonMethods.isTablet(mContext) ? 2.5 : 2));
@@ -188,6 +200,14 @@ public class HomePageActivity extends AppCompatActivity implements HelperRespons
     protected void onResume() {
         if (mDashboardDataModel == null)
             mDashboardHelper.doGetDashboardResponse();
+
+        CommonMethods.setImageUrl(this, DMSConstants.Images.LOGO_SMALL, loginLogo, R.drawable.login_logo);
+        CommonMethods.setImageUrl(this, DMSConstants.Images.IC_ACTIONBAR_LOGO, actionBarLogo, R.drawable.ic_launcher);
+
+        CommonMethods.setImageUrl(this, DMSConstants.Images.IC_SETTINGS, settingLogo, R.drawable.settings);
+        CommonMethods.setImageUrl(this, DMSConstants.Images.IC_HOME, homeLogo, R.drawable.home);
+        CommonMethods.setImageUrl(this, DMSConstants.Images.IC_SUPPORT, supportLogo, R.drawable.support);
+        CommonMethods.setImageUrl(this, DMSConstants.Images.IC_PATIENT, patientLogo, R.drawable.mypatients_icon_copy);
 
         super.onResume();
     }

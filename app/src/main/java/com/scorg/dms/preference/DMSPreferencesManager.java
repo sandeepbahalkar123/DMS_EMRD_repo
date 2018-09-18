@@ -23,6 +23,7 @@ import javax.crypto.spec.SecretKeySpec;
 public class DMSPreferencesManager {
 
     private static final String TAG = "DMS/DmsPreferencesManager";
+    public static final String CACHE_TIME = "cache_time";
     private static SharedPreferences sharedPreferences = null;
     private static byte[] sKey;
 

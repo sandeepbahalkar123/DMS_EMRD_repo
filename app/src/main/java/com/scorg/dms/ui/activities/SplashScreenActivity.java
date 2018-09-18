@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.ImageView;
 
 import com.scorg.dms.R;
 import com.scorg.dms.helpers.login.LoginHelper;
@@ -17,6 +18,9 @@ import com.scorg.dms.preference.DMSPreferencesManager;
 import com.scorg.dms.util.CommonMethods;
 import com.scorg.dms.util.DMSConstants;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 
 public class SplashScreenActivity extends AppCompatActivity implements HelperResponse {
 
@@ -24,14 +28,23 @@ public class SplashScreenActivity extends AppCompatActivity implements HelperRes
     private LoginHelper mLoginHelper;
     private Dialog mDialog;
 
+    @BindView(R.id.splashBackground)
+    ImageView splashBackground;
+    @BindView(R.id.splashLogo)
+    ImageView splashLogo;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splashscreen);
-
         mContext = SplashScreenActivity.this;
-
+        ButterKnife.bind(this);
         mLoginHelper = new LoginHelper(this, this);
+        if (DMSPreferencesManager.getString(DMSPreferencesManager.CACHE_TIME, mContext).isEmpty())
+            DMSPreferencesManager.putString(DMSPreferencesManager.CACHE_TIME, CommonMethods.getCurrentDate("ddMMyyyyhhmmss"), mContext);
+
+        CommonMethods.setImageUrl(this, DMSConstants.Images.IC_LOGIN_BACKGROUD, splashBackground, R.drawable.login_background);
+        CommonMethods.setImageUrl(this, DMSConstants.Images.IC_LOGIN_LOGO, splashLogo, R.drawable.login_logo);
 
         doAppCheckLogin();
     }
@@ -39,8 +52,6 @@ public class SplashScreenActivity extends AppCompatActivity implements HelperRes
     private void doAppCheckLogin() {
         //handler to close the splash activity after the set time
         new Handler().postDelayed(new Runnable() {
-
-
             @Override
             public void run() {
 
@@ -85,15 +96,12 @@ public class SplashScreenActivity extends AppCompatActivity implements HelperRes
                     finish();
                     overridePendingTransition(R.anim.fadein, R.anim.fadeout);
                 }
-
-
             }
         }, DMSConstants.TIME_STAMPS.THREE_SECONDS);
 
     }
 
     @Override
-
     public void onSuccess(String mOldDataTag, CustomResponse customResponse) {
         mDialog.dismiss();
         //TODO : IP CHECK API IN NOT IMPLEMENTED YET, HENCE COMMENTED BELOW CODE
