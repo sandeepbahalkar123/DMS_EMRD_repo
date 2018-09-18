@@ -91,12 +91,20 @@
             android:hint="@string/patient_details_search_hint"
             android:textCursorDrawable="@drawable/cursor_color" />
     </LinearLayout>
-
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/listOfOPDTypes"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/mainDataLayout" />
+        android:layout_below="@+id/mainDataLayout">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/listOfOPDTypes"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+
+        <include layout="@layout/common_no_records_found"/>
+
+
+    </RelativeLayout>
+
 
 </RelativeLayout>

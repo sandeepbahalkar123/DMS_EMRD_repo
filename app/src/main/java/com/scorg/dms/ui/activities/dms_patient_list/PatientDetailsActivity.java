@@ -40,6 +40,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static com.scorg.dms.util.DMSConstants.BUNDLE;
+
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class PatientDetailsActivity extends AppCompatActivity implements HelperResponse, PatientEpisodeRecycleViewListAdapter.OnEpisodeClickListener, PatientSearchAutoCompleteTextViewAdapter.OnItemClickListener {
@@ -55,6 +57,9 @@ public class PatientDetailsActivity extends AppCompatActivity implements HelperR
     //-----------
     @BindView(R.id.autoCompleteSearchBox)
     AutoCompleteTextView mAutoCompleteSearchBox;
+
+    @BindView(R.id.emptyListView)
+    RelativeLayout emptyListView;
 
     ArrayList<PatientFilter> mAutoCompleteSearchBoxList = new ArrayList<>();
     private PatientSearchAutoCompleteTextViewAdapter mPatientSearchAutoCompleteTextViewAdapter;
@@ -138,11 +143,13 @@ public class PatientDetailsActivity extends AppCompatActivity implements HelperR
                         }
                     }, 200);
 
+                }else {
+                    doGetPatientEpisode("",0);
                 }
 
             }
         });
-
+        emptyListView.setVisibility(View.GONE);
         //-----------------
     }
 
@@ -171,13 +178,15 @@ public class PatientDetailsActivity extends AppCompatActivity implements HelperR
                     if (patientEpisodeFileDataList.size() != 0) {
                         mPatientEpisodeRecycleViewListAdapter.addNewItems(patientEpisodeFileDataList);
                         mPatientEpisodeRecycleViewListAdapter.notifyDataSetChanged();
+                        emptyListView.setVisibility(View.GONE);
                     }
                     else {
-                        CommonMethods.showToast(this, "No data found");
-
+                        emptyListView.setVisibility(View.VISIBLE);
                     }
+
                 } else {
-                    CommonMethods.showToast(this, "No data found");
+                    emptyListView.setVisibility(View.VISIBLE);
+                  //  CommonMethods.showToast(this, "No data found");
                     finish();
                 }
             }
@@ -253,7 +262,4 @@ public class PatientDetailsActivity extends AppCompatActivity implements HelperR
         mAutoCompleteSearchBox.setSelection(mAutoCompleteSearchBox.getText().length());
 
     }
-
-
-
 }

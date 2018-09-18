@@ -1,0 +1,18 @@
+[
+    {
+        "merged": "/home/yogeshgaikwad/AndroidStudioProjects/DMS_EMRD_repo/advanced_recycler/build/intermediates/res/merged/release/drawable-v21/abc_btn_colored_material.xml",
+        "source": "/home/yogeshgaikwad/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/eba31dbe30965dbd3d712d880ad98457/res/drawable-v21/abc_btn_colored_material.xml"
+    },
+    {
+        "merged": "/home/yogeshgaikwad/AndroidStudioProjects/DMS_EMRD_repo/advanced_recycler/build/intermediates/res/merged/release/drawable-v21/notification_action_background.xml",
+        "source": "/home/yogeshgaikwad/.gradle/caches/transforms-1/files-1.1/support-compat-27.1.1.aar/962df48e521eee6aad1e400cdd09ba5e/res/drawable-v21/notification_action_background.xml"
+    },
+    {
+        "merged": "/home/yogeshgaikwad/AndroidStudioProjects/DMS_EMRD_repo/advanced_recycler/build/intermediates/res/merged/release/drawable-v21/abc_action_bar_item_background_material.xml",
+        "source": "/home/yogeshgaikwad/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/eba31dbe30965dbd3d712d880ad98457/res/drawable-v21/abc_action_bar_item_background_material.xml"
+    },
+    {
+        "merged": "/home/yogeshgaikwad/AndroidStudioProjects/DMS_EMRD_repo/advanced_recycler/build/intermediates/res/merged/release/drawable-v21/abc_edit_text_material.xml",
+        "source": "/home/yogeshgaikwad/.gradle/caches/transforms-1/files-1.1/appcompat-v7-27.1.1.aar/eba31dbe30965dbd3d712d880ad98457/res/drawable-v21/abc_edit_text_material.xml"
+    }
+]

@@ -1,0 +1,37 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /home/yogeshgaikwad/AndroidStudioProjects/DMS_EMRD_repo/advanced_recycler/src/main/AndroidManifest.xml:16:1-18:12
+INJECTED from /home/yogeshgaikwad/AndroidStudioProjects/DMS_EMRD_repo/advanced_recycler/src/main/AndroidManifest.xml:16:1-18:12
+INJECTED from /home/yogeshgaikwad/AndroidStudioProjects/DMS_EMRD_repo/advanced_recycler/src/main/AndroidManifest.xml:16:1-18:12
+INJECTED from /home/yogeshgaikwad/AndroidStudioProjects/DMS_EMRD_repo/advanced_recycler/src/main/AndroidManifest.xml:16:1-18:12
+INJECTED from /home/yogeshgaikwad/AndroidStudioProjects/DMS_EMRD_repo/advanced_recycler/src/main/AndroidManifest.xml:16:1-18:12
+INJECTED from /home/yogeshgaikwad/AndroidStudioProjects/DMS_EMRD_repo/advanced_recycler/src/main/AndroidManifest.xml:16:1-18:12
+INJECTED from /home/yogeshgaikwad/AndroidStudioProjects/DMS_EMRD_repo/advanced_recycler/src/main/AndroidManifest.xml:16:1-18:12
+	package
+		ADDED from /home/yogeshgaikwad/AndroidStudioProjects/DMS_EMRD_repo/advanced_recycler/src/main/AndroidManifest.xml:17:5-56
+		INJECTED from /home/yogeshgaikwad/AndroidStudioProjects/DMS_EMRD_repo/advanced_recycler/src/main/AndroidManifest.xml
+		INJECTED from /home/yogeshgaikwad/AndroidStudioProjects/DMS_EMRD_repo/advanced_recycler/src/main/AndroidManifest.xml
+	android:versionName
+		INJECTED from /home/yogeshgaikwad/AndroidStudioProjects/DMS_EMRD_repo/advanced_recycler/src/main/AndroidManifest.xml
+		ADDED from /home/yogeshgaikwad/AndroidStudioProjects/DMS_EMRD_repo/advanced_recycler/src/main/AndroidManifest.xml:16:1-18:12
+		INJECTED from /home/yogeshgaikwad/AndroidStudioProjects/DMS_EMRD_repo/advanced_recycler/src/main/AndroidManifest.xml
+	xmlns:android
+		ADDED from /home/yogeshgaikwad/AndroidStudioProjects/DMS_EMRD_repo/advanced_recycler/src/main/AndroidManifest.xml:16:1-18:12
+	android:versionCode
+		INJECTED from /home/yogeshgaikwad/AndroidStudioProjects/DMS_EMRD_repo/advanced_recycler/src/main/AndroidManifest.xml
+		ADDED from /home/yogeshgaikwad/AndroidStudioProjects/DMS_EMRD_repo/advanced_recycler/src/main/AndroidManifest.xml:16:1-18:12
+		INJECTED from /home/yogeshgaikwad/AndroidStudioProjects/DMS_EMRD_repo/advanced_recycler/src/main/AndroidManifest.xml
+uses-sdk
+INJECTED from /home/yogeshgaikwad/AndroidStudioProjects/DMS_EMRD_repo/advanced_recycler/src/main/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /home/yogeshgaikwad/AndroidStudioProjects/DMS_EMRD_repo/advanced_recycler/src/main/AndroidManifest.xml
+INJECTED from /home/yogeshgaikwad/AndroidStudioProjects/DMS_EMRD_repo/advanced_recycler/src/main/AndroidManifest.xml
+INJECTED from /home/yogeshgaikwad/AndroidStudioProjects/DMS_EMRD_repo/advanced_recycler/src/main/AndroidManifest.xml
+INJECTED from /home/yogeshgaikwad/AndroidStudioProjects/DMS_EMRD_repo/advanced_recycler/src/main/AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from /home/yogeshgaikwad/AndroidStudioProjects/DMS_EMRD_repo/advanced_recycler/src/main/AndroidManifest.xml
+		ADDED from /home/yogeshgaikwad/AndroidStudioProjects/DMS_EMRD_repo/advanced_recycler/src/main/AndroidManifest.xml
+		INJECTED from /home/yogeshgaikwad/AndroidStudioProjects/DMS_EMRD_repo/advanced_recycler/src/main/AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from /home/yogeshgaikwad/AndroidStudioProjects/DMS_EMRD_repo/advanced_recycler/src/main/AndroidManifest.xml
+		ADDED from /home/yogeshgaikwad/AndroidStudioProjects/DMS_EMRD_repo/advanced_recycler/src/main/AndroidManifest.xml
+		INJECTED from /home/yogeshgaikwad/AndroidStudioProjects/DMS_EMRD_repo/advanced_recycler/src/main/AndroidManifest.xml
