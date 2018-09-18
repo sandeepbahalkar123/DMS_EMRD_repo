@@ -22,10 +22,10 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.amulyakhare.textdrawable.util.ColorGenerator;
-import com.scorg.dms.R;
 import com.scorg.dms.adapters.dms_adapters.DashboardAppointmentListAdapter;
 import com.scorg.dms.helpers.dashboard.DashboardHelper;
 import com.scorg.dms.helpers.login.LoginHelper;
@@ -42,7 +42,6 @@ import com.scorg.dms.ui.activities.dms_patient_list.PatientList;
 import com.scorg.dms.ui.activities.my_appointments.MyAppointmentsActivity;
 import com.scorg.dms.ui.activities.pending_approval_list.RequestedArchivedMainListActivity;
 import com.scorg.dms.ui.activities.waiting_list.WaitingMainListActivity;
-import com.scorg.dms.ui.customesViews.CustomTextView;
 import com.scorg.dms.util.CommonMethods;
 import com.scorg.dms.util.DMSConstants;
 
@@ -51,6 +50,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.RuntimePermissions;
+import com.scorg.dms.R;
 
 import static com.scorg.dms.util.DMSConstants.PATIENT_DETAILS;
 
@@ -65,26 +65,26 @@ public class HomePageActivity extends AppCompatActivity implements HelperRespons
 
     //------------
     @BindView(R.id.totalPatientsCount)
-    CustomTextView totalPatientsCount;
+    TextView totalPatientsCount;
     @BindView(R.id.todayAppointmentsCount)
-    CustomTextView todayAppointmentsCount;
+    TextView todayAppointmentsCount;
     @BindView(R.id.waitingPatientCount)
-    CustomTextView waitingPatientCount;
+    TextView waitingPatientCount;
     @BindView(R.id.pendingApprovalCount)
-    CustomTextView pendingApprovalCount;
+    TextView pendingApprovalCount;
     //------------
 
     @BindView(R.id.viewPagerDoctorItem)
     LinearLayout viewPagerDoctorItem;
 
     @BindView(R.id.welcomeTextView)
-    CustomTextView welcomeTextView;
+    TextView welcomeTextView;
 
     @BindView(R.id.doctorNameTextView)
-    CustomTextView doctorNameTextView;
+    TextView doctorNameTextView;
 
     @BindView(R.id.aboutDoctorTextView)
-    CustomTextView aboutDoctorTextView;
+    TextView aboutDoctorTextView;
 
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
@@ -109,9 +109,9 @@ public class HomePageActivity extends AppCompatActivity implements HelperRespons
     FrameLayout mRightNavigationView;
 
     ImageView menuImageView;
-    CustomTextView appointmentTextView;
+    TextView appointmentTextView;
     @BindView(R.id.viewTextView)
-    CustomTextView viewTextView;
+    TextView viewTextView;
 
     @BindView(R.id.layoutTotalPatients)
     RelativeLayout layoutTotalPatients;
@@ -129,7 +129,7 @@ public class HomePageActivity extends AppCompatActivity implements HelperRespons
     RelativeLayout emptyListView;
 
     ImageView menuImageWaitingList;
-    CustomTextView menuNameTextView;
+    TextView menuNameTextView;
     ImageView dashboardArrowImageView;
 
     @BindView(R.id.hostViewsLayout)
@@ -218,9 +218,6 @@ public class HomePageActivity extends AppCompatActivity implements HelperRespons
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                if (DMSPreferencesManager.getBoolean(DMSPreferencesManager.DMS_PREFERENCES_KEY.isSkippedClicked, mContext)) {
-                    DMSPreferencesManager.putString(DMSPreferencesManager.DMS_PREFERENCES_KEY.SHOW_UPDATE_DIALOG_ON_SKIPPED, DMSConstants.YES, mContext);
-                }
                 finishAffinity();
             }
         });
@@ -231,7 +228,6 @@ public class HomePageActivity extends AppCompatActivity implements HelperRespons
 
             }
         });
-
         dialog.show();
 
     }
@@ -393,106 +389,4 @@ public class HomePageActivity extends AppCompatActivity implements HelperRespons
 
     }
 
-    //------Set dynamic layout for appointment,waiting and my_patient: START
-/*
-
-    private void setLayoutForAppointment(boolean isRecyclerViewRequired, ArrayList<DashboardDataModel.AppointmentOpdAndOtherCount> calendarTypeList) {
-        LayoutInflater inflater = LayoutInflater.from(mContext);
-        View inflatedLayout = inflater.inflate(R.layout.waiting_todays_appointment_common_layout, null, false);
-        hostViewsLayout.addView(inflatedLayout);
-        recyclerView = (RecyclerView) inflatedLayout.findViewById(R.id.recyclerView);
-        menuImageView = (ImageView) inflatedLayout.findViewById(R.id.menuImageView);
-        appointmentTextView = (CustomTextView) inflatedLayout.findViewById(R.id.appointmentTextView);
-        viewTextView = (CustomTextView) inflatedLayout.findViewById(R.id.viewTextView);
-        menuImageView.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.appointment));
-        appointmentTextView.setText(getString(R.string.today_appointment).replace("\n", " "));
-        viewTextView.setVisibility(View.VISIBLE);
-        recyclerView.setVisibility(View.VISIBLE);
-        viewTextView.setText(getString(R.string.view));
-        recyclerView.setNestedScrollingEnabled(false);
-        LinearLayoutManager linearlayoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
-        recyclerView.setLayoutManager(linearlayoutManager);
-        recyclerView.setNestedScrollingEnabled(false);
-        // off recyclerView Animation
-
-        if (calendarTypeList != null) {
-            if (calendarTypeList.size() > 0) {
-                RecyclerView.ItemAnimator animator = recyclerView.getItemAnimator();
-                if (animator instanceof SimpleItemAnimator)
-                    ((SimpleItemAnimator) animator).setSupportsChangeAnimations(false);
-                if (isRecyclerViewRequired) {
-                    mDashBoardAppointmentListAdapter = new DashBoardAppointmentListAdapter(mContext, calendarTypeList);
-                    recyclerView.setAdapter(mDashBoardAppointmentListAdapter);
-                } else {
-                    CommonMethods.Log(TAG, "Dont show recyclerView");
-                }
-            }
-        } else {
-            RecyclerView.ItemAnimator animator = recyclerView.getItemAnimator();
-            if (animator instanceof SimpleItemAnimator)
-                ((SimpleItemAnimator) animator).setSupportsChangeAnimations(false);
-            if (isRecyclerViewRequired) {
-                mDashBoardAppointmentListAdapter = new DashBoardAppointmentListAdapter(mContext, calendarTypeList);
-                recyclerView.setAdapter(mDashBoardAppointmentListAdapter);
-            } else {
-                CommonMethods.Log(TAG, "Dont show recyclerView");
-            }
-
-        }
-
-        viewTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(HomePageActivity.this, MyAppointmentsActivity.class);
-                startActivity(intent);
-            }
-        });
-
-    }
-
-    private void setLayoutForWaitingList(String waitingListCount) {
-        LayoutInflater inflaterWaitingList = LayoutInflater.from(mContext);
-        View inflatedLayoutWaitingList = inflaterWaitingList.inflate(R.layout.dashboard_menu_common_layout, null, false);
-        hostViewsLayout.addView(inflatedLayoutWaitingList);
-        menuOptionLinearLayout = (LinearLayout) inflatedLayoutWaitingList.findViewById(R.id.menuOptionLinearLayout);
-        menuImageWaitingList = (ImageView) inflatedLayoutWaitingList.findViewById(R.id.menuImageView);
-        menuNameTextView = (CustomTextView) inflatedLayoutWaitingList.findViewById(R.id.menuNameTextView);
-        dashboardArrowImageView = (ImageView) inflatedLayoutWaitingList.findViewById(R.id.dashboardArrowImageView);
-        menuImageWaitingList.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.patientwaitinglist));
-        menuNameTextView.setText(getString(R.string.waiting_list) + " - " + waitingListCount);
-        dashboardArrowImageView.setVisibility(View.VISIBLE);
-        menuOptionLinearLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(mContext, WaitingMainListActivity.class);
-                startActivity(intent);
-            }
-        });
-    }
-
-    private void setLayoutForMyPatients() {
-        LayoutInflater inflaterMyPatients = LayoutInflater.from(mContext);
-        View inflaterMyPatientsLayout = inflaterMyPatients.inflate(R.layout.dashboard_menu_common_layout, null, false);
-        hostViewsLayout.addView(inflaterMyPatientsLayout);
-        menuOptionLinearLayout = (LinearLayout) inflaterMyPatientsLayout.findViewById(R.id.menuOptionLinearLayout);
-        menuImageWaitingList = (ImageView) inflaterMyPatientsLayout.findViewById(R.id.menuImageView);
-        menuNameTextView = (CustomTextView) inflaterMyPatientsLayout.findViewById(R.id.menuNameTextView);
-        dashboardArrowImageView = (ImageView) inflaterMyPatientsLayout.findViewById(R.id.dashboardArrowImageView);
-        menuImageWaitingList.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.patient));
-        menuNameTextView.setText(getString(R.string.my_patients));
-        menuOptionLinearLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(mContext, PatientList.class);
-                intent.putExtra(DMSConstants.ACTIVITY_LAUNCHED_FROM, DMSConstants.HOME_PAGE);
-                intent.putExtra(DMSConstants.PATIENT_LIST_PARAMS.FILE_TYPE, mDashboardDataModel.getFileTypes());
-                startActivity(intent);
-            }
-        });
-        dashboardArrowImageView.setVisibility(View.VISIBLE);
-    }
-
-*/
-
-    //------Set dynamic layout for appointment,waiting and my_patient: END
 }

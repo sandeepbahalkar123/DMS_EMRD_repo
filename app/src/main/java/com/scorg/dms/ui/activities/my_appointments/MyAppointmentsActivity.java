@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.philliphsu.bottomsheetpickers.date.DatePickerDialog;
 import com.scorg.dms.R;
@@ -21,12 +22,8 @@ import com.scorg.dms.helpers.myappointments.AppointmentHelper;
 import com.scorg.dms.interfaces.CustomResponse;
 import com.scorg.dms.interfaces.HelperResponse;
 import com.scorg.dms.model.my_appointments.AppointmentPatientData;
-import com.scorg.dms.model.my_appointments.ClinicList;
 import com.scorg.dms.model.my_appointments.MyAppointmentsBaseModel;
 import com.scorg.dms.model.my_appointments.MyAppointmentsDataModel;
-import com.scorg.dms.model.my_appointments.PatientList;
-import com.scorg.dms.model.my_appointments.StatusList;
-import com.scorg.dms.ui.customesViews.CustomTextView;
 import com.scorg.dms.ui.fragments.my_appointments.MyAppointmentsFragment;
 import com.scorg.dms.util.CommonMethods;
 import com.scorg.dms.util.DMSConstants;
@@ -51,11 +48,11 @@ public class MyAppointmentsActivity extends AppCompatActivity implements HelperR
     @BindView(R.id.backImageView)
     ImageView backImageView;
     @BindView(R.id.titleTextView)
-    CustomTextView titleTextView;
+    TextView titleTextView;
     @BindView(R.id.userInfoTextView)
-    CustomTextView userInfoTextView;
+    TextView userInfoTextView;
     @BindView(R.id.dateTextview)
-    CustomTextView dateTextview;
+    TextView dateTextview;
     @BindView(R.id.viewContainer)
     FrameLayout viewContainer;
     @BindView(R.id.nav_view)

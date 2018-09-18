@@ -44,7 +44,7 @@
                     android:orientation="vertical"
                     android:layout_weight="0.5">
 
-                    <com.scorg.dms.ui.customesViews.CustomTextView
+                    <TextView
                         android:id="@+id/patientId"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -53,16 +53,16 @@
                         android:layout_toRightOf="@id/uhid"
                         android:textColor="@color/green"
                         android:textSize="@dimen/sp13"
-                        app:customFont="@string/roboto_medium"
+                        android:fontFamily="@font/roboto_medium"
                         tools:ignore="RtlSymmetry"
                         tools:text="23456" />
-                    <com.scorg.dms.ui.customesViews.CustomTextView
+                    <TextView
                         android:id="@+id/userName"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:textColor="@color/tagColor"
                         android:textSize="@dimen/sp15"
-                        app:customFont="@string/roboto_bold"
+                        android:fontFamily="@font/roboto_bold"
                         tools:text="Mr. Uren Chhadva" />
                 </LinearLayout>
 
@@ -74,7 +74,7 @@
                    android:layout_gravity="center"
                    android:layout_weight="1.5">
 
-                   <com.scorg.dms.ui.customesViews.CustomTextView
+                   <TextView
                        android:id="@+id/episodeList"
                        android:layout_width="wrap_content"
                        android:layout_height="wrap_content"

@@ -14,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.scorg.dms.R;
 import com.scorg.dms.adapters.waiting_list.WaitingListAdapter;
@@ -31,7 +32,6 @@ import com.scorg.dms.ui.activities.dms_patient_list.FileTypeViewerActivity;
 import com.scorg.dms.ui.activities.dms_patient_list.PatientDetailsActivity;
 import com.scorg.dms.ui.activities.waiting_list.WaitingMainListActivity;
 import com.scorg.dms.ui.customesViews.CircularImageView;
-import com.scorg.dms.ui.customesViews.CustomTextView;
 import com.scorg.dms.util.DMSConstants;
 
 import java.util.ArrayList;
@@ -58,9 +58,9 @@ public class ViewAllPatientListFragment extends Fragment implements WaitingListA
     @BindView(R.id.bulletImageView)
     CircularImageView bulletImageView;
     @BindView(R.id.clinicNameTextView)
-    CustomTextView clinicNameTextView;
+    TextView clinicNameTextView;
     @BindView(R.id.clinicAddress)
-    CustomTextView clinicAddress;
+    TextView clinicAddress;
     @BindView(R.id.hospitalDetailsLinearLayout)
     RelativeLayout hospitalDetailsLinearLayout;
 
