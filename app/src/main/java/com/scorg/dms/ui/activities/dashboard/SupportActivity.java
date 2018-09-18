@@ -13,7 +13,6 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.scorg.dms.R;
-import com.scorg.dms.ui.customesViews.CustomTextView;
 import com.scorg.dms.util.CommonMethods;
 
 import butterknife.BindView;
@@ -21,7 +20,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.RuntimePermissions;
-
+import android.widget.TextView;
 
 /**
  * Created by jeetal on 3/11/17.
@@ -32,19 +31,19 @@ public class SupportActivity extends AppCompatActivity  {
     private static final String TAG = "SupportActivity";
 
     @BindView(R.id.callTextView)
-    CustomTextView callTextView;
+    TextView callTextView;
     @BindView(R.id.emailtextView)
-    CustomTextView emailtextView;
+    TextView emailtextView;
     @BindView(R.id.backImageView)
     ImageView backImageView;
     @BindView(R.id.titleTextView)
-    CustomTextView titleTextView;
+    TextView titleTextView;
     @BindView(R.id.userInfoTextView)
-    CustomTextView userInfoTextView;
+    TextView userInfoTextView;
     @BindView(R.id.dateTextview)
-    CustomTextView dateTextview;
+    TextView dateTextview;
     @BindView(R.id.versionText)
-    CustomTextView versionText;
+    TextView versionText;
     private Context mContext;
 
     @Override

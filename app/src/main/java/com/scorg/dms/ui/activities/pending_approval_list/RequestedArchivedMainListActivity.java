@@ -2,7 +2,6 @@ package com.scorg.dms.ui.activities.pending_approval_list;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -12,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.scorg.dms.R;
 import com.scorg.dms.helpers.pending_approval.PendingApprovalHelper;
@@ -19,7 +19,6 @@ import com.scorg.dms.interfaces.CustomResponse;
 import com.scorg.dms.interfaces.HelperResponse;
 import com.scorg.dms.model.pending_approval_list.RequestedArchivedBaseModel;
 import com.scorg.dms.model.pending_approval_list.PendingApprovalDataModel;
-import com.scorg.dms.ui.customesViews.CustomTextView;
 import com.scorg.dms.ui.fragments.approval_list.AllRequestListFragment;
 import com.scorg.dms.ui.fragments.approval_list.PendingListFragment;
 
@@ -40,11 +39,11 @@ public class RequestedArchivedMainListActivity extends AppCompatActivity impleme
     @BindView(R.id.backImageView)
     ImageView backImageView;
     @BindView(R.id.titleTextView)
-    CustomTextView titleTextView;
+    TextView titleTextView;
     @BindView(R.id.userInfoTextView)
-    CustomTextView userInfoTextView;
+    TextView userInfoTextView;
     @BindView(R.id.dateTextview)
-    CustomTextView dateTextview;
+    TextView dateTextview;
     @BindView(R.id.year)
     Spinner year;
     @BindView(R.id.addImageView)

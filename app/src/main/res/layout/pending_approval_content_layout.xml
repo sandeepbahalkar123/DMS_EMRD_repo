@@ -41,7 +41,7 @@
                 android:layout_marginTop="@dimen/dp6"
                 android:background="@drawable/circular_bullet" />
 
-            <com.scorg.dms.ui.customesViews.CustomTextView
+            <TextView
                 android:id="@+id/clinicNameTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -50,10 +50,10 @@
                 android:layout_toRightOf="@id/bulletImageView"
                 android:textColor="@color/black"
                 android:textSize="@dimen/sp16"
-                app:customFont="@string/roboto_bold"
+                android:fontFamily="@font/roboto_bold"
                 tools:text="Shree Clinic - " />
 
-            <com.scorg.dms.ui.customesViews.CustomTextView
+            <TextView
                 android:id="@+id/clinicAddress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -65,7 +65,7 @@
                 android:maxLines="1"
                 android:textColor="@color/clinic_address_color"
                 android:textSize="@dimen/sp13"
-                app:customFont="@string/roboto_medium"
+                android:fontFamily="@font/roboto_medium"
                 tools:text="Worli, Mumbaifgfdgfdgfgf" />
         </RelativeLayout>
 

@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.scorg.dms.R;
 import com.scorg.dms.adapters.pending_approvals.RequestListAdapter;
@@ -27,10 +28,8 @@ import com.scorg.dms.model.pending_approval_list.RequestedArchivedBaseModel;
 import com.scorg.dms.model.pending_approval_list.RequestedArchivedDetailList;
 import com.scorg.dms.model.waiting_list.WaitingPatientData;
 import com.scorg.dms.ui.activities.dms_patient_list.FileTypeViewerActivity;
-import com.scorg.dms.ui.activities.dms_patient_list.PatientDetailsActivity;
 import com.scorg.dms.ui.activities.pending_approval_list.RequestedArchivedMainListActivity;
 import com.scorg.dms.ui.customesViews.CircularImageView;
-import com.scorg.dms.ui.customesViews.CustomTextView;
 import com.scorg.dms.util.DMSConstants;
 
 import java.util.ArrayList;
@@ -41,8 +40,6 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.RuntimePermissions;
-
-import static com.scorg.dms.util.DMSConstants.PATIENT_DETAILS;
 
 /**
  * Created by jeetal on 22/2/18.
@@ -57,9 +54,9 @@ public class AllRequestListFragment extends Fragment implements RequestListAdapt
     @BindView(R.id.bulletImageView)
     CircularImageView bulletImageView;
     @BindView(R.id.clinicNameTextView)
-    CustomTextView clinicNameTextView;
+    TextView clinicNameTextView;
     @BindView(R.id.clinicAddress)
-    CustomTextView clinicAddress;
+    TextView clinicAddress;
     @BindView(R.id.hospitalDetailsLinearLayout)
     RelativeLayout hospitalDetailsLinearLayout;
 

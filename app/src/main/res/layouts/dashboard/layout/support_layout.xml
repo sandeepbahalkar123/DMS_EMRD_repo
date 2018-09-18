@@ -27,25 +27,25 @@
                 android:paddingTop="@dimen/dp10"
                 app:srcCompat="@drawable/support_bg" />
 
-            <com.scorg.dms.ui.customesViews.CustomTextView
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingTop="@dimen/dp12"
                 android:text="@string/need_some_help"
                 android:textColor="@color/black"
                 android:textSize="@dimen/sp20"
-                app:customFont="@string/roboto_medium" />
+                android:fontFamily="@font/roboto_medium" />
 
-            <com.scorg.dms.ui.customesViews.CustomTextView
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingTop="@dimen/dp8"
                 android:text="@string/feel_free"
                 android:textColor="@color/grey_shade"
                 android:textSize="@dimen/sp14"
-                app:customFont="@string/roboto_medium" />
+                android:fontFamily="@font/roboto_medium" />
 
-            <com.scorg.dms.ui.customesViews.CustomTextView
+            <TextView
                 android:id="@+id/callTextView"
                 android:layout_width="@dimen/dp222"
                 android:layout_height="@dimen/dp40"
@@ -55,9 +55,9 @@
                 android:text="@string/call"
                 android:textColor="@color/white"
                 android:textSize="@dimen/sp19"
-                app:customFont="@string/roboto_bold" />
+                android:fontFamily="@font/roboto_bold" />
 
-            <com.scorg.dms.ui.customesViews.CustomTextView
+            <TextView
                 android:id="@+id/emailtextView"
                 android:layout_width="@dimen/dp222"
                 android:layout_height="@dimen/dp40"
@@ -67,7 +67,7 @@
                 android:text="@string/email"
                 android:textColor="@color/tagColor"
                 android:textSize="@dimen/sp19"
-                app:customFont="@string/roboto_bold" />
+                android:fontFamily="@font/roboto_bold" />
 
 
         </LinearLayout>
@@ -82,26 +82,26 @@
             android:gravity="center"
             android:orientation="vertical">
 
-            <com.scorg.dms.ui.customesViews.CustomTextView
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/support_bottom_first_line"
                 android:textColor="@color/logo_color"
                 android:textSize="@dimen/sp13"
-                app:customFont="@string/roboto_regular"
+                android:fontFamily="@font/roboto_regular"
                  />
 
-            <com.scorg.dms.ui.customesViews.CustomTextView
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="@string/company_name"
                 android:textColor="@color/logo_color"
                 android:textSize="@dimen/sp13"
-                app:customFont="@string/roboto_regular"
+                android:fontFamily="@font/roboto_regular"
                />
 
-            <com.scorg.dms.ui.customesViews.CustomTextView
+            <TextView
                 android:id="@+id/versionText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -109,7 +109,7 @@
                 android:textColor="@color/logo_color"
                 android:textSize="@dimen/sp13"
                 tools:text="v1.1(4)"
-                app:customFont="@string/roboto_regular"
+                android:fontFamily="@font/roboto_regular"
                  />
 
         </LinearLayout>

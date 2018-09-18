@@ -3,22 +3,17 @@ package com.scorg.dms.ui.customesViews.treeViewHolder.arrow_expand;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Switch;
 import android.widget.TextView;
 
-import com.github.johnkil.print.PrintView;
 import com.scorg.dms.R;
-import com.scorg.dms.adapters.dms_adapters.PatientEpisodeRecycleViewListAdapter;
 import com.scorg.dms.model.dms_models.responsemodel.annotationlistresponsemodel.AnnotationList;
 import com.scorg.dms.model.dms_models.responsemodel.annotationlistresponsemodel.DocTypeList;
-import com.scorg.dms.util.CommonMethods;
 import com.unnamed.b.atv.model.TreeNode;
 
 /**
