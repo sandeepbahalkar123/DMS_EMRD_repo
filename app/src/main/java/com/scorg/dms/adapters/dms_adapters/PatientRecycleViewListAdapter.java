@@ -2,12 +2,9 @@ package com.scorg.dms.adapters.dms_adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatImageButton;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,18 +17,13 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.scorg.dms.R;
 import com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemodel.SearchResult;
-import com.scorg.dms.ui.activities.dms_patient_list.PatientDetailsActivity;
-import com.scorg.dms.ui.customesViews.CustomTextView;
 import com.scorg.dms.util.CommonMethods;
-import com.scorg.dms.util.DMSConstants;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import static com.scorg.dms.util.DMSConstants.PATIENT_DETAILS;
 
 /**
  * Created by riteshpandhurkar on 24/2/17.
@@ -172,7 +164,7 @@ public class PatientRecycleViewListAdapter extends RecyclerView.Adapter<PatientR
         @BindView(R.id.patientImageView)
         ImageView patientImageView;
         @BindView(R.id.episodeList)
-        CustomTextView episodeList;
+        TextView episodeList;
 
         //@BindView(R.id.divider)
         //View divider;

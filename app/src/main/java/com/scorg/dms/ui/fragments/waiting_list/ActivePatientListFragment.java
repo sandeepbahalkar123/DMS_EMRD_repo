@@ -15,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.scorg.dms.R;
 import com.scorg.dms.adapters.waiting_list.WaitingListAdapter;
@@ -22,8 +23,6 @@ import com.scorg.dms.adapters.waiting_list.WaitingListSpinnerAdapter;
 import com.scorg.dms.helpers.patient_list.DMSPatientsHelper;
 import com.scorg.dms.interfaces.CustomResponse;
 import com.scorg.dms.interfaces.HelperResponse;
-import com.scorg.dms.model.dms_models.requestmodel.showsearchresultrequestmodel.ShowSearchResultRequestModel;
-import com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemodel.PatientFileData;
 import com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemodel.SearchResult;
 import com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemodel.SearchResultData;
 import com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemodel.ShowSearchResultResponseModel;
@@ -34,7 +33,6 @@ import com.scorg.dms.ui.activities.dms_patient_list.FileTypeViewerActivity;
 import com.scorg.dms.ui.activities.dms_patient_list.PatientDetailsActivity;
 import com.scorg.dms.ui.activities.waiting_list.WaitingMainListActivity;
 import com.scorg.dms.ui.customesViews.CircularImageView;
-import com.scorg.dms.ui.customesViews.CustomTextView;
 import com.scorg.dms.util.DMSConstants;
 
 import java.util.ArrayList;
@@ -61,9 +59,9 @@ public class ActivePatientListFragment extends Fragment implements WaitingListAd
     @BindView(R.id.bulletImageView)
     CircularImageView bulletImageView;
     @BindView(R.id.clinicNameTextView)
-    CustomTextView clinicNameTextView;
+    TextView clinicNameTextView;
     @BindView(R.id.clinicAddress)
-    CustomTextView clinicAddress;
+    TextView clinicAddress;
     @BindView(R.id.hospitalDetailsLinearLayout)
     RelativeLayout hospitalDetailsLinearLayout;
 

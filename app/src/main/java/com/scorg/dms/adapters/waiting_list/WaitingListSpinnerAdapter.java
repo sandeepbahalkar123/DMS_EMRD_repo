@@ -6,10 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.TextView;
 
 import com.scorg.dms.R;
 import com.scorg.dms.model.waiting_list.WaitingClinicList;
-import com.scorg.dms.ui.customesViews.CustomTextView;
 
 import java.util.ArrayList;
 
@@ -53,8 +53,8 @@ public class WaitingListSpinnerAdapter extends BaseAdapter {
 
         final WaitingClinicList waitingClinicListObject = mWaitingClinicLists.get(position);
         if (waitingClinicListObject != null) {
-            CustomTextView clinicNameTextView = (CustomTextView) view.findViewById(R.id.clinicNameTextView);
-            CustomTextView clinicAddress = (CustomTextView) view.findViewById(R.id.clinicAddress);
+            TextView clinicNameTextView = (TextView) view.findViewById(R.id.clinicNameTextView);
+            TextView clinicAddress = (TextView) view.findViewById(R.id.clinicAddress);
             clinicNameTextView.setText(waitingClinicListObject.getHosName() + " - ");
             clinicAddress.setText(waitingClinicListObject.getHosAddress1() + ", " + waitingClinicListObject.getHosAddress2());
 

@@ -27,7 +27,6 @@ import com.scorg.dms.model.dms_models.responsemodel.episode_list.EpisodeResponse
 import com.scorg.dms.model.dms_models.responsemodel.episode_list.PatientEpisodeFileData;
 import com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemodel.SearchResult;
 import com.scorg.dms.model.my_patient_filter.PatientFilter;
-import com.scorg.dms.ui.customesViews.CustomTextView;
 import com.scorg.dms.ui.customesViews.drag_drop_recyclerview_helper.EndlessRecyclerViewScrollListener;
 import com.scorg.dms.util.CommonMethods;
 import com.scorg.dms.util.DMSConstants;
@@ -41,6 +40,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static com.scorg.dms.util.DMSConstants.BUNDLE;
+import android.widget.TextView;
 
 public class PatientDetailsActivity extends AppCompatActivity implements HelperResponse, PatientEpisodeRecycleViewListAdapter.OnEpisodeClickListener, PatientSearchAutoCompleteTextViewAdapter.OnItemClickListener {
 
@@ -49,9 +49,9 @@ public class PatientDetailsActivity extends AppCompatActivity implements HelperR
     @BindView(R.id.listOfOPDTypes)
     RecyclerView listOfOPDTypes;
     @BindView(R.id.patientName)
-    CustomTextView mPatientName;
+    TextView mPatientName;
     @BindView(R.id.uhidData)
-    CustomTextView mUHIDData;
+    TextView mUHIDData;
     //-----------
     @BindView(R.id.autoCompleteSearchBox)
     AutoCompleteTextView mAutoCompleteSearchBox;

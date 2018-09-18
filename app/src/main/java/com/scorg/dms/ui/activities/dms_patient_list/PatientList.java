@@ -466,12 +466,11 @@ public class PatientList extends AppCompatActivity implements HelperResponse, Vi
 
             //mPatientListView.setDividerHeight(2);
         } else if (mOldDataTag == DMSConstants.TASK_ANNOTATIONS_LIST) {
-
             AnnotationListResponseModel annotationListResponseModel = (AnnotationListResponseModel) customResponse;
             mAnnotationListData = annotationListResponseModel.getAnnotationListData();
-
             createAnnotationTreeStructure(mAnnotationListData, false);
             mFirstFileTypeProgressDialogLayout.setVisibility(View.GONE);
+
         } else if (mOldDataTag == DMSConstants.TASK_GET_PATIENT_NAME_LIST) {
             PatientNameListResponseModel patientNameListResponseModel = (PatientNameListResponseModel) customResponse;
             mPatientNameListData = patientNameListResponseModel.getData();
@@ -481,12 +480,9 @@ public class PatientList extends AppCompatActivity implements HelperResponse, Vi
                 patientName = mLstPatient.get(i).getPatientName();
                 mPatientLists.add(patientName);
             }
-
             mShowPatientNameAdapter = new ShowPatientNameAdapter(this, R.layout.patient_filter_right_drawer, R.id.custom_spinner_txt_view_Id, mLstPatient);
             mSearchPatientNameEditText.setAdapter(mShowPatientNameAdapter);
             mSearchPatientNameEditText.showDropDown();
-
-
             Log.d(TAG, "" + mLstPatient);
         }
 

@@ -24,7 +24,7 @@
             android:paddingTop="@dimen/dp6"
             app:srcCompat="@drawable/back_arrow_a_01" />
 
-        <com.scorg.dms.ui.customesViews.CustomTextView
+        <TextView
             android:id="@+id/titleTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -39,10 +39,10 @@
             android:paddingStart="@dimen/dp16"
             android:textColor="@color/white"
             android:textSize="@dimen/sp17"
-            app:customFont="@string/roboto_bold"
+            android:fontFamily="@font/roboto_bold"
             tools:text="@string/appointment_completed" />
 
-        <com.scorg.dms.ui.customesViews.CustomTextView
+        <TextView
             android:id="@+id/userInfoTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -55,12 +55,12 @@
             android:textColor="@color/white"
             android:textSize="@dimen/sp12"
             android:visibility="gone"
-            app:customFont="@string/roboto_bold"
+            android:fontFamily="@font/roboto_bold"
             tools:ignore="RtlSymmetry"
             tools:text="36 yrs - Male"
             tools:visibility="visible" />
 
-        <com.scorg.dms.ui.customesViews.CustomTextView
+        <TextView
             android:id="@+id/dateTextview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -74,7 +74,7 @@
             android:textColor="@color/white"
             android:textSize="@dimen/sp12"
             android:visibility="gone"
-            app:customFont="@string/roboto_medium"
+            android:fontFamily="@font/roboto_medium"
             tools:ignore="RtlSymmetry"
             tools:text="27th Dec '17"
             tools:visibility="visible" />

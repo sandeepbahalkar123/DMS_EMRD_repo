@@ -60,7 +60,7 @@
                         app:srcCompat="@drawable/result_blue_line"
                         tools:ignore="ContentDescription,RtlSymmetry" />
 
-                    <com.scorg.dms.ui.customesViews.CustomTextView
+                    <TextView
                         android:id="@+id/patientIdTextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -71,11 +71,11 @@
                         android:paddingStart="@dimen/dp13"
                         android:textColor="@color/black"
                         android:textSize="@dimen/sp13"
-                        app:customFont="@string/roboto_medium"
+                        android:fontFamily="@font/roboto_medium"
                         tools:ignore="RtlSymmetry"
                         tools:text="ID: 23456" />
 
-                    <com.scorg.dms.ui.customesViews.CustomTextView
+                    <TextView
                         android:id="@+id/appointmentTime"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -87,7 +87,7 @@
                         android:padding="@dimen/dp5"
                         android:textColor="@color/rating_color"
                         android:textSize="@dimen/sp14"
-                        app:customFont="@string/roboto_bold"
+                        android:fontFamily="@font/roboto_bold"
                         tools:text="03:20 pm"
                         tools:visibility="visible" />
 
@@ -118,13 +118,13 @@
                         android:orientation="vertical"
                         tools:ignore="RelativeOverlap">
 
-                        <com.scorg.dms.ui.customesViews.CustomTextView
+                        <TextView
                             android:id="@+id/patientNameTextView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="@color/black"
                             android:textSize="@dimen/sp15"
-                            app:customFont="@string/roboto_bold"
+                            android:fontFamily="@font/roboto_bold"
                             tools:text="Mr. Uren Chhadva" />
 
                         <LinearLayout
@@ -133,22 +133,22 @@
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
 
-                            <com.scorg.dms.ui.customesViews.CustomTextView
+                            <TextView
                                 android:id="@+id/statusTextView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Status :"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/sp12"
-                                app:customFont="@string/roboto_medium" />
+                                android:fontFamily="@font/roboto_medium" />
 
-                            <com.scorg.dms.ui.customesViews.CustomTextView
+                            <TextView
                                 android:id="@+id/typeStatus"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/tagColor"
                                 android:textSize="@dimen/sp12"
-                                app:customFont="@string/roboto_medium"
+                                android:fontFamily="@font/roboto_medium"
                                 tools:text=" Male" />
                         </LinearLayout>
 
@@ -159,22 +159,22 @@
                             android:visibility="gone"
                             android:orientation="horizontal">
 
-                            <com.scorg.dms.ui.customesViews.CustomTextView
+                            <TextView
                                 android:id="@+id/appointmentLabelTextView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Appointment Time - "
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/sp12"
-                                app:customFont="@string/roboto_medium" />
+                                android:fontFamily="@font/roboto_medium" />
 
-                            <com.scorg.dms.ui.customesViews.CustomTextView
+                            <TextView
                                 android:id="@+id/appointmentTimeTextView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/tagColor"
                                 android:textSize="@dimen/sp12"
-                                app:customFont="@string/roboto_medium"
+                                android:fontFamily="@font/roboto_medium"
                                 tools:text=" 12:30 pm" />
                         </LinearLayout>
                     </LinearLayout>
@@ -202,7 +202,7 @@
                     android:layout_weight=".5"
                     android:gravity="center_horizontal">
 
-                    <com.scorg.dms.ui.customesViews.CustomTextView
+                    <TextView
                         android:id="@+id/patientPhoneNumber"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -211,7 +211,7 @@
                         android:drawableStart="@drawable/mobile_icon"
                         android:textColor="@color/rating_color"
                         android:textSize="@dimen/sp12"
-                        app:customFont="@string/roboto_medium"
+                        android:fontFamily="@font/roboto_medium"
                         tools:ignore="RtlHardcoded"
                         tools:text="987678999" />
                 </LinearLayout>
@@ -235,7 +235,7 @@
                     android:gravity="center"
                     android:orientation="horizontal">
 
-                    <com.scorg.dms.ui.customesViews.CustomTextView
+                    <TextView
                         android:id="@+id/tokenLabelTextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -244,26 +244,26 @@
                         android:textColor="@color/black"
                         android:textSize="@dimen/sp11"
                         android:visibility="gone"
-                        app:customFont="@string/roboto_medium" />
+                        android:fontFamily="@font/roboto_medium" />
 
-                    <com.scorg.dms.ui.customesViews.CustomTextView
+                    <TextView
                         android:id="@+id/tokenNumber"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:textColor="@color/rating_color"
                         android:textSize="@dimen/sp16"
-                        app:customFont="@string/roboto_bold"
+                        android:fontFamily="@font/roboto_bold"
                         android:visibility="gone"
                         tools:text=" 02" />
 
-                    <com.scorg.dms.ui.customesViews.CustomTextView
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:textColor="@color/black"
                         android:textSize="@dimen/sp12"
-                        app:customFont="@string/roboto_medium"
+                        android:fontFamily="@font/roboto_medium"
                         android:text="@string/episode" />
 
                 </LinearLayout>

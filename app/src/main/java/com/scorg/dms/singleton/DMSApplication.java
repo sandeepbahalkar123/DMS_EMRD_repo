@@ -41,8 +41,6 @@ public class DMSApplication extends MultiDexApplication {
         super.onCreate();
         //------------
         MultiDex.install(this);
-//        new NukeSSLCerts().nuke(); // disable all ssl certificates (dangerous)
-        //--------------
     }
 
 
