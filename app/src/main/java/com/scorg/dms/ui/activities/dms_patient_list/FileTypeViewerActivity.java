@@ -78,6 +78,7 @@ import com.unnamed.b.atv.view.AndroidTreeView;
 import org.json.JSONArray;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -304,6 +305,8 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
         mPreviousClickedTreeElement = new LinkedHashMap<>();
 
         bindView();
+        mFirstPdfView.fromAsset("NO_DOCUMENT_LOADED.pdf").load();
+        mSecondPdfView.fromAsset("NO_DOCUMENT_LOADED.pdf").load();
 
         //-----------
         mDrawer.openDrawer(GravityCompat.END);
@@ -1244,7 +1247,8 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
                     .enableAnnotationRendering(true)
                     .scrollHandle(new DefaultScrollHandle(this))
                     .loadFromUrl();
-            mFirstPdfView.zoomTo(DEFAULT_MIN_SCALE);
+            mFirstPdfView.fromAsset("NO_DOCUMENT_LOADED.pdf").load();
+
         } else if (pdfViewToLoad == mSecondPdfView) {
             mSecondPdfView.fromUrl(pdfFileURL)
                     .defaultPage(mPageNumber)
@@ -1254,7 +1258,7 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
                     .enableAnnotationRendering(true)
                     .scrollHandle(new DefaultScrollHandle(this))
                     .loadFromUrl();
-            mSecondPdfView.zoomTo(DEFAULT_MIN_SCALE);
+            mSecondPdfView.fromAsset("NO_DOCUMENT_LOADED.pdf").load();
 
         }
 
