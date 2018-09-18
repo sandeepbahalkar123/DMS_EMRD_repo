@@ -214,7 +214,7 @@
             android:gravity="center"
             android:padding="@dimen/dp10"
             android:text="@string/comparedocument"
-            android:textColor="@color/grey_700"
+            android:textColor="@color/white"
             android:textSize="@dimen/sp17" />
 
     </LinearLayout>

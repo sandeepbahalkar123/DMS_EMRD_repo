@@ -54,7 +54,6 @@ import butterknife.OnClick;
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.RuntimePermissions;
 
-import static com.scorg.dms.util.DMSConstants.ACTIVE_STATUS;
 import static com.scorg.dms.util.DMSConstants.PATIENT_DETAILS;
 
 /**
@@ -75,10 +74,7 @@ public class HomePageActivity extends AppCompatActivity implements HelperRespons
     CustomTextView waitingPatientCount;
     @BindView(R.id.pendingApprovalCount)
     CustomTextView pendingApprovalCount;
-    //------------
-
-    @BindView(R.id.viewPagerDoctorItem)
-    LinearLayout viewPagerDoctorItem;
+    //-----------
 
     @BindView(R.id.welcomeTextView)
     CustomTextView welcomeTextView;
@@ -259,14 +255,6 @@ public class HomePageActivity extends AppCompatActivity implements HelperRespons
     @Override
     public void onSuccess(String mOldDataTag, CustomResponse customResponse) {
         switch (mOldDataTag) {
-            case DMSConstants.LOGOUT:
-                //if user turns on radio button
-                CommonMethods.Log(TAG, "logout");
-                break;
-            case ACTIVE_STATUS:
-                CommonMethods.Log(ACTIVE_STATUS, "active");
-                break;
-
             case DMSConstants.TASK_GET_DASHBOARD_RESPONSE:
                 DashboardBaseModel mDashboardBaseModel = (DashboardBaseModel) customResponse;
                 if (DMSConstants.RESPONSE_OK.equalsIgnoreCase(mDashboardBaseModel.getCommon().getSuccess())) {
@@ -331,8 +319,6 @@ public class HomePageActivity extends AppCompatActivity implements HelperRespons
     @OnClick({R.id.viewTextView,R.id.layoutDrawerIcon,R.id.layoutTotalPatients, R.id.layoutTodayAppointment, R.id.layoutWaitingPatient, R.id.layoutDrawerSetting, R.id.layoutDrawerSupport,R.id.layoutPendingApproval,R.id.layoutDrawerHome})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.viewPagerDoctorItem:
-                break;
             case R.id.layoutTodayAppointment:
                 if( mDashboardDataModel != null && !mDashboardDataModel.getAppointmentCount().equalsIgnoreCase("0") ) {
                     Intent myAppointmentsActivity = new Intent(this, MyAppointmentsActivity.class);

@@ -27,7 +27,6 @@ import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Environment;
 import android.os.HandlerThread;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -37,7 +36,6 @@ import android.widget.RelativeLayout;
 
 import com.github.barteksc.pdfviewer.listener.OnDrawListener;
 import com.github.barteksc.pdfviewer.listener.OnErrorListener;
-import com.github.barteksc.pdfviewer.listener.OnFileDownloadCompleteListener;
 import com.github.barteksc.pdfviewer.listener.OnLoadCompleteListener;
 import com.github.barteksc.pdfviewer.listener.OnPageChangeListener;
 import com.github.barteksc.pdfviewer.listener.OnPageScrollListener;
@@ -49,16 +47,13 @@ import com.github.barteksc.pdfviewer.source.DocumentSource;
 import com.github.barteksc.pdfviewer.source.FileSource;
 import com.github.barteksc.pdfviewer.source.InputStreamSource;
 import com.github.barteksc.pdfviewer.source.UriSource;
-import com.github.barteksc.pdfviewer.source.UrlSource;
 import com.github.barteksc.pdfviewer.util.ArrayUtils;
 import com.github.barteksc.pdfviewer.util.Constants;
-import com.github.barteksc.pdfviewer.util.DownloadUtil;
 import com.github.barteksc.pdfviewer.util.MathUtils;
 import com.shockwave.pdfium.PdfDocument;
 import com.shockwave.pdfium.PdfiumCore;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -88,7 +83,6 @@ public class PDFView extends RelativeLayout {
     public static final float DEFAULT_MAX_SCALE = 3.0f;
     public static final float DEFAULT_MID_SCALE = 1.75f;
     public static final float DEFAULT_MIN_SCALE = 1.0f;
-    private Context mContext;
 
     private float minZoom = DEFAULT_MIN_SCALE;
     private float midZoom = DEFAULT_MID_SCALE;
@@ -180,7 +174,7 @@ public class PDFView extends RelativeLayout {
     /**
      * The zoom level, always >= 1
      */
-    private float zoom = 1.0f;
+    private float zoom = 1f;
 
     /**
      * True if the PDFView has been recycled
@@ -303,8 +297,6 @@ public class PDFView extends RelativeLayout {
         debugPaint.setStyle(Style.STROKE);
 
         pdfiumCore = new PdfiumCore(context);
-
-        this.mContext = context;
         setWillNotDraw(false);
     }
 
@@ -494,7 +486,7 @@ public class PDFView extends RelativeLayout {
         scrollHandle = null;
         isScrollHandleInit = false;
         currentXOffset = currentYOffset = 0;
-        zoom = DEFAULT_MIN_SCALE;
+        zoom = DEFAULT_MID_SCALE;
         recycled = true;
         state = State.DEFAULT;
     }
@@ -1172,18 +1164,7 @@ public class PDFView extends RelativeLayout {
         return new Configurator(new UriSource(uri));
     }
 
-
     /**
-     * Use a url as the pdf source
-     */
-    public Configurator fromUrl(String url) {
-        Configurator source = new Configurator(new UrlSource(url));
-        source.fileUrl(url);
-        return source;
-    }
-
-    /**
-     * /**
      * Use bytearray as the pdf source, documents is not saved
      *
      * @param bytes
@@ -1208,8 +1189,6 @@ public class PDFView extends RelativeLayout {
 
     public class Configurator {
 
-        private String fileUrl;
-
         private final DocumentSource documentSource;
 
         private int[] pageNumbers = null;
@@ -1221,8 +1200,6 @@ public class PDFView extends RelativeLayout {
         private OnDrawListener onDrawListener;
 
         private OnLoadCompleteListener onLoadCompleteListener;
-
-        private OnFileDownloadCompleteListener onFileDownloadCompleteListener;
 
         private OnErrorListener onErrorListener;
 
@@ -1246,11 +1223,6 @@ public class PDFView extends RelativeLayout {
 
         public Configurator pages(int... pageNumbers) {
             this.pageNumbers = pageNumbers;
-            return this;
-        }
-
-        private Configurator fileUrl(String fileUrl) {
-            this.fileUrl = fileUrl;
             return this;
         }
 
@@ -1333,80 +1305,5 @@ public class PDFView extends RelativeLayout {
             }
             return null;
         }
-
-
-        public void loadFromUrl() {
-            PDFView.this.animationManager.stopAll();
-            //final String SDPath = getCacheTempFilePath() + "/PDFViewCache/";
-            final String SDPath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/PDFViewCache/";
-            int index = fileUrl.lastIndexOf("/");
-            String fileName = fileUrl.substring(index);
-            final File file = new File(SDPath, fileName);
-            Log.e("PDFVIEW", "LOAD_FROM_URL:_file.name():" + file.getName() + "|file.exists():>" + file.exists());
-            if (file.exists()) {
-                //文件存在
-                if (onFileDownloadCompleteListener != null) {
-                    onFileDownloadCompleteListener.onDownloadComplete(file);
-                }
-                PDFView.this.fromFile(file)
-                        .load();
-            } else {
-                DownloadUtil.get().download(fileUrl, SDPath, new DownloadUtil.OnDownloadListener() {
-                    @Override
-                    public void onDownloadSuccess(File file) {
-                        Log.e("PDFVIEW", "onDownloadSuccess|file.name()+" + file.getName());
-
-                        if (onFileDownloadCompleteListener != null) {
-                            onFileDownloadCompleteListener.onDownloadComplete(file);
-                        }
-                        PDFView.this.fromFile(file)
-                                .load();
-
-                    }
-
-                    @Override
-                    public void onDownloading(int progress) {
-
-                    }
-
-                    @Override
-                    public void onDownloadFailed() {
-                        Log.e("PDFVIEW", "onDownloadFailed|file.name()+" + file.getName());
-
-                        PDFView.this.fromFile(file)
-                                .load();
-                    }
-                });
-            }
-        }
-
-        /**
-         * Create a temporary file in the cache directory on either internal or external storage,
-         * whichever is available and has more free space.
-         */
-        private String getCacheTempFilePath() {
-            try {
-                File externalCacheDir = mContext.getExternalCacheDir();
-                File internalCacheDir = mContext.getCacheDir();
-                File cacheDir;
-                if (externalCacheDir == null && internalCacheDir == null) {
-                    throw new IOException("No cache directory available");
-                }
-                if (externalCacheDir == null) {
-                    cacheDir = internalCacheDir;
-                } else if (internalCacheDir == null) {
-                    cacheDir = externalCacheDir;
-                } else {
-                    cacheDir = externalCacheDir.getFreeSpace() > internalCacheDir.getFreeSpace() ?
-                            externalCacheDir : internalCacheDir;
-                }
-
-                return cacheDir.getAbsolutePath();
-            } catch (IOException e) {
-
-            }
-            return "";
-        }
-
     }
 }

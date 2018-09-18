@@ -1,9 +1,6 @@
 package com.scorg.dms.ui.fragments.my_appointments;
 
-import android.app.Dialog;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -12,46 +9,31 @@ import android.support.v4.view.GravityCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.scorg.dms.R;
 import com.scorg.dms.adapters.my_appointments.AppointmentListAdapter;
-import com.scorg.dms.adapters.waiting_list.ShowWaitingStatusAdapter;
 import com.scorg.dms.helpers.myappointments.AppointmentHelper;
 import com.scorg.dms.helpers.patient_list.DMSPatientsHelper;
-import com.scorg.dms.interfaces.CustomResponse;
-import com.scorg.dms.interfaces.HelperResponse;
 import com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemodel.SearchResult;
-import com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemodel.SearchResultData;
-import com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemodel.ShowSearchResultResponseModel;
 import com.scorg.dms.model.my_appointments.AppointmentPatientData;
 import com.scorg.dms.model.my_appointments.MyAppointmentsDataModel;
-import com.scorg.dms.model.waiting_list.response_add_to_waiting_list.AddToWaitingListBaseModel;
-import com.scorg.dms.model.waiting_list.response_add_to_waiting_list.AddToWaitingResponse;
 import com.scorg.dms.ui.activities.dms_patient_list.FileTypeViewerActivity;
 import com.scorg.dms.ui.activities.dms_patient_list.PatientDetailsActivity;
 import com.scorg.dms.ui.activities.my_appointments.MyAppointmentsActivity;
-import com.scorg.dms.ui.activities.waiting_list.WaitingMainListActivity;
 import com.scorg.dms.ui.customesViews.EditTextWithDeleteButton;
-import com.scorg.dms.util.CommonMethods;
 import com.scorg.dms.util.DMSConstants;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
-import static com.scorg.dms.ui.activities.waiting_list.WaitingMainListActivity.RESULT_CLOSE_ACTIVITY_WAITING_LIST;
 import static com.scorg.dms.util.DMSConstants.APPOINTMENT_DATA;
 import static com.scorg.dms.util.DMSConstants.PATIENT_DETAILS;
 

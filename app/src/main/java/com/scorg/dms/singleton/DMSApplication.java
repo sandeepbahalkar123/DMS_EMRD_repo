@@ -5,8 +5,6 @@ import android.graphics.Typeface;
 import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
 
-import com.scorg.dms.model.doctor_location.DoctorLocationModel;
-
 import java.util.ArrayList;
 import java.util.Hashtable;
 
@@ -16,7 +14,6 @@ import java.util.Hashtable;
 public class DMSApplication extends MultiDexApplication {
     public final String TAG = this.getClass().getName();
     private static final Hashtable<String, Typeface> cache = new Hashtable<String, Typeface>();
-    private static ArrayList<DoctorLocationModel> doctorLocationModels = new ArrayList<>();
     private static String SHOW_UPDATE_DIALOG_ON_SKIPPED = "";
 
     public static String getShowUpdateDialogOnSkipped() {
@@ -48,13 +45,6 @@ public class DMSApplication extends MultiDexApplication {
         //--------------
     }
 
-    public static ArrayList<DoctorLocationModel> getDoctorLocationModels() {
-        return doctorLocationModels;
-    }
-
-    public static void setDoctorLocationModels(ArrayList<DoctorLocationModel> doctorLocationModels) {
-        DMSApplication.doctorLocationModels = doctorLocationModels;
-    }
 
 
 }

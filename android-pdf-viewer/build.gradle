@@ -38,11 +38,9 @@ android {
 }
 
 dependencies {
-    //implementation 'com.github.barteksc:pdfium-android:1.5.0'
-    implementation 'com.github.barteksc:pdfium-android:1.8.2'
+    implementation 'com.github.barteksc:pdfium-android:1.5.0'
     implementation 'com.squareup.okhttp3:okhttp:3.8.1'
-
 }
 
-//apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
-//apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'

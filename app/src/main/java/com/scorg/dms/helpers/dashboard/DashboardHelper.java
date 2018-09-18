@@ -36,9 +36,7 @@ public class DashboardHelper implements ConnectionListener {
         //CommonMethods.Log(TAG, customResponse.toString());
         switch (responseResult) {
             case ConnectionListener.RESPONSE_OK:
-                if (mOldDataTag.equalsIgnoreCase(DMSConstants.TASK_GET_LOCATION_LIST)) {
-                    mHelperResponseManager.onSuccess(mOldDataTag, customResponse);
-                } else if (mOldDataTag.equalsIgnoreCase(DMSConstants.TASK_GET_DASHBOARD_RESPONSE)) {
+               if (mOldDataTag.equalsIgnoreCase(DMSConstants.TASK_GET_DASHBOARD_RESPONSE)) {
                     mHelperResponseManager.onSuccess(mOldDataTag, customResponse);
                 }
                 break;
@@ -69,12 +67,6 @@ public class DashboardHelper implements ConnectionListener {
 
     }
 
-    public void doDoctorGetLocationList() {
-        ConnectionFactory mConnectionFactory = new ConnectionFactory(mContext, this, null, false, DMSConstants.TASK_GET_LOCATION_LIST, Request.Method.GET, true);
-        mConnectionFactory.setHeaderParams();
-        mConnectionFactory.setUrl(Config.GET_CLINIC_LOCATION_LIST + DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.DOC_ID, mContext));
-        mConnectionFactory.createConnection(DMSConstants.TASK_GET_LOCATION_LIST);
-    }
 
     public void doGetDashboardResponse() {
         ConnectionFactory mConnectionFactory = new ConnectionFactory(mContext, this, null, true, DMSConstants.TASK_GET_DASHBOARD_RESPONSE, Request.Method.POST, true);
