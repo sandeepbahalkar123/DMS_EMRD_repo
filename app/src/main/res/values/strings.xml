@@ -352,5 +352,6 @@
     <string name="in_all">in All</string>
     <string name="on">ON</string>
     <string name="off">OFF</string>
+    <string name="refresh_images">Refresh Images</string>
 
 </resources>

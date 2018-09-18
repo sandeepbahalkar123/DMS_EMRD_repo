@@ -7,9 +7,6 @@ import android.content.Context;
  */
 public class Config {
 
-
-
-
     public static final String HTTP = "http://";
     public static final String API = "/api/";
     public static final String TOKEN_TYPE = "Bearer";

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.ImageView;
 
 import com.scorg.dms.R;
 import com.scorg.dms.helpers.login.LoginHelper;
@@ -28,10 +29,13 @@ public class SplashScreenActivity extends AppCompatActivity implements HelperRes
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splashscreen);
-
         mContext = SplashScreenActivity.this;
-
         mLoginHelper = new LoginHelper(this, this);
+        ImageView image = findViewById(R.id.image);
+        if (DMSPreferencesManager.getString(DMSPreferencesManager.CACHE_TIME, mContext).isEmpty())
+            DMSPreferencesManager.putString(DMSPreferencesManager.CACHE_TIME, CommonMethods.getCurrentTimeStamp("ddMMyyyyhhmmss"), mContext);
+
+        CommonMethods.setImageUrl(this, DMSConstants.Images.SPLASHSCREEN, image, R.drawable.splashscreen);
 
         doAppCheckLogin();
     }
@@ -39,8 +43,6 @@ public class SplashScreenActivity extends AppCompatActivity implements HelperRes
     private void doAppCheckLogin() {
         //handler to close the splash activity after the set time
         new Handler().postDelayed(new Runnable() {
-
-
             @Override
             public void run() {
 
@@ -85,15 +87,12 @@ public class SplashScreenActivity extends AppCompatActivity implements HelperRes
                     finish();
                     overridePendingTransition(R.anim.fadein, R.anim.fadeout);
                 }
-
-
             }
         }, DMSConstants.TIME_STAMPS.THREE_SECONDS);
 
     }
 
     @Override
-
     public void onSuccess(String mOldDataTag, CustomResponse customResponse) {
         mDialog.dismiss();
         //TODO : IP CHECK API IN NOT IMPLEMENTED YET, HENCE COMMENTED BELOW CODE

@@ -1,5 +1,6 @@
 package com.scorg.dms.util;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -26,6 +27,7 @@ import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -34,11 +36,15 @@ import android.widget.Toast;
 
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.amulyakhare.textdrawable.util.ColorGenerator;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.signature.ObjectKey;
 import com.scorg.dms.R;
 import com.scorg.dms.interfaces.CheckIpConnection;
 import com.scorg.dms.interfaces.DatePickerDialogListener;
 import com.scorg.dms.model.patient.patient_history.DatesData;
 import com.scorg.dms.preference.DMSPreferencesManager;
+import com.scorg.dms.singleton.DMSApplication;
 import com.scorg.dms.ui.activities.SplashScreenActivity;
 
 import org.joda.time.DateTime;
@@ -163,10 +169,6 @@ public class CommonMethods {
         listView.setLayoutParams(params);
         listView.requestLayout();
     }
-
-
-
-
 
 
     /**
@@ -515,26 +517,22 @@ public class CommonMethods {
      * @return formated date or time
      */
     public static String formatDateTime(String selectedDateTime, String requestedFormat, String currentDateFormat, String formatString) {
-            String ourDate="";
-            try
-            {
-                SimpleDateFormat ft = new SimpleDateFormat(currentDateFormat, Locale.US);
-                ft.setTimeZone(TimeZone.getTimeZone("UTC"));
-                Date value = ft.parse(selectedDateTime);
-                SimpleDateFormat dateFormatter = new SimpleDateFormat(requestedFormat, Locale.US); //this format changeable
-                dateFormatter.setTimeZone(TimeZone.getDefault());
-                ourDate = dateFormatter.format(value);
+        String ourDate = "";
+        try {
+            SimpleDateFormat ft = new SimpleDateFormat(currentDateFormat, Locale.US);
+            ft.setTimeZone(TimeZone.getTimeZone("UTC"));
+            Date value = ft.parse(selectedDateTime);
+            SimpleDateFormat dateFormatter = new SimpleDateFormat(requestedFormat, Locale.US); //this format changeable
+            dateFormatter.setTimeZone(TimeZone.getDefault());
+            ourDate = dateFormatter.format(value);
+        } catch (Exception e) {
+            if (formatString.equalsIgnoreCase(DMSConstants.TIME)) {
+                ourDate = "00:00 am";
+            } else if (formatString.equalsIgnoreCase(DMSConstants.DATE)) {
+                ourDate = "00-00-000";
             }
-            catch (Exception e)
-            {
-                if (formatString.equalsIgnoreCase(DMSConstants.TIME)) {
-                    ourDate="00:00 am";
-                }
-                else if (formatString.equalsIgnoreCase(DMSConstants.DATE)) {
-                    ourDate="00-00-000";
-                }
-            }
-            return ourDate;
+        }
+        return ourDate;
     }
 
 
@@ -598,7 +596,6 @@ public class CommonMethods {
         CommonMethods.Log(TAG, "getMealTime" + time);
         return time;
     }
-
 
 
     public static int displayAgeAnalysis(DateTime dateToday, DateTime birthdayDate) {
@@ -856,7 +853,7 @@ public class CommonMethods {
         dialog.setCanceledOnTouchOutside(false);
         dialog.setCancelable(false);
 
-        ((TextView) dialog.findViewById(R.id.textview_sucess)).setText(msg+changeIpAddress);
+        ((TextView) dialog.findViewById(R.id.textview_sucess)).setText(msg + changeIpAddress);
         dialog.findViewById(R.id.button_ok).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -995,6 +992,19 @@ public class CommonMethods {
             b[i] = (byte) v;
         }
         return b;
+    }
+
+    @SuppressLint("CheckResult")
+    public static void setImageUrl(Context mContext, String imageName, ImageView imageView, int defaultImage) {
+        String url = DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.SERVER_PATH, mContext) + DMSConstants.Images.FOLDER + DMSApplication.RESOLUTION + imageName;
+        RequestOptions requestOptions = new RequestOptions();
+        requestOptions.error(defaultImage);
+        requestOptions.placeholder(defaultImage);
+        requestOptions.signature(new ObjectKey(imageName + DMSPreferencesManager.getString(DMSPreferencesManager.CACHE_TIME, mContext)));
+        Glide.with(mContext)
+                .load(url)
+                .apply(requestOptions)
+                .into(imageView);
     }
     //--------------
 }

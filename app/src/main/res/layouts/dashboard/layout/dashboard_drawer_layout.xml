@@ -11,16 +11,18 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:layout_width="wrap_content"
+            android:id="@+id/loginLogo"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:src="@drawable/logo_blue" />
+            android:src="@drawable/login_logo" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="@dimen/dp5"
+            android:layout_marginStart="@dimen/dp5"
             android:src="@drawable/menu" />
     </LinearLayout>
 
@@ -28,11 +30,12 @@
         android:id="@+id/layoutDrawerHome"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dp5"
         android:layout_marginTop="@dimen/dp20"
-       android:layout_marginBottom="@dimen/dp5"
         android:orientation="horizontal">
 
         <ImageView
+            android:id="@+id/homeLogo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/home" />
@@ -44,8 +47,8 @@
             android:layout_marginLeft="@dimen/dp5"
             android:gravity="center|left"
             android:text="@string/home"
-            android:textSize="@dimen/sp14"
-            android:textColor="@color/tagColor" />
+            android:textColor="@color/tagColor"
+            android:textSize="@dimen/sp14" />
     </LinearLayout>
 
     <ImageView
@@ -58,12 +61,12 @@
         android:id="@+id/layoutDrawerSetting"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp10"
         android:layout_marginBottom="@dimen/dp5"
-
+        android:layout_marginTop="@dimen/dp10"
         android:orientation="horizontal">
 
         <ImageView
+            android:id="@+id/settingLogo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/settings" />
@@ -73,15 +76,15 @@
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:layout_marginLeft="@dimen/dp5"
+            android:layout_marginStart="@dimen/dp5"
             android:gravity="center|left"
             android:text="@string/settings"
-            android:textSize="@dimen/sp14"
-            android:textColor="@color/tagColor" />
+            android:textColor="@color/tagColor"
+            android:textSize="@dimen/sp14" />
     </LinearLayout>
 
     <ImageView
         android:layout_width="wrap_content"
-
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp5"
         android:src="@drawable/layer_5" />
@@ -90,12 +93,13 @@
         android:id="@+id/layoutDrawerSupport"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp10"
         android:layout_marginBottom="@dimen/dp5"
+        android:layout_marginTop="@dimen/dp10"
 
         android:orientation="horizontal">
 
         <ImageView
+            android:id="@+id/supportLogo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/support" />
@@ -107,7 +111,7 @@
             android:layout_marginLeft="@dimen/dp5"
             android:gravity="center|left"
             android:text="@string/support"
-            android:textSize="@dimen/sp14"
-            android:textColor="@color/tagColor" />
+            android:textColor="@color/tagColor"
+            android:textSize="@dimen/sp14" />
     </LinearLayout>
 </LinearLayout>

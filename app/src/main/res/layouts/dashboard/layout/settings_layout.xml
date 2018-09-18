@@ -18,9 +18,18 @@
             android:id="@+id/change_ip_address"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp56"
-            android:layout_centerVertical="true"
             android:gravity="center|left"
             android:text="@string/change_ip_address"
+            android:textColor="@color/tagColor"
+            android:textSize="@dimen/sp16"
+            app:customFont="@string/roboto_medium" />
+
+        <com.scorg.dms.ui.customesViews.CustomTextView
+            android:id="@+id/clearImageCache"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp56"
+            android:gravity="center|left"
+            android:text="@string/refresh_images"
             android:textColor="@color/tagColor"
             android:textSize="@dimen/sp16"
             app:customFont="@string/roboto_medium" />

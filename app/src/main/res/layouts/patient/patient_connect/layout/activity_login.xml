@@ -3,9 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/dms_bg"
     android:fitsSystemWindows="true"
     android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/loginBackground"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        android:background="@drawable/login_background" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -22,11 +28,12 @@
             android:orientation="vertical">
 
             <ImageView
+                android:id="@+id/loginLogo"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp80"
                 android:layout_gravity="center_horizontal"
                 android:adjustViewBounds="true"
-                android:src="@drawable/logo_blue" />
+                android:src="@drawable/login_logo" />
 
             <!--  Name Label -->
             <android.support.design.widget.TextInputLayout
@@ -39,13 +46,12 @@
                     android:id="@+id/userName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/user_name"
-                    android:textColorHint="@color/SkyBlue"
                     android:focusedByDefault="true"
+                    android:hint="@string/user_name"
                     android:inputType="textCapWords"
+                    android:textColorHint="@color/SkyBlue"
                     android:textCursorDrawable="@drawable/cursor_color"
-                    android:textSize="@dimen/sp14"
-                   />
+                    android:textSize="@dimen/sp14" />
 
             </android.support.design.widget.TextInputLayout>
 

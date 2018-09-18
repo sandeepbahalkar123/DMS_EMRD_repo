@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.scorg.dms.R;
 import com.scorg.dms.helpers.login.LoginHelper;
@@ -13,6 +14,7 @@ import com.scorg.dms.interfaces.CustomResponse;
 import com.scorg.dms.interfaces.HelperResponse;
 import com.scorg.dms.model.dms_models.responsemodel.loginresponsemodel.LoginResponseModel;
 import com.scorg.dms.preference.DMSPreferencesManager;
+import com.scorg.dms.singleton.DMSApplication;
 import com.scorg.dms.util.CommonMethods;
 import com.scorg.dms.util.DMSConstants;
 
@@ -30,24 +32,29 @@ public class LoginActivity extends AppCompatActivity implements HelperResponse {
     String mServerPath;
     @BindView(R.id.userName)
     EditText mUserName;
-
     @BindView(R.id.password)
     EditText mPassword;
 
+    @BindView(R.id.loginBackground)
+    ImageView loginBackground;
+    @BindView(R.id.loginLogo)
+    ImageView loginLogo;
+
     private LoginHelper mLoginHelper;
-    String userName="";
-    String password="";
+    String userName = "";
+    String password = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         mContext = getApplicationContext();
-        // Log.d("Server PAth",mServerPath);
-
         ButterKnife.bind(this);
-        mLoginHelper = new LoginHelper(this, this);
 
+        CommonMethods.setImageUrl(this, DMSConstants.Images.IC_LOGIN_BACKGROUD, loginBackground, R.drawable.login_background);
+        CommonMethods.setImageUrl(this, DMSConstants.Images.IC_LOGIN_LOGO, loginLogo, R.drawable.login_logo);
+
+        mLoginHelper = new LoginHelper(this, this);
     }
 
 
