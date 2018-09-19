@@ -262,7 +262,7 @@
     <string name="uhid">UHID</string>
     <string name="patient_list">Patient List</string>
     <string name="compare">Compare</string>
-    <string name="both_scroll">Both Scroll</string>
+    <string name="both_scroll">Both PDF Scroll</string>
     <string name="from_date">From:</string>
     <string name="to_date">To:</string>
     <string name="patient_name">Patient Name:</string>

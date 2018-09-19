@@ -52,42 +52,6 @@
             </LinearLayout>
 
             <TableRow
-                android:id="@+id/rowScrollBoth"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dp5"
-                android:orientation="horizontal"
-                android:visibility="gone"
-                android:weightSum="6">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="4"
-                    android:gravity="center_vertical"
-                    android:text="@string/scrollingBoth"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/sp13"
-                    android:textStyle="bold" />
-
-                <Switch
-                    android:id="@+id/et_uhid"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="2"
-                    android:checked="false"
-                    android:maxLines="1"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/sp13"
-                    android:textStyle="bold" />
-
-
-            </TableRow>
-
-
-            <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/dp5"
@@ -707,7 +671,7 @@
             <LinearLayout
                 android:id="@+id/preferenceLayout"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp36"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dp5"
                 android:gravity="center"
                 android:orientation="horizontal"
@@ -757,14 +721,16 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:visibility="gone"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                  >
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:weightSum="2"
-                        tools:visibility="visible">
+                        tools:visibility="visible"
+                        android:layout_marginBottom="@dimen/dp5">
 
                         <TextView
                             android:layout_width="match_parent"

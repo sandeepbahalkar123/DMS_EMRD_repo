@@ -212,12 +212,6 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
     @BindView(R.id.labelFirstPdf)
     TextView labelFirstPdf;
 
-    //----------
-    @BindView(R.id.et_uhid)
-    Switch mCompareSwitch;
-    @BindView(R.id.rowScrollBoth)
-    TableRow mRowScrollBoth;
-
     @BindView(R.id.fileOneLay)
     LinearLayout mFileOneDrawerLayout;
     @BindView(R.id.fileTwoLay)
@@ -251,7 +245,7 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
 
     private DMSPatientsHelper mPatientsHelper;
 
-    private boolean isCompareChecked = true;
+    private boolean isCompareChecked = false;
     //---------
     ArrayList<PatientEpisodeFileData> mSelectedFileTypeDataToCompare;
     String respectivePatientID;
@@ -381,18 +375,8 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
         toggle.setDrawerIndicatorEnabled(false);
         toggle.setHomeAsUpIndicator(getResources().getDrawable(R.drawable.back_arrow_a_01));
         toggle.syncState();
-
         mToolbar.setTitle(getString(R.string.pdf));
         doBindHeaderViews();
-        //-------Listeners-----
-
-        mCompareSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                isCompareChecked = isChecked;
-            }
-        });
-        mCompareSwitch.setChecked(true);
 
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
