@@ -5,9 +5,16 @@ import android.graphics.Typeface;
 import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
 import android.util.DisplayMetrics;
+import android.util.Log;
+
+import com.scorg.dms.R;
+import com.scorg.dms.util.CommonMethods;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
+
+import static android.content.res.Configuration.SCREENLAYOUT_SIZE_LARGE;
+import static android.content.res.Configuration.SCREENLAYOUT_SIZE_XLARGE;
 
 /**
  * Created by Sandeep Bahalkar
@@ -47,30 +54,46 @@ public class DMSApplication extends MultiDexApplication {
     }
 
     private void getDeviceResolution(Context mContext) {
+
         int density = mContext.getResources().getDisplayMetrics().densityDpi;
-        switch (density) {
-            case DisplayMetrics.DENSITY_LOW:
-                RESOLUTION = "ldpi";
-                break;
-            case DisplayMetrics.DENSITY_MEDIUM:
-                RESOLUTION = "mdpi";
-                break;
-            case DisplayMetrics.DENSITY_HIGH:
-                RESOLUTION = "hdpi";
-                break;
-            case DisplayMetrics.DENSITY_XHIGH:
-                RESOLUTION = "xhdpi";
-                break;
-            case DisplayMetrics.DENSITY_XXHIGH:
-            case DisplayMetrics.DENSITY_420:
-                RESOLUTION = "xxhdpi";
-                break;
-            case DisplayMetrics.DENSITY_XXXHIGH:
-                RESOLUTION = "xxxhdpi";
-                break;
-            default:
-                RESOLUTION = "xxhdpi";
-                break;
+        if (!CommonMethods.isTablet(mContext)) {
+            switch (density) {
+                case DisplayMetrics.DENSITY_LOW:
+                    RESOLUTION = "ldpi";
+                    break;
+                case DisplayMetrics.DENSITY_MEDIUM:
+                    RESOLUTION = "mdpi";
+                    break;
+                case DisplayMetrics.DENSITY_HIGH:
+                    RESOLUTION = "hdpi";
+                    break;
+                case DisplayMetrics.DENSITY_XHIGH:
+                    RESOLUTION = "xhdpi";
+                    break;
+                case DisplayMetrics.DENSITY_XXHIGH:
+                case DisplayMetrics.DENSITY_420:
+                    RESOLUTION = "xxhdpi";
+                    break;
+                case DisplayMetrics.DENSITY_XXXHIGH:
+                    RESOLUTION = "xxxhdpi";
+                    break;
+                default:
+                    RESOLUTION = "xxhdpi";
+                    break;
+            }
+        } else {
+            String dim = mContext.getResources().getString(R.string.device);
+            switch (dim) {
+                case "Tablet10":
+                    RESOLUTION = "sw720dp";
+                    break;
+                case "Tablet7":
+                    RESOLUTION = "sw600dp";
+                    break;
+                default:
+                    RESOLUTION = "xhdpi";
+                    break;
+            }
         }
     }
 

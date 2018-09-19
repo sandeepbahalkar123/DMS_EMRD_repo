@@ -16,6 +16,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -526,6 +527,7 @@ public class CommonMethods {
                 .load(url)
                 .apply(requestOptions)
                 .into(imageView);
+        CommonMethods.Log(TAG,url);
     }
     //--------------
 }

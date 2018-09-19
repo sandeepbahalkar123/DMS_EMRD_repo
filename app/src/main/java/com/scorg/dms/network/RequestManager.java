@@ -46,6 +46,7 @@ import com.scorg.dms.model.waiting_list.WaitingListBaseModel;
 import com.scorg.dms.preference.DMSPreferencesManager;
 import com.scorg.dms.singleton.Device;
 import com.scorg.dms.ui.activities.LoginActivity;
+import com.scorg.dms.ui.activities.SplashScreenActivity;
 import com.scorg.dms.ui.customesViews.CustomProgressDialog;
 import com.scorg.dms.util.CommonMethods;
 import com.scorg.dms.util.Config;
@@ -302,7 +303,7 @@ public class RequestManager extends ConnectRequest implements Connector, Request
                 if (isTokenExpired) {// this is refresh token 400 http response code when password changed happened at web app side.
                     DMSPreferencesManager.clearSharedPref(mContext);
                     // Redirect to Login screen
-                    Intent intent = new Intent(mContext, LoginActivity.class);
+                    Intent intent = new Intent(mContext, SplashScreenActivity.class);
                     mContext.startActivity(intent);
                     ((AppCompatActivity) mContext).finishAffinity();
                 } else {
@@ -527,7 +528,7 @@ public class RequestManager extends ConnectRequest implements Connector, Request
             headerParams.put(DMSConstants.DEVICEID, device.getDeviceId());
             headerParams.put(DMSConstants.OS, device.getOS());
             headerParams.put(DMSConstants.DMS_OSVERSION, device.getOSVersion());
-            headerParams.put(DMSConstants.DEVICE_TYPE, device.getDeviceType());
+            headerParams.put(DMSConstants.DEVICE_TYPE, mContext.getResources().getString(R.string.device));
             CommonMethods.Log(TAG, "setHeaderParams:" + headerParams.toString());
             Map<String, String> postParams = new HashMap<String, String>();
             postParams.put(DMSConstants.GRANT_TYPE_KEY, DMSConstants.REFRESH_TOKEN);

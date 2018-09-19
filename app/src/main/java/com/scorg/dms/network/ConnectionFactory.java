@@ -7,6 +7,7 @@ package com.scorg.dms.network;
 import android.content.Context;
 import android.view.View;
 
+import com.scorg.dms.R;
 import com.scorg.dms.interfaces.ConnectionListener;
 import com.scorg.dms.interfaces.Connector;
 import com.scorg.dms.interfaces.CustomResponse;
@@ -77,7 +78,7 @@ public class ConnectionFactory extends ConnectRequest {
 
         headerParams.put(DMSConstants.OS, device.getOS());
         headerParams.put(DMSConstants.DMS_OSVERSION, device.getOSVersion());
-          headerParams.put(DMSConstants.DEVICE_TYPE, device.getDeviceType());
+          headerParams.put(DMSConstants.DEVICE_TYPE, mContext.getResources().getString(R.string.device));
         CommonMethods.Log(TAG, "setHeaderParams:" + headerParams.toString());
         this.mHeaderParams = headerParams;
     }

@@ -30,7 +30,9 @@ import com.scorg.dms.model.waiting_list.WaitingPatientData;
 import com.scorg.dms.ui.activities.dms_patient_list.FileTypeViewerActivity;
 import com.scorg.dms.ui.activities.pending_approval_list.RequestedArchivedMainListActivity;
 import com.scorg.dms.ui.customesViews.CircularImageView;
+import com.scorg.dms.ui.customesViews.drag_drop_recyclerview_helper.EndlessRecyclerViewScrollListener;
 import com.scorg.dms.util.DMSConstants;
+import com.scorg.dms.util.NetworkUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,7 +71,11 @@ public class AllRequestListFragment extends Fragment implements RequestListAdapt
     private long mClickedPhoneNumber;
     private PendingApprovalHelper mPendingApprovalHelper;
     private RequestListAdapter mPendingListAdapter;
-    private ArrayList<RequestedArchivedDetailList> requestedArchivedDetailList;
+    private ArrayList<RequestedArchivedDetailList> requestedArchivedDetailList =new ArrayList<>();
+
+    private boolean mIsLoadMorePatients;
+    private int currentPage = 1;
+    LinearLayoutManager linearlayoutManager;
 
     public AllRequestListFragment() {
     }
@@ -92,8 +98,23 @@ public class AllRequestListFragment extends Fragment implements RequestListAdapt
     private void init() {
         mParentActivity = (RequestedArchivedMainListActivity) getActivity();
         mPendingApprovalHelper= new PendingApprovalHelper(mParentActivity,this);
+
+        linearlayoutManager = new LinearLayoutManager(this.getContext(), LinearLayoutManager.VERTICAL, false);
+        mRecyclerView.setLayoutManager(linearlayoutManager);
+        mPendingListAdapter = new RequestListAdapter(this.getContext(), requestedArchivedDetailList, this, false);
+        mRecyclerView.setAdapter(mPendingListAdapter);
+
         mPendingApprovalHelper.doGetPendingApprovalData(1,false);
 
+        mRecyclerView.addOnScrollListener(new EndlessRecyclerViewScrollListener(linearlayoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                if (NetworkUtil.isInternetAvailable(mParentActivity) && mIsLoadMorePatients) {
+                    currentPage = currentPage + 1;
+                    mPendingApprovalHelper.doGetPendingApprovalData(currentPage, false);
+                }
+            }
+        });
     }
 
 
@@ -131,22 +152,6 @@ public class AllRequestListFragment extends Fragment implements RequestListAdapt
 //            setViewAdapter();
 //        }
     }
-
-    private void setViewAdapter() {
-
-        if (requestedArchivedDetailList.isEmpty()) {
-            mRecyclerView.setVisibility(View.GONE);
-            noRecords.setVisibility(View.VISIBLE);
-        } else {
-            mRecyclerView.setVisibility(View.VISIBLE);
-            noRecords.setVisibility(View.GONE);
-            mPendingListAdapter = new RequestListAdapter(this.getContext(),requestedArchivedDetailList , this,false);
-            LinearLayoutManager linearlayoutManager = new LinearLayoutManager(this.getContext(), LinearLayoutManager.VERTICAL, false);
-            mRecyclerView.setLayoutManager(linearlayoutManager);
-            mRecyclerView.setAdapter(mPendingListAdapter);
-        }
-    }
-
 
     @Override
     public void onItemClick(WaitingPatientData clickItem) {
@@ -227,8 +232,17 @@ public class AllRequestListFragment extends Fragment implements RequestListAdapt
             case DMSConstants.TASK_PENDING_APPROVAL_LIST:{
                 if (customResponse != null) {
                     RequestedArchivedBaseModel requestedArchivedBaseModel = (RequestedArchivedBaseModel)customResponse;
-                    requestedArchivedDetailList= (ArrayList<RequestedArchivedDetailList>) requestedArchivedBaseModel.getPendingApprovalDataModel().getRequestedArchivedDetailList();
-                    setViewAdapter();
+                    requestedArchivedDetailList.addAll(requestedArchivedBaseModel.getPendingApprovalDataModel().getRequestedArchivedDetailList());
+                    mIsLoadMorePatients = requestedArchivedBaseModel.getPendingApprovalDataModel().isPaggination();
+                    mPendingListAdapter.notifyDataSetChanged();
+                    if (requestedArchivedDetailList.isEmpty()) {
+                        mRecyclerView.setVisibility(View.GONE);
+                        noRecords.setVisibility(View.VISIBLE);
+                    } else {
+                        mRecyclerView.setVisibility(View.VISIBLE);
+                        noRecords.setVisibility(View.GONE);
+
+                    }
                 }
 
             }

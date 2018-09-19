@@ -74,16 +74,6 @@ public class Device {
         return density;
     }
 
-    public String getDeviceType() {
-        String what = "";
-        boolean tabletSize = context.getResources().getBoolean(R.bool.isTablet);
-        if (tabletSize) {
-            what = DMSConstants.TABLET;
-        } else {
-            what = DMSConstants.PHONE;
-        }
-        return what;
-    }
 
     public String getDeviceId() {
         return Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
