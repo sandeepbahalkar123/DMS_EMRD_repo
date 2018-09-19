@@ -1,0 +1,37 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /Users/ganeshs/AndroidStudioProjects/DMS_EMRD_repo/advanced_recycler/src/main/AndroidManifest.xml:16:1-18:12
+INJECTED from /Users/ganeshs/AndroidStudioProjects/DMS_EMRD_repo/advanced_recycler/src/main/AndroidManifest.xml:16:1-18:12
+INJECTED from /Users/ganeshs/AndroidStudioProjects/DMS_EMRD_repo/advanced_recycler/src/main/AndroidManifest.xml:16:1-18:12
+INJECTED from /Users/ganeshs/AndroidStudioProjects/DMS_EMRD_repo/advanced_recycler/src/main/AndroidManifest.xml:16:1-18:12
+INJECTED from /Users/ganeshs/AndroidStudioProjects/DMS_EMRD_repo/advanced_recycler/src/main/AndroidManifest.xml:16:1-18:12
+INJECTED from /Users/ganeshs/AndroidStudioProjects/DMS_EMRD_repo/advanced_recycler/src/main/AndroidManifest.xml:16:1-18:12
+INJECTED from /Users/ganeshs/AndroidStudioProjects/DMS_EMRD_repo/advanced_recycler/src/main/AndroidManifest.xml:16:1-18:12
+	package
+		ADDED from /Users/ganeshs/AndroidStudioProjects/DMS_EMRD_repo/advanced_recycler/src/main/AndroidManifest.xml:17:5-56
+		INJECTED from /Users/ganeshs/AndroidStudioProjects/DMS_EMRD_repo/advanced_recycler/src/main/AndroidManifest.xml
+		INJECTED from /Users/ganeshs/AndroidStudioProjects/DMS_EMRD_repo/advanced_recycler/src/main/AndroidManifest.xml
+	android:versionName
+		INJECTED from /Users/ganeshs/AndroidStudioProjects/DMS_EMRD_repo/advanced_recycler/src/main/AndroidManifest.xml
+		ADDED from /Users/ganeshs/AndroidStudioProjects/DMS_EMRD_repo/advanced_recycler/src/main/AndroidManifest.xml:16:1-18:12
+		INJECTED from /Users/ganeshs/AndroidStudioProjects/DMS_EMRD_repo/advanced_recycler/src/main/AndroidManifest.xml
+	xmlns:android
+		ADDED from /Users/ganeshs/AndroidStudioProjects/DMS_EMRD_repo/advanced_recycler/src/main/AndroidManifest.xml:16:1-18:12
+	android:versionCode
+		INJECTED from /Users/ganeshs/AndroidStudioProjects/DMS_EMRD_repo/advanced_recycler/src/main/AndroidManifest.xml
+		ADDED from /Users/ganeshs/AndroidStudioProjects/DMS_EMRD_repo/advanced_recycler/src/main/AndroidManifest.xml:16:1-18:12
+		INJECTED from /Users/ganeshs/AndroidStudioProjects/DMS_EMRD_repo/advanced_recycler/src/main/AndroidManifest.xml
+uses-sdk
+INJECTED from /Users/ganeshs/AndroidStudioProjects/DMS_EMRD_repo/advanced_recycler/src/main/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /Users/ganeshs/AndroidStudioProjects/DMS_EMRD_repo/advanced_recycler/src/main/AndroidManifest.xml
+INJECTED from /Users/ganeshs/AndroidStudioProjects/DMS_EMRD_repo/advanced_recycler/src/main/AndroidManifest.xml
+INJECTED from /Users/ganeshs/AndroidStudioProjects/DMS_EMRD_repo/advanced_recycler/src/main/AndroidManifest.xml
+INJECTED from /Users/ganeshs/AndroidStudioProjects/DMS_EMRD_repo/advanced_recycler/src/main/AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from /Users/ganeshs/AndroidStudioProjects/DMS_EMRD_repo/advanced_recycler/src/main/AndroidManifest.xml
+		ADDED from /Users/ganeshs/AndroidStudioProjects/DMS_EMRD_repo/advanced_recycler/src/main/AndroidManifest.xml
+		INJECTED from /Users/ganeshs/AndroidStudioProjects/DMS_EMRD_repo/advanced_recycler/src/main/AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from /Users/ganeshs/AndroidStudioProjects/DMS_EMRD_repo/advanced_recycler/src/main/AndroidManifest.xml
+		ADDED from /Users/ganeshs/AndroidStudioProjects/DMS_EMRD_repo/advanced_recycler/src/main/AndroidManifest.xml
+		INJECTED from /Users/ganeshs/AndroidStudioProjects/DMS_EMRD_repo/advanced_recycler/src/main/AndroidManifest.xml

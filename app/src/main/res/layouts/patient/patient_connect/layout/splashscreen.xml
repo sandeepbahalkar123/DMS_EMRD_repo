@@ -1,11 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <ImageView
+        android:id="@+id/splashBackground"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/dms_logo" />
+        android:background="@drawable/login_background"
+        android:scaleType="centerCrop" />
 
-</RelativeLayout>
+    <ImageView
+        android:id="@+id/splashLogo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/dp40"
+        android:layout_marginLeft="@dimen/dp40"
+        android:layout_marginRight="@dimen/dp40"
+        android:layout_marginStart="@dimen/dp40"
+        android:padding="@dimen/dp16"
+        android:adjustViewBounds="true"
+        android:src="@drawable/login_logo"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/splashBackground"
+        app:layout_constraintVertical_bias="0.37" />
+
+</android.support.constraint.ConstraintLayout>

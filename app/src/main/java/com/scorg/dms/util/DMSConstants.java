@@ -6,6 +6,20 @@ package com.scorg.dms.util;
  */
 public class DMSConstants {
 
+    public interface Images {
+
+        String FOLDER = "/Contents/android/";
+
+        String IC_LOGIN_BACKGROUD  = "/ic_login_backgroud.png";
+        String IC_LOGIN_LOGO  = "/ic_login_logo.png";
+        String SPLASHSCREEN  = "/splashscreen.png";
+        String IC_ACTIONBAR_LOGO  = "/ic_actionbar_logo.png";
+        String IC_HOME = "/ic_home.png";
+        String IC_PATIENT  = "/ic_patient.png";
+        String IC_SETTINGS  = "/ic_settings.png";
+        String IC_SUPPORT  = "/ic_support.png";
+        String LOGO_SMALL  = "/logo_small.png";
+    }
 
     public static final String BUNDLE = "bundle";
     public static final String YES = "yes";

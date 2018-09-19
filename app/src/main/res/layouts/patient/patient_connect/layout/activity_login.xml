@@ -1,112 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/dms_bg"
-    android:fitsSystemWindows="true"
-    android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <LinearLayout
+    <ImageView
+        android:id="@+id/loginBackground"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center"
+        android:scaleType="centerCrop"
+        android:background="@drawable/login_background" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginEnd="@dimen/dp40"
-            android:layout_marginStart="@dimen/dp40"
-            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:orientation="vertical">
 
-            <ImageView
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp80"
-                android:layout_gravity="center_horizontal"
-                android:adjustViewBounds="true"
-                android:src="@drawable/logo_blue" />
+                android:layout_height="match_parent"
+                android:layout_marginEnd="@dimen/dp40"
+                android:layout_marginStart="@dimen/dp40"
+                android:gravity="center"
+                android:orientation="vertical">
 
-            <!--  Name Label -->
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dp12"
-                app:hintTextAppearance="@style/editTextInputLayout">
+                <ImageView
+                    android:id="@+id/loginLogo"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp80"
+                    android:layout_gravity="center_horizontal"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/login_logo" />
 
-                <EditText
-                    android:id="@+id/userName"
+                <!--  Name Label -->
+                <android.support.design.widget.TextInputLayout
+                    app:hintTextAppearance="@style/editTextInputLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/user_name"
-                    android:textColorHint="@color/SkyBlue"
-                    android:focusedByDefault="true"
-                    android:inputType="textCapWords"
-                    android:textCursorDrawable="@drawable/cursor_color"
+                    android:layout_margin="@dimen/dp12">
+
+                    <EditText
+                        android:id="@+id/userName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:focusedByDefault="true"
+                        android:hint="@string/user_name"
+                        android:inputType="textCapWords"
+                        android:textColorHint="@color/SkyBlue"
+                        android:textCursorDrawable="@drawable/cursor_color"
+                        android:textSize="@dimen/sp14" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <!-- Password Label -->
+                <android.support.design.widget.TextInputLayout
+                    app:hintTextAppearance="@style/editTextInputLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/dp12">
+
+                    <EditText
+                        android:id="@+id/password"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/password"
+                        android:inputType="textPassword"
+                        android:textColorHint="@color/SkyBlue"
+                        android:textCursorDrawable="@drawable/cursor_color"
+                        android:textSize="@dimen/sp14" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <!-- Signup Button -->
+                <Button
+                    android:id="@+id/loginButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/dp12"
+                    android:background="@color/tagColor"
+                    android:text="@string/login"
+                    android:textColor="@color/white" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp0"
+                android:layout_weight="0.5"
+                android:gravity="bottom|center"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/sign_up_hospital_name"
+                    android:textColor="@color/white"
                     android:textSize="@dimen/sp14"
-                   />
+                    android:visibility="gone" />
 
-            </android.support.design.widget.TextInputLayout>
-
-            <!-- Password Label -->
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dp12"
-                app:hintTextAppearance="@style/editTextInputLayout">
-
-                <EditText
-                    android:id="@+id/password"
-                    android:layout_width="match_parent"
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:hint="@string/password"
-                    android:inputType="textPassword"
-                    android:textColorHint="@color/SkyBlue"
-                    android:textCursorDrawable="@drawable/cursor_color"
-                    android:textSize="@dimen/sp14" />
+                    android:layout_margin="@dimen/dp12"
+                    android:text="@string/forgot_password"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp14"
+                    android:visibility="gone" />
 
-            </android.support.design.widget.TextInputLayout>
-
-            <!-- Signup Button -->
-            <Button
-                android:id="@+id/loginButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dp12"
-                android:background="@color/tagColor"
-                android:text="@string/login"
-                android:textColor="@color/white" />
-
-
+            </LinearLayout>
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp0"
-            android:layout_weight="0.5"
-            android:gravity="bottom|center"
-            android:orientation="vertical"
-            android:visibility="gone">
+    </ScrollView>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/sign_up_hospital_name"
-                android:textColor="@color/white"
-                android:textSize="@dimen/sp14"
-                android:visibility="gone" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dp12"
-                android:text="@string/forgot_password"
-                android:textColor="@color/white"
-                android:textSize="@dimen/sp14"
-                android:visibility="gone" />
-
-        </LinearLayout>
-    </LinearLayout>
-
-</ScrollView>
+</FrameLayout>
