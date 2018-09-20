@@ -3,6 +3,8 @@ package com.scorg.dms.adapters.dms_adapters;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -33,6 +35,7 @@ import butterknife.ButterKnife;
 public class DashboardAppointmentListAdapter extends RecyclerView.Adapter<DashboardAppointmentListAdapter.GroupViewHolder> {
 
     private static final String TAG = "PatientList";
+    private final GradientDrawable buttonBackground;
     private Context _context;
     private DashboardAppointmentListAdapter.OnItemClickListener onItemClickListener;
     private List<AppointmentPatientData> _originalListDataHeader = new ArrayList<>(); // header titles
@@ -50,6 +53,11 @@ public class DashboardAppointmentListAdapter extends RecyclerView.Adapter<Dashbo
         ipd = _context.getString(R.string.ipd);
         uhid = _context.getString(R.string.uhid);
         this.onItemClickListener = onItemClickListener;
+
+        buttonBackground = new GradientDrawable();
+        buttonBackground.setShape(GradientDrawable.RECTANGLE);
+        buttonBackground.setColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
+        buttonBackground.setCornerRadius(_context.getResources().getDimension(R.dimen.dp5));
     }
 
     @Override
@@ -63,7 +71,8 @@ public class DashboardAppointmentListAdapter extends RecyclerView.Adapter<Dashbo
     @SuppressLint("CheckResult")
     @Override
     public void onBindViewHolder(GroupViewHolder groupViewHolder, final int position) {
-        groupViewHolder.episodeList.setBackgroundColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
+
+        groupViewHolder.episodeList.setBackground(buttonBackground);
         groupViewHolder.userName.setTextColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
 
         final AppointmentPatientData groupHeader = _originalListDataHeader.get(position);

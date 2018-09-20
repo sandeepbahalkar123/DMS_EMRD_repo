@@ -5,6 +5,7 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -60,7 +61,19 @@ public class SupportActivity extends BaseActivity {
     }
 
     private void initialize() {
-        callTextView.setBackgroundColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
+        GradientDrawable buttonBackground = new GradientDrawable();
+        buttonBackground.setShape(GradientDrawable.RECTANGLE);
+        buttonBackground.setColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
+        buttonBackground.setCornerRadius(getResources().getDimension(R.dimen.dp5));
+        callTextView.setBackground(buttonBackground);
+
+        GradientDrawable emailButtonBackground = new GradientDrawable();
+        emailButtonBackground.setShape(GradientDrawable.RECTANGLE);
+        emailButtonBackground.setCornerRadius(getResources().getDimension(R.dimen.dp5));
+        emailButtonBackground.setStroke(5, Color.parseColor(DMSApplication.COLOR_ACCENT));
+        emailtextView.setBackground(emailButtonBackground);
+        emailtextView.setTextColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
+
         mContext = SupportActivity.this;
         titleTextView.setText(getString(R.string.support));
         backImageView.setVisibility(View.VISIBLE);

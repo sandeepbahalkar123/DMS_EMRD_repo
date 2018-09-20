@@ -2,9 +2,12 @@ package com.scorg.dms.ui.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
@@ -19,6 +22,7 @@ import com.scorg.dms.util.CommonMethods;
 import com.scorg.dms.util.DMSConstants;
 
 import butterknife.BindView;
+import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -40,6 +44,9 @@ public class LoginActivity extends BaseActivity implements HelperResponse {
     @BindView(R.id.loginLogo)
     ImageView loginLogo;
 
+    @BindView(R.id.loginButton)
+    Button loginButton;
+
     private LoginHelper mLoginHelper;
     String userName = "";
     String password = "";
@@ -55,6 +62,11 @@ public class LoginActivity extends BaseActivity implements HelperResponse {
         CommonMethods.setImageUrl(this, DMSConstants.Images.IC_LOGIN_LOGO, loginLogo, R.drawable.login_logo);
 
         mLoginHelper = new LoginHelper(this, this);
+        GradientDrawable buttonBackground = new GradientDrawable();
+        buttonBackground.setShape(GradientDrawable.RECTANGLE);
+        buttonBackground.setColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
+        buttonBackground.setCornerRadius(getResources().getDimension(R.dimen.dp5));
+        loginButton.setBackground(buttonBackground);
     }
 
 

@@ -19,6 +19,7 @@ package com.scorg.dms.adapters.my_appointments;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
@@ -71,6 +72,7 @@ import static com.scorg.dms.util.DMSConstants.APPOINTMENT_STATUS.OTHER;
 public class AppointmentListAdapter
         extends RecyclerView.Adapter<AppointmentListAdapter.MyViewHolder> implements Filterable {
     private static final String TAG = "AppointmentListAdapter";
+    private final GradientDrawable buttonBackground;
     private OnItemClickListener onItemClickListener;
     private Context mContext;
     private ArrayList<AppointmentPatientData> mAppointmentDataList;
@@ -84,6 +86,11 @@ public class AppointmentListAdapter
         this.mAppointmentDataList = new ArrayList<>();
         this.mAppointmentDataList.addAll(waitingDataList);
         this.onItemClickListener = onItemClickListener;
+
+        buttonBackground = new GradientDrawable();
+        buttonBackground.setShape(GradientDrawable.RECTANGLE);
+        buttonBackground.setColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
+        buttonBackground.setCornerRadius(context.getResources().getDimension(R.dimen.dp5));
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
@@ -155,8 +162,8 @@ public class AppointmentListAdapter
     }
 
     private void bindGroupItem(final AppointmentPatientData appointmentPatientDataObject, final AppointmentListAdapter.MyViewHolder holder) {
-       holder.appointmentTime.setBackgroundColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
 
+        holder.appointmentTime.setBackground(buttonBackground);
         String salutation = appointmentPatientDataObject.getSalutation();
         String patientName = toCamelCase(appointmentPatientDataObject.getPatientName());
 

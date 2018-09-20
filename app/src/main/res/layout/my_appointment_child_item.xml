@@ -84,7 +84,7 @@
                         android:visibility="gone"
                         android:fontFamily="@font/roboto_bold"
                         tools:text="03:20 pm"
-                        tools:visibility="invisible" />
+                        tools:visibility="visible" />
 
                 </RelativeLayout>
 
