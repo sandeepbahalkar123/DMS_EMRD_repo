@@ -1,6 +1,7 @@
 package com.scorg.dms.ui.fragments.my_appointments;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -21,6 +22,7 @@ import com.scorg.dms.helpers.patient_list.DMSPatientsHelper;
 import com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemodel.SearchResult;
 import com.scorg.dms.model.my_appointments.AppointmentPatientData;
 import com.scorg.dms.model.my_appointments.MyAppointmentsDataModel;
+import com.scorg.dms.singleton.DMSApplication;
 import com.scorg.dms.ui.activities.dms_patient_list.FileTypeViewerActivity;
 import com.scorg.dms.ui.activities.dms_patient_list.PatientDetailsActivity;
 import com.scorg.dms.ui.activities.my_appointments.MyAppointmentsActivity;
@@ -69,6 +71,7 @@ public class MyAppointmentsFragment extends Fragment implements AppointmentListA
                              @Nullable Bundle savedInstanceState) {
         View mRootView = inflater.inflate(R.layout.my_appointments_layout, container, false);
         unbinder = ButterKnife.bind(this, mRootView);
+        mRootView.findViewById(R.id.layoutPatSearch).setBackgroundColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         init();
         return mRootView;
     }

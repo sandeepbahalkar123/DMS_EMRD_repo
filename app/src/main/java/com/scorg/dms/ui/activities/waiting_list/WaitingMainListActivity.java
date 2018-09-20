@@ -1,6 +1,7 @@
 package com.scorg.dms.ui.activities.waiting_list;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -20,6 +21,8 @@ import com.scorg.dms.interfaces.HelperResponse;
 import com.scorg.dms.model.waiting_list.WaitingClinicList;
 import com.scorg.dms.model.waiting_list.WaitingListBaseModel;
 import com.scorg.dms.model.waiting_list.WaitingListDataModel;
+import com.scorg.dms.singleton.DMSApplication;
+import com.scorg.dms.ui.activities.BaseActivity;
 import com.scorg.dms.ui.fragments.waiting_list.ActivePatientListFragment;
 import com.scorg.dms.ui.fragments.waiting_list.ViewAllPatientListFragment;
 
@@ -34,7 +37,7 @@ import butterknife.OnClick;
  * Created by jeetal on 22/2/18.
  */
 
-public class WaitingMainListActivity extends AppCompatActivity implements HelperResponse {
+public class WaitingMainListActivity extends BaseActivity implements HelperResponse {
 
     public static final int RESULT_CLOSE_ACTIVITY_WAITING_LIST = 040;
     @BindView(R.id.backImageView)
@@ -66,6 +69,9 @@ public class WaitingMainListActivity extends AppCompatActivity implements Helper
         super.onCreate(savedInstanceState);
         setContentView(R.layout.waiting_base_layout);
         ButterKnife.bind(this);
+        findViewById(R.id.toolbar).setBackgroundColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+        findViewById(R.id.tabs).setBackgroundColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+
         mFragmentTitleList[0] = getString(R.string.active);
         mFragmentTitleList[1] = getString(R.string.view_all);
         mAppointmentHelper = new AppointmentHelper(this, this);

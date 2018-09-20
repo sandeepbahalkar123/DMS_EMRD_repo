@@ -3,6 +3,8 @@ package com.scorg.dms.ui.activities;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +17,7 @@ import com.scorg.dms.interfaces.CustomResponse;
 import com.scorg.dms.interfaces.HelperResponse;
 import com.scorg.dms.model.dms_models.responsemodel.iptestresponsemodel.IpTestResponseModel;
 import com.scorg.dms.preference.DMSPreferencesManager;
+import com.scorg.dms.singleton.DMSApplication;
 import com.scorg.dms.util.CommonMethods;
 import com.scorg.dms.util.DMSConstants;
 
@@ -22,7 +25,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class SplashScreenActivity extends AppCompatActivity implements HelperResponse {
+public class SplashScreenActivity extends BaseActivity implements HelperResponse {
 
     private Context mContext;
     private LoginHelper mLoginHelper;

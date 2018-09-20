@@ -18,6 +18,7 @@ package com.scorg.dms.adapters.pending_approvals;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -37,6 +38,7 @@ import com.scorg.dms.R;
 import com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemodel.SearchResult;
 import com.scorg.dms.model.pending_approval_list.RequestedArchivedDetailList;
 import com.scorg.dms.model.waiting_list.WaitingPatientData;
+import com.scorg.dms.singleton.DMSApplication;
 import com.scorg.dms.util.CommonMethods;
 
 import java.util.ArrayList;
@@ -131,6 +133,11 @@ public class RequestListAdapter
     @SuppressLint("CheckResult")
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
+
+        holder.textRequestId.setTextColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
+        holder.textProcessBy.setTextColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
+        holder.textRequestId.setTextColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
+
         final RequestedArchivedDetailList item = mRequestedArchivedDetailLists.get(position);
 
         //-------------

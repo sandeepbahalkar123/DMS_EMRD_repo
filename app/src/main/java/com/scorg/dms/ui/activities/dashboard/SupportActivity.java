@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,6 +14,8 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.scorg.dms.R;
+import com.scorg.dms.singleton.DMSApplication;
+import com.scorg.dms.ui.activities.BaseActivity;
 import com.scorg.dms.util.CommonMethods;
 
 import butterknife.BindView;
@@ -27,7 +30,7 @@ import android.widget.TextView;
  */
 
 @RuntimePermissions
-public class SupportActivity extends AppCompatActivity  {
+public class SupportActivity extends BaseActivity {
     private static final String TAG = "SupportActivity";
 
     @BindView(R.id.callTextView)
@@ -51,11 +54,13 @@ public class SupportActivity extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.support_base_layout);
         ButterKnife.bind(this);
+        findViewById(R.id.toolbar).setBackgroundColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         initialize();
 
     }
 
     private void initialize() {
+        callTextView.setBackgroundColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
         mContext = SupportActivity.this;
         titleTextView.setText(getString(R.string.support));
         backImageView.setVisibility(View.VISIBLE);

@@ -17,6 +17,7 @@
             android:orientation="vertical">
 
             <LinearLayout
+                android:id="@+id/layoutMedicalRecordHeader"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/SkyBlue"
@@ -26,7 +27,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp16"
-                    android:background="@color/SkyBlue"
                     android:orientation="horizontal"
                     android:padding="@dimen/dp5">
 

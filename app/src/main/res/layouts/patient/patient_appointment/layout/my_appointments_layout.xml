@@ -22,10 +22,11 @@
                 android:background="@color/toolbar_divider_color" />
 
             <LinearLayout
+                android:id="@+id/layoutPatSearch"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp56"
+
                 android:layout_marginBottom="@dimen/dp7"
-                android:background="@color/tagColor"
                 android:orientation="vertical">
 
                 <com.scorg.dms.ui.customesViews.EditTextWithDeleteButton

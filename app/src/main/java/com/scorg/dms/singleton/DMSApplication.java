@@ -8,7 +8,9 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 
 import com.scorg.dms.R;
+import com.scorg.dms.preference.DMSPreferencesManager;
 import com.scorg.dms.util.CommonMethods;
+import com.scorg.dms.util.DMSConstants;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -24,6 +26,11 @@ public class DMSApplication extends MultiDexApplication {
     private static final Hashtable<String, Typeface> cache = new Hashtable<String, Typeface>();
     private static String SHOW_UPDATE_DIALOG_ON_SKIPPED = "";
     public static String RESOLUTION = "xxhdpi";
+
+    public static String COLOR_PRIMARY = "#04ABDF";
+    public static String COLOR_DARK_PRIMARY = "#0077A7";
+    public static String COLOR_ACCENT = "#04ABDF";
+
 
     public static String getShowUpdateDialogOnSkipped() {
         return SHOW_UPDATE_DIALOG_ON_SKIPPED;
@@ -51,7 +58,14 @@ public class DMSApplication extends MultiDexApplication {
         MultiDex.install(this);
 //        new NukeSSLCerts().nuke(); // disable all ssl certificates (dangerous)
         getDeviceResolution(this);
+        getThemeColors();
     }
+
+    private void getThemeColors() {
+        if (!DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.COLOR_PRIMARY,this).isEmpty())
+        COLOR_PRIMARY = DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.COLOR_PRIMARY,this);
+    }
+
 
     private void getDeviceResolution(Context mContext) {
 

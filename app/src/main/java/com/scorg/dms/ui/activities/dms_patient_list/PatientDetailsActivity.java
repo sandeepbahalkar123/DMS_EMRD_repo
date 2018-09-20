@@ -2,6 +2,7 @@ package com.scorg.dms.ui.activities.dms_patient_list;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.ActionBar;
@@ -27,6 +28,8 @@ import com.scorg.dms.model.dms_models.responsemodel.episode_list.EpisodeResponse
 import com.scorg.dms.model.dms_models.responsemodel.episode_list.PatientEpisodeFileData;
 import com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemodel.SearchResult;
 import com.scorg.dms.model.my_patient_filter.PatientFilter;
+import com.scorg.dms.singleton.DMSApplication;
+import com.scorg.dms.ui.activities.BaseActivity;
 import com.scorg.dms.ui.customesViews.drag_drop_recyclerview_helper.EndlessRecyclerViewScrollListener;
 import com.scorg.dms.util.CommonMethods;
 import com.scorg.dms.util.DMSConstants;
@@ -44,7 +47,7 @@ import static com.scorg.dms.util.DMSConstants.BUNDLE;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-public class PatientDetailsActivity extends AppCompatActivity implements HelperResponse, PatientEpisodeRecycleViewListAdapter.OnEpisodeClickListener, PatientSearchAutoCompleteTextViewAdapter.OnItemClickListener {
+public class PatientDetailsActivity extends BaseActivity implements HelperResponse, PatientEpisodeRecycleViewListAdapter.OnEpisodeClickListener, PatientSearchAutoCompleteTextViewAdapter.OnItemClickListener {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -74,23 +77,26 @@ public class PatientDetailsActivity extends AppCompatActivity implements HelperR
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patient_details);
+        findViewById(R.id.toolbar).setBackgroundColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+        findViewById(R.id.mainDataLayout).setBackgroundColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ActionBar supportActionBar = getSupportActionBar();
         supportActionBar.setTitle(getString(R.string.episode_details));
         mContext = this;
-
+        findViewById(R.id.toolbar).setBackgroundColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         Bundle bundle = getIntent().getBundleExtra(BUNDLE);
         mReceivedPatientData = (SearchResult) bundle.getSerializable(DMSConstants.PATIENT_DETAILS);
 
         init();
     }
 
-    private void init() {
+    public void init() {
         //--------------
+
         mUHIDData.setText(mReceivedPatientData.getPatientId());
-        Log.e("getPatientId","--"+mReceivedPatientData.getPatientId());
+
 
         mPatientName.setText(mReceivedPatientData.getPatientName());
         //--------------

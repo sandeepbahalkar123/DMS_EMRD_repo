@@ -172,6 +172,9 @@ public class DMSPreferencesManager {
         String USER_NAME = "user_name";
         String PASSWORD = "password";
         String ARCHIVE_API_COUNT = "ViewArchivedApiTakeCount";
+        String COLOR_PRIMARY = "COLOR_PRIMARY";
+        String COLOR_DARK_PRIMARY = "COLOR_DARK_PRIMARY";
+        String COLOR_ACCENT = "COLOR_ACCENT";
 
     }
 }

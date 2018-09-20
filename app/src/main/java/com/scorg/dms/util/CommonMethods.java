@@ -406,6 +406,8 @@ public class CommonMethods {
         dialog.setContentView(R.layout.dialog_exit);
         dialog.setCanceledOnTouchOutside(false);
         dialog.setCancelable(false);
+        dialog.findViewById(R.id.button_ok).setBackgroundColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
+        dialog.findViewById(R.id.button_cancel).setBackgroundColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
 
         ((TextView) dialog.findViewById(R.id.textview_sucess)).setText(msg + changeIpAddress);
         dialog.findViewById(R.id.button_ok).setOnClickListener(new View.OnClickListener() {

@@ -1,6 +1,7 @@
 package com.scorg.dms.ui.activities.pending_approval_list;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -19,6 +20,8 @@ import com.scorg.dms.interfaces.CustomResponse;
 import com.scorg.dms.interfaces.HelperResponse;
 import com.scorg.dms.model.pending_approval_list.RequestedArchivedBaseModel;
 import com.scorg.dms.model.pending_approval_list.PendingApprovalDataModel;
+import com.scorg.dms.singleton.DMSApplication;
+import com.scorg.dms.ui.activities.BaseActivity;
 import com.scorg.dms.ui.fragments.approval_list.AllRequestListFragment;
 import com.scorg.dms.ui.fragments.approval_list.PendingListFragment;
 
@@ -33,7 +36,7 @@ import butterknife.OnClick;
  * Created by jeetal on 22/2/18.
  */
 
-public class RequestedArchivedMainListActivity extends AppCompatActivity implements HelperResponse {
+public class RequestedArchivedMainListActivity extends BaseActivity implements HelperResponse {
 
     public static final int RESULT_CLOSE_ACTIVITY_PENDINGAPPROVAL_LIST = 040;
     @BindView(R.id.backImageView)
@@ -63,6 +66,8 @@ public class RequestedArchivedMainListActivity extends AppCompatActivity impleme
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.waiting_base_layout);
+        findViewById(R.id.toolbar).setBackgroundColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+        findViewById(R.id.tabs).setBackgroundColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         ButterKnife.bind(this);
         mFragmentTitleList[0] = getString(R.string.pending_request);
         mFragmentTitleList[1] = getString(R.string.all_request);

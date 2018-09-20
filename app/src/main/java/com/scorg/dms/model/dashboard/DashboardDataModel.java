@@ -24,6 +24,20 @@ public class DashboardDataModel implements Parcelable {
     @SerializedName("waitingCount")
     @Expose
     private String waitingCount;
+
+    @SerializedName("colorPrimary")
+    @Expose
+    private String colorPrimary;
+
+    @SerializedName("colorPrimaryDark")
+    @Expose
+    private String colorPrimaryDark;
+
+    @SerializedName("colorAccent")
+    @Expose
+    private String colorAccent;
+
+
     @SerializedName("fileTypes")
     @Expose
     private String[] fileTypes;
@@ -63,7 +77,11 @@ public class DashboardDataModel implements Parcelable {
             instance.setAppointmentCount(((String) in.readValue((String.class.getClassLoader()))));
             instance.setPendingApprovedCount(((String) in.readValue((String.class.getClassLoader()))));
             instance.setWaitingCount(((String) in.readValue((String.class.getClassLoader()))));
+            instance.setColorPrimary(((String) in.readValue((String.class.getClassLoader()))));
+            instance.setColorPrimaryDark(((String) in.readValue((String.class.getClassLoader()))));
+            instance.setColorAccent(((String) in.readValue((String.class.getClassLoader()))));
             instance.setFileTypes(in.createStringArray());
+
 
             // instance.setAppointmentOpdOTAndOtherCount((AppointmentOpdAndOtherCount) in.readValue(AppointmentOpdAndOtherCount.class.getClassLoader()));
 
@@ -99,6 +117,9 @@ public class DashboardDataModel implements Parcelable {
         dest.writeValue(getEpisodeApiTakeCount());
         dest.writeValue(getViewArchivedApiTakeCount());
         dest.writeValue(getPatientApiTakeCount());
+        dest.writeValue(getColorPrimary());
+        dest.writeValue(getColorPrimaryDark());
+        dest.writeValue(getColorAccent());
         dest.writeList(getAppointmentPatientDataList());
 
         //-------
@@ -148,13 +169,21 @@ public class DashboardDataModel implements Parcelable {
         this.fileTypes = fileTypes;
     }
 
-    /*public AppointmentOpdAndOtherCount getAppointmentOpdOTAndOtherCount() {
-        return appointmentOpdOTAndOtherCount;
+    public String getColorPrimaryDark() {
+        return colorPrimaryDark;
     }
 
-    public void setAppointmentOpdOTAndOtherCount(AppointmentOpdAndOtherCount appointmentOpdOTAndOtherCount) {
-        this.appointmentOpdOTAndOtherCount = appointmentOpdOTAndOtherCount;
-    }*/
+    public void setColorPrimaryDark(String colorPrimaryDark) {
+        this.colorPrimaryDark = colorPrimaryDark;
+    }
+
+    public String getColorAccent() {
+        return colorAccent;
+    }
+
+    public void setColorAccent(String colorAccent) {
+        this.colorAccent = colorAccent;
+    }
 
     public ArrayList<AppointmentOpdAndOtherCount> getAppointmentOpdOTAndOtherCountList() {
         return appointmentOpdOTAndOtherCountList;
@@ -202,6 +231,15 @@ public class DashboardDataModel implements Parcelable {
 
     public void setAppointmentPatientDataList(ArrayList<AppointmentPatientData> appointmentPatientDataList) {
         this.appointmentPatientDataList = appointmentPatientDataList;
+    }
+
+
+    public String getColorPrimary() {
+        return colorPrimary;
+    }
+
+    public void setColorPrimary(String colorPrimary) {
+        this.colorPrimary = colorPrimary;
     }
 
     public static class AppointmentOpdAndOtherCount implements Parcelable {

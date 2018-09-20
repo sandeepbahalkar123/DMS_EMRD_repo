@@ -25,7 +25,7 @@ import butterknife.OnClick;
 /**
  * A login screen that offers login via email/password.
  */
-public class LoginActivity extends AppCompatActivity implements HelperResponse {
+public class LoginActivity extends BaseActivity implements HelperResponse {
 
     String TAG = this.getClass().getSimpleName();
     Context mContext;

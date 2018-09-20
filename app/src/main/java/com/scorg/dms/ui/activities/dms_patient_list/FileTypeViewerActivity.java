@@ -67,6 +67,8 @@ import com.scorg.dms.model.dms_models.responsemodel.filetreeresponsemodel.LstDoc
 import com.scorg.dms.model.dms_models.responsemodel.filetreeresponsemodel.LstDocType;
 import com.scorg.dms.model.dms_models.responsemodel.getpdfdataresponsemodel.GetPdfDataResponseModel;
 import com.scorg.dms.preference.DMSPreferencesManager;
+import com.scorg.dms.singleton.DMSApplication;
+import com.scorg.dms.ui.activities.BaseActivity;
 import com.scorg.dms.ui.customesViews.treeViewHolder.arrow_expand.ArrowExpandIconTreeItemHolder;
 import com.scorg.dms.ui.customesViews.treeViewHolder.arrow_expand.ArrowExpandSelectableHeaderHolder;
 import com.scorg.dms.util.CommonMethods;
@@ -94,7 +96,7 @@ import static com.github.barteksc.pdfviewer.PDFView.DEFAULT_MIN_SCALE;
  */
 
 
-public class FileTypeViewerActivity extends AppCompatActivity implements HelperResponse, OnLoadCompleteListener, OnErrorListener, OnDrawListener, TreeNode.TreeNodeClickListener, ArrowExpandSelectableHeaderHolder.ArrowExpandSelectableHeaderHolderLockIconClickListener {
+public class FileTypeViewerActivity extends BaseActivity implements HelperResponse, OnLoadCompleteListener, OnErrorListener, OnDrawListener, TreeNode.TreeNodeClickListener, ArrowExpandSelectableHeaderHolder.ArrowExpandSelectableHeaderHolderLockIconClickListener {
 
     private static final long ANIMATION_DURATION = 500; // in milliseconds
 
@@ -281,6 +283,8 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
         setContentView(R.layout.compare_file_type_activity);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         ButterKnife.bind(this);
+        findViewById(R.id.toolbar).setBackgroundColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+        findViewById(R.id.layoutMedicalRecordHeader).setBackgroundColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         initialize();
     }
 
@@ -311,7 +315,6 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
         mDrawer.openDrawer(GravityCompat.END);
         mArchivedPreferenceSpinnerListener();
         if (CommonMethods.isTablet(this)) {
-            Log.e("isTablet","true");
             layoutCompareSwitch.setVisibility(View.VISIBLE);
         }
 
@@ -1075,30 +1078,6 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
         if (pdfView == mSecondPdfView)
             mMessageForSecondFile.setVisibility(View.GONE);
 
-//        try {
-//            PdfDocument.Meta meta = null;
-//            if (pdfView == mFirstPdfView) {
-//                meta = mFirstPdfView.getDocumentMeta();
-//                printBookmarksTree(mFirstPdfView.getTableOfContents(), "-");
-//            } else if (pdfView == mSecondPdfView) {
-//                meta = mSecondPdfView.getDocumentMeta();
-//                printBookmarksTree(mSecondPdfView.getTableOfContents(), "-");
-//            }
-//            if (meta != null) {
-//                String dataToShow = "title = " + meta.getTitle()
-//                        + "author = " + meta.getAuthor()
-//                        + "subject = " + meta.getSubject()
-//                        + "keywords = " + meta.getKeywords()
-//                        + "creator = " + meta.getCreator()
-//                        + "producer = " + meta.getProducer()
-//                        + "creationDate = " + meta.getCreationDate()
-//                        + "modDate = " + meta.getModDate();
-//                CommonMethods.Log(TAG, "title = " + dataToShow);
-//            }
-//        } catch (Exception e) {
-//            e.getStackTrace();
-//
-//        }
         setPDFScale(getResources().getConfiguration());
     }
 
@@ -1159,37 +1138,44 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
                 expandCompareDialog();
                 CommonMethods.showToast(this, "Can not compare more than 2 PDFs");
             } else {
-                mGetEncryptedPDFRequestModelList.add(getEncryptedPDFRequestModel);
-                mPreviousClickedTreeElement.put(clickedLstDocTypeElement.getRecordDetailId(), clickedLstDocTypeElement.getTypeName().trim());
 
-                ArrayList<String> tempClickedElements = new ArrayList<>(mPreviousClickedTreeElement.values());
+                if(mPreviousClickedTreeElement.containsKey(clickedLstDocTypeElement.getRecordDetailId())){
+                    CommonMethods.showToast(this, "Can not compare same PDFs");
 
-                expandCompareDialog();
-                switch (mGetEncryptedPDFRequestModelList.size()) {
-                    case 1:
-                        //-----
-                        mFileOnePatientID.setText(getString(R.string.patient_id) + respectivePatientID);
-                        mFileOneFileName.setText(getString(R.string.file) + tempClickedElements.get(0));
-                        mFirstFileTypeProgressDialogLayout.setVisibility(View.VISIBLE);
-                        recordIdFirstPdf = clickedLstDocTypeElement.getRecordDetailId();
-                        labelFirstPdf.setText(tempClickedElements.get(0));
-                        break;
-                    case 2:
-                        //-----
-                        mFileOnePatientID.setText(getString(R.string.patient_id) + respectivePatientID);
-                        mFileOneFileName.setText(getString(R.string.file) + tempClickedElements.get(0));
-                        mFirstFileTypeProgressDialogLayout.setVisibility(View.VISIBLE);
-                        recordIdFirstPdf = clickedLstDocTypeElement.getRecordDetailId();
-                        labelFirstPdf.setText(tempClickedElements.get(0));
-                        //-------
-                        mFileTwoPatientID.setText(getString(R.string.patient_id) + respectivePatientID);
-                        mFileTwoFileName.setText(getString(R.string.file) + tempClickedElements.get(1));
-                        mSecondFileTypePdfViewLayout.setVisibility(View.VISIBLE);
-                        recordIdSecondPdf = clickedLstDocTypeElement.getRecordDetailId();
+                }else {
 
-                        mSecondFileTypeProgressDialogLayout.setVisibility(View.VISIBLE);
-                        labelSecondPdf.setText(tempClickedElements.get(1));
-                        break;
+                    mGetEncryptedPDFRequestModelList.add(getEncryptedPDFRequestModel);
+                    mPreviousClickedTreeElement.put(clickedLstDocTypeElement.getRecordDetailId(), clickedLstDocTypeElement.getTypeName().trim());
+
+                    ArrayList<String> tempClickedElements = new ArrayList<>(mPreviousClickedTreeElement.values());
+
+                    expandCompareDialog();
+                    switch (mGetEncryptedPDFRequestModelList.size()) {
+                        case 1:
+                            //-----
+                            mFileOnePatientID.setText(getString(R.string.patient_id) + respectivePatientID);
+                            mFileOneFileName.setText(getString(R.string.file) + tempClickedElements.get(0));
+                            mFirstFileTypeProgressDialogLayout.setVisibility(View.VISIBLE);
+                            recordIdFirstPdf = clickedLstDocTypeElement.getRecordDetailId();
+                            labelFirstPdf.setText(tempClickedElements.get(0));
+                            break;
+                        case 2:
+                            //-----
+                            mFileOnePatientID.setText(getString(R.string.patient_id) + respectivePatientID);
+                            mFileOneFileName.setText(getString(R.string.file) + tempClickedElements.get(0));
+                            mFirstFileTypeProgressDialogLayout.setVisibility(View.VISIBLE);
+                            recordIdFirstPdf = clickedLstDocTypeElement.getRecordDetailId();
+                            labelFirstPdf.setText(tempClickedElements.get(0));
+                            //-------
+                            mFileTwoPatientID.setText(getString(R.string.patient_id) + respectivePatientID);
+                            mFileTwoFileName.setText(getString(R.string.file) + tempClickedElements.get(1));
+                            mSecondFileTypePdfViewLayout.setVisibility(View.VISIBLE);
+                            recordIdSecondPdf = clickedLstDocTypeElement.getRecordDetailId();
+
+                            mSecondFileTypeProgressDialogLayout.setVisibility(View.VISIBLE);
+                            labelSecondPdf.setText(tempClickedElements.get(1));
+                            break;
+                    }
                 }
             }
 
@@ -1509,6 +1495,9 @@ public class FileTypeViewerActivity extends AppCompatActivity implements HelperR
         dialog.setCanceledOnTouchOutside(false);
         dialog.setCancelable(false);
         ((TextView) dialog.findViewById(R.id.textview_sucess)).setText(getResources().getString(R.string.do_you_want_to_unlock));
+        dialog.findViewById(R.id.button_ok).setBackgroundColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
+        dialog.findViewById(R.id.button_cancel).setBackgroundColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
+
         dialog.findViewById(R.id.button_ok).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

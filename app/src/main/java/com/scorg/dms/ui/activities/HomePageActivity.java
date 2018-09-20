@@ -1,5 +1,6 @@
 package com.scorg.dms.ui.activities;
 
+import android.os.Build;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.AppCompatButton;
 import android.Manifest;
@@ -61,7 +62,7 @@ import static com.scorg.dms.util.DMSConstants.PATIENT_DETAILS;
  */
 
 @RuntimePermissions
-public class HomePageActivity extends AppCompatActivity implements HelperResponse,DashboardAppointmentListAdapter.OnItemClickListener {
+public class HomePageActivity extends BaseActivity implements HelperResponse,DashboardAppointmentListAdapter.OnItemClickListener {
 
     private static final String TAG = "Home";
 
@@ -113,6 +114,10 @@ public class HomePageActivity extends AppCompatActivity implements HelperRespons
     TextView appointmentTextView;
     @BindView(R.id.viewTextView)
     TextView viewTextView;
+
+    @BindView(R.id.textHeaderTodayAppointment)
+    TextView textHeaderTodayAppointment;
+
 
     @BindView(R.id.layoutTotalPatients)
     RelativeLayout layoutTotalPatients;
@@ -167,6 +172,7 @@ public class HomePageActivity extends AppCompatActivity implements HelperRespons
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_page_layout);
         ButterKnife.bind(this);
+
         mContext = HomePageActivity.this;
         mColorGenerator = ColorGenerator.MATERIAL;
         HomePageActivityPermissionsDispatcher.getPermissionWithCheck(HomePageActivity.this);
@@ -177,6 +183,15 @@ public class HomePageActivity extends AppCompatActivity implements HelperRespons
     }
 
     private void initialize() {
+        viewTextView.setTextColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
+        textHeaderTodayAppointment.setTextColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
+        pendingApprovalCount.setTextColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
+        totalPatientsCount.setTextColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
+        todayAppointmentsCount.setTextColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
+        waitingPatientCount.setTextColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
+
+
+
         int width = (int) (getResources().getDisplayMetrics().widthPixels / (CommonMethods.isTablet(mContext) ? 2.5 : 2));
         ViewGroup.LayoutParams layoutParams = mRightNavigationView.getLayoutParams();
         layoutParams.width = width;
@@ -235,6 +250,8 @@ public class HomePageActivity extends AppCompatActivity implements HelperRespons
         dialog.setContentView(R.layout.dialog_exit);
         dialog.setCanceledOnTouchOutside(false);
         dialog.setCancelable(false);
+        dialog.findViewById(R.id.button_ok).setBackgroundColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
+        dialog.findViewById(R.id.button_cancel).setBackgroundColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
         dialog.findViewById(R.id.button_ok).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -283,10 +300,26 @@ public class HomePageActivity extends AppCompatActivity implements HelperRespons
                        pendingApprovalCount.setText(mDashboardDataModel.getPendingApprovedCount());
                         totalPatientsCount.setText(mDashboardDataModel.getTotalPatientCount());
                         todayAppointmentsCount.setText(mDashboardDataModel.getAppointmentCount());
-                       waitingPatientCount.setText(mDashboardDataModel.getWaitingCount());
+                        waitingPatientCount.setText(mDashboardDataModel.getWaitingCount());
+
+
                         DMSPreferencesManager.putInt(DMSPreferencesManager.DMS_PREFERENCES_KEY.ARCHIVE_API_COUNT,mDashboardDataModel.getViewArchivedApiTakeCount() , mContext);
+                        DMSPreferencesManager.putString(DMSPreferencesManager.DMS_PREFERENCES_KEY.COLOR_PRIMARY,mDashboardDataModel.getColorPrimary(), mContext);
+                        DMSPreferencesManager.putString(DMSPreferencesManager.DMS_PREFERENCES_KEY.COLOR_DARK_PRIMARY,mDashboardDataModel.getColorPrimaryDark(), mContext);
+                        DMSPreferencesManager.putString(DMSPreferencesManager.DMS_PREFERENCES_KEY.COLOR_ACCENT,mDashboardDataModel.getColorAccent(), mContext);
+                        DMSApplication.COLOR_PRIMARY =mDashboardDataModel.getColorPrimary();
+                        DMSApplication.COLOR_DARK_PRIMARY =mDashboardDataModel.getColorPrimaryDark();
+                        DMSApplication.COLOR_ACCENT =mDashboardDataModel.getColorAccent();
+                        viewTextView.setTextColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
+                        textHeaderTodayAppointment.setTextColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
+                        pendingApprovalCount.setTextColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
+                        totalPatientsCount.setTextColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
+                        todayAppointmentsCount.setTextColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
+                        waitingPatientCount.setTextColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
 
-
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                            getWindow().setStatusBarColor(Color.parseColor(DMSApplication.COLOR_DARK_PRIMARY));
+                        }
                         LinearLayoutManager linearlayoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
                         recyclerView.setLayoutManager(linearlayoutManager);
                         mDashBoardAppointmentListAdapter = new DashboardAppointmentListAdapter(mContext, mDashboardDataModel.getAppointmentPatientDataList(),this);

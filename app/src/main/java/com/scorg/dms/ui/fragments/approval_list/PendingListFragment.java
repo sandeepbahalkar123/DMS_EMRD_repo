@@ -33,6 +33,7 @@ import com.scorg.dms.model.pending_approval_list.PendingRequestCancelModel;
 import com.scorg.dms.model.pending_approval_list.RequestedArchivedBaseModel;
 import com.scorg.dms.model.pending_approval_list.RequestedArchivedDetailList;
 import com.scorg.dms.model.waiting_list.WaitingPatientData;
+import com.scorg.dms.singleton.DMSApplication;
 import com.scorg.dms.ui.activities.dms_patient_list.FileTypeViewerActivity;
 import com.scorg.dms.ui.activities.pending_approval_list.RequestedArchivedMainListActivity;
 import com.scorg.dms.ui.customesViews.CircularImageView;
@@ -77,7 +78,7 @@ public class PendingListFragment extends Fragment implements RequestListAdapter.
     private boolean mIsLoadMorePatients;
     private int currentPage = 1;
 
-    private ArrayList<RequestedArchivedDetailList> requestedArchivedDetailList =new ArrayList<>();
+    private ArrayList<RequestedArchivedDetailList> requestedArchivedDetailList = new ArrayList<>();
     private RequestedArchivedMainListActivity mParentActivity;
     private RequestListAdapter mPendingListAdapter;
     private long mClickedPhoneNumber;
@@ -204,6 +205,8 @@ public class PendingListFragment extends Fragment implements RequestListAdapter.
         dialog.setContentView(R.layout.dialog_alert);
         dialog.setCanceledOnTouchOutside(false);
         dialog.setCancelable(false);
+        dialog.findViewById(R.id.button_ok).setBackgroundColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
+        dialog.findViewById(R.id.button_cancel).setBackgroundColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
         ((TextView) dialog.findViewById(R.id.textview_sucess)).setText(getContext().getResources().getString(R.string.do_you_want_to_cancel));
         dialog.findViewById(R.id.button_ok).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -302,7 +305,6 @@ public class PendingListFragment extends Fragment implements RequestListAdapter.
                         CommonMethods.showToast(getActivity(), "Successfully Canceled");
                     mPendingApprovalHelper.doGetPendingApprovalData(1, true);
                 }
-
             }
         }
     }

@@ -2,6 +2,7 @@ package com.scorg.dms.ui.activities.my_appointments;
 
 import android.Manifest;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -24,6 +25,8 @@ import com.scorg.dms.interfaces.HelperResponse;
 import com.scorg.dms.model.my_appointments.AppointmentPatientData;
 import com.scorg.dms.model.my_appointments.MyAppointmentsBaseModel;
 import com.scorg.dms.model.my_appointments.MyAppointmentsDataModel;
+import com.scorg.dms.singleton.DMSApplication;
+import com.scorg.dms.ui.activities.BaseActivity;
 import com.scorg.dms.ui.fragments.my_appointments.MyAppointmentsFragment;
 import com.scorg.dms.util.CommonMethods;
 import com.scorg.dms.util.DMSConstants;
@@ -44,7 +47,7 @@ import static com.scorg.dms.util.DMSConstants.SUCCESS;
  * Created by jeetal on 31/1/18.
  */
 @RuntimePermissions
-public class MyAppointmentsActivity extends AppCompatActivity implements HelperResponse, DatePickerDialog.OnDateSetListener {
+public class MyAppointmentsActivity extends BaseActivity implements HelperResponse, DatePickerDialog.OnDateSetListener {
     @BindView(R.id.backImageView)
     ImageView backImageView;
     @BindView(R.id.titleTextView)
@@ -76,6 +79,7 @@ public class MyAppointmentsActivity extends AppCompatActivity implements HelperR
         super.onCreate(savedInstanceState);
         setContentView(R.layout.my_patients_base_layout);
         ButterKnife.bind(this);
+        findViewById(R.id.toolbar).setBackgroundColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         initialize();
     }
 

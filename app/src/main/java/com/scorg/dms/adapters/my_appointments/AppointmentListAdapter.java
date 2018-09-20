@@ -18,6 +18,7 @@ package com.scorg.dms.adapters.my_appointments;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
@@ -44,6 +45,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.scorg.dms.R;
 import com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemodel.SearchResult;
 import com.scorg.dms.model.my_appointments.AppointmentPatientData;
+import com.scorg.dms.singleton.DMSApplication;
 import com.scorg.dms.ui.customesViews.CircularImageView;
 import com.scorg.dms.util.CommonMethods;
 import com.scorg.dms.util.DMSConstants;
@@ -153,6 +155,7 @@ public class AppointmentListAdapter
     }
 
     private void bindGroupItem(final AppointmentPatientData appointmentPatientDataObject, final AppointmentListAdapter.MyViewHolder holder) {
+       holder.appointmentTime.setBackgroundColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
 
         String salutation = appointmentPatientDataObject.getSalutation();
         String patientName = toCamelCase(appointmentPatientDataObject.getPatientName());

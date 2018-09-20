@@ -17,6 +17,8 @@ import com.scorg.dms.helpers.login.LoginHelper;
 import com.scorg.dms.interfaces.CustomResponse;
 import com.scorg.dms.interfaces.HelperResponse;
 import com.scorg.dms.preference.DMSPreferencesManager;
+import com.scorg.dms.singleton.DMSApplication;
+import com.scorg.dms.ui.activities.BaseActivity;
 import com.scorg.dms.ui.activities.SplashScreenActivity;
 import com.scorg.dms.util.CommonMethods;
 import com.scorg.dms.util.DMSConstants;
@@ -30,7 +32,7 @@ import android.widget.TextView;
  * Created by jeetal on 9/2/18.
  */
 
-public class SettingsActivity extends AppCompatActivity implements  HelperResponse {
+public class SettingsActivity extends BaseActivity implements  HelperResponse {
     private static final String TAG = "SettingsActivity";
     @BindView(R.id.backImageView)
     ImageView backImageView;
@@ -38,6 +40,14 @@ public class SettingsActivity extends AppCompatActivity implements  HelperRespon
     TextView titleTextView;
     @BindView(R.id.userInfoTextView)
     TextView userInfoTextView;
+
+
+    @BindView(R.id.change_ip_address)
+    TextView change_ip_address;
+
+    @BindView(R.id.clearImageCache)
+    TextView clearImageCache;
+
     @BindView(R.id.dateTextview)
     TextView dateTextview;
     @BindView(R.id.logout)
@@ -56,11 +66,16 @@ public class SettingsActivity extends AppCompatActivity implements  HelperRespon
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings_base_layout);
         ButterKnife.bind(this);
+        findViewById(R.id.toolbar).setBackgroundColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         initialize();
 
     }
 
     private void initialize() {
+        logout.setTextColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
+        change_ip_address.setTextColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
+        clearImageCache.setTextColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
+
         mContext = SettingsActivity.this;
         docId = DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.DOC_ID, mContext);
         loginHelper = new LoginHelper(mContext, this);
@@ -104,6 +119,9 @@ public class SettingsActivity extends AppCompatActivity implements  HelperRespon
         textView.setText(getString(R.string.do_you_logout));
         dialog.setCanceledOnTouchOutside(false);
         dialog.setCancelable(false);
+        dialog.findViewById(R.id.button_ok).setBackgroundColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
+        dialog.findViewById(R.id.button_cancel).setBackgroundColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
+
         dialog.findViewById(R.id.button_ok).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
