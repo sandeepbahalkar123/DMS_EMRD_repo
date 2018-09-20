@@ -43,20 +43,20 @@
                 android:layout_width="@dimen/dp0"
                 android:layout_height="@dimen/dp40"
                 android:layout_weight="1"
-                android:background="@drawable/curve_edges_dialog_button_right"
                 android:gravity="center"
                 android:text="@string/yes"
                 android:textColor="@color/white"
                 android:textSize="@dimen/sp16" />
+
             <android.support.v4.widget.Space
                 android:layout_width="@dimen/dp2"
                 android:layout_height="wrap_content" />
+
             <Button
                 android:id="@+id/button_cancel"
                 android:layout_width="@dimen/dp0"
                 android:layout_height="@dimen/dp40"
                 android:layout_weight="1"
-                android:background="@drawable/curve_edges_dialog_button_left"
                 android:gravity="center"
                 android:text="@string/no"
                 android:textColor="@color/white"

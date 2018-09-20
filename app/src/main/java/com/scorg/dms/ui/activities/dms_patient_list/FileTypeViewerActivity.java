@@ -12,6 +12,7 @@ import android.content.res.Configuration;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -19,7 +20,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatImageButton;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.Toolbar;
@@ -79,11 +79,9 @@ import com.unnamed.b.atv.view.AndroidTreeView;
 import org.json.JSONArray;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -103,20 +101,9 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
     private static final String TAG = FileTypeViewerActivity.class.getName();
     private static final int REQUEST_CODE_WRITE_FILE_ONE_PERMISSIONS = 101;
     private static final int REQUEST_CODE_WRITE_FILE_TWO_PERMISSIONS = 102;
-
-    private Integer mPageNumber = 0;
-    private boolean isFirstPdf = true;
-    private float mCurrentXOffset = -1;
-    private float mCurrentYOffset = -1;
-    // End
-
-    private Context mContext;
-
-
     //------
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
-
     //------compare dialog box obj initalize
     @BindView(R.id.compareDialogParentLayout)
     LinearLayout mCompareDialogParentLayout;
@@ -124,6 +111,7 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
     RelativeLayout mCompareDialogLayout;
     @BindView(R.id.fileOneRemoveButton)
     AppCompatImageView mFileOneRemoveButton;
+    // End
     @BindView(R.id.fileOnePatientID)
     TextView mFileOnePatientID;
     @BindView(R.id.fileOneFileName)
@@ -140,49 +128,40 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
     ImageView mFileTwoIcon;
     @BindView(R.id.compareButton)
     Button mCompareButton;
-    //---------------------------------------
-
-
     @BindView(R.id.archivedPreferenceSpinner)
     Spinner mArchivedPreferenceSpinner;
     @BindView(R.id.preferenceLayout)
     LinearLayout mPreferenceLayout;
-
     //---------
     @BindView(R.id.firstPdfView)
     PDFView mFirstPdfView;
     @BindView(R.id.secondPdfView)
     PDFView mSecondPdfView;
-
     @BindView(R.id.firstPdfViewFrameLayout)
     FrameLayout mFirstFileTypePdfViewLayout;
+    //---------------------------------------
     @BindView(R.id.secondPdfViewFrameLayout)
     FrameLayout mSecondFileTypePdfViewLayout;
-    //---------
-
     @BindView(R.id.messageForFirstFile)
     TextView mMessageForFirstFile;
     @BindView(R.id.messageForSecondFile)
     TextView mMessageForSecondFile;
     @BindView(R.id.openRightDrawer)
     ImageView mOpenRightDrawer;
-    // End
-
-
     @BindView(R.id.fileTypeOneDoctorName)
     TextView mDoctorNameOne;
     @BindView(R.id.fileTypeTwoDoctorName)
     TextView mDoctorNameTwo;
+    //---------
     @BindView(R.id.tvPatientLocation)
     TextView mPatientAddress;
-
     @BindView(R.id.fileTypeOneRefID)
     TextView mFileOneRefId;
     @BindView(R.id.fileTypeTwoRefID)
     TextView mFileTwoRefId;
+    // End
     @BindView(R.id.fileTypeOneAdmissionDate)
     TextView mAdmissionDateOne;
-
     @BindView(R.id.fileTypeTwoAdmissionDate)
     TextView mAdmissionDateTwo;
     @BindView(R.id.fileTypeOneDischargeDate)
@@ -204,50 +183,39 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
     AppCompatImageButton mLoadPreviousArchiveDataList;
     @BindView(R.id.loadNextArchiveDataList)
     AppCompatImageButton mLoadNextArchiveDataList;
-
     @BindView(R.id.loadedArchiveDataMessage)
     TextView loadedArchiveDataMessage;
-
     @BindView(R.id.labelSecondPdf)
     TextView labelSecondPdf;
-
     @BindView(R.id.labelFirstPdf)
     TextView labelFirstPdf;
-
     @BindView(R.id.fileOneLay)
     LinearLayout mFileOneDrawerLayout;
     @BindView(R.id.fileTwoLay)
     LinearLayout mFileTwoDrawerLayout;
     @BindView(R.id.nav_right_view)
     FrameLayout mRightNavigationView;
-
     @BindView(R.id.dischargeDateRow)
     TableRow dischargeDateRow;
-
     @BindView(R.id.dischargeDateRowTwo)
     TableRow dischargeDateRowTwo;
-
     @BindView(R.id.layoutCompareSwitch)
     LinearLayout layoutCompareSwitch;
-
     @BindView(R.id.compareDialogSwitch)
     Switch mOpenCompareDialogSwitch;
-
     @BindView(R.id.layoutCompareSwitch1)
     LinearLayout layoutCompareSwitch1;
-
     @BindView(R.id.compareDialogSwitch1)
     Switch mOpenCompareDialogSwitch1;
-
     @BindView(R.id.imageCloseDrawer)
     AppCompatImageButton imageCloseDrawer;
-
-
+    @BindView(R.id.patientIcon)
+    ImageView patientIcon;
+    @BindView(R.id.uhidIcon)
+    ImageView uhidIcon;
+    @BindView(R.id.addressIcon)
+    ImageView addressIcon;
     DrawerLayout mDrawer;
-
-    private DMSPatientsHelper mPatientsHelper;
-
-    private boolean isCompareChecked = false;
     //---------
     ArrayList<PatientEpisodeFileData> mSelectedFileTypeDataToCompare;
     String respectivePatientID;
@@ -257,6 +225,13 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
     String patientName;
     String doctorName;
     String patientAddress;
+    private Integer mPageNumber = 0;
+    private boolean isFirstPdf = true;
+    private float mCurrentXOffset = -1;
+    private float mCurrentYOffset = -1;
+    private Context mContext;
+    private DMSPatientsHelper mPatientsHelper;
+    private boolean isCompareChecked = false;
     //---------
     private FileTreeResponseData mFileTreeResponseData;
 
@@ -289,6 +264,10 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
     }
 
     private void initialize() {
+
+        patientIcon.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+        uhidIcon.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+        addressIcon.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
 
         Bundle extra = getIntent().getBundleExtra(DMSConstants.DATA);
 
@@ -411,7 +390,7 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
         mOpenCompareDialogSwitch1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    isCompareChecked = isChecked;
+                isCompareChecked = isChecked;
             }
         });
 
@@ -1139,10 +1118,10 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
                 CommonMethods.showToast(this, "Can not compare more than 2 PDFs");
             } else {
 
-                if(mPreviousClickedTreeElement.containsKey(clickedLstDocTypeElement.getRecordDetailId())){
+                if (mPreviousClickedTreeElement.containsKey(clickedLstDocTypeElement.getRecordDetailId())) {
                     CommonMethods.showToast(this, "Can not compare same PDFs");
 
-                }else {
+                } else {
 
                     mGetEncryptedPDFRequestModelList.add(getEncryptedPDFRequestModel);
                     mPreviousClickedTreeElement.put(clickedLstDocTypeElement.getRecordDetailId(), clickedLstDocTypeElement.getTypeName().trim());
@@ -1204,11 +1183,11 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
     private void loadPDFFromServer(String pdfFileURL, final PDFView pdfViewToLoad) {
 
         String baseUrl = DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.SERVER_PATH, mContext);
-        if(pdfFileURL.contains(",")) {
+        if (pdfFileURL.contains(",")) {
             String[] separated = pdfFileURL.split(",");
-            pdfFileURL =  separated[0];
+            pdfFileURL = separated[0];
         }
-      // this will contain PDF Path
+        // this will contain PDF Path
         pdfFileURL = baseUrl + pdfFileURL.replace("~", "").trim();
         CommonMethods.Log(TAG, "PDF URL:==-->> " + pdfFileURL);
 
@@ -1495,10 +1474,27 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
         dialog.setCanceledOnTouchOutside(false);
         dialog.setCancelable(false);
         ((TextView) dialog.findViewById(R.id.textview_sucess)).setText(getResources().getString(R.string.do_you_want_to_unlock));
-        dialog.findViewById(R.id.button_ok).setBackgroundColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
-        dialog.findViewById(R.id.button_cancel).setBackgroundColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
 
-        dialog.findViewById(R.id.button_ok).setOnClickListener(new View.OnClickListener() {
+        float[] bottomLeftRadius = {0, 0, 0, 0, getResources().getDimension(R.dimen.dp8), getResources().getDimension(R.dimen.dp8), 0, 0};
+        float[] bottomRightRadius = {0, 0, 0, 0, 0, 0, getResources().getDimension(R.dimen.dp8), getResources().getDimension(R.dimen.dp8)};
+
+        GradientDrawable buttonLeftBackground = new GradientDrawable();
+        buttonLeftBackground.setShape(GradientDrawable.RECTANGLE);
+        buttonLeftBackground.setColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
+        buttonLeftBackground.setCornerRadii(bottomLeftRadius);
+
+        GradientDrawable buttonRightBackground = new GradientDrawable();
+        buttonRightBackground.setShape(GradientDrawable.RECTANGLE);
+        buttonRightBackground.setColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
+        buttonRightBackground.setCornerRadii(bottomRightRadius);
+
+        Button buttonRight = dialog.findViewById(R.id.button_cancel);
+        Button buttonLeft = dialog.findViewById(R.id.button_ok);
+
+        buttonLeft.setBackground(buttonLeftBackground);
+        buttonRight.setBackground(buttonRightBackground);
+
+        buttonRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
@@ -1506,7 +1502,8 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
 
             }
         });
-        dialog.findViewById(R.id.button_cancel).setOnClickListener(new View.OnClickListener() {
+
+        buttonLeft.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();

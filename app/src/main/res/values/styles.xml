@@ -37,20 +37,6 @@
          <isenderNamename="android:textAllCaps">false</item>
      </style>-->
 
-    <style name="AppLoginMainStyle">
-        <item name="android:textCursorDrawable">@drawable/cursor_color</item>
-        <item name="android:cursorVisible">true</item>
-        <item name="android:background">@android:color/transparent</item>
-        <item name="android:backgroundTint">@color/transparent</item>
-        <item name="android:textAllCaps">true</item>
-        <item name="android:textColorHint">@color/hint_color_my_appointment</item>
-        <item name="android:textColor">@color/white</item>
-        <item name="android:textSize">@dimen/sp16</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-    </style>
-
     <style name="SpinnerTheme" parent="android:Widget.DeviceDefault.DropDownItem.Spinner">
         <item name="android:background">@drawable/spinner_bg</item>
         <item name="android:textColor">@color/black</item>
@@ -59,66 +45,6 @@
         <item name="android:popupBackground">@drawable/location_spinner_border</item>
     </style>
 
-    <style name="drawer_filter_header_icon_layout">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_centerVertical">true</item>
-        <item name="android:layout_marginLeft">@dimen/dp8</item>
-        <item name="android:layout_marginStart">@dimen/dp8</item>
-        <item name="android:adjustViewBounds">true</item>
-        <item name="android:padding">@dimen/dp8</item>
-    </style>
-
-    <style name="drawer_filter_gender_style">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_centerVertical">true</item>
-        <item name="android:adjustViewBounds">true</item>
-        <item name="android:padding">@dimen/dp2</item>
-    </style>
-
-    <style name="AppLoginNewMainStyle">
-        <item name="android:textCursorDrawable">@drawable/cursor_color_white</item>
-        <item name="android:cursorVisible">true</item>
-        <item name="android:background">@android:color/transparent</item>
-        <item name="android:backgroundTint">@color/transparent</item>
-        <item name="android:textAllCaps">true</item>
-        <item name="android:gravity">bottom|left</item>
-        <item name="android:textColorHint">@color/white</item>
-        <item name="android:textColor">@color/white</item>
-        <item name="android:textSize">@dimen/sp14</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">@dimen/dp40</item>
-    </style>
-
-    <style name="drawer_filter_header_layout">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:paddingEnd">@dimen/dp8</item>
-        <item name="android:gravity">center|left</item>
-        <item name="android:layout_weight">1</item>
-        <item name="android:paddingStart">@dimen/dp8</item>
-        <item name="android:textColor">@color/tagColor</item>
-        <item name="android:textSize">@dimen/sp14</item>
-    </style>
-
-    <style name="drawer_filter_header_direction_icon_layout">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginRight">@dimen/dp30</item>
-        <item name="android:layout_gravity">center</item>
-    </style>
-
-    <style name="Material"></style>
-
-    <style name="Material.App"></style>
-
-
-
-    <style name="DialogNoAnimation">
-        <item name="android:windowEnterAnimation">@null</item>
-        <item name="android:windowExitAnimation">@null</item>
-    </style>
 
     <style name="tabTextSize" parent="TextAppearance.Design.Tab">
         <item name="android:textSize">@dimen/sp16</item>

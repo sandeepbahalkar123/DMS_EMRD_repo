@@ -5,10 +5,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
@@ -119,10 +121,27 @@ public class SettingsActivity extends BaseActivity implements  HelperResponse {
         textView.setText(getString(R.string.do_you_logout));
         dialog.setCanceledOnTouchOutside(false);
         dialog.setCancelable(false);
-        dialog.findViewById(R.id.button_ok).setBackgroundColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
-        dialog.findViewById(R.id.button_cancel).setBackgroundColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
 
-        dialog.findViewById(R.id.button_ok).setOnClickListener(new View.OnClickListener() {
+        float[] bottomLeftRadius = {0, 0, 0, 0, getResources().getDimension(R.dimen.dp8), getResources().getDimension(R.dimen.dp8), 0, 0};
+        float[] bottomRightRadius = {0, 0, 0, 0, 0, 0, getResources().getDimension(R.dimen.dp8), getResources().getDimension(R.dimen.dp8)};
+
+        GradientDrawable buttonLeftBackground = new GradientDrawable();
+        buttonLeftBackground.setShape(GradientDrawable.RECTANGLE);
+        buttonLeftBackground.setColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
+        buttonLeftBackground.setCornerRadii(bottomLeftRadius);
+
+        GradientDrawable buttonRightBackground = new GradientDrawable();
+        buttonRightBackground.setShape(GradientDrawable.RECTANGLE);
+        buttonRightBackground.setColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
+        buttonRightBackground.setCornerRadii(bottomRightRadius);
+
+        Button buttonRight = dialog.findViewById(R.id.button_cancel);
+        Button buttonLeft = dialog.findViewById(R.id.button_ok);
+
+        buttonLeft.setBackground(buttonLeftBackground);
+        buttonRight.setBackground(buttonRightBackground);
+
+        buttonLeft.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
@@ -130,7 +149,7 @@ public class SettingsActivity extends BaseActivity implements  HelperResponse {
                 logout();
             }
         });
-        dialog.findViewById(R.id.button_cancel).setOnClickListener(new View.OnClickListener() {
+        buttonRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();

@@ -34,7 +34,7 @@ import butterknife.ButterKnife;
 
 public class DashboardAppointmentListAdapter extends RecyclerView.Adapter<DashboardAppointmentListAdapter.GroupViewHolder> {
 
-    private static final String TAG = "PatientList";
+    private static final String TAG = "PatientListActivity";
     private final GradientDrawable buttonBackground;
     private Context _context;
     private DashboardAppointmentListAdapter.OnItemClickListener onItemClickListener;

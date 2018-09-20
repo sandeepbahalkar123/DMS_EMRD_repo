@@ -24,7 +24,6 @@
                 tools:src="@drawable/uren_pic" />
 
             <LinearLayout
-                android:id="@+id/dataLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -46,9 +45,6 @@
                         android:id="@+id/patientId"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_toEndOf="@id/uhid"
-                        android:layout_toRightOf="@id/uhid"
                         android:fontFamily="@font/roboto_medium"
                         android:textColor="@color/green"
                         android:textSize="@dimen/sp13"
@@ -96,7 +92,6 @@
 
 
     <View
-        android:id="@+id/divider"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp1"
         android:layout_below="@+id/cardView"

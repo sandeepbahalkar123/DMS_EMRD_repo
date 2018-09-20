@@ -7,20 +7,25 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.res.ColorStateList;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.GradientDrawable;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
+import android.support.v4.widget.ImageViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -66,10 +71,10 @@ import javax.crypto.spec.SecretKeySpec;
 public class CommonMethods {
 
     private static final String TAG = "DOCUPHI/CommonMethods";
+    private static final AtomicInteger sNextGeneratedId = new AtomicInteger(1);
     private static boolean encryptionIsOn = true;
     private static String aBuffer = "";
     private static CheckIpConnection mCheckIpConnection;
-    private static final AtomicInteger sNextGeneratedId = new AtomicInteger(1);
     private int mYear, mMonth, mDay, mHour, mMinute;
     private DatePickerDialogListener mDatePickerDialogListener;
 
@@ -98,7 +103,6 @@ public class CommonMethods {
             return input;
         }
     }
-
 
 
     public static void showSnack(View mViewById, String msg) {
@@ -284,48 +288,6 @@ public class CommonMethods {
         return px / ((float) metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);
     }
 
-
-    public static void showInfoDialog(String msg, final Context mContext, final boolean closeActivity) {
-
-        final Dialog dialog = new Dialog(mContext);
-
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.dialog_ok);
-        dialog.setCanceledOnTouchOutside(false);
-        dialog.setCancelable(false);
-
-        ((TextView) dialog.findViewById(R.id.textview_sucess)).setText(msg);
-
-        dialog.findViewById(R.id.button_ok).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-                if (closeActivity)
-                    ((AppCompatActivity) mContext).finish();
-            }
-        });
-
-        dialog.show();
-    }
-
-    public static String getMealTime(int hour, int mint, Context context) {
-        //BB : 7-11,lunch : 11-3,dinner :7-11
-        String time = "";
-        if (hour > 7 && hour < 11)
-            time = context.getString(R.string.break_fast);
-        else if (hour >= 11 && hour < 15)
-            time = context.getString(R.string.mlunch);
-        else if (hour >= 15 && hour <= 17)
-            time = context.getString(R.string.msnacks);
-        else if (hour >= 17 && hour <= 24)
-            time = context.getString(R.string.mdinner);
-
-        CommonMethods.Log(TAG, "hour" + hour);
-        CommonMethods.Log(TAG, "getMealTime" + time);
-        return time;
-    }
-
     public static Date convertStringToDate(String dateString, String dateFormat) {
         SimpleDateFormat formatter = new SimpleDateFormat(dateFormat, Locale.US);
         Date date = null;
@@ -372,7 +334,26 @@ public class CommonMethods {
         if (dialogHeader != null)
             ((TextView) dialog.findViewById(R.id.textView_dialog_heading)).setText(dialogHeader);
 
-        dialog.findViewById(R.id.button_ok).setOnClickListener(new View.OnClickListener() {
+        float[] bottomLeftRadius = {0, 0, 0, 0, mContext.getResources().getDimension(R.dimen.dp8), mContext.getResources().getDimension(R.dimen.dp8), 0, 0};
+        float[] bottomRightRadius = {0, 0, 0, 0, 0, 0, mContext.getResources().getDimension(R.dimen.dp8), mContext.getResources().getDimension(R.dimen.dp8)};
+
+        GradientDrawable buttonLeftBackground = new GradientDrawable();
+        buttonLeftBackground.setShape(GradientDrawable.RECTANGLE);
+        buttonLeftBackground.setColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
+        buttonLeftBackground.setCornerRadii(bottomLeftRadius);
+
+        GradientDrawable buttonRightBackground = new GradientDrawable();
+        buttonRightBackground.setShape(GradientDrawable.RECTANGLE);
+        buttonRightBackground.setColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
+        buttonRightBackground.setCornerRadii(bottomRightRadius);
+
+        Button buttonRight = dialog.findViewById(R.id.button_cancel);
+        Button buttonLeft = dialog.findViewById(R.id.button_ok);
+
+        buttonLeft.setBackground(buttonLeftBackground);
+        buttonRight.setBackground(buttonRightBackground);
+
+        buttonLeft.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -387,7 +368,7 @@ public class CommonMethods {
                 }
             }
         });
-        dialog.findViewById(R.id.button_cancel).setOnClickListener(new View.OnClickListener() {
+        buttonRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
@@ -406,11 +387,27 @@ public class CommonMethods {
         dialog.setContentView(R.layout.dialog_exit);
         dialog.setCanceledOnTouchOutside(false);
         dialog.setCancelable(false);
-        dialog.findViewById(R.id.button_ok).setBackgroundColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
-        dialog.findViewById(R.id.button_cancel).setBackgroundColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
+
+        float[] bottomLeftRadius = {0, 0, 0, 0, mContext.getResources().getDimension(R.dimen.dp8), mContext.getResources().getDimension(R.dimen.dp8), 0, 0};
+        float[] bottomRightRadius = {0, 0, 0, 0, 0, 0, mContext.getResources().getDimension(R.dimen.dp8), mContext.getResources().getDimension(R.dimen.dp8)};
+        GradientDrawable buttonLeftBackground = new GradientDrawable();
+        buttonLeftBackground.setShape(GradientDrawable.RECTANGLE);
+        buttonLeftBackground.setColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
+        buttonLeftBackground.setCornerRadii(bottomLeftRadius);
+
+        GradientDrawable buttonRightBackground = new GradientDrawable();
+        buttonRightBackground.setShape(GradientDrawable.RECTANGLE);
+        buttonRightBackground.setColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
+        buttonRightBackground.setCornerRadii(bottomRightRadius);
+
+        Button buttonRight = dialog.findViewById(R.id.button_cancel);
+        Button buttonLeft = dialog.findViewById(R.id.button_ok);
+
+        buttonLeft.setBackground(buttonLeftBackground);
+        buttonRight.setBackground(buttonRightBackground);
 
         ((TextView) dialog.findViewById(R.id.textview_sucess)).setText(msg + changeIpAddress);
-        dialog.findViewById(R.id.button_ok).setOnClickListener(new View.OnClickListener() {
+        buttonLeft.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
@@ -420,7 +417,7 @@ public class CommonMethods {
 
             }
         });
-        dialog.findViewById(R.id.button_cancel).setOnClickListener(new View.OnClickListener() {
+        buttonRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
@@ -504,8 +501,7 @@ public class CommonMethods {
         byte[] decryptBytes = localCipher.doFinal(value_bytes);
 
         //STEP 4
-        String s = new String(decryptBytes, "UTF-8");
-        return s;
+        return new String(decryptBytes, "UTF-8");
     }
 
     private static byte[] hexStringToByteArray(String s) {
@@ -529,7 +525,7 @@ public class CommonMethods {
                 .load(url)
                 .apply(requestOptions)
                 .into(imageView);
-        CommonMethods.Log(TAG,url);
+        CommonMethods.Log(TAG, url);
     }
     //--------------
 }

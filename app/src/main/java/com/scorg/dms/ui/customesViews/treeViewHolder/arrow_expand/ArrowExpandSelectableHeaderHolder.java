@@ -1,6 +1,7 @@
 package com.scorg.dms.ui.customesViews.treeViewHolder.arrow_expand;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import com.scorg.dms.R;
 import com.scorg.dms.model.dms_models.responsemodel.annotationlistresponsemodel.AnnotationList;
 import com.scorg.dms.model.dms_models.responsemodel.annotationlistresponsemodel.DocTypeList;
+import com.scorg.dms.singleton.DMSApplication;
 import com.unnamed.b.atv.model.TreeNode;
 
 /**
@@ -34,12 +36,12 @@ public class ArrowExpandSelectableHeaderHolder extends TreeNode.BaseNodeViewHold
     private ArrowExpandSelectableHeaderHolderLockIconClickListener lockIconClickListener;
     private boolean isChecked;
 
-    public ArrowExpandSelectableHeaderHolder(Context context, boolean isDefaultExpanded, boolean istViewClickRequired, int confidentialState,boolean isChecked) {
+    public ArrowExpandSelectableHeaderHolder(Context context, boolean isDefaultExpanded, boolean istViewClickRequired, int confidentialState, boolean isChecked) {
 
-        this(context, isDefaultExpanded, (int) (context.getResources().getDimension(R.dimen.dp10) / context.getResources().getDisplayMetrics().density), istViewClickRequired, confidentialState,isChecked);
+        this(context, isDefaultExpanded, (int) (context.getResources().getDimension(R.dimen.dp10) / context.getResources().getDisplayMetrics().density), istViewClickRequired, confidentialState, isChecked);
     }
 
-    public ArrowExpandSelectableHeaderHolder(Context context, boolean isDefaultExpanded, int leftPadding, boolean istViewClickRequired, int confidentialState,boolean isChecked) {
+    public ArrowExpandSelectableHeaderHolder(Context context, boolean isDefaultExpanded, int leftPadding, boolean istViewClickRequired, int confidentialState, boolean isChecked) {
         super(context);
         this.leftPadding = leftPadding;
         this.isDefaultExpanded = isDefaultExpanded;
@@ -81,6 +83,7 @@ public class ArrowExpandSelectableHeaderHolder extends TreeNode.BaseNodeViewHold
         //arrowView.setPadding(20, 10, 10, 10);
         if (node.isLeaf()) {
             arrowView.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_tree_file));
+            arrowView.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         }
 
 
@@ -174,10 +177,11 @@ public class ArrowExpandSelectableHeaderHolder extends TreeNode.BaseNodeViewHold
             icon_lock.setVisibility(View.VISIBLE);
             if (confidentialState == 4) {
                 icon_lock.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_unlock));
+                icon_lock.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
             }
         }
 
-        if(isChecked){
+        if (isChecked) {
             nodeSelector.setChecked(isChecked);
         }
 
@@ -188,8 +192,10 @@ public class ArrowExpandSelectableHeaderHolder extends TreeNode.BaseNodeViewHold
     @Override
     public void toggle(boolean active) {
         //  arrowView.setIconText(context.getResources().getString(active ? R.string.ic_keyboard_arrow_down : R.string.ic_keyboard_arrow_right));
-        if (!mNode.isLeaf())
+        if (!mNode.isLeaf()) {
             arrowView.setImageDrawable(context.getResources().getDrawable(active ? R.drawable.ic_tree_folder_open : R.drawable.ic_tree_close_folder));
+            arrowView.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+        }
 
     }
 
@@ -212,16 +218,16 @@ public class ArrowExpandSelectableHeaderHolder extends TreeNode.BaseNodeViewHold
         return isTreeLabelBold;
     }
 
+    public void setTreeLabelBold(boolean treeLabelBold) {
+        isTreeLabelBold = treeLabelBold;
+    }
+
     public boolean isOnlyOneNodeExpanded() {
         return isOnlyOneNodeExpanded;
     }
 
     public void setOnlyOneNodeExpanded(boolean expandedOrCollapsed) {
         isOnlyOneNodeExpanded = expandedOrCollapsed;
-    }
-
-    public void setTreeLabelBold(boolean treeLabelBold) {
-        isTreeLabelBold = treeLabelBold;
     }
 
 

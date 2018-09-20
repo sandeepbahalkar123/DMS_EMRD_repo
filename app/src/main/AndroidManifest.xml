@@ -70,7 +70,7 @@
         <!-- DMS -->
 
         <activity
-            android:name=".ui.activities.dms_patient_list.PatientList"
+            android:name=".ui.activities.dms_patient_list.PatientListActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/patient_list"
             android:theme="@style/AppTheme.NoActionBar" />

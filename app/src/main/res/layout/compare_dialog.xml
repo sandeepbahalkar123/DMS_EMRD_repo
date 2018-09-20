@@ -18,10 +18,7 @@
             android:id="@+id/compareLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
             android:layout_gravity="center"
-            android:background="@drawable/compare_label_background"
             android:gravity="center"
             android:paddingBottom="@dimen/dp5"
             android:paddingEnd="@dimen/activity_horizontal_margin"
@@ -37,14 +34,11 @@
             android:id="@+id/deviderView"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp2"
-            android:layout_below="@+id/compareLabel"
             android:background="@color/tagColor" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="fill_parent"
-            android:layout_above="@+id/compareButton"
-            android:layout_below="@+id/deviderView"
             android:gravity="center"
             android:orientation="horizontal">
 
@@ -82,7 +76,6 @@
                     tools:text="@string/patient_id" />
 
                 <TextView
-                    android:id="@+id/fileOneAdmissionDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
@@ -164,7 +157,6 @@
                     tools:text="@string/patient_id" />
 
                 <TextView
-                    android:id="@+id/fileTwoAdmissionDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
@@ -205,12 +197,10 @@
             android:id="@+id/compareButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
             android:layout_marginEnd="@dimen/dp10"
             android:layout_marginLeft="@dimen/dp10"
             android:layout_marginRight="@dimen/dp10"
             android:layout_marginStart="@dimen/dp10"
-            android:background="@drawable/compare_button_themecolor_background"
             android:gravity="center"
             android:padding="@dimen/dp10"
             android:text="@string/comparedocument"

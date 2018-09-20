@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".ui.activities.dms_patient_list.PatientList"
+    tools:context=".ui.activities.dms_patient_list.PatientListActivity"
     tools:showIn="@layout/patient_list_app_bar">
 
     <FrameLayout

@@ -34,13 +34,14 @@
         android:layout_marginTop="@dimen/dp20"
         android:orientation="horizontal">
 
-        <ImageView
+        <android.support.v7.widget.AppCompatImageView
             android:id="@+id/homeLogo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/home" />
 
         <TextView
+            android:id="@+id/homeText"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
@@ -65,13 +66,14 @@
         android:layout_marginTop="@dimen/dp10"
         android:orientation="horizontal">
 
-        <ImageView
+        <android.support.v7.widget.AppCompatImageView
             android:id="@+id/settingLogo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/settings" />
 
         <TextView
+            android:id="@+id/settingText"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
@@ -98,13 +100,14 @@
 
         android:orientation="horizontal">
 
-        <ImageView
+        <android.support.v7.widget.AppCompatImageView
             android:id="@+id/supportLogo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/support" />
 
         <TextView
+            android:id="@+id/supportText"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"

@@ -28,7 +28,7 @@ import butterknife.ButterKnife;
 
 public class PatientEpisodeRecycleViewListAdapter extends RecyclerView.Adapter<PatientEpisodeRecycleViewListAdapter.GroupViewHolder> {
 
-    private static final String TAG = "PatientList";
+    private static final String TAG = "PatientListActivity";
     private Context _context;
     private OnEpisodeClickListener onPatientListener;
 

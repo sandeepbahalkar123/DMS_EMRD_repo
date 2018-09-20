@@ -1,6 +1,7 @@
 package com.scorg.dms.adapters.dms_adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.scorg.dms.R;
+import com.scorg.dms.singleton.DMSApplication;
 
 public class CustomPreferenceSpinAdapter extends BaseAdapter {
     Context mContext;
@@ -51,6 +53,7 @@ public class CustomPreferenceSpinAdapter extends BaseAdapter {
 
         txtPrefName.setText(prefNameList[position]);
         imagePref.setImageResource(prefImageList[position]);
+        imagePref.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
 
         return view;
     }

@@ -1,6 +1,5 @@
 <resources>
     <dimen name="dialog_radius">15dp</dimen>
-    <dimen name="device">3dp</dimen>
     <dimen name="dp0">0dp</dimen>
     <dimen name="dp1">1dp</dimen>
     <dimen name="dp2">3dp</dimen>
@@ -18,33 +17,22 @@
     <dimen name="dp50">75dp</dimen>
     <dimen name="dp34">51dp</dimen>
     <dimen name="dp14">21dp</dimen>
-    <dimen name="dp18">27dp</dimen>
     <dimen name="fab_margin">24dp</dimen>
     <dimen name="dp9">13dp</dimen>
     <dimen name="dp13">19dp</dimen>
     <dimen name="dp7">10dp</dimen>
     <dimen name="dp67">100dp</dimen>
     <dimen name="dp11">17dp</dimen>
-    <dimen name="dp21">31dp</dimen>
     <dimen name="dp3">5dp</dimen>
     <dimen name="dp100">150dp</dimen>
     <dimen name="dp17">25dp</dimen>
     <dimen name="dp23">34dp</dimen>
     <dimen name="dp28">42dp</dimen>
     <dimen name="dp32">48dp</dimen>
-    <dimen name="dp210">315dp</dimen>
-    <dimen name="dp120">180dp</dimen>
     <dimen name="dp80">120dp</dimen>
-    <dimen name="dp58">87dp</dimen>
     <dimen name="dp60">90dp</dimen>
-    <dimen name="dp24">36dp</dimen>
-    <dimen name="dp86">129dp</dimen>
     <dimen name="dp222">333dp</dimen>
-    <dimen name="dashboard_back">420dp</dimen>
-    <dimen name="dp130">195dp</dimen>
     <dimen name="drawer_width">500dp</dimen>
-    <dimen name="dialog_waitinglist_bullet_width_height">16dp</dimen>
-    <dimen name="dp62">112dp</dimen>
 
     <dimen name="sp11">17sp</dimen>
     <dimen name="sp12">18sp</dimen>
@@ -53,15 +41,12 @@
     <dimen name="sp16">24sp</dimen>
     <dimen name="sp15">22sp</dimen>
     <dimen name="sp17">26sp</dimen>
-    <dimen name="sp22">22sp</dimen>
     <dimen name="sp20">30sp</dimen>
     <dimen name="sp10">15sp</dimen>
-    <dimen name="sp9">13sp</dimen>
     <dimen name="sp8">11sp</dimen>
     <dimen name="sp24">36sp</dimen>
     <dimen name="sp13">19sp</dimen>
     <dimen name="sp19">28sp</dimen>
-    <dimen name="dialog_waitinglist_textsize">18sp</dimen>
 
     <!--// DMS // -->
 

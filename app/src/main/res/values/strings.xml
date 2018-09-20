@@ -1,22 +1,8 @@
 <resources>
     <string name="app_name">DOCUPHI</string>
-    <string name="enter_mobile_no">Mobile No.</string>
-    <string name="log_in">Login</string>
-    <string name="enter_full_name">Name</string>
-    <string name="enter_email_id">Email ID</string>
     <string name="internet">Please check your Internet Connection</string>
     <string name="timeout">Timeout error</string>
-    <string name="break_fast">BREAKFAST</string>
-    <string name="mlunch">LUNCH</string>
-    <string name="msnacks">SNACKS</string>
-    <string name="time_select_err">Please select time slot.</string>
-    <string name="token_select_time_err_msg">Please select future time slot for the day.</string>
-    <string name="mdinner">DINNER</string>
-    <string name="resend_in_text">Resend in</string>
-    <string name="resend"><u>Resend OTP</u></string>
     <string name="ok">OK</string>
-    <string name="sign_up">Sign Up</string>
-    <string name="sign_up_confirmation">Sign Up Confirmation</string>
     <string name="logout">Logout</string>
     <string name="need_some_help">Need some help?</string>
     <string name="feel_free">Feel free to get in touch with us</string>
@@ -26,42 +12,18 @@
     <!--<string name="roboto_bold">roboto_bold.ttf</string>-->
     <!--<string name="roboto_medium">roboto_medium.ttf</string>-->
     <!--<string name="roboto_regular">roboto_regular.ttf</string>-->
-    <string name="gallery">Gallery</string>
-    <string name="files">Files</string>
     <string name="file">File: </string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="enter_otp">Enter OTP</string>
-    <string name="enter_word">Enter </string>
     <string name="enter">Enter&#160;</string>
     <string name="read_more"><u>More</u></string>
     <string name="read_less">&#160;<u>
         less</u></string>
-    <string name="done">Done</string>
-    <string name="practices_at_locations">Practices at $$ locations</string>
-    <string name="title_activity_zoomview">Zoom View</string>
-    <string name="type">type</string>
-    <string name="name">Name</string>
-    <string name="details">&#160;Details</string>
     <string name="forgot_password">Forgot Password?</string>
-    <string name="forgot_password_header">Forgot Password</string>
-    <string name="message_for_mobile_otp">Please input the OTP received on your Mobile No.&#160; %1$s</string>
-    <string name="message_forgot_password">Please provide your email id to access the reset password link.</string>
-    <string name="message_social_login_confirm_mobile_no_password">Please input your mobile no. and password.</string>
-    <string name="submit">Submit</string>
-    <string name="err_email_invalid">Enter valid email.</string>
-    <string name="err_otp_invalid">Enter valid OTP</string>
-    <string name="err_maximum_otp_retries">You have exceeded maximum retry of OTP generation, please try after sometime.</string>
-    <string name="err_invalid_mobile_no">Enter valid mobile no.</string>
-    <string name="enter_password">Password</string>
-    <string name="error_too_small_password">Password should be 6 characters long. </string>
-    <string name="title">Title</string>
     <string name="server_error">Server Error</string>
 
 
     <!--//*** Google Map key-->
 
-    <string name="enter_otp_for_login">Otp For Login</string>
-    <string name="your_health">\"Your Own Healthcare Repository\"</string>
     <!-- <strsenderNamename="google_maps_key">AIzaSyDxO-cLqGemArsUCSrn_uIUn5FzTkds4u0</string>-->
 
     <!-- <strsenderNamename="google_maps_key">AIzaSyDxO-cLqGemArsUCSrn_uIUn5FzTkds4u0</string>-->
@@ -69,39 +31,10 @@
 
     <!--Key for Debug-->
 
-    <string name="google_maps_key">AIzaSyBtI5h1jCRJZFXQowkuglxMtNYPURtHX5M</string>
-
-    <string name="profile_exists">User\'s profile is already exist!!</string>
-    <string name="enter_otp_no">Enter otp received on your mobile no.</string>
-    <string name="login_with_gmail">Login with gmail</string>
-    <string name="login_with_facebook">Login with facebook</string>
-
     <!--sandeep sir account credentials-->
-    <string name="facebook_app_id">1351340758298095</string>
-    <string name="fb_login_protocol_scheme">fb1351340758298095</string>
-    <string name="dummy_full">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</string>
-    <string name="dummy_normal">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</string>
-    <string name="cardiologist">cardiologist</string>
-    <string name="ophthalmologist">ophthalmologist</string>
-    <string name="gastro">gastro</string>
-    <string name="physiotherapist">physiotherapist</string>
-    <string name="orthopaedic">orthopaedic</string>
-    <string name="ent">ent</string>
-    <string name="dentist">dentist</string>
-    <string name="gynecologist">gynecologist</string>
-    <string name="paediatric">paediatric</string>
     <string name="parse_error">parse error</string>
     <string name="no_connection_error">Internal server error</string>
     <string name="default_error">default error</string>
-    <string name="dermatologist">dermatologist</string>
-    <string name="neurologist">neurologist</string>
-    <string name="physician">physician</string>
-    <string name="psychiatrist">psychiatrist</string>
-    <string name="oncologist">oncologist</string>
-    <string name="urologist">urologist</string>
-    <string name="nephrologist">nephrologist</string>
-    <string name="surgeon">surgeon</string>
-    <string name="endocrinologist">endocrinologist</string>
     <string name="cancel">Cancel</string>
     <string name="do_you_exit">Do you want to exit ?</string>
     <string name="do_you_want_to_cancel">Do you want to cancel the request ?</string>
@@ -109,106 +42,41 @@
     <string name="apply">Apply</string>
     <string name="filter">Filter</string>
     <string name="reset">Reset</string>
-    <string name="sorting">Sorting</string>
-    <string name="sort">Sort by</string>
-    <string name="choose_one_option">Choose one option</string>
-    <string name="gender">Gender</string>
-    <string name="select_gender">Select Gender</string>
-    <string name="male">Male</string>
-    <string name="female">Female</string>
-    <string name="age">Age</string>
-    <string name="less">less</string>
-    <string name="equal">equal</string>
-    <string name="greater">greater</string>
-    <string name="less_than_sign"><![CDATA[<]]></string>
-    <string name="greater_than_sign"><![CDATA[>]]></string>
-    <string name="age_range">Age Range</string>
-    <string name="city">City</string>
-    <string name="select_city">Select City</string>
     <string name="welcome">Welcome,</string>
-    <string name="appointment_status">Appointment Status</string>
-    <string name="select_status">Select Status</string>
-    <string name="clinic_names">Clinic Names</string>
-    <string name="select_clinic">Select Clinic</string>
     <string name="search_hint"><![CDATA[Search by Name, Phone & Patient ID]]></string>
     <string name="home">Home</string>
-    <string name="profile">Profile</string>
-    <string name="app_logo">AppLogo</string>
     <string name="settings">Settings</string>
     <string name="support">Support</string>
     <string name="outstanding_amount">O/S Amount:</string>
-    <string name="id">ID:</string>
     <string name="opd_appointment">Appointment</string>
     <string name="nil">NIL</string>
     <string name="booked">Booked</string>
     <string name="capitalcompleted">Completed</string>
-    <string name="file_extension">file_extension</string>
-    <string name="title_activity_selected_docs">Selected Documents</string>
     <string name="appointments">Appointments</string>
-    <string name="normalRange">normal</string>
-    <string name="moderateRange">Moderate</string>
-    <string name="severeRange">Severe</string>
-    <string name="select_all">Select All</string>
-    <string name="send_sms">Send SMS</string>
     <string name="waiting_list">Waiting List</string>
     <string name="request_list">Request List</string>
-    <string name="bp_max">BpMax</string>
-    <string name="bp">BP</string>
-    <string name="bp_min">BpMin</string>
-    <string name="dash">-</string>
     <string name="dashboard">dashboard</string>
-    <string name="systolic_pressure">Systolic BP</string>
-    <string name="diastolic_pressure">Diastolic BP</string>
-    <string name="normal">Normal Level :</string>
-    <string name="moderate">Moderate Level :</string>
-    <string name="severe">Severe Level :</string>
     <string name="my_patients">My Patients</string>
     <string name="do_you_logout">Do you want to logout?</string>
-    <string name="transgender">Transgender</string>
     <string name="select_date_text">Select Date</string>
-    <string name="just_now">Just Now</string>
-    <string name="services"><u>Services</u></string>
-    <string name="about_doctor"><u>About Doctor :</u></string>
     <string name="doc_name">Doctor Name:</string>
     <!--<string name="template_list">Template List</string>-->
-    <string name="template_list">SMS Templates</string>
     <string name="active">ACTIVE</string>
     <string name="pending_request">PENDING REQUESTS</string>
     <string name="all_request">ALL REQUESTS</string>
     <string name="view_all">VIEW ALL</string>
     <string name="in_time">In Time</string>
     <string name="appointment_completed">Appointment is completed</string>
-    <string name="Confirmed">Confirmed</string>
-    <string name="cancelled">Cancelled</string>
-    <string name="no_show">No show</string>
-    <string name="other">Other</string>
     <string name="episode">Episode</string>
     <string name="episode_details">Episode Details</string>
-    <string name="enter_sms_text_here">Enter sms text here</string>
-    <string name="location">Location</string>
     <string name="today_appointment">Today\'s Appointment/Walk-in</string>
     <string name="today_appointment_no_new_line">Today\'s Appointments</string>
     <string name="waiting_patients"> Waiting /Admitted Patients</string>
     <string name="pending_approval">Pending\nApproval</string>
     <string name="today_patient">Total\nPatients</string>
-    <string name="consultation">Consultation</string>
-    <string name="follow_up">Follow Up</string>
     <string name="years">yrs -\u0020</string>
-    <string name="camera">Camera</string>
 
 
-    <string name="book_appointment">Book Appointment</string>
-    <string name="appointment_booked_message">Appointment has already been taken with this doctor.</string>
-    <string name="no_time_slot_message">No time slots available.</string>
-    <string name="no_clinic_data_found">No clinic data found.</string>
-    <string name="morning">Morning</string>
-    <string name="afternoon">Afternoon</string>
-    <string name="evening">Evening</string>
-    <string name="night">Night</string>
-    <string name="book_time_slot_err">Slot must be greater than current time.</string>
-    <string name="booking_appointment">Booking Appointment for :-</string>
-    <string name="Reschedule">Reschedule</string>
-    <string name="view">VIEW</string>
     <string name="waiting_list_message">Oops !! There are no patients currently in the waiting list.</string>
     <string name="company_name">SCORG TECHNOLOGIES Pvt.Ltd.</string>
 
@@ -227,7 +95,6 @@
     <string name="searchbyPatient">Search By Patient Name</string>
     <string name="enterAnnotation">Enter Annotation</string>
     <string name="searchAnnotation">Search Documents</string>
-    <string name="scrollingBoth">Scrolling Both</string>
     <string name="patientInformation">Patient Information</string>
     <string name="refId">REF ID</string>
     <string name="change_ip_address">Change IP Address</string>
@@ -244,15 +111,12 @@
     <string name="medical_records">Medical Records</string>
     <string name="complete">Complete</string>
     <string name="select_date_type">Date type</string>
-    <string name="select_file_type">Select file type</string>
     <string name="request_raised_success"> Request raised successfully.</string>
 
     <!-- Strings related to login -->
     <string name="error_empty_fields">Please enter username/password</string>
 
     <string name="visit_date">Visit Date:\u0020</string>
-    <string name="error_enter_opd">Enter OPD</string>
-    <string name="error_enter_ipd">Enter IPD</string>
     <string name="error_enter_uhid">Enter UHID</string>
     <string name="Select">Select</string>
     <string name="admission_date">Admission Date:\u0020</string>
@@ -270,17 +134,13 @@
     <string name="date_type">DType:</string>
     <string name="documenttype">DT:</string>
     <string name="enter_annotation">Annotation:</string>
-    <string name="error_compare_patient">Please select same patient record to compare</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="preference">Preference:</string>
     <string name="records_more">Records and more</string>
     <string name="records">Records</string>
 
-    <string name="previous">Previous</string>
-    <string name="next">Next</string>
     <string name="support_bottom_first_line">DOCUPHI is a unique product of</string>
-    <string name="error_max_two_reports">You can not select more than two reports to compare</string>
     <string name="invalid_username_password"> Invalid username/password</string>
     <string name="pdf">PDF</string>
     <string name="patient_list_search_hint">Search UHID,Ref id,Patient name</string>
@@ -335,13 +195,10 @@
 
     <!--********Tree view holder icon codes****************-->
     <string name="ic_folder">&#xe09d;</string>
-    <string name="ic_keyboard_arrow_down">&#xe0c5;</string>
-    <string name="ic_keyboard_arrow_right">&#xe0c7;</string>
     <string name="ic_shopping_cart">&#xe14f;</string>
     <string name="filenotfound">File not found</string>
     <string name="error_in_ip">Please enter valid IP address</string>
     <string name="comparedocument">Compare Document</string>
-    <string name="adddocument">Add Document</string>
     <string name="denied_permission_read_document">Denied permission read Document.</string>
     <string name="file_one">FileType-1</string>
     <string name="file_two">FileType-2</string>

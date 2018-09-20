@@ -13,7 +13,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dp5"
         android:layout_marginBottom="@dimen/dp5"
-        android:background="@drawable/curv_edge_blue"
         android:orientation="horizontal"
         android:weightSum="6">
 
