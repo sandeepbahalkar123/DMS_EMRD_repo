@@ -8,22 +8,6 @@
     android:paddingEnd="@dimen/dp4"
     android:paddingStart="@dimen/dp4">
 
-    <LinearLayout
-        android:id="@+id/behind_views"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_alignBottom="@+id/container"
-        android:layout_alignTop="@+id/container"
-        tools:visibility="visible">
-
-        <android.support.v4.widget.Space
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight=".65" />
-
-
-
-    </LinearLayout>
 
     <FrameLayout
         android:id="@+id/container"
@@ -36,9 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/dp2"
-            android:background="@drawable/bg_waiting_white_box"
             android:orientation="vertical">
-
             <LinearLayout
                 android:id="@+id/idAndDetailsLayout"
                 android:layout_width="match_parent"
@@ -184,6 +166,7 @@
             </LinearLayout>
 
             <View
+                android:id="@+id/viewLine1"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp1"
                 android:layout_marginEnd="@dimen/dp2"
@@ -200,15 +183,18 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight=".5"
-                    android:gravity="center_horizontal">
+                    android:gravity="center">
+                    <ImageView
+                        android:id="@+id/callIcon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/dp3"
+                        android:src="@drawable/mobile_icon" />
 
                     <TextView
                         android:id="@+id/patientPhoneNumber"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:drawableLeft="@drawable/mobile_icon"
-                        android:drawablePadding="@dimen/dp9"
-                        android:drawableStart="@drawable/mobile_icon"
                         android:textColor="@color/rating_color"
                         android:textSize="@dimen/sp12"
                         android:fontFamily="@font/roboto_medium"

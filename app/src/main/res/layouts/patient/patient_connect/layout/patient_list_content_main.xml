@@ -23,10 +23,11 @@
             <android.support.v7.widget.AppCompatAutoCompleteTextView
                 android:id="@+id/autocompleteSearchBox"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp36"
+                android:layout_height="wrap_content"
                 android:layout_margin="@dimen/dp5"
-                android:background="@drawable/round_background_full_view"
                 android:gravity="center"
+                android:padding="@dimen/dp5"
+                android:background="@null"
                 android:hint="@string/patient_list_search_hint"
                 android:textCursorDrawable="@drawable/cursor_color" />
 
@@ -74,7 +75,6 @@
             android:layout_marginBottom="@dimen/dp10"
             android:layout_marginEnd="@dimen/fab_margin"
             android:layout_marginRight="@dimen/fab_margin"
-            app:backgroundTint="@color/Red"
             app:srcCompat="@drawable/ic_filter" />
 
     </FrameLayout>

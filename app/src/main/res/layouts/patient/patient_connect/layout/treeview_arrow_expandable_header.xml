@@ -17,7 +17,7 @@
         android:paddingStart="@dimen/dp5">
 
 
-        <CheckBox
+        <android.support.v7.widget.AppCompatCheckBox
             android:id="@+id/node_selector"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -26,13 +26,12 @@
             tools:visibility="visible" />
 
 
-        <android.support.v7.widget.AppCompatImageView
+        <ImageView
             android:id="@+id/icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dp5"
             android:layout_marginRight="@dimen/dp5"
-            android:tint="@color/colorAccent"
             android:src="@drawable/ic_tree_close_folder" />
 
         <TextView

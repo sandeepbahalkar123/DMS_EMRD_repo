@@ -73,11 +73,12 @@ public class DashboardAppointmentListAdapter extends RecyclerView.Adapter<Dashbo
     public void onBindViewHolder(GroupViewHolder groupViewHolder, final int position) {
 
         groupViewHolder.episodeList.setBackground(buttonBackground);
-        groupViewHolder.userName.setTextColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
+        groupViewHolder.userName.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
 
         final AppointmentPatientData groupHeader = _originalListDataHeader.get(position);
 
         groupViewHolder.userName.setText(groupHeader.getPatientName().trim());
+        groupViewHolder.patientId.setTextColor(Color.parseColor(DMSApplication.COLOR_APPOINTMENT_TEXT));
         groupViewHolder.patientId.setText(uhid + " - " + groupHeader.getPatientId().trim());
 
         //-------------

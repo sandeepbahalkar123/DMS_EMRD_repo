@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.ViewGroup;
@@ -110,7 +111,9 @@ public class DefaultScrollHandle extends RelativeLayout implements ScrollHandle 
         } else {
             handler.removeCallbacks(hidePageScrollerRunnable);
         }
-        setPosition((pdfView.isSwipeVertical() ? pdfView.getHeight() : pdfView.getWidth()) * position);
+        if (pdfView != null)
+            setPosition((pdfView.isSwipeVertical() ? pdfView.getHeight() : pdfView.getWidth()) * position);
+        else Log.e("DEFAULT_SCROLL","null pdf view");
     }
 
     private void setPosition(float pos) {

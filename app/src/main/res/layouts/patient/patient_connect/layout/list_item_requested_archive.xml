@@ -19,7 +19,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/dp2"
-            android:background="@drawable/round_background_full_view"
             android:orientation="vertical">
 
             <LinearLayout
@@ -84,6 +83,7 @@
                     </LinearLayout>
 
                     <View
+                        android:id="@+id/viewDivider"
                         android:layout_width="0.5dp"
                         android:layout_height="fill_parent"
                         android:background="@color/tagColor"/>

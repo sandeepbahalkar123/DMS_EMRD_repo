@@ -11,12 +11,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.scorg.dms.R;
 import com.scorg.dms.model.dms_models.responsemodel.annotationlistresponsemodel.AnnotationList;
 import com.scorg.dms.model.dms_models.responsemodel.annotationlistresponsemodel.DocTypeList;
+import com.scorg.dms.singleton.DMSApplication;
 import com.scorg.dms.util.CommonMethods;
 import com.scorg.dms.util.DMSConstants;
 
@@ -30,6 +32,7 @@ import java.util.Random;
  */
 
 public class TagAdapter extends RecyclerView.Adapter<TagAdapter.ViewHolder> {
+
     private Handler mAddedTagsEventHandler;
     private HashMap<String, Object> mAddedTagsForFiltering;
     private ArrayList<String> mTagsDataSet;
@@ -38,21 +41,12 @@ public class TagAdapter extends RecyclerView.Adapter<TagAdapter.ViewHolder> {
     private Random mRandom = new Random();
     private String TAG = this.getClass().getName();
 
-    public TagAdapter(Context context, ArrayList<String> list, HashMap<String, Object> mAddedTagsForFiltering, Handler mAddedTagsEventHandler) {
-        mTagsDataSet = list;
-        mContext = context;
-        this.mAddedTagsForFiltering = mAddedTagsForFiltering;
-        this.mAddedTagsEventHandler = mAddedTagsEventHandler;
-        inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-    }
-
     public TagAdapter(Context context, HashMap<String, Object> mAddedTagsForFiltering, Handler mAddedTagsEventHandler) {
         mContext = context;
         this.mAddedTagsForFiltering = mAddedTagsForFiltering;
         this.mAddedTagsEventHandler = mAddedTagsEventHandler;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.mTagsDataSet = new ArrayList<String>();
-
         for (Map.Entry<String, Object> entry : mAddedTagsForFiltering.entrySet()) {
             String tempValue;
             if (entry.getValue() instanceof DocTypeList || entry.getValue() instanceof AnnotationList) {
@@ -70,13 +64,13 @@ public class TagAdapter extends RecyclerView.Adapter<TagAdapter.ViewHolder> {
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView mTextView;
         public ImageButton mRemoveButton;
-        public RelativeLayout mRelativeLayout;
+        public LinearLayout tagLayout;
 
         public ViewHolder(View v) {
             super(v);
             mTextView = (TextView) v.findViewById(R.id.tv_dispalydetails);
             mRemoveButton = (ImageButton) v.findViewById(R.id.ib_remove);
-            // mRelativeLayout = (RelativeLayout) v.findViewById(R.id.rl);
+            tagLayout = (LinearLayout) v.findViewById(R.id.tagLayout);
         }
     }
 
@@ -84,13 +78,17 @@ public class TagAdapter extends RecyclerView.Adapter<TagAdapter.ViewHolder> {
     public TagAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // Create a new View
         View v = inflater.inflate(R.layout.tag_row_item, parent, false);
+
         return new ViewHolder(v);
     }
 
     @Override
     public void onBindViewHolder(final TagAdapter.ViewHolder holder, int position) {
-
-
+        GradientDrawable buttonBackground = new GradientDrawable();
+        buttonBackground.setShape(GradientDrawable.RECTANGLE);
+        buttonBackground.setColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+        buttonBackground.setCornerRadius(mContext.getResources().getDimension(R.dimen.dp20));
+        holder.tagLayout.setBackground(buttonBackground);
 //        String.valueOf(mTagsDataSet.get(position).split("\\|")[1])
 
         String data = mTagsDataSet.get(position);

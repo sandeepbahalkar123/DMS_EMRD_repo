@@ -8,20 +8,24 @@ import android.animation.ValueAnimator;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.content.res.ColorStateList;
 import android.content.res.Configuration;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.AppCompatImageButton;
 import android.support.v7.widget.AppCompatImageView;
+import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -176,6 +180,10 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
     TextView mFileTypeOne;
     @BindView(R.id.fileTypeTwoFileTypeName)
     TextView mFileTypeTwo;
+    @BindView(R.id.compareLabel)
+    TextView compareLabel;
+
+
     //----------
     @BindView(R.id.fileTypeTreeViewContainer)
     RelativeLayout mFileTypeOneTreeViewContainer;
@@ -202,11 +210,11 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
     @BindView(R.id.layoutCompareSwitch)
     LinearLayout layoutCompareSwitch;
     @BindView(R.id.compareDialogSwitch)
-    Switch mOpenCompareDialogSwitch;
+    SwitchCompat mOpenCompareDialogSwitch;
     @BindView(R.id.layoutCompareSwitch1)
     LinearLayout layoutCompareSwitch1;
     @BindView(R.id.compareDialogSwitch1)
-    Switch mOpenCompareDialogSwitch1;
+    SwitchCompat mOpenCompareDialogSwitch1;
     @BindView(R.id.imageCloseDrawer)
     AppCompatImageButton imageCloseDrawer;
     @BindView(R.id.patientIcon)
@@ -215,6 +223,12 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
     ImageView uhidIcon;
     @BindView(R.id.addressIcon)
     ImageView addressIcon;
+
+    @BindView(R.id.deviderView)
+    View deviderView;
+
+
+
     DrawerLayout mDrawer;
     //---------
     ArrayList<PatientEpisodeFileData> mSelectedFileTypeDataToCompare;
@@ -264,11 +278,42 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
     }
 
     private void initialize() {
-
+        mContext = getApplicationContext();
         patientIcon.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         uhidIcon.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         addressIcon.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+        deviderView.setBackgroundColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+        GradientDrawable cardBackground = new GradientDrawable();
+        cardBackground.setShape(GradientDrawable.RECTANGLE);
+        cardBackground.setColor(Color.WHITE);
+        cardBackground.setCornerRadius(mContext.getResources().getDimension(R.dimen.dp8));
+        cardBackground.setStroke(mContext.getResources().getDimensionPixelSize(R.dimen.dp1), Color.parseColor(DMSApplication.COLOR_PRIMARY));
+        mPatientId.setBackground(cardBackground);
+        int[][] states = new int[][] {
+                new int[] {-android.R.attr.state_checked},
+                new int[] {android.R.attr.state_checked},
+        };
 
+        int[] thumbColors = new int[] {
+                Color.LTGRAY,
+                Color.parseColor(DMSApplication.COLOR_ACCENT)
+        };
+
+        int[] trackColors = new int[] {
+                Color.LTGRAY,
+                Color.parseColor(DMSApplication.COLOR_ACCENT),
+        };
+
+
+
+        DrawableCompat.setTintList(DrawableCompat.wrap(mOpenCompareDialogSwitch.getThumbDrawable()), new ColorStateList(states, thumbColors));
+        DrawableCompat.setTintList(DrawableCompat.wrap(mOpenCompareDialogSwitch.getTrackDrawable()), new ColorStateList(states, trackColors));
+
+        DrawableCompat.setTintList(DrawableCompat.wrap(mOpenCompareDialogSwitch1.getThumbDrawable()), new ColorStateList(states, thumbColors));
+        DrawableCompat.setTintList(DrawableCompat.wrap(mOpenCompareDialogSwitch1.getTrackDrawable()), new ColorStateList(states, trackColors));
+        compareLabel.setBackgroundColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
+        mFileOneRemoveButton.setBackgroundColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
+        mFileTwoRemoveButton.setBackgroundColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
         Bundle extra = getIntent().getBundleExtra(DMSConstants.DATA);
 
         if (extra != null) {
@@ -281,7 +326,7 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
             respectivePatID = extra.getString(DMSConstants.PAT_ID);
         }
 
-        mContext = getApplicationContext();
+
         //-------------
         mPatientsHelper = new DMSPatientsHelper(this, this);
         mPreviousClickedTreeElement = new LinkedHashMap<>();
@@ -434,13 +479,11 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
 
 
     private void doBindHeaderViews() {
-
         mPatientName.setText(patientName);
         mPatientId.setText(respectivePatientID);
         mDoctorNameTwo.setText(doctorName);
         mDoctorNameOne.setText(doctorName);
         mPatientAddress.setText(patientAddress);
-
     }
 
     @OnClick({R.id.imageCloseDrawer, R.id.openRightDrawer, R.id.loadPreviousArchiveDataList, R.id.loadNextArchiveDataList, R.id.compareButton, R.id.compareLabel, R.id.fileOneRemoveButton, R.id.fileTwoRemoveButton})
@@ -1329,6 +1372,7 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
                 mSecondPdfView.zoomTo(DEFAULT_MIN_SCALE);
             }
         }
+
         mFirstPdfView.moveTo(mFirstPdfView.getCurrentXOffset(), mFirstPdfView.getCurrentYOffset());
         mSecondPdfView.moveTo(mSecondPdfView.getCurrentXOffset(), mSecondPdfView.getCurrentYOffset());
     }
@@ -1361,8 +1405,8 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
 
         if (respectiveRecordID != null) {
             mArchivedSelectedPreference = DMSConstants.ArchivedPreference.DATE;
-            mArchivedPreferenceSpinner.setVisibility(View.GONE);
-            mPreferenceLayout.setVisibility(View.GONE);
+           // mArchivedPreferenceSpinner.setVisibility(View.GONE);
+           // mPreferenceLayout.setVisibility(View.GONE);
         }
 
         if (mFileTreeResponseData == null)
@@ -1477,24 +1521,25 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
 
         float[] bottomLeftRadius = {0, 0, 0, 0, getResources().getDimension(R.dimen.dp8), getResources().getDimension(R.dimen.dp8), 0, 0};
         float[] bottomRightRadius = {0, 0, 0, 0, 0, 0, getResources().getDimension(R.dimen.dp8), getResources().getDimension(R.dimen.dp8)};
-
+        //getResources().getDimension(R.dimen.dp8)
         GradientDrawable buttonLeftBackground = new GradientDrawable();
         buttonLeftBackground.setShape(GradientDrawable.RECTANGLE);
         buttonLeftBackground.setColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
-        buttonLeftBackground.setCornerRadii(bottomLeftRadius);
+        buttonLeftBackground.setCornerRadii(bottomRightRadius);
 
         GradientDrawable buttonRightBackground = new GradientDrawable();
         buttonRightBackground.setShape(GradientDrawable.RECTANGLE);
         buttonRightBackground.setColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
-        buttonRightBackground.setCornerRadii(bottomRightRadius);
+        buttonRightBackground.setCornerRadii(bottomLeftRadius);
 
         Button buttonRight = dialog.findViewById(R.id.button_cancel);
         Button buttonLeft = dialog.findViewById(R.id.button_ok);
-
+        ImageView dialogIcon = dialog.findViewById(R.id.dialogIcon);
+        dialogIcon.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         buttonLeft.setBackground(buttonLeftBackground);
         buttonRight.setBackground(buttonRightBackground);
 
-        buttonRight.setOnClickListener(new View.OnClickListener() {
+        buttonLeft.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
@@ -1503,7 +1548,7 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
             }
         });
 
-        buttonLeft.setOnClickListener(new View.OnClickListener() {
+        buttonRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();

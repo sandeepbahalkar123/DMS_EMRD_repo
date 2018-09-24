@@ -147,7 +147,6 @@
                         android:layout_marginBottom="@dimen/margin_tiny"
                         android:layout_marginLeft="@dimen/dp5"
                         android:layout_marginStart="@dimen/dp5"
-                        android:background="@drawable/shape_rounded_corners_with_border"
                         android:gravity="center_vertical"
                         android:padding="@dimen/dp5"
                         android:textColor="@color/black"
@@ -763,7 +762,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1">
 
-                            <Switch
+                            <android.support.v7.widget.SwitchCompat
                                 android:id="@+id/compareDialogSwitch"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -800,7 +799,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1">
 
-                            <Switch
+                            <android.support.v7.widget.SwitchCompat
                                 android:id="@+id/compareDialogSwitch1"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"

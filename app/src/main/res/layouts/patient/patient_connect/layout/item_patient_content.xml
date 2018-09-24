@@ -31,7 +31,6 @@
                 android:id="@+id/ipd"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:background="@drawable/rounded_button"
                 android:gravity="center"
                 android:minWidth="?attr/actionBarSize"
                 android:textColor="@color/white"

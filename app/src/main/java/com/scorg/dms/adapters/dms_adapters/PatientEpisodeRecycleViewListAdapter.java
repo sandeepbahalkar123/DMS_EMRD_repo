@@ -2,6 +2,8 @@ package com.scorg.dms.adapters.dms_adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.support.v7.widget.AppCompatImageButton;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,6 +15,7 @@ import android.widget.TextView;
 
 import com.scorg.dms.R;
 import com.scorg.dms.model.dms_models.responsemodel.episode_list.PatientEpisodeFileData;
+import com.scorg.dms.singleton.DMSApplication;
 import com.scorg.dms.util.CommonMethods;
 import com.scorg.dms.util.DMSConstants;
 
@@ -63,10 +66,14 @@ public class PatientEpisodeRecycleViewListAdapter extends RecyclerView.Adapter<P
     @SuppressLint("CheckResult")
     @Override
     public void onBindViewHolder(GroupViewHolder childViewHolder, final int position) {
-
+        GradientDrawable buttonBackground = new GradientDrawable();
+        buttonBackground.setShape(GradientDrawable.RECTANGLE);
+        buttonBackground.setColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
+        buttonBackground.setCornerRadius(_context.getResources().getDimension(R.dimen.dp8));
         final PatientEpisodeFileData childElement = _originalListDataHeader.get(position);
 
         childViewHolder.ipdDischargeDateValue.setVisibility(View.GONE);
+        childViewHolder.ipd.setBackground(buttonBackground);
 
         //---
         if (opd.equalsIgnoreCase(childElement.getFileType())) {

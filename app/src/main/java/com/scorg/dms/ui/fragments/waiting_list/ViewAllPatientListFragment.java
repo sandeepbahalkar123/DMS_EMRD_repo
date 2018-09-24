@@ -2,6 +2,7 @@ package com.scorg.dms.ui.fragments.waiting_list;
 
 import android.Manifest;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
@@ -28,6 +30,7 @@ import com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemode
 import com.scorg.dms.model.waiting_list.WaitingClinicList;
 import com.scorg.dms.model.waiting_list.WaitingListDataModel;
 import com.scorg.dms.model.waiting_list.WaitingPatientData;
+import com.scorg.dms.singleton.DMSApplication;
 import com.scorg.dms.ui.activities.dms_patient_list.FileTypeViewerActivity;
 import com.scorg.dms.ui.activities.dms_patient_list.PatientDetailsActivity;
 import com.scorg.dms.ui.activities.waiting_list.WaitingMainListActivity;
@@ -67,6 +70,9 @@ public class ViewAllPatientListFragment extends Fragment implements WaitingListA
     @BindView(R.id.noRecords)
     LinearLayout noRecords;
 
+    @BindView(R.id.imgNoRecordFound)
+    ImageView imgNoRecordFound;
+
     private Unbinder unbinder;
     private ArrayList<WaitingClinicList> mWaitingClinicLists = new ArrayList<>();
     private ArrayList<WaitingPatientData> waitingPatientTempList;
@@ -97,6 +103,7 @@ public class ViewAllPatientListFragment extends Fragment implements WaitingListA
     private void init() {
         mParentActivity = (WaitingMainListActivity) getActivity();
         mPatientsHelper = new DMSPatientsHelper(this.getContext(), this);
+        imgNoRecordFound.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
 
         clinicListSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -187,7 +194,7 @@ public class ViewAllPatientListFragment extends Fragment implements WaitingListA
 
     @Override
     public void onPhoneNoClick(long phoneNumber) {
-        mClickedPhoneNumber =phoneNumber;
+        mClickedPhoneNumber = phoneNumber;
         ViewAllPatientListFragmentPermissionsDispatcher.doCallSupportWithCheck(this);
     }
 

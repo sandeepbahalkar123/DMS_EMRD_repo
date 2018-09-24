@@ -8,7 +8,6 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/recyclerViewBottom"
         android:background="@color/divider">
 
         <LinearLayout

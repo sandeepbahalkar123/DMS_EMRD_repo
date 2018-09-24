@@ -30,7 +30,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.FrameLayout;
@@ -86,22 +85,21 @@ public class AppointmentListAdapter
         this.mAppointmentDataList = new ArrayList<>();
         this.mAppointmentDataList.addAll(waitingDataList);
         this.onItemClickListener = onItemClickListener;
-
         buttonBackground = new GradientDrawable();
         buttonBackground.setShape(GradientDrawable.RECTANGLE);
-        buttonBackground.setColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
+        buttonBackground.setColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         buttonBackground.setCornerRadius(context.getResources().getDimension(R.dimen.dp5));
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        private FrameLayout delete_layout;
+
         private FrameLayout front_layout;
-        private CheckBox checkbox;
+
         private RelativeLayout swipe_layout;
-        private RelativeLayout patientDetailsClickLinearLayout;
+
         private TextView appointmentTime;
-        private ImageView waitingIcon;
+        private ImageView bluelineImageView;
         private TextView patientIdTextView;
         private CircularImageView patientImageView;
         private TextView patientNameTextView;
@@ -109,23 +107,23 @@ public class AppointmentListAdapter
         private TextView patientGenderTextView;
         private TextView opdTypeTextView;
         private TextView patientPhoneNumber;
-        private TextView outstandingAmountTextView;
-        private TextView payableAmountTextView;
+
         private LinearLayout idAndDetailsLayout;
+
         private Button appointmentReschedule;
         private Button appointmentCancel;
         private Button appointmentComplete;
         private LinearLayout layoutAppointmentEpisode;
+        private View viewLine1;
+        private View separatorView;
+        private ImageView callIcon;
+
 
         MyViewHolder(View convertView) {
             super(convertView);
             idAndDetailsLayout = (LinearLayout) convertView.findViewById(R.id.idAndDetailsLayout);
             front_layout = (FrameLayout) convertView.findViewById(R.id.front_layout);
-            delete_layout = (FrameLayout) convertView.findViewById(R.id.delete_layout);
-
             swipe_layout = (RelativeLayout) convertView.findViewById(R.id.swipe_layout);
-            checkbox = (CheckBox) convertView.findViewById(R.id.checkbox);
-            patientDetailsClickLinearLayout = (RelativeLayout) convertView.findViewById(R.id.patientDetailsClickLinearLayout);
             appointmentTime = (TextView) convertView.findViewById(R.id.appointmentTime);
             patientIdTextView = (TextView) convertView.findViewById(R.id.patientIdTextView);
             patientImageView = (CircularImageView) convertView.findViewById(R.id.patientImageView);
@@ -134,9 +132,11 @@ public class AppointmentListAdapter
             patientGenderTextView = (TextView) convertView.findViewById(R.id.patientGenderTextView);
             opdTypeTextView = (TextView) convertView.findViewById(R.id.opdTypeTextView);
             patientPhoneNumber = (TextView) convertView.findViewById(R.id.patientPhoneNumber);
-            outstandingAmountTextView = (TextView) convertView.findViewById(R.id.outstandingAmountTextView);
-            payableAmountTextView = (TextView) convertView.findViewById(R.id.payableAmountTextView);
             layoutAppointmentEpisode = (LinearLayout) convertView.findViewById(R.id.layoutAppointmentEpisode);
+            bluelineImageView = (ImageView) convertView.findViewById(R.id.bluelineImageView);
+            callIcon = (ImageView) convertView.findViewById(R.id.callIcon);
+            viewLine1 = (View) convertView.findViewById(R.id.viewLine1);
+            separatorView = (View) convertView.findViewById(R.id.separatorView);
         }
     }
 
@@ -162,8 +162,21 @@ public class AppointmentListAdapter
     }
 
     private void bindGroupItem(final AppointmentPatientData appointmentPatientDataObject, final AppointmentListAdapter.MyViewHolder holder) {
-
+        GradientDrawable cardBackground = new GradientDrawable();
+        cardBackground.setShape(GradientDrawable.RECTANGLE);
+        cardBackground.setColor(Color.WHITE);
+        cardBackground.setCornerRadius(mContext.getResources().getDimension(R.dimen.dp8));
+        cardBackground.setStroke(mContext.getResources().getDimensionPixelSize(R.dimen.dp1), Color.parseColor(DMSApplication.COLOR_PRIMARY));
+        holder.swipe_layout.setBackground(cardBackground);
+        holder.bluelineImageView.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+        holder.callIcon.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         holder.appointmentTime.setBackground(buttonBackground);
+        holder.patientGenderTextView.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+        holder.patientPhoneNumber.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+        holder.separatorView.setBackgroundColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+        holder.viewLine1.setBackgroundColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+
+
         String salutation = appointmentPatientDataObject.getSalutation();
         String patientName = toCamelCase(appointmentPatientDataObject.getPatientName());
 
@@ -246,17 +259,6 @@ public class AppointmentListAdapter
             holder.opdTypeTextView.setText(mContext.getString(R.string.opd_appointment) + " " + appointmentPatientDataObject.getAppointmentStatus());
             holder.opdTypeTextView.setTextColor(ContextCompat.getColor(mContext, R.color.other_color));
         }
-        //--------------
-        holder.outstandingAmountTextView.setText(mContext.getString(R.string.outstanding_amount) + " ");
-        //--------
-        String outstandingAmount = appointmentPatientDataObject.getOutstandingAmount();
-        if ("0.00".equals(outstandingAmount) || "0.0".equals(outstandingAmount) || "0".equals(outstandingAmount)) {
-            holder.payableAmountTextView.setText(" " + mContext.getString(R.string.nil));
-            holder.payableAmountTextView.setTextColor(ContextCompat.getColor(mContext, R.color.rating_color));
-        } else {
-            holder.payableAmountTextView.setText(" Rs." + outstandingAmount + "/-");
-            holder.payableAmountTextView.setTextColor(ContextCompat.getColor(mContext, R.color.Red));
-        }
         //---------
         String appDate = appointmentPatientDataObject.getAppDate();
         if (appDate != null) {
@@ -278,24 +280,14 @@ public class AppointmentListAdapter
                 .into(holder.patientImageView);
 
         ViewTreeObserver vto = holder.front_layout.getViewTreeObserver();
-        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                holder.front_layout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                ViewGroup.LayoutParams layoutParams = holder.delete_layout.getLayoutParams();
-                layoutParams.height = holder.front_layout.getMeasuredHeight();
-                layoutParams.width = holder.front_layout.getMeasuredWidth() / 2;
-                holder.delete_layout.setLayoutParams(layoutParams);
 
-            }
-        });
 
         holder.layoutAppointmentEpisode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SearchResult searchResult =new SearchResult();
+                SearchResult searchResult = new SearchResult();
                 searchResult.setPatientName(appointmentPatientDataObject.getPatientName());
-                 searchResult.setPatientId(appointmentPatientDataObject.getPatientId());
+                searchResult.setPatientId(appointmentPatientDataObject.getPatientId());
                 searchResult.setPatientAddress(appointmentPatientDataObject.getPatAddress());
                 searchResult.setPatientImageURL(appointmentPatientDataObject.getPatientImageUrl());
                 onItemClickListener.onClickedOfEpisodeListButton(searchResult);

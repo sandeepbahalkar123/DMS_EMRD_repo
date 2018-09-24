@@ -122,6 +122,10 @@ public class HomePageActivity extends BaseActivity implements HelperResponse, Da
     @BindView(R.id.viewTextView)
     TextView viewTextView;
 
+    @BindView(R.id.txtDashboardHeader)
+    TextView txtDashboardHeader;
+
+
     @BindView(R.id.textHeaderTodayAppointment)
     TextView textHeaderTodayAppointment;
 
@@ -162,7 +166,18 @@ public class HomePageActivity extends BaseActivity implements HelperResponse, Da
     ImageView supportLogo;
     @BindView(R.id.patientLogo)
     ImageView patientLogo;
+    @BindView(R.id.menuIcon)
+    ImageView menuIcon;
+    @BindView(R.id.menuIcon1)
+    ImageView menuIcon1;
 
+    @BindView(R.id.divider1)
+    ImageView divider1;
+    @BindView(R.id.divider2)
+    ImageView divider2;
+
+    @BindView(R.id.imgNoRecordFound)
+    ImageView imgNoRecordFound;
 
     private Context mContext;
     private String docId;
@@ -193,6 +208,7 @@ public class HomePageActivity extends BaseActivity implements HelperResponse, Da
         int width = (int) (getResources().getDisplayMetrics().widthPixels / (CommonMethods.isTablet(mContext) ? 2.5 : 2));
         ViewGroup.LayoutParams layoutParams = mRightNavigationView.getLayoutParams();
         layoutParams.width = width;
+        imgNoRecordFound.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         mRightNavigationView.setLayoutParams(layoutParams);
         mDashboardHelper = new DashboardHelper(this, this);
         String doctorNameToDisplay;
@@ -211,8 +227,10 @@ public class HomePageActivity extends BaseActivity implements HelperResponse, Da
 
     @Override
     protected void onResume() {
-        if (mDashboardDataModel == null)
+        if (mDashboardDataModel == null ||  DMSApplication.ISCancelRequest) {
             mDashboardHelper.doGetDashboardResponse();
+            DMSApplication.ISCancelRequest=false;
+        }
         setAssetsFromServer();
         super.onResume();
     }
@@ -225,7 +243,11 @@ public class HomePageActivity extends BaseActivity implements HelperResponse, Da
         homeLogo.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         supportLogo.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         patientLogo.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
-
+        menuIcon.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+        menuIcon1.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+        divider1.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+        divider2.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+        txtDashboardHeader.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         settingText.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         homeText.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         supportText.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
@@ -278,6 +300,8 @@ public class HomePageActivity extends BaseActivity implements HelperResponse, Da
 
         Button buttonRight = dialog.findViewById(R.id.button_cancel);
         Button buttonLeft = dialog.findViewById(R.id.button_ok);
+        ImageView dialogIcon = dialog.findViewById(R.id.dialogIcon);
+        dialogIcon.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
 
         buttonLeft.setBackground(buttonLeftBackground);
         buttonRight.setBackground(buttonRightBackground);
@@ -337,15 +361,11 @@ public class HomePageActivity extends BaseActivity implements HelperResponse, Da
                         DMSPreferencesManager.putString(DMSPreferencesManager.DMS_PREFERENCES_KEY.COLOR_PRIMARY, mDashboardDataModel.getColorPrimary(), mContext);
                         DMSPreferencesManager.putString(DMSPreferencesManager.DMS_PREFERENCES_KEY.COLOR_DARK_PRIMARY, mDashboardDataModel.getColorPrimaryDark(), mContext);
                         DMSPreferencesManager.putString(DMSPreferencesManager.DMS_PREFERENCES_KEY.COLOR_ACCENT, mDashboardDataModel.getColorAccent(), mContext);
+                        DMSPreferencesManager.putString(DMSPreferencesManager.DMS_PREFERENCES_KEY.COLOR_APPOINTMENT_TEXT, mDashboardDataModel.getAppointmentTextColor(), mContext);
                         DMSApplication.COLOR_PRIMARY = mDashboardDataModel.getColorPrimary();
                         DMSApplication.COLOR_DARK_PRIMARY = mDashboardDataModel.getColorPrimaryDark();
                         DMSApplication.COLOR_ACCENT = mDashboardDataModel.getColorAccent();
-                        viewTextView.setTextColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
-                        textHeaderTodayAppointment.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
-                        pendingApprovalCount.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
-                        totalPatientsCount.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
-                        todayAppointmentsCount.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
-                        waitingPatientCount.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+                        DMSApplication.COLOR_APPOINTMENT_TEXT = mDashboardDataModel.getAppointmentTextColor();
 
                         setAssetsFromServer();
 

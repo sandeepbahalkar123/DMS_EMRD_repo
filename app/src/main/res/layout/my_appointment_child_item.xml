@@ -4,17 +4,12 @@
     android:id="@+id/swipe_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/divider"
+    android:layout_marginBottom="@dimen/dp4"
+    android:layout_marginEnd="@dimen/dp7"
+    android:layout_marginStart="@dimen/dp7"
+    android:layout_marginTop="@dimen/dp5"
     app:dragEdge="right"
     app:mode="same_level">
-
-    <FrameLayout
-        android:id="@+id/delete_layout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone">
-
-    </FrameLayout>
 
     <FrameLayout
         android:id="@+id/front_layout"
@@ -25,10 +20,6 @@
             android:id="@+id/cardView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/dp4"
-            android:layout_marginEnd="@dimen/dp7"
-            android:layout_marginStart="@dimen/dp7"
-            android:background="@drawable/result_white_box"
             android:orientation="vertical">
 
             <LinearLayout
@@ -60,11 +51,11 @@
                         android:layout_centerVertical="true"
                         android:layout_toEndOf="@id/bluelineImageView"
                         android:layout_toRightOf="@id/bluelineImageView"
+                        android:fontFamily="@font/roboto_medium"
                         android:paddingLeft="@dimen/dp13"
                         android:paddingStart="@dimen/dp13"
                         android:textColor="@color/black"
                         android:textSize="@dimen/sp13"
-                        android:fontFamily="@font/roboto_medium"
                         tools:ignore="RtlSymmetry"
                         tools:text="ID: 23456" />
 
@@ -76,12 +67,12 @@
                         android:layout_alignParentRight="true"
                         android:layout_marginEnd="@dimen/dp16"
                         android:layout_marginRight="@dimen/dp16"
+                        android:fontFamily="@font/roboto_bold"
                         android:gravity="center"
                         android:padding="@dimen/dp5"
                         android:textColor="@color/white"
                         android:textSize="@dimen/sp14"
                         android:visibility="gone"
-                        android:fontFamily="@font/roboto_bold"
                         tools:text="03:20 pm"
                         tools:visibility="visible" />
 
@@ -117,12 +108,12 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:ellipsize="end"
+                            android:fontFamily="@font/roboto_bold"
                             android:maxLines="1"
                             android:paddingEnd="@dimen/dp6"
                             android:paddingRight="@dimen/dp6"
                             android:textColor="@color/black"
                             android:textSize="@dimen/sp15"
-                            android:fontFamily="@font/roboto_bold"
                             tools:text="Mr. Uren Chhadva" />
 
                         <LinearLayout
@@ -135,18 +126,18 @@
                                 android:id="@+id/patientAgeTextView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:fontFamily="@font/roboto_medium"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/sp12"
-                                android:fontFamily="@font/roboto_medium"
                                 tools:text="36 yrs - " />
 
                             <TextView
                                 android:id="@+id/patientGenderTextView"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:fontFamily="@font/roboto_medium"
                                 android:textColor="@color/rating_color"
                                 android:textSize="@dimen/sp12"
-                                android:fontFamily="@font/roboto_medium"
                                 tools:text="Male" />
                         </LinearLayout>
 
@@ -154,18 +145,18 @@
                             android:id="@+id/opdTypeTextView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/roboto_medium"
                             android:textColor="@color/rating_color"
                             android:textSize="@dimen/sp12"
-                            android:fontFamily="@font/roboto_medium"
                             tools:text="OPD Completed" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/roboto_medium"
                             android:textColor="@color/black"
                             android:textSize="@dimen/sp12"
                             android:visibility="gone"
-                            android:fontFamily="@font/roboto_medium"
                             tools:text="OPD Completed" />
                     </LinearLayout>
 
@@ -189,6 +180,7 @@
 
 
             <View
+                android:id="@+id/viewLine1"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp1"
                 android:layout_marginEnd="@dimen/dp2"
@@ -199,24 +191,30 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/dp8"
-                android:layout_marginTop="@dimen/dp3">
+                android:layout_marginTop="@dimen/dp3"
+                android:gravity="center">
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight=".5"
-                    android:gravity="center_horizontal">
+                    android:gravity="center"
+                    android:padding="@dimen/dp3">
+
+                    <ImageView
+                        android:id="@+id/callIcon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/dp3"
+                        android:src="@drawable/mobile_icon" />
 
                     <TextView
                         android:id="@+id/patientPhoneNumber"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:drawableLeft="@drawable/mobile_icon"
-                        android:drawablePadding="@dimen/dp9"
-                        android:drawableStart="@drawable/mobile_icon"
+                        android:fontFamily="@font/roboto_medium"
                         android:textColor="@color/rating_color"
                         android:textSize="@dimen/sp12"
-                        android:fontFamily="@font/roboto_medium"
                         tools:ignore="RtlHardcoded"
                         tools:text="987678999" />
                 </LinearLayout>
@@ -236,6 +234,7 @@
                     android:layout_marginLeft="@dimen/dp5"
                     android:layout_marginRight="@dimen/dp5"
                     android:layout_marginStart="@dimen/dp5"
+                    android:padding="@dimen/dp3"
                     android:layout_weight=".5"
                     android:gravity="center"
                     android:orientation="horizontal"
@@ -246,33 +245,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/sp11"
+                        android:fontFamily="@font/roboto_medium"
                         android:text="@string/episode"
-                        android:fontFamily="@font/roboto_medium"
-                        tools:text="@string/episode"/>
-
-                    <TextView
-                        android:id="@+id/outstandingAmountTextView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
+                        android:gravity="center"
                         android:textColor="@color/black"
                         android:textSize="@dimen/sp11"
-                        android:visibility="gone"
-                        android:fontFamily="@font/roboto_medium"
-                        tools:text="Outstanding Amount:" />
+                        tools:text="@string/episode" />
 
-                    <TextView
-                        android:id="@+id/payableAmountTextView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:textColor="@color/rating_color"
-                        android:textSize="@dimen/sp12"
-                        android:fontFamily="@font/roboto_bold"
-                        android:visibility="gone"
-                        tools:text=" Rs.450/-" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

@@ -3,7 +3,7 @@ package com.scorg.dms.adapters.dms_adapters;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
-import android.support.v4.content.ContextCompat;
+import android.graphics.drawable.GradientDrawable;
 import android.support.v7.widget.AppCompatImageButton;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -69,17 +69,30 @@ public class PatientRecycleViewListAdapter extends RecyclerView.Adapter<PatientR
     @SuppressLint("CheckResult")
     @Override
     public void onBindViewHolder(GroupViewHolder groupViewHolder, final int position) {
-        groupViewHolder.episodeList.setBackgroundColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
+        GradientDrawable buttonBackground = new GradientDrawable();
+        buttonBackground.setShape(GradientDrawable.RECTANGLE);
+        buttonBackground.setColor(Color.WHITE);
+        buttonBackground.setCornerRadius(_context.getResources().getDimension(R.dimen.dp8));
+        buttonBackground.setStroke(_context.getResources().getDimensionPixelSize(R.dimen.dp1), Color.parseColor(DMSApplication.COLOR_PRIMARY));
+        groupViewHolder.cardView.setBackground(buttonBackground);
+
+        GradientDrawable episodButtonBackground = new GradientDrawable();
+        episodButtonBackground.setShape(GradientDrawable.RECTANGLE);
+        episodButtonBackground.setColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
+        episodButtonBackground.setCornerRadius(_context.getResources().getDimension(R.dimen.dp8));
+        groupViewHolder.episodeList.setBackground(episodButtonBackground);
 
         SearchResult groupHeader = _originalListDataHeader.get(position);
-//        int childrenCount = getChildrenCount(groupPosition);
+        groupViewHolder.uhid.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+        groupViewHolder.patientId.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+        groupViewHolder.bluelineImageView.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
 
         groupViewHolder.userName.setText(groupHeader.getPatientName());
         groupViewHolder.patientId.setText(groupHeader.getPatientId());
         groupViewHolder.uhid.setText(uhid + ":");
 
 
-        groupViewHolder.cardView.setBackground(ContextCompat.getDrawable(_context, R.drawable.round_background_full_view));
+        // groupViewHolder.cardView.setBackground(ContextCompat.getDrawable(_context, R.drawable.round_background_full_view));
 
         groupViewHolder.groupItemCollapseButton.setVisibility(View.GONE);
         groupViewHolder.groupItemExpandCollapseButton.setImageResource(R.drawable.ic_expand_more_black_24dp);
@@ -103,7 +116,7 @@ public class PatientRecycleViewListAdapter extends RecyclerView.Adapter<PatientR
 //        Log.e("age","=="+groupHeader.getAge());
 //        Log.e("gender","=="+groupHeader.getGender());
 
-        if (groupHeader.getAge()!= null) {
+        if (groupHeader.getAge() != null) {
             groupViewHolder.userAge.setVisibility(View.VISIBLE);
             groupViewHolder.userAge.setText(groupHeader.getAge().concat(" Year"));
         }
@@ -166,6 +179,10 @@ public class PatientRecycleViewListAdapter extends RecyclerView.Adapter<PatientR
         LinearLayout groupItemCollapseButton;
         @BindView(R.id.patientImageView)
         ImageView patientImageView;
+        @BindView(R.id.bluelineImageView)
+        ImageView bluelineImageView;
+
+
         @BindView(R.id.episodeList)
         TextView episodeList;
 
@@ -196,6 +213,7 @@ public class PatientRecycleViewListAdapter extends RecyclerView.Adapter<PatientR
         void onPatientListItemClick(SearchResult groupHeader);
 
         void onClickedOfEpisodeListButton(SearchResult groupHeader);
+
         void smoothScrollToPosition(int previousPosition);
     }
 

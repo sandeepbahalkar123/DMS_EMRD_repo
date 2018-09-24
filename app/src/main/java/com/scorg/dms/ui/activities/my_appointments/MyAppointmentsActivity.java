@@ -64,6 +64,10 @@ public class MyAppointmentsActivity extends BaseActivity implements HelperRespon
     DrawerLayout drawerLayout;
     @BindView(R.id.emptyListView)
     RelativeLayout emptyListView;
+
+    @BindView(R.id.imgNoRecordFound)
+    ImageView imgNoRecordFound;
+
     private Context mContext;
     private MyAppointmentsFragment mMyAppointmentsFragment;
     private AppointmentHelper mAppointmentHelper;
@@ -92,7 +96,11 @@ public class MyAppointmentsActivity extends BaseActivity implements HelperRespon
         System.out.println(date);
         mAppointmentHelper = new AppointmentHelper(this, this);
         mAppointmentHelper.doGetAppointmentData(date);
+
+        imgNoRecordFound.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+
     }
+
 
     public DrawerLayout getActivityDrawerLayout() {
         return drawerLayout;
@@ -144,6 +152,7 @@ public class MyAppointmentsActivity extends BaseActivity implements HelperRespon
 
         CommonMethods.showToast(mContext, errorMessage);
         emptyListView.setVisibility(View.VISIBLE);
+        imgNoRecordFound.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
 
     }
 
@@ -151,6 +160,8 @@ public class MyAppointmentsActivity extends BaseActivity implements HelperRespon
     public void onServerError(String mOldDataTag, String serverErrorMessage) {
         CommonMethods.showToast(mContext, serverErrorMessage);
         emptyListView.setVisibility(View.VISIBLE);
+        imgNoRecordFound.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+
     }
 
     @Override

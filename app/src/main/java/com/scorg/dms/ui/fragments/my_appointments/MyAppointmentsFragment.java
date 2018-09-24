@@ -13,6 +13,7 @@ import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.scorg.dms.R;
@@ -58,6 +59,8 @@ public class MyAppointmentsFragment extends Fragment implements AppointmentListA
     @BindView(R.id.rightFab)
     FloatingActionButton rightFab;
 
+    @BindView(R.id.imgNoRecordFound)
+    ImageView imgNoRecordFound;
     Unbinder unbinder;
     private AppointmentListAdapter mAppointmentListAdapter;
     private AppointmentHelper mAppointmentHelper;
@@ -77,6 +80,7 @@ public class MyAppointmentsFragment extends Fragment implements AppointmentListA
     }
 
     private void init() {
+        imgNoRecordFound.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         searchEditText.addTextChangedListener(new EditTextWithDeleteButton.TextChangedListener() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -119,6 +123,7 @@ public class MyAppointmentsFragment extends Fragment implements AppointmentListA
     public void onRecordFound(boolean isListEmpty) {
         if (isListEmpty) {
             emptyListView.setVisibility(View.VISIBLE);
+            imgNoRecordFound.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         } else {
             emptyListView.setVisibility(View.GONE);
         }
@@ -126,7 +131,7 @@ public class MyAppointmentsFragment extends Fragment implements AppointmentListA
 
     @Override
     public void onClickOfPatientDetails(AppointmentPatientData patientListObject) {
-       // ShowSearchResultRequestModel showSearchResultRequestModel = new ShowSearchResultRequestModel();
+        // ShowSearchResultRequestModel showSearchResultRequestModel = new ShowSearchResultRequestModel();
         // TODO: hardcoed for now, As patientList And WaitingList API patientID not sync from server
         //showSearchResultRequestModel.setPatientId("07535277");
         // showSearchResultRequestModel.setPatientId(patientListObject.getPatientId());
@@ -170,8 +175,6 @@ public class MyAppointmentsFragment extends Fragment implements AppointmentListA
     }
 
 
-
-
     public void setFilteredData(MyAppointmentsDataModel myAppointmentsDataModel) {
 
         if (!myAppointmentsDataModel.getAppointmentPatientData().isEmpty()) {
@@ -187,10 +190,11 @@ public class MyAppointmentsFragment extends Fragment implements AppointmentListA
         } else {
             recyclerView.setVisibility(View.GONE);
             emptyListView.setVisibility(View.VISIBLE);
+            imgNoRecordFound.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+
         }
 
     }
-
 
 
     @Override

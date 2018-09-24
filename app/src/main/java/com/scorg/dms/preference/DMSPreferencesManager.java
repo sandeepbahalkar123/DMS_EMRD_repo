@@ -175,6 +175,7 @@ public class DMSPreferencesManager {
         String COLOR_PRIMARY = "COLOR_PRIMARY";
         String COLOR_DARK_PRIMARY = "COLOR_DARK_PRIMARY";
         String COLOR_ACCENT = "COLOR_ACCENT";
+        String COLOR_APPOINTMENT_TEXT = "COLOR_APPOINTMENT_TEXT";
 
     }
 }

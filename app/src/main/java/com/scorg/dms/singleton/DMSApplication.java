@@ -5,18 +5,12 @@ import android.graphics.Typeface;
 import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
 import android.util.DisplayMetrics;
-import android.util.Log;
 
 import com.scorg.dms.R;
 import com.scorg.dms.preference.DMSPreferencesManager;
 import com.scorg.dms.util.CommonMethods;
-import com.scorg.dms.util.DMSConstants;
 
-import java.util.ArrayList;
 import java.util.Hashtable;
-
-import static android.content.res.Configuration.SCREENLAYOUT_SIZE_LARGE;
-import static android.content.res.Configuration.SCREENLAYOUT_SIZE_XLARGE;
 
 /**
  * Created by Sandeep Bahalkar
@@ -30,6 +24,8 @@ public class DMSApplication extends MultiDexApplication {
     public static String COLOR_PRIMARY = "#04ABDF";
     public static String COLOR_DARK_PRIMARY = "#0077A7";
     public static String COLOR_ACCENT = "#04ABDF";
+    public static String COLOR_APPOINTMENT_TEXT = "#0077A7";
+    public static boolean ISCancelRequest = false;
 
 
     public static String getShowUpdateDialogOnSkipped() {
@@ -62,8 +58,14 @@ public class DMSApplication extends MultiDexApplication {
     }
 
     private void getThemeColors() {
-        if (!DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.COLOR_PRIMARY,this).isEmpty())
-        COLOR_PRIMARY = DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.COLOR_PRIMARY,this);
+        if (!DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.COLOR_PRIMARY, this).isEmpty())
+            COLOR_PRIMARY = DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.COLOR_PRIMARY, this);
+        if (!DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.COLOR_DARK_PRIMARY, this).isEmpty())
+            COLOR_DARK_PRIMARY = DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.COLOR_DARK_PRIMARY, this);
+        if (!DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.COLOR_ACCENT, this).isEmpty())
+            COLOR_ACCENT = DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.COLOR_ACCENT, this);
+        if (!DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.COLOR_APPOINTMENT_TEXT, this).isEmpty())
+            COLOR_APPOINTMENT_TEXT = DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.COLOR_APPOINTMENT_TEXT, this);
     }
 
 

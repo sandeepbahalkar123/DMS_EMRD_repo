@@ -50,6 +50,10 @@ public class SupportActivity extends BaseActivity {
     TextView versionText;
     private Context mContext;
 
+    @BindView(R.id.supportLogo)
+    ImageView supportLogo;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,8 +76,8 @@ public class SupportActivity extends BaseActivity {
         emailButtonBackground.setCornerRadius(getResources().getDimension(R.dimen.dp5));
         emailButtonBackground.setStroke(5, Color.parseColor(DMSApplication.COLOR_ACCENT));
         emailtextView.setBackground(emailButtonBackground);
-        emailtextView.setTextColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
-
+        emailtextView.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+        supportLogo.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         mContext = SupportActivity.this;
         titleTextView.setText(getString(R.string.support));
         backImageView.setVisibility(View.VISIBLE);

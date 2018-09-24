@@ -1,9 +1,13 @@
 package com.scorg.dms.ui.customesViews.treeViewHolder.arrow_expand;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.CompoundButtonCompat;
+import android.support.v7.widget.AppCompatCheckBox;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CheckBox;
@@ -30,7 +34,7 @@ public class ArrowExpandSelectableHeaderHolder extends TreeNode.BaseNodeViewHold
     private TextView tvValue;
     private boolean isOnlyOneNodeExpanded;
     private ImageView arrowView, icon_lock;
-    private CheckBox nodeSelector;
+    private AppCompatCheckBox nodeSelector;
     private LinearLayout mainContentLayout;
     private int confidentialState;
     private ArrowExpandSelectableHeaderHolderLockIconClickListener lockIconClickListener;
@@ -55,13 +59,37 @@ public class ArrowExpandSelectableHeaderHolder extends TreeNode.BaseNodeViewHold
         }
     }
 
+    @SuppressLint("RestrictedApi")
     @Override
     public View createNodeView(final TreeNode node, final ArrowExpandIconTreeItemHolder.IconTreeItem value) {
         final LayoutInflater inflater = LayoutInflater.from(context);
         final View view = inflater.inflate(R.layout.treeview_arrow_expandable_header, null, false);
+        nodeSelector = (AppCompatCheckBox) view.findViewById(R.id.node_selector);
 
-        mainContentLayout = (LinearLayout) view.findViewById(R.id.mainContentLayout);
+
+        int[][] states = new int[][] {
+                new int[] { android.R.attr.state_enabled}, // enabled
+                new int[] {-android.R.attr.state_enabled}, // disabled
+                new int[] {-android.R.attr.state_checked}, // unchecked
+                new int[] { android.R.attr.state_pressed} // pressed
+        };
+
+        int[] colors = new int[] {
+                Color.parseColor(DMSApplication.COLOR_PRIMARY),
+                Color.parseColor(DMSApplication.COLOR_PRIMARY),
+                Color.parseColor(DMSApplication.COLOR_PRIMARY),
+                Color.parseColor(DMSApplication.COLOR_PRIMARY)
+        };
+        ColorStateList myList = new ColorStateList(states, colors);
+        nodeSelector.setSupportButtonTintList(myList);
+
+
         icon_lock = (ImageView) view.findViewById(R.id.icon_lock);
+        icon_lock.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+        arrowView = (ImageView) view.findViewById(R.id.icon);
+        arrowView.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+        mainContentLayout = (LinearLayout) view.findViewById(R.id.mainContentLayout);
+
         mainContentLayout.setPadding(leftPadding, 0, 0, 0);
 
         tvValue = (TextView) view.findViewById(R.id.node_value);
@@ -79,7 +107,7 @@ public class ArrowExpandSelectableHeaderHolder extends TreeNode.BaseNodeViewHold
         }
 
 
-        arrowView = (ImageView) view.findViewById(R.id.icon);
+
         //arrowView.setPadding(20, 10, 10, 10);
         if (node.isLeaf()) {
             arrowView.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_tree_file));
@@ -122,7 +150,7 @@ public class ArrowExpandSelectableHeaderHolder extends TreeNode.BaseNodeViewHold
 
         }
 
-        nodeSelector = (CheckBox) view.findViewById(R.id.node_selector);
+
         nodeSelector.setClickable(false);
         nodeSelector.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -235,4 +263,11 @@ public class ArrowExpandSelectableHeaderHolder extends TreeNode.BaseNodeViewHold
         void onLockIconClick(Object value, boolean isLeaf);
     }
 
+
+    public void setCheckBoxColor(CheckBox checkBox, int checkedColor, int uncheckedColor) {
+        int states[][] = {{android.R.attr.state_checked}, {}};
+        int colors[] = {checkedColor, uncheckedColor};
+        CompoundButtonCompat.setButtonTintList(checkBox, new
+                ColorStateList(states, colors));
+    }
 }

@@ -77,7 +77,7 @@ public class SettingsActivity extends BaseActivity implements  HelperResponse {
         logout.setTextColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
         change_ip_address.setTextColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
         clearImageCache.setTextColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
-
+        dashboardArrowIcon.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         mContext = SettingsActivity.this;
         docId = DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.DOC_ID, mContext);
         loginHelper = new LoginHelper(mContext, this);
@@ -108,6 +108,7 @@ public class SettingsActivity extends BaseActivity implements  HelperResponse {
 
             case R.id.clearImageCache:
                 DMSPreferencesManager.putString(DMSPreferencesManager.CACHE_TIME, CommonMethods.getCurrentDate("ddMMyyyyhhmmss"), mContext);
+                CommonMethods.showToast(this,"Images Refreshed.");
                 break;
         }
     }
@@ -137,6 +138,8 @@ public class SettingsActivity extends BaseActivity implements  HelperResponse {
 
         Button buttonRight = dialog.findViewById(R.id.button_cancel);
         Button buttonLeft = dialog.findViewById(R.id.button_ok);
+        ImageView dialogIcon = dialog.findViewById(R.id.dialogIcon);
+        dialogIcon.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
 
         buttonLeft.setBackground(buttonLeftBackground);
         buttonRight.setBackground(buttonRightBackground);

@@ -92,6 +92,7 @@
             tools:visibility="visible">
 
             <ImageView
+                android:id="@+id/imgNoRecordFound"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/dp32"
@@ -99,19 +100,6 @@
                 android:adjustViewBounds="true"
                 android:background="@drawable/no_records_found"
                 app:srcCompat="@drawable/no_records_found" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/dp32"
-                android:layout_marginStart="@dimen/dp32"
-                android:fontFamily="@font/roboto_medium"
-                android:gravity="center"
-                android:visibility="invisible"
-                android:paddingTop="@dimen/dp30"
-                android:text="@string/waiting_list_message"
-                android:textColor="@color/black"
-                android:textSize="@dimen/sp16" />
 
         </LinearLayout>
 

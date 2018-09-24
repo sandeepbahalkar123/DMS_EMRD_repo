@@ -83,10 +83,11 @@
         <AutoCompleteTextView
             android:id="@+id/autoCompleteSearchBox"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp36"
+            android:layout_height="wrap_content"
             android:layout_margin="@dimen/dp5"
-            android:background="@drawable/round_background_full_view"
+            android:padding="@dimen/dp5"
             android:gravity="center"
+            android:background="@null"
             android:hint="@string/patient_details_search_hint"
             android:textCursorDrawable="@drawable/cursor_color" />
     </LinearLayout>

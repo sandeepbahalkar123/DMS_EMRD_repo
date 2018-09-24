@@ -4,6 +4,7 @@ package com.scorg.dms.ui.activities.dms_patient_list;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
@@ -127,7 +128,16 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
     TextView mResetSearchFilter;
     @BindView(R.id.annotationTreeViewContainer)
     RelativeLayout mAnnotationTreeViewContainer;
+    @BindView(R.id.imgNoRecordFound)
+    ImageView imgNoRecordFound;
 
+    @BindView(R.id.imageFromDate)
+    ImageView imageFromDate;
+    @BindView(R.id.imageToDate)
+    ImageView imageToDate;
+
+    @BindView(R.id.imageAnnotation)
+    ImageView imageAnnotation;
     //----------------
     @BindView(R.id.emptyListView)
     RelativeLayout emptyListView;
@@ -192,10 +202,20 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
         initializeVariables();
         bindView();
         doGetPatientList();
-
+        GradientDrawable buttonBackground = new GradientDrawable();
+        buttonBackground.setShape(GradientDrawable.RECTANGLE);
+        buttonBackground.setColor(Color.WHITE);
+        buttonBackground.setCornerRadius(getResources().getDimension(R.dimen.dp8));
+        buttonBackground.setStroke(getResources().getDimensionPixelSize(R.dimen.dp1),Color.parseColor(DMSApplication.COLOR_PRIMARY));
+        mAutoCompleteSearchBox.setBackground(buttonBackground);
+        mOpenFilterViewFAB.setBackgroundTintList(ColorStateList.valueOf(Color.RED));
         LinearLayoutManager linearlayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mPatientListView.setLayoutManager(linearlayoutManager);
-
+        imageFromDate.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+        imageToDate.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+        mClearPatientNameButton.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+        imageAnnotation.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+        mClearSearchAnnotationButton.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         mPatientListView.addOnScrollListener(new EndlessRecyclerViewScrollListener(linearlayoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
@@ -360,7 +380,7 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
         mClearSearchAnnotationButton.setOnClickListener(this);
         mClearSearchAnnotationButton.setVisibility(View.GONE);
         mClearPatientNameButton.setOnClickListener(this);
-        mClearPatientNameButton.setBackground(getResources().getDrawable(R.mipmap.user));
+        mClearPatientNameButton.setImageDrawable(getResources().getDrawable(R.mipmap.user));
         //--------
         // setting adapter for spinner in header view of right drawer
         mFileTypeStringArrayExtra = getIntent().getStringArrayExtra(DMSConstants.PATIENT_LIST_PARAMS.FILE_TYPE);
@@ -457,6 +477,7 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
                 mPatientListView.setVisibility(View.GONE);
                 // mRecycleTag.setVisibility(View.GONE);
                 emptyListView.setVisibility(View.VISIBLE);
+                imgNoRecordFound.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
             } else {
 
                 mPatientListView.setVisibility(View.VISIBLE);
@@ -529,31 +550,10 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
             // on click of fromDate editext in right drawer
             case R.id.et_fromdate:
                 doConfigDatePickerDialog(getString(R.string.from), mFromDate);
-/*
-                new CommonMethods().datePickerDialog(this, new DatePickerDialogListener() {
-                    @Override
-                    public void getSelectedDate(String selectedTime) {
-                        mSelectedFromDate = selectedTime;
-                        mFromDateEditText.setText("" + selectedTime);
-                        try {
-                            mFromDate = dfDate.parse(mSelectedFromDate);
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                        }
-
-                    }
-                }, null, true, mFromDate);*/
                 break;
             // on click of endDate ediText in right drawer
             case R.id.et_todate:
                 doConfigDatePickerDialog(getString(R.string.to), mFromDate);
-               /* new CommonMethods().datePickerDialog(this, new DatePickerDialogListener() {
-                    @Override
-                    public void getSelectedDate(String selectedTime) {
-                        mToDateEditText.setText("" + selectedTime);
-
-                    }
-                }, null, false, mFromDate);*/
                 break;
             //  on click of Reset in right drawer
             case R.id.reset:
@@ -864,8 +864,19 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
             }
         } else if (parent.getId() == R.id.spinner_admissionDate) {
             int indexSselectedId = parent.getSelectedItemPosition();
-            mArrayId = getResources().getStringArray(R.array.admission_date);
-            mAdmissionDate = mArrayId[indexSselectedId];
+            if (mSelectedId.equalsIgnoreCase(getResources().getString(R.string.Select))) {
+                mArrayId = getResources().getStringArray(R.array.admission_date);
+                mAdmissionDate = mArrayId[indexSselectedId];
+            } else if (mSelectedId.equalsIgnoreCase(getResources().getString(R.string.ipd))) {
+                mArrayId = getResources().getStringArray(R.array.ipd_array);
+                mAdmissionDate = mArrayId[indexSselectedId];
+            } else if (mSelectedId.equalsIgnoreCase(getResources().getString(R.string.opd))) {
+                mArrayId = getResources().getStringArray(R.array.opd_array);
+                mAdmissionDate = mArrayId[indexSselectedId];
+            } else if (mSelectedId.equalsIgnoreCase(getResources().getString(R.string.admission_date))) {
+                mArrayId = getResources().getStringArray(R.array.admission_date);
+                mAdmissionDate = mArrayId[indexSselectedId];
+            }
         }
 
 
@@ -917,9 +928,9 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
                     String enteredString = mSearchPatientNameEditText.getText().toString();
                     if (!enteredString.equals(priv)) {
                         if (enteredString.equals("")) {
-                            mClearPatientNameButton.setBackground(getResources().getDrawable(R.mipmap.user));
+                            mClearPatientNameButton.setImageDrawable(getResources().getDrawable(R.mipmap.user));
                         } else {
-                            mClearPatientNameButton.setBackground(getResources().getDrawable(R.mipmap.crosswithcircle));
+                            mClearPatientNameButton.setImageDrawable(getResources().getDrawable(R.mipmap.crosswithcircle));
                         }
                         if (enteredString.trim().length() >= 3) {
                             mPatientsHelper.doGetPatientNameList(s.toString());
@@ -1083,7 +1094,6 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
     @Override
     public void onClick(TreeNode node, Object value, View nodeView) {
         CheckBox nodeSelector = (CheckBox) nodeView.findViewById(R.id.node_selector);
-
 
         if (nodeSelector.isChecked()) {
             nodeSelector.setChecked(false);

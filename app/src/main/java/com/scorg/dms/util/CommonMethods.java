@@ -340,12 +340,12 @@ public class CommonMethods {
         GradientDrawable buttonLeftBackground = new GradientDrawable();
         buttonLeftBackground.setShape(GradientDrawable.RECTANGLE);
         buttonLeftBackground.setColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
-        buttonLeftBackground.setCornerRadii(bottomLeftRadius);
+        buttonLeftBackground.setCornerRadii(bottomRightRadius);
 
         GradientDrawable buttonRightBackground = new GradientDrawable();
         buttonRightBackground.setShape(GradientDrawable.RECTANGLE);
         buttonRightBackground.setColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
-        buttonRightBackground.setCornerRadii(bottomRightRadius);
+        buttonRightBackground.setCornerRadii(bottomLeftRadius);
 
         Button buttonRight = dialog.findViewById(R.id.button_cancel);
         Button buttonLeft = dialog.findViewById(R.id.button_ok);
@@ -402,6 +402,8 @@ public class CommonMethods {
 
         Button buttonRight = dialog.findViewById(R.id.button_cancel);
         Button buttonLeft = dialog.findViewById(R.id.button_ok);
+        ImageView dialogIcon = dialog.findViewById(R.id.dialogIcon);
+        dialogIcon.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
 
         buttonLeft.setBackground(buttonLeftBackground);
         buttonRight.setBackground(buttonRightBackground);

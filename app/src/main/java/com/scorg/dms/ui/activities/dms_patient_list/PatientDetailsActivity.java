@@ -3,6 +3,7 @@ package com.scorg.dms.ui.activities.dms_patient_list;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.ActionBar;
@@ -44,6 +45,7 @@ import butterknife.OnClick;
 
 import static com.scorg.dms.util.DMSConstants.BUNDLE;
 
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -64,6 +66,8 @@ public class PatientDetailsActivity extends BaseActivity implements HelperRespon
     @BindView(R.id.emptyListView)
     RelativeLayout emptyListView;
 
+    @BindView(R.id.imgNoRecordFound)
+    ImageView imgNoRecordFound;
     ArrayList<PatientFilter> mAutoCompleteSearchBoxList = new ArrayList<>();
     private PatientSearchAutoCompleteTextViewAdapter mPatientSearchAutoCompleteTextViewAdapter;
     //----------
@@ -93,6 +97,15 @@ public class PatientDetailsActivity extends BaseActivity implements HelperRespon
     }
 
     public void init() {
+
+        GradientDrawable buttonBackground = new GradientDrawable();
+        buttonBackground.setShape(GradientDrawable.RECTANGLE);
+        buttonBackground.setColor(Color.WHITE);
+        buttonBackground.setCornerRadius(getResources().getDimension(R.dimen.dp8));
+        buttonBackground.setStroke(getResources().getDimensionPixelSize(R.dimen.dp2),Color.parseColor(DMSApplication.COLOR_PRIMARY));
+        mAutoCompleteSearchBox.setBackground(buttonBackground);
+        imgNoRecordFound.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+
         //--------------
 
         mUHIDData.setText(mReceivedPatientData.getPatientId());

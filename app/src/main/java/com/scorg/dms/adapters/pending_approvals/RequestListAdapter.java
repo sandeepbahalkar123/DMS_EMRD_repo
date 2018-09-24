@@ -19,6 +19,7 @@ package com.scorg.dms.adapters.pending_approvals;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -86,12 +87,14 @@ public class RequestListAdapter
         TextView textProcessBy;
         TextView textMyElapsedTime;
         TextView textCurrentStage;
+        LinearLayout cardView;
+        View viewDivider;
+        ImageView bluelineImageView;
 
 
         MyViewHolder(View v) {
             super(v);
             mContainer = v.findViewById(R.id.container);
-            mBehindViews = v.findViewById(R.id.behind_views);
             idAndDetailsLayout = v.findViewById(R.id.idAndDetailsLayout);
             mBluelineImageView = v.findViewById(R.id.bluelineImageView);
             mPatientIdTextView = v.findViewById(R.id.patientIdTextView);
@@ -110,6 +113,9 @@ public class RequestListAdapter
             textMyElapsedTime = v.findViewById(R.id.textMyElapsedTime);
             textCurrentStage = v.findViewById(R.id.textCurrentStage);
             btn_cancel_request = v.findViewById(R.id.btn_cancel_request);
+            cardView = v.findViewById(R.id.cardView);
+            viewDivider = v.findViewById(R.id.viewDivider);
+            bluelineImageView = v.findViewById(R.id.bluelineImageView);
         }
 
 //        @Override
@@ -134,9 +140,26 @@ public class RequestListAdapter
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
 
-        holder.textRequestId.setTextColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
-        holder.textProcessBy.setTextColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
-        holder.textRequestId.setTextColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
+        holder.textRequestId.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+        holder.textProcessBy.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+        holder.textCurrentStage.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+        holder.textRequester.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+        holder.mPatientIdTextView.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+        holder.viewDivider.setBackgroundColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+        holder.bluelineImageView.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+
+        GradientDrawable buttonBackground = new GradientDrawable();
+        buttonBackground.setShape(GradientDrawable.RECTANGLE);
+        buttonBackground.setColor(Color.WHITE);
+        buttonBackground.setCornerRadius(mContext.getResources().getDimension(R.dimen.dp8));
+        buttonBackground.setStroke(mContext.getResources().getDimensionPixelSize(R.dimen.dp1),Color.parseColor(DMSApplication.COLOR_PRIMARY));
+        holder.cardView.setBackground(buttonBackground);
+
+        GradientDrawable currentStageBackground = new GradientDrawable();
+        currentStageBackground.setShape(GradientDrawable.OVAL);
+        currentStageBackground.setColor(Color.WHITE);
+        currentStageBackground.setStroke(mContext.getResources().getDimensionPixelSize(R.dimen.dp1),Color.parseColor(DMSApplication.COLOR_PRIMARY));
+        holder.textCurrentStage.setBackground(currentStageBackground);
 
         final RequestedArchivedDetailList item = mRequestedArchivedDetailLists.get(position);
 

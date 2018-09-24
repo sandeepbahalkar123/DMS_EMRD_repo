@@ -37,6 +37,9 @@ public class DashboardDataModel implements Parcelable {
     @Expose
     private String colorAccent;
 
+    @SerializedName("appointmentTextColor")
+    @Expose
+    private String appointmentTextColor;
 
     @SerializedName("fileTypes")
     @Expose
@@ -79,6 +82,7 @@ public class DashboardDataModel implements Parcelable {
             instance.setWaitingCount(((String) in.readValue((String.class.getClassLoader()))));
             instance.setColorPrimary(((String) in.readValue((String.class.getClassLoader()))));
             instance.setColorPrimaryDark(((String) in.readValue((String.class.getClassLoader()))));
+            instance.setAppointmentTextColor(((String) in.readValue((String.class.getClassLoader()))));
             instance.setColorAccent(((String) in.readValue((String.class.getClassLoader()))));
             instance.setFileTypes(in.createStringArray());
 
@@ -120,6 +124,7 @@ public class DashboardDataModel implements Parcelable {
         dest.writeValue(getColorPrimary());
         dest.writeValue(getColorPrimaryDark());
         dest.writeValue(getColorAccent());
+        dest.writeValue(getAppointmentTextColor());
         dest.writeList(getAppointmentPatientDataList());
 
         //-------
@@ -187,6 +192,14 @@ public class DashboardDataModel implements Parcelable {
 
     public ArrayList<AppointmentOpdAndOtherCount> getAppointmentOpdOTAndOtherCountList() {
         return appointmentOpdOTAndOtherCountList;
+    }
+
+    public String getAppointmentTextColor() {
+        return appointmentTextColor;
+    }
+
+    public void setAppointmentTextColor(String appointmentTextColor) {
+        this.appointmentTextColor = appointmentTextColor;
     }
 
     public void setAppointmentOpdOTAndOtherCountList(ArrayList<AppointmentOpdAndOtherCount> appointmentOpdOTAndOtherCount) {

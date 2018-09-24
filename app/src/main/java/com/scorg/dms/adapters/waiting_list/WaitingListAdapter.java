@@ -18,6 +18,8 @@ package com.scorg.dms.adapters.waiting_list;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,6 +38,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.scorg.dms.R;
 import com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemodel.SearchResult;
 import com.scorg.dms.model.waiting_list.WaitingPatientData;
+import com.scorg.dms.singleton.DMSApplication;
 import com.scorg.dms.util.CommonMethods;
 import com.scorg.dms.util.DMSConstants;
 
@@ -62,10 +65,11 @@ public class WaitingListAdapter
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
+        ImageView bluelineImageView;
         FrameLayout mContainer;
-        LinearLayout mBehindViews;
         LinearLayout idAndDetailsLayout;
         ImageView mBluelineImageView;
+        ImageView callIcon;
         TextView mPatientIdTextView;
         TextView mAppointmentTime;
         ImageView mPatientImageView;
@@ -81,12 +85,13 @@ public class WaitingListAdapter
         View mSeparatorView;
         TextView mTokenLabelTextView;
         TextView mTokenNumber;
-
+        LinearLayout cardView;
+         View viewLine1;
+         View separatorView;
 
         MyViewHolder(View v) {
             super(v);
             mContainer = v.findViewById(R.id.container);
-            mBehindViews = v.findViewById(R.id.behind_views);
             idAndDetailsLayout = v.findViewById(R.id.idAndDetailsLayout);
             mBluelineImageView = v.findViewById(R.id.bluelineImageView);
             mPatientIdTextView = v.findViewById(R.id.patientIdTextView);
@@ -104,6 +109,12 @@ public class WaitingListAdapter
             mTokenLabelTextView = v.findViewById(R.id.tokenLabelTextView);
             mTokenNumber = v.findViewById(R.id.tokenNumber);
             layoutWaitingEpisode = v.findViewById(R.id.layoutWaitingEpisode);
+            cardView = v.findViewById(R.id.cardView);
+            bluelineImageView = (ImageView) v.findViewById(R.id.bluelineImageView);
+            callIcon = (ImageView) v.findViewById(R.id.callIcon);
+            viewLine1 = (View) v.findViewById(R.id.viewLine1);
+            separatorView = (View) v.findViewById(R.id.separatorView);
+
         }
 
 //        @Override
@@ -127,6 +138,20 @@ public class WaitingListAdapter
     @SuppressLint("CheckResult")
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
+
+        GradientDrawable cardBackground = new GradientDrawable();
+        cardBackground.setShape(GradientDrawable.RECTANGLE);
+        cardBackground.setColor(Color.WHITE);
+        cardBackground.setCornerRadius(mContext.getResources().getDimension(R.dimen.dp8));
+        cardBackground.setStroke(mContext.getResources().getDimensionPixelSize(R.dimen.dp1), Color.parseColor(DMSApplication.COLOR_PRIMARY));
+        holder.cardView.setBackground(cardBackground);
+        holder.mAppointmentTime.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+        holder.mTypeStatus.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+        holder.bluelineImageView.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+        holder.callIcon.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+        holder.separatorView.setBackgroundColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+        holder.viewLine1.setBackgroundColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+        holder.mPatientPhoneNumber.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         final WaitingPatientData item = mWaitingDataList.get(position);
 
         //-------------
@@ -180,11 +205,11 @@ public class WaitingListAdapter
         vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
-                holder.mContainer.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                ViewGroup.LayoutParams layoutParams = holder.mBehindViews.getLayoutParams();
-                layoutParams.height = holder.mContainer.getMeasuredHeight();
-                layoutParams.width = holder.mContainer.getMeasuredWidth();
-                holder.mBehindViews.setLayoutParams(layoutParams);
+//                holder.mContainer.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+//                ViewGroup.LayoutParams layoutParams = holder.mBehindViews.getLayoutParams();
+//                layoutParams.height = holder.mContainer.getMeasuredHeight();
+//                layoutParams.width = holder.mContainer.getMeasuredWidth();
+//                holder.mBehindViews.setLayoutParams(layoutParams);
             }
         });
 

@@ -30,9 +30,6 @@
                 android:padding="1.5dp">
 
 
-
-
-
                 <com.github.barteksc.pdfviewer.PDFView
                     android:id="@+id/firstPdfView"
                     android:layout_width="match_parent"

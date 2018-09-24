@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
@@ -75,6 +76,9 @@ public class PendingListFragment extends Fragment implements RequestListAdapter.
     @BindView(R.id.noRecords)
     LinearLayout noRecords;
 
+    @BindView(R.id.imgNoRecordFound)
+    ImageView imgNoRecordFound;
+
     private Unbinder unbinder;
 
     private boolean mIsLoadMorePatients;
@@ -111,7 +115,7 @@ public class PendingListFragment extends Fragment implements RequestListAdapter.
         mPendingApprovalHelper = new PendingApprovalHelper(mParentActivity, this);
         linearlayoutManager = new LinearLayoutManager(this.getContext(), LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(linearlayoutManager);
-
+        imgNoRecordFound.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         mPendingListAdapter = new RequestListAdapter(this.getContext(), requestedArchivedDetailList, this, true);
         mRecyclerView.setAdapter(mPendingListAdapter);
 
@@ -145,25 +149,7 @@ public class PendingListFragment extends Fragment implements RequestListAdapter.
     @Override
     public void onResume() {
         super.onResume();
-//        WaitingListDataModel waitingListDataModel = mParentActivity.getWaitingListDataModel();
-//        waitingPatientTempList = compare(waitingListDataModel.getWaitingPatientDataList());
-//
-//        mWaitingClinicLists = waitingListDataModel.getWaitingClinicList();
-//        if (mWaitingClinicLists.size() > 1) {
-//            clinicListSpinner.setVisibility(View.VISIBLE);
-//            hospitalDetailsLinearLayout.setVisibility(View.GONE);
-//            WaitingListSpinnerAdapter mWaitingListSpinnerAdapter = new WaitingListSpinnerAdapter(getActivity(), mWaitingClinicLists);
-//            clinicListSpinner.setAdapter(mWaitingListSpinnerAdapter);
-//        }
-//        if (!mWaitingClinicLists.isEmpty()) {
-//            clinicListSpinner.setVisibility(View.GONE);
-//            hospitalDetailsLinearLayout.setVisibility(View.GONE);
-//            clinicNameTextView.setText(mWaitingClinicLists.get(0).getHosName() + " - ");
-//            clinicAddress.setText(mWaitingClinicLists.get(0).getHosAddress1());
-//            mRecyclerView.setVisibility(View.VISIBLE);
-//            mRecyclerView.setClipToPadding(false);
-//            setAdapter();
-//        }
+
     }
 
 
@@ -216,16 +202,17 @@ public class PendingListFragment extends Fragment implements RequestListAdapter.
         GradientDrawable buttonLeftBackground = new GradientDrawable();
         buttonLeftBackground.setShape(GradientDrawable.RECTANGLE);
         buttonLeftBackground.setColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
-        buttonLeftBackground.setCornerRadii(bottomLeftRadius);
+        buttonLeftBackground.setCornerRadii(bottomRightRadius);
 
         GradientDrawable buttonRightBackground = new GradientDrawable();
         buttonRightBackground.setShape(GradientDrawable.RECTANGLE);
         buttonRightBackground.setColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
-        buttonRightBackground.setCornerRadii(bottomRightRadius);
+        buttonRightBackground.setCornerRadii(bottomLeftRadius);
 
         Button buttonRight = dialog.findViewById(R.id.button_cancel);
         Button buttonLeft = dialog.findViewById(R.id.button_ok);
-
+        ImageView dialogIcon = dialog.findViewById(R.id.dialogIcon);
+        dialogIcon.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         buttonLeft.setBackground(buttonLeftBackground);
         buttonRight.setBackground(buttonRightBackground);
 
@@ -325,6 +312,8 @@ public class PendingListFragment extends Fragment implements RequestListAdapter.
                     CancelUnlockRequestResponseBaseModel cancelUnlockRequestResponseBaseModel = (CancelUnlockRequestResponseBaseModel) customResponse;
                     if (cancelUnlockRequestResponseBaseModel.getCommon().getStatusCode() == 200)
                         CommonMethods.showToast(getActivity(), "Successfully Canceled");
+                        DMSApplication.ISCancelRequest= true;
+                    requestedArchivedDetailList.clear();
                     mPendingApprovalHelper.doGetPendingApprovalData(1, true);
                 }
             }
