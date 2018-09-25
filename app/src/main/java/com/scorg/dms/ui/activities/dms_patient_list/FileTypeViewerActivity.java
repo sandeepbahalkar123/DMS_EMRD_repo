@@ -23,6 +23,7 @@ import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.AppCompatImageButton;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.SwitchCompat;
@@ -279,6 +280,7 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
 
     private void initialize() {
         mContext = getApplicationContext();
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
         patientIcon.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         uhidIcon.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         addressIcon.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
@@ -1390,6 +1392,7 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
                 mArchivedSelectedPreference = array[position];
                 mFileTreeResponseData = null;
                 getArchivedPageNumber = 1;
+                archiveCount=0;
                 doCreateTreeStructure();
 
             }

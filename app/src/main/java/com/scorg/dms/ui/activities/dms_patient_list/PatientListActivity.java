@@ -302,6 +302,9 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
                         }
                     }, 200);
 
+                }else {
+                    if (patientExpandableListAdapter.getItemCount()==0)
+                        doGetPatientList();
                 }
             }
         });

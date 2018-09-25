@@ -262,7 +262,7 @@
             </RelativeLayout>
 
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/dp5"
@@ -277,13 +277,12 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="@dimen/dp5"
                     android:layout_marginRight="@dimen/dp5"
-                    android:layout_weight="1"
                     app:hintTextAppearance="@style/editTextInputLayout">
 
                     <EditText
                         android:id="@+id/et_userEnteredAnnotation"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:background="@null"
                         android:hint="@string/enterAnnotation"
                         android:imeOptions="actionNext"
@@ -295,8 +294,9 @@
                     android:id="@+id/imageAnnotation"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
                     android:src="@mipmap/annotation"/>
-            </LinearLayout>
+            </RelativeLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"

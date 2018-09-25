@@ -79,7 +79,7 @@ public class RequestListAdapter
         TextView textRequestId;
         TextView textCurrentStatus;
         LinearLayout mAppointmentDetailsLinearLayout;
-        LinearLayout btn_cancel_request;
+        TextView btn_cancel_request;
         TextView mAppointmentLabelTextView;
         TextView mAppointmentTimeTextView;
         TextView textRequester;

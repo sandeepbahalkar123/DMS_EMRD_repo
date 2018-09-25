@@ -232,15 +232,15 @@
                         </LinearLayout>
 
                         <LinearLayout
-                            android:id="@+id/btn_cancel_request"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
-                            android:visibility="gone"
+
                             android:layout_below="@+id/viewProcessBy"
                             android:layout_marginRight="@dimen/dp5"
                             android:layout_marginBottom="@dimen/dp10">
                             <TextView
+                                android:id="@+id/btn_cancel_request"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:background="@drawable/shape_rectangle_red_border"
@@ -250,6 +250,7 @@
                                 android:fontFamily="@font/roboto_medium"
                                 android:textSize="@dimen/sp15"
                                 android:textAllCaps="true"
+                                android:visibility="gone"
                                 android:layout_marginRight="@dimen/dp10"
                                 android:textColor="@color/Red"/>
 

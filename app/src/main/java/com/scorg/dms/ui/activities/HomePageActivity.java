@@ -179,6 +179,9 @@ public class HomePageActivity extends BaseActivity implements HelperResponse, Da
     @BindView(R.id.imgNoRecordFound)
     ImageView imgNoRecordFound;
 
+    @BindView(R.id.layoutTopBackground)
+    LinearLayout layoutTopBackground;
+
     private Context mContext;
     private String docId;
     private LoginHelper loginHelper;
@@ -239,6 +242,8 @@ public class HomePageActivity extends BaseActivity implements HelperResponse, Da
         CommonMethods.setImageUrl(this, DMSConstants.Images.LOGO_SMALL, loginLogo, R.drawable.login_logo);
         CommonMethods.setImageUrl(this, DMSConstants.Images.IC_ACTIONBAR_LOGO, actionBarLogo, R.drawable.ic_launcher);
 
+        layoutTopBackground.setBackgroundColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+
         settingLogo.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         homeLogo.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         supportLogo.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
@@ -254,7 +259,6 @@ public class HomePageActivity extends BaseActivity implements HelperResponse, Da
 
         viewTextView.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         textHeaderTodayAppointment.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
-
         pendingApprovalCount.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         totalPatientsCount.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         todayAppointmentsCount.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
@@ -366,6 +370,7 @@ public class HomePageActivity extends BaseActivity implements HelperResponse, Da
                         DMSApplication.COLOR_DARK_PRIMARY = mDashboardDataModel.getColorPrimaryDark();
                         DMSApplication.COLOR_ACCENT = mDashboardDataModel.getColorAccent();
                         DMSApplication.COLOR_APPOINTMENT_TEXT = mDashboardDataModel.getAppointmentTextColor();
+                        imgNoRecordFound.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
 
                         setAssetsFromServer();
 
@@ -378,6 +383,8 @@ public class HomePageActivity extends BaseActivity implements HelperResponse, Da
                         recyclerView.setAdapter(mDashBoardAppointmentListAdapter);
                         if (mDashboardDataModel.getAppointmentPatientDataList().size() <= 0)
                             emptyListView.setVisibility(View.VISIBLE);
+                        else
+                            emptyListView.setVisibility(View.GONE);
 
 
                         // setLayoutForAppointment(true, mDashboardDataModel.getAppointmentOpdOTAndOtherCountList());
@@ -468,6 +475,7 @@ public class HomePageActivity extends BaseActivity implements HelperResponse, Da
                 }
                 break;
             case R.id.layoutDrawerHome:
+                mDashboardHelper.doGetDashboardResponse();
                 break;
 
         }

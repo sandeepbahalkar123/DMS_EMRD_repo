@@ -76,7 +76,7 @@ public class SupportActivity extends BaseActivity {
         emailButtonBackground.setCornerRadius(getResources().getDimension(R.dimen.dp5));
         emailButtonBackground.setStroke(5, Color.parseColor(DMSApplication.COLOR_ACCENT));
         emailtextView.setBackground(emailButtonBackground);
-        emailtextView.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+        emailtextView.setTextColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
         supportLogo.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         mContext = SupportActivity.this;
         titleTextView.setText(getString(R.string.support));

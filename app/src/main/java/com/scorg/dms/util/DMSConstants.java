@@ -14,6 +14,7 @@ public class DMSConstants {
         String IC_LOGIN_LOGO  = "/ic_login_logo.png";
         String IC_ACTIONBAR_LOGO  = "/ic_actionbar_logo.png";
         String LOGO_SMALL  = "/logo_small.png";
+        String DASHBOARD_BACKGROUND  = "/background_dashboard.png";
     }
 
     public static final String BUNDLE = "bundle";

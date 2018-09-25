@@ -163,6 +163,7 @@ public class PatientDetailsActivity extends BaseActivity implements HelperRespon
                     }, 200);
 
                 }else {
+                    if (mPatientEpisodeRecycleViewListAdapter.getItemCount()==0)
                     doGetPatientEpisode("",0);
                 }
 

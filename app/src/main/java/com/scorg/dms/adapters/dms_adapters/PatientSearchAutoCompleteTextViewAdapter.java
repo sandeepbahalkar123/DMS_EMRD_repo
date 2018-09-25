@@ -1,6 +1,7 @@
 package com.scorg.dms.adapters.dms_adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
 import android.text.Spannable;
 import android.text.style.ForegroundColorSpan;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 
 import com.scorg.dms.R;
 import com.scorg.dms.model.my_patient_filter.PatientFilter;
+import com.scorg.dms.singleton.DMSApplication;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +27,7 @@ public class PatientSearchAutoCompleteTextViewAdapter extends ArrayAdapter<Patie
     Context context;
     int resource, textViewResourceId;
     List<PatientFilter> items, tempItems;
-    public static final String HARDCODED_STRING = "&&&&";
+    public static final String HARDCODED_STRING = "in";
     private PatientSearchAutoCompleteTextViewAdapter.OnItemClickListener onItemClickListener;
 
 
@@ -59,12 +61,12 @@ public class PatientSearchAutoCompleteTextViewAdapter extends ArrayAdapter<Patie
             final TextView lblName = (TextView) view.findViewById(R.id.custom_spinner_txt_view_Id);
             if (lblName != null) {
 
-               // String[] split = names.split(HARDCODED_STRING);
-             //   String textToShow = "\"" + split[0] + "\" " + split[1];
+                String[] split = names.split(HARDCODED_STRING);
+                String textToShow = "\"" + split[0] + "\" " + split[1];
 
                 Spannable spanText = Spannable.Factory.getInstance().newSpannable(names);
                // spanText.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, R.color.tagColor)), 0, (split[0].length() + 2), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                spanText.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, R.color.tagColor)), 0, (1 + 2), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                spanText.setSpan(new ForegroundColorSpan(Color.parseColor(DMSApplication.COLOR_PRIMARY)), 0, (split[0].length()), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                 lblName.setText(spanText);
 
 

@@ -11,6 +11,7 @@ import android.content.res.ColorStateList;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.GradientDrawable;
 import android.support.design.widget.Snackbar;
@@ -334,24 +335,24 @@ public class CommonMethods {
         if (dialogHeader != null)
             ((TextView) dialog.findViewById(R.id.textView_dialog_heading)).setText(dialogHeader);
 
-        float[] bottomLeftRadius = {0, 0, 0, 0, mContext.getResources().getDimension(R.dimen.dp8), mContext.getResources().getDimension(R.dimen.dp8), 0, 0};
-        float[] bottomRightRadius = {0, 0, 0, 0, 0, 0, mContext.getResources().getDimension(R.dimen.dp8), mContext.getResources().getDimension(R.dimen.dp8)};
-
-        GradientDrawable buttonLeftBackground = new GradientDrawable();
-        buttonLeftBackground.setShape(GradientDrawable.RECTANGLE);
-        buttonLeftBackground.setColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
-        buttonLeftBackground.setCornerRadii(bottomRightRadius);
-
-        GradientDrawable buttonRightBackground = new GradientDrawable();
-        buttonRightBackground.setShape(GradientDrawable.RECTANGLE);
-        buttonRightBackground.setColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
-        buttonRightBackground.setCornerRadii(bottomLeftRadius);
+//        float[] bottomLeftRadius = {0, 0, 0, 0, mContext.getResources().getDimension(R.dimen.dp8), mContext.getResources().getDimension(R.dimen.dp8), 0, 0};
+//        float[] bottomRightRadius = {0, 0, 0, 0, 0, 0, mContext.getResources().getDimension(R.dimen.dp8), mContext.getResources().getDimension(R.dimen.dp8)};
+//
+//        GradientDrawable buttonLeftBackground = new GradientDrawable();
+//        buttonLeftBackground.setShape(GradientDrawable.RECTANGLE);
+//        buttonLeftBackground.setColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
+//        buttonLeftBackground.setCornerRadii(bottomRightRadius);
+//
+//        GradientDrawable buttonRightBackground = new GradientDrawable();
+//        buttonRightBackground.setShape(GradientDrawable.RECTANGLE);
+//        buttonRightBackground.setColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
+//        buttonRightBackground.setCornerRadii(bottomLeftRadius);
 
         Button buttonRight = dialog.findViewById(R.id.button_cancel);
         Button buttonLeft = dialog.findViewById(R.id.button_ok);
-
-        buttonLeft.setBackground(buttonLeftBackground);
-        buttonRight.setBackground(buttonRightBackground);
+//
+//        buttonLeft.setBackground(buttonLeftBackground);
+//        buttonRight.setBackground(buttonRightBackground);
 
         buttonLeft.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -416,6 +417,7 @@ public class CommonMethods {
                 DMSPreferencesManager.clearSharedPref(mContext);
                 ((Activity) mContext).finish();
                 mContext.startActivity(new Intent(mContext, SplashScreenActivity.class));
+                ((AppCompatActivity) mContext).finishAffinity();
 
             }
         });
@@ -528,6 +530,14 @@ public class CommonMethods {
                 .apply(requestOptions)
                 .into(imageView);
         CommonMethods.Log(TAG, url);
+    }
+
+    @SuppressLint("CheckResult")
+    public static void setBackgroundImageUrl(Context mContext, String imageName, LinearLayout imageView, int defaultImage) {
+        String url = DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.SERVER_PATH, mContext) + DMSConstants.Images.FOLDER + DMSApplication.RESOLUTION + imageName;
+
+        BitmapDrawable d = new BitmapDrawable(url);
+        imageView.setBackground(d);
     }
     //--------------
 }
