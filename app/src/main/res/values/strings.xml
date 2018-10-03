@@ -38,7 +38,7 @@
     <string name="cancel">Cancel</string>
     <string name="do_you_exit">Do you want to exit ?</string>
     <string name="do_you_want_to_cancel">Do you want to cancel the request ?</string>
-    <string name="do_you_want_to_unlock">Do you want to unlock this ?</string>
+    <string name="do_you_want_to_unlock">Do you want to send the request to admin to view patient\'s confidential file?</string>
     <string name="apply">Apply</string>
     <string name="filter">Filter</string>
     <string name="reset">Reset</string>
@@ -53,6 +53,7 @@
     <string name="booked">Booked</string>
     <string name="capitalcompleted">Completed</string>
     <string name="appointments">Appointments</string>
+    <string name="admitted_patient">Admitted Patient</string>
     <string name="waiting_list">Waiting List</string>
     <string name="request_list">Request List</string>
     <string name="dashboard">dashboard</string>
@@ -69,11 +70,11 @@
     <string name="appointment_completed">Appointment is completed</string>
     <string name="episode">Episode</string>
     <string name="episode_details">Episode Details</string>
-    <string name="today_appointment">Today\'s Appointment/Walk-in</string>
+    <string name="today_appointment">OPD\nPatients</string>
     <string name="today_appointment_no_new_line">Today\'s Appointments</string>
-    <string name="waiting_patients"> Waiting /Admitted Patients</string>
+    <string name="admitted_patients"> Admitted\nPatients</string>
     <string name="pending_approval">Pending\nApproval</string>
-    <string name="today_patient">Total\nPatients</string>
+    <string name="today_patient">My \nPatients</string>
     <string name="years">yrs -\u0020</string>
 
 
@@ -105,8 +106,8 @@
     <string name="discharge">Discharge</string>
     <string name="from">From</string>
     <string name="to">To</string>
-    <string name="requester">Requester-</string>
-    <string name="processed_by">Processed By-</string>
+    <string name="requester">Requester- </string>
+    <string name="processed_by">Processed By- </string>
     <string name="patient_id">Patient ID:</string>
     <string name="medical_records">Medical Records</string>
     <string name="complete">Complete</string>
@@ -211,5 +212,6 @@
     <string name="on">ON</string>
     <string name="off">OFF</string>
     <string name="refresh_images">Refresh Images</string>
+    <string name="clear_file_cache">Clear File Cache</string>
 
 </resources>

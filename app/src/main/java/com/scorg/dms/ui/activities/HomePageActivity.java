@@ -39,6 +39,7 @@ import com.scorg.dms.model.dashboard.DashboardDataModel;
 import com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemodel.SearchResult;
 import com.scorg.dms.preference.DMSPreferencesManager;
 import com.scorg.dms.singleton.DMSApplication;
+import com.scorg.dms.ui.activities.admitted_patient_list.AdmittedPatientsActivity;
 import com.scorg.dms.ui.activities.dashboard.SettingsActivity;
 import com.scorg.dms.ui.activities.dashboard.SupportActivity;
 import com.scorg.dms.ui.activities.dms_patient_list.PatientDetailsActivity;
@@ -142,12 +143,14 @@ public class HomePageActivity extends BaseActivity implements HelperResponse, Da
     @BindView(R.id.layoutPendingApproval)
     RelativeLayout layoutPendingApproval;
 
+    @BindView(R.id.layoutAdmittedPatient)
+    RelativeLayout layoutAdmittedPatient;
+
+    @BindView(R.id.admittedPatientCount)
+    TextView admittedPatientCount;
+
     @BindView(R.id.emptyListView)
     RelativeLayout emptyListView;
-
-    ImageView menuImageWaitingList;
-    TextView menuNameTextView;
-    ImageView dashboardArrowImageView;
 
     @BindView(R.id.hostViewsLayout)
     LinearLayout hostViewsLayout;
@@ -230,9 +233,9 @@ public class HomePageActivity extends BaseActivity implements HelperResponse, Da
 
     @Override
     protected void onResume() {
-        if (mDashboardDataModel == null ||  DMSApplication.ISCancelRequest) {
+        if (mDashboardDataModel == null || DMSApplication.ISCancelRequest) {
             mDashboardHelper.doGetDashboardResponse();
-            DMSApplication.ISCancelRequest=false;
+            DMSApplication.ISCancelRequest = false;
         }
         setAssetsFromServer();
         super.onResume();
@@ -263,6 +266,7 @@ public class HomePageActivity extends BaseActivity implements HelperResponse, Da
         totalPatientsCount.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         todayAppointmentsCount.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         waitingPatientCount.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+        admittedPatientCount.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
     }
 
 
@@ -358,7 +362,8 @@ public class HomePageActivity extends BaseActivity implements HelperResponse, Da
                         pendingApprovalCount.setText(mDashboardDataModel.getPendingApprovedCount());
                         totalPatientsCount.setText(mDashboardDataModel.getTotalPatientCount());
                         todayAppointmentsCount.setText(mDashboardDataModel.getAppointmentCount());
-                        waitingPatientCount.setText(mDashboardDataModel.getWaitingCount());
+                        // waitingPatientCount.setText(mDashboardDataModel.getWaitingCount());
+                        admittedPatientCount.setText(mDashboardDataModel.getAdmittedPatientCount());
 
 
                         DMSPreferencesManager.putInt(DMSPreferencesManager.DMS_PREFERENCES_KEY.ARCHIVE_API_COUNT, mDashboardDataModel.getViewArchivedApiTakeCount(), mContext);
@@ -371,7 +376,6 @@ public class HomePageActivity extends BaseActivity implements HelperResponse, Da
                         DMSApplication.COLOR_ACCENT = mDashboardDataModel.getColorAccent();
                         DMSApplication.COLOR_APPOINTMENT_TEXT = mDashboardDataModel.getAppointmentTextColor();
                         imgNoRecordFound.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
-
                         setAssetsFromServer();
 
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -385,13 +389,6 @@ public class HomePageActivity extends BaseActivity implements HelperResponse, Da
                             emptyListView.setVisibility(View.VISIBLE);
                         else
                             emptyListView.setVisibility(View.GONE);
-
-
-                        // setLayoutForAppointment(true, mDashboardDataModel.getAppointmentOpdOTAndOtherCountList());
-                        // inflate waiting list layout
-                        // setLayoutForWaitingList(mDashboardDataModel.getWaitingCount());
-
-                        //setLayoutForMyPatients();
                     }
                 }
                 break;
@@ -405,7 +402,8 @@ public class HomePageActivity extends BaseActivity implements HelperResponse, Da
         pendingApprovalCount.setText("0");
         totalPatientsCount.setText("0");
         todayAppointmentsCount.setText("0");
-        waitingPatientCount.setText("0");
+        //  waitingPatientCount.setText("0");
+        admittedPatientCount.setText("0");
 
         Toast.makeText(mContext, errorMessage + "", Toast.LENGTH_SHORT).show();
     }
@@ -416,7 +414,8 @@ public class HomePageActivity extends BaseActivity implements HelperResponse, Da
         pendingApprovalCount.setText("0");
         totalPatientsCount.setText("0");
         todayAppointmentsCount.setText("0");
-        waitingPatientCount.setText("0");
+        // waitingPatientCount.setText("0");
+        admittedPatientCount.setText("0");
 
         Toast.makeText(mContext, serverErrorMessage + "", Toast.LENGTH_SHORT).show();
 
@@ -428,13 +427,19 @@ public class HomePageActivity extends BaseActivity implements HelperResponse, Da
 
     }
 
-    @OnClick({R.id.viewTextView, R.id.layoutDrawerIcon, R.id.layoutTotalPatients, R.id.layoutTodayAppointment, R.id.layoutWaitingPatient, R.id.layoutDrawerSetting, R.id.layoutDrawerSupport, R.id.layoutPendingApproval, R.id.layoutDrawerHome})
+    @OnClick({R.id.viewTextView, R.id.layoutDrawerIcon, R.id.layoutTotalPatients, R.id.layoutTodayAppointment, R.id.layoutWaitingPatient, R.id.layoutDrawerSetting, R.id.layoutDrawerSupport, R.id.layoutPendingApproval, R.id.layoutDrawerHome, R.id.layoutAdmittedPatient})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.layoutTodayAppointment:
                 if (mDashboardDataModel != null && !mDashboardDataModel.getAppointmentCount().equalsIgnoreCase("0")) {
                     Intent myAppointmentsActivity = new Intent(this, MyAppointmentsActivity.class);
                     startActivity(myAppointmentsActivity);
+                }
+                break;
+            case R.id.layoutAdmittedPatient:
+                if (mDashboardDataModel != null && !mDashboardDataModel.getAdmittedPatientCount().equalsIgnoreCase("0")) {
+                    Intent admittedPatientsActivity = new Intent(this, AdmittedPatientsActivity.class);
+                    startActivity(admittedPatientsActivity);
                 }
                 break;
             case R.id.layoutWaitingPatient:
@@ -445,7 +450,7 @@ public class HomePageActivity extends BaseActivity implements HelperResponse, Da
                 break;
 
             case R.id.layoutPendingApproval:
-                if (mDashboardDataModel != null && !mDashboardDataModel.getPendingApprovedCount().equalsIgnoreCase("0")) {
+                if (mDashboardDataModel != null) {
                     Intent pendingApprovalList = new Intent(this, RequestedArchivedMainListActivity.class);
                     startActivity(pendingApprovalList);
                 }

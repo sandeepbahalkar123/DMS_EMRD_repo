@@ -138,29 +138,31 @@
                 android:layout_marginBottom="@dimen/dp5"
                 android:background="@color/grey_200"
                 android:baselineAligned="false"
+                android:weightSum="2"
                 android:orientation="horizontal">
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_gravity="center"
-                    android:gravity="center"
+                    android:layout_weight="0.9"
+                   android:gravity="center"
                     android:orientation="horizontal">
-                    <android.support.design.widget.TextInputLayout
-                        android:layout_width="0dp"
+                    <android.support.v7.widget.AppCompatImageView
+                        android:id="@+id/imageFromDate"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
                         android:layout_marginLeft="@dimen/dp5"
                         android:layout_marginStart="@dimen/dp5"
-                        android:layout_marginBottom="@dimen/dp5"
-                        android:layout_weight="1"
+                        android:src="@mipmap/calendar"/>
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:padding="@dimen/dp2"
                         app:hintTextAppearance="@style/editTextInputLayout">
-
                         <EditText
                             android:id="@+id/et_fromdate"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center"
                             android:background="@null"
                             android:ellipsize="end"
                             android:focusableInTouchMode="false"
@@ -171,38 +173,35 @@
                             android:textCursorDrawable="@drawable/cursor_color"
                             android:textSize="@dimen/sp13" />
                     </android.support.design.widget.TextInputLayout>
-                    <android.support.v7.widget.AppCompatImageView
-                        android:id="@+id/imageFromDate"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@mipmap/calendar"/>
+
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_gravity="center"
+                    android:layout_weight="1.1"
                     android:gravity="center"
                     android:orientation="horizontal">
-
+                    <android.support.v7.widget.AppCompatImageView
+                        android:id="@+id/imageToDate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/calendar"/>
                 <android.support.design.widget.TextInputLayout
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginEnd="@dimen/dp5"
                     android:layout_marginLeft="@dimen/dp2"
                     android:layout_marginRight="@dimen/dp5"
                     android:layout_marginStart="@dimen/dp2"
-                    android:layout_marginBottom="@dimen/dp5"
-                    android:layout_weight="1"
+                    android:padding="@dimen/dp2"
                     app:hintTextAppearance="@style/editTextInputLayout">
 
                     <EditText
                         android:id="@+id/et_todate"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
                         android:background="@null"
                         android:ellipsize="end"
                         android:focusableInTouchMode="false"
@@ -213,11 +212,7 @@
                         android:textSize="@dimen/sp13" />
 
                 </android.support.design.widget.TextInputLayout>
-                    <android.support.v7.widget.AppCompatImageView
-                        android:id="@+id/imageToDate"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@mipmap/calendar"/>
+
                 </LinearLayout>
 
             </LinearLayout>

@@ -29,6 +29,7 @@ import com.scorg.dms.R;
 import com.scorg.dms.interfaces.ConnectionListener;
 import com.scorg.dms.interfaces.Connector;
 import com.scorg.dms.interfaces.CustomResponse;
+import com.scorg.dms.model.admitted_patient.AdmittedPatientBaseModel;
 import com.scorg.dms.model.dashboard.DashboardBaseModel;
 import com.scorg.dms.model.dms_models.requestmodel.archive.UnlockRequestResponseBaseModel;
 import com.scorg.dms.model.dms_models.responsemodel.annotationlistresponsemodel.AnnotationListResponseModel;
@@ -430,6 +431,11 @@ public class RequestManager extends ConnectRequest implements Connector, Request
                     case DMSConstants.TASK_CANCEL_REQUEST_CONFIDENTIAL: //This is for cancel request for unlock confidential file /folder
                         CancelUnlockRequestResponseBaseModel cancelUnlockRequestResponseBaseModel = gson.fromJson(data, CancelUnlockRequestResponseBaseModel.class);
                         this.mConnectionListener.onResponse(ConnectionListener.RESPONSE_OK, cancelUnlockRequestResponseBaseModel, mOldDataTag);
+                        break;
+
+                    case DMSConstants.TASK_ADMITTED_PATIENT_DATA: //This is for get admitted patient data
+                       AdmittedPatientBaseModel admittedPatientBaseModel = gson.fromJson(data, AdmittedPatientBaseModel.class);
+                        this.mConnectionListener.onResponse(ConnectionListener.RESPONSE_OK, admittedPatientBaseModel, mOldDataTag);
                         break;
 
                     default:

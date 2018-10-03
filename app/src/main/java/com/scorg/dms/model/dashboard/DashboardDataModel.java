@@ -25,6 +25,10 @@ public class DashboardDataModel implements Parcelable {
     @Expose
     private String waitingCount;
 
+    @SerializedName("admittedPatientCount")
+    @Expose
+    private String admittedPatientCount;
+
     @SerializedName("colorPrimary")
     @Expose
     private String colorPrimary;
@@ -81,6 +85,7 @@ public class DashboardDataModel implements Parcelable {
             instance.setPendingApprovedCount(((String) in.readValue((String.class.getClassLoader()))));
             instance.setWaitingCount(((String) in.readValue((String.class.getClassLoader()))));
             instance.setColorPrimary(((String) in.readValue((String.class.getClassLoader()))));
+            instance.setAdmittedPatientCount(((String) in.readValue((String.class.getClassLoader()))));
             instance.setColorPrimaryDark(((String) in.readValue((String.class.getClassLoader()))));
             instance.setAppointmentTextColor(((String) in.readValue((String.class.getClassLoader()))));
             instance.setColorAccent(((String) in.readValue((String.class.getClassLoader()))));
@@ -125,6 +130,7 @@ public class DashboardDataModel implements Parcelable {
         dest.writeValue(getColorPrimaryDark());
         dest.writeValue(getColorAccent());
         dest.writeValue(getAppointmentTextColor());
+        dest.writeValue(getAdmittedPatientCount());
         dest.writeList(getAppointmentPatientDataList());
 
         //-------
@@ -236,6 +242,14 @@ public class DashboardDataModel implements Parcelable {
 
     public void setPatientApiTakeCount(int patientApiTakeCount) {
         this.patientApiTakeCount = patientApiTakeCount;
+    }
+
+    public String getAdmittedPatientCount() {
+        return admittedPatientCount;
+    }
+
+    public void setAdmittedPatientCount(String admittedPatientCount) {
+        this.admittedPatientCount = admittedPatientCount;
     }
 
     public ArrayList<AppointmentPatientData> getAppointmentPatientDataList() {

@@ -67,6 +67,13 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan|adjustResize" />
 
+        <activity
+            android:name=".ui.activities.admitted_patient_list.AdmittedPatientsActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan|adjustResize" />
+
+
         <!-- DMS -->
 
         <activity

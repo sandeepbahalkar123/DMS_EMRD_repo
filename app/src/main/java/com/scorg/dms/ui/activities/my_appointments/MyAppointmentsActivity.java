@@ -2,7 +2,9 @@ package com.scorg.dms.ui.activities.my_appointments;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -135,7 +137,7 @@ public class MyAppointmentsActivity extends BaseActivity implements HelperRespon
                 if (myAppointmentsBaseMainModel.getCommon().getStatusCode().equals(SUCCESS)) {
 
                     MyAppointmentsDataModel myAppointmentsDM = myAppointmentsBaseMainModel.getMyAppointmentsDataModel();
-                    myAppointmentsDM.setAppointmentPatientData(getBookedAndConfirmed(myAppointmentsBaseMainModel.getMyAppointmentsDataModel().getAppointmentPatientData()));
+                    myAppointmentsDM.setAppointmentPatientData(myAppointmentsBaseMainModel.getMyAppointmentsDataModel().getAppointmentPatientData());
 
                     mMyAppointmentsFragment = MyAppointmentsFragment.newInstance(myAppointmentsDM, mDateSelectedByUser);
                    getSupportFragmentManager().beginTransaction().replace(R.id.viewContainer, mMyAppointmentsFragment).commit();
@@ -216,18 +218,26 @@ public class MyAppointmentsActivity extends BaseActivity implements HelperRespon
 
 
 
+
     public void callPatient(long patientPhone) {
         mClickedPhoneNumber = patientPhone;
+        MyAppointmentsActivityPermissionsDispatcher.doCallSupportWithCheck(this);
     }
 
     @NeedsPermission(Manifest.permission.CALL_PHONE)
     void doCallSupport() {
-
+        Intent callIntent = new Intent(Intent.ACTION_CALL);
+        callIntent.setData(Uri.parse("tel:" + mClickedPhoneNumber));
+        startActivity(callIntent);
     }
+
+
 
     public void onRequestPermssionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        MyAppointmentsActivityPermissionsDispatcher.onRequestPermissionsResult(this, requestCode, grantResults);
     }
+
 
     @Override
     public void onDateSet(DatePickerDialog dialog, String year, String monthOfYear, String dayOfMonth) {

@@ -841,6 +841,7 @@
                     android:gravity="center"
                     android:textColor="@color/black"
                     android:textSize="@dimen/sp14"
+                    android:visibility="invisible"
                     tools:text="this is text" />
 
                 <android.support.v7.widget.AppCompatImageButton

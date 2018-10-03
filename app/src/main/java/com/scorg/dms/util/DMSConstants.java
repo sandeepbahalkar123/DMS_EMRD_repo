@@ -71,12 +71,14 @@ public class DMSConstants {
     public static final String TASK_PENDING_APPROVAL_LIST = DMSConstants.BLANK + 46;
     public static final String TASK_RAISE_REQUEST_CONFIDENTIAL = DMSConstants.BLANK + 47;
     public static final String TASK_CANCEL_REQUEST_CONFIDENTIAL = DMSConstants.BLANK + 48;
+    public static final String TASK_ADMITTED_PATIENT_DATA = DMSConstants.BLANK + 49;
 
     //-----------
 
     public static final String PATIENT_ADDRESS = "patientAddress";
     public static final String DOCTOR_NAME = "doctorName";
     public static final String APPOINTMENT_DATA = "appointment_data";
+    public static final String ADMITTED_PATIENT_DATA = "admitted_patient_data";
     public static final String PATIENT_ID = "patient_id";
     public static final String PAT_ID = "pat_id";
     public static final String NO = "no";
@@ -91,6 +93,9 @@ public class DMSConstants {
         int OTHER = 6;
         String BOOKED_STATUS = "Booked";
         String CONFIRM_STATUS = "Confirm";
+        String CANCEL_STATUS = "Cancel";
+        String COMPLETED_STATUS = "Completed";
+
     }
 
 
@@ -101,7 +106,7 @@ public class DMSConstants {
         String DD_MMM = "dd MMM";
         String MM = "MM";
         String MMM = "MMM";
-       // String UTC_PATTERN = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
+       String UTC_PATTERN_2ND = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
         String UTC_PATTERN = "yyyy-MM-dd'T'HH:mm:ss'Z'";
         String YYYY_MM_DD = "yyyy-MM-dd";
         String DD_MM_YYYY = "dd-MM-yyyy";

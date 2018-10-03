@@ -20,6 +20,7 @@ public class Config {
     public static final String GET_DASHBOARD_DATA = "/api/DoctorDashboard";
     public static final String GET_WAITING_LIST = "/api/WaitingList";
     public static final String GET_MY_APPOINTMENTS_LIST = "/api/Appointment";
+    public static final String GET_ADMITTED_PATIENT_LIST = "/api/AdmittedPatient";
     public static final String URL_PATIENT_LIST = "/api/Result";
     public static final String URL_PENDING_APPROVAL_LIST = "/api/PendingApprovalList";
     public static final String URL_RAISE_REQUEST_CONFIDENTIAL = "/api/RaiseRequest";

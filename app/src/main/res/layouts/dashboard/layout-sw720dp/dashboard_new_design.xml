@@ -150,12 +150,47 @@
                                 android:fontFamily="@font/roboto_medium"/>
                         </RelativeLayout>
 
+
+                        <RelativeLayout
+                            android:id="@+id/layoutAdmittedPatient"
+                            android:layout_width="@dimen/dp0"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/dp5"
+                            android:layout_weight="1"
+                            android:background="@drawable/curve_edge_dashbooard_display_count_bg"
+                            android:paddingBottom="@dimen/dp16"
+                            android:paddingTop="@dimen/dp16">
+
+                            <TextView
+                                android:id="@+id/admittedPatientCount"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerHorizontal="true"
+                                android:fontFamily="@font/roboto_bold"
+                                android:gravity="center"
+                                android:textColor="@color/timing_bg_color"
+                                android:textSize="@dimen/sp20"
+                                tools:text="21" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/admittedPatientCount"
+                                android:layout_centerHorizontal="true"
+                                android:fontFamily="@font/roboto_medium"
+                                android:gravity="center"
+                                android:text="@string/admitted_patients"
+                                android:textColor="@color/dashboard_text_color"
+                                android:textSize="@dimen/sp12" />
+                        </RelativeLayout>
+
                         <RelativeLayout
                             android:id="@+id/layoutWaitingPatient"
                             android:layout_width="@dimen/dp0"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/dp5"
                             android:layout_weight="1"
+                            android:visibility="gone"
                             android:background="@drawable/curve_edge_dashbooard_display_count_bg"
                             android:paddingBottom="@dimen/dp16"
                             android:paddingTop="@dimen/dp16">
@@ -177,7 +212,7 @@
                                 android:layout_below="@id/waitingPatientCount"
                                 android:layout_centerHorizontal="true"
                                 android:gravity="center"
-                                android:text="@string/waiting_patients"
+                                android:text="@string/admitted_patients"
                                 android:textColor="@color/dashboard_text_color"
                                 android:textSize="@dimen/sp12"
                                 android:fontFamily="@font/roboto_medium" />

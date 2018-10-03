@@ -7,7 +7,9 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -30,6 +32,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import android.widget.TextView;
 
+import java.io.File;
+
 /**
  * Created by jeetal on 9/2/18.
  */
@@ -49,6 +53,9 @@ public class SettingsActivity extends BaseActivity implements  HelperResponse {
 
     @BindView(R.id.clearImageCache)
     TextView clearImageCache;
+
+    @BindView(R.id.clearFileCache)
+    TextView clearFileCache;
 
     @BindView(R.id.dateTextview)
     TextView dateTextview;
@@ -77,6 +84,7 @@ public class SettingsActivity extends BaseActivity implements  HelperResponse {
         logout.setTextColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
         change_ip_address.setTextColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
         clearImageCache.setTextColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
+        clearFileCache.setTextColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
         dashboardArrowIcon.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         mContext = SettingsActivity.this;
         docId = DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.DOC_ID, mContext);
@@ -92,7 +100,7 @@ public class SettingsActivity extends BaseActivity implements  HelperResponse {
         super.onBackPressed();
     }
 
-    @OnClick({R.id.clearImageCache, R.id.backImageView, R.id.selectMenuLayout, R.id.change_ip_address})
+    @OnClick({R.id.clearImageCache,R.id.clearFileCache, R.id.backImageView, R.id.selectMenuLayout, R.id.change_ip_address })
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.backImageView:
@@ -110,9 +118,44 @@ public class SettingsActivity extends BaseActivity implements  HelperResponse {
                 DMSPreferencesManager.putString(DMSPreferencesManager.CACHE_TIME, CommonMethods.getCurrentDate("ddMMyyyyhhmmss"), mContext);
                 CommonMethods.showToast(this,"Images Refreshed.");
                 break;
+
+            case R.id.clearFileCache:
+                //final File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/PDFViewCache/");
+                boolean isClear=deleteCache(this);
+
+                Log.e("isClear--","--"+isClear);
+                CommonMethods.showToast(this,"File Cache Cleared.");
+                break;
         }
     }
+    public static boolean deleteCache(Context context) {
+        try {
+            File dir =  new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/PDFViewCache/");
+           return deleteDir(dir);
+        } catch (Exception e) {
 
+            e.printStackTrace();
+            return false;
+        }
+
+    }
+
+    public static boolean deleteDir(File dir) {
+        if (dir != null && dir.isDirectory()) {
+            String[] children = dir.list();
+            for (int i = 0; i < children.length; i++) {
+                boolean success = deleteDir(new File(dir, children[i]));
+                if (!success) {
+                    return false;
+                }
+            }
+            return dir.delete();
+        } else if(dir!= null && dir.isFile()) {
+            return dir.delete();
+        } else {
+            return false;
+        }
+    }
     private void showLogoutDialog() {
         final Dialog dialog = new Dialog(mContext);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));

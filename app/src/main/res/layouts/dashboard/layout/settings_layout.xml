@@ -33,6 +33,15 @@
             android:textColor="@color/tagColor"
             android:textSize="@dimen/sp16"
             android:fontFamily="@font/roboto_medium" />
+        <TextView
+            android:id="@+id/clearFileCache"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp56"
+            android:gravity="center|left"
+            android:text="@string/clear_file_cache"
+            android:textColor="@color/tagColor"
+            android:textSize="@dimen/sp16"
+            android:fontFamily="@font/roboto_medium" />
 
         <View
             android:layout_width="match_parent"

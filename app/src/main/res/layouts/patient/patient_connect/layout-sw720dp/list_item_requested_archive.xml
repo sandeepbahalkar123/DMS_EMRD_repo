@@ -124,7 +124,7 @@
                                     android:layout_marginStart="@dimen/dp5"
                                     android:textColor="@color/statusbar"
                                     android:textSize="@dimen/sp14"
-                                    android:padding="@dimen/dp3"
+                                    android:padding="@dimen/dp2"
                                     android:fontFamily="@font/roboto_medium"
                                     tools:ignore="RtlSymmetry"
                                     tools:text="ID: 23456"

@@ -59,6 +59,8 @@ import static com.scorg.dms.util.DMSConstants.APPOINTMENT_STATUS.BOOKED_STATUS;
 import static com.scorg.dms.util.DMSConstants.APPOINTMENT_STATUS.CANCEL;
 import static com.scorg.dms.util.DMSConstants.APPOINTMENT_STATUS.COMPLETED;
 import static com.scorg.dms.util.DMSConstants.APPOINTMENT_STATUS.CONFIRM_STATUS;
+import static com.scorg.dms.util.DMSConstants.APPOINTMENT_STATUS.COMPLETED_STATUS;
+import static com.scorg.dms.util.DMSConstants.APPOINTMENT_STATUS.CANCEL_STATUS;
 import static com.scorg.dms.util.DMSConstants.APPOINTMENT_STATUS.NO_SHOW;
 import static com.scorg.dms.util.DMSConstants.APPOINTMENT_STATUS.OTHER;
 
@@ -70,7 +72,7 @@ import static com.scorg.dms.util.DMSConstants.APPOINTMENT_STATUS.OTHER;
  */
 public class AppointmentListAdapter
         extends RecyclerView.Adapter<AppointmentListAdapter.MyViewHolder> implements Filterable {
-    private static final String TAG = "AppointmentListAdapter";
+    private static final String TAG = "AdmittedPatientsListAdapter";
     private final GradientDrawable buttonBackground;
     private OnItemClickListener onItemClickListener;
     private Context mContext;
@@ -240,16 +242,16 @@ public class AppointmentListAdapter
             holder.patientGenderTextView.setVisibility(View.GONE);
         }
         //-----------
-        if (appointmentPatientDataObject.getAppointmentStatus().equalsIgnoreCase(BOOKED_STATUS)) {
+        if (appointmentPatientDataObject.getAppointmentStatus().contains(BOOKED_STATUS)) {
             holder.opdTypeTextView.setTextColor(ContextCompat.getColor(mContext, R.color.book_color));
             holder.opdTypeTextView.setText(mContext.getString(R.string.opd_appointment) + " " + mContext.getString(R.string.booked));
-        } else if (appointmentPatientDataObject.getAppointmentStatus().equals(COMPLETED)) {
+        } else if (appointmentPatientDataObject.getAppointmentStatus().contains(COMPLETED_STATUS)) {
             holder.opdTypeTextView.setText(mContext.getString(R.string.opd_appointment) + " " + mContext.getString(R.string.capitalcompleted));
             holder.opdTypeTextView.setTextColor(ContextCompat.getColor(mContext, R.color.complete_color));
-        } else if (appointmentPatientDataObject.getAppointmentStatus().equalsIgnoreCase(CONFIRM_STATUS)) {
+        } else if (appointmentPatientDataObject.getAppointmentStatus().contains(CONFIRM_STATUS)) {
             holder.opdTypeTextView.setText(mContext.getString(R.string.opd_appointment) + " " + appointmentPatientDataObject.getAppointmentStatus());
             holder.opdTypeTextView.setTextColor(ContextCompat.getColor(mContext, R.color.confirm_color));
-        } else if (appointmentPatientDataObject.getAppointmentStatus().equals(CANCEL)) {
+        } else if (appointmentPatientDataObject.getAppointmentStatus().contains(CANCEL_STATUS)) {
             holder.opdTypeTextView.setText(mContext.getString(R.string.opd_appointment) + " " + appointmentPatientDataObject.getAppointmentStatus());
             holder.opdTypeTextView.setTextColor(ContextCompat.getColor(mContext, R.color.cancel_color));
         } else if (appointmentPatientDataObject.getAppointmentStatus().equals(NO_SHOW)) {

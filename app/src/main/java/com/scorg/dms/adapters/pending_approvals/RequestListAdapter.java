@@ -168,7 +168,8 @@ public class RequestListAdapter
         holder.mPatientIdTextView.setText(holder.mPatientIdTextView.getResources().getString(R.string.uhid) + "-" + dataToShowInPatientID);
         //-------------
         String name = CommonMethods.toCamelCase(item.getPatientName());
-        if (item.getSalutation() != null) {
+        if (item.getSalutation() != null && !item.getSalutation().equals("")) {
+            Log.e("getSalutation","--"+item.getSalutation());
             name = item.getSalutation() + " " + name;
         }
         holder.mPatientNameTextView.setText(name);
@@ -179,14 +180,14 @@ public class RequestListAdapter
         holder.textCurrentStatus.setText(" " + CommonMethods.toCamelCase(item.getCurrentStatus()));
        Log.e("getStageChangeBy",""+item.getStageChangeBy());
         if (item.getStageChangeBy() != null && !item.getStageChangeBy().isEmpty()) {
-            holder.textProcessBy.setText(item.getStageChangeBy());
+            holder.textProcessBy.setText(" "+item.getStageChangeBy());
         } else {
             holder.textProcessBy.setVisibility(View.GONE);
         }
         if (item.getRequestInitiatorName() == null) {
             holder.textRequestId.setVisibility(View.GONE);
         } else {
-            holder.textRequester.setText(item.getRequestInitiatorName());
+            holder.textRequester.setText(" "+item.getRequestInitiatorName());
         }
         holder.textRequestId.setText("" + item.getRequestID());
         holder.textCurrentStage.setText(item.getCurrentStage());

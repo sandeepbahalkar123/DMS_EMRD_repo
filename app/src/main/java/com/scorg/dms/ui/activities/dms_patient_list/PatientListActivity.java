@@ -206,7 +206,7 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
         buttonBackground.setShape(GradientDrawable.RECTANGLE);
         buttonBackground.setColor(Color.WHITE);
         buttonBackground.setCornerRadius(getResources().getDimension(R.dimen.dp8));
-        buttonBackground.setStroke(getResources().getDimensionPixelSize(R.dimen.dp1),Color.parseColor(DMSApplication.COLOR_PRIMARY));
+        buttonBackground.setStroke(getResources().getDimensionPixelSize(R.dimen.dp1), Color.parseColor(DMSApplication.COLOR_PRIMARY));
         mAutoCompleteSearchBox.setBackground(buttonBackground);
         mOpenFilterViewFAB.setBackgroundTintList(ColorStateList.valueOf(Color.RED));
         LinearLayoutManager linearlayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
@@ -302,8 +302,8 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
                         }
                     }, 200);
 
-                }else {
-                    if (patientExpandableListAdapter.getItemCount()==0)
+                } else {
+                    if (patientExpandableListAdapter.getItemCount() == 0)
                         doGetPatientList();
                 }
             }
@@ -1166,8 +1166,10 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
                         int month = Integer.parseInt(monthOfYear) + 1;
                         if (month <= 9) {
                             monthOfYear = "0" + month;
-                        }
+                        }else
+                            monthOfYear= String.valueOf(month);
                         String selectedTime = year + "-" + monthOfYear + "-" + dayOfMonth;
+                        Log.e("selectedTime", ""+selectedTime);
                         if (getString(R.string.from).equalsIgnoreCase(callFrom)) {
 
                             mSelectedFromDate = selectedTime;
@@ -1196,6 +1198,7 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
 
         } else if (getString(R.string.to).equalsIgnoreCase(callFrom)) {
             if (mFromDate != null) {
+
                 mDatePickerDialog.setMaxDate(Calendar.getInstance());
                 Calendar now = Calendar.getInstance();
                 now.setTime(mFromDate);

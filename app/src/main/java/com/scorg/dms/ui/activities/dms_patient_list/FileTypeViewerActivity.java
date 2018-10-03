@@ -12,7 +12,6 @@ import android.content.res.ColorStateList;
 import android.content.res.Configuration;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
@@ -42,7 +41,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
-import android.widget.Switch;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -229,7 +227,6 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
     View deviderView;
 
 
-
     DrawerLayout mDrawer;
     //---------
     ArrayList<PatientEpisodeFileData> mSelectedFileTypeDataToCompare;
@@ -285,28 +282,27 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
         uhidIcon.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         addressIcon.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         deviderView.setBackgroundColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+        mCompareButton.setBackgroundColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         GradientDrawable cardBackground = new GradientDrawable();
         cardBackground.setShape(GradientDrawable.RECTANGLE);
         cardBackground.setColor(Color.WHITE);
         cardBackground.setCornerRadius(mContext.getResources().getDimension(R.dimen.dp8));
         cardBackground.setStroke(mContext.getResources().getDimensionPixelSize(R.dimen.dp1), Color.parseColor(DMSApplication.COLOR_PRIMARY));
         mPatientId.setBackground(cardBackground);
-        int[][] states = new int[][] {
-                new int[] {-android.R.attr.state_checked},
-                new int[] {android.R.attr.state_checked},
+        int[][] states = new int[][]{
+                new int[]{-android.R.attr.state_checked},
+                new int[]{android.R.attr.state_checked},
         };
 
-        int[] thumbColors = new int[] {
+        int[] thumbColors = new int[]{
                 Color.LTGRAY,
                 Color.parseColor(DMSApplication.COLOR_ACCENT)
         };
 
-        int[] trackColors = new int[] {
+        int[] trackColors = new int[]{
                 Color.LTGRAY,
                 Color.parseColor(DMSApplication.COLOR_ACCENT),
         };
-
-
 
         DrawableCompat.setTintList(DrawableCompat.wrap(mOpenCompareDialogSwitch.getThumbDrawable()), new ColorStateList(states, thumbColors));
         DrawableCompat.setTintList(DrawableCompat.wrap(mOpenCompareDialogSwitch.getTrackDrawable()), new ColorStateList(states, trackColors));
@@ -1204,7 +1200,7 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
             }
 
         } else {
-            Log.e("hiiiiii", "giiiiii");
+
             mGetEncryptedPDFRequestModelList.clear();
             mGetEncryptedPDFRequestModelList.add(getEncryptedPDFRequestModel);
 
@@ -1226,7 +1222,6 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
 
 
     private void loadPDFFromServer(String pdfFileURL, final PDFView pdfViewToLoad) {
-
         String baseUrl = DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.SERVER_PATH, mContext);
         if (pdfFileURL.contains(",")) {
             String[] separated = pdfFileURL.split(",");
@@ -1245,31 +1240,38 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
             loadFile(pdfViewToLoad, file);
         } else {
             final String finalPdfFileURL = pdfFileURL;
-            DownloadUtil.get().download(pdfFileURL, SDPath, new DownloadUtil.OnDownloadListener() {
-                @Override
-                public void onDownloadSuccess(final File file) {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            loadFile(pdfViewToLoad, file);
-                        }
-                    });
-                }
+            try {
+                DownloadUtil.get().download(pdfFileURL, SDPath, new DownloadUtil.OnDownloadListener() {
+                    @Override
+                    public void onDownloadSuccess(final File file) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                loadFile(pdfViewToLoad, file);
+                            }
+                        });
+                    }
 
-                @Override
-                public void onDownloading(int progress) {
+                    @Override
+                    public void onDownloading(int progress) {
 
-                }
+                    }
 
-                @Override
-                public void onDownloadFailed() {
-                    loadPDFFromServer(finalPdfFileURL, pdfViewToLoad);
-                }
-            });
+                    @Override
+                    public void onDownloadFailed() {
+                        loadPDFFromServer(finalPdfFileURL, pdfViewToLoad);
+                    }
+                });
+            }catch (Exception e){
+                e.fillInStackTrace();
+                Toast.makeText(this,pdfFileURL,Toast.LENGTH_LONG).show();
+            }
         }
     }
 
     private void loadFile(PDFView pdfViewToLoad, File file) {
+        CommonMethods.Log(TAG, "PDF URL1112222:==-->> " + file);
+
         if (pdfViewToLoad == mFirstPdfView) {
             mFirstPdfView.fromFile(file)
                     .defaultPage(mPageNumber)
@@ -1289,7 +1291,6 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
                     .onLoad(this)
                     .enableAnnotationRendering(true)
                     .scrollHandle(new DefaultScrollHandle(this))
-
                     .load();
             mSecondPdfView.zoomTo(DEFAULT_MIN_SCALE);
         }
@@ -1392,7 +1393,7 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
                 mArchivedSelectedPreference = array[position];
                 mFileTreeResponseData = null;
                 getArchivedPageNumber = 1;
-                archiveCount=0;
+                archiveCount = 0;
                 doCreateTreeStructure();
 
             }
@@ -1408,8 +1409,8 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
 
         if (respectiveRecordID != null) {
             mArchivedSelectedPreference = DMSConstants.ArchivedPreference.DATE;
-           // mArchivedPreferenceSpinner.setVisibility(View.GONE);
-           // mPreferenceLayout.setVisibility(View.GONE);
+            mArchivedPreferenceSpinner.setVisibility(View.GONE);
+            mPreferenceLayout.setVisibility(View.GONE);
         }
 
         if (mFileTreeResponseData == null)
