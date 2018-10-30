@@ -667,6 +667,11 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
 
     }
 
+    @Override
+    public void onTimeOutError(String mOldDataTag, String timeOutErrorMessage) {
+
+    }
+
 
     private void askWriteExtenralStoragePermission(int requestCode) {
         int hasWriteContactsPermissionCamera = ContextCompat.checkSelfPermission(mContext, Manifest.permission.WRITE_EXTERNAL_STORAGE);

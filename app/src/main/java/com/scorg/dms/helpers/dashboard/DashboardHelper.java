@@ -36,7 +36,7 @@ public class DashboardHelper implements ConnectionListener {
         //CommonMethods.Log(TAG, customResponse.toString());
         switch (responseResult) {
             case ConnectionListener.RESPONSE_OK:
-               if (mOldDataTag.equalsIgnoreCase(DMSConstants.TASK_GET_DASHBOARD_RESPONSE)) {
+                if (mOldDataTag.equalsIgnoreCase(DMSConstants.TASK_GET_DASHBOARD_RESPONSE)) {
                     mHelperResponseManager.onSuccess(mOldDataTag, customResponse);
                 }
                 break;
@@ -55,6 +55,10 @@ public class DashboardHelper implements ConnectionListener {
             case ConnectionListener.NO_CONNECTION_ERROR:
                 CommonMethods.Log(TAG, mContext.getString(R.string.no_connection_error));
                 mHelperResponseManager.onNoConnectionError(mOldDataTag, mContext.getString(R.string.no_connection_error));
+                break;
+            case ConnectionListener.TIMEOUT_ERROR:
+                CommonMethods.Log(TAG, mContext.getString(R.string.timeout_error));
+                mHelperResponseManager.onTimeOutError(mOldDataTag, mContext.getString(R.string.timeout_error));
                 break;
             default:
                 CommonMethods.Log(TAG, mContext.getString(R.string.default_error));

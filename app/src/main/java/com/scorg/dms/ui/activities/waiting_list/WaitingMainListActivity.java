@@ -113,6 +113,11 @@ public class WaitingMainListActivity extends BaseActivity implements HelperRespo
 
     }
 
+    @Override
+    public void onTimeOutError(String mOldDataTag, String timeOutErrorMessage) {
+
+    }
+
     @OnClick({R.id.backImageView, R.id.titleTextView, R.id.userInfoTextView})
     public void onViewClicked(View view) {
         switch (view.getId()) {

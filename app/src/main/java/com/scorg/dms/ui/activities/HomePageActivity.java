@@ -246,7 +246,6 @@ public class HomePageActivity extends BaseActivity implements HelperResponse, Da
         CommonMethods.setImageUrl(this, DMSConstants.Images.IC_ACTIONBAR_LOGO, actionBarLogo, R.drawable.ic_launcher);
 
         layoutTopBackground.setBackgroundColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
-
         settingLogo.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         homeLogo.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         supportLogo.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
@@ -359,6 +358,7 @@ public class HomePageActivity extends BaseActivity implements HelperResponse, Da
                 } else if (DMSConstants.RESPONSE_OK.equalsIgnoreCase(mDashboardBaseModel.getCommon().getSuccess())) {
                     mDashboardDataModel = mDashboardBaseModel.getDashboardDataModel();
                     if (mDashboardDataModel != null) {
+                        hostViewsLayout.setVisibility(View.VISIBLE);
                         pendingApprovalCount.setText(mDashboardDataModel.getPendingApprovedCount());
                         totalPatientsCount.setText(mDashboardDataModel.getTotalPatientCount());
                         todayAppointmentsCount.setText(mDashboardDataModel.getAppointmentCount());
@@ -424,6 +424,18 @@ public class HomePageActivity extends BaseActivity implements HelperResponse, Da
     @Override
     public void onNoConnectionError(String mOldDataTag, String serverErrorMessage) {
         Toast.makeText(mContext, serverErrorMessage + "", Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    public void onTimeOutError(String mOldDataTag, String timeOutErrorMessage) {
+        hostViewsLayout.removeAllViews();
+        pendingApprovalCount.setText("0");
+        totalPatientsCount.setText("0");
+        todayAppointmentsCount.setText("0");
+        // waitingPatientCount.setText("0");
+        admittedPatientCount.setText("0");
+        Toast.makeText(mContext, timeOutErrorMessage + "", Toast.LENGTH_SHORT).show();
 
     }
 

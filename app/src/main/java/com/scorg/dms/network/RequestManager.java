@@ -46,7 +46,6 @@ import com.scorg.dms.model.pending_approval_list.RequestedArchivedBaseModel;
 import com.scorg.dms.model.waiting_list.WaitingListBaseModel;
 import com.scorg.dms.preference.DMSPreferencesManager;
 import com.scorg.dms.singleton.Device;
-import com.scorg.dms.ui.activities.LoginActivity;
 import com.scorg.dms.ui.activities.SplashScreenActivity;
 import com.scorg.dms.ui.customesViews.CustomProgressDialog;
 import com.scorg.dms.util.CommonMethods;
@@ -274,16 +273,7 @@ public class RequestManager extends ConnectRequest implements Connector, Request
 //            CommonMethods.Log("Error Message", error.getMessage() + "\n error Localize message" + error.getLocalizedMessage());
             CommonMethods.Log(TAG, "Goes into error response condition");
             if (error instanceof TimeoutError) {
-
-                if (error.getMessage().equalsIgnoreCase("java.io.IOException: No authentication challenges found") || error.getMessage().equalsIgnoreCase("invalid_grant")) {
-                    if (!isTokenExpired) {
-                        tokenRefreshRequest();
-                    }
-                }
-                if (mViewById != null)
-                    CommonMethods.showSnack(mViewById, mContext.getString(R.string.timeout));
-                else
-                    CommonMethods.showToast(mContext, mContext.getString(R.string.timeout));
+                mConnectionListener.onResponse(ConnectionListener.TIMEOUT_ERROR, null, mOldDataTag);
 
             } else if (error instanceof NoConnectionError) {
 
@@ -434,7 +424,7 @@ public class RequestManager extends ConnectRequest implements Connector, Request
                         break;
 
                     case DMSConstants.TASK_ADMITTED_PATIENT_DATA: //This is for get admitted patient data
-                       AdmittedPatientBaseModel admittedPatientBaseModel = gson.fromJson(data, AdmittedPatientBaseModel.class);
+                        AdmittedPatientBaseModel admittedPatientBaseModel = gson.fromJson(data, AdmittedPatientBaseModel.class);
                         this.mConnectionListener.onResponse(ConnectionListener.RESPONSE_OK, admittedPatientBaseModel, mOldDataTag);
                         break;
 

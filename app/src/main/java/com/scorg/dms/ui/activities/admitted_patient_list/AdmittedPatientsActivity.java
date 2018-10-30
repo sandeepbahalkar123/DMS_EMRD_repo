@@ -169,6 +169,11 @@ public class AdmittedPatientsActivity extends BaseActivity implements HelperResp
 
     }
 
+    @Override
+    public void onTimeOutError(String mOldDataTag, String timeOutErrorMessage) {
+
+    }
+
     @OnClick({R.id.backImageView, R.id.dateTextview})
     public void onViewClicked(View view) {
         switch (view.getId()) {

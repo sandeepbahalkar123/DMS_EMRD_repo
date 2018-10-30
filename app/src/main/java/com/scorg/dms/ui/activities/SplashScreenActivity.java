@@ -155,6 +155,11 @@ public class SplashScreenActivity extends BaseActivity implements HelperResponse
     }
 
     @Override
+    public void onTimeOutError(String mOldDataTag, String timeOutErrorMessage) {
+
+    }
+
+    @Override
     public void onBackPressed() {
         super.onBackPressed();
         finish();

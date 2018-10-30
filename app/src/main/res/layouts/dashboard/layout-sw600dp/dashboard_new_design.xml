@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -9,7 +8,6 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp40"
         android:theme="@style/AppTheme.AppBarOverlay">
-
         <include layout="@layout/dashboard_action_bar" />
 
     </android.support.design.widget.AppBarLayout>
@@ -42,19 +40,19 @@
                         android:id="@+id/welcomeTextView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_bold"
                         android:text="@string/welcome"
                         android:textColor="@color/green"
-                        android:textSize="@dimen/sp18"
-                        android:fontFamily="@font/roboto_bold" />
+                        android:textSize="@dimen/sp18" />
 
                     <TextView
                         android:id="@+id/doctorNameTextView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/welcomeTextView"
+                        android:fontFamily="@font/roboto_bold"
                         android:textColor="@color/white"
                         android:textSize="@dimen/sp18"
-                        android:fontFamily="@font/roboto_bold"
                         tools:text="Dr. Rahul Kalyanpur" />
 
                     <TextView
@@ -63,11 +61,11 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/doctorNameTextView"
                         android:ellipsize="end"
+                        android:fontFamily="@font/roboto_medium"
                         android:maxLines="1"
                         android:text="MBBS, MD - Medicine, Neurology"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/sp12"
-                        android:fontFamily="@font/roboto_medium" />
+                        android:textSize="@dimen/sp12" />
 
 
                 </LinearLayout>
@@ -91,18 +89,19 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/curve_edge_dashbooard_display_count_bg"
-                            android:paddingBottom="@dimen/dp16"
-                            android:paddingTop="@dimen/dp16">
+                            android:paddingTop="@dimen/dp16"
+                            android:paddingBottom="@dimen/dp16">
 
                             <TextView
                                 android:id="@+id/totalPatientsCount"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerHorizontal="true"
+                                android:fontFamily="@font/roboto_bold"
                                 android:gravity="center"
+                                android:text="0"
                                 android:textColor="@color/timing_bg_color"
                                 android:textSize="@dimen/sp20"
-                                android:fontFamily="@font/roboto_bold"
                                 tools:text="21" />
 
                             <TextView
@@ -110,11 +109,11 @@
                                 android:layout_height="wrap_content"
                                 android:layout_below="@id/totalPatientsCount"
                                 android:layout_centerHorizontal="true"
+                                android:fontFamily="@font/roboto_medium"
                                 android:gravity="center"
                                 android:text="@string/today_patient"
                                 android:textColor="@color/dashboard_text_color"
-                                android:textSize="@dimen/sp12"
-                                android:fontFamily="@font/roboto_medium" />
+                                android:textSize="@dimen/sp12" />
                         </RelativeLayout>
 
                         <RelativeLayout
@@ -124,18 +123,19 @@
                             android:layout_marginLeft="@dimen/dp5"
                             android:layout_weight="1"
                             android:background="@drawable/curve_edge_dashbooard_display_count_bg"
-                            android:paddingBottom="@dimen/dp16"
-                            android:paddingTop="@dimen/dp16">
+                            android:paddingTop="@dimen/dp16"
+                            android:paddingBottom="@dimen/dp16">
 
                             <TextView
                                 android:id="@+id/todayAppointmentsCount"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerHorizontal="true"
+                                android:fontFamily="@font/roboto_bold"
                                 android:gravity="center"
+                                android:text="0"
                                 android:textColor="@color/timing_bg_color"
                                 android:textSize="@dimen/sp20"
-                                android:fontFamily="@font/roboto_bold"
                                 tools:text="21" />
 
                             <TextView
@@ -143,11 +143,11 @@
                                 android:layout_height="wrap_content"
                                 android:layout_below="@id/todayAppointmentsCount"
                                 android:layout_centerHorizontal="true"
+                                android:fontFamily="@font/roboto_medium"
                                 android:gravity="center"
                                 android:text="@string/today_appointment"
                                 android:textColor="@color/dashboard_text_color"
-                                android:textSize="@dimen/sp12"
-                                android:fontFamily="@font/roboto_medium" />
+                                android:textSize="@dimen/sp12" />
                         </RelativeLayout>
 
                         <RelativeLayout
@@ -157,8 +157,8 @@
                             android:layout_marginLeft="@dimen/dp5"
                             android:layout_weight="1"
                             android:background="@drawable/curve_edge_dashbooard_display_count_bg"
-                            android:paddingBottom="@dimen/dp16"
-                            android:paddingTop="@dimen/dp16">
+                            android:paddingTop="@dimen/dp16"
+                            android:paddingBottom="@dimen/dp16">
 
                             <TextView
                                 android:id="@+id/admittedPatientCount"
@@ -167,6 +167,7 @@
                                 android:layout_centerHorizontal="true"
                                 android:fontFamily="@font/roboto_bold"
                                 android:gravity="center"
+                                android:text="0"
                                 android:textColor="@color/timing_bg_color"
                                 android:textSize="@dimen/sp20"
                                 tools:text="21" />
@@ -191,19 +192,20 @@
                             android:layout_marginLeft="@dimen/dp5"
                             android:layout_weight="1"
                             android:background="@drawable/curve_edge_dashbooard_display_count_bg"
+                            android:paddingTop="@dimen/dp16"
                             android:paddingBottom="@dimen/dp16"
-                            android:visibility="gone"
-                            android:paddingTop="@dimen/dp16">
+
+                            android:visibility="gone">
 
                             <TextView
                                 android:id="@+id/waitingPatientCount"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerHorizontal="true"
+                                android:fontFamily="@font/roboto_bold"
                                 android:gravity="center"
                                 android:textColor="@color/timing_bg_color"
                                 android:textSize="@dimen/sp20"
-                                android:fontFamily="@font/roboto_bold"
                                 tools:text="21" />
 
                             <TextView
@@ -211,11 +213,11 @@
                                 android:layout_height="wrap_content"
                                 android:layout_below="@id/waitingPatientCount"
                                 android:layout_centerHorizontal="true"
+                                android:fontFamily="@font/roboto_medium"
                                 android:gravity="center"
                                 android:text="@string/admitted_patients"
                                 android:textColor="@color/dashboard_text_color"
-                                android:textSize="@dimen/sp12"
-                                android:fontFamily="@font/roboto_medium" />
+                                android:textSize="@dimen/sp12" />
                         </RelativeLayout>
 
                         <RelativeLayout
@@ -225,18 +227,19 @@
                             android:layout_marginLeft="@dimen/dp5"
                             android:layout_weight="1"
                             android:background="@drawable/curve_edge_dashbooard_display_count_bg"
-                            android:paddingBottom="@dimen/dp16"
-                            android:paddingTop="@dimen/dp16">
+                            android:paddingTop="@dimen/dp16"
+                            android:paddingBottom="@dimen/dp16">
 
                             <TextView
                                 android:id="@+id/pendingApprovalCount"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerHorizontal="true"
+                                android:fontFamily="@font/roboto_bold"
                                 android:gravity="center"
+                                android:text="0"
                                 android:textColor="@color/timing_bg_color"
                                 android:textSize="@dimen/sp20"
-                                android:fontFamily="@font/roboto_bold"
                                 tools:text="21" />
 
                             <TextView
@@ -244,11 +247,11 @@
                                 android:layout_height="wrap_content"
                                 android:layout_below="@id/pendingApprovalCount"
                                 android:layout_centerHorizontal="true"
+                                android:fontFamily="@font/roboto_medium"
                                 android:gravity="center"
                                 android:text="@string/pending_approval"
                                 android:textColor="@color/dashboard_text_color"
-                                android:textSize="@dimen/sp12"
-                                android:fontFamily="@font/roboto_medium" />
+                                android:textSize="@dimen/sp12" />
                         </RelativeLayout>
 
                     </LinearLayout>
@@ -264,7 +267,8 @@
             android:layout_margin="@dimen/dp8"
             android:layout_marginTop="@dimen/dp0"
             android:layout_weight="1"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="invisible">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -294,11 +298,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
+                    android:fontFamily="@font/roboto_medium"
                     android:gravity="center"
                     android:text="@string/today_appointment_no_new_line"
                     android:textColor="@color/tagColor"
                     android:textSize="@dimen/sp16"
-                    android:fontFamily="@font/roboto_medium"
                     tools:text="@string/today_appointment_no_new_line" />
 
                 <TextView
@@ -306,11 +310,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1.2"
+                    android:fontFamily="@font/roboto_bold"
                     android:text="@string/view_all"
                     android:textAllCaps="true"
                     android:textColor="@color/tagColor"
                     android:textSize="@dimen/sp12"
-                    android:fontFamily="@font/roboto_bold"
                     tools:text="@string/view_all" />
 
             </LinearLayout>
@@ -318,8 +322,8 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp1"
-                android:layout_marginBottom="@dimen/dp5"
                 android:layout_marginTop="@dimen/dp5"
+                android:layout_marginBottom="@dimen/dp5"
                 android:background="@color/grey_700" />
 
             <include layout="@layout/common_recycler_view"></include>

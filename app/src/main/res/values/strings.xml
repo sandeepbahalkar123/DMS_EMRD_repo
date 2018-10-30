@@ -34,6 +34,7 @@
     <!--sandeep sir account credentials-->
     <string name="parse_error">parse error</string>
     <string name="no_connection_error">Internal server error</string>
+    <string name="timeout_error">Timeout error</string>
     <string name="default_error">default error</string>
     <string name="cancel">Cancel</string>
     <string name="do_you_exit">Do you want to exit ?</string>

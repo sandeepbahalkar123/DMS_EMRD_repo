@@ -1,6 +1,7 @@
 package com.scorg.dms.helpers.login;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.android.volley.Request;
 import com.scorg.dms.interfaces.ConnectionListener;
@@ -90,6 +91,7 @@ public class LoginHelper implements ConnectionListener {
         testParams.put(DMSConstants.PASSWORD, password);
         testParams.put(DMSConstants.CLIENT_ID_KEY, DMSConstants.CLIENT_ID_VALUE);
         mConnectionFactory.setPostParams(testParams);
+        Log.e("testParams",""+testParams);
         //TODO: setDMSUrl added for temporary purpose, once done with real API, use setUrl method
         mConnectionFactory.setUrl(Config.URL_LOGIN);
         mConnectionFactory.createConnection(DMSConstants.TASK_LOGIN_CODE);

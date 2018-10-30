@@ -265,4 +265,9 @@ public class ViewAllPatientListFragment extends Fragment implements WaitingListA
     public void onNoConnectionError(String mOldDataTag, String serverErrorMessage) {
 
     }
+
+    @Override
+    public void onTimeOutError(String mOldDataTag, String timeOutErrorMessage) {
+
+    }
 }

@@ -274,6 +274,11 @@ public class ActivePatientListFragment extends Fragment implements WaitingListAd
 
     }
 
+    @Override
+    public void onTimeOutError(String mOldDataTag, String timeOutErrorMessage) {
+
+    }
+
     private ArrayList<WaitingPatientData> compare(ArrayList<WaitingPatientData> waitingPatientData){
         ArrayList<WaitingPatientData> patientData = new ArrayList<>();
         if (waitingPatientData.size()!=0)

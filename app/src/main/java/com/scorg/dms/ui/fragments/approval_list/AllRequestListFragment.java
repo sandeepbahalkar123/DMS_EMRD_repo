@@ -263,4 +263,9 @@ public class AllRequestListFragment extends Fragment implements RequestListAdapt
     public void onNoConnectionError(String mOldDataTag, String serverErrorMessage) {
 
     }
+
+    @Override
+    public void onTimeOutError(String mOldDataTag, String timeOutErrorMessage) {
+
+    }
 }

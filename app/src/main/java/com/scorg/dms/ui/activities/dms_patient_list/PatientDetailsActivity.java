@@ -229,6 +229,11 @@ public class PatientDetailsActivity extends BaseActivity implements HelperRespon
     }
 
     @Override
+    public void onTimeOutError(String mOldDataTag, String timeOutErrorMessage) {
+
+    }
+
+    @Override
     public void onEpisodeListItemClick(PatientEpisodeFileData groupHeader) {
 
         Intent intent = new Intent(mContext, FileTypeViewerActivity.class);

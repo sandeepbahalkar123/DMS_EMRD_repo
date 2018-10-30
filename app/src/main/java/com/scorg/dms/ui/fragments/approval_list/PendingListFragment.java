@@ -335,4 +335,9 @@ public class PendingListFragment extends Fragment implements RequestListAdapter.
 
     }
 
+    @Override
+    public void onTimeOutError(String mOldDataTag, String timeOutErrorMessage) {
+
+    }
+
 }

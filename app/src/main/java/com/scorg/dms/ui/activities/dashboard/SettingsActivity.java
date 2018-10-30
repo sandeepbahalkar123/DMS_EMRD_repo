@@ -23,6 +23,7 @@ import com.scorg.dms.interfaces.HelperResponse;
 import com.scorg.dms.preference.DMSPreferencesManager;
 import com.scorg.dms.singleton.DMSApplication;
 import com.scorg.dms.ui.activities.BaseActivity;
+import com.scorg.dms.ui.activities.LoginActivity;
 import com.scorg.dms.ui.activities.SplashScreenActivity;
 import com.scorg.dms.util.CommonMethods;
 import com.scorg.dms.util.DMSConstants;
@@ -206,13 +207,17 @@ public class SettingsActivity extends BaseActivity implements  HelperResponse {
 
 
     private void logout() {
-        DMSPreferencesManager.clearSharedPref(mContext);
+
         String mServerPath = DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.SERVER_PATH, mContext);
         String isValidConfig = DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.IS_VALID_IP_CONFIG, mContext);
-        DMSPreferencesManager.clearSharedPref(mContext);
+
         DMSPreferencesManager.putString(DMSPreferencesManager.DMS_PREFERENCES_KEY.SERVER_PATH, mServerPath, mContext);
         DMSPreferencesManager.putString(DMSPreferencesManager.DMS_PREFERENCES_KEY.IS_VALID_IP_CONFIG, isValidConfig, mContext);
-        Intent intent = new Intent(mContext, SplashScreenActivity.class);
+        DMSPreferencesManager.putString(DMSConstants.USERNAME, DMSConstants.BLANK, mContext);
+        DMSPreferencesManager.putString(DMSConstants.PASSWORD, DMSConstants.BLANK, mContext);
+        DMSPreferencesManager.putString(DMSConstants.LOGIN_SUCCESS, DMSConstants.FALSE, mContext);
+
+        Intent intent = new Intent(mContext, LoginActivity.class);
         startActivity(intent);
         ((AppCompatActivity) mContext).finishAffinity();
     }
@@ -234,6 +239,11 @@ public class SettingsActivity extends BaseActivity implements  HelperResponse {
 
     @Override
     public void onNoConnectionError(String mOldDataTag, String serverErrorMessage) {
+
+    }
+
+    @Override
+    public void onTimeOutError(String mOldDataTag, String timeOutErrorMessage) {
 
     }
 }

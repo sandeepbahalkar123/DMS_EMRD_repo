@@ -14,4 +14,7 @@ public interface HelperResponse {
 
     public void onNoConnectionError(String mOldDataTag, String serverErrorMessage);
 
+
+    public void onTimeOutError(String mOldDataTag, String timeOutErrorMessage);
+
 }

@@ -528,6 +528,11 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
         mFirstFileTypeProgressDialogLayout.setVisibility(View.GONE);
     }
 
+    @Override
+    public void onTimeOutError(String mOldDataTag, String timeOutErrorMessage) {
+
+    }
+
     /**
      * Return true if fields empty/validation failed, else false.
      *
