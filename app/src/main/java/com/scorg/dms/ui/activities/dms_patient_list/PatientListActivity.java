@@ -530,7 +530,7 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
 
     @Override
     public void onTimeOutError(String mOldDataTag, String timeOutErrorMessage) {
-
+        CommonMethods.showToast(mContext,timeOutErrorMessage);
     }
 
     /**

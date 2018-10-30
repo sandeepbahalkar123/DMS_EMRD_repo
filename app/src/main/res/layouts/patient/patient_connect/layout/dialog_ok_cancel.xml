@@ -61,6 +61,7 @@
                 android:inputType="text"
                 android:maxLines="1"
                 android:text=""
+                android:textCursorDrawable="@drawable/cursor_color_white"
                 android:textColor="@color/white"
                 android:textSize="@dimen/sp14" />
 

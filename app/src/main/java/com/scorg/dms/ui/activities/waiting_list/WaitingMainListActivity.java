@@ -25,6 +25,7 @@ import com.scorg.dms.singleton.DMSApplication;
 import com.scorg.dms.ui.activities.BaseActivity;
 import com.scorg.dms.ui.fragments.waiting_list.ActivePatientListFragment;
 import com.scorg.dms.ui.fragments.waiting_list.ViewAllPatientListFragment;
+import com.scorg.dms.util.CommonMethods;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -115,7 +116,7 @@ public class WaitingMainListActivity extends BaseActivity implements HelperRespo
 
     @Override
     public void onTimeOutError(String mOldDataTag, String timeOutErrorMessage) {
-
+        CommonMethods.showToast(WaitingMainListActivity.this,timeOutErrorMessage);
     }
 
     @OnClick({R.id.backImageView, R.id.titleTextView, R.id.userInfoTextView})

@@ -636,11 +636,11 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
         String fileData = filePath;
         if (fileData != null) {
             if (mOldDataTag.endsWith("0")) {
-                mFirstFileTypeProgressDialogLayout.setVisibility(View.GONE);
+              //  mFirstFileTypeProgressDialogLayout.setVisibility(View.GONE);
                 fileOneData = fileData;
                 askWriteExtenralStoragePermission(REQUEST_CODE_WRITE_FILE_ONE_PERMISSIONS);
             } else if (mOldDataTag.endsWith("1")) {
-                mSecondFileTypeProgressDialogLayout.setVisibility(View.GONE);
+               // mSecondFileTypeProgressDialogLayout.setVisibility(View.GONE);
                 fileTwoData = fileData;
                 askWriteExtenralStoragePermission(REQUEST_CODE_WRITE_FILE_TWO_PERMISSIONS);
             }
@@ -654,22 +654,21 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
 
     @Override
     public void onParseError(String mOldDataTag, String errorMessage) {
-
+        CommonMethods.showToast(mContext,errorMessage);
     }
 
     @Override
     public void onServerError(String mOldDataTag, String serverErrorMessage) {
-
+        CommonMethods.showToast(mContext,serverErrorMessage);
     }
 
     @Override
     public void onNoConnectionError(String mOldDataTag, String serverErrorMessage) {
-
     }
 
     @Override
     public void onTimeOutError(String mOldDataTag, String timeOutErrorMessage) {
-
+        CommonMethods.showToast(mContext,timeOutErrorMessage);
     }
 
 
@@ -1089,19 +1088,26 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
         if (mFirstPdfView == pdfView) {
             mMessageForFirstFile.setVisibility(View.VISIBLE);
             mMessageForFirstFile.setText(getString(R.string.filenotfound));
+            mFirstFileTypeProgressDialogLayout.setVisibility(View.GONE);
         } else if (mSecondPdfView == pdfView) {
             mMessageForSecondFile.setVisibility(View.VISIBLE);
             mMessageForSecondFile.setText(getString(R.string.filenotfound));
+            mSecondFileTypeProgressDialogLayout.setVisibility(View.GONE);
         }
     }
 
     @Override
     public void loadComplete(PDFView pdfView, int nbPages) {
-        if (pdfView == mFirstPdfView)
+        if (pdfView == mFirstPdfView) {
             mMessageForFirstFile.setVisibility(View.GONE);
+            mFirstFileTypeProgressDialogLayout.setVisibility(View.GONE);
+        }
 
-        if (pdfView == mSecondPdfView)
+        if (pdfView == mSecondPdfView) {
             mMessageForSecondFile.setVisibility(View.GONE);
+            mSecondFileTypeProgressDialogLayout.setVisibility(View.GONE);
+
+        }
 
         setPDFScale(getResources().getConfiguration());
     }

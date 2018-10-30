@@ -24,6 +24,7 @@ import com.scorg.dms.singleton.DMSApplication;
 import com.scorg.dms.ui.activities.BaseActivity;
 import com.scorg.dms.ui.fragments.approval_list.AllRequestListFragment;
 import com.scorg.dms.ui.fragments.approval_list.PendingListFragment;
+import com.scorg.dms.util.CommonMethods;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -110,7 +111,6 @@ public class RequestedArchivedMainListActivity extends BaseActivity implements H
 
     @Override
     public void onTimeOutError(String mOldDataTag, String timeOutErrorMessage) {
-
     }
 
     @OnClick({R.id.backImageView, R.id.titleTextView, R.id.userInfoTextView})

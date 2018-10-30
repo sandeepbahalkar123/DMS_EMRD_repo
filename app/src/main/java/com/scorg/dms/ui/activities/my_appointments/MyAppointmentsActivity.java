@@ -174,7 +174,7 @@ public class MyAppointmentsActivity extends BaseActivity implements HelperRespon
 
     @Override
     public void onTimeOutError(String mOldDataTag, String timeOutErrorMessage) {
-
+        CommonMethods.showToast(mContext,timeOutErrorMessage);
     }
 
     @OnClick({R.id.backImageView, R.id.dateTextview})

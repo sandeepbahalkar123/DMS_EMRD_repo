@@ -220,17 +220,18 @@ public class PatientDetailsActivity extends BaseActivity implements HelperRespon
 
     @Override
     public void onServerError(String mOldDataTag, String serverErrorMessage) {
-
+        CommonMethods.showToast(mContext,serverErrorMessage);
     }
 
     @Override
     public void onNoConnectionError(String mOldDataTag, String serverErrorMessage) {
+        CommonMethods.showToast(mContext,serverErrorMessage);
 
     }
 
     @Override
     public void onTimeOutError(String mOldDataTag, String timeOutErrorMessage) {
-
+        CommonMethods.showToast(mContext,timeOutErrorMessage);
     }
 
     @Override
