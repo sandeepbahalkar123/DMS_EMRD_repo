@@ -35,6 +35,7 @@ import com.scorg.dms.ui.activities.dms_patient_list.FileTypeViewerActivity;
 import com.scorg.dms.ui.activities.dms_patient_list.PatientDetailsActivity;
 import com.scorg.dms.ui.activities.waiting_list.WaitingMainListActivity;
 import com.scorg.dms.ui.customesViews.CircularImageView;
+import com.scorg.dms.util.CommonMethods;
 import com.scorg.dms.util.DMSConstants;
 
 import java.util.ArrayList;
@@ -263,6 +264,12 @@ public class ViewAllPatientListFragment extends Fragment implements WaitingListA
 
     @Override
     public void onNoConnectionError(String mOldDataTag, String serverErrorMessage) {
+
+    }
+
+    @Override
+    public void onTimeOutError(String mOldDataTag, String timeOutErrorMessage) {
+        CommonMethods.showToast(mParentActivity,timeOutErrorMessage);
 
     }
 }

@@ -1,8 +1,10 @@
 package com.scorg.dms.helpers.login;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.android.volley.Request;
+import com.scorg.dms.R;
 import com.scorg.dms.interfaces.ConnectionListener;
 import com.scorg.dms.interfaces.CustomResponse;
 import com.scorg.dms.interfaces.HelperResponse;
@@ -66,6 +68,10 @@ public class LoginHelper implements ConnectionListener {
                 CommonMethods.Log(TAG, "no connection error");
                 mHelperResponseManager.onNoConnectionError(mOldDataTag, "no connection error");
                 break;
+            case ConnectionListener.TIMEOUT_ERROR:
+                CommonMethods.Log(TAG, mContext.getString(R.string.timeout_error));
+                mHelperResponseManager.onTimeOutError(mOldDataTag, mContext.getString(R.string.timeout_error));
+                break;
             default:
                 CommonMethods.Log(TAG, "default error");
                 break;
@@ -90,6 +96,7 @@ public class LoginHelper implements ConnectionListener {
         testParams.put(DMSConstants.PASSWORD, password);
         testParams.put(DMSConstants.CLIENT_ID_KEY, DMSConstants.CLIENT_ID_VALUE);
         mConnectionFactory.setPostParams(testParams);
+        Log.e("testParams", "" + testParams);
         //TODO: setDMSUrl added for temporary purpose, once done with real API, use setUrl method
         mConnectionFactory.setUrl(Config.URL_LOGIN);
         mConnectionFactory.createConnection(DMSConstants.TASK_LOGIN_CODE);
@@ -109,7 +116,6 @@ public class LoginHelper implements ConnectionListener {
 //        i.setCommon(c);
 //        onResponse(ConnectionListener.RESPONSE_OK, i, DMSConstants.TASK_CHECK_SERVER_CONNECTION);
     }
-
 
 
 }

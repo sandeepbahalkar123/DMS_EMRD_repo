@@ -31,6 +31,7 @@ import com.scorg.dms.ui.activities.dms_patient_list.FileTypeViewerActivity;
 import com.scorg.dms.ui.activities.pending_approval_list.RequestedArchivedMainListActivity;
 import com.scorg.dms.ui.customesViews.CircularImageView;
 import com.scorg.dms.ui.customesViews.drag_drop_recyclerview_helper.EndlessRecyclerViewScrollListener;
+import com.scorg.dms.util.CommonMethods;
 import com.scorg.dms.util.DMSConstants;
 import com.scorg.dms.util.NetworkUtil;
 
@@ -256,11 +257,17 @@ public class AllRequestListFragment extends Fragment implements RequestListAdapt
 
     @Override
     public void onServerError(String mOldDataTag, String serverErrorMessage) {
-
+        CommonMethods.showToast(mParentActivity,serverErrorMessage);
     }
 
     @Override
     public void onNoConnectionError(String mOldDataTag, String serverErrorMessage) {
+        CommonMethods.showToast(mParentActivity,serverErrorMessage);
 
+    }
+
+    @Override
+    public void onTimeOutError(String mOldDataTag, String timeOutErrorMessage) {
+        CommonMethods.showToast(mParentActivity,timeOutErrorMessage);
     }
 }

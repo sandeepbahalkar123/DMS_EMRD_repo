@@ -140,5 +140,11 @@ public class LoginActivity extends BaseActivity implements HelperResponse {
         Log.e("loginResponce","onNoConnectionError");
 
     }
+
+    @Override
+    public void onTimeOutError(String mOldDataTag, String timeOutErrorMessage) {
+        CommonMethods.showToast(this, timeOutErrorMessage);
+        Log.e("loginResponce","onTimeOutError");
+    }
 }
 

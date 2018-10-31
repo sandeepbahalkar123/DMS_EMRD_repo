@@ -5,13 +5,12 @@ import android.content.Context;
 import com.android.volley.Request;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.scorg.dms.R;
 import com.scorg.dms.interfaces.ConnectionListener;
 import com.scorg.dms.interfaces.CustomResponse;
 import com.scorg.dms.interfaces.HelperResponse;
 import com.scorg.dms.model.dms_models.requestmodel.archive.GetArchiveRequestModel;
 import com.scorg.dms.model.dms_models.requestmodel.archive.RaiseUnlockRequestModel;
-import com.scorg.dms.model.dms_models.requestmodel.filetreerequestmodel.FileTreeRequestModel;
-import com.scorg.dms.model.dms_models.requestmodel.getpdfdatarequestmodel.GetPdfDataRequestModel;
 import com.scorg.dms.model.dms_models.requestmodel.showfile_data.GetEncryptedPDFRequestModel;
 import com.scorg.dms.model.dms_models.requestmodel.showsearchresultrequestmodel.ShowSearchResultRequestModel;
 import com.scorg.dms.network.ConnectRequest;
@@ -109,9 +108,11 @@ public class DMSPatientsHelper implements ConnectionListener {
             case ConnectionListener.SERVER_ERROR:
                 CommonMethods.Log(TAG, "server error");
                 mHelperResponseManager.onServerError(mOldDataTag, "server error");
-
                 break;
-
+            case ConnectionListener.TIMEOUT_ERROR:
+                CommonMethods.Log(TAG, mContext.getString(R.string.timeout_error));
+                mHelperResponseManager.onTimeOutError(mOldDataTag, mContext.getString(R.string.timeout_error));
+                break;
             default:
                 CommonMethods.Log(TAG, "default error");
                 break;

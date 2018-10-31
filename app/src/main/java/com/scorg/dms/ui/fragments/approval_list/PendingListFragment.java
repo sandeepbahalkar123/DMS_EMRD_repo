@@ -327,11 +327,19 @@ public class PendingListFragment extends Fragment implements RequestListAdapter.
 
     @Override
     public void onServerError(String mOldDataTag, String serverErrorMessage) {
+        CommonMethods.showToast(mParentActivity,serverErrorMessage);
 
     }
 
     @Override
     public void onNoConnectionError(String mOldDataTag, String serverErrorMessage) {
+        CommonMethods.showToast(mParentActivity,serverErrorMessage);
+
+    }
+
+    @Override
+    public void onTimeOutError(String mOldDataTag, String timeOutErrorMessage) {
+        CommonMethods.showToast(mParentActivity,timeOutErrorMessage);
 
     }
 

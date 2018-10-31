@@ -54,7 +54,10 @@ public class AppointmentHelper implements ConnectionListener {
                 CommonMethods.Log(TAG, mContext.getString(R.string.no_connection_error));
                 mHelperResponseManager.onNoConnectionError(mOldDataTag, mContext.getString(R.string.no_connection_error));
                 break;
-
+            case ConnectionListener.TIMEOUT_ERROR:
+                CommonMethods.Log(TAG, mContext.getString(R.string.timeout_error));
+                mHelperResponseManager.onTimeOutError(mOldDataTag, mContext.getString(R.string.timeout_error));
+                break;
             default:
                 CommonMethods.Log(TAG, mContext.getString(R.string.default_error));
                 break;

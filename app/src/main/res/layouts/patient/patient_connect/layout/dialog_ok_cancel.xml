@@ -60,7 +60,8 @@
                 android:gravity="center"
                 android:inputType="text"
                 android:maxLines="1"
-                android:text="172.16.100.216:81"
+                android:text=""
+                android:textCursorDrawable="@drawable/cursor_color_white"
                 android:textColor="@color/white"
                 android:textSize="@dimen/sp14" />
 

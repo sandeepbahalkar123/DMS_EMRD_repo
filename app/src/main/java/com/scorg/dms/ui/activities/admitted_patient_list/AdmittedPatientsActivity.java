@@ -17,6 +17,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.philliphsu.bottomsheetpickers.date.DatePickerDialog;
 import com.scorg.dms.R;
@@ -166,6 +167,14 @@ public class AdmittedPatientsActivity extends BaseActivity implements HelperResp
     @Override
     public void onNoConnectionError(String mOldDataTag, String serverErrorMessage) {
         CommonMethods.showToast(mContext, serverErrorMessage);
+
+    }
+
+    @Override
+    public void onTimeOutError(String mOldDataTag, String timeOutErrorMessage) {
+        CommonMethods.showToast(mContext, timeOutErrorMessage);
+        emptyListView.setVisibility(View.VISIBLE);
+        imgNoRecordFound.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
 
     }
 
