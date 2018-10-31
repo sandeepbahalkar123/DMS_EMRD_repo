@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr format="boolean" name="animateSlideText"/>
+    <attr format="color" name="buttonBackgroundColor"/>
+    <attr format="reference" name="buttonImage"/>
+    <attr format="reference" name="buttonImageDisabled"/>
+    <attr format="boolean" name="reverseSlide"/>
+    <attr format="color" name="slideBackgroundColor"/>
+    <attr format="string" name="slideText"/>
+    <attr format="color" name="slideTextColor"/>
+    <attr format="dimension" name="slideTextSize"/>
+    <attr format="color" name="strokeColor"/>
+    <color name="button_color_default">#FFFFFF</color>
+    <color name="stroke_color_default">#FFFFFF</color>
+    <declare-styleable name="SlideView"><attr name="slideBackgroundColor"/><attr name="buttonBackgroundColor"/><attr name="buttonImage"/><attr name="buttonImageDisabled"/><attr name="strokeColor"/><attr name="slideText"/><attr name="slideTextColor"/><attr name="reverseSlide"/><attr name="animateSlideText"/><attr name="slideTextSize"/></declare-styleable>
+    <dimen name="sp16">16sp</dimen>
+    <string name="app_name">Slide View</string>
+</resources>
