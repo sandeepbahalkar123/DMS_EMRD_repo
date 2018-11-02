@@ -25,9 +25,9 @@ import com.scorg.dms.util.DMSConstants;
 
 public class DMSPatientsHelper implements ConnectionListener {
 
-    String TAG = this.getClass().getSimpleName();
-    Context mContext;
-    HelperResponse mHelperResponseManager;
+    private String TAG = this.getClass().getSimpleName();
+    private Context mContext;
+    private HelperResponse mHelperResponseManager;
 
     public DMSPatientsHelper(Context context, HelperResponse loginActivity1) {
         this.mContext = context;

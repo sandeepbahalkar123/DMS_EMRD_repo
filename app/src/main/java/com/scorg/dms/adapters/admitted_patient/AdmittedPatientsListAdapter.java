@@ -144,6 +144,7 @@ public class AdmittedPatientsListAdapter
         bindGroupItem(admittedPatientDataObject, holder);
     }
 
+    @SuppressLint("CheckResult")
     private void bindGroupItem(final AdmittedPatientData admittedPatientDataObject, final AdmittedPatientsListAdapter.MyViewHolder holder) {
         GradientDrawable cardBackground = new GradientDrawable();
         cardBackground.setShape(GradientDrawable.RECTANGLE);

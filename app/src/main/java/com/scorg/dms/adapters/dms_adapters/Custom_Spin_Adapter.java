@@ -14,14 +14,12 @@ import com.scorg.dms.R;
  * Created by root on 22/6/16.
  */
 public class Custom_Spin_Adapter extends BaseAdapter {
-    Context mContext;
-    String[] spinIds;
-    String[] choice;
+    private Context mContext;
+    private String[] choice;
 
 
     public Custom_Spin_Adapter(Context context, String[] ids, String[] spinner_data) {
         this.mContext = context;
-        this.spinIds = ids;
         this.choice = spinner_data;
     }
 

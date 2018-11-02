@@ -506,14 +506,16 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
                 break;
             case R.id.loadNextArchiveDataList:
                 archiveCount = 0;
-                if (!mFileTreeResponseData.isPagination()) {
-                    CommonMethods.showToast(this, "No Next data to load");
-                } else {
-                    currentCount = currentCount + archiveApiCount;
-                    getArchivedPageNumber = getArchivedPageNumber + 1;
-                    mFileTreeResponseData = null;
-                    doCreateTreeStructure();
-                }
+                if (mFileTreeResponseData != null) {
+                    if (!mFileTreeResponseData.isPagination()) {
+                        CommonMethods.showToast(this, "No Next data to load");
+                    } else {
+                        currentCount = currentCount + archiveApiCount;
+                        getArchivedPageNumber = getArchivedPageNumber + 1;
+                        mFileTreeResponseData = null;
+                        doCreateTreeStructure();
+                    }
+                } else CommonMethods.showToast(this, "No Next data to load");
 
                 break;
             case R.id.compareButton:

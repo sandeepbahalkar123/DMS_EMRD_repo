@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
@@ -185,6 +186,9 @@ public class HomePageActivity extends BaseActivity implements HelperResponse, Da
     @BindView(R.id.layoutTopBackground)
     LinearLayout layoutTopBackground;
 
+    @BindView(R.id.swipeToRefresh)
+    SwipeRefreshLayout swipeToRefresh;
+
     private Context mContext;
     private String docId;
     private LoginHelper loginHelper;
@@ -228,7 +232,13 @@ public class HomePageActivity extends BaseActivity implements HelperResponse, Da
 
         doctorNameTextView.setText(doctorNameToDisplay);
         aboutDoctorTextView.setText(hospitalNameToDisplay);
-
+        swipeToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                swipeToRefresh.setRefreshing(false);
+                mDashboardHelper.doGetDashboardResponse();
+            }
+        });
     }
 
     @Override

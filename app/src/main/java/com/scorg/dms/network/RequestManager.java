@@ -234,12 +234,12 @@ public class RequestManager extends ConnectRequest implements Connector, Request
                 }
         ) {
             @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
+            public Map<String, String> getHeaders() {
                 return headerParams;
             }
 
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams() {
                 return postParams;
             }
         };
@@ -299,7 +299,7 @@ public class RequestManager extends ConnectRequest implements Connector, Request
                     ((AppCompatActivity) mContext).finishAffinity();
                 } else {
                     mConnectionListener.onResponse(ConnectionListener.SERVER_ERROR, null, mOldDataTag);
-                    if (DMSConstants.TASK_LOGIN_CODE != mOldDataTag)
+                    if (!DMSConstants.TASK_LOGIN_CODE.equals(mOldDataTag))
                         CommonMethods.showToast(mContext, mContext.getResources().getString(R.string.server_error));
                 }
             } else if (error instanceof NetworkError) {
@@ -477,16 +477,14 @@ public class RequestManager extends ConnectRequest implements Connector, Request
     @Override
     public void onTimeout(RequestTimer requestTimer) {
         if (mContext instanceof AppCompatActivity) {
-            if (mContext != null) {
-                ((AppCompatActivity) this.mContext).runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (mProgressDialog != null && mProgressDialog.isShowing()) {
-                            mProgressDialog.dismiss();
-                        }
+            ((AppCompatActivity) this.mContext).runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    if (mProgressDialog != null && mProgressDialog.isShowing()) {
+                        mProgressDialog.dismiss();
                     }
-                });
-            }
+                }
+            });
         }
 
         RequestPool.getInstance(mContext)
