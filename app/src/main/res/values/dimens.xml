@@ -62,5 +62,7 @@
     <dimen name="dp26">26dp</dimen>
     <dimen name="dp36">36dp</dimen>
     <dimen name="compare_dialog">270dp</dimen>
+    <dimen name="banner_height">200dp</dimen>
+    <dimen name="label_height">90dp</dimen>
 
 </resources>

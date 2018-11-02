@@ -115,37 +115,29 @@ public class HomePageActivity extends BaseActivity implements HelperResponse, Da
     @BindView(R.id.layoutDrawerIcon)
     LinearLayout layoutDrawerIcon;
 
-
     @BindView(R.id.nav_right_view)
     FrameLayout mRightNavigationView;
 
-    ImageView menuImageView;
-    TextView appointmentTextView;
     @BindView(R.id.viewTextView)
     TextView viewTextView;
 
     @BindView(R.id.txtDashboardHeader)
     TextView txtDashboardHeader;
 
-
     @BindView(R.id.textHeaderTodayAppointment)
     TextView textHeaderTodayAppointment;
 
-
-    @BindView(R.id.layoutTotalPatients)
-    RelativeLayout layoutTotalPatients;
-
     @BindView(R.id.layoutTodayAppointment)
-    RelativeLayout layoutTodayAppointment;
+    LinearLayout layoutTodayAppointment;
 
     @BindView(R.id.layoutWaitingPatient)
-    RelativeLayout layoutWaitingPatient;
+    LinearLayout layoutWaitingPatient;
 
     @BindView(R.id.layoutPendingApproval)
-    RelativeLayout layoutPendingApproval;
+    LinearLayout layoutPendingApproval;
 
     @BindView(R.id.layoutAdmittedPatient)
-    RelativeLayout layoutAdmittedPatient;
+    LinearLayout layoutAdmittedPatient;
 
     @BindView(R.id.admittedPatientCount)
     TextView admittedPatientCount;
@@ -190,12 +182,8 @@ public class HomePageActivity extends BaseActivity implements HelperResponse, Da
     SwipeRefreshLayout swipeToRefresh;
 
     private Context mContext;
-    private String docId;
-    private LoginHelper loginHelper;
-    private LinearLayout menuOptionLinearLayout;
     private DashboardHelper mDashboardHelper;
     private DashboardDataModel mDashboardDataModel;
-    private ColorGenerator mColorGenerator;
 
     private DashboardAppointmentListAdapter mDashBoardAppointmentListAdapter;
 
@@ -206,10 +194,7 @@ public class HomePageActivity extends BaseActivity implements HelperResponse, Da
         ButterKnife.bind(this);
 
         mContext = HomePageActivity.this;
-        mColorGenerator = ColorGenerator.MATERIAL;
         HomePageActivityPermissionsDispatcher.getPermissionWithCheck(HomePageActivity.this);
-        docId = DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.DOC_ID, mContext);
-        loginHelper = new LoginHelper(mContext, HomePageActivity.this);
         initialize();
         //drawerConfiguration();
     }

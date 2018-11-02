@@ -19,15 +19,14 @@
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/dp40">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
             <FrameLayout
+                android:id="@+id/bannerLayout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1.5">
+                android:layout_height="@dimen/banner_height">
 
                 <LinearLayout
                     android:id="@+id/layoutTopBackground"
@@ -67,7 +66,6 @@
                             android:id="@+id/doctorNameTextView"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_below="@id/welcomeTextView"
                             android:fontFamily="@font/roboto_bold"
                             android:textColor="@color/white"
                             android:textSize="@dimen/sp18"
@@ -77,201 +75,178 @@
                             android:id="@+id/aboutDoctorTextView"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_below="@id/doctorNameTextView"
                             android:ellipsize="end"
                             android:fontFamily="@font/roboto_medium"
                             android:maxLines="1"
-                            android:text="MBBS, MD - Medicine, Neurology"
                             android:textColor="@color/white"
-                            android:textSize="@dimen/sp12" />
-
+                            android:textSize="@dimen/sp12"
+                            tools:text="MBBS, MD - Medicine, Neurology" />
 
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dp5"
-                        android:orientation="horizontal">
+                        android:layout_height="@dimen/label_height"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/dp20"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:visibility="visible">
 
                         <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
+                            android:id="@+id/layoutTotalPatients"
+                            android:layout_width="@dimen/dp0"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="@drawable/curve_edge_dashbooard_display_count_bg"
                             android:gravity="center"
-                            android:orientation="horizontal"
-                            android:visibility="visible">
+                            android:orientation="vertical">
 
-                            <RelativeLayout
-                                android:id="@+id/layoutTotalPatients"
-                                android:layout_width="@dimen/dp0"
-                                android:layout_height="fill_parent"
-                                android:layout_weight="1"
-                                android:background="@drawable/curve_edge_dashbooard_display_count_bg"
-                                android:paddingTop="@dimen/dp16"
-                                android:paddingBottom="@dimen/dp16">
-
-                                <TextView
-                                    android:id="@+id/totalPatientsCount"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_centerHorizontal="true"
-                                    android:fontFamily="@font/roboto_bold"
-                                    android:gravity="center"
-                                    android:text="0"
-                                    android:textColor="@color/timing_bg_color"
-                                    android:textSize="@dimen/sp20"
-                                    tools:text="21" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_below="@id/totalPatientsCount"
-                                    android:layout_centerHorizontal="true"
-                                    android:fontFamily="@font/roboto_medium"
-                                    android:gravity="center"
-                                    android:text="@string/today_patient"
-                                    android:textColor="@color/dashboard_text_color"
-                                    android:textSize="@dimen/sp12" />
-                            </RelativeLayout>
-
-                            <RelativeLayout
-                                android:id="@+id/layoutTodayAppointment"
-                                android:layout_width="@dimen/dp0"
+                            <TextView
+                                android:id="@+id/totalPatientsCount"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="@dimen/dp5"
-                                android:layout_weight="1"
-                                android:background="@drawable/curve_edge_dashbooard_display_count_bg"
-                                android:paddingTop="@dimen/dp16"
-                                android:paddingBottom="@dimen/dp16">
+                                android:fontFamily="@font/roboto_bold"
+                                android:gravity="center"
+                                android:text="0"
+                                android:textColor="@color/timing_bg_color"
+                                android:textSize="@dimen/sp20"
+                                tools:text="21" />
 
-                                <TextView
-                                    android:id="@+id/todayAppointmentsCount"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_centerHorizontal="true"
-                                    android:fontFamily="@font/roboto_bold"
-                                    android:gravity="center"
-                                    android:text="0"
-                                    android:textColor="@color/timing_bg_color"
-                                    android:textSize="@dimen/sp20"
-                                    tools:text="21" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_below="@id/todayAppointmentsCount"
-                                    android:layout_centerHorizontal="true"
-                                    android:fontFamily="@font/roboto_medium"
-                                    android:gravity="center"
-                                    android:text="@string/today_appointment"
-                                    android:textColor="@color/dashboard_text_color"
-                                    android:textSize="@dimen/sp12" />
-                            </RelativeLayout>
-
-                            <RelativeLayout
-                                android:id="@+id/layoutAdmittedPatient"
-                                android:layout_width="@dimen/dp0"
+                            <TextView
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="@dimen/dp5"
-                                android:layout_weight="1"
-                                android:background="@drawable/curve_edge_dashbooard_display_count_bg"
-                                android:paddingTop="@dimen/dp16"
-                                android:paddingBottom="@dimen/dp16">
+                                android:fontFamily="@font/roboto_medium"
+                                android:gravity="center"
+                                android:text="@string/today_patient"
+                                android:textColor="@color/dashboard_text_color"
+                                android:textSize="@dimen/sp12" />
 
-                                <TextView
-                                    android:id="@+id/admittedPatientCount"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_centerHorizontal="true"
-                                    android:fontFamily="@font/roboto_bold"
-                                    android:gravity="center"
-                                    android:text="0"
-                                    android:textColor="@color/timing_bg_color"
-                                    android:textSize="@dimen/sp20"
-                                    tools:text="21" />
+                        </LinearLayout>
 
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_below="@id/admittedPatientCount"
-                                    android:layout_centerHorizontal="true"
-                                    android:fontFamily="@font/roboto_medium"
-                                    android:gravity="center"
-                                    android:text="@string/admitted_patients"
-                                    android:textColor="@color/dashboard_text_color"
-                                    android:textSize="@dimen/sp12" />
-                            </RelativeLayout>
+                        <LinearLayout
+                            android:id="@+id/layoutTodayAppointment"
+                            android:layout_width="@dimen/dp0"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="@dimen/dp5"
+                            android:layout_weight="1"
+                            android:background="@drawable/curve_edge_dashbooard_display_count_bg"
+                            android:gravity="center"
+                            android:orientation="vertical">
 
-
-                            <RelativeLayout
-                                android:id="@+id/layoutWaitingPatient"
-                                android:layout_width="@dimen/dp0"
+                            <TextView
+                                android:id="@+id/todayAppointmentsCount"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="@dimen/dp5"
-                                android:layout_weight="1"
-                                android:background="@drawable/curve_edge_dashbooard_display_count_bg"
-                                android:paddingTop="@dimen/dp16"
-                                android:paddingBottom="@dimen/dp16"
-                                android:visibility="gone">
+                                android:fontFamily="@font/roboto_bold"
+                                android:gravity="center"
+                                android:text="0"
+                                android:textColor="@color/timing_bg_color"
+                                android:textSize="@dimen/sp20"
+                                tools:text="21" />
 
-                                <TextView
-                                    android:id="@+id/waitingPatientCount"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_centerHorizontal="true"
-                                    android:fontFamily="@font/roboto_bold"
-                                    android:gravity="center"
-                                    android:textColor="@color/timing_bg_color"
-                                    android:textSize="@dimen/sp20"
-                                    tools:text="21" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/roboto_medium"
+                                android:gravity="center"
+                                android:text="@string/today_appointment"
+                                android:textColor="@color/dashboard_text_color"
+                                android:textSize="@dimen/sp12" />
+                        </LinearLayout>
 
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_below="@id/waitingPatientCount"
-                                    android:layout_centerHorizontal="true"
-                                    android:fontFamily="@font/roboto_medium"
-                                    android:gravity="center"
-                                    android:text="@string/admitted_patients"
-                                    android:textColor="@color/dashboard_text_color"
-                                    android:textSize="@dimen/sp12" />
-                            </RelativeLayout>
+                        <LinearLayout
+                            android:id="@+id/layoutAdmittedPatient"
+                            android:layout_width="@dimen/dp0"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="@dimen/dp5"
+                            android:layout_weight="1"
+                            android:background="@drawable/curve_edge_dashbooard_display_count_bg"
+                            android:gravity="center"
+                            android:orientation="vertical">
 
-                            <RelativeLayout
-                                android:id="@+id/layoutPendingApproval"
-                                android:layout_width="@dimen/dp0"
-                                android:layout_height="fill_parent"
-                                android:layout_marginLeft="@dimen/dp5"
-                                android:layout_weight="1"
-                                android:background="@drawable/curve_edge_dashbooard_display_count_bg"
-                                android:paddingTop="@dimen/dp16"
-                                android:paddingBottom="@dimen/dp16">
+                            <TextView
+                                android:id="@+id/admittedPatientCount"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/roboto_bold"
+                                android:gravity="center"
+                                android:text="0"
+                                android:textColor="@color/timing_bg_color"
+                                android:textSize="@dimen/sp20"
+                                tools:text="21" />
 
-                                <TextView
-                                    android:id="@+id/pendingApprovalCount"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_centerHorizontal="true"
-                                    android:fontFamily="@font/roboto_bold"
-                                    android:gravity="center"
-                                    android:text="0"
-                                    android:textColor="@color/timing_bg_color"
-                                    android:textSize="@dimen/sp20"
-                                    tools:text="21" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/roboto_medium"
+                                android:gravity="center"
+                                android:text="@string/admitted_patients"
+                                android:textColor="@color/dashboard_text_color"
+                                android:textSize="@dimen/sp12" />
+                        </LinearLayout>
 
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_below="@id/pendingApprovalCount"
-                                    android:layout_centerHorizontal="true"
-                                    android:fontFamily="@font/roboto_medium"
-                                    android:gravity="center"
-                                    android:text="@string/pending_approval"
-                                    android:textColor="@color/dashboard_text_color"
-                                    android:textSize="@dimen/sp12" />
-                            </RelativeLayout>
 
+                        <LinearLayout
+                            android:id="@+id/layoutWaitingPatient"
+                            android:layout_width="@dimen/dp0"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="@dimen/dp5"
+                            android:layout_weight="1"
+                            android:background="@drawable/curve_edge_dashbooard_display_count_bg"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:visibility="gone">
+
+                            <TextView
+                                android:id="@+id/waitingPatientCount"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/roboto_bold"
+                                android:gravity="center"
+                                android:textColor="@color/timing_bg_color"
+                                android:textSize="@dimen/sp20"
+                                tools:text="21" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/roboto_medium"
+                                android:gravity="center"
+                                android:text="@string/admitted_patients"
+                                android:textColor="@color/dashboard_text_color"
+                                android:textSize="@dimen/sp12" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:gravity="center"
+                            android:id="@+id/layoutPendingApproval"
+                            android:layout_width="@dimen/dp0"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="@dimen/dp5"
+                            android:layout_weight="1"
+                            android:background="@drawable/curve_edge_dashbooard_display_count_bg">
+
+                            <TextView
+                                android:id="@+id/pendingApprovalCount"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/roboto_bold"
+                                android:gravity="center"
+                                android:text="0"
+                                android:textColor="@color/timing_bg_color"
+                                android:textSize="@dimen/sp20"
+                                tools:text="21" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/roboto_medium"
+                                android:gravity="center"
+                                android:text="@string/pending_approval"
+                                android:textColor="@color/dashboard_text_color"
+                                android:textSize="@dimen/sp12" />
                         </LinearLayout>
 
                     </LinearLayout>
@@ -282,9 +257,9 @@
                 android:id="@+id/hostViewsLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_below="@+id/bannerLayout"
                 android:layout_margin="@dimen/dp8"
                 android:layout_marginTop="@dimen/dp0"
-                android:layout_weight="1"
                 android:orientation="vertical"
                 android:visibility="invisible">
 
@@ -350,7 +325,7 @@
                 <include layout="@layout/common_recycler_view"></include>
 
             </LinearLayout>
-        </LinearLayout>
+        </RelativeLayout>
     </android.support.v4.widget.SwipeRefreshLayout>
 
 </android.support.design.widget.CoordinatorLayout>
