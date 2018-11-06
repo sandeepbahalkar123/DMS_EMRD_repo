@@ -63,11 +63,11 @@ public class PendingApprovalHelper implements ConnectionListener {
     }
 
     @Override
-    public void onTimeout(ConnectRequest request) {
+    public void onTimeout(ConnectRequest request, String mOldDataTag) {
 
     }
 
-    public void doGetPendingApprovalData(int pageNo,boolean isPending) {
+    public void doGetPendingApprovalData(int pageNo, boolean isPending) {
 
         ConnectionFactory mConnectionFactory = new ConnectionFactory(mContext, this, null, true, DMSConstants.TASK_PENDING_APPROVAL_LIST, Request.Method.POST, true);
         RequestPendingApprovalData mRequestPendingApprovalData = new RequestPendingApprovalData();

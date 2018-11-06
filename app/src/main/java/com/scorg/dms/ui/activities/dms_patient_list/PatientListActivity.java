@@ -46,6 +46,7 @@ import com.scorg.dms.adapters.dms_adapters.ShowPatientNameAdapter;
 import com.scorg.dms.adapters.dms_adapters.TagAdapter;
 import com.scorg.dms.helpers.patient_list.DMSPatientsHelper;
 import com.scorg.dms.interfaces.CustomResponse;
+import com.scorg.dms.interfaces.ErrorDialogCallback;
 import com.scorg.dms.interfaces.HelperResponse;
 import com.scorg.dms.model.dms_models.requestmodel.showsearchresultrequestmodel.ShowSearchResultRequestModel;
 import com.scorg.dms.model.dms_models.responsemodel.annotationlistresponsemodel.AnnotationList;
@@ -65,7 +66,6 @@ import com.scorg.dms.ui.customesViews.treeViewHolder.arrow_expand.ArrowExpandIco
 import com.scorg.dms.ui.customesViews.treeViewHolder.arrow_expand.ArrowExpandSelectableHeaderHolder;
 import com.scorg.dms.util.CommonMethods;
 import com.scorg.dms.util.DMSConstants;
-import com.scorg.dms.util.NetworkUtil;
 import com.unnamed.b.atv.model.TreeNode;
 import com.unnamed.b.atv.view.AndroidTreeView;
 
@@ -130,6 +130,8 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
     RelativeLayout mAnnotationTreeViewContainer;
     @BindView(R.id.imgNoRecordFound)
     ImageView imgNoRecordFound;
+    @BindView(R.id.imgNoRecordFoundDrawer)
+    ImageView imgNoRecordFoundDrawer;
 
     @BindView(R.id.imageFromDate)
     ImageView imageFromDate;
@@ -219,8 +221,8 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
         mPatientListView.addOnScrollListener(new EndlessRecyclerViewScrollListener(linearlayoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
-
-                if (NetworkUtil.isInternetAvailable(mContext) && mIsLoadMorePatients) {
+                //  NetworkUtil.isInternetAvailable(mContext) &&
+                if (mIsLoadMorePatients) {
 
                     currentPage = currentPage + 1;
                     doGetPatientList();
@@ -349,11 +351,11 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
 
             @Override
             public void onDrawerOpened(View drawerView) {
-                if (mAnnotationListData == null) {
-                    mPatientsHelper.doGetAllAnnotations();
-                } else {
-                    createAnnotationTreeStructure(mAnnotationListData, false);
-                }
+//                if (mAnnotationListData == null) {
+//                    mPatientsHelper.doGetAllAnnotations();
+//                } else {
+//                    createAnnotationTreeStructure(mAnnotationListData, false);
+//                }
             }
 
             @Override
@@ -493,9 +495,15 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
         } else if (mOldDataTag == DMSConstants.TASK_ANNOTATIONS_LIST) {
             AnnotationListResponseModel annotationListResponseModel = (AnnotationListResponseModel) customResponse;
             mAnnotationListData = annotationListResponseModel.getAnnotationListData();
-            createAnnotationTreeStructure(mAnnotationListData, false);
-            mFirstFileTypeProgressDialogLayout.setVisibility(View.GONE);
-
+            if (mAnnotationListData != null) {
+                createAnnotationTreeStructure(mAnnotationListData, false);
+                mFirstFileTypeProgressDialogLayout.setVisibility(View.GONE);
+                if (imgNoRecordFoundDrawer.getVisibility() == View.VISIBLE)
+                    imgNoRecordFoundDrawer.setVisibility(View.GONE);
+            }else {
+                if (imgNoRecordFoundDrawer.getVisibility() != View.VISIBLE)
+                    imgNoRecordFoundDrawer.setVisibility(View.VISIBLE);
+            }
         } else if (mOldDataTag == DMSConstants.TASK_GET_PATIENT_NAME_LIST) {
             PatientNameListResponseModel patientNameListResponseModel = (PatientNameListResponseModel) customResponse;
             mPatientNameListData = patientNameListResponseModel.getData();
@@ -513,24 +521,138 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
 
     }
 
+
+
     @Override
     public void onParseError(String mOldDataTag, String errorMessage) {
         mFirstFileTypeProgressDialogLayout.setVisibility(View.GONE);
+        setErrorView(mOldDataTag);
+        CommonMethods.showErrorDialog(errorMessage, mContext, false, new ErrorDialogCallback() {
+            @Override
+            public void ok() {
+            }
+
+            @Override
+            public void retry() {
+            }
+        });
+    }
+
+    private void setErrorView(String mOldDataTag) {
+        if (mOldDataTag == DMSConstants.TASK_PATIENT_LIST) {
+            if (patientExpandableListAdapter.getItemCount() == 0) {
+                mPatientListView.setVisibility(View.GONE);
+                // mRecycleTag.setVisibility(View.GONE);
+                emptyListView.setVisibility(View.VISIBLE);
+                imgNoRecordFound.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+            }
+        } else if (mOldDataTag == DMSConstants.TASK_ANNOTATIONS_LIST) {
+            imgNoRecordFoundDrawer.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+            imgNoRecordFoundDrawer.setVisibility(View.VISIBLE);
+
+        }
     }
 
     @Override
     public void onServerError(String mOldDataTag, String serverErrorMessage) {
         mFirstFileTypeProgressDialogLayout.setVisibility(View.GONE);
+        setErrorView(mOldDataTag);
+        if (mOldDataTag == DMSConstants.TASK_PATIENT_LIST) {
+
+            if (patientExpandableListAdapter.getItemCount() == 0) {
+                CommonMethods.showErrorDialog(serverErrorMessage, mContext, false, new ErrorDialogCallback() {
+                    @Override
+                    public void ok() {
+                    }
+
+                    @Override
+                    public void retry() {
+                    }
+                });
+            }
+        }else if (mOldDataTag == DMSConstants.TASK_ANNOTATIONS_LIST) {
+            CommonMethods.showErrorDialog(serverErrorMessage, mContext, false, new ErrorDialogCallback() {
+                @Override
+                public void ok() {
+                }
+
+                @Override
+                public void retry() {
+                }
+            });
+        }
+
     }
 
     @Override
     public void onNoConnectionError(String mOldDataTag, String serverErrorMessage) {
         mFirstFileTypeProgressDialogLayout.setVisibility(View.GONE);
+        setErrorView(mOldDataTag);
+        if (mOldDataTag == DMSConstants.TASK_PATIENT_LIST) {
+
+            if (patientExpandableListAdapter.getItemCount() == 0) {
+                CommonMethods.showErrorDialog(serverErrorMessage, mContext, false, new ErrorDialogCallback() {
+                    @Override
+                    public void ok() {
+                    }
+
+                    @Override
+                    public void retry() {
+                    }
+                });
+            }
+        }else if (mOldDataTag == DMSConstants.TASK_ANNOTATIONS_LIST) {
+            CommonMethods.showErrorDialog(serverErrorMessage, mContext, false, new ErrorDialogCallback() {
+                @Override
+                public void ok() {
+                }
+
+                @Override
+                public void retry() {
+                }
+            });
+        }
+
     }
 
     @Override
-    public void onTimeOutError(String mOldDataTag, String timeOutErrorMessage) {
-        CommonMethods.showToast(mContext,timeOutErrorMessage);
+    public void onTimeOutError(final String mOldDataTag, String timeOutErrorMessage) {
+        mFirstFileTypeProgressDialogLayout.setVisibility(View.GONE);
+        setErrorView(mOldDataTag);
+        if (mOldDataTag == DMSConstants.TASK_PATIENT_LIST) {
+
+            if (patientExpandableListAdapter.getItemCount() == 0) {
+                CommonMethods.showErrorDialog(timeOutErrorMessage, mContext, true, new ErrorDialogCallback() {
+                    @Override
+                    public void ok() {
+
+                    }
+
+                    @Override
+                    public void retry() {
+                        if (mOldDataTag == DMSConstants.TASK_PATIENT_LIST) {
+                            if (patientExpandableListAdapter.getItemCount() == 0) {
+                                doGetPatientList();
+                            }
+                        }
+
+
+                    }
+                });
+
+            }
+        }
+        else if (mOldDataTag == DMSConstants.TASK_ANNOTATIONS_LIST) {
+            CommonMethods.showErrorDialog(timeOutErrorMessage, mContext, false, new ErrorDialogCallback() {
+                @Override
+                public void ok() {
+                }
+
+                @Override
+                public void retry() {
+                }
+            });
+        }
     }
 
     /**
@@ -1171,10 +1293,10 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
                         int month = Integer.parseInt(monthOfYear) + 1;
                         if (month <= 9) {
                             monthOfYear = "0" + month;
-                        }else
-                            monthOfYear= String.valueOf(month);
+                        } else
+                            monthOfYear = String.valueOf(month);
                         String selectedTime = year + "-" + monthOfYear + "-" + dayOfMonth;
-                        Log.e("selectedTime", ""+selectedTime);
+                        Log.e("selectedTime", "" + selectedTime);
                         if (getString(R.string.from).equalsIgnoreCase(callFrom)) {
 
                             mSelectedFromDate = selectedTime;

@@ -189,7 +189,8 @@ public class MyAppointmentsFragment extends Fragment implements AppointmentListA
 
         } else {
             recyclerView.setVisibility(View.GONE);
-            emptyListView.setVisibility(View.VISIBLE);
+            if (emptyListView.getVisibility() != View.VISIBLE)
+                emptyListView.setVisibility(View.VISIBLE);
             imgNoRecordFound.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
 
         }
@@ -199,7 +200,6 @@ public class MyAppointmentsFragment extends Fragment implements AppointmentListA
 
     @Override
     public void onClickedOfEpisodeListButton(SearchResult groupHeader) {
-
         Intent intent = new Intent(getActivity(), PatientDetailsActivity.class);
         Bundle bundle = new Bundle();
         bundle.putSerializable(PATIENT_DETAILS, groupHeader);

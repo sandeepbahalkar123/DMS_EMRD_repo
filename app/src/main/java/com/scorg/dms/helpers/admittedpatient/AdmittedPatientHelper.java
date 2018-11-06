@@ -61,9 +61,11 @@ public class AdmittedPatientHelper implements ConnectionListener {
     }
 
     @Override
-    public void onTimeout(ConnectRequest request) {
+    public void onTimeout(ConnectRequest request, String mOldDataTag) {
 
     }
+
+
 
     public void doGetAdmittedData(String userSelectedDate) {
         ConnectionFactory mConnectionFactory = new ConnectionFactory(mContext, this, null, true, DMSConstants.TASK_ADMITTED_PATIENT_DATA, Request.Method.POST, true);

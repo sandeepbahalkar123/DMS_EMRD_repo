@@ -36,8 +36,8 @@
                         android:id="@+id/imageCloseDrawer"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/dp10"
                         android:layout_marginStart="@dimen/dp10"
+                        android:layout_marginLeft="@dimen/dp10"
                         android:background="@drawable/ic_close_white"
                         android:textColor="@color/white" />
 
@@ -145,9 +145,9 @@
                         android:id="@+id/tvPatientUHID"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/margin_tiny"
-                        android:layout_marginLeft="@dimen/dp5"
                         android:layout_marginStart="@dimen/dp5"
+                        android:layout_marginLeft="@dimen/dp5"
+                        android:layout_marginBottom="@dimen/margin_tiny"
                         android:gravity="center_vertical"
                         android:padding="@dimen/dp5"
                         android:textColor="@color/black"
@@ -191,8 +191,8 @@
                     android:id="@+id/tvPatientLocation"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dp5"
                     android:layout_marginStart="@dimen/dp5"
+                    android:layout_marginLeft="@dimen/dp5"
                     android:padding="@dimen/dp2"
                     android:textColor="@color/black"
                     android:textSize="@dimen/sp13"
@@ -267,9 +267,9 @@
                     <TableRow
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/dp5"
                         android:layout_marginLeft="@dimen/dp5"
                         android:layout_marginRight="@dimen/dp5"
+                        android:layout_marginBottom="@dimen/dp5"
                         android:orientation="horizontal"
                         android:weightSum="3">
 
@@ -278,9 +278,9 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_weight="1"
+                            android:drawableStart="@mipmap/referenceidblack"
                             android:drawableLeft="@mipmap/referenceidblack"
                             android:drawablePadding="@dimen/padding_tiny"
-                            android:drawableStart="@mipmap/referenceidblack"
                             android:gravity="center_vertical"
                             android:text="@string/refId"
                             android:textColor="@color/black"
@@ -317,9 +317,9 @@
                     <TableRow
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/dp5"
-                        android:layout_marginLeft="@dimen/dp5"
                         android:layout_marginStart="@dimen/dp5"
+                        android:layout_marginLeft="@dimen/dp5"
+                        android:layout_marginBottom="@dimen/dp5"
                         android:orientation="horizontal"
                         android:weightSum="3">
 
@@ -328,9 +328,9 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_weight="1"
+                            android:drawableStart="@mipmap/doctorblack"
                             android:drawableLeft="@mipmap/doctorblack"
                             android:drawablePadding="@dimen/dp5"
-                            android:drawableStart="@mipmap/doctorblack"
                             android:gravity="center_vertical"
                             android:text="@string/doctor"
                             android:textColor="@color/black"
@@ -354,9 +354,9 @@
                     <TableRow
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/dp5"
-                        android:layout_marginLeft="@dimen/dp5"
                         android:layout_marginStart="@dimen/dp5"
+                        android:layout_marginLeft="@dimen/dp5"
+                        android:layout_marginBottom="@dimen/dp5"
                         android:orientation="horizontal"
                         android:weightSum="3">
 
@@ -365,9 +365,9 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_weight="1"
+                            android:drawableStart="@mipmap/calendarblack"
                             android:drawableLeft="@mipmap/calendarblack"
                             android:drawablePadding="@dimen/dp5"
-                            android:drawableStart="@mipmap/calendarblack"
                             android:gravity="center_vertical"
                             android:text="@string/admission"
                             android:textColor="@color/black"
@@ -394,9 +394,9 @@
                         android:id="@+id/dischargeDateRow"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/dp10"
-                        android:layout_marginLeft="@dimen/dp5"
                         android:layout_marginStart="@dimen/dp5"
+                        android:layout_marginLeft="@dimen/dp5"
+                        android:layout_marginBottom="@dimen/dp10"
                         android:orientation="horizontal"
                         android:weightSum="3">
 
@@ -405,9 +405,9 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_weight="1"
+                            android:drawableStart="@mipmap/calendarblack"
                             android:drawableLeft="@mipmap/calendarblack"
                             android:drawablePadding="@dimen/dp5"
-                            android:drawableStart="@mipmap/calendarblack"
                             android:gravity="center_vertical"
                             android:text="@string/discharge"
                             android:textColor="@color/black"
@@ -493,9 +493,9 @@
                     <TableRow
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/dp5"
                         android:layout_marginLeft="@dimen/dp5"
                         android:layout_marginRight="@dimen/dp5"
+                        android:layout_marginBottom="@dimen/dp5"
                         android:orientation="horizontal"
                         android:weightSum="3">
 
@@ -504,9 +504,9 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_weight="1"
+                            android:drawableStart="@mipmap/referenceidblack"
                             android:drawableLeft="@mipmap/referenceidblack"
                             android:drawablePadding="@dimen/padding_tiny"
-                            android:drawableStart="@mipmap/referenceidblack"
                             android:gravity="center_vertical"
                             android:text="@string/refId"
                             android:textColor="@color/black"
@@ -516,8 +516,8 @@
                         <LinearLayout
                             android:layout_width="@dimen/dp0"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/dp5"
                             android:layout_marginStart="@dimen/dp5"
+                            android:layout_marginLeft="@dimen/dp5"
                             android:layout_weight="2">
 
                             <TextView
@@ -546,9 +546,9 @@
                     <TableRow
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/dp5"
-                        android:layout_marginLeft="@dimen/dp5"
                         android:layout_marginStart="@dimen/dp5"
+                        android:layout_marginLeft="@dimen/dp5"
+                        android:layout_marginBottom="@dimen/dp5"
                         android:orientation="horizontal"
                         android:weightSum="3">
 
@@ -557,9 +557,9 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_weight="1"
+                            android:drawableStart="@mipmap/doctorblack"
                             android:drawableLeft="@mipmap/doctorblack"
                             android:drawablePadding="@dimen/dp5"
-                            android:drawableStart="@mipmap/doctorblack"
                             android:gravity="center_vertical"
                             android:text="@string/doctor"
                             android:textColor="@color/black"
@@ -584,9 +584,9 @@
                     <TableRow
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/dp5"
-                        android:layout_marginLeft="@dimen/dp5"
                         android:layout_marginStart="@dimen/dp5"
+                        android:layout_marginLeft="@dimen/dp5"
+                        android:layout_marginBottom="@dimen/dp5"
                         android:orientation="horizontal"
                         android:weightSum="3">
 
@@ -595,9 +595,9 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_weight="1"
+                            android:drawableStart="@mipmap/calendarblack"
                             android:drawableLeft="@mipmap/calendarblack"
                             android:drawablePadding="@dimen/dp5"
-                            android:drawableStart="@mipmap/calendarblack"
                             android:gravity="center_vertical"
                             android:text="@string/admission"
                             android:textColor="@color/black"
@@ -624,9 +624,9 @@
                         android:id="@+id/dischargeDateRowTwo"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/dp10"
-                        android:layout_marginLeft="@dimen/dp5"
                         android:layout_marginStart="@dimen/dp5"
+                        android:layout_marginLeft="@dimen/dp5"
+                        android:layout_marginBottom="@dimen/dp10"
                         android:orientation="horizontal"
                         android:weightSum="3">
 
@@ -635,9 +635,9 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_weight="1"
+                            android:drawableStart="@mipmap/calendarblack"
                             android:drawableLeft="@mipmap/calendarblack"
                             android:drawablePadding="@dimen/dp5"
-                            android:drawableStart="@mipmap/calendarblack"
                             android:gravity="center_vertical"
                             android:text="@string/discharge"
                             android:textColor="@color/black"
@@ -849,7 +849,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginRight="@dimen/dp10"
-
                     android:background="@mipmap/right_arrow"
                     android:textColor="@color/white" />
             </LinearLayout>
@@ -864,10 +863,10 @@
                 android:id="@+id/fileTypeTreeViewContainer"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1">
+                android:layout_weight="1"></RelativeLayout>
 
-            </RelativeLayout>
-
+            <include
+                 layout="@layout/common_no_records_found" />
 
         </LinearLayout>
 

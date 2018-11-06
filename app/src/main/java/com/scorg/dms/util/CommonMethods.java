@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.content.res.ColorStateList;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Color;
@@ -15,9 +14,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.GradientDrawable;
 import android.support.design.widget.Snackbar;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.drawable.DrawableCompat;
-import android.support.v4.widget.ImageViewCompat;
+import android.support.v4.widget.Space;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -32,6 +29,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,6 +41,7 @@ import com.bumptech.glide.signature.ObjectKey;
 import com.scorg.dms.R;
 import com.scorg.dms.interfaces.CheckIpConnection;
 import com.scorg.dms.interfaces.DatePickerDialogListener;
+import com.scorg.dms.interfaces.ErrorDialogCallback;
 import com.scorg.dms.preference.DMSPreferencesManager;
 import com.scorg.dms.singleton.DMSApplication;
 import com.scorg.dms.ui.activities.SplashScreenActivity;
@@ -291,6 +290,7 @@ public class CommonMethods {
 
     public static Date convertStringToDate(String dateString, String dateFormat) {
         SimpleDateFormat formatter = new SimpleDateFormat(dateFormat, Locale.US);
+        formatter.setTimeZone(TimeZone.getTimeZone("UTC"));
         Date date = null;
 
         try {
@@ -334,25 +334,8 @@ public class CommonMethods {
         dialog.setCancelable(false);
         if (dialogHeader != null)
             ((TextView) dialog.findViewById(R.id.textView_dialog_heading)).setText(dialogHeader);
-
-//        float[] bottomLeftRadius = {0, 0, 0, 0, mContext.getResources().getDimension(R.dimen.dp8), mContext.getResources().getDimension(R.dimen.dp8), 0, 0};
-//        float[] bottomRightRadius = {0, 0, 0, 0, 0, 0, mContext.getResources().getDimension(R.dimen.dp8), mContext.getResources().getDimension(R.dimen.dp8)};
-//
-//        GradientDrawable buttonLeftBackground = new GradientDrawable();
-//        buttonLeftBackground.setShape(GradientDrawable.RECTANGLE);
-//        buttonLeftBackground.setColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
-//        buttonLeftBackground.setCornerRadii(bottomRightRadius);
-//
-//        GradientDrawable buttonRightBackground = new GradientDrawable();
-//        buttonRightBackground.setShape(GradientDrawable.RECTANGLE);
-//        buttonRightBackground.setColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
-//        buttonRightBackground.setCornerRadii(bottomLeftRadius);
-
         Button buttonRight = dialog.findViewById(R.id.button_cancel);
         Button buttonLeft = dialog.findViewById(R.id.button_ok);
-//
-//        buttonLeft.setBackground(buttonLeftBackground);
-//        buttonRight.setBackground(buttonRightBackground);
 
         buttonLeft.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -424,6 +407,74 @@ public class CommonMethods {
         buttonRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+    }
+
+
+    public static void showErrorDialog(String msg, final Context mContext, boolean isTimeout, final ErrorDialogCallback errorDialogCallback) {
+        final Dialog dialog = new Dialog(mContext);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_exit);
+        dialog.setCanceledOnTouchOutside(true);
+        dialog.setCancelable(true);
+
+        float[] bottomLeftRadius = {0, 0, 0, 0, mContext.getResources().getDimension(R.dimen.dp8), mContext.getResources().getDimension(R.dimen.dp8), 0, 0};
+        float[] bottomRightRadius = {0, 0, 0, 0, 0, 0, mContext.getResources().getDimension(R.dimen.dp8), mContext.getResources().getDimension(R.dimen.dp8)};
+        float[] bottomLiftRightRadius = {0, 0, 0, 0, mContext.getResources().getDimension(R.dimen.dp8), mContext.getResources().getDimension(R.dimen.dp8), mContext.getResources().getDimension(R.dimen.dp8), mContext.getResources().getDimension(R.dimen.dp8)};
+
+
+        GradientDrawable buttonLeftBackground = new GradientDrawable();
+        buttonLeftBackground.setShape(GradientDrawable.RECTANGLE);
+        buttonLeftBackground.setColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
+        buttonLeftBackground.setCornerRadii(bottomLeftRadius);
+
+        GradientDrawable buttonRightBackground = new GradientDrawable();
+        buttonRightBackground.setShape(GradientDrawable.RECTANGLE);
+        buttonRightBackground.setColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
+        buttonRightBackground.setCornerRadii(bottomRightRadius);
+
+
+        GradientDrawable buttonLeftRightBackground = new GradientDrawable();
+        buttonLeftRightBackground.setShape(GradientDrawable.RECTANGLE);
+        buttonLeftRightBackground.setColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
+        buttonLeftRightBackground.setCornerRadii(bottomLiftRightRadius);
+
+
+        Button buttonCancel = dialog.findViewById(R.id.button_cancel);
+        Button buttonOk = dialog.findViewById(R.id.button_ok);
+        ImageView dialogIcon = dialog.findViewById(R.id.dialogIcon);
+        dialogIcon.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+        buttonCancel.setText(R.string.retry);
+        View space= dialog.findViewById(R.id.dialogSpace);
+
+        buttonOk.setBackground(buttonLeftRightBackground);
+        buttonCancel.setBackground(buttonRightBackground);
+        if (isTimeout) {
+            buttonCancel.setVisibility(View.VISIBLE);
+            buttonOk.setBackground(buttonLeftBackground);
+        }
+        else {
+            space.setVisibility(View.GONE);
+            buttonCancel.setVisibility(View.GONE);
+            buttonOk.setBackground(buttonLeftRightBackground);
+        }
+
+        ((TextView) dialog.findViewById(R.id.textview_sucess)).setText(msg);
+        buttonOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                errorDialogCallback.ok();
+                dialog.dismiss();
+            }
+        });
+        buttonCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                errorDialogCallback.retry();
                 dialog.dismiss();
             }
         });

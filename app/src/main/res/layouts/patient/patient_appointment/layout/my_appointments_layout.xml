@@ -42,16 +42,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp1"
                     android:layout_gravity="center"
-                    android:layout_marginBottom="@dimen/dp8"
                     android:layout_marginLeft="@dimen/dp10"
-                    android:layout_marginRight="@dimen/dp10"
                     android:layout_marginTop="@dimen/dp8"
+                    android:layout_marginRight="@dimen/dp10"
+                    android:layout_marginBottom="@dimen/dp8"
                     android:background="@color/white"
                     android:visibility="visible"
                     tools:visibility="visible" />
             </LinearLayout>
 
-            <include layout="@layout/common_recycler_view" />
+            <include
+                layout="@layout/common_recycler_view" />
         </LinearLayout>
     </FrameLayout>
 </RelativeLayout>

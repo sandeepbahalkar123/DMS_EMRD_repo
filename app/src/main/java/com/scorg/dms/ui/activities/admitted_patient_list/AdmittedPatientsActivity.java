@@ -23,6 +23,7 @@ import com.philliphsu.bottomsheetpickers.date.DatePickerDialog;
 import com.scorg.dms.R;
 import com.scorg.dms.helpers.admittedpatient.AdmittedPatientHelper;
 import com.scorg.dms.interfaces.CustomResponse;
+import com.scorg.dms.interfaces.ErrorDialogCallback;
 import com.scorg.dms.interfaces.HelperResponse;
 import com.scorg.dms.model.admitted_patient.AdmittedPatientBaseModel;
 import com.scorg.dms.model.admitted_patient.AdmittedPatientDataModel;
@@ -142,39 +143,60 @@ public class AdmittedPatientsActivity extends BaseActivity implements HelperResp
 
                     Bundle bundle = new Bundle();
                     bundle.putParcelable(DMSConstants.ADMITTED_PATIENT_DATA, admittedPatientBaseModel.getAdmittedPatientDataModel());
+
+                    if (emptyListView.getVisibility()==View.VISIBLE){
+                        emptyListView.setVisibility(View.GONE);
+                        imgNoRecordFound.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+                    }
+
                 }
             }
         }
     }
 
+
+    private void showErrorDialog(String errorMessage, boolean isTimeout) {
+        CommonMethods.showErrorDialog(errorMessage, mContext, isTimeout, new ErrorDialogCallback() {
+            @Override
+            public void ok() {
+            }
+
+            @Override
+            public void retry() {
+                String date = CommonMethods.getCurrentDate(DMSConstants.DATE_PATTERN.UTC_PATTERN);
+                System.out.println(date);
+                admittedPatientHelper.doGetAdmittedData(date);
+
+            }
+        });
+        emptyListView.setVisibility(View.VISIBLE);
+        imgNoRecordFound.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+    }
+
     @Override
     public void onParseError(String mOldDataTag, String errorMessage) {
 
-        CommonMethods.showToast(mContext, errorMessage);
-        emptyListView.setVisibility(View.VISIBLE);
-        imgNoRecordFound.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+       showErrorDialog(errorMessage,false);
 
     }
 
     @Override
     public void onServerError(String mOldDataTag, String serverErrorMessage) {
-        CommonMethods.showToast(mContext, serverErrorMessage);
-        emptyListView.setVisibility(View.VISIBLE);
-        imgNoRecordFound.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+        showErrorDialog(serverErrorMessage,false);
+
 
     }
 
     @Override
     public void onNoConnectionError(String mOldDataTag, String serverErrorMessage) {
-        CommonMethods.showToast(mContext, serverErrorMessage);
+        showErrorDialog(serverErrorMessage,false);
 
     }
 
     @Override
     public void onTimeOutError(String mOldDataTag, String timeOutErrorMessage) {
-        CommonMethods.showToast(mContext, timeOutErrorMessage);
-        emptyListView.setVisibility(View.VISIBLE);
-        imgNoRecordFound.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+        showErrorDialog(timeOutErrorMessage,true);
+
 
     }
 

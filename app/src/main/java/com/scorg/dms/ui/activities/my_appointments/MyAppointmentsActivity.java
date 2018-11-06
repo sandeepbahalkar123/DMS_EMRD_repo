@@ -10,9 +10,9 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.text.Spanned;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -23,6 +23,7 @@ import com.philliphsu.bottomsheetpickers.date.DatePickerDialog;
 import com.scorg.dms.R;
 import com.scorg.dms.helpers.myappointments.AppointmentHelper;
 import com.scorg.dms.interfaces.CustomResponse;
+import com.scorg.dms.interfaces.ErrorDialogCallback;
 import com.scorg.dms.interfaces.HelperResponse;
 import com.scorg.dms.model.my_appointments.AppointmentPatientData;
 import com.scorg.dms.model.my_appointments.MyAppointmentsBaseModel;
@@ -33,9 +34,12 @@ import com.scorg.dms.ui.fragments.my_appointments.MyAppointmentsFragment;
 import com.scorg.dms.util.CommonMethods;
 import com.scorg.dms.util.DMSConstants;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -94,9 +98,9 @@ public class MyAppointmentsActivity extends BaseActivity implements HelperRespon
         titleTextView.setText(getString(R.string.appointments));
         setDateInToolbar();
         //Call api for AppointmentData
+        mAppointmentHelper = new AppointmentHelper(this, this);
         String date = CommonMethods.getCurrentDate(DMSConstants.DATE_PATTERN.UTC_PATTERN);
         System.out.println(date);
-        mAppointmentHelper = new AppointmentHelper(this, this);
         mAppointmentHelper.doGetAppointmentData(date);
 
         imgNoRecordFound.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
@@ -135,46 +139,60 @@ public class MyAppointmentsActivity extends BaseActivity implements HelperRespon
             if (customResponse != null) {
                 myAppointmentsBaseMainModel = (MyAppointmentsBaseModel) customResponse;
                 if (myAppointmentsBaseMainModel.getCommon().getStatusCode().equals(SUCCESS)) {
-
                     MyAppointmentsDataModel myAppointmentsDM = myAppointmentsBaseMainModel.getMyAppointmentsDataModel();
                     myAppointmentsDM.setAppointmentPatientData(myAppointmentsBaseMainModel.getMyAppointmentsDataModel().getAppointmentPatientData());
-
                     mMyAppointmentsFragment = MyAppointmentsFragment.newInstance(myAppointmentsDM, mDateSelectedByUser);
-                   getSupportFragmentManager().beginTransaction().replace(R.id.viewContainer, mMyAppointmentsFragment).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.viewContainer, mMyAppointmentsFragment).commit();
 
                     Bundle bundle = new Bundle();
                     bundle.putParcelable(DMSConstants.APPOINTMENT_DATA, myAppointmentsBaseMainModel.getMyAppointmentsDataModel());
+
+                    if (emptyListView.getVisibility()==View.VISIBLE){
+                        emptyListView.setVisibility(View.GONE);
+                        imgNoRecordFound.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+                    }
                 }
             }
         }
     }
 
-    @Override
-    public void onParseError(String mOldDataTag, String errorMessage) {
+    private void showErrorDialog(String errorMessage, boolean isTimeout) {
+        CommonMethods.showErrorDialog(errorMessage, mContext, isTimeout, new ErrorDialogCallback() {
+            @Override
+            public void ok() {
+            }
 
-        CommonMethods.showToast(mContext, errorMessage);
+            @Override
+            public void retry() {
+                String date = CommonMethods.getCurrentDate(DMSConstants.DATE_PATTERN.UTC_PATTERN);
+                System.out.println(date);
+                mAppointmentHelper.doGetAppointmentData(date);
+            }
+        });
         emptyListView.setVisibility(View.VISIBLE);
         imgNoRecordFound.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
-
     }
 
     @Override
-    public void onServerError(String mOldDataTag, String serverErrorMessage) {
-        CommonMethods.showToast(mContext, serverErrorMessage);
-        emptyListView.setVisibility(View.VISIBLE);
-        imgNoRecordFound.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+    public void onParseError(String mOldDataTag, String errorMessage) {
+        showErrorDialog(errorMessage,false);
 
+
+    }
+    @Override
+    public void onServerError(String mOldDataTag, String serverErrorMessage) {
+        showErrorDialog(serverErrorMessage,false);
     }
 
     @Override
     public void onNoConnectionError(String mOldDataTag, String serverErrorMessage) {
-        CommonMethods.showToast(mContext, serverErrorMessage);
-
+        showErrorDialog(serverErrorMessage,false);
     }
 
     @Override
     public void onTimeOutError(String mOldDataTag, String timeOutErrorMessage) {
-        CommonMethods.showToast(mContext,timeOutErrorMessage);
+        showErrorDialog(timeOutErrorMessage,true);
+
     }
 
     @OnClick({R.id.backImageView, R.id.dateTextview})
@@ -185,7 +203,7 @@ public class MyAppointmentsActivity extends BaseActivity implements HelperRespon
                 break;
             case R.id.dateTextview:
                 Calendar now = Calendar.getInstance();
-// As of version 2.3.0, `BottomSheetDatePickerDialog` is deprecated.
+                // As of version 2.3.0, `BottomSheetDatePickerDialog` is deprecated.
                 DatePickerDialog datePickerDialog = DatePickerDialog.newInstance(
                         this,
                         now.get(Calendar.YEAR),
@@ -222,8 +240,6 @@ public class MyAppointmentsActivity extends BaseActivity implements HelperRespon
     }
 
 
-
-
     public void callPatient(long patientPhone) {
         mClickedPhoneNumber = patientPhone;
         MyAppointmentsActivityPermissionsDispatcher.doCallSupportWithCheck(this);
@@ -237,7 +253,6 @@ public class MyAppointmentsActivity extends BaseActivity implements HelperRespon
     }
 
 
-
     public void onRequestPermssionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         MyAppointmentsActivityPermissionsDispatcher.onRequestPermissionsResult(this, requestCode, grantResults);
@@ -249,13 +264,16 @@ public class MyAppointmentsActivity extends BaseActivity implements HelperRespon
 
         int monthOfYearToShow = Integer.parseInt(monthOfYear) + 1;
         mDateSelectedByUser = dayOfMonth + "-" + monthOfYearToShow + "-" + year;
+        Log.e("mDateSelectedByUser",""+mDateSelectedByUser);
         dateTextview.setVisibility(View.VISIBLE);
         String timeToShow = CommonMethods.formatDateTime(dayOfMonth + "-" + monthOfYearToShow + "-" + year, DMSConstants.DATE_PATTERN.MMM_YY,
                 DMSConstants.DATE_PATTERN.DD_MM_YYYY, DMSConstants.DATE).toLowerCase();
         String[] timeToShowSpilt = timeToShow.split(",");
         month = timeToShowSpilt[0].substring(0, 1).toUpperCase() + timeToShowSpilt[0].substring(1);
         mYear = timeToShowSpilt.length == 2 ? timeToShowSpilt[1] : "";
-        Date date = CommonMethods.convertStringToDate(dayOfMonth + "-" + monthOfYearToShow + "-" + year, DMSConstants.DATE_PATTERN.DD_MM_YYYY);
+        Date date = CommonMethods.convertStringToDate(dayOfMonth + "-" + monthOfYearToShow + "-" + year,DMSConstants.DATE_PATTERN.UTC_PATTERN);
+
+        Log.e("selected date",""+date);
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
 
@@ -273,6 +291,10 @@ public class MyAppointmentsActivity extends BaseActivity implements HelperRespon
         if (monthOfYearToShow <= 9) {
             monthToSend = "0" + monthToSend;
         }
+        Date dateToSend = CommonMethods.convertStringToDate(dayOfMonth + "-" + monthToSend + "-" + year,DMSConstants.DATE_PATTERN.UTC_PATTERN);
+
+        Log.e("selected dateToSend",""+dateToSend);
+
         //-----
 
         mAppointmentHelper.doGetAppointmentData(dayOfMonth + "/" + monthToSend + "/" + year);

@@ -23,6 +23,7 @@ import com.scorg.dms.adapters.dms_adapters.PatientEpisodeRecycleViewListAdapter;
 import com.scorg.dms.adapters.dms_adapters.PatientSearchAutoCompleteTextViewAdapter;
 import com.scorg.dms.helpers.patient_list.DMSPatientsHelper;
 import com.scorg.dms.interfaces.CustomResponse;
+import com.scorg.dms.interfaces.ErrorDialogCallback;
 import com.scorg.dms.interfaces.HelperResponse;
 import com.scorg.dms.model.dms_models.requestmodel.showsearchresultrequestmodel.ShowSearchResultRequestModel;
 import com.scorg.dms.model.dms_models.responsemodel.episode_list.EpisodeResponseModel;
@@ -169,7 +170,6 @@ public class PatientDetailsActivity extends BaseActivity implements HelperRespon
 
             }
         });
-        emptyListView.setVisibility(View.GONE);
         //-----------------
     }
 
@@ -206,7 +206,6 @@ public class PatientDetailsActivity extends BaseActivity implements HelperRespon
 
                 } else {
                     emptyListView.setVisibility(View.VISIBLE);
-                  //  CommonMethods.showToast(this, "No data found");
                     finish();
                 }
             }
@@ -216,22 +215,78 @@ public class PatientDetailsActivity extends BaseActivity implements HelperRespon
     @Override
     public void onParseError(String mOldDataTag, String errorMessage) {
 
+        if (mPatientEpisodeRecycleViewListAdapter.getItemCount()==0){
+            emptyListView.setVisibility(View.VISIBLE);
+            CommonMethods.showErrorDialog(errorMessage, mContext, false, new ErrorDialogCallback() {
+                @Override
+                public void ok() {
+                }
+
+                @Override
+                public void retry() {
+                }
+            });
+
+        }
+
     }
 
     @Override
     public void onServerError(String mOldDataTag, String serverErrorMessage) {
-        CommonMethods.showToast(mContext,serverErrorMessage);
+
+        if (mPatientEpisodeRecycleViewListAdapter.getItemCount()==0){
+            emptyListView.setVisibility(View.VISIBLE);
+            CommonMethods.showErrorDialog(serverErrorMessage, mContext, false, new ErrorDialogCallback() {
+                @Override
+                public void ok() {
+                }
+
+                @Override
+                public void retry() {
+                }
+            });
+
+        }
+
     }
 
     @Override
     public void onNoConnectionError(String mOldDataTag, String serverErrorMessage) {
-        CommonMethods.showToast(mContext,serverErrorMessage);
+
+        if (mPatientEpisodeRecycleViewListAdapter.getItemCount()==0){
+            emptyListView.setVisibility(View.VISIBLE);
+            CommonMethods.showErrorDialog(serverErrorMessage, mContext, false, new ErrorDialogCallback() {
+                @Override
+                public void ok() {
+                }
+
+                @Override
+                public void retry() {
+                }
+            });
+
+        }
+
 
     }
 
     @Override
     public void onTimeOutError(String mOldDataTag, String timeOutErrorMessage) {
-        CommonMethods.showToast(mContext,timeOutErrorMessage);
+        if (mPatientEpisodeRecycleViewListAdapter.getItemCount()==0){
+            emptyListView.setVisibility(View.VISIBLE);
+            CommonMethods.showErrorDialog(timeOutErrorMessage, mContext, true, new ErrorDialogCallback() {
+                @Override
+                public void ok() {
+                }
+
+                @Override
+                public void retry() {
+                    if (mPatientEpisodeRecycleViewListAdapter.getItemCount()==0)
+                        doGetPatientEpisode("",0);
+                }
+            });
+
+        }
     }
 
     @Override

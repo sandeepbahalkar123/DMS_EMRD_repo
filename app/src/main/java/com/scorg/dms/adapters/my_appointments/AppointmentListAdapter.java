@@ -380,6 +380,7 @@ public class AppointmentListAdapter
             @Override
             protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
                 notifyDataSetChanged();
+                onItemClickListener.onRecordFound(mAppointmentDataList.isEmpty());
             }
         };
     }

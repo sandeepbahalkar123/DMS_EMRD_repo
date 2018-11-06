@@ -48,9 +48,10 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/sp16" />
 
-            <android.support.v4.widget.Space
+            <View
+                android:id="@+id/dialogSpace"
                 android:layout_width="@dimen/dp2"
-                android:layout_height="wrap_content" />
+                android:layout_height="@dimen/dp1" />
 
             <Button
                 android:id="@+id/button_ok"

@@ -280,8 +280,14 @@
             android:layout_margin="@dimen/dp8"
             android:layout_marginTop="@dimen/dp0"
             android:layout_weight="1"
-            android:visibility="invisible"
             android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/layoutTodayAppointmentHeader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -331,6 +337,7 @@
                     android:textAllCaps="true"
                     android:textColor="@color/tagColor"
                     android:textSize="@dimen/sp12"
+                    android:clickable="false"
                     tools:text="@string/view_all" />
 
             </LinearLayout>
@@ -341,10 +348,13 @@
                 android:layout_marginBottom="@dimen/dp5"
                 android:layout_marginTop="@dimen/dp5"
                 android:background="@color/grey_700" />
+            </LinearLayout>
 
             <include layout="@layout/common_recycler_view"></include>
 
         </LinearLayout>
+
+
     </LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>

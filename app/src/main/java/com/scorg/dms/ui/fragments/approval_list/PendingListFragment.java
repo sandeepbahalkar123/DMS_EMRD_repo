@@ -27,6 +27,7 @@ import com.scorg.dms.R;
 import com.scorg.dms.adapters.pending_approvals.RequestListAdapter;
 import com.scorg.dms.helpers.pending_approval.PendingApprovalHelper;
 import com.scorg.dms.interfaces.CustomResponse;
+import com.scorg.dms.interfaces.ErrorDialogCallback;
 import com.scorg.dms.interfaces.HelperResponse;
 import com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemodel.SearchResult;
 import com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemodel.SearchResultData;
@@ -320,26 +321,43 @@ public class PendingListFragment extends Fragment implements RequestListAdapter.
         }
     }
 
+
+    private void showErrorDialog(String errorMessage, boolean isTimeout) {
+        CommonMethods.showErrorDialog(errorMessage, mParentActivity, isTimeout, new ErrorDialogCallback() {
+            @Override
+            public void ok() {
+            }
+
+            @Override
+            public void retry() {
+                mPendingApprovalHelper.doGetPendingApprovalData(1, true);
+            }
+        });
+        noRecords.setVisibility(View.VISIBLE);
+        imgNoRecordFound.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+    }
+
     @Override
     public void onParseError(String mOldDataTag, String errorMessage) {
-
+            showErrorDialog(errorMessage,false);
     }
 
     @Override
     public void onServerError(String mOldDataTag, String serverErrorMessage) {
-        CommonMethods.showToast(mParentActivity,serverErrorMessage);
+        showErrorDialog(serverErrorMessage,false);
 
     }
 
     @Override
     public void onNoConnectionError(String mOldDataTag, String serverErrorMessage) {
-        CommonMethods.showToast(mParentActivity,serverErrorMessage);
+        showErrorDialog(serverErrorMessage,false);
 
     }
 
     @Override
     public void onTimeOutError(String mOldDataTag, String timeOutErrorMessage) {
-        CommonMethods.showToast(mParentActivity,timeOutErrorMessage);
+        showErrorDialog(timeOutErrorMessage,true);
+
 
     }
 
