@@ -42,7 +42,7 @@
     <dimen name="sp16">16sp</dimen>
     <dimen name="sp15">15sp</dimen>
     <dimen name="sp17">17sp</dimen>
-    <dimen name="sp13">13sp</dimen>
+    <dimen name="sp13">13sp</dimen>ba
     <dimen name="sp19">19sp</dimen>
     <dimen name="sp24">24sp</dimen>
     <dimen name="sp10">10sp</dimen>
@@ -62,5 +62,7 @@
     <dimen name="dp26">26dp</dimen>
     <dimen name="dp36">36dp</dimen>
     <dimen name="compare_dialog">270dp</dimen>
+    <dimen name="banner_height">200dp</dimen>
+    <dimen name="label_height">90dp</dimen>
 
 </resources>

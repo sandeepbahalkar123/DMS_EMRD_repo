@@ -518,14 +518,16 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
                 break;
             case R.id.loadNextArchiveDataList:
                 archiveCount = 0;
-                if (!mFileTreeResponseData.isPagination()) {
-                    CommonMethods.showToast(this, "No Next data to load");
-                } else {
-                    currentCount = currentCount + archiveApiCount;
-                    getArchivedPageNumber = getArchivedPageNumber + 1;
-                    mFileTreeResponseData = null;
-                    doCreateTreeStructure();
-                }
+                if (mFileTreeResponseData != null) {
+                    if (!mFileTreeResponseData.isPagination()) {
+                        CommonMethods.showToast(this, "No Next data to load");
+                    } else {
+                        currentCount = currentCount + archiveApiCount;
+                        getArchivedPageNumber = getArchivedPageNumber + 1;
+                        mFileTreeResponseData = null;
+                        doCreateTreeStructure();
+                    }
+                } else CommonMethods.showToast(this, "No Next data to load");
 
                 break;
             case R.id.compareButton:
@@ -801,7 +803,7 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
             confidentialState = archiveDatumObject.getConfidentialState();
 
             ArrowExpandSelectableHeaderHolder selectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, true, confidentialState, false);
-            selectableHeaderHolder.setOnlyOneNodeExpanded(true);
+            selectableHeaderHolder.setOnlyOneNodeExpanded(false);
             selectableHeaderHolder.setNodeValueColor(textColor);
 
             //---- To bold clicked text in tree
@@ -829,7 +831,7 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
                 confidentialState = lstDateFolderType.getConfidentialState();
                 dataToShow = lstDateFolderType.getDateFolderType() + " (" + lstDateFolderType.getPageCount() + ")" + "|NA";
                 ArrowExpandSelectableHeaderHolder lstDateFolderTypeSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstDocTypeChildLeftPadding, true, confidentialState, false);
-                lstDateFolderTypeSelectableHeaderHolder.setOnlyOneNodeExpanded(true);
+                lstDateFolderTypeSelectableHeaderHolder.setOnlyOneNodeExpanded(false);
 
                 lstDateFolderTypeSelectableHeaderHolder.setNodeValueColor(textColor);
 
@@ -855,7 +857,7 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
 
                     dataToShow = lstDocCategoryObject.getCategoryName() + " (" + lstDocCategoryObject.getTotalDocTypePageCount() + ")" + "|" + lstDocCategoryObject.getCategoryId();
                     ArrowExpandSelectableHeaderHolder docCatSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstDateFolderTypeChildLeftPadding, true, confidentialState, false);
-                    docCatSelectableHeaderHolder.setOnlyOneNodeExpanded(true);
+                    docCatSelectableHeaderHolder.setOnlyOneNodeExpanded(false);
 
                     docCatSelectableHeaderHolder.setNodeValueColor(textColor);
 
@@ -880,7 +882,7 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
 
                         //-------
                         ArrowExpandSelectableHeaderHolder lstDocTypeChildSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstDateFolderTypeChildLeftPadding, false, confidentialState, false);
-                        lstDocTypeChildSelectableHeaderHolder.setOnlyOneNodeExpanded(true);
+                        lstDocTypeChildSelectableHeaderHolder.setOnlyOneNodeExpanded(false);
                         lstDocTypeChildSelectableHeaderHolder.setNodeValueColor(textColor);
 
                         //---- To bold clicked text in tree
@@ -928,7 +930,7 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
             ArchiveDatum archiveDatumObject = archiveData.get(i);
             confidentialState = archiveDatumObject.getConfidentialState();
             ArrowExpandSelectableHeaderHolder selectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, true, confidentialState, false);
-            selectableHeaderHolder.setOnlyOneNodeExpanded(true);
+            selectableHeaderHolder.setOnlyOneNodeExpanded(false);
             selectableHeaderHolder.setNodeValueColor(textColor);
 
             //---- To bold clicked text in tree
@@ -954,7 +956,7 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
                 confidentialState = lstDocCategory.getConfidentialState();
                 dataToShow = lstDocCategory.getCategoryName() + " (" + lstDocCategory.getPageCount() + ")" + "|NA";
                 ArrowExpandSelectableHeaderHolder lstDateFolderTypeSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstDocTypeChildLeftPadding, true, confidentialState, false);
-                lstDateFolderTypeSelectableHeaderHolder.setOnlyOneNodeExpanded(true);
+                lstDateFolderTypeSelectableHeaderHolder.setOnlyOneNodeExpanded(false);
 
                 lstDateFolderTypeSelectableHeaderHolder.setNodeValueColor(textColor);
 
@@ -979,7 +981,7 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
                     confidentialState = lstDocTypeChild.getConfidentialState();
                     //-------
                     ArrowExpandSelectableHeaderHolder lstDocTypeChildSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstDateFolderTypeChildLeftPadding, false, confidentialState, false);
-                    lstDocTypeChildSelectableHeaderHolder.setOnlyOneNodeExpanded(true);
+                    lstDocTypeChildSelectableHeaderHolder.setOnlyOneNodeExpanded(false);
                     lstDocTypeChildSelectableHeaderHolder.setNodeValueColor(textColor);
 
                     //---- To bold clicked text in tree
@@ -1026,7 +1028,7 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
 
             confidentialState = archiveDatumObject.getConfidentialState();
             ArrowExpandSelectableHeaderHolder selectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, true, confidentialState, false);
-            selectableHeaderHolder.setOnlyOneNodeExpanded(true);
+            selectableHeaderHolder.setOnlyOneNodeExpanded(false);
             selectableHeaderHolder.setNodeValueColor(textColor);
 
             //---- To bold clicked text in tree
@@ -1051,7 +1053,7 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
                 confidentialState = lstDocCategoryObject.getConfidentialState();
                 dataToShow = lstDocCategoryObject.getCategoryName() + " (" + lstDocCategoryObject.getTotalDocTypePageCount() + ")" + "|" + lstDocCategoryObject.getCategoryId();
                 ArrowExpandSelectableHeaderHolder docCatSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstDocTypeChildLeftPadding, true, confidentialState, false);
-                docCatSelectableHeaderHolder.setOnlyOneNodeExpanded(true);
+                docCatSelectableHeaderHolder.setOnlyOneNodeExpanded(false);
 
                 docCatSelectableHeaderHolder.setNodeValueColor(textColor);
 
@@ -1075,7 +1077,7 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
 
                     //-------
                     ArrowExpandSelectableHeaderHolder lstDocTypeChildSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstDateFolderTypeChildLeftPadding, true, confidentialState, false);
-                    lstDocTypeChildSelectableHeaderHolder.setOnlyOneNodeExpanded(true);
+                    lstDocTypeChildSelectableHeaderHolder.setOnlyOneNodeExpanded(false);
                     lstDocTypeChildSelectableHeaderHolder.setNodeValueColor(textColor);
 
                     //---- To bold clicked text in tree
@@ -1097,7 +1099,7 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
 
                         //-------
                         ArrowExpandSelectableHeaderHolder lstDateFileTypeLastChildSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstDateFolderTypeChildLeftPadding, false, confidentialState, false);
-                        lstDateFileTypeLastChildSelectableHeaderHolder.setOnlyOneNodeExpanded(true);
+                        lstDateFileTypeLastChildSelectableHeaderHolder.setOnlyOneNodeExpanded(false);
                         lstDateFileTypeLastChildSelectableHeaderHolder.setNodeValueColor(textColor);
 
                         //---- To bold clicked text in tree

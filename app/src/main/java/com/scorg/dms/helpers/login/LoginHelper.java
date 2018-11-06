@@ -24,12 +24,9 @@ import java.util.Map;
  */
 
 public class LoginHelper implements ConnectionListener {
-    String TAG = this.getClass().getName();
-    Context mContext;
-    HelperResponse mHelperResponseManager;
-    private String mServerPath;
-    private String userName;
-    private String password;
+    private String TAG = this.getClass().getName();
+    private Context mContext;
+    private HelperResponse mHelperResponseManager;
 
     public LoginHelper(Context context, HelperResponse loginActivity) {
         this.mContext = context;
@@ -89,8 +86,6 @@ public class LoginHelper implements ConnectionListener {
     //-------DMS LOGIN AND IP CHECK APIS. : START
 
     public void doAppLogin(String userName, String password) {
-        this.userName = userName;
-        this.password = password;
         ConnectionFactory mConnectionFactory = new ConnectionFactory(mContext, this, null, true, DMSConstants.TASK_LOGIN_CODE, Request.Method.POST, false);
         mConnectionFactory.setHeaderParams();
         Map<String, String> testParams = new HashMap<String, String>();
@@ -106,7 +101,6 @@ public class LoginHelper implements ConnectionListener {
     }
 
     public void checkConnectionToServer(String serverPath) {
-        this.mServerPath = serverPath;
 
         //TODO : IP CHECK API IN NOT IMPLEMENTED YET, HENCE COMMENTED BELOW CODE, N GOES INTO ONSUCEESS.
         ConnectionFactory mConnectionFactory = new ConnectionFactory(mContext, this, null, true, DMSConstants.TASK_CHECK_SERVER_CONNECTION, Request.Method.GET, false);

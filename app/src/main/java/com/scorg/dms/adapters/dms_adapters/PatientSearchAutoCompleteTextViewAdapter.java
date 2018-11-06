@@ -24,22 +24,15 @@ import java.util.List;
 
 public class PatientSearchAutoCompleteTextViewAdapter extends ArrayAdapter<PatientFilter> {
 
-    Context context;
-    int resource, textViewResourceId;
-    List<PatientFilter> items, tempItems;
+    private Context context;
+    private List<PatientFilter> items;
     public static final String HARDCODED_STRING = "in";
     private PatientSearchAutoCompleteTextViewAdapter.OnItemClickListener onItemClickListener;
-
-
-
 
     public PatientSearchAutoCompleteTextViewAdapter(Context context, int resource, int textViewResourceId, List<PatientFilter> items,OnItemClickListener onItemClickListener ) {
         super(context, resource, textViewResourceId, items);
         this.context = context;
-        this.resource = resource;
-        this.textViewResourceId = textViewResourceId;
         this.items = items;
-        tempItems = new ArrayList<PatientFilter>(items); // this makes the difference.
         this.onItemClickListener = onItemClickListener;
 
     }

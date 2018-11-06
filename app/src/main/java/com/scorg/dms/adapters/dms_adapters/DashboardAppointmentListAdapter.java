@@ -40,17 +40,11 @@ public class DashboardAppointmentListAdapter extends RecyclerView.Adapter<Dashbo
     private DashboardAppointmentListAdapter.OnItemClickListener onItemClickListener;
     private List<AppointmentPatientData> _originalListDataHeader = new ArrayList<>(); // header titles
 
-    // @BindString(R.string.opd)
-    private String opd;
-    // @BindString(R.string.ipd)
-    private String ipd;
     private String uhid;
 
     public DashboardAppointmentListAdapter(Context context, List<AppointmentPatientData> searchResult,OnItemClickListener onItemClickListener) {
         this._context = context;
         addNewItems(searchResult);
-        opd = _context.getString(R.string.opd);
-        ipd = _context.getString(R.string.ipd);
         uhid = _context.getString(R.string.uhid);
         this.onItemClickListener = onItemClickListener;
 

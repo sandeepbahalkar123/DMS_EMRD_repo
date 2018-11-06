@@ -236,12 +236,12 @@ public class RequestManager extends ConnectRequest implements Connector, Request
                 }
         ) {
             @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
+            public Map<String, String> getHeaders() {
                 return headerParams;
             }
 
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams() {
                 return postParams;
             }
         };
@@ -315,16 +315,10 @@ public class RequestManager extends ConnectRequest implements Connector, Request
                     ((AppCompatActivity) mContext).finishAffinity();
                 } else {
                     mConnectionListener.onResponse(ConnectionListener.SERVER_ERROR, null, mOldDataTag);
-//                    if (DMSConstants.TASK_LOGIN_CODE != mOldDataTag)
-//                        CommonMethods.showErrorDialog(mContext.getResources().getString(R.string.something_went_wrong_error),mContext, new ErrorDialogCallback() {
-//                            @Override
-//                            public void ok() {
-//                            }
-//
-//                            @Override
-//                            public void retry() {
-//                            }
-//                        });
+
+                    if (!DMSConstants.TASK_LOGIN_CODE.equals(mOldDataTag))
+                        CommonMethods.showToast(mContext, mContext.getResources().getString(R.string.server_error));
+
                 }
             } else if (error instanceof NetworkError) {
                 mConnectionListener.onResponse(ConnectionListener.NO_INTERNET, null, mOldDataTag);
@@ -509,6 +503,7 @@ public class RequestManager extends ConnectRequest implements Connector, Request
 
     @Override
     public void onTimeout(RequestTimer requestTimer) {
+
 //        if (mContext instanceof AppCompatActivity) {
 //            ((AppCompatActivity) this.mContext).runOnUiThread(new Runnable() {
 //                @Override
@@ -523,7 +518,6 @@ public class RequestManager extends ConnectRequest implements Connector, Request
 //        RequestPool.getInstance(mContext)
 //                .cancellAllPreviousRequestWithSameTag(requestTag);
 //        mConnectionListener.onTimeout(this,mOldDataTag);
-
 
     }
 

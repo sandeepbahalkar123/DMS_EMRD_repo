@@ -37,7 +37,7 @@ public class TagAdapter extends RecyclerView.Adapter<TagAdapter.ViewHolder> {
     private HashMap<String, Object> mAddedTagsForFiltering;
     private ArrayList<String> mTagsDataSet;
     private Context mContext;
-    LayoutInflater inflater;
+    private LayoutInflater inflater;
     private Random mRandom = new Random();
     private String TAG = this.getClass().getName();
 

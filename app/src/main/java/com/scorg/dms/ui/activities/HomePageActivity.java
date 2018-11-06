@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -114,37 +115,29 @@ public class HomePageActivity extends BaseActivity implements HelperResponse, Da
     @BindView(R.id.layoutDrawerIcon)
     LinearLayout layoutDrawerIcon;
 
-
     @BindView(R.id.nav_right_view)
     FrameLayout mRightNavigationView;
 
-    ImageView menuImageView;
-    TextView appointmentTextView;
     @BindView(R.id.viewTextView)
     TextView viewTextView;
 
     @BindView(R.id.txtDashboardHeader)
     TextView txtDashboardHeader;
 
-
     @BindView(R.id.textHeaderTodayAppointment)
     TextView textHeaderTodayAppointment;
 
-
-    @BindView(R.id.layoutTotalPatients)
-    RelativeLayout layoutTotalPatients;
-
     @BindView(R.id.layoutTodayAppointment)
-    RelativeLayout layoutTodayAppointment;
+    LinearLayout layoutTodayAppointment;
 
     @BindView(R.id.layoutWaitingPatient)
-    RelativeLayout layoutWaitingPatient;
+    LinearLayout layoutWaitingPatient;
 
     @BindView(R.id.layoutPendingApproval)
-    RelativeLayout layoutPendingApproval;
+    LinearLayout layoutPendingApproval;
 
     @BindView(R.id.layoutAdmittedPatient)
-    RelativeLayout layoutAdmittedPatient;
+    LinearLayout layoutAdmittedPatient;
 
     @BindView(R.id.admittedPatientCount)
     TextView admittedPatientCount;
@@ -185,16 +178,16 @@ public class HomePageActivity extends BaseActivity implements HelperResponse, Da
     @BindView(R.id.layoutTopBackground)
     LinearLayout layoutTopBackground;
 
-    @BindView(R.id.layoutTodayAppointmentHeader)
-    LinearLayout layoutTodayAppointmentHeader;
+//    @BindView(R.id.layoutTodayAppointmentHeader)
+//    LinearLayout layoutTodayAppointmentHeader;
+
+    @BindView(R.id.swipeToRefresh)
+    SwipeRefreshLayout swipeToRefresh;
+
 
     private Context mContext;
-    private String docId;
-    private LoginHelper loginHelper;
-    private LinearLayout menuOptionLinearLayout;
     private DashboardHelper mDashboardHelper;
     private DashboardDataModel mDashboardDataModel;
-    private ColorGenerator mColorGenerator;
 
     private DashboardAppointmentListAdapter mDashBoardAppointmentListAdapter;
 
@@ -205,10 +198,7 @@ public class HomePageActivity extends BaseActivity implements HelperResponse, Da
         ButterKnife.bind(this);
 
         mContext = HomePageActivity.this;
-        mColorGenerator = ColorGenerator.MATERIAL;
         HomePageActivityPermissionsDispatcher.getPermissionWithCheck(HomePageActivity.this);
-        docId = DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.DOC_ID, mContext);
-        loginHelper = new LoginHelper(mContext, HomePageActivity.this);
         initialize();
         //drawerConfiguration();
     }
@@ -231,7 +221,13 @@ public class HomePageActivity extends BaseActivity implements HelperResponse, Da
 
         doctorNameTextView.setText(doctorNameToDisplay);
         aboutDoctorTextView.setText(hospitalNameToDisplay);
-
+        swipeToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                swipeToRefresh.setRefreshing(false);
+                mDashboardHelper.doGetDashboardResponse();
+            }
+        });
     }
 
     @Override
@@ -367,7 +363,6 @@ public class HomePageActivity extends BaseActivity implements HelperResponse, Da
                     mDashboardDataModel = mDashboardBaseModel.getDashboardDataModel();
                     if (mDashboardDataModel != null) {
                         viewTextView.setClickable(true);
-                        layoutTodayAppointmentHeader.setVisibility(View.VISIBLE);
                         pendingApprovalCount.setText(mDashboardDataModel.getPendingApprovedCount());
                         totalPatientsCount.setText(mDashboardDataModel.getTotalPatientCount());
                         todayAppointmentsCount.setText(mDashboardDataModel.getAppointmentCount());
