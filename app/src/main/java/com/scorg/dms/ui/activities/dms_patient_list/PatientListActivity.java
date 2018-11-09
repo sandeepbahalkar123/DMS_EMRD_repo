@@ -61,6 +61,7 @@ import com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemode
 import com.scorg.dms.model.my_patient_filter.PatientFilter;
 import com.scorg.dms.singleton.DMSApplication;
 import com.scorg.dms.ui.activities.BaseActivity;
+import com.scorg.dms.ui.customesViews.SearchTextViewWithDeleteButton;
 import com.scorg.dms.ui.customesViews.drag_drop_recyclerview_helper.EndlessRecyclerViewScrollListener;
 import com.scorg.dms.ui.customesViews.treeViewHolder.arrow_expand.ArrowExpandIconTreeItemHolder;
 import com.scorg.dms.ui.customesViews.treeViewHolder.arrow_expand.ArrowExpandSelectableHeaderHolder;
@@ -101,7 +102,7 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
     Spinner mSpinSelectedId;
     //--------
     @BindView(R.id.autocompleteSearchBox)
-    AutoCompleteTextView mAutoCompleteSearchBox;
+    SearchTextViewWithDeleteButton mAutoCompleteSearchBox;
     //--------
     ArrayList<PatientFilter> mAutoCompleteSearchBoxList = new ArrayList<>();
     @BindView(R.id.spinner_admissionDate)
@@ -195,21 +196,15 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
         mSupportActionBar.setTitle(getString(R.string.my_patients));
         mSupportActionBar.setDisplayHomeAsUpEnabled(true);
         findViewById(R.id.toolbar).setBackgroundColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+        findViewById(R.id.layoutPatSearch).setBackgroundColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         //----------
         initialize();
     }
-
 
     private void initialize() {
         initializeVariables();
         bindView();
         doGetPatientList();
-        GradientDrawable buttonBackground = new GradientDrawable();
-        buttonBackground.setShape(GradientDrawable.RECTANGLE);
-        buttonBackground.setColor(Color.WHITE);
-        buttonBackground.setCornerRadius(getResources().getDimension(R.dimen.dp8));
-        buttonBackground.setStroke(getResources().getDimensionPixelSize(R.dimen.dp1), Color.parseColor(DMSApplication.COLOR_PRIMARY));
-        mAutoCompleteSearchBox.setBackground(buttonBackground);
         mOpenFilterViewFAB.setBackgroundTintList(ColorStateList.valueOf(Color.RED));
         LinearLayoutManager linearlayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mPatientListView.setLayoutManager(linearlayoutManager);
@@ -273,10 +268,9 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
         // mAutoCompleteSearchBox.setThreshold(0);//start searching from 1 character
 
 
-        mAutoCompleteSearchBox.addTextChangedListener(new TextWatcher() {
+        mAutoCompleteSearchBox.addTextChangedListener(new SearchTextViewWithDeleteButton.TextChangedListener() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
             }
 
             @Override
@@ -286,7 +280,6 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
 
             @Override
             public void afterTextChanged(Editable s) {
-
                 String enteredText = s.toString().trim();
                 mAutoCompleteSearchBoxList.clear();
                 if (enteredText.length() != 0) {
@@ -296,11 +289,11 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
                     mAutoCompleteSearchBoxList.add(new PatientFilter(enteredText, getString(R.string.in_all)));
 
                     mPatientSearchAutoCompleteTextViewAdapter = new PatientSearchAutoCompleteTextViewAdapter(PatientListActivity.this, R.layout.patient_filter_right_drawer, R.id.custom_spinner_txt_view_Id, mAutoCompleteSearchBoxList, PatientListActivity.this);
-                    mAutoCompleteSearchBox.setAdapter(mPatientSearchAutoCompleteTextViewAdapter);
+                    mAutoCompleteSearchBox.getEditText().setAdapter(mPatientSearchAutoCompleteTextViewAdapter);
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            mAutoCompleteSearchBox.showDropDown();
+                            mAutoCompleteSearchBox.getEditText().showDropDown();
                         }
                     }, 200);
 
@@ -310,6 +303,45 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
                 }
             }
         });
+
+
+//        mAutoCompleteSearchBox.addTextChangedListener(new SearchTextViewWithDeleteButton().TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//
+//                String enteredText = s.toString().trim();
+//                mAutoCompleteSearchBoxList.clear();
+//                if (enteredText.length() != 0) {
+//                    mAutoCompleteSearchBoxList.add(new PatientFilter(enteredText, getString(R.string.in_uhid)));
+//                    mAutoCompleteSearchBoxList.add(new PatientFilter(enteredText, getString(R.string.in_patient_name)));
+//                    mAutoCompleteSearchBoxList.add(new PatientFilter(enteredText, getString(R.string.in_ref_id)));
+//                    mAutoCompleteSearchBoxList.add(new PatientFilter(enteredText, getString(R.string.in_all)));
+//
+//                    mPatientSearchAutoCompleteTextViewAdapter = new PatientSearchAutoCompleteTextViewAdapter(PatientListActivity.this, R.layout.patient_filter_right_drawer, R.id.custom_spinner_txt_view_Id, mAutoCompleteSearchBoxList, PatientListActivity.this);
+////                    mAutoCompleteSearchBox.setAdapter(mPatientSearchAutoCompleteTextViewAdapter);
+////                    new Handler().postDelayed(new Runnable() {
+////                        @Override
+////                        public void run() {
+////                            mAutoCompleteSearchBox.showDropDown();
+////                        }
+////                    }, 200);
+//
+//                } else {
+//                    if (patientExpandableListAdapter.getItemCount() == 0)
+//                        doGetPatientList();
+//                }
+//            }
+//        });
 
         //-----------------
 
@@ -476,7 +508,7 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
             patientExpandableListAdapter.addNewItems(searchResult);
             patientExpandableListAdapter.notifyDataSetChanged();
             mSearchPatientNameEditText.dismissDropDown();
-            mAutoCompleteSearchBox.dismissDropDown();
+            mAutoCompleteSearchBox.getEditText().dismissDropDown();
             Log.e("searchResult", "---" + searchResult.size());
             if (searchResult.size() <= 0) {
                 mPatientListView.setVisibility(View.GONE);
@@ -500,7 +532,7 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
                 mFirstFileTypeProgressDialogLayout.setVisibility(View.GONE);
                 if (imgNoRecordFoundDrawer.getVisibility() == View.VISIBLE)
                     imgNoRecordFoundDrawer.setVisibility(View.GONE);
-            }else {
+            } else {
                 if (imgNoRecordFoundDrawer.getVisibility() != View.VISIBLE)
                     imgNoRecordFoundDrawer.setVisibility(View.VISIBLE);
             }
@@ -520,7 +552,6 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
         }
 
     }
-
 
 
     @Override
@@ -570,7 +601,7 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
                     }
                 });
             }
-        }else if (mOldDataTag == DMSConstants.TASK_ANNOTATIONS_LIST) {
+        } else if (mOldDataTag == DMSConstants.TASK_ANNOTATIONS_LIST) {
             CommonMethods.showErrorDialog(serverErrorMessage, mContext, false, new ErrorDialogCallback() {
                 @Override
                 public void ok() {
@@ -601,7 +632,7 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
                     }
                 });
             }
-        }else if (mOldDataTag == DMSConstants.TASK_ANNOTATIONS_LIST) {
+        } else if (mOldDataTag == DMSConstants.TASK_ANNOTATIONS_LIST) {
             CommonMethods.showErrorDialog(serverErrorMessage, mContext, false, new ErrorDialogCallback() {
                 @Override
                 public void ok() {
@@ -641,8 +672,7 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
                 });
 
             }
-        }
-        else if (mOldDataTag == DMSConstants.TASK_ANNOTATIONS_LIST) {
+        } else if (mOldDataTag == DMSConstants.TASK_ANNOTATIONS_LIST) {
             CommonMethods.showErrorDialog(timeOutErrorMessage, mContext, false, new ErrorDialogCallback() {
                 @Override
                 public void ok() {
@@ -904,7 +934,7 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
             }
         }
 
-        mAutoCompleteSearchBox.dismissDropDown();
+        //    mAutoCompleteSearchBox.dismissDropDown();
 
         mPatientsHelper.doGetPatientList(showSearchResultRequestModel);
     }
@@ -1341,13 +1371,13 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
     @Override
     public void onSearchAutoCompleteItemClicked(PatientFilter patientFilter) {
 
-        mAutoCompleteSearchBox.dismissDropDown();
+        mAutoCompleteSearchBox.getEditText().dismissDropDown();
         mAutoCompleteSearchBox.setText(patientFilter.getSearchValue());
-        mAutoCompleteSearchBox.setSelection(mAutoCompleteSearchBox.getText().length());
+        mAutoCompleteSearchBox.getEditText().setSelection(mAutoCompleteSearchBox.getText().length());
 
         patientExpandableListAdapter.removeAll();
         doGetPatientListFilter(patientFilter);
-        mAutoCompleteSearchBox.setSelection(mAutoCompleteSearchBox.getText().length());
+        mAutoCompleteSearchBox.getEditText().setSelection(mAutoCompleteSearchBox.getText().length());
 
     }
 }

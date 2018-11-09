@@ -19,18 +19,40 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-
-            <android.support.v7.widget.AppCompatAutoCompleteTextView
-                android:id="@+id/autocompleteSearchBox"
+            <View
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dp5"
-                android:gravity="center"
-                android:padding="@dimen/dp5"
-                android:textSize="@dimen/dp17"
-                android:background="@null"
-                android:hint="@string/patient_list_search_hint"
-                android:textCursorDrawable="@drawable/cursor_color" />
+                android:layout_height="0.5dp"
+                android:background="@color/toolbar_divider_color" />
+
+            <LinearLayout
+                android:id="@+id/layoutPatSearch"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp42"
+                android:layout_marginBottom="@dimen/dp5"
+                android:orientation="vertical">
+
+                <com.scorg.dms.ui.customesViews.SearchTextViewWithDeleteButton
+                    android:id="@+id/autocompleteSearchBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp5"
+                    android:visibility="visible"
+                    app:hintText="@string/patient_details_search_hint"
+                    app:textSize="@dimen/sp15" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp1"
+                    android:background="@color/white"
+                    android:layout_marginTop="@dimen/dp5"
+                    android:layout_marginLeft="@dimen/dp10"
+                    android:layout_marginRight="@dimen/dp10"
+                    android:layout_marginStart="@dimen/dp10"
+                    android:layout_marginEnd="@dimen/dp10"
+                    android:layout_marginBottom="5dp"
+                    />
+            </LinearLayout>
+
 
 
             <android.support.v7.widget.RecyclerView
@@ -73,9 +95,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
-            android:layout_marginBottom="@dimen/dp10"
             android:layout_marginEnd="@dimen/fab_margin"
             android:layout_marginRight="@dimen/fab_margin"
+            android:layout_marginBottom="@dimen/dp10"
             app:srcCompat="@drawable/ic_filter" />
 
     </FrameLayout>

@@ -244,21 +244,21 @@ public class AppointmentListAdapter
         //-----------
         if (appointmentPatientDataObject.getAppointmentStatus().contains(BOOKED_STATUS)) {
             holder.opdTypeTextView.setTextColor(ContextCompat.getColor(mContext, R.color.book_color));
-            holder.opdTypeTextView.setText(mContext.getString(R.string.opd_appointment) + " " + mContext.getString(R.string.booked));
+            holder.opdTypeTextView.setText(mContext.getString(R.string.booked));
         } else if (appointmentPatientDataObject.getAppointmentStatus().contains(COMPLETED_STATUS)) {
-            holder.opdTypeTextView.setText(mContext.getString(R.string.opd_appointment) + " " + mContext.getString(R.string.capitalcompleted));
+            holder.opdTypeTextView.setText(mContext.getString(R.string.capitalcompleted));
             holder.opdTypeTextView.setTextColor(ContextCompat.getColor(mContext, R.color.complete_color));
         } else if (appointmentPatientDataObject.getAppointmentStatus().contains(CONFIRM_STATUS)) {
-            holder.opdTypeTextView.setText(mContext.getString(R.string.opd_appointment) + " " + appointmentPatientDataObject.getAppointmentStatus());
+            holder.opdTypeTextView.setText( appointmentPatientDataObject.getAppointmentStatus());
             holder.opdTypeTextView.setTextColor(ContextCompat.getColor(mContext, R.color.confirm_color));
         } else if (appointmentPatientDataObject.getAppointmentStatus().contains(CANCEL_STATUS)) {
-            holder.opdTypeTextView.setText(mContext.getString(R.string.opd_appointment) + " " + appointmentPatientDataObject.getAppointmentStatus());
+            holder.opdTypeTextView.setText(appointmentPatientDataObject.getAppointmentStatus());
             holder.opdTypeTextView.setTextColor(ContextCompat.getColor(mContext, R.color.cancel_color));
         } else if (appointmentPatientDataObject.getAppointmentStatus().equals(NO_SHOW)) {
-            holder.opdTypeTextView.setText(mContext.getString(R.string.opd_appointment) + " " + appointmentPatientDataObject.getAppointmentStatus());
+            holder.opdTypeTextView.setText(appointmentPatientDataObject.getAppointmentStatus());
             holder.opdTypeTextView.setTextColor(ContextCompat.getColor(mContext, R.color.no_show_color));
         } else if (appointmentPatientDataObject.getAppointmentStatus().equals(OTHER)) {
-            holder.opdTypeTextView.setText(mContext.getString(R.string.opd_appointment) + " " + appointmentPatientDataObject.getAppointmentStatus());
+            holder.opdTypeTextView.setText(appointmentPatientDataObject.getAppointmentStatus());
             holder.opdTypeTextView.setTextColor(ContextCompat.getColor(mContext, R.color.other_color));
         }
         //---------

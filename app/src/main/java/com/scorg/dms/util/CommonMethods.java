@@ -161,7 +161,7 @@ public class CommonMethods {
 
     public static TextDrawable getTextDrawable(Context context, String name) {
         ColorGenerator mColorGenerator = ColorGenerator.MATERIAL;
-
+        name=nameInitialSuffix(name);
         if (DMSConstants.BLANK.equalsIgnoreCase(name)) {
             int color2 = mColorGenerator.getColor(name);
             return TextDrawable.builder()
@@ -181,7 +181,24 @@ public class CommonMethods {
         }
 
     }
-
+    private static String nameInitialSuffix(String name){
+        if(name.substring(0,3).equals("Mrs") ){
+            name=name.substring(4,name.length());
+        }else if(name.substring(0,4).equals("Mrs.") ){
+            name=name.substring(5,name.length());
+        }else if(name.substring(0,2).equals("Mr") || name.substring(0,2).equals("Dr")){
+            name=name.substring(3,name.length());
+        }else if(name.substring(0,3).equals("Mr.") || name.substring(0,3).equals("Dr.")){
+            name=name.substring(4,name.length());
+        }else if(name.substring(0,4).equals("Miss") ){
+            name=name.substring(5,name.length());
+        }else if(name.substring(0,5).equals("Miss.") ){
+            name=name.substring(6,name.length());
+        }else if(name.charAt(0)==' '){
+            name=name.substring(1,name.length());
+        }
+        return name;
+    }
     public static int getVersionCode(Context mContext) {
         int versionCode = -1;
         try {

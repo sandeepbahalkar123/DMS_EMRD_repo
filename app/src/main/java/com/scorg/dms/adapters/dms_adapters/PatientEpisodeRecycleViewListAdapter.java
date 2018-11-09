@@ -69,10 +69,11 @@ public class PatientEpisodeRecycleViewListAdapter extends RecyclerView.Adapter<P
         GradientDrawable buttonBackground = new GradientDrawable();
         buttonBackground.setShape(GradientDrawable.RECTANGLE);
         buttonBackground.setColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
-        buttonBackground.setCornerRadius(_context.getResources().getDimension(R.dimen.dp8));
+        buttonBackground.setCornerRadius(_context.getResources().getDimension(R.dimen.dp5));
         final PatientEpisodeFileData childElement = _originalListDataHeader.get(position);
 
         childViewHolder.ipdDischargeDateValue.setVisibility(View.GONE);
+        childViewHolder.ipdDischargeDate.setVisibility(View.GONE);
         childViewHolder.ipd.setBackground(buttonBackground);
 
         //---
@@ -108,14 +109,12 @@ public class PatientEpisodeRecycleViewListAdapter extends RecyclerView.Adapter<P
                 date = CommonMethods.formatDateTime(childElement.getDischargeDate(), DMSConstants.DATE_PATTERN.DD_MMM_YYYY, DMSConstants.DATE_PATTERN.DD_MM_YYYY, DMSConstants.DATE);
                 childViewHolder.ipdDischargeDateValue.setText(date);
                 childViewHolder.ipdDischargeDateValue.setVisibility(View.VISIBLE);
+                childViewHolder.ipdDischargeDate.setVisibility(View.VISIBLE);
             }
 
         }
 
-        if (CommonMethods.isTablet(_context))
-            childViewHolder.ipdCheckBox.setVisibility(View.GONE);
-        else
-            childViewHolder.ipdCheckBox.setVisibility(View.GONE);
+
 
         childViewHolder.doctorName.setText(childElement.getDoctorName());
 
@@ -127,17 +126,6 @@ public class PatientEpisodeRecycleViewListAdapter extends RecyclerView.Adapter<P
                 onPatientListener.onEpisodeListItemClick(childElement);
             }
         });
-
-        //  childViewHolder.childCardView.setBackgroundResource(R.drawable.round_background_and_square_side_view);
-        childViewHolder.childItemCollapseButton.setVisibility(View.GONE);
-
-
-        childViewHolder.childItemExpandCollapseButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            }
-        });
-
     }
 
     @Override
@@ -166,12 +154,7 @@ public class PatientEpisodeRecycleViewListAdapter extends RecyclerView.Adapter<P
         TextView ipdDischargeDateValue;
         @BindView(R.id.doctorName)
         TextView doctorName;
-        @BindView(R.id.ipdCheckBox)
-        CheckBox ipdCheckBox;
-        @BindView(R.id.childItemCollapseButton)
-        LinearLayout childItemCollapseButton;
-        @BindView(R.id.childItemExpandCollapseButton)
-        AppCompatImageButton childItemExpandCollapseButton;
+
 
         //@BindView(R.id.divider)
         //View divider;

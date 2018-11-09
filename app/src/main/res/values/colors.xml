@@ -35,6 +35,7 @@
     <color name="grey">#b3b3b3</color>
     <color name="logo_color">#7f5b5b5b</color>
     <color name="activity_background">#E4E4E4</color>
+    <color name="appointment_time_color">#797979</color>
 
 
     <!--// DMS //-->

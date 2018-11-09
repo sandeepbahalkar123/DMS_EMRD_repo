@@ -111,6 +111,7 @@
                                 android:text="0"
                                 android:textColor="@color/timing_bg_color"
                                 android:textSize="@dimen/sp20"
+                                android:visibility="gone"
                                 tools:text="21" />
 
                             <TextView
@@ -262,36 +263,17 @@
                 android:layout_marginTop="@dimen/dp0"
                 android:orientation="vertical">
 
-                <LinearLayout
+
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp30"
-                    android:gravity="center"
-                    android:orientation="horizontal"
-                    android:weightSum="3">
+                    android:layout_height="wrap_content"
 
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1.3"
-                        android:gravity="center">
-
-                        <ImageView
-                            android:id="@+id/patientLogo"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:src="@drawable/mypatients_icon_copy"
-                            tools:ignore="ContentDescription" />
-
-                    </LinearLayout>
-
+                    >
 
                     <TextView
                         android:id="@+id/textHeaderTodayAppointment"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="0.5"
                         android:fontFamily="@font/roboto_medium"
                         android:gravity="center"
                         android:text="@string/today_appointment_no_new_line"
@@ -299,20 +281,95 @@
                         android:textSize="@dimen/sp16"
                         tools:text="@string/today_appointment_no_new_line" />
 
-                    <TextView
-                        android:id="@+id/viewTextView"
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1.2"
-                        android:fontFamily="@font/roboto_bold"
-                        android:gravity="center"
-                        android:text="@string/view_all"
-                        android:textAllCaps="true"
-                        android:textColor="@color/tagColor"
-                        android:textSize="@dimen/sp12"
-                        tools:text="@string/view_all" />
+                        android:layout_height="@dimen/dp30"
+                        android:orientation="horizontal"
+                        android:weightSum="1">
 
-                </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.5"
+                            android:gravity="left|center">
+
+                            <ImageView
+                                android:id="@+id/patientLogo"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:src="@drawable/mypatients_icon_copy"
+                                tools:ignore="ContentDescription" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.5"
+                            android:weightSum="1"
+                            android:layout_gravity="center"
+                            android:gravity="right|center"
+                            android:orientation="vertical"
+                           >
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="@dimen/dp3"
+                                android:layout_marginRight="@dimen/dp3"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/viewShow"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/roboto_bold"
+                                    android:gravity="right|center"
+                                    android:text="@string/view_all"
+                                    android:textAllCaps="true"
+                                    android:paddingTop="@dimen/dp5"
+                                    android:paddingStart="@dimen/dp5"
+                                    android:paddingLeft="@dimen/dp5"
+                                    android:paddingRight="@dimen/dp1"
+                                    android:paddingEnd="@dimen/dp1"
+                                    android:paddingBottom="@dimen/dp5"
+                                    android:textColor="@color/tagColor"
+                                    android:textSize="@dimen/sp12"
+                                    tools:text="@string/view_all" />\
+                                <TextView
+                                    android:id="@+id/showHideDivider"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="/"/>
+
+                                <TextView
+                                    android:id="@+id/viewHide"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/roboto_bold"
+                                    android:gravity="left|center"
+                                    android:text="@string/hide"
+                                    android:paddingTop="@dimen/dp5"
+                                    android:paddingStart="@dimen/dp1"
+                                    android:paddingLeft="@dimen/dp1"
+                                    android:paddingRight="@dimen/dp3"
+                                    android:paddingEnd="@dimen/dp3"
+                                    android:paddingBottom="@dimen/dp5"
+                                    android:textAllCaps="true"
+                                    android:textColor="@color/tagColor"
+                                    android:textSize="@dimen/sp12"
+                                    tools:text="@string/hide" />
+
+                            </LinearLayout>
+
+
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+                </RelativeLayout>
 
                 <View
                     android:layout_width="match_parent"

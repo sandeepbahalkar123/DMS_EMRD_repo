@@ -13,95 +13,131 @@
         android:id="@+id/mainDataLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp36"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="@dimen/dp0"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="right|center"
-                android:paddingRight="@dimen/dp5"
-                android:text="@string/uhid"
-                android:textColor="@color/white"
-                android:textSize="@dimen/sp17"
-                style="@style/editTextInputLayout" />
-
-            <TextView
-                android:id="@+id/uhidData"
-                android:layout_width="@dimen/dp0"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="left|center"
-                android:textColor="@color/white"
-                android:textSize="@dimen/sp17" />
-
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp1"
-            android:background="@color/white"></View>
+        android:orientation="vertical"
+        tools:background="@color/SkyBlue">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/dp5"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="@dimen/dp0"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="right|center"
-                android:paddingRight="@dimen/dp5"
-                android:text="@string/patient_name"
-                android:textColor="@color/white"
-                android:textSize="@dimen/sp17"
-                style="@style/editTextInputLayout" />
-
-            <TextView
-                android:id="@+id/patientName"
-                android:layout_width="@dimen/dp0"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="left|center"
-                android:textColor="@color/white"
-                android:textSize="@dimen/sp17"
-                tools:text="Yogesh"/>
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp1"
-            android:background="@color/white"></View>
-
-        <AutoCompleteTextView
-            android:id="@+id/autoCompleteSearchBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/dp5"
-            android:padding="@dimen/dp5"
+            android:layout_gravity="center"
             android:gravity="center"
-            android:background="@null"
-            android:hint="@string/patient_details_search_hint"
-            android:textCursorDrawable="@drawable/cursor_color" />
+            android:orientation="horizontal"
+            android:padding="@dimen/dp5">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/patientImageView"
+                    android:layout_width="@dimen/dp40"
+                    android:layout_height="@dimen/dp40"
+                    android:layout_marginStart="@dimen/dp10"
+                    android:layout_marginLeft="@dimen/dp10"
+                    android:layout_marginEnd="@dimen/dp10"
+                    android:layout_marginRight="@dimen/dp10"
+                    tools:src="@drawable/uren_pic" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingStart="@dimen/dp2"
+                    android:paddingLeft="@dimen/dp2"
+                    android:paddingBottom="@dimen/dp1">
+
+                    <TextView
+                        style="@style/editTextInputLayout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="left|center"
+                        android:paddingRight="@dimen/dp5"
+                        android:text="@string/uhid"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/sp13" />
+
+                    <TextView
+                        android:id="@+id/uhidData"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="left|center"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/sp13" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/patientName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="left|center"
+                    android:paddingStart="@dimen/dp2"
+                    android:paddingLeft="@dimen/dp2"
+                    android:paddingBottom="@dimen/dp1"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp13"
+                    tools:text="Yogesh" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp1"
+            android:background="@color/white" />
+
+        <LinearLayout
+            android:id="@+id/layoutPatSearch"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp42"
+            android:layout_marginBottom="@dimen/dp5"
+            android:orientation="vertical">
+
+            <com.scorg.dms.ui.customesViews.SearchTextViewWithDeleteButton
+                android:id="@+id/autoCompleteSearchBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp5"
+                android:visibility="visible"
+                app:hintText="@string/patient_details_search_hint"
+                app:textSize="@dimen/sp15" />
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp1"
+                android:background="@color/white"
+                android:layout_marginTop="@dimen/dp5"
+                android:layout_marginLeft="@dimen/dp10"
+                android:layout_marginRight="@dimen/dp10"
+                android:layout_marginStart="@dimen/dp10"
+                android:layout_marginEnd="@dimen/dp10"
+                android:layout_marginBottom="5dp"
+                />
+        </LinearLayout>
+
+
     </LinearLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/mainDataLayout">
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/listOfOPDTypes"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            />
+            android:layout_height="match_parent" />
 
-        <include layout="@layout/common_no_records_found"/>
+        <include layout="@layout/common_no_records_found" />
 
 
     </RelativeLayout>

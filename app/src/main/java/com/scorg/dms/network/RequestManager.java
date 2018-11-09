@@ -334,15 +334,6 @@ public class RequestManager extends ConnectRequest implements Connector, Request
                 }
             } else {
                 CommonMethods.Log(TAG, error.getMessage());
-//                CommonMethods.showErrorDialog(mContext.getResources().getString(R.string.something_went_wrong_error),mContext, new ErrorDialogCallback() {
-//                    @Override
-//                    public void ok() {
-//                    }
-//
-//                    @Override
-//                    public void retry() {
-//                    }
-//                });
             }
         } catch (Exception e) {
             e.printStackTrace();

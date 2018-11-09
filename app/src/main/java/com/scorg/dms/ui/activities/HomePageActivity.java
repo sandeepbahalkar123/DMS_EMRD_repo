@@ -39,11 +39,13 @@ import com.scorg.dms.interfaces.HelperResponse;
 import com.scorg.dms.model.dashboard.DashboardBaseModel;
 import com.scorg.dms.model.dashboard.DashboardDataModel;
 import com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemodel.SearchResult;
+import com.scorg.dms.model.my_appointments.AppointmentPatientData;
 import com.scorg.dms.preference.DMSPreferencesManager;
 import com.scorg.dms.singleton.DMSApplication;
 import com.scorg.dms.ui.activities.admitted_patient_list.AdmittedPatientsActivity;
 import com.scorg.dms.ui.activities.dashboard.SettingsActivity;
 import com.scorg.dms.ui.activities.dashboard.SupportActivity;
+import com.scorg.dms.ui.activities.dms_patient_list.FileTypeViewerActivity;
 import com.scorg.dms.ui.activities.dms_patient_list.PatientDetailsActivity;
 import com.scorg.dms.ui.activities.dms_patient_list.PatientListActivity;
 import com.scorg.dms.ui.activities.my_appointments.MyAppointmentsActivity;
@@ -118,8 +120,11 @@ public class HomePageActivity extends BaseActivity implements HelperResponse, Da
     @BindView(R.id.nav_right_view)
     FrameLayout mRightNavigationView;
 
-    @BindView(R.id.viewTextView)
-    TextView viewTextView;
+    @BindView(R.id.viewShow)
+    TextView viewShow;
+
+    @BindView(R.id.viewHide)
+    TextView viewHide;
 
     @BindView(R.id.txtDashboardHeader)
     TextView txtDashboardHeader;
@@ -178,8 +183,9 @@ public class HomePageActivity extends BaseActivity implements HelperResponse, Da
     @BindView(R.id.layoutTopBackground)
     LinearLayout layoutTopBackground;
 
-//    @BindView(R.id.layoutTodayAppointmentHeader)
-//    LinearLayout layoutTodayAppointmentHeader;
+    @BindView(R.id.showHideDivider)
+    TextView showHideDivider;
+
 
     @BindView(R.id.swipeToRefresh)
     SwipeRefreshLayout swipeToRefresh;
@@ -258,7 +264,9 @@ public class HomePageActivity extends BaseActivity implements HelperResponse, Da
         homeText.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         supportText.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
 
-        viewTextView.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+        viewShow.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+        viewHide.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+        showHideDivider.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         textHeaderTodayAppointment.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         pendingApprovalCount.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         totalPatientsCount.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
@@ -362,7 +370,8 @@ public class HomePageActivity extends BaseActivity implements HelperResponse, Da
 
                     mDashboardDataModel = mDashboardBaseModel.getDashboardDataModel();
                     if (mDashboardDataModel != null) {
-                        viewTextView.setClickable(true);
+                        viewShow.setClickable(true);
+                        viewHide.setClickable(true);
                         pendingApprovalCount.setText(mDashboardDataModel.getPendingApprovedCount());
                         totalPatientsCount.setText(mDashboardDataModel.getTotalPatientCount());
                         todayAppointmentsCount.setText(mDashboardDataModel.getAppointmentCount());
@@ -401,12 +410,14 @@ public class HomePageActivity extends BaseActivity implements HelperResponse, Da
                         admittedPatientCount.setText("0");
                         recyclerView.setVisibility(View.GONE);
                         emptyListView.setVisibility(View.VISIBLE);
-                        viewTextView.setClickable(false);
+                        viewShow.setClickable(false);
+                        viewHide.setClickable(false);
                     }
                 } else {
                     recyclerView.setVisibility(View.GONE);
                     emptyListView.setVisibility(View.VISIBLE);
-                    viewTextView.setClickable(false);
+                    viewShow.setClickable(false);
+                    viewHide.setClickable(false);
                 }
                 break;
         }
@@ -420,7 +431,8 @@ public class HomePageActivity extends BaseActivity implements HelperResponse, Da
         todayAppointmentsCount.setText("0");
         // waitingPatientCount.setText("0");
         admittedPatientCount.setText("0");
-        viewTextView.setClickable(false);
+        viewShow.setClickable(false);
+        viewHide.setClickable(false);
 
         if (mDrawer.isDrawerOpen(GravityCompat.START)) {
             Log.e("mDrawer", "open");
@@ -490,23 +502,23 @@ public class HomePageActivity extends BaseActivity implements HelperResponse, Da
 
     }
 
-    @OnClick({R.id.viewTextView, R.id.layoutDrawerIcon, R.id.layoutTotalPatients, R.id.layoutTodayAppointment, R.id.layoutWaitingPatient, R.id.layoutDrawerSetting, R.id.layoutDrawerSupport, R.id.layoutPendingApproval, R.id.layoutDrawerHome, R.id.layoutAdmittedPatient})
+    @OnClick({R.id.viewShow, R.id.layoutDrawerIcon, R.id.layoutTotalPatients, R.id.layoutTodayAppointment, R.id.layoutWaitingPatient, R.id.layoutDrawerSetting, R.id.layoutDrawerSupport, R.id.layoutPendingApproval, R.id.layoutDrawerHome, R.id.layoutAdmittedPatient})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.layoutTodayAppointment:
-                if (mDashboardDataModel != null && !mDashboardDataModel.getAppointmentCount().equalsIgnoreCase("0")) {
+                if (mDashboardDataModel != null ) {
                     Intent myAppointmentsActivity = new Intent(this, MyAppointmentsActivity.class);
                     startActivity(myAppointmentsActivity);
                 }
                 break;
             case R.id.layoutAdmittedPatient:
-                if (mDashboardDataModel != null && !mDashboardDataModel.getAdmittedPatientCount().equalsIgnoreCase("0")) {
+                if (mDashboardDataModel != null ) {
                     Intent admittedPatientsActivity = new Intent(this, AdmittedPatientsActivity.class);
                     startActivity(admittedPatientsActivity);
                 }
                 break;
             case R.id.layoutWaitingPatient:
-                if (mDashboardDataModel != null && !mDashboardDataModel.getWaitingCount().equalsIgnoreCase("0")) {
+                if (mDashboardDataModel != null) {
                     Intent todayAppointmentsOrWaitingList = new Intent(this, WaitingMainListActivity.class);
                     startActivity(todayAppointmentsOrWaitingList);
                 }
@@ -536,7 +548,7 @@ public class HomePageActivity extends BaseActivity implements HelperResponse, Da
             case R.id.layoutDrawerIcon:
                 mDrawer.openDrawer(GravityCompat.START);
                 break;
-            case R.id.viewTextView:
+            case R.id.viewShow:
                 Intent myAppointmentsActivity = new Intent(this, MyAppointmentsActivity.class);
                 startActivity(myAppointmentsActivity);
                 break;
@@ -561,12 +573,25 @@ public class HomePageActivity extends BaseActivity implements HelperResponse, Da
 
     @Override
     public void onClickedOfEpisodeListButton(SearchResult groupHeader) {
-        Intent intent = new Intent(this, PatientDetailsActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putSerializable(PATIENT_DETAILS, groupHeader);
-        intent.putExtra(DMSConstants.BUNDLE, bundle);
-        startActivity(intent);
+//        Intent intent = new Intent(this, PatientDetailsActivity.class);
+//        Bundle bundle = new Bundle();
+//        bundle.putSerializable(PATIENT_DETAILS, groupHeader);
+//        intent.putExtra(DMSConstants.BUNDLE, bundle);
+//        startActivity(intent);
 
+    }
+
+    @Override
+    public void onPatientListItemClick(AppointmentPatientData appointmentPatientData) {
+        Intent intent = new Intent(mContext, FileTypeViewerActivity.class);
+        Bundle extra = new Bundle();
+        extra.putString(DMSConstants.PATIENT_ADDRESS, appointmentPatientData.getPatAddress());
+        extra.putString(DMSConstants.DOCTOR_NAME, "");
+        extra.putString(DMSConstants.PATIENT_ID, appointmentPatientData.getPatientId());
+        extra.putString(DMSConstants.PAT_ID, appointmentPatientData.getPatId());
+        extra.putString(DMSConstants.PATIENT_LIST_PARAMS.PATIENT_NAME, "" + appointmentPatientData.getPatientName());
+        intent.putExtra(DMSConstants.DATA, extra);
+        startActivity(intent);
     }
 
 }
