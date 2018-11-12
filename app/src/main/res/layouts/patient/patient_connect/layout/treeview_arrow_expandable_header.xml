@@ -14,8 +14,8 @@
         android:layout_centerVertical="true"
         android:gravity="center"
         android:orientation="horizontal"
-        android:paddingLeft="@dimen/dp5"
-        android:paddingStart="@dimen/dp5">
+        android:paddingLeft="@dimen/dp10"
+        android:paddingStart="@dimen/dp10">
 
 
         <android.support.v7.widget.AppCompatCheckBox
