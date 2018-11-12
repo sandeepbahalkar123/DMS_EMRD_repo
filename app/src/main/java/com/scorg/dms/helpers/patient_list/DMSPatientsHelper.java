@@ -54,7 +54,7 @@ public class DMSPatientsHelper implements ConnectionListener {
     public void doGetArchivedList(GetArchiveRequestModel fileTreeRequestModel) {
 
 
-        ConnectionFactory mConnectionFactory = new ConnectionFactory(mContext, this, null, true, DMSConstants.TASK_GET_ARCHIVED_LIST, Request.Method.POST, false);
+        ConnectionFactory mConnectionFactory = new ConnectionFactory(mContext, this, null, false, DMSConstants.TASK_GET_ARCHIVED_LIST, Request.Method.POST, false);
         mConnectionFactory.setHeaderParams();
         mConnectionFactory.setPostParams(fileTreeRequestModel);
 
@@ -92,9 +92,7 @@ public class DMSPatientsHelper implements ConnectionListener {
             case ConnectionListener.RESPONSE_OK:
 
                 if (String.valueOf(mOldDataTag).equalsIgnoreCase("" + DMSConstants.TASK_GET_ARCHIVED_LIST)) {
-
                     mHelperResponseManager.onSuccess(mOldDataTag, customResponse);
-
                 } else {
                     mHelperResponseManager.onSuccess(mOldDataTag, customResponse);
                 }
@@ -113,7 +111,12 @@ public class DMSPatientsHelper implements ConnectionListener {
                 CommonMethods.Log(TAG, mContext.getString(R.string.timeout_error));
                 mHelperResponseManager.onTimeOutError(mOldDataTag, mContext.getString(R.string.timeout_error));
                 break;
+            case ConnectionListener.NO_INTERNET:
+                CommonMethods.Log(TAG, mContext.getString(R.string.no_connection_error));
+                mHelperResponseManager.onNoConnectionError(mOldDataTag, mContext.getString(R.string.no_connection_error));
+                break;
             default:
+                mHelperResponseManager.onParseError(mOldDataTag, mContext.getString(R.string.something_went_wrong_error));
                 CommonMethods.Log(TAG, "default error");
                 break;
 
@@ -122,10 +125,9 @@ public class DMSPatientsHelper implements ConnectionListener {
     }
 
     @Override
-    public void onTimeout(ConnectRequest request) {
+    public void onTimeout(ConnectRequest request, String mOldDataTag) {
 
     }
-
 
     public void doGetPatientNameList(String enteredPatientName) {
         ConnectionFactory mConnectionFactory = new ConnectionFactory(mContext, this, null, false, DMSConstants.TASK_GET_PATIENT_NAME_LIST, Request.Method.POST, false);

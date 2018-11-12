@@ -33,7 +33,8 @@
 
     <!--sandeep sir account credentials-->
     <string name="parse_error">parse error</string>
-    <string name="no_connection_error">Internal server error</string>
+    <string name="something_went_wrong_error">Something went wrong</string>
+    <string name="no_connection_error">No network</string>
     <string name="timeout_error">Timeout error</string>
     <string name="default_error">default error</string>
     <string name="cancel">Cancel</string>
@@ -61,12 +62,13 @@
     <string name="my_patients">My Patients</string>
     <string name="do_you_logout">Do you want to logout?</string>
     <string name="select_date_text">Select Date</string>
-    <string name="doc_name">Doctor Name:</string>
+    <string name="doc_name">Doctor Name:\u0020</string>
     <!--<string name="template_list">Template List</string>-->
     <string name="active">ACTIVE</string>
     <string name="pending_request">PENDING REQUESTS</string>
     <string name="all_request">ALL REQUESTS</string>
-    <string name="view_all">VIEW ALL</string>
+    <string name="view_all">Show</string>
+    <string name="hide">Hide</string>
     <string name="in_time">In Time</string>
     <string name="appointment_completed">Appointment is completed</string>
     <string name="episode">Episode</string>
@@ -75,8 +77,9 @@
     <string name="today_appointment_no_new_line">Today\'s Appointments</string>
     <string name="admitted_patients"> Admitted\nPatients</string>
     <string name="pending_approval">Pending\nApproval</string>
-    <string name="today_patient">My \nPatients</string>
+    <string name="today_patient">All \nPatients</string>
     <string name="years">yrs -\u0020</string>
+    <string name="done">Done</string>
 
 
     <string name="waiting_list_message">Oops !! There are no patients currently in the waiting list.</string>
@@ -214,5 +217,6 @@
     <string name="off">OFF</string>
     <string name="refresh_images">Refresh Images</string>
     <string name="clear_file_cache">Clear File Cache</string>
+    <string name="retry">Retry</string>
 
 </resources>

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -23,32 +22,29 @@
             <LinearLayout
                 android:id="@+id/layoutPatSearch"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp56"
-
-                android:layout_marginBottom="@dimen/dp7"
+                android:layout_height="@dimen/dp42"
+                android:layout_marginBottom="@dimen/dp5"
                 android:orientation="vertical">
 
                 <com.scorg.dms.ui.customesViews.EditTextWithDeleteButton
                     android:id="@+id/searchEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp10"
+                    android:layout_marginTop="@dimen/dp5"
                     android:visibility="visible"
                     app:hintText="@string/search_hint"
-                    app:textSize="@dimen/sp17" />
+                    app:textSize="@dimen/sp15" />
 
-
-                <ImageView
+                <View
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp1"
-                    android:layout_gravity="center"
-                    android:layout_marginBottom="@dimen/dp8"
+                    android:layout_marginStart="@dimen/dp10"
                     android:layout_marginLeft="@dimen/dp10"
+                    android:layout_marginTop="@dimen/dp5"
+                    android:layout_marginEnd="@dimen/dp10"
                     android:layout_marginRight="@dimen/dp10"
-                    android:layout_marginTop="@dimen/dp8"
-                    android:background="@color/white"
-                    android:visibility="visible"
-                    tools:visibility="visible" />
+                    android:layout_marginBottom="5dp"
+                    android:background="@color/white" />
             </LinearLayout>
 
             <include layout="@layout/common_recycler_view" />

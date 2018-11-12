@@ -17,6 +17,7 @@ import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.view.GravityCompat;
@@ -55,6 +56,7 @@ import com.scorg.dms.R;
 import com.scorg.dms.adapters.dms_adapters.CustomPreferenceSpinAdapter;
 import com.scorg.dms.helpers.patient_list.DMSPatientsHelper;
 import com.scorg.dms.interfaces.CustomResponse;
+import com.scorg.dms.interfaces.ErrorDialogCallback;
 import com.scorg.dms.interfaces.HelperResponse;
 import com.scorg.dms.model.dms_models.requestmodel.archive.GetArchiveRequestModel;
 import com.scorg.dms.model.dms_models.requestmodel.archive.RaiseUnlockRequestModel;
@@ -72,6 +74,7 @@ import com.scorg.dms.model.dms_models.responsemodel.getpdfdataresponsemodel.GetP
 import com.scorg.dms.preference.DMSPreferencesManager;
 import com.scorg.dms.singleton.DMSApplication;
 import com.scorg.dms.ui.activities.BaseActivity;
+import com.scorg.dms.ui.customesViews.CustomProgressDialog;
 import com.scorg.dms.ui.customesViews.treeViewHolder.arrow_expand.ArrowExpandIconTreeItemHolder;
 import com.scorg.dms.ui.customesViews.treeViewHolder.arrow_expand.ArrowExpandSelectableHeaderHolder;
 import com.scorg.dms.util.CommonMethods;
@@ -226,6 +229,11 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
     @BindView(R.id.deviderView)
     View deviderView;
 
+    @BindView(R.id.emptyListView)
+    RelativeLayout emptyListView;
+
+    @BindView(R.id.imgNoRecordFound)
+    ImageView imgNoRecordFound;
 
     DrawerLayout mDrawer;
     //---------
@@ -264,6 +272,8 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
     private int recordIdFirstPdf = 0;
     private int recordIdSecondPdf = 0;
 
+    private CustomProgressDialog customProgressDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -276,13 +286,15 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
     }
 
     private void initialize() {
-        mContext = getApplicationContext();
+        mContext = this;
+        customProgressDialog = new CustomProgressDialog(mContext);
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
         patientIcon.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         uhidIcon.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         addressIcon.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         deviderView.setBackgroundColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         mCompareButton.setBackgroundColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+        imgNoRecordFound.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         GradientDrawable cardBackground = new GradientDrawable();
         cardBackground.setShape(GradientDrawable.RECTANGLE);
         cardBackground.setColor(Color.WHITE);
@@ -576,6 +588,7 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
 
     // To create JSON and get archived list of data.
     private void getLoadArchivedList() {
+        customProgressDialog.show();
         //---------------
         GetArchiveRequestModel model = new GetArchiveRequestModel();
         model.setPatId(respectivePatID);
@@ -591,18 +604,29 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
     @Override
     public void onSuccess(String mOldDataTag, CustomResponse customResponse) {
         if (String.valueOf(mOldDataTag).equalsIgnoreCase("" + DMSConstants.TASK_GET_ARCHIVED_LIST)) {
+
+            hideProgressDialog();
             FileTreeResponseModel fileTreeResponseModel = (FileTreeResponseModel) customResponse;
             if (!fileTreeResponseModel.getCommon().getStatusCode().equals(DMSConstants.SUCCESS)) {
-                CommonMethods.showToast(mContext, fileTreeResponseModel.getCommon().getStatusMessage());
+                if (emptyListView.getVisibility() != View.VISIBLE)
+                    emptyListView.setVisibility(View.VISIBLE);
+                setErrorDialog(fileTreeResponseModel.getCommon().getStatusMessage(), mOldDataTag, false, FileTypeViewerActivity.this);
             } else {
-                mFileTreeResponseData = fileTreeResponseModel.getFileTreeResponseData();
 
-                if (mFileTypeOne.getText().toString().equalsIgnoreCase(mFileTypeTwo.getText().toString())) {
-                    isComparingBetweenSameFileType = true;
+                if (!fileTreeResponseModel.getFileTreeResponseData().getArchiveData().isEmpty()) {
+                    if (emptyListView.getVisibility() == View.VISIBLE)
+                        emptyListView.setVisibility(View.GONE);
+                    mFileTreeResponseData = fileTreeResponseModel.getFileTreeResponseData();
+
+                    if (mFileTypeOne.getText().toString().equalsIgnoreCase(mFileTypeTwo.getText().toString())) {
+                        isComparingBetweenSameFileType = true;
+                    }
+                    doCreateTreeStructure();
+                } else {
+                    setErrorDialog("Records Not Found", mOldDataTag, false, FileTypeViewerActivity.this);
                 }
 
 
-                doCreateTreeStructure();
             }
 
 
@@ -630,6 +654,44 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
         }
     }
 
+    private void hideProgressDialog() {
+        if (customProgressDialog.isShowing()) {
+            final Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    // Do something after 5s = 5000ms
+
+                    customProgressDialog.dismiss();
+                }
+            }, 500);
+        }
+
+        if (mSecondFileTypeProgressDialogLayout.getVisibility()==View.VISIBLE)
+            mSecondFileTypeProgressDialogLayout.setVisibility(View.GONE);
+
+        if (mFirstFileTypeProgressDialogLayout.getVisibility()==View.VISIBLE)
+            mFirstFileTypeProgressDialogLayout.setVisibility(View.GONE);
+
+
+    }
+
+    void setErrorDialog(String errorMessage, String mOldDataTag, boolean isTimeout, Context mContext) {
+        hideProgressDialog();
+        CommonMethods.showErrorDialog(errorMessage, mContext, isTimeout, new ErrorDialogCallback() {
+            @Override
+            public void ok() {
+
+            }
+
+            @Override
+            public void retry() {
+                if (mFileTreeResponseData == null)
+                    getLoadArchivedList();
+            }
+        });
+    }
+
 
     private void doValidateReceivedEncryptedFilePath(String filePath, String mOldDataTag) {
         //------
@@ -638,11 +700,11 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
         String fileData = filePath;
         if (fileData != null) {
             if (mOldDataTag.endsWith("0")) {
-              //  mFirstFileTypeProgressDialogLayout.setVisibility(View.GONE);
+                //  mFirstFileTypeProgressDialogLayout.setVisibility(View.GONE);
                 fileOneData = fileData;
                 askWriteExtenralStoragePermission(REQUEST_CODE_WRITE_FILE_ONE_PERMISSIONS);
             } else if (mOldDataTag.endsWith("1")) {
-               // mSecondFileTypeProgressDialogLayout.setVisibility(View.GONE);
+                // mSecondFileTypeProgressDialogLayout.setVisibility(View.GONE);
                 fileTwoData = fileData;
                 askWriteExtenralStoragePermission(REQUEST_CODE_WRITE_FILE_TWO_PERMISSIONS);
             }
@@ -656,21 +718,41 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
 
     @Override
     public void onParseError(String mOldDataTag, String errorMessage) {
-        CommonMethods.showToast(mContext,errorMessage);
+        if (String.valueOf(mOldDataTag).equalsIgnoreCase("" + DMSConstants.TASK_GET_ARCHIVED_LIST)) {
+            emptyListView.setVisibility(View.VISIBLE);
+        }
+        setErrorDialog(errorMessage, mOldDataTag, false, mContext);
+
+
     }
 
     @Override
     public void onServerError(String mOldDataTag, String serverErrorMessage) {
-        CommonMethods.showToast(mContext,serverErrorMessage);
+        if (String.valueOf(mOldDataTag).equalsIgnoreCase("" + DMSConstants.TASK_GET_ARCHIVED_LIST)) {
+            emptyListView.setVisibility(View.VISIBLE);
+        }
+        setErrorDialog(serverErrorMessage, mOldDataTag, false, mContext);
+
     }
 
     @Override
     public void onNoConnectionError(String mOldDataTag, String serverErrorMessage) {
+        if (String.valueOf(mOldDataTag).equalsIgnoreCase("" + DMSConstants.TASK_GET_ARCHIVED_LIST)) {
+            emptyListView.setVisibility(View.VISIBLE);
+        }
+        setErrorDialog(serverErrorMessage, mOldDataTag, false, mContext);
+
     }
 
     @Override
     public void onTimeOutError(String mOldDataTag, String timeOutErrorMessage) {
-        CommonMethods.showToast(mContext,timeOutErrorMessage);
+        if (String.valueOf(mOldDataTag).equalsIgnoreCase("" + DMSConstants.TASK_GET_ARCHIVED_LIST)) {
+            emptyListView.setVisibility(View.VISIBLE);
+            setErrorDialog(timeOutErrorMessage, mOldDataTag, true, mContext);
+
+        } else {
+            setErrorDialog(timeOutErrorMessage, mOldDataTag, false, mContext);
+        }
     }
 
 
@@ -821,7 +903,7 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
         }
 
         AndroidTreeView mAndroidTreeView = new AndroidTreeView(this, treeRoot);
-        mAndroidTreeView.setDefaultAnimation(true);
+        mAndroidTreeView.setDefaultAnimation(false);
         mAndroidTreeView.setUse2dScroll(false);
         mAndroidTreeView.setDefaultNodeClickListener(this);
         mAndroidTreeView.setUseAutoToggle(false);
@@ -918,7 +1000,7 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
         }
 
         AndroidTreeView mAndroidTreeView = new AndroidTreeView(this, treeRoot);
-        mAndroidTreeView.setDefaultAnimation(true);
+        mAndroidTreeView.setDefaultAnimation(false);
         mAndroidTreeView.setUse2dScroll(false);
         mAndroidTreeView.setDefaultNodeClickListener(this);
         mAndroidTreeView.setUseAutoToggle(false);
@@ -1040,7 +1122,7 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
         }
 
         AndroidTreeView mAndroidTreeView = new AndroidTreeView(this, treeRoot);
-        mAndroidTreeView.setDefaultAnimation(true);
+        mAndroidTreeView.setDefaultAnimation(false);
         mAndroidTreeView.setUse2dScroll(false);
         mAndroidTreeView.setDefaultNodeClickListener(this);
         mAndroidTreeView.setUseAutoToggle(false);
@@ -1275,9 +1357,9 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
                         loadPDFFromServer(finalPdfFileURL, pdfViewToLoad);
                     }
                 });
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.fillInStackTrace();
-                Toast.makeText(this,pdfFileURL,Toast.LENGTH_LONG).show();
+                Toast.makeText(this, pdfFileURL, Toast.LENGTH_LONG).show();
             }
         }
     }

@@ -51,6 +51,7 @@
 
     <dimen name="drawer_width">280dp</dimen>
 
+
     <!--// DMS //-->
 
     <!-- Default screen margins, per the Android Design guidelines. -->
@@ -64,5 +65,7 @@
     <dimen name="compare_dialog">270dp</dimen>
     <dimen name="banner_height">200dp</dimen>
     <dimen name="label_height">90dp</dimen>
+    <dimen name="dp42">42dp</dimen>
+    <dimen name="dp45">45dp</dimen>
 
 </resources>

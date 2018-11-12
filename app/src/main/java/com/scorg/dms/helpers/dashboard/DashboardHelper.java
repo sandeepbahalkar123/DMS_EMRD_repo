@@ -42,11 +42,11 @@ public class DashboardHelper implements ConnectionListener {
                 break;
             case ConnectionListener.PARSE_ERR0R:
                 CommonMethods.Log(TAG, mContext.getString(R.string.parse_error));
-                mHelperResponseManager.onParseError(mOldDataTag, mContext.getString(R.string.parse_error));
+                mHelperResponseManager.onParseError(mOldDataTag, mContext.getString(R.string.something_went_wrong_error));
                 break;
             case ConnectionListener.SERVER_ERROR:
                 CommonMethods.Log(TAG, mContext.getString(R.string.server_error));
-                mHelperResponseManager.onServerError(mOldDataTag, mContext.getString(R.string.server_error));
+                mHelperResponseManager.onServerError(mOldDataTag, mContext.getString(R.string.something_went_wrong_error));
                 break;
             case ConnectionListener.NO_INTERNET:
                 CommonMethods.Log(TAG, mContext.getString(R.string.no_connection_error));
@@ -56,19 +56,17 @@ public class DashboardHelper implements ConnectionListener {
                 CommonMethods.Log(TAG, mContext.getString(R.string.no_connection_error));
                 mHelperResponseManager.onNoConnectionError(mOldDataTag, mContext.getString(R.string.no_connection_error));
                 break;
-            case ConnectionListener.TIMEOUT_ERROR:
-                CommonMethods.Log(TAG, mContext.getString(R.string.timeout_error));
-                mHelperResponseManager.onTimeOutError(mOldDataTag, mContext.getString(R.string.timeout_error));
-                break;
             default:
                 CommonMethods.Log(TAG, mContext.getString(R.string.default_error));
+                mHelperResponseManager.onParseError(mOldDataTag, mContext.getString(R.string.something_went_wrong_error));
                 break;
         }
     }
 
     @Override
-    public void onTimeout(ConnectRequest request) {
-
+    public void onTimeout(ConnectRequest request, String mOldDataTag) {
+        CommonMethods.Log(TAG, mContext.getString(R.string.timeout_error));
+        mHelperResponseManager.onTimeOutError(mOldDataTag, mContext.getString(R.string.timeout_error));
     }
 
 

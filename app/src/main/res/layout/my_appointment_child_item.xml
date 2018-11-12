@@ -4,10 +4,10 @@
     android:id="@+id/swipe_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="@dimen/dp4"
-    android:layout_marginEnd="@dimen/dp7"
     android:layout_marginStart="@dimen/dp7"
     android:layout_marginTop="@dimen/dp5"
+    android:layout_marginEnd="@dimen/dp7"
+    android:layout_marginBottom="@dimen/dp4"
     app:dragEdge="right"
     app:mode="same_level">
 
@@ -38,8 +38,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:paddingLeft="@dimen/dp2"
                         android:paddingStart="@dimen/dp2"
+                        android:paddingLeft="@dimen/dp2"
                         android:paddingTop="@dimen/dp2"
                         app:srcCompat="@drawable/result_blue_line"
                         tools:ignore="ContentDescription,RtlSymmetry" />
@@ -52,12 +52,13 @@
                         android:layout_toEndOf="@id/bluelineImageView"
                         android:layout_toRightOf="@id/bluelineImageView"
                         android:fontFamily="@font/roboto_medium"
-                        android:paddingLeft="@dimen/dp13"
                         android:paddingStart="@dimen/dp13"
+                        android:paddingLeft="@dimen/dp13"
                         android:textColor="@color/black"
                         android:textSize="@dimen/sp13"
                         tools:ignore="RtlSymmetry"
                         tools:text="ID: 23456" />
+
 
                     <TextView
                         android:id="@+id/appointmentTime"
@@ -65,16 +66,32 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentRight="true"
+                        android:layout_gravity="center"
                         android:layout_marginEnd="@dimen/dp16"
                         android:layout_marginRight="@dimen/dp16"
                         android:fontFamily="@font/roboto_bold"
-                        android:gravity="center"
-                        android:padding="@dimen/dp5"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/sp14"
-                        android:visibility="gone"
-                        tools:text="03:20 pm"
-                        tools:visibility="visible" />
+                        android:text="11:00 pm"
+                        android:textColor="@color/appointment_time_color"
+                        android:textSize="@dimen/sp12"
+                        android:visibility="gone" />
+
+
+                    <!--<TextView-->
+                    <!--android:id="@+id/appointmentTime"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_alignParentEnd="true"-->
+                    <!--android:layout_alignParentRight="true"-->
+                    <!--android:layout_marginEnd="@dimen/dp16"-->
+                    <!--android:layout_marginRight="@dimen/dp16"-->
+                    <!--android:fontFamily="@font/roboto_bold"-->
+                    <!--android:gravity="center"-->
+                    <!--android:padding="@dimen/dp5"-->
+                    <!--android:textColor="@color/white"-->
+                    <!--android:textSize="@dimen/sp14"-->
+                    <!--android:visibility="gone"-->
+                    <!--tools:text="03:20 pm"-->
+                    <!--tools:visibility="visible" />-->
 
                 </RelativeLayout>
 
@@ -86,18 +103,18 @@
 
                     <com.scorg.dms.ui.customesViews.CircularImageView
                         android:id="@+id/patientImageView"
-                        android:layout_width="@dimen/dp67"
-                        android:layout_height="@dimen/dp67"
-                        android:layout_marginLeft="@dimen/dp10"
+                        android:layout_width="@dimen/dp45"
+                        android:layout_height="@dimen/dp45"
                         android:layout_marginStart="@dimen/dp10"
+                        android:layout_marginLeft="@dimen/dp10"
                         tools:src="@drawable/uren_pic" />
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_marginLeft="@dimen/dp11"
                         android:layout_marginStart="@dimen/dp11"
+                        android:layout_marginLeft="@dimen/dp11"
                         android:layout_toEndOf="@id/patientImageView"
                         android:layout_toRightOf="@id/patientImageView"
                         android:orientation="vertical"
@@ -141,14 +158,43 @@
                                 tools:text="Male" />
                         </LinearLayout>
 
-                        <TextView
-                            android:id="@+id/opdTypeTextView"
-                            android:layout_width="wrap_content"
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/roboto_medium"
-                            android:textColor="@color/rating_color"
-                            android:textSize="@dimen/sp12"
-                            tools:text="OPD Completed" />
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/opdTypeTextView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_marginEnd="@dimen/dp10"
+                                android:layout_marginRight="@dimen/dp10"
+                                android:fontFamily="@font/roboto_medium"
+                                android:text="Confirm"
+                                android:textColor="@color/tagColor"
+                                android:textSize="@dimen/sp12" />
+
+                            <TextView
+                                android:id="@+id/appointmentConsultationType"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:fontFamily="@font/roboto_medium"
+                                android:text="Consultation Type"
+                                android:textColor="@color/green"
+                                android:textSize="@dimen/sp12" />
+
+                        </LinearLayout>
+
+
+                        <!--<TextView-->
+                            <!--android:id="@+id/opdTypeTextView"-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:fontFamily="@font/roboto_medium"-->
+                            <!--android:textColor="@color/rating_color"-->
+                            <!--android:textSize="@dimen/sp12"-->
+                            <!--tools:text="OPD Completed" />-->
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -174,6 +220,24 @@
                         android:visibility="gone"
                         tools:visibility="visible" />
 
+                    <TextView
+                        android:id="@+id/btnDone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/dp8"
+                        android:layout_marginEnd="@dimen/dp16"
+                        android:layout_marginRight="@dimen/dp16"
+                        android:background="@drawable/shape_rectangle_sky_blue"
+                        android:padding="@dimen/dp5"
+                        android:text="@string/done"
+                        android:textAllCaps="true"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/sp14" />
+
 
                 </RelativeLayout>
             </LinearLayout>
@@ -183,15 +247,15 @@
                 android:id="@+id/viewLine1"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp1"
-                android:layout_marginEnd="@dimen/dp2"
                 android:layout_marginStart="@dimen/dp2"
+                android:layout_marginEnd="@dimen/dp2"
                 android:background="@color/tagColor" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/dp8"
                 android:layout_marginTop="@dimen/dp3"
+                android:layout_marginBottom="@dimen/dp8"
                 android:gravity="center">
 
                 <LinearLayout
@@ -230,14 +294,14 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginEnd="@dimen/dp5"
-                    android:layout_marginLeft="@dimen/dp5"
-                    android:layout_marginRight="@dimen/dp5"
                     android:layout_marginStart="@dimen/dp5"
-                    android:padding="@dimen/dp3"
+                    android:layout_marginLeft="@dimen/dp5"
+                    android:layout_marginEnd="@dimen/dp5"
+                    android:layout_marginRight="@dimen/dp5"
                     android:layout_weight=".5"
                     android:gravity="center"
                     android:orientation="horizontal"
+                    android:padding="@dimen/dp3"
                     android:visibility="visible">
 
                     <TextView
@@ -246,8 +310,8 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:fontFamily="@font/roboto_medium"
-                        android:text="@string/episode"
                         android:gravity="center"
+                        android:text="@string/episode"
                         android:textColor="@color/black"
                         android:textSize="@dimen/sp11"
                         tools:text="@string/episode" />

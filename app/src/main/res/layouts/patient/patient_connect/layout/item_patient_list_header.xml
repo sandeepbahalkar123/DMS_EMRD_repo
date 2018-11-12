@@ -90,8 +90,8 @@
                     android:layout_weight="1.1">
                     <ImageView
                         android:id="@+id/patientImageView"
-                        android:layout_width="@dimen/dp67"
-                        android:layout_height="@dimen/dp67"
+                        android:layout_width="@dimen/dp45"
+                        android:layout_height="@dimen/dp45"
                         android:layout_marginLeft="@dimen/dp10"
                         android:layout_marginStart="@dimen/dp10"
                         tools:src="@drawable/uren_pic" />
