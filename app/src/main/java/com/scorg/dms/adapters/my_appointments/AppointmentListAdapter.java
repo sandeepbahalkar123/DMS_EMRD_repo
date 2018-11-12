@@ -25,6 +25,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,6 +44,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.scorg.dms.R;
+import com.scorg.dms.interfaces.ErrorDialogCallback;
 import com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemodel.SearchResult;
 import com.scorg.dms.model.my_appointments.AppointmentPatientData;
 import com.scorg.dms.singleton.DMSApplication;
@@ -56,11 +58,9 @@ import java.util.regex.Pattern;
 
 import static com.scorg.dms.util.CommonMethods.toCamelCase;
 import static com.scorg.dms.util.DMSConstants.APPOINTMENT_STATUS.BOOKED_STATUS;
-import static com.scorg.dms.util.DMSConstants.APPOINTMENT_STATUS.CANCEL;
-import static com.scorg.dms.util.DMSConstants.APPOINTMENT_STATUS.COMPLETED;
-import static com.scorg.dms.util.DMSConstants.APPOINTMENT_STATUS.CONFIRM_STATUS;
-import static com.scorg.dms.util.DMSConstants.APPOINTMENT_STATUS.COMPLETED_STATUS;
 import static com.scorg.dms.util.DMSConstants.APPOINTMENT_STATUS.CANCEL_STATUS;
+import static com.scorg.dms.util.DMSConstants.APPOINTMENT_STATUS.COMPLETED_STATUS;
+import static com.scorg.dms.util.DMSConstants.APPOINTMENT_STATUS.CONFIRM_STATUS;
 import static com.scorg.dms.util.DMSConstants.APPOINTMENT_STATUS.NO_SHOW;
 import static com.scorg.dms.util.DMSConstants.APPOINTMENT_STATUS.OTHER;
 
@@ -89,17 +89,13 @@ public class AppointmentListAdapter
         this.onItemClickListener = onItemClickListener;
         buttonBackground = new GradientDrawable();
         buttonBackground.setShape(GradientDrawable.RECTANGLE);
-        buttonBackground.setColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
-        buttonBackground.setCornerRadius(context.getResources().getDimension(R.dimen.dp5));
+        buttonBackground.setColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
+        buttonBackground.setCornerRadius(mContext.getResources().getDimension(R.dimen.dp5));
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
-
-
         private FrameLayout front_layout;
-
         private RelativeLayout swipe_layout;
-
         private TextView appointmentTime;
         private ImageView bluelineImageView;
         private TextView patientIdTextView;
@@ -109,9 +105,7 @@ public class AppointmentListAdapter
         private TextView patientGenderTextView;
         private TextView opdTypeTextView;
         private TextView patientPhoneNumber;
-
         private LinearLayout idAndDetailsLayout;
-
         private Button appointmentReschedule;
         private Button appointmentCancel;
         private Button appointmentComplete;
@@ -119,7 +113,8 @@ public class AppointmentListAdapter
         private View viewLine1;
         private View separatorView;
         private ImageView callIcon;
-
+        private TextView btnDone;
+        private TextView appointmentConsultationType;
 
         MyViewHolder(View convertView) {
             super(convertView);
@@ -134,11 +129,14 @@ public class AppointmentListAdapter
             patientGenderTextView = (TextView) convertView.findViewById(R.id.patientGenderTextView);
             opdTypeTextView = (TextView) convertView.findViewById(R.id.opdTypeTextView);
             patientPhoneNumber = (TextView) convertView.findViewById(R.id.patientPhoneNumber);
+            btnDone = (TextView) convertView.findViewById(R.id.btnDone);
             layoutAppointmentEpisode = (LinearLayout) convertView.findViewById(R.id.layoutAppointmentEpisode);
             bluelineImageView = (ImageView) convertView.findViewById(R.id.bluelineImageView);
             callIcon = (ImageView) convertView.findViewById(R.id.callIcon);
             viewLine1 = (View) convertView.findViewById(R.id.viewLine1);
             separatorView = (View) convertView.findViewById(R.id.separatorView);
+            appointmentConsultationType = (TextView) convertView.findViewById(R.id.appointmentConsultationType);
+
         }
     }
 
@@ -172,7 +170,7 @@ public class AppointmentListAdapter
         holder.swipe_layout.setBackground(cardBackground);
         holder.bluelineImageView.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         holder.callIcon.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
-        holder.appointmentTime.setBackground(buttonBackground);
+        holder.btnDone.setBackground(buttonBackground);
         holder.patientGenderTextView.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         holder.patientPhoneNumber.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         holder.separatorView.setBackgroundColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
@@ -249,7 +247,7 @@ public class AppointmentListAdapter
             holder.opdTypeTextView.setText(mContext.getString(R.string.capitalcompleted));
             holder.opdTypeTextView.setTextColor(ContextCompat.getColor(mContext, R.color.complete_color));
         } else if (appointmentPatientDataObject.getAppointmentStatus().contains(CONFIRM_STATUS)) {
-            holder.opdTypeTextView.setText( appointmentPatientDataObject.getAppointmentStatus());
+            holder.opdTypeTextView.setText(appointmentPatientDataObject.getAppointmentStatus());
             holder.opdTypeTextView.setTextColor(ContextCompat.getColor(mContext, R.color.confirm_color));
         } else if (appointmentPatientDataObject.getAppointmentStatus().contains(CANCEL_STATUS)) {
             holder.opdTypeTextView.setText(appointmentPatientDataObject.getAppointmentStatus());
@@ -267,6 +265,12 @@ public class AppointmentListAdapter
             holder.appointmentTime.setVisibility(View.VISIBLE);
             holder.appointmentTime.setText(CommonMethods.formatDateTime(appDate, DMSConstants.DATE_PATTERN.hh_mm_a, DMSConstants.DATE_PATTERN.UTC_PATTERN, DMSConstants.TIME).toLowerCase());
         }
+
+        String consultationType = appointmentPatientDataObject.getConsultationType();
+        if (!consultationType.equalsIgnoreCase("")) {
+            holder.appointmentConsultationType.setText(consultationType);
+        }
+
         //-------
         TextDrawable textDrawable = CommonMethods.getTextDrawable(mContext, appointmentPatientDataObject.getPatientName());
         RequestOptions requestOptions = new RequestOptions();
@@ -296,12 +300,33 @@ public class AppointmentListAdapter
             }
         });
 
+
+
+
         holder.idAndDetailsLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onItemClickListener.onClickOfPatientDetails(appointmentPatientDataObject);
+
+                Log.e("Name", appointmentPatientDataObject.getPatientName());
+                Log.e("isArchived---", "" + appointmentPatientDataObject.isArchived());
+
+                if (appointmentPatientDataObject.isArchived()) {
+                    onItemClickListener.onClickOfPatientDetails(appointmentPatientDataObject);
+                } else {
+                    CommonMethods.showErrorDialog("NO Data Found", mContext, false, new ErrorDialogCallback() {
+                        @Override
+                        public void ok() {
+                        }
+
+                        @Override
+                        public void retry() {
+                        }
+                    });
+                }
             }
         });
+
+
         holder.patientPhoneNumber.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

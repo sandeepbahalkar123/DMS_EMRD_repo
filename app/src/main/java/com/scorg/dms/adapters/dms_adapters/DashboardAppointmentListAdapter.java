@@ -19,6 +19,7 @@ import com.amulyakhare.textdrawable.TextDrawable;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.scorg.dms.R;
+import com.scorg.dms.interfaces.ErrorDialogCallback;
 import com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemodel.SearchResult;
 import com.scorg.dms.model.my_appointments.AppointmentPatientData;
 import com.scorg.dms.singleton.DMSApplication;
@@ -145,14 +146,32 @@ public class DashboardAppointmentListAdapter extends RecyclerView.Adapter<Dashbo
         if (!consultationType.equalsIgnoreCase("")){
             groupViewHolder.appointmentConsultationType.setText(consultationType);
         }
-        if (groupHeader.isArchived()) {
+
             groupViewHolder.cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    onItemClickListener.onPatientListItemClick(groupHeader);
+                    if (groupHeader.isArchived()) {
+
+                        onItemClickListener.onPatientListItemClick(groupHeader);
+                    }
+                    else {
+                        CommonMethods.showErrorDialog("NO Data Found", _context, false, new ErrorDialogCallback() {
+                            @Override
+                            public void ok() {
+
+                            }
+
+                            @Override
+                            public void retry() {
+
+                            }
+                        });
+                    }
+
                 }
             });
-        }
+
+
 
     }
 
