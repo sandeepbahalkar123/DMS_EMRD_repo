@@ -316,8 +316,8 @@ public class RequestManager extends ConnectRequest implements Connector, Request
                 } else {
                     mConnectionListener.onResponse(ConnectionListener.SERVER_ERROR, null, mOldDataTag);
 
-                    if (!DMSConstants.TASK_LOGIN_CODE.equals(mOldDataTag))
-                        CommonMethods.showToast(mContext, mContext.getResources().getString(R.string.server_error));
+                    //if (!DMSConstants.TASK_LOGIN_CODE.equals(mOldDataTag))
+                        //CommonMethods.showToast(mContext, mContext.getResources().getString(R.string.server_error));
 
                 }
             } else if (error instanceof NetworkError) {

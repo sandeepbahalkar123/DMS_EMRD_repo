@@ -87,13 +87,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:layout_weight="1.1">
+                    android:gravity="center"
+                    android:layout_weight="1.2">
                     <ImageView
                         android:id="@+id/patientImageView"
                         android:layout_width="@dimen/dp45"
                         android:layout_height="@dimen/dp45"
-                        android:layout_marginLeft="@dimen/dp10"
-                        android:layout_marginStart="@dimen/dp10"
                         tools:src="@drawable/uren_pic" />
                 </LinearLayout>
 
@@ -147,7 +146,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:gravity="center"
-                android:layout_weight="1.1">
+                android:layout_weight="1">
                 <TextView
                     android:id="@+id/episodeList"
                     android:layout_width="wrap_content"

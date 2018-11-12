@@ -48,6 +48,7 @@ import com.scorg.dms.helpers.patient_list.DMSPatientsHelper;
 import com.scorg.dms.interfaces.CustomResponse;
 import com.scorg.dms.interfaces.ErrorDialogCallback;
 import com.scorg.dms.interfaces.HelperResponse;
+import com.scorg.dms.model.dms_models.ViewRights;
 import com.scorg.dms.model.dms_models.requestmodel.showsearchresultrequestmodel.ShowSearchResultRequestModel;
 import com.scorg.dms.model.dms_models.responsemodel.annotationlistresponsemodel.AnnotationList;
 import com.scorg.dms.model.dms_models.responsemodel.annotationlistresponsemodel.AnnotationListData;
@@ -83,6 +84,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static com.scorg.dms.util.DMSConstants.PATIENT_DETAILS;
+import static com.scorg.dms.util.DMSConstants.VIEW_RIGHTS_DETAILS;
 
 public class PatientListActivity extends BaseActivity implements HelperResponse, View.OnClickListener, AdapterView.OnItemSelectedListener, PatientRecycleViewListAdapter.OnPatientListener, TreeNode.TreeNodeClickListener, PatientSearchAutoCompleteTextViewAdapter.OnItemClickListener {
 
@@ -181,6 +183,7 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
     private PatientSearchAutoCompleteTextViewAdapter mPatientSearchAutoCompleteTextViewAdapter;
     private String priv = "";
     private boolean mIsLoadMorePatients;
+    public ViewRights viewRights;
 
     //---------
     @Override
@@ -213,6 +216,7 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
         mClearPatientNameButton.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         imageAnnotation.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         mClearSearchAnnotationButton.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+        mAutoCompleteSearchBox.setHint(getString(R.string.search_label)+DMSApplication.LABEL_UHID+getString(R.string.coma_space_seperator)+DMSApplication.LABEL_REF_ID+getString(R.string.coma_space_seperator)+getString(R.string.label_patient_name) );
         mPatientListView.addOnScrollListener(new EndlessRecyclerViewScrollListener(linearlayoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
@@ -283,9 +287,9 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
                 String enteredText = s.toString().trim();
                 mAutoCompleteSearchBoxList.clear();
                 if (enteredText.length() != 0) {
-                    mAutoCompleteSearchBoxList.add(new PatientFilter(enteredText, getString(R.string.in_uhid)));
+                    mAutoCompleteSearchBoxList.add(new PatientFilter(enteredText,"in "+DMSApplication.LABEL_UHID));
                     mAutoCompleteSearchBoxList.add(new PatientFilter(enteredText, getString(R.string.in_patient_name)));
-                    mAutoCompleteSearchBoxList.add(new PatientFilter(enteredText, getString(R.string.in_ref_id)));
+                    mAutoCompleteSearchBoxList.add(new PatientFilter(enteredText, "in "+DMSApplication.LABEL_REF_ID));
                     mAutoCompleteSearchBoxList.add(new PatientFilter(enteredText, getString(R.string.in_all)));
 
                     mPatientSearchAutoCompleteTextViewAdapter = new PatientSearchAutoCompleteTextViewAdapter(PatientListActivity.this, R.layout.patient_filter_right_drawer, R.id.custom_spinner_txt_view_Id, mAutoCompleteSearchBoxList, PatientListActivity.this);
@@ -503,7 +507,7 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
         if (mOldDataTag == DMSConstants.TASK_PATIENT_LIST) {
             ShowSearchResultResponseModel showSearchResultResponseModel = (ShowSearchResultResponseModel) customResponse;
             List<SearchResult> searchResult = showSearchResultResponseModel.getSearchResultData().getSearchResult();
-
+            viewRights=showSearchResultResponseModel.getSearchResultData().getViewRights();
             mIsLoadMorePatients = showSearchResultResponseModel.getSearchResultData().isPaggination();
             patientExpandableListAdapter.addNewItems(searchResult);
             patientExpandableListAdapter.notifyDataSetChanged();
@@ -1237,6 +1241,7 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
         Intent intent = new Intent(this, PatientDetailsActivity.class);
         Bundle bundle = new Bundle();
         bundle.putSerializable(PATIENT_DETAILS, groupHeader);
+        bundle.putSerializable(VIEW_RIGHTS_DETAILS, viewRights);
         intent.putExtra(DMSConstants.BUNDLE, bundle);
         startActivity(intent);
 

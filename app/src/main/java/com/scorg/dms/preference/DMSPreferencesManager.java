@@ -177,5 +177,9 @@ public class DMSPreferencesManager {
         String COLOR_ACCENT = "COLOR_ACCENT";
         String COLOR_APPOINTMENT_TEXT = "COLOR_APPOINTMENT_TEXT";
 
+        String LABEL_UHID = "LABEL_UHID";
+        String LABEL_REF_ID = "LABEL_REF_ID";
+        String LABEL_DOCTOR_NAME = "LABEL_DOCTOR_NAME";
+
     }
 }

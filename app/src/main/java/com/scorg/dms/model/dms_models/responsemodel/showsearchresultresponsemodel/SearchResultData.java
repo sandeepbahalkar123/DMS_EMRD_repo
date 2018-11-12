@@ -7,6 +7,7 @@ package com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemod
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.scorg.dms.interfaces.CustomResponse;
+import com.scorg.dms.model.dms_models.ViewRights;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +21,10 @@ public class SearchResultData implements CustomResponse {
     @SerializedName("ispaggination")
     @Expose
     private boolean ispaggination;
+
+    @SerializedName("viewRights")
+    @Expose
+    private ViewRights viewRights;
 
     public List<SearchResult> getSearchResult() {
         return searchResult;
@@ -35,5 +40,13 @@ public class SearchResultData implements CustomResponse {
 
     public void setIspaggination(boolean ispaggination) {
         this.ispaggination = ispaggination;
+    }
+
+    public ViewRights getViewRights() {
+        return viewRights;
+    }
+
+    public void setViewRights(ViewRights viewRights) {
+        this.viewRights = viewRights;
     }
 }

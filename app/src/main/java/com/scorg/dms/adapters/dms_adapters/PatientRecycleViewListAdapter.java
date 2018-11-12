@@ -17,6 +17,7 @@ import com.amulyakhare.textdrawable.TextDrawable;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.scorg.dms.R;
+import com.scorg.dms.interfaces.ErrorDialogCallback;
 import com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemodel.SearchResult;
 import com.scorg.dms.singleton.DMSApplication;
 import com.scorg.dms.util.CommonMethods;
@@ -82,14 +83,14 @@ public class PatientRecycleViewListAdapter extends RecyclerView.Adapter<PatientR
         episodButtonBackground.setCornerRadius(_context.getResources().getDimension(R.dimen.dp8));
         groupViewHolder.episodeList.setBackground(episodButtonBackground);
 
-        SearchResult groupHeader = _originalListDataHeader.get(position);
+        final SearchResult groupHeader = _originalListDataHeader.get(position);
         groupViewHolder.uhid.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         groupViewHolder.patientId.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         groupViewHolder.bluelineImageView.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
 
         groupViewHolder.userName.setText(groupHeader.getPatientName());
         groupViewHolder.patientId.setText(groupHeader.getPatientId());
-        groupViewHolder.uhid.setText(uhid + ":");
+        groupViewHolder.uhid.setText(DMSApplication.LABEL_UHID + ":");
 
 
         // groupViewHolder.cardView.setBackground(ContextCompat.getDrawable(_context, R.drawable.round_background_full_view));
@@ -130,10 +131,23 @@ public class PatientRecycleViewListAdapter extends RecyclerView.Adapter<PatientR
         groupViewHolder.mainContentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (groupHeader.isArchived()) {
+                    SearchResult groupHeader = _originalListDataHeader.get(position);
+                    onPatientListener.onPatientListItemClick(groupHeader);
+                } else {
+                    CommonMethods.showErrorDialog(_context.getString(R.string.patient_not_having_record), _context, false, new ErrorDialogCallback() {
+                        @Override
+                        public void ok() {
 
-                SearchResult groupHeader = _originalListDataHeader.get(position);
+                        }
 
-                onPatientListener.onPatientListItemClick(groupHeader);
+                        @Override
+                        public void retry() {
+
+                        }
+                    });
+                }
+
 
             }
         });

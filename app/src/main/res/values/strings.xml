@@ -218,5 +218,10 @@
     <string name="refresh_images">Refresh Images</string>
     <string name="clear_file_cache">Clear File Cache</string>
     <string name="retry">Retry</string>
+    <string name="appointment_code">Appointment Code :</string>
+    <string name="label_patient_name">Patient Name</string>
+    <string name="coma_space_seperator">,\u0020</string>
+    <string name="search_label">Search\u0020</string>
+    <string name="patient_not_having_record">Patient is not having record</string>
 
 </resources>

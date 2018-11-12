@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rowLay"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/dp5"
     android:background="@color/white"
     android:orientation="vertical"
-    android:paddingEnd="@dimen/dp4"
-    android:layout_marginTop="@dimen/dp5"
-    android:paddingStart="@dimen/dp4">
+    android:paddingStart="@dimen/dp4"
+    android:paddingEnd="@dimen/dp4">
 
     <LinearLayout
         android:id="@+id/cardView"
@@ -24,26 +23,26 @@
             android:layout_height="wrap_content"
             android:baselineAligned="false"
             android:orientation="horizontal"
-            android:paddingEnd="@dimen/dp10"
+            android:padding="@dimen/dp5"
             android:paddingStart="@dimen/dp10"
             android:paddingTop="@dimen/dp5"
-            android:padding="@dimen/dp5">
+            android:paddingEnd="@dimen/dp10">
 
             <TextView
                 android:id="@+id/ipd"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                tools:text="IPD"
+                android:layout_gravity="center"
                 android:fontFamily="@font/roboto_medium"
-                tools:textColor="@color/colorAccent"
-                android:paddingRight="@dimen/dp5"
+                android:gravity="center"
                 android:paddingLeft="@dimen/dp5"
                 android:paddingTop="@dimen/dp3"
+                android:paddingRight="@dimen/dp5"
                 android:paddingBottom="@dimen/dp3"
-                android:layout_gravity="center"
                 android:textColor="@color/white"
-                android:textSize="@dimen/sp14" />
+                android:textSize="@dimen/sp14"
+                tools:text="IPD"
+                tools:textColor="@color/colorAccent" />
 
             <TextView
                 android:id="@+id/ipdValue"
@@ -52,16 +51,19 @@
                 android:layout_gravity="center"
                 android:layout_marginStart="@dimen/dp5"
                 android:layout_marginLeft="@dimen/dp5"
+                android:fontFamily="@font/roboto_bold"
                 android:gravity="center_vertical"
                 android:textSize="@dimen/sp14"
-                android:fontFamily="@font/roboto_bold"
                 tools:text="@string/user_name" />
+
             <ImageView
+                android:id="@+id/imageViewRights"
                 android:layout_width="66px"
                 android:layout_height="48px"
                 android:layout_gravity="center"
                 android:layout_marginLeft="@dimen/dp10"
-                android:src="@drawable/view_rights"/>
+                android:visibility="gone"
+                android:src="@drawable/view_rights" />
 
 
         </LinearLayout>
@@ -70,16 +72,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingLeft="@dimen/dp10"
-           >
+            android:paddingLeft="@dimen/dp10">
 
             <TextView
+                android:id="@+id/labelDoctorName"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:layout_marginRight="@dimen/dp5"
+                android:fontFamily="@font/roboto_medium"
                 android:gravity="center_vertical"
                 android:text="@string/doc_name"
-                android:fontFamily="@font/roboto_medium"
-                android:layout_marginRight="@dimen/dp5"
                 android:textSize="@dimen/sp14" />
 
             <TextView
@@ -95,20 +97,19 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-           >
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="@dimen/dp10"
                 android:layout_marginBottom="@dimen/dp5"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/dp10">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:orientation="horizontal">
 
@@ -116,25 +117,25 @@
                         android:id="@+id/ipdAdmissionDate"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
+                        android:layout_marginRight="@dimen/dp5"
+                        android:fontFamily="@font/roboto_medium"
                         android:gravity="center_vertical"
                         android:textSize="@dimen/sp14"
-                        android:fontFamily="@font/roboto_medium"
-                        android:layout_marginRight="@dimen/dp5"
                         tools:text="@string/admission_date" />
 
                     <TextView
                         android:id="@+id/ipdAdmissionDateValue"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:gravity="center_vertical"
                         android:fontFamily="@font/roboto_medium"
+                        android:gravity="center_vertical"
                         android:textSize="@dimen/sp14"
                         tools:text="@string/visit_date" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:orientation="horizontal">
 
@@ -142,18 +143,18 @@
                         android:id="@+id/ipdDischargeDate"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
+                        android:layout_marginRight="@dimen/dp5"
+                        android:fontFamily="@font/roboto_medium"
                         android:gravity="center_vertical"
                         android:textSize="@dimen/sp14"
-                        android:fontFamily="@font/roboto_medium"
-                        android:layout_marginRight="@dimen/dp5"
                         tools:text="@string/discharge_date" />
 
                     <TextView
                         android:id="@+id/ipdDischargeDateValue"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:gravity="center_vertical"
                         android:fontFamily="@font/roboto_medium"
+                        android:gravity="center_vertical"
                         android:textSize="@dimen/sp14"
                         tools:text="@string/visit_date" />
                 </LinearLayout>
@@ -162,10 +163,11 @@
         </LinearLayout>
 
     </LinearLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp1"
         android:layout_marginTop="@dimen/dp5"
-        android:background="@color/appointment_time_color"/>
+        android:background="@color/appointment_time_color" />
 
 </LinearLayout>

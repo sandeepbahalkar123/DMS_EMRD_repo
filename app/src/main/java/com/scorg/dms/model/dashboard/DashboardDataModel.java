@@ -41,6 +41,8 @@ public class DashboardDataModel implements Parcelable {
     @Expose
     private String colorAccent;
 
+
+
     @SerializedName("appointmentTextColor")
     @Expose
     private String appointmentTextColor;
@@ -72,6 +74,16 @@ public class DashboardDataModel implements Parcelable {
     @SerializedName("TodaysAppointmentList")
     @Expose
     private ArrayList<AppointmentPatientData> appointmentPatientDataList = new ArrayList<>();
+
+    @SerializedName("appointmentStatusUrl")
+    @Expose
+    private String appointmentStatusUrl;
+
+    @SerializedName("lstLabelNameData")
+    @Expose
+    private LstLabelNameData lstLabelNameData;
+
+
     public final static Parcelable.Creator<DashboardDataModel> CREATOR = new Creator<DashboardDataModel>() {
 
 
@@ -102,7 +114,8 @@ public class DashboardDataModel implements Parcelable {
             instance.setViewArchivedApiTakeCount(((Integer) in.readValue((Integer.class.getClassLoader()))));
             instance.setPatientApiTakeCount(((Integer) in.readValue((Integer.class.getClassLoader()))));
             in.readList(instance.getAppointmentPatientDataList(), (AppointmentPatientData.class.getClassLoader()));
-
+            instance.setAppointmentStatusUrl(((String) in.readValue((String.class.getClassLoader()))));
+            instance.setLstLabelNameData(((LstLabelNameData) in.readValue((LstLabelNameData.class.getClassLoader()))));
             //--------
 
             return instance;
@@ -132,6 +145,8 @@ public class DashboardDataModel implements Parcelable {
         dest.writeValue(getAppointmentTextColor());
         dest.writeValue(getAdmittedPatientCount());
         dest.writeList(getAppointmentPatientDataList());
+        dest.writeValue(getAppointmentStatusUrl());
+        dest.writeValue(getLstLabelNameData());
 
         //-------
     }
@@ -260,6 +275,21 @@ public class DashboardDataModel implements Parcelable {
         this.appointmentPatientDataList = appointmentPatientDataList;
     }
 
+    public String getAppointmentStatusUrl() {
+        return appointmentStatusUrl;
+    }
+
+    public void setAppointmentStatusUrl(String appointmentStatusUrl) {
+        this.appointmentStatusUrl = appointmentStatusUrl;
+    }
+
+    public LstLabelNameData getLstLabelNameData() {
+        return lstLabelNameData;
+    }
+
+    public void setLstLabelNameData(LstLabelNameData lstLabelNameData) {
+        this.lstLabelNameData = lstLabelNameData;
+    }
 
     public String getColorPrimary() {
         return colorPrimary;
@@ -308,6 +338,7 @@ public class DashboardDataModel implements Parcelable {
         public void setAppointmentOpdOTCount(String appointmentOpdOTCount) {
             this.appointmentOpdOTCount = appointmentOpdOTCount;
         }
+
 
         @Override
         public int describeContents() {

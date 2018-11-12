@@ -84,6 +84,7 @@ public class DMSConstants {
     public static final String NO = "no";
     public static final String RECORD_ID = "record_id";
     public static final String PATIENT_DETAILS = "patient_details";
+    public static final String VIEW_RIGHTS_DETAILS = "view_rights_details";
     public interface APPOINTMENT_STATUS {
         int BOOKED = 1;
         int CONFIRM = 2;
