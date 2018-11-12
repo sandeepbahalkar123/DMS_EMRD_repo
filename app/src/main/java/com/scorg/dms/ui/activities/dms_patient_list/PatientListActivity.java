@@ -944,11 +944,9 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
         mAnnotationTreeViewContainer.removeAllViews();
 
         TreeNode root = TreeNode.root();
-        int lstDocCategoryObjectLeftPadding = (int) (getResources().getDimension(R.dimen.dp30) / getResources().getDisplayMetrics().density);
         int lstDocTypeChildLeftPadding = (int) (getResources().getDimension(R.dimen.dp50) / getResources().getDisplayMetrics().density);
-        int textColor = ContextCompat.getColor(this, R.color.black);
 
-        boolean isChecked = false;
+        boolean isChecked;
         if (annotationListData != null) {
             List<AnnotationList> annotationLists = annotationListData.getAnnotationLists();
 

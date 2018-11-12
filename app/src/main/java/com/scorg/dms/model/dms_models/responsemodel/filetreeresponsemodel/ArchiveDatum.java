@@ -25,6 +25,9 @@ public class ArchiveDatum {
     @Expose
     private List<LstDocCategory> archiveDataLstDocCategories = new ArrayList<LstDocCategory>();
 
+    @SerializedName("lstOrderedDocTypes")
+    @Expose
+    private List<LstOrderedDocType> lstOrderedDocTypes = new ArrayList<LstOrderedDocType>();
 
     private int totalLstDateFolderTypePageCount = -1;
     private int totalArchiveDataLstDocCategoriesPageCount = -1;
@@ -53,9 +56,11 @@ public class ArchiveDatum {
     public int getTotalLstDateFolderTypePageCount() {
         if (totalLstDateFolderTypePageCount == -1) {
             int count = 0;
-            for (LstDateFolderType temp :
-                    lstDateFolderTypeList) {
-                count = count + temp.getPageCount();
+            if (lstDateFolderTypeList != null) {
+                for (LstDateFolderType temp :
+                        lstDateFolderTypeList) {
+                    count = count + temp.getPageCount();
+                }
             }
             setTotalLstDateFolderTypePageCount(count);
         }
@@ -95,6 +100,14 @@ public class ArchiveDatum {
 
     public void setConfidentialState(int confidentialState) {
         this.confidentialState = confidentialState;
+    }
+
+    public List<LstOrderedDocType> getLstOrderedDocTypes() {
+        return lstOrderedDocTypes;
+    }
+
+    public void setLstOrderedDocTypes(List<LstOrderedDocType> lstOrderedDocTypes) {
+        this.lstOrderedDocTypes = lstOrderedDocTypes;
     }
 
     @Override

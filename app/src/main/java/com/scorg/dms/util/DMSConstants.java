@@ -148,6 +148,7 @@ public class DMSConstants {
         public static final String FOLDER = "Folder";
         public static final String DATE = "Date";
         public static final String FILE = "File";
+        public static final String MY_ORDER = "Order";
     }
 
 }
