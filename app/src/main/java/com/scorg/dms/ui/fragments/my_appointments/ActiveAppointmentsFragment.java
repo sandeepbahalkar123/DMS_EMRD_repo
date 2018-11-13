@@ -63,7 +63,6 @@ public class ActiveAppointmentsFragment extends Fragment implements AppointmentL
     private AppointmentHelper mAppointmentHelper;
 
     private ArrayList<AppointmentPatientData> mAppointmentPatientData;
-    private String mUserSelectedDate;
     private DMSPatientsHelper mPatientsHelper;
     ViewRights viewRights;
 
@@ -97,20 +96,10 @@ public class ActiveAppointmentsFragment extends Fragment implements AppointmentL
             }
         });
 
-        mUserSelectedDate = getArguments().getString(DMSConstants.DATE);
-        MyAppointmentsDataModel myAppointmentsDataModel = getArguments().getParcelable(APPOINTMENT_DATA);
-        viewRights = (ViewRights) getArguments().getSerializable(VIEW_RIGHTS_DETAILS);
-        setFilteredData(myAppointmentsDataModel);
     }
 
-    public static ActiveAppointmentsFragment newInstance(MyAppointmentsDataModel myAppointmentsDataModel, String mDateSelectedByUser,ViewRights viewRights) {
-        ActiveAppointmentsFragment activeAppointmentsFragment = new ActiveAppointmentsFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString(DMSConstants.DATE, mDateSelectedByUser);
-        bundle.putParcelable(APPOINTMENT_DATA, myAppointmentsDataModel);
-        bundle.putSerializable(VIEW_RIGHTS_DETAILS, viewRights);
-        activeAppointmentsFragment.setArguments(bundle);
-        return activeAppointmentsFragment;
+    public static ActiveAppointmentsFragment newInstance() {
+        return new ActiveAppointmentsFragment();
     }
 
     @Override
@@ -176,7 +165,7 @@ public class ActiveAppointmentsFragment extends Fragment implements AppointmentL
 
 
     public void setFilteredData(MyAppointmentsDataModel myAppointmentsDataModel) {
-
+        viewRights= myAppointmentsDataModel.getViewRights();
         if (!myAppointmentsDataModel.getAppointmentPatientData().isEmpty()) {
             recyclerView.setVisibility(View.VISIBLE);
             emptyListView.setVisibility(View.GONE);

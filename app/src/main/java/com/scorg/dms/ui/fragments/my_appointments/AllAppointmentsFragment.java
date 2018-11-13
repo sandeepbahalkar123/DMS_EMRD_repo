@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.GravityCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -97,20 +96,10 @@ public class AllAppointmentsFragment extends Fragment implements AppointmentList
             }
         });
 
-        mUserSelectedDate = getArguments().getString(DMSConstants.DATE);
-        MyAppointmentsDataModel myAppointmentsDataModel = getArguments().getParcelable(APPOINTMENT_DATA);
-        viewRights = (ViewRights) getArguments().getSerializable(VIEW_RIGHTS_DETAILS);
-        setFilteredData(myAppointmentsDataModel);
     }
 
-    public static AllAppointmentsFragment newInstance(MyAppointmentsDataModel myAppointmentsDataModel, String mDateSelectedByUser,ViewRights viewRights) {
-        AllAppointmentsFragment allAppointmentsFragment = new AllAppointmentsFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString(DMSConstants.DATE, mDateSelectedByUser);
-        bundle.putParcelable(APPOINTMENT_DATA, myAppointmentsDataModel);
-        bundle.putSerializable(VIEW_RIGHTS_DETAILS, viewRights);
-        allAppointmentsFragment.setArguments(bundle);
-        return allAppointmentsFragment;
+    public static AllAppointmentsFragment newInstance() {
+        return new AllAppointmentsFragment();
     }
 
     @Override
@@ -169,15 +158,16 @@ public class AllAppointmentsFragment extends Fragment implements AppointmentList
         switch (view.getId()) {
             case R.id.rightFab:
                 MyAppointmentsActivity activity = (MyAppointmentsActivity) getActivity();
-               // activity.getActivityDrawerLayout().openDrawer(GravityCompat.END);
+                // activity.getActivityDrawerLayout().openDrawer(GravityCompat.END);
                 break;
         }
     }
 
 
     public void setFilteredData(MyAppointmentsDataModel myAppointmentsDataModel) {
-
+        viewRights= myAppointmentsDataModel.getViewRights();
         if (!myAppointmentsDataModel.getAppointmentPatientData().isEmpty()) {
+
             recyclerView.setVisibility(View.VISIBLE);
             emptyListView.setVisibility(View.GONE);
 

@@ -11,7 +11,6 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.Html;
@@ -85,14 +84,13 @@ public class MyAppointmentsActivity extends BaseActivity implements HelperRespon
 
 
     private Context mContext;
-    private MyAppointmentsFragment mMyAppointmentsFragment;
+
     private AppointmentHelper mAppointmentHelper;
-    private String month;
-    private String mYear;
+
     private MyAppointmentsBaseModel myAppointmentsBaseMainModel;
     private long mClickedPhoneNumber;
     private String mDateSelectedByUser = "";
-    public static final int CLOSE_APPOINTMENT_ACTIVITY_AFTER_BOOK_APPOINTMENT = 666;
+
     public ViewRights viewRights;
     String[] mFragmentTitleList = new String[2];
     ActiveAppointmentsFragment activeAppointmentsFragment;
@@ -105,12 +103,13 @@ public class MyAppointmentsActivity extends BaseActivity implements HelperRespon
         ButterKnife.bind(this);
         findViewById(R.id.toolbar).setBackgroundColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         findViewById(R.id.tabs).setBackgroundColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
-        initialize();
+
         ButterKnife.bind(this);
         mFragmentTitleList[0] = getString(R.string.active_appointmets);
         mFragmentTitleList[1] = getString(R.string.all_appointments);
-
-       // setupViewPager(viewpager, new MyAppointmentsDataModel(), viewRights);
+        initialize();
+        setupViewPager(viewpager);
+        tabs.setupWithViewPager(viewpager);
 
 
     }
@@ -129,10 +128,10 @@ public class MyAppointmentsActivity extends BaseActivity implements HelperRespon
 
     }
 
-    private void setupViewPager(ViewPager viewPager, MyAppointmentsDataModel myAppointmentsDataModel, ViewRights viewRights) {
+    private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        activeAppointmentsFragment = ActiveAppointmentsFragment.newInstance(myAppointmentsDataModel, mDateSelectedByUser, viewRights);
-        allAppointmentsFragment = AllAppointmentsFragment.newInstance(myAppointmentsDataModel, mDateSelectedByUser, viewRights);
+        activeAppointmentsFragment = ActiveAppointmentsFragment.newInstance();
+        allAppointmentsFragment = AllAppointmentsFragment.newInstance();
         adapter.addFragment(activeAppointmentsFragment, getString(R.string.active_appointmets));
         adapter.addFragment(allAppointmentsFragment, getString(R.string.all_appointments));
         viewPager.setAdapter(adapter);
@@ -146,8 +145,7 @@ public class MyAppointmentsActivity extends BaseActivity implements HelperRespon
         //Set Date in Required Format i.e 13thJuly'18
         dateTextview.setVisibility(View.VISIBLE);
 
-        month = CommonMethods.getCurrentDate("MM");
-        mYear = CommonMethods.getCurrentDate("yyyy");
+
         String day = CommonMethods.getCurrentDate("dd");
         mDateSelectedByUser = CommonMethods.getCurrentDate(DMSConstants.DATE_PATTERN.d_M_YYYY);
         String toDisplay = day + "<sup>" + CommonMethods.getSuffixForNumber(Integer.parseInt(day)) + "</sup> " + CommonMethods.getCurrentDate("MMM'' yy");
@@ -172,19 +170,9 @@ public class MyAppointmentsActivity extends BaseActivity implements HelperRespon
                     MyAppointmentsDataModel myAppointmentsDM = myAppointmentsBaseMainModel.getMyAppointmentsDataModel();
                     viewRights = myAppointmentsDM.getViewRights();
                     myAppointmentsDM.setAppointmentPatientData(myAppointmentsBaseMainModel.getMyAppointmentsDataModel().getAppointmentPatientData());
+                    activeAppointmentsFragment.setFilteredData(myAppointmentsDM);
+                    allAppointmentsFragment.setFilteredData(myAppointmentsDM);
 
-                    setupViewPager(viewpager, myAppointmentsDM, viewRights);
-                    tabs.setupWithViewPager(viewpager);
-//                    mMyAppointmentsFragment = MyAppointmentsFragment.newInstance(myAppointmentsDM, mDateSelectedByUser, myAppointmentsBaseMainModel.getMyAppointmentsDataModel().getViewRights());
-//                    getSupportFragmentManager().beginTransaction().replace(R.id.viewContainer, mMyAppointmentsFragment).commit();
-                    Bundle bundle = new Bundle();
-                    bundle.putParcelable(DMSConstants.APPOINTMENT_DATA, myAppointmentsBaseMainModel.getMyAppointmentsDataModel());
-                    bundle.putSerializable(DMSConstants.VIEW_RIGHTS_DETAILS, myAppointmentsBaseMainModel.getMyAppointmentsDataModel().getViewRights());
-
-//                    if (emptyListView.getVisibility()==View.VISIBLE){
-//                        emptyListView.setVisibility(View.GONE);
-//                        imgNoRecordFound.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
-//                    }
                 }
             }
         }
@@ -301,16 +289,10 @@ public class MyAppointmentsActivity extends BaseActivity implements HelperRespon
         mDateSelectedByUser = dayOfMonth + "-" + monthOfYearToShow + "-" + year;
         Log.e("mDateSelectedByUser", "" + mDateSelectedByUser);
         dateTextview.setVisibility(View.VISIBLE);
-        String timeToShow = CommonMethods.formatDateTime(dayOfMonth + "-" + monthOfYearToShow + "-" + year, DMSConstants.DATE_PATTERN.MMM_YY,
-                DMSConstants.DATE_PATTERN.DD_MM_YYYY, DMSConstants.DATE).toLowerCase();
-        String[] timeToShowSpilt = timeToShow.split(",");
-        month = timeToShowSpilt[0].substring(0, 1).toUpperCase() + timeToShowSpilt[0].substring(1);
-        mYear = timeToShowSpilt.length == 2 ? timeToShowSpilt[1] : "";
         Date date = CommonMethods.convertStringToDate(dayOfMonth + "-" + monthOfYearToShow + "-" + year, DMSConstants.DATE_PATTERN.DD_MM_YYYY);
         Log.e("selected date", "" + date);
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
-
         String toDisplay = cal.get(Calendar.DAY_OF_MONTH) + "<sup>" + CommonMethods.getSuffixForNumber(cal.get(Calendar.DAY_OF_MONTH)) + "</sup> " + CommonMethods.getFormattedDate(monthOfYearToShow + " " + year, "MM yyyy", "MMM'' yy");
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
