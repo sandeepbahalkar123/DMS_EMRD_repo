@@ -149,15 +149,12 @@ public class DashboardAppointmentListAdapter extends RecyclerView.Adapter<Dashbo
             @Override
             public void onClick(View view) {
                 if (groupHeader.isArchived()) {
-
                     onItemClickListener.onPatientListItemClick(groupHeader);
                 } else {
                     CommonMethods.showErrorDialog(_context.getString(R.string.patient_not_having_record), _context, false, new ErrorDialogCallback() {
                         @Override
                         public void ok() {
-
                         }
-
                         @Override
                         public void retry() {
 

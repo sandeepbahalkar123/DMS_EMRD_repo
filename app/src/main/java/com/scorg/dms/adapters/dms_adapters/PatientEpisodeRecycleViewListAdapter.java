@@ -5,7 +5,6 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -122,69 +121,59 @@ public class PatientEpisodeRecycleViewListAdapter extends RecyclerView.Adapter<P
 
         //--------------------
 
-        childViewHolder.rowLay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onPatientListener.onEpisodeListItemClick(childElement);
-            }
-        });
 
 
 
-
-
-        if (!viewRights.getIsAllFileAccessible()) { /// case 1
-            Log.e("imageViewRights","Case1");
-            childViewHolder.imageViewRights.setVisibility(View.VISIBLE);
-        } else if (viewRights.getIsRequestForAll() && !childElement.IsView()) {   //// case 2
-            Log.e("imageViewRights","Case2");
-            childViewHolder.imageViewRights.setVisibility(View.VISIBLE);
-        }else if (!viewRights.getAllowOnlyPrimaryFiles() && !childElement.IsPrimary()) { /// case 3
-            Log.e("imageViewRights","Case3");
-
-            childViewHolder.imageViewRights.setVisibility(View.VISIBLE);
-        }else if(viewRights.getIsOneFileIsPrimary()&&
-                viewRights.getPrimaryFileTypeSetting().contains(childElement.getFileType())){  /// case 4
-            Log.e("imageViewRights","Case4");
-
-            childViewHolder.imageViewRights.setVisibility(View.VISIBLE);
-        }else {
-            Log.e("imageViewRights","else");
+        /// case 1
+        if (viewRights.getIsAllFileAccessible()) {
             childViewHolder.imageViewRights.setVisibility(View.GONE);
+            childViewHolder.rowLay.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onPatientListener.onEpisodeListItemClick(childElement);
+                }
+            });
+        } else {
+            childViewHolder.imageViewRights.setVisibility(View.VISIBLE);
         }
 
+        //// case 2
+        if (viewRights.getIsRequestForAll() && !childElement.IsView()) {
+            childViewHolder.imageViewRights.setVisibility(View.VISIBLE);
+        } else {
+            childViewHolder.imageViewRights.setVisibility(View.GONE);
+            childViewHolder.rowLay.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onPatientListener.onEpisodeListItemClick(childElement);
+                }
+            });
+        }
+        /// case 3
+        if (viewRights.getAllowOnlyPrimaryFiles() && childElement.IsPrimary()) {
+            childViewHolder.imageViewRights.setVisibility(View.GONE);
+            childViewHolder.rowLay.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onPatientListener.onEpisodeListItemClick(childElement);
+                }
+            });
+        } else {
+            childViewHolder.imageViewRights.setVisibility(View.VISIBLE);
+        }
 
-
-
-
-
-//        /// case 1
-//        if (viewRights.getIsAllFileAccessible()) {
-//
-//            childViewHolder.imageViewRights.setVisibility(View.GONE);
-//        } else {
-//            childViewHolder.imageViewRights.setVisibility(View.VISIBLE);
-//        }
-//
-//        //// case 2
-//        if (viewRights.getIsRequestForAll() && !childElement.IsView()) {
-//            childViewHolder.imageViewRights.setVisibility(View.VISIBLE);
-//        } else {
-//            childViewHolder.imageViewRights.setVisibility(View.GONE);
-//        }
-//            /// case 3
-//        if (viewRights.getAllowOnlyPrimaryFiles() && childElement.IsPrimary()) {
-//            childViewHolder.imageViewRights.setVisibility(View.GONE);
-//        } else {
-//            childViewHolder.imageViewRights.setVisibility(View.VISIBLE);
-//        }
-//
-//            /// case 4
-//        if(viewRights.getIsOneFileIsPrimary()&& viewRights.getPrimaryFileTypeSetting().contains(childElement.getFileType())){
-//            childViewHolder.imageViewRights.setVisibility(View.VISIBLE);
-//        }else{
-//            childViewHolder.imageViewRights.setVisibility(View.GONE);
-//        }
+        /// case 4
+        if (viewRights.getIsOneFileIsPrimary() && viewRights.getPrimaryFileTypeSetting().contains(childElement.getFileType())) {
+            childViewHolder.imageViewRights.setVisibility(View.VISIBLE);
+        } else {
+            childViewHolder.imageViewRights.setVisibility(View.GONE);
+            childViewHolder.rowLay.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onPatientListener.onEpisodeListItemClick(childElement);
+                }
+            });
+        }
 
         /// case 5 /// Uncomment this when IsAppointment parameter get from api
 //
@@ -194,6 +183,8 @@ public class PatientEpisodeRecycleViewListAdapter extends RecyclerView.Adapter<P
 //            childViewHolder.imageViewRights.setVisibility(View.VISIBLE);
 //        }
     }
+
+
 
     @Override
     public int getItemCount() {

@@ -66,35 +66,7 @@
                             tools:ignore="RtlSymmetry"
                             tools:text="ID: 23456" />
 
-                        <TextView
-                            android:id="@+id/patientAppointmentsCode"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/roboto_medium"
-                            android:textColor="@color/green"
-                            android:layout_marginStart="@dimen/dp5"
-                            android:layout_marginLeft="@dimen/dp5"
-                            android:textSize="@dimen/sp13"
-                            tools:ignore="RtlSymmetry"
-                            tools:text="0" />
                     </LinearLayout>
-
-
-                    <!--<TextView-->
-                        <!--android:id="@+id/patientIdTextView"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:layout_centerVertical="true"-->
-                        <!--android:layout_toEndOf="@id/bluelineImageView"-->
-                        <!--android:layout_toRightOf="@id/bluelineImageView"-->
-                        <!--android:fontFamily="@font/roboto_medium"-->
-                        <!--android:paddingLeft="@dimen/dp13"-->
-                        <!--android:paddingStart="@dimen/dp13"-->
-                        <!--android:textColor="@color/black"-->
-                        <!--android:textSize="@dimen/sp13"-->
-                        <!--tools:ignore="RtlSymmetry"-->
-                        <!--tools:text="ID: 23456" />-->
-
 
                     <TextView
                         android:id="@+id/appointmentTime"
@@ -111,22 +83,6 @@
                         android:textSize="@dimen/sp12"
                         android:visibility="gone" />
 
-                    <!--<TextView-->
-                        <!--android:id="@+id/appointmentTime"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:layout_alignParentEnd="true"-->
-                        <!--android:layout_alignParentRight="true"-->
-                        <!--android:layout_marginEnd="@dimen/dp16"-->
-                        <!--android:layout_marginRight="@dimen/dp16"-->
-                        <!--android:fontFamily="@font/roboto_bold"-->
-                        <!--android:gravity="center"-->
-                        <!--android:padding="@dimen/dp5"-->
-                        <!--android:textColor="@color/white"-->
-                        <!--android:textSize="@dimen/sp14"-->
-                        <!--android:visibility="gone"-->
-                        <!--tools:text="03:20 pm"-->
-                        <!--tools:visibility="visible" />-->
 
                 </RelativeLayout>
 

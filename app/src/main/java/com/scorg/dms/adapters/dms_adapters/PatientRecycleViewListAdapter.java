@@ -63,7 +63,6 @@ public class PatientRecycleViewListAdapter extends RecyclerView.Adapter<PatientR
     public GroupViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_patient_list_header, parent, false);
-
         return new GroupViewHolder(itemView);
     }
 
@@ -147,17 +146,30 @@ public class PatientRecycleViewListAdapter extends RecyclerView.Adapter<PatientR
                         }
                     });
                 }
-
-
             }
         });
 
         groupViewHolder.episodeList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SearchResult groupHeader = _originalListDataHeader.get(position);
 
-                onPatientListener.onClickedOfEpisodeListButton(groupHeader);
+                if (groupHeader.isArchived()) {
+                    SearchResult groupHeader = _originalListDataHeader.get(position);
+                    onPatientListener.onClickedOfEpisodeListButton(groupHeader);
+                } else {
+                    CommonMethods.showErrorDialog(_context.getString(R.string.patient_not_having_record), _context, false, new ErrorDialogCallback() {
+                        @Override
+                        public void ok() {
+
+                        }
+
+                        @Override
+                        public void retry() {
+
+                        }
+                    });
+                }
+
             }
         });
 

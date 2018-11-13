@@ -299,12 +299,25 @@ public class AppointmentListAdapter
         holder.layoutAppointmentEpisode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SearchResult searchResult = new SearchResult();
-                searchResult.setPatientName(appointmentPatientDataObject.getPatientName());
-                searchResult.setPatientId(appointmentPatientDataObject.getPatientId());
-                searchResult.setPatientAddress(appointmentPatientDataObject.getPatAddress());
-                searchResult.setPatientImageURL(appointmentPatientDataObject.getPatientImageUrl());
-                onItemClickListener.onClickedOfEpisodeListButton(searchResult);
+                if (appointmentPatientDataObject.isArchived()) {
+                    SearchResult searchResult = new SearchResult();
+                    searchResult.setPatientName(appointmentPatientDataObject.getPatientName());
+                    searchResult.setPatientId(appointmentPatientDataObject.getPatientId());
+                    searchResult.setPatientAddress(appointmentPatientDataObject.getPatAddress());
+                    searchResult.setPatientImageURL(appointmentPatientDataObject.getPatientImageUrl());
+                    onItemClickListener.onClickedOfEpisodeListButton(searchResult);
+                } else {
+                    CommonMethods.showErrorDialog(mContext.getString(R.string.patient_not_having_record), mContext, false, new ErrorDialogCallback() {
+                        @Override
+                        public void ok() {
+                        }
+
+                        @Override
+                        public void retry() {
+                        }
+                    });
+                }
+
             }
         });
 
@@ -358,13 +371,11 @@ public class AppointmentListAdapter
 
     private void onPatDetailsClick(AppointmentPatientData appointmentPatientDataObject) {
 
-        Log.e("Name", appointmentPatientDataObject.getPatientName());
-        Log.e("isArchived---", "" + appointmentPatientDataObject.isArchived());
 
         if (appointmentPatientDataObject.isArchived()) {
             onItemClickListener.onClickOfPatientDetails(appointmentPatientDataObject);
         } else {
-            CommonMethods.showErrorDialog("NO Data Found", mContext, false, new ErrorDialogCallback() {
+            CommonMethods.showErrorDialog(mContext.getString(R.string.patient_not_having_record), mContext, false, new ErrorDialogCallback() {
                 @Override
                 public void ok() {
                 }

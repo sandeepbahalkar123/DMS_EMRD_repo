@@ -223,6 +223,8 @@
     <string name="label_patient_name">Patient Name</string>
     <string name="coma_space_seperator">,\u0020</string>
     <string name="search_label">Search\u0020</string>
-    <string name="patient_not_having_record">Patient is not having record</string>
+    <string name="patient_not_having_record">No records found for these patient.</string>
+    <string name="active_appointmets">Active</string>
+    <string name="all_appointments">View all</string>
 
 </resources>
