@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -65,6 +66,10 @@ public class PendingListFragment extends Fragment implements RequestListAdapter.
     Spinner clinicListSpinner;
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
+
+    @BindView(R.id.swipeToRefresh)
+    SwipeRefreshLayout swipeToRefresh;
+
     @BindView(R.id.bulletImageView)
     CircularImageView bulletImageView;
     @BindView(R.id.clinicNameTextView)
@@ -79,20 +84,23 @@ public class PendingListFragment extends Fragment implements RequestListAdapter.
 
     @BindView(R.id.imgNoRecordFound)
     ImageView imgNoRecordFound;
-
+    LinearLayoutManager linearlayoutManager;
     private Unbinder unbinder;
-
     private boolean mIsLoadMorePatients;
     private int currentPage = 1;
-
     private ArrayList<RequestedArchivedDetailList> requestedArchivedDetailList = new ArrayList<>();
     private RequestedArchivedMainListActivity mParentActivity;
     private RequestListAdapter mPendingListAdapter;
     private long mClickedPhoneNumber;
     private PendingApprovalHelper mPendingApprovalHelper;
-    LinearLayoutManager linearlayoutManager;
 
     public PendingListFragment() {
+    }
+
+    public static PendingListFragment newInstance(Bundle bundle) {
+        PendingListFragment fragment = new PendingListFragment();
+        fragment.setArguments(bundle);
+        return fragment;
     }
 
     @Override
@@ -122,6 +130,14 @@ public class PendingListFragment extends Fragment implements RequestListAdapter.
 
         mPendingApprovalHelper.doGetPendingApprovalData(1, true);
 
+        swipeToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                currentPage = 1;
+                mPendingApprovalHelper.doGetPendingApprovalData(currentPage, true);
+            }
+        });
+
         mRecyclerView.addOnScrollListener(new EndlessRecyclerViewScrollListener(linearlayoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
@@ -131,15 +147,6 @@ public class PendingListFragment extends Fragment implements RequestListAdapter.
                 }
             }
         });
-
-
-    }
-
-
-    public static PendingListFragment newInstance(Bundle bundle) {
-        PendingListFragment fragment = new PendingListFragment();
-        fragment.setArguments(bundle);
-        return fragment;
     }
 
     public void onRequestPermssionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -258,6 +265,7 @@ public class PendingListFragment extends Fragment implements RequestListAdapter.
 
     @Override
     public void onSuccess(String mOldDataTag, CustomResponse customResponse) {
+        swipeToRefresh.setRefreshing(false);
         switch (mOldDataTag) {
             case DMSConstants.TASK_PATIENT_LIST: {
                 ShowSearchResultResponseModel showSearchResultResponseModel = (ShowSearchResultResponseModel) customResponse;
@@ -292,6 +300,8 @@ public class PendingListFragment extends Fragment implements RequestListAdapter.
             case DMSConstants.TASK_PENDING_APPROVAL_LIST: {
                 if (customResponse != null) {
                     RequestedArchivedBaseModel requestedArchivedBaseModel = (RequestedArchivedBaseModel) customResponse;
+                    if (currentPage == 0)
+                        requestedArchivedDetailList.clear();
                     requestedArchivedDetailList.addAll(requestedArchivedBaseModel.getPendingApprovalDataModel().getRequestedArchivedDetailList());
                     mIsLoadMorePatients = requestedArchivedBaseModel.getPendingApprovalDataModel().isPaggination();
                     mPendingListAdapter.notifyDataSetChanged();
@@ -313,7 +323,7 @@ public class PendingListFragment extends Fragment implements RequestListAdapter.
                     CancelUnlockRequestResponseBaseModel cancelUnlockRequestResponseBaseModel = (CancelUnlockRequestResponseBaseModel) customResponse;
                     if (cancelUnlockRequestResponseBaseModel.getCommon().getStatusCode() == 200)
                         CommonMethods.showToast(getActivity(), "Successfully Canceled");
-                        DMSApplication.ISCancelRequest= true;
+                    DMSApplication.ISCancelRequest = true;
                     requestedArchivedDetailList.clear();
                     mPendingApprovalHelper.doGetPendingApprovalData(1, true);
                 }
@@ -339,24 +349,28 @@ public class PendingListFragment extends Fragment implements RequestListAdapter.
 
     @Override
     public void onParseError(String mOldDataTag, String errorMessage) {
-            showErrorDialog(errorMessage,false);
+        swipeToRefresh.setRefreshing(false);
+        showErrorDialog(errorMessage, false);
     }
 
     @Override
     public void onServerError(String mOldDataTag, String serverErrorMessage) {
-        showErrorDialog(serverErrorMessage,false);
+        swipeToRefresh.setRefreshing(false);
+        showErrorDialog(serverErrorMessage, false);
 
     }
 
     @Override
     public void onNoConnectionError(String mOldDataTag, String serverErrorMessage) {
-        showErrorDialog(serverErrorMessage,false);
+        swipeToRefresh.setRefreshing(false);
+        showErrorDialog(serverErrorMessage, false);
 
     }
 
     @Override
     public void onTimeOutError(String mOldDataTag, String timeOutErrorMessage) {
-        showErrorDialog(timeOutErrorMessage,true);
+        swipeToRefresh.setRefreshing(false);
+        showErrorDialog(timeOutErrorMessage, true);
 
 
     }

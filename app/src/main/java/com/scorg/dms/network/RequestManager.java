@@ -270,10 +270,15 @@ public class RequestManager extends ConnectRequest implements Connector, Request
 
         try {
 
+            if (error != null) {
+                if (error.getMessage() != null) {
+                    CommonMethods.Log(TAG, error.getMessage());
+                }
+            }
+
 //            VolleyError error1 = new VolleyError(new String(error.networkResponse.data));
 //            error = error1;
 //            CommonMethods.Log("Error Message", error.getMessage() + "\n error Localize message" + error.getLocalizedMessage());
-            CommonMethods.Log(TAG, "Goes into error response condition");
             if (error instanceof TimeoutError) {
                 // mConnectionListener.onResponse(ConnectionListener.TIMEOUT_ERROR, null, mOldDataTag);
                 if (mContext instanceof AppCompatActivity) {

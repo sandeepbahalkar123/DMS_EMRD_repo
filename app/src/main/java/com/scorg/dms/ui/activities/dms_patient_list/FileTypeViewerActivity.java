@@ -1205,7 +1205,6 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
         mMessageForFirstFile.setVisibility(View.GONE);
         mMessageForSecondFile.setVisibility(View.GONE);
         //---
-        mDrawer.closeDrawer(GravityCompat.END);
 
         if (value instanceof ArrowExpandIconTreeItemHolder.IconTreeItem) {
             ArrowExpandIconTreeItemHolder.IconTreeItem value1 = (ArrowExpandIconTreeItemHolder.IconTreeItem) value;
@@ -1215,6 +1214,7 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
             if (value1.objectData instanceof LstDocType) {
                 LstDocType clickedLstDocTypeElement = (LstDocType) value1.objectData;
                 doClickedOperationOnTreeItem(clickedLstDocTypeElement);
+                mDrawer.closeDrawer(GravityCompat.END);
             } else if (value1.objectData instanceof LstDateFileType) {
                 LstDateFileType clickedLstDocTypeElement = (LstDateFileType) value1.objectData;
                 LstDocType tempClickedLstDocTypeElement = new LstDocType();
@@ -1226,6 +1226,7 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
                 tempClickedLstDocTypeElement.setPermission(clickedLstDocTypeElement.getPermission());
                 tempClickedLstDocTypeElement.setConfidentialState(clickedLstDocTypeElement.getConfidentialState());
                 doClickedOperationOnTreeItem(tempClickedLstDocTypeElement);
+                mDrawer.closeDrawer(GravityCompat.END);
             } else if (value1.objectData instanceof LstOrderedDocType) {
                 LstOrderedDocType clickedLstDocTypeElement = (LstOrderedDocType) value1.objectData;
                 LstDocType tempClickedLstDocTypeElement = new LstDocType();
@@ -1237,6 +1238,7 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
 //                tempClickedLstDocTypeElement.setPermission(clickedLstDocTypeElement.getPermission());
                 tempClickedLstDocTypeElement.setConfidentialState(clickedLstDocTypeElement.getConfidentialState());
                 doClickedOperationOnTreeItem(tempClickedLstDocTypeElement);
+                mDrawer.closeDrawer(GravityCompat.END);
             }
         }
     }
@@ -1573,6 +1575,7 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
         TreeNode treeRoot = TreeNode.root();
         int confidentialState;
         int lstDocTypeChildLeftPadding = (int) (getResources().getDimension(R.dimen.dp50) / getResources().getDisplayMetrics().density);
+        int lstDateFolderTypeChildLeftPadding = (int) (getResources().getDimension(R.dimen.dp100) / getResources().getDisplayMetrics().density);
         int textColor = ContextCompat.getColor(this, R.color.black);
 
         List<ArchiveDatum> archiveData = fileTreeResponseData.getArchiveData();
@@ -1591,48 +1594,112 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
             if (archiveDatumObject.getFileType().equalsIgnoreCase(mPreviousClickedTreeElement.get(archiveDatumObject.getFileType())))
                 selectableHeaderHolder.setTreeLabelBold(true);
 
-            //---- For list lstDateFolderType loop
-            List<LstOrderedDocType> lstOrderedDocTypeList = archiveDatumObject.getLstOrderedDocTypes();
-            archiveCount = archiveCount + lstOrderedDocTypeList.size();
+            TreeNode archiveDatumObjectFolder;
 
-            int pageCount = 0;
-            for (int l = 0; l < lstOrderedDocTypeList.size(); l++) {
-                LstOrderedDocType lstOrderedDocType = lstOrderedDocTypeList.get(l);
-                pageCount += lstOrderedDocType.getPageCount();
+            String key = "";
+            if (archiveDatumObject.getDisplayKey() != null)
+                key = archiveDatumObject.getDisplayKey().toLowerCase();
+
+            if (key.contains("order")) {
+
+                //---- For list lstDateFolderType loop
+                List<LstOrderedDocType> lstOrderedDocTypeList = archiveDatumObject.getLstOrderedDocTypes();
+                archiveCount = archiveCount + lstOrderedDocTypeList.size();
+
+                // Label(pageCount)|NA
+                String dataToShow = archiveDatumObject.getFileType() + " (" + archiveDatumObject.getTotalArchiveDataLstOrderPageCount() + ")" + "|NA";
+                archiveDatumObjectFolder = new TreeNode(new ArrowExpandIconTreeItemHolder.IconTreeItem(R.string.ic_shopping_cart, dataToShow, archiveDatumObject, i))
+                        .setViewHolder(selectableHeaderHolder);
+
+                for (int l = 0; l < lstOrderedDocTypeList.size(); l++) {
+                    LstOrderedDocType lstOrderedDocType = lstOrderedDocTypeList.get(l);
+
+                    //-------NODE LstDateFolderType--------------
+                    // Label(pageCount)|id
+                    confidentialState = lstOrderedDocType.getConfidentialState();
+                    dataToShow = lstOrderedDocType.getDocumentType() + " (" + lstOrderedDocType.getPageCount() + ")" + "|NA";
+                    ArrowExpandSelectableHeaderHolder lstDateFolderTypeSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstDocTypeChildLeftPadding, false, confidentialState, false);
+                    lstDateFolderTypeSelectableHeaderHolder.setOnlyOneNodeExpanded(false);
+
+                    lstDateFolderTypeSelectableHeaderHolder.setNodeValueColor(textColor);
+
+                    //---- To bold clicked text in tree
+                    // if (lstDateFolderType.getDateFolderType().equalsIgnoreCase(mPreviousClickedTreeElement.get(i)))
+                    if (lstOrderedDocType.getDocumentType().equalsIgnoreCase(mPreviousClickedTreeElement.get(lstOrderedDocType.getRecordDetailId())))
+                        lstDateFolderTypeSelectableHeaderHolder.setTreeLabelBold(true);
+
+                    TreeNode lstDateFolderTypeObjectFolder = new TreeNode(new ArrowExpandIconTreeItemHolder.IconTreeItem(R.string.ic_shopping_cart, dataToShow, lstOrderedDocType, i))
+                            .setViewHolder(lstDateFolderTypeSelectableHeaderHolder);
+                    //---
+
+                    archiveDatumObjectFolder.addChildren(lstDateFolderTypeObjectFolder);
+                }
+            } else {
+
+                ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+                List<LstDocCategory> archiveDataLstDocCategoriesList = archiveDatumObject.getArchiveDataLstDocCategories();
+                //---- For list lstDateFolderType loop
+                archiveCount = archiveCount + archiveDataLstDocCategoriesList.size();
+
+                // Label(pageCount)|NA
+                String dataToShow = archiveDatumObject.getFileType() + " (" + archiveDatumObject.getTotalArchiveDataLstDocCategoriesPageCount() + ")" + "|NA";
+                archiveDatumObjectFolder = new TreeNode(new ArrowExpandIconTreeItemHolder.IconTreeItem(R.string.ic_shopping_cart, dataToShow, archiveDatumObject, i))
+                        .setViewHolder(selectableHeaderHolder);
+
+                if (archiveDataLstDocCategoriesList.isEmpty())
+                    archiveDatumObjectFolder.addChild(new TreeNode(new ArrowExpandIconTreeItemHolder.IconTreeItem(R.string.ic_shopping_cart, "File not found", "File not found", 0)).setViewHolder(new ArrowExpandSelectableHeaderHolder(this, false, lstDocTypeChildLeftPadding, false, 0, false)));
+
+                for (int l = 0; l < archiveDataLstDocCategoriesList.size(); l++) {
+                    LstDocCategory lstDocCategory = archiveDataLstDocCategoriesList.get(l);
+
+                    //-------NODE LstDateFolderType--------------
+                    // Label(pageCount)|id
+                    confidentialState = lstDocCategory.getConfidentialState();
+                    dataToShow = lstDocCategory.getCategoryName() + " (" + lstDocCategory.getPageCount() + ")" + "|NA";
+                    ArrowExpandSelectableHeaderHolder lstDateFolderTypeSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstDocTypeChildLeftPadding, true, confidentialState, false);
+                    lstDateFolderTypeSelectableHeaderHolder.setOnlyOneNodeExpanded(false);
+
+                    lstDateFolderTypeSelectableHeaderHolder.setNodeValueColor(textColor);
+
+                    //---- To bold clicked text in tree
+                    // if (lstDateFolderType.getDateFolderType().equalsIgnoreCase(mPreviousClickedTreeElement.get(i)))
+                    if (lstDocCategory.getCategoryName().equalsIgnoreCase(mPreviousClickedTreeElement.get(lstDocCategory.getCategoryName())))
+                        lstDateFolderTypeSelectableHeaderHolder.setTreeLabelBold(true);
+
+                    TreeNode lstDateFolderTypeObjectFolder = new TreeNode(new ArrowExpandIconTreeItemHolder.IconTreeItem(R.string.ic_shopping_cart, dataToShow, lstDocCategory, i))
+                            .setViewHolder(lstDateFolderTypeSelectableHeaderHolder);
+                    //---
+
+                    //--------------------
+
+                    //for lstDocTypes loop
+                    List<LstDocType> lstDocTypesCategoriesChildList = lstDocCategory.getLstDocTypes();
+                    for (int k = 0; k < lstDocTypesCategoriesChildList.size(); k++) {
+                        LstDocType lstDocTypeChild = lstDocTypesCategoriesChildList.get(k);
+
+                        // Label(pageCount)|id
+                        dataToShow = lstDocTypeChild.getTypeName() + " (" + lstDocTypeChild.getPageCount() + ")" + "|" + lstDocTypeChild.getTypeId();
+                        confidentialState = lstDocTypeChild.getConfidentialState();
+                        //-------
+                        ArrowExpandSelectableHeaderHolder lstDocTypeChildSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstDateFolderTypeChildLeftPadding, false, confidentialState, false);
+                        lstDocTypeChildSelectableHeaderHolder.setOnlyOneNodeExpanded(false);
+                        lstDocTypeChildSelectableHeaderHolder.setNodeValueColor(textColor);
+
+                        //---- To bold clicked text in tree
+                        // if (lstDocTypeChild.getTypeName().equalsIgnoreCase(mPreviousClickedTreeElement.get(i)))
+                        if (lstDocTypeChild.getTypeName().equalsIgnoreCase(mPreviousClickedTreeElement.get(lstDocTypeChild.getRecordDetailId())))
+                            lstDocTypeChildSelectableHeaderHolder.setTreeLabelBold(true);
+
+                        TreeNode lstDocTypeChildFolder = new TreeNode(new ArrowExpandIconTreeItemHolder.IconTreeItem(R.string.ic_shopping_cart, dataToShow, lstDocTypeChild, i))
+                                .setViewHolder(lstDocTypeChildSelectableHeaderHolder);
+                        //-------
+                        lstDateFolderTypeObjectFolder.addChildren(lstDocTypeChildFolder);
+                    }
+                    archiveDatumObjectFolder.addChildren(lstDateFolderTypeObjectFolder);
+                }
             }
 
-            // Label(pageCount)|NA
-            String dataToShow = archiveDatumObject.getFileType() + " (" + pageCount + ")" + "|NA";
-            TreeNode archiveDatumObjectFolder = new TreeNode(new ArrowExpandIconTreeItemHolder.IconTreeItem(R.string.ic_shopping_cart, dataToShow, archiveDatumObject, i))
-                    .setViewHolder(selectableHeaderHolder);
-
-            for (int l = 0; l < lstOrderedDocTypeList.size(); l++) {
-                LstOrderedDocType lstOrderedDocType = lstOrderedDocTypeList.get(l);
-
-                //-------NODE LstDateFolderType--------------
-                // Label(pageCount)|id
-                confidentialState = lstOrderedDocType.getConfidentialState();
-                dataToShow = lstOrderedDocType.getDocumentType() + " (" + lstOrderedDocType.getPageCount() + ")" + "|NA";
-                ArrowExpandSelectableHeaderHolder lstDateFolderTypeSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstDocTypeChildLeftPadding, false, confidentialState, false);
-                lstDateFolderTypeSelectableHeaderHolder.setOnlyOneNodeExpanded(false);
-
-                lstDateFolderTypeSelectableHeaderHolder.setNodeValueColor(textColor);
-
-                //---- To bold clicked text in tree
-                // if (lstDateFolderType.getDateFolderType().equalsIgnoreCase(mPreviousClickedTreeElement.get(i)))
-                if (lstOrderedDocType.getDocumentType().equalsIgnoreCase(mPreviousClickedTreeElement.get(lstOrderedDocType.getDocumentType())))
-                    lstDateFolderTypeSelectableHeaderHolder.setTreeLabelBold(true);
-
-                TreeNode lstDateFolderTypeObjectFolder = new TreeNode(new ArrowExpandIconTreeItemHolder.IconTreeItem(R.string.ic_shopping_cart, dataToShow, lstOrderedDocType, i))
-                        .setViewHolder(lstDateFolderTypeSelectableHeaderHolder);
-                //---
-
-                archiveDatumObjectFolder.addChildren(lstDateFolderTypeObjectFolder);
-            }
-
-
-            if (archiveDatumObject.getLstOrderedDocTypes().isEmpty())
-                archiveDatumObjectFolder.addChild(new TreeNode(new ArrowExpandIconTreeItemHolder.IconTreeItem(R.string.ic_shopping_cart, "File not found", "File not found", 0)).setViewHolder(new ArrowExpandSelectableHeaderHolder(this, false, lstDocTypeChildLeftPadding, false, 0, false)));
             treeRoot.addChildren(archiveDatumObjectFolder);
         }
 

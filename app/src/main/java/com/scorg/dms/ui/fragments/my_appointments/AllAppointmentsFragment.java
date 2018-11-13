@@ -1,11 +1,13 @@
 package com.scorg.dms.ui.fragments.my_appointments;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -50,6 +52,9 @@ public class AllAppointmentsFragment extends Fragment implements AppointmentList
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
 
+    @BindView(R.id.swipeToRefresh)
+    public SwipeRefreshLayout swipeToRefresh;
+
     @BindView(R.id.emptyListView)
     RelativeLayout emptyListView;
     @BindView(R.id.rightFab)
@@ -59,12 +64,9 @@ public class AllAppointmentsFragment extends Fragment implements AppointmentList
     ImageView imgNoRecordFound;
     Unbinder unbinder;
     private AppointmentListAdapter mAppointmentListAdapter;
-    private AppointmentHelper mAppointmentHelper;
 
-    private ArrayList<AppointmentPatientData> mAppointmentPatientData;
-    private String mUserSelectedDate;
-    private DMSPatientsHelper mPatientsHelper;
     ViewRights viewRights;
+    private OnFragmentInteraction onFragmentInteraction;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
@@ -93,6 +95,14 @@ public class AllAppointmentsFragment extends Fragment implements AppointmentList
                 if (mAppointmentListAdapter != null) {
                     mAppointmentListAdapter.getFilter().filter(s);
                 }
+            }
+        });
+
+        swipeToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                onFragmentInteraction.pullRefresh();
+                searchEditText.setText("");
             }
         });
 
@@ -165,6 +175,7 @@ public class AllAppointmentsFragment extends Fragment implements AppointmentList
 
 
     public void setFilteredData(MyAppointmentsDataModel myAppointmentsDataModel) {
+        swipeToRefresh.setRefreshing(false);
         viewRights= myAppointmentsDataModel.getViewRights();
         if (!myAppointmentsDataModel.getAppointmentPatientData().isEmpty()) {
 
@@ -182,11 +193,8 @@ public class AllAppointmentsFragment extends Fragment implements AppointmentList
             if (emptyListView.getVisibility() != View.VISIBLE)
                 emptyListView.setVisibility(View.VISIBLE);
             imgNoRecordFound.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
-
         }
-
     }
-
 
     @Override
     public void onClickedOfEpisodeListButton(SearchResult groupHeader) {
@@ -196,6 +204,17 @@ public class AllAppointmentsFragment extends Fragment implements AppointmentList
         bundle.putSerializable(VIEW_RIGHTS_DETAILS, viewRights);
         intent.putExtra(DMSConstants.BUNDLE, bundle);
         startActivity(intent);
+    }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnFragmentInteraction) {
+            onFragmentInteraction = (OnFragmentInteraction) context;
+        }
+    }
+
+    public interface OnFragmentInteraction {
+        void pullRefresh();
     }
 }

@@ -45,20 +45,17 @@ public class PatientSearchAutoCompleteTextViewAdapter extends ArrayAdapter<Patie
             view = inflater.inflate(R.layout.layout_custom_spinner_layout, parent, false);
         }
 
+        if (position < items.size()) {
+            final String names = items.get(position).getSearchValue().concat(" ").concat(items.get(position).getSearchType());
 
-        final String names = items.get(position).getSearchValue().toString().concat(" ").concat(items.get(position).getSearchType().toString());
-
-
-        if (names != null) {
-
-            final TextView lblName = (TextView) view.findViewById(R.id.custom_spinner_txt_view_Id);
+            final TextView lblName = view.findViewById(R.id.custom_spinner_txt_view_Id);
             if (lblName != null) {
 
                 String[] split = names.split(HARDCODED_STRING);
                 String textToShow = "\"" + split[0] + "\" " + split[1];
 
                 Spannable spanText = Spannable.Factory.getInstance().newSpannable(names);
-               // spanText.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, R.color.tagColor)), 0, (split[0].length() + 2), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                // spanText.setSpan(new ForegroundColorSpan(ContextCompat.getColor(context, R.color.tagColor)), 0, (split[0].length() + 2), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                 spanText.setSpan(new ForegroundColorSpan(Color.parseColor(DMSApplication.COLOR_PRIMARY)), 0, (split[0].length()), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                 lblName.setText(spanText);
 
@@ -70,8 +67,8 @@ public class PatientSearchAutoCompleteTextViewAdapter extends ArrayAdapter<Patie
                     }
                 });
             }
-
         }
+
         return view;
     }
 

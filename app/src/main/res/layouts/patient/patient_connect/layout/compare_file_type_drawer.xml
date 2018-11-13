@@ -721,7 +721,7 @@
 
                         <Spinner
                             android:id="@+id/archivedPreferenceSpinner"
-                            android:layout_width="@dimen/dp100"
+                            android:layout_width="@dimen/dp110"
                             android:layout_height="match_parent"
                             android:layout_gravity="center"
                             android:background="@drawable/shape_pref_bg"

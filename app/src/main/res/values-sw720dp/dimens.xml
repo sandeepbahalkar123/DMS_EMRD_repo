@@ -25,6 +25,7 @@
     <dimen name="dp11">17dp</dimen>
     <dimen name="dp3">5dp</dimen>
     <dimen name="dp100">150dp</dimen>
+    <dimen name="dp110">164dp</dimen>
     <dimen name="dp17">25dp</dimen>
     <dimen name="dp23">34dp</dimen>
     <dimen name="dp28">42dp</dimen>

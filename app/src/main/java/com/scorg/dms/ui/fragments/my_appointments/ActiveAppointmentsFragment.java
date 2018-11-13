@@ -1,12 +1,13 @@
 package com.scorg.dms.ui.fragments.my_appointments;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -38,18 +39,19 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
-import static com.scorg.dms.util.DMSConstants.APPOINTMENT_DATA;
 import static com.scorg.dms.util.DMSConstants.PATIENT_DETAILS;
 import static com.scorg.dms.util.DMSConstants.VIEW_RIGHTS_DETAILS;
 
 public class ActiveAppointmentsFragment extends Fragment implements AppointmentListAdapter.OnItemClickListener {
-
 
     @BindView(R.id.searchEditText)
     EditTextWithDeleteButton searchEditText;
 
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
+
+    @BindView(R.id.swipeToRefresh)
+    public SwipeRefreshLayout swipeToRefresh;
 
     @BindView(R.id.emptyListView)
     RelativeLayout emptyListView;
@@ -59,12 +61,16 @@ public class ActiveAppointmentsFragment extends Fragment implements AppointmentL
     @BindView(R.id.imgNoRecordFound)
     ImageView imgNoRecordFound;
     Unbinder unbinder;
+    ViewRights viewRights;
     private AppointmentListAdapter mAppointmentListAdapter;
     private AppointmentHelper mAppointmentHelper;
-
     private ArrayList<AppointmentPatientData> mAppointmentPatientData;
     private DMSPatientsHelper mPatientsHelper;
-    ViewRights viewRights;
+    private OnFragmentInteraction onFragmentInteraction;
+
+    public static ActiveAppointmentsFragment newInstance() {
+        return new ActiveAppointmentsFragment();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
@@ -96,10 +102,13 @@ public class ActiveAppointmentsFragment extends Fragment implements AppointmentL
             }
         });
 
-    }
-
-    public static ActiveAppointmentsFragment newInstance() {
-        return new ActiveAppointmentsFragment();
+        swipeToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                onFragmentInteraction.pullRefresh();
+                searchEditText.setText("");
+            }
+        });
     }
 
     @Override
@@ -165,7 +174,8 @@ public class ActiveAppointmentsFragment extends Fragment implements AppointmentL
 
 
     public void setFilteredData(MyAppointmentsDataModel myAppointmentsDataModel) {
-        viewRights= myAppointmentsDataModel.getViewRights();
+        swipeToRefresh.setRefreshing(false);
+        viewRights = myAppointmentsDataModel.getViewRights();
         if (!myAppointmentsDataModel.getAppointmentPatientData().isEmpty()) {
             recyclerView.setVisibility(View.VISIBLE);
             emptyListView.setVisibility(View.GONE);
@@ -173,9 +183,9 @@ public class ActiveAppointmentsFragment extends Fragment implements AppointmentL
             LinearLayoutManager linearlayoutManager = new LinearLayoutManager(this.getContext(), LinearLayoutManager.VERTICAL, false);
             recyclerView.setLayoutManager(linearlayoutManager);
             //list is sorted for Booked and Confirmed Status appointments
-            ArrayList<AppointmentPatientData> activeAppointmentPatientData = sortByActiveAppointmets( myAppointmentsDataModel.getAppointmentPatientData());
+            ArrayList<AppointmentPatientData> activeAppointmentPatientData = sortByActiveAppointmets(myAppointmentsDataModel.getAppointmentPatientData());
 
-            mAppointmentListAdapter = new AppointmentListAdapter(getActivity(),activeAppointmentPatientData, this);
+            mAppointmentListAdapter = new AppointmentListAdapter(getActivity(), activeAppointmentPatientData, this);
             recyclerView.setAdapter(mAppointmentListAdapter);
 
         } else {
@@ -187,11 +197,12 @@ public class ActiveAppointmentsFragment extends Fragment implements AppointmentL
         }
 
     }
-    private ArrayList<AppointmentPatientData> sortByActiveAppointmets(ArrayList<AppointmentPatientData> appointmentPatientData) {
-        ArrayList<AppointmentPatientData> filterList= new ArrayList<>();
-        for ( AppointmentPatientData patientData:appointmentPatientData){
 
-            if (patientData.getAppointmentStatus().equalsIgnoreCase(DMSConstants.APPOINTMENT_STATUS.BOOKED_STATUS)){
+    private ArrayList<AppointmentPatientData> sortByActiveAppointmets(ArrayList<AppointmentPatientData> appointmentPatientData) {
+        ArrayList<AppointmentPatientData> filterList = new ArrayList<>();
+        for (AppointmentPatientData patientData : appointmentPatientData) {
+
+            if (patientData.getAppointmentStatus().equalsIgnoreCase(DMSConstants.APPOINTMENT_STATUS.BOOKED_STATUS)) {
                 filterList.add(patientData);
             }
 
@@ -207,6 +218,17 @@ public class ActiveAppointmentsFragment extends Fragment implements AppointmentL
         bundle.putSerializable(VIEW_RIGHTS_DETAILS, viewRights);
         intent.putExtra(DMSConstants.BUNDLE, bundle);
         startActivity(intent);
+    }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnFragmentInteraction) {
+            onFragmentInteraction = (OnFragmentInteraction) context;
+        }
+    }
+
+    public interface OnFragmentInteraction {
+        void pullRefresh();
     }
 }
