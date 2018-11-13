@@ -31,6 +31,7 @@ public class ArchiveDatum {
 
     private int totalLstDateFolderTypePageCount = -1;
     private int totalArchiveDataLstDocCategoriesPageCount = -1;
+    private int totalArchiveDataLstOrderPageCount = -1;
 
 
     public String getFileType() {
@@ -79,6 +80,10 @@ public class ArchiveDatum {
         this.totalArchiveDataLstDocCategoriesPageCount = totalArchiveDataLstDocCategoriesPageCount;
     }
 
+    public void setTotalArchiveDataLstOrderPageCount(int totalArchiveDataLstOrderPageCount) {
+        this.totalArchiveDataLstOrderPageCount = totalArchiveDataLstOrderPageCount;
+    }
+
     public int getTotalArchiveDataLstDocCategoriesPageCount() {
         if (archiveDataLstDocCategories != null) {
             if (totalArchiveDataLstDocCategoriesPageCount == -1) {
@@ -92,6 +97,21 @@ public class ArchiveDatum {
         }
 
         return totalArchiveDataLstDocCategoriesPageCount;
+    }
+
+    public int getTotalArchiveDataLstOrderPageCount() {
+        if (lstOrderedDocTypes != null) {
+            if (totalArchiveDataLstOrderPageCount == -1) {
+                int count = 0;
+                for (LstOrderedDocType temp :
+                        lstOrderedDocTypes) {
+                    count = count + temp.getPageCount();
+                }
+                setTotalArchiveDataLstOrderPageCount(count);
+            }
+        }
+
+        return totalArchiveDataLstOrderPageCount;
     }
 
     public int getConfidentialState() {

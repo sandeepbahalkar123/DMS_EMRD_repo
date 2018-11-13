@@ -67,14 +67,14 @@ public class ArrowExpandSelectableHeaderHolder extends TreeNode.BaseNodeViewHold
         nodeSelector = (AppCompatCheckBox) view.findViewById(R.id.node_selector);
 
 
-        int[][] states = new int[][] {
-                new int[] { android.R.attr.state_enabled}, // enabled
-                new int[] {-android.R.attr.state_enabled}, // disabled
-                new int[] {-android.R.attr.state_checked}, // unchecked
-                new int[] { android.R.attr.state_pressed} // pressed
+        int[][] states = new int[][]{
+                new int[]{android.R.attr.state_enabled}, // enabled
+                new int[]{-android.R.attr.state_enabled}, // disabled
+                new int[]{-android.R.attr.state_checked}, // unchecked
+                new int[]{android.R.attr.state_pressed} // pressed
         };
 
-        int[] colors = new int[] {
+        int[] colors = new int[]{
                 Color.parseColor(DMSApplication.COLOR_PRIMARY),
                 Color.parseColor(DMSApplication.COLOR_PRIMARY),
                 Color.parseColor(DMSApplication.COLOR_PRIMARY),
@@ -107,7 +107,6 @@ public class ArrowExpandSelectableHeaderHolder extends TreeNode.BaseNodeViewHold
         }
 
 
-
         //arrowView.setPadding(20, 10, 10, 10);
         if (node.isLeaf()) {
             arrowView.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_tree_file));
@@ -124,27 +123,18 @@ public class ArrowExpandSelectableHeaderHolder extends TreeNode.BaseNodeViewHold
             }
         });
 
-        arrowView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (isOnlyOneNodeExpanded()) {
-                    tView.toggleNode(node, isOnlyOneNodeExpanded());
+//        arrowView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                tView.toggleNode(node, isOnlyOneNodeExpanded());
+//            }
+//        });
 
-                } else {
-                    tView.toggleNode(node, isOnlyOneNodeExpanded());
-                }
-            }
-        });
         if (istViewClickRequired) {
-            tvValue.setOnClickListener(new View.OnClickListener() {
+            tvValue.getRootView().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (isOnlyOneNodeExpanded()) {
-                        tView.toggleNode(node, isOnlyOneNodeExpanded());
-
-                    } else {
-                        tView.toggleNode(node, isOnlyOneNodeExpanded());
-                    }
+                    tView.toggleNode(node, isOnlyOneNodeExpanded());
                 }
             });
 
@@ -258,16 +248,15 @@ public class ArrowExpandSelectableHeaderHolder extends TreeNode.BaseNodeViewHold
         isOnlyOneNodeExpanded = expandedOrCollapsed;
     }
 
-
-    public interface ArrowExpandSelectableHeaderHolderLockIconClickListener {
-        void onLockIconClick(Object value, boolean isLeaf);
-    }
-
-
     public void setCheckBoxColor(CheckBox checkBox, int checkedColor, int uncheckedColor) {
         int states[][] = {{android.R.attr.state_checked}, {}};
         int colors[] = {checkedColor, uncheckedColor};
         CompoundButtonCompat.setButtonTintList(checkBox, new
                 ColorStateList(states, colors));
+    }
+
+
+    public interface ArrowExpandSelectableHeaderHolderLockIconClickListener {
+        void onLockIconClick(Object value, boolean isLeaf);
     }
 }

@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -67,6 +68,9 @@ public class AllRequestListFragment extends Fragment implements RequestListAdapt
     @BindView(R.id.hospitalDetailsLinearLayout)
     RelativeLayout hospitalDetailsLinearLayout;
 
+    @BindView(R.id.swipeToRefresh)
+    SwipeRefreshLayout swipeToRefresh;
+
     @BindView(R.id.noRecords)
     LinearLayout noRecords;
 
@@ -113,6 +117,14 @@ public class AllRequestListFragment extends Fragment implements RequestListAdapt
         mRecyclerView.setAdapter(mPendingListAdapter);
 
         mPendingApprovalHelper.doGetPendingApprovalData(1, false);
+
+        swipeToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                currentPage = 1;
+                mPendingApprovalHelper.doGetPendingApprovalData(currentPage, true);
+            }
+        });
 
         mRecyclerView.addOnScrollListener(new EndlessRecyclerViewScrollListener(linearlayoutManager) {
             @Override
@@ -187,6 +199,7 @@ public class AllRequestListFragment extends Fragment implements RequestListAdapt
 
     @Override
     public void onSuccess(String mOldDataTag, CustomResponse customResponse) {
+        swipeToRefresh.setRefreshing(false);
         switch (mOldDataTag) {
             case DMSConstants.TASK_PATIENT_LIST: {
                 ShowSearchResultResponseModel showSearchResultResponseModel = (ShowSearchResultResponseModel) customResponse;
@@ -222,6 +235,10 @@ public class AllRequestListFragment extends Fragment implements RequestListAdapt
             case DMSConstants.TASK_PENDING_APPROVAL_LIST: {
                 if (customResponse != null) {
                     RequestedArchivedBaseModel requestedArchivedBaseModel = (RequestedArchivedBaseModel) customResponse;
+
+                    if (currentPage == 0)
+                        requestedArchivedDetailList.clear();
+
                     requestedArchivedDetailList.addAll(requestedArchivedBaseModel.getPendingApprovalDataModel().getRequestedArchivedDetailList());
                     mIsLoadMorePatients = requestedArchivedBaseModel.getPendingApprovalDataModel().isPaggination();
                     mPendingListAdapter.notifyDataSetChanged();
@@ -257,21 +274,25 @@ public class AllRequestListFragment extends Fragment implements RequestListAdapt
 
     @Override
     public void onParseError(String mOldDataTag, String errorMessage) {
+        swipeToRefresh.setRefreshing(false);
         showErrorDialog(errorMessage, false);
     }
 
     @Override
     public void onServerError(String mOldDataTag, String serverErrorMessage) {
+        swipeToRefresh.setRefreshing(false);
         showErrorDialog(serverErrorMessage, false);
     }
 
     @Override
     public void onNoConnectionError(String mOldDataTag, String serverErrorMessage) {
+        swipeToRefresh.setRefreshing(false);
         showErrorDialog(serverErrorMessage, false);
     }
 
     @Override
     public void onTimeOutError(String mOldDataTag, String timeOutErrorMessage) {
+        swipeToRefresh.setRefreshing(false);
         showErrorDialog(timeOutErrorMessage, true);
     }
 }
