@@ -34,7 +34,6 @@ import com.scorg.dms.singleton.DMSApplication;
 import com.scorg.dms.ui.activities.BaseActivity;
 import com.scorg.dms.ui.fragments.my_appointments.ActiveAppointmentsFragment;
 import com.scorg.dms.ui.fragments.my_appointments.AllAppointmentsFragment;
-import com.scorg.dms.ui.fragments.my_appointments.MyAppointmentsFragment;
 import com.scorg.dms.util.CommonMethods;
 import com.scorg.dms.util.DMSConstants;
 
@@ -108,8 +107,6 @@ public class MyAppointmentsActivity extends BaseActivity implements HelperRespon
         mFragmentTitleList[0] = getString(R.string.active_appointmets);
         mFragmentTitleList[1] = getString(R.string.all_appointments);
         initialize();
-        setupViewPager(viewpager);
-        tabs.setupWithViewPager(viewpager);
 
 
     }
@@ -118,14 +115,13 @@ public class MyAppointmentsActivity extends BaseActivity implements HelperRespon
         mContext = MyAppointmentsActivity.this;
         titleTextView.setText(getString(R.string.appointments));
         setDateInToolbar();
+        setupViewPager(viewpager);
+        tabs.setupWithViewPager(viewpager);
         //Call api for AppointmentData
         mAppointmentHelper = new AppointmentHelper(this, this);
         String date = CommonMethods.getCurrentDate(DMSConstants.DATE_PATTERN.UTC_PATTERN);
         System.out.println(date);
         mAppointmentHelper.doGetAppointmentData(date);
-
-        // imgNoRecordFound.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
-
     }
 
     private void setupViewPager(ViewPager viewPager) {
@@ -137,15 +133,10 @@ public class MyAppointmentsActivity extends BaseActivity implements HelperRespon
         viewPager.setAdapter(adapter);
     }
 
-//    public DrawerLayout getActivityDrawerLayout() {
-//        return drawerLayout;
-//    }
 
     private void setDateInToolbar() {
         //Set Date in Required Format i.e 13thJuly'18
         dateTextview.setVisibility(View.VISIBLE);
-
-
         String day = CommonMethods.getCurrentDate("dd");
         mDateSelectedByUser = CommonMethods.getCurrentDate(DMSConstants.DATE_PATTERN.d_M_YYYY);
         String toDisplay = day + "<sup>" + CommonMethods.getSuffixForNumber(Integer.parseInt(day)) + "</sup> " + CommonMethods.getCurrentDate("MMM'' yy");
@@ -172,7 +163,6 @@ public class MyAppointmentsActivity extends BaseActivity implements HelperRespon
                     myAppointmentsDM.setAppointmentPatientData(myAppointmentsBaseMainModel.getMyAppointmentsDataModel().getAppointmentPatientData());
                     activeAppointmentsFragment.setFilteredData(myAppointmentsDM);
                     allAppointmentsFragment.setFilteredData(myAppointmentsDM);
-
                 }
             }
         }
@@ -191,8 +181,6 @@ public class MyAppointmentsActivity extends BaseActivity implements HelperRespon
                 mAppointmentHelper.doGetAppointmentData(date);
             }
         });
-//        emptyListView.setVisibility(View.VISIBLE);
-//        imgNoRecordFound.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
     }
 
     @Override
@@ -239,16 +227,6 @@ public class MyAppointmentsActivity extends BaseActivity implements HelperRespon
                 break;
         }
     }
-
-//    @Override
-//    public void onBackPressed() {
-//        if (drawerLayout.isDrawerOpen(GravityCompat.END)) {
-//            drawerLayout.closeDrawer(GravityCompat.END);
-//        } else {
-//            super.onBackPressed();
-//        }
-//    }
-
 
     private ArrayList<AppointmentPatientData> getBookedAndConfirmed(ArrayList<AppointmentPatientData> mAppointmentPatientData) {
 

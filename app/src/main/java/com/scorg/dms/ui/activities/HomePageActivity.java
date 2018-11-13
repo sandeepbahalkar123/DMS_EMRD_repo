@@ -10,12 +10,14 @@ import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,11 +30,9 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.scorg.dms.R;
 import com.scorg.dms.adapters.dms_adapters.DashboardAppointmentListAdapter;
 import com.scorg.dms.helpers.dashboard.DashboardHelper;
-import com.scorg.dms.helpers.login.LoginHelper;
 import com.scorg.dms.interfaces.CustomResponse;
 import com.scorg.dms.interfaces.ErrorDialogCallback;
 import com.scorg.dms.interfaces.HelperResponse;
@@ -46,7 +46,6 @@ import com.scorg.dms.ui.activities.admitted_patient_list.AdmittedPatientsActivit
 import com.scorg.dms.ui.activities.dashboard.SettingsActivity;
 import com.scorg.dms.ui.activities.dashboard.SupportActivity;
 import com.scorg.dms.ui.activities.dms_patient_list.FileTypeViewerActivity;
-import com.scorg.dms.ui.activities.dms_patient_list.PatientDetailsActivity;
 import com.scorg.dms.ui.activities.dms_patient_list.PatientListActivity;
 import com.scorg.dms.ui.activities.my_appointments.MyAppointmentsActivity;
 import com.scorg.dms.ui.activities.pending_approval_list.RequestedArchivedMainListActivity;
@@ -54,13 +53,13 @@ import com.scorg.dms.ui.activities.waiting_list.WaitingMainListActivity;
 import com.scorg.dms.util.CommonMethods;
 import com.scorg.dms.util.DMSConstants;
 
+import java.util.ArrayList;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.RuntimePermissions;
-
-import static com.scorg.dms.util.DMSConstants.PATIENT_DETAILS;
 
 /**
  * Created by jeetal on 28/6/17.
@@ -183,13 +182,8 @@ public class HomePageActivity extends BaseActivity implements HelperResponse, Da
     @BindView(R.id.layoutTopBackground)
     LinearLayout layoutTopBackground;
 
-//    @BindView(R.id.layoutShowHide)
-//    LinearLayout layoutShowHide;
-//
-//
-//    @BindView(R.id.showHideDivider)
-//    TextView showHideDivider;
-
+    @BindView(R.id.tabsActiveVieAll)
+    TabLayout tabsActiveVieAll;
 
     @BindView(R.id.swipeToRefresh)
     SwipeRefreshLayout swipeToRefresh;
@@ -200,6 +194,8 @@ public class HomePageActivity extends BaseActivity implements HelperResponse, Da
     private DashboardDataModel mDashboardDataModel;
 
     private DashboardAppointmentListAdapter mDashBoardAppointmentListAdapter;
+
+    ArrayList<AppointmentPatientData> appointmentActivePatientData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -238,6 +234,83 @@ public class HomePageActivity extends BaseActivity implements HelperResponse, Da
                 mDashboardHelper.doGetDashboardResponse();
             }
         });
+        setupTabs();
+    }
+
+    private void setupTabs() {
+
+        float[] bottomLeftRadius = {getResources().getDimension(R.dimen.dp8), getResources().getDimension(R.dimen.dp8), 0, 0, 0, 0, getResources().getDimension(R.dimen.dp8), getResources().getDimension(R.dimen.dp8)};
+        float[] bottomRightRadius = {0, 0, getResources().getDimension(R.dimen.dp8), getResources().getDimension(R.dimen.dp8), getResources().getDimension(R.dimen.dp8), getResources().getDimension(R.dimen.dp8), 0, 0};
+
+        final GradientDrawable buttonBackgroundActiveSelected = new GradientDrawable();
+        buttonBackgroundActiveSelected.setShape(GradientDrawable.RECTANGLE);
+        buttonBackgroundActiveSelected.setColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
+        buttonBackgroundActiveSelected.setCornerRadii(bottomLeftRadius);
+
+        final GradientDrawable buttonBackgroundViewAllSelected = new GradientDrawable();
+        buttonBackgroundViewAllSelected.setShape(GradientDrawable.RECTANGLE);
+        buttonBackgroundViewAllSelected.setColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
+        buttonBackgroundViewAllSelected.setCornerRadii(bottomRightRadius);
+
+        final GradientDrawable buttonBackgroundActiveUnSelected = new GradientDrawable();
+        buttonBackgroundActiveUnSelected.setShape(GradientDrawable.RECTANGLE);
+        buttonBackgroundActiveUnSelected.setColor(getResources().getColor(R.color.white));
+        buttonBackgroundActiveUnSelected.setStroke(1, Color.parseColor(DMSApplication.COLOR_ACCENT));
+        buttonBackgroundActiveUnSelected.setCornerRadii(bottomLeftRadius);
+
+        final GradientDrawable buttonBackgroundViewAllUnSelected = new GradientDrawable();
+        buttonBackgroundViewAllUnSelected.setShape(GradientDrawable.RECTANGLE);
+        buttonBackgroundViewAllUnSelected.setColor(getResources().getColor(R.color.white));
+        buttonBackgroundViewAllUnSelected.setStroke(1, Color.parseColor(DMSApplication.COLOR_ACCENT));
+        buttonBackgroundViewAllUnSelected.setCornerRadii(bottomRightRadius);
+
+        tabsActiveVieAll.addTab(tabsActiveVieAll.newTab());
+        tabsActiveVieAll.addTab(tabsActiveVieAll.newTab());
+
+        LinearLayout tabActive = (LinearLayout) LayoutInflater.from(this).inflate(R.layout.custom_tab, null);
+        TextView textActive = tabActive.findViewById(R.id.textTab);
+        textActive.setText(getString(R.string.active_appointmets));
+        textActive.setTextColor(getResources().getColor(R.color.white));
+        tabActive.setBackground(buttonBackgroundActiveSelected);
+        tabsActiveVieAll.getTabAt(0).setCustomView(tabActive);
+
+        LinearLayout tabViewAll = (LinearLayout) LayoutInflater.from(this).inflate(R.layout.custom_tab, null);
+        TextView textViewAll = tabViewAll.findViewById(R.id.textTab);
+        textViewAll.setText(getString(R.string.all_appointments));
+        textViewAll.setTextColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
+        tabViewAll.setBackground(buttonBackgroundViewAllUnSelected);
+        tabsActiveVieAll.getTabAt(1).setCustomView(tabViewAll);
+
+        tabsActiveVieAll.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                if (tab.getPosition() == 0) {
+                    tab.getCustomView().setBackground(buttonBackgroundActiveSelected);
+                    setAppointmentAdapter(appointmentActivePatientData);
+                } else {
+                    tab.getCustomView().setBackground(buttonBackgroundViewAllSelected);
+                    setAppointmentAdapter(mDashboardDataModel.getAppointmentPatientDataList());
+                }
+                TextView textView = tab.getCustomView().findViewById(R.id.textTab);
+                textView.setTextColor(getResources().getColor(R.color.white));
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                if (tab.getPosition() == 0) {
+                    tab.getCustomView().setBackground(buttonBackgroundActiveUnSelected);
+                } else {
+                    tab.getCustomView().setBackground(buttonBackgroundViewAllUnSelected);
+                }
+                TextView textView = tab.getCustomView().findViewById(R.id.textTab);
+                textView.setTextColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
     }
 
     @Override
@@ -267,10 +340,6 @@ public class HomePageActivity extends BaseActivity implements HelperResponse, Da
         settingText.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         homeText.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         supportText.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
-
-//        viewShow.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
-//        viewHide.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
-//        showHideDivider.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         textHeaderTodayAppointment.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         pendingApprovalCount.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         totalPatientsCount.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
@@ -386,7 +455,6 @@ public class HomePageActivity extends BaseActivity implements HelperResponse, Da
                         admittedPatientCount.setText(mDashboardDataModel.getAdmittedPatientCount());
 
 
-
                         DMSPreferencesManager.putInt(DMSPreferencesManager.DMS_PREFERENCES_KEY.ARCHIVE_API_COUNT, mDashboardDataModel.getViewArchivedApiTakeCount(), mContext);
                         DMSPreferencesManager.putString(DMSPreferencesManager.DMS_PREFERENCES_KEY.COLOR_PRIMARY, mDashboardDataModel.getColorPrimary(), mContext);
                         DMSPreferencesManager.putString(DMSPreferencesManager.DMS_PREFERENCES_KEY.COLOR_DARK_PRIMARY, mDashboardDataModel.getColorPrimaryDark(), mContext);
@@ -412,10 +480,10 @@ public class HomePageActivity extends BaseActivity implements HelperResponse, Da
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                             getWindow().setStatusBarColor(Color.parseColor(DMSApplication.COLOR_DARK_PRIMARY));
                         }
-                        LinearLayoutManager linearlayoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
-                        recyclerView.setLayoutManager(linearlayoutManager);
-                        mDashBoardAppointmentListAdapter = new DashboardAppointmentListAdapter(mContext, mDashboardDataModel.getAppointmentPatientDataList(), this);
-                        recyclerView.setAdapter(mDashBoardAppointmentListAdapter);
+
+                        appointmentActivePatientData = getBookedAppointment(mDashboardDataModel.getAppointmentPatientDataList());
+                        setAppointmentAdapter(appointmentActivePatientData);
+
                         if (mDashboardDataModel.getAppointmentPatientDataList().size() <= 0) {
                             emptyListView.setVisibility(View.VISIBLE);
                         } else {
@@ -429,18 +497,23 @@ public class HomePageActivity extends BaseActivity implements HelperResponse, Da
                         admittedPatientCount.setText("0");
                         recyclerView.setVisibility(View.GONE);
                         emptyListView.setVisibility(View.VISIBLE);
-//                        viewShow.setClickable(false);
-//                        viewHide.setClickable(false);
+
                     }
                 } else {
                     recyclerView.setVisibility(View.GONE);
                     emptyListView.setVisibility(View.VISIBLE);
-//                    viewShow.setClickable(false);
-//                    viewHide.setClickable(false);
+
                 }
                 break;
         }
 
+    }
+
+    private void setAppointmentAdapter(ArrayList<AppointmentPatientData> appointmentPatientData) {
+        LinearLayoutManager linearlayoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
+        recyclerView.setLayoutManager(linearlayoutManager);
+        mDashBoardAppointmentListAdapter = new DashboardAppointmentListAdapter(mContext, appointmentPatientData, this);
+        recyclerView.setAdapter(mDashBoardAppointmentListAdapter);
     }
 
     private void setErrorContent() {
@@ -450,8 +523,6 @@ public class HomePageActivity extends BaseActivity implements HelperResponse, Da
         todayAppointmentsCount.setText("0");
         // waitingPatientCount.setText("0");
         admittedPatientCount.setText("0");
-//        viewShow.setClickable(false);
-//        viewHide.setClickable(false);
 
         if (mDrawer.isDrawerOpen(GravityCompat.START)) {
             Log.e("mDrawer", "open");
@@ -525,13 +596,13 @@ public class HomePageActivity extends BaseActivity implements HelperResponse, Da
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.layoutTodayAppointment:
-                if (mDashboardDataModel != null ) {
+                if (mDashboardDataModel != null) {
                     Intent myAppointmentsActivity = new Intent(this, MyAppointmentsActivity.class);
                     startActivity(myAppointmentsActivity);
                 }
                 break;
             case R.id.layoutAdmittedPatient:
-                if (mDashboardDataModel != null ) {
+                if (mDashboardDataModel != null) {
                     Intent admittedPatientsActivity = new Intent(this, AdmittedPatientsActivity.class);
                     startActivity(admittedPatientsActivity);
                 }
@@ -612,5 +683,19 @@ public class HomePageActivity extends BaseActivity implements HelperResponse, Da
         intent.putExtra(DMSConstants.DATA, extra);
         startActivity(intent);
     }
+
+
+    private ArrayList<AppointmentPatientData> getBookedAppointment(ArrayList<AppointmentPatientData> mAppointmentPatientData) {
+
+        ArrayList<AppointmentPatientData> mAppointListForBookAndConfirm = new ArrayList<>();
+        for (int i = 0; i < mAppointmentPatientData.size(); i++) {
+            String appointmentStatus = mAppointmentPatientData.get(i).getAppointmentStatus();
+            if (appointmentStatus.equalsIgnoreCase(DMSConstants.APPOINTMENT_STATUS.BOOKED_STATUS) /*|| appointmentStatus.equalsIgnoreCase(DMSConstants.APPOINTMENT_STATUS.CONFIRM_STATUS)*/) {
+                mAppointListForBookAndConfirm.add(mAppointmentPatientData.get(i));
+            }
+        }
+        return mAppointListForBookAndConfirm;
+    }
+
 
 }
