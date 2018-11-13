@@ -3,7 +3,6 @@ package com.scorg.dms.adapters.dms_adapters;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
@@ -53,10 +52,10 @@ public class DashboardAppointmentListAdapter extends RecyclerView.Adapter<Dashbo
 
     private String uhid;
 
-    public DashboardAppointmentListAdapter(Context context, List<AppointmentPatientData> searchResult,OnItemClickListener onItemClickListener) {
+    public DashboardAppointmentListAdapter(Context context, List<AppointmentPatientData> searchResult, OnItemClickListener onItemClickListener) {
         this._context = context;
         addNewItems(searchResult);
-        uhid = _context.getString(R.string.uhid);
+        uhid = DMSApplication.LABEL_UHID;
         this.onItemClickListener = onItemClickListener;
         buttonBackground = new GradientDrawable();
         buttonBackground.setShape(GradientDrawable.RECTANGLE);
@@ -101,8 +100,8 @@ public class DashboardAppointmentListAdapter extends RecyclerView.Adapter<Dashbo
             @Override
             public void onClick(View view) {
 
-                Log.e("getPatientId","--"+groupHeader.getPatientId());
-                SearchResult searchResult =new SearchResult();
+                Log.e("getPatientId", "--" + groupHeader.getPatientId());
+                SearchResult searchResult = new SearchResult();
                 searchResult.setPatientName(groupHeader.getPatientName());
                 searchResult.setPatientId(groupHeader.getPatientId());
                 searchResult.setPatientAddress(groupHeader.getPatAddress());
@@ -115,8 +114,7 @@ public class DashboardAppointmentListAdapter extends RecyclerView.Adapter<Dashbo
         if (appDate != null) {
             groupViewHolder.appointmentTime.setVisibility(View.VISIBLE);
             groupViewHolder.appointmentTime.setText(CommonMethods.formatDateTime(appDate, DMSConstants.DATE_PATTERN.hh_mm_a, DMSConstants.DATE_PATTERN.UTC_PATTERN, DMSConstants.TIME).toLowerCase());
-        }
-        else {
+        } else {
             groupViewHolder.appointmentTime.setVisibility(View.INVISIBLE);
         }
 
@@ -128,50 +126,51 @@ public class DashboardAppointmentListAdapter extends RecyclerView.Adapter<Dashbo
             groupViewHolder.appointmentStatus.setText(_context.getString(R.string.capitalcompleted));
             groupViewHolder.appointmentStatus.setTextColor(ContextCompat.getColor(_context, R.color.complete_color));
         } else if (groupHeader.getAppointmentStatus().contains(CONFIRM_STATUS)) {
-            groupViewHolder.appointmentStatus.setText( groupHeader.getAppointmentStatus());
+            groupViewHolder.appointmentStatus.setText(groupHeader.getAppointmentStatus());
             groupViewHolder.appointmentStatus.setTextColor(ContextCompat.getColor(_context, R.color.confirm_color));
         } else if (groupHeader.getAppointmentStatus().contains(CANCEL_STATUS)) {
-            groupViewHolder.appointmentStatus.setText( groupHeader.getAppointmentStatus());
+            groupViewHolder.appointmentStatus.setText(groupHeader.getAppointmentStatus());
             groupViewHolder.appointmentStatus.setTextColor(ContextCompat.getColor(_context, R.color.cancel_color));
         } else if (groupHeader.getAppointmentStatus().equals(NO_SHOW)) {
             groupViewHolder.appointmentStatus.setText(groupHeader.getAppointmentStatus());
             groupViewHolder.appointmentStatus.setTextColor(ContextCompat.getColor(_context, R.color.no_show_color));
         } else if (groupHeader.getAppointmentStatus().equals(OTHER)) {
-            groupViewHolder.appointmentStatus.setText( groupHeader.getAppointmentStatus());
+            groupViewHolder.appointmentStatus.setText(groupHeader.getAppointmentStatus());
             groupViewHolder.appointmentStatus.setTextColor(ContextCompat.getColor(_context, R.color.other_color));
         }
 
 
         String consultationType = groupHeader.getConsultationType();
-        if (!consultationType.equalsIgnoreCase("")){
+        if (!consultationType.equalsIgnoreCase("")) {
             groupViewHolder.appointmentConsultationType.setText(consultationType);
         }
 
-            groupViewHolder.cardView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (groupHeader.isArchived()) {
+        groupViewHolder.cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (groupHeader.isArchived()) {
+                    onItemClickListener.onPatientListItemClick(groupHeader);
+                } else {
+                    CommonMethods.showErrorDialog(_context.getString(R.string.patient_not_having_record), _context, false, new ErrorDialogCallback() {
+                        @Override
+                        public void ok() {
+                        }
+                        @Override
+                        public void retry() {
 
-                        onItemClickListener.onPatientListItemClick(groupHeader);
-                    }
-                    else {
-                        CommonMethods.showErrorDialog("NO Data Found", _context, false, new ErrorDialogCallback() {
-                            @Override
-                            public void ok() {
-
-                            }
-
-                            @Override
-                            public void retry() {
-
-                            }
-                        });
-                    }
-
+                        }
+                    });
                 }
-            });
 
-
+            }
+        });
+        groupViewHolder.layoutAppointmentCode.setVisibility(View.VISIBLE);
+//        if (groupHeader.getAppointmentCode()!=0) {
+//            groupViewHolder.layoutAppointmentCode.setVisibility(View.VISIBLE);
+//            groupViewHolder.patientAppointmentsCode.setText("" + groupHeader.getAppointmentCode());
+//       }
+        if(DMSApplication.APPOINTMENT_STATUS_URL.equalsIgnoreCase(""))
+            groupViewHolder.btnDone.setVisibility(View.INVISIBLE);
 
     }
 
@@ -199,8 +198,14 @@ public class DashboardAppointmentListAdapter extends RecyclerView.Adapter<Dashbo
         @BindView(R.id.appointmentTime)
         TextView appointmentTime;
 
+        @BindView(R.id.patientAppointmentsCode)
+        TextView patientAppointmentsCode;
+
         @BindView(R.id.cardView)
         LinearLayout cardView;
+
+        @BindView(R.id.layoutAppointmentCode)
+        LinearLayout layoutAppointmentCode;
 
 
         GroupViewHolder(View view) {
@@ -218,6 +223,7 @@ public class DashboardAppointmentListAdapter extends RecyclerView.Adapter<Dashbo
     public interface OnItemClickListener {
 
         void onClickedOfEpisodeListButton(SearchResult groupHeader);
+
         void onPatientListItemClick(AppointmentPatientData appointmentPatientData);
 
     }

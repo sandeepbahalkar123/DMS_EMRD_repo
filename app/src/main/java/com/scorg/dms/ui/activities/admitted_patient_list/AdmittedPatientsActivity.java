@@ -12,6 +12,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.text.Html;
 import android.text.Spanned;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -138,12 +139,12 @@ public class AdmittedPatientsActivity extends BaseActivity implements HelperResp
                     AdmittedPatientDataModel patientDataModel = admittedPatientBaseModel.getAdmittedPatientDataModel();
                     patientDataModel.setAdmittedPatientData(admittedPatientBaseModel.getAdmittedPatientDataModel().getAdmittedPatientData());
 
-                    mAdmittedPatientsFragment = AdmittedPatientsFragment.newInstance(patientDataModel, mDateSelectedByUser);
+                    mAdmittedPatientsFragment = AdmittedPatientsFragment.newInstance(patientDataModel, mDateSelectedByUser,admittedPatientBaseModel.getAdmittedPatientDataModel().getViewRights());
                     getSupportFragmentManager().beginTransaction().replace(R.id.viewContainer, mAdmittedPatientsFragment).commit();
 
                     Bundle bundle = new Bundle();
                     bundle.putParcelable(DMSConstants.ADMITTED_PATIENT_DATA, admittedPatientBaseModel.getAdmittedPatientDataModel());
-
+                    bundle.putSerializable(DMSConstants.VIEW_RIGHTS_DETAILS, admittedPatientBaseModel.getAdmittedPatientDataModel().getViewRights());
                     if (emptyListView.getVisibility()==View.VISIBLE){
                         emptyListView.setVisibility(View.GONE);
                         imgNoRecordFound.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
@@ -293,9 +294,12 @@ public class AdmittedPatientsActivity extends BaseActivity implements HelperResp
         if (monthOfYearToShow <= 9) {
             monthToSend = "0" + monthToSend;
         }
+        String dateToSend = CommonMethods.formatDateTime(dayOfMonth + "-" + monthToSend + "-" + year, DMSConstants.DATE_PATTERN.UTC_PATTERN,DMSConstants.DATE_PATTERN.DD_MM_YYYY,DMSConstants.DATE);
+
+        Log.e("selected dateToSend",""+dateToSend);
         //-----
 
-        admittedPatientHelper.doGetAdmittedData(dayOfMonth + "/" + monthToSend + "/" + year);
+        admittedPatientHelper.doGetAdmittedData(dateToSend);
     }
 }
 

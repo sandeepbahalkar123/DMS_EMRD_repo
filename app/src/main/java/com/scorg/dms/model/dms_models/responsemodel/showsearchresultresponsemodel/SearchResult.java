@@ -36,6 +36,12 @@ public class SearchResult implements Serializable {
     private String gender="";
 
 
+    @SerializedName("IsArchived")
+    @Expose
+    private boolean IsArchived;
+
+
+
     public String getPatientId() {
         return patientId;
     }
@@ -99,5 +105,13 @@ public class SearchResult implements Serializable {
 
     public void setGender(String gender) {
         this.gender = gender;
+    }
+
+    public boolean isArchived() {
+        return IsArchived;
+    }
+
+    public void setArchived(boolean archived) {
+        IsArchived = archived;
     }
 }

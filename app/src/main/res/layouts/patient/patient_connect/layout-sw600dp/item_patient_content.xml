@@ -55,11 +55,21 @@
                 android:fontFamily="@font/roboto_bold"
                 tools:text="@string/user_name" />
             <ImageView
+                android:id="@+id/imageViewRights"
                 android:layout_width="66px"
                 android:layout_height="48px"
                 android:layout_gravity="center"
                 android:layout_marginLeft="@dimen/dp10"
+                android:visibility="gone"
                 android:src="@drawable/view_rights"/>
+            <ImageView
+                android:id="@+id/imageViewTimer"
+                android:layout_width="66px"
+                android:layout_height="48px"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/dp10"
+                android:visibility="visible"
+                android:src="@drawable/view_rights_timer" />
 
         </LinearLayout>
         <LinearLayout
@@ -71,6 +81,7 @@
             android:paddingTop="@dimen/dp5">
 
             <TextView
+                android:id="@+id/labelDoctorName"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"

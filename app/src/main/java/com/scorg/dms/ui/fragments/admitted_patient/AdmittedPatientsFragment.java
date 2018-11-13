@@ -23,6 +23,7 @@ import com.scorg.dms.helpers.myappointments.AppointmentHelper;
 import com.scorg.dms.helpers.patient_list.DMSPatientsHelper;
 import com.scorg.dms.model.admitted_patient.AdmittedPatientData;
 import com.scorg.dms.model.admitted_patient.AdmittedPatientDataModel;
+import com.scorg.dms.model.dms_models.ViewRights;
 import com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemodel.SearchResult;
 import com.scorg.dms.model.my_appointments.AppointmentPatientData;
 import com.scorg.dms.model.my_appointments.MyAppointmentsDataModel;
@@ -43,6 +44,7 @@ import butterknife.Unbinder;
 
 import static com.scorg.dms.util.DMSConstants.ADMITTED_PATIENT_DATA;
 import static com.scorg.dms.util.DMSConstants.PATIENT_DETAILS;
+import static com.scorg.dms.util.DMSConstants.VIEW_RIGHTS_DETAILS;
 
 
 /**
@@ -72,6 +74,7 @@ public class AdmittedPatientsFragment extends Fragment implements AdmittedPatien
     private ArrayList<AppointmentPatientData> mAppointmentPatientData;
     private String mUserSelectedDate;
     private DMSPatientsHelper mPatientsHelper;
+    ViewRights viewRights;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
@@ -105,14 +108,16 @@ public class AdmittedPatientsFragment extends Fragment implements AdmittedPatien
 
         mUserSelectedDate = getArguments().getString(DMSConstants.DATE);
         AdmittedPatientDataModel myAppointmentsDataModel = getArguments().getParcelable(ADMITTED_PATIENT_DATA);
+        viewRights  = (ViewRights) getArguments().getSerializable(VIEW_RIGHTS_DETAILS);
         setFilteredData(myAppointmentsDataModel);
     }
 
-    public static AdmittedPatientsFragment newInstance(AdmittedPatientDataModel admittedPatientDataModel, String mDateSelectedByUser) {
+    public static AdmittedPatientsFragment newInstance(AdmittedPatientDataModel admittedPatientDataModel, String mDateSelectedByUser, ViewRights viewRights) {
         AdmittedPatientsFragment myAppointmentsFragment = new AdmittedPatientsFragment();
         Bundle bundle = new Bundle();
         bundle.putString(DMSConstants.DATE, mDateSelectedByUser);
         bundle.putParcelable(ADMITTED_PATIENT_DATA, admittedPatientDataModel);
+        bundle.putSerializable(VIEW_RIGHTS_DETAILS, viewRights);
         myAppointmentsFragment.setArguments(bundle);
         return myAppointmentsFragment;
     }
@@ -172,7 +177,7 @@ public class AdmittedPatientsFragment extends Fragment implements AdmittedPatien
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.rightFab:
-                MyAppointmentsActivity activity = (MyAppointmentsActivity) getActivity();
+                AdmittedPatientsActivity activity = (AdmittedPatientsActivity) getActivity();
                 activity.getActivityDrawerLayout().openDrawer(GravityCompat.END);
                 break;
         }
@@ -207,6 +212,7 @@ public class AdmittedPatientsFragment extends Fragment implements AdmittedPatien
         Intent intent = new Intent(getActivity(), PatientDetailsActivity.class);
         Bundle bundle = new Bundle();
         bundle.putSerializable(PATIENT_DETAILS, groupHeader);
+        bundle.putSerializable(VIEW_RIGHTS_DETAILS,viewRights);
         intent.putExtra(DMSConstants.BUNDLE, bundle);
         startActivity(intent);
 

@@ -15,7 +15,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import android.widget.Button;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.FrameLayout;
@@ -29,9 +28,9 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.scorg.dms.R;
+import com.scorg.dms.interfaces.ErrorDialogCallback;
 import com.scorg.dms.model.admitted_patient.AdmittedPatientData;
 import com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemodel.SearchResult;
-
 import com.scorg.dms.singleton.DMSApplication;
 import com.scorg.dms.ui.customesViews.CircularImageView;
 import com.scorg.dms.util.CommonMethods;
@@ -42,18 +41,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static com.scorg.dms.util.CommonMethods.toCamelCase;
-import static com.scorg.dms.util.DMSConstants.APPOINTMENT_STATUS.BOOKED_STATUS;
-import static com.scorg.dms.util.DMSConstants.APPOINTMENT_STATUS.CANCEL;
-import static com.scorg.dms.util.DMSConstants.APPOINTMENT_STATUS.COMPLETED;
-import static com.scorg.dms.util.DMSConstants.APPOINTMENT_STATUS.CONFIRM_STATUS;
-import static com.scorg.dms.util.DMSConstants.APPOINTMENT_STATUS.NO_SHOW;
-import static com.scorg.dms.util.DMSConstants.APPOINTMENT_STATUS.OTHER;
 
 
 public class AdmittedPatientsListAdapter
         extends RecyclerView.Adapter<AdmittedPatientsListAdapter.MyViewHolder> implements Filterable {
     private static final String TAG = "AdmittedPatientsListAdapter";
-    private final GradientDrawable buttonBackground;
+    //  private final GradientDrawable buttonBackground;
     private OnItemClickListener onItemClickListener;
     private Context mContext;
     private ArrayList<AdmittedPatientData> admittedPatientDataList;
@@ -67,10 +60,10 @@ public class AdmittedPatientsListAdapter
         this.admittedPatientDataList = new ArrayList<>();
         this.admittedPatientDataList.addAll(admittedPatientData);
         this.onItemClickListener = onItemClickListener;
-        buttonBackground = new GradientDrawable();
-        buttonBackground.setShape(GradientDrawable.RECTANGLE);
-        buttonBackground.setColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
-        buttonBackground.setCornerRadius(context.getResources().getDimension(R.dimen.dp5));
+//        buttonBackground = new GradientDrawable();
+//        buttonBackground.setShape(GradientDrawable.RECTANGLE);
+//        buttonBackground.setColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+//        buttonBackground.setCornerRadius(context.getResources().getDimension(R.dimen.dp5));
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
@@ -91,6 +84,7 @@ public class AdmittedPatientsListAdapter
         private TextView textBedNoHead;
         private TextView textNewPatient;
         private TextView patientPhoneNumber;
+
 
         private LinearLayout idAndDetailsLayout;
 
@@ -120,6 +114,7 @@ public class AdmittedPatientsListAdapter
             callIcon = (ImageView) convertView.findViewById(R.id.callIcon);
             viewLine1 = (View) convertView.findViewById(R.id.viewLine1);
             separatorView = (View) convertView.findViewById(R.id.separatorView);
+
         }
     }
 
@@ -154,7 +149,7 @@ public class AdmittedPatientsListAdapter
         holder.swipe_layout.setBackground(cardBackground);
         holder.bluelineImageView.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         holder.callIcon.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
-        holder.appointmentTime.setBackground(buttonBackground);
+        //   holder.appointmentTime.setBackground(buttonBackground);
         holder.patientGenderTextView.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         holder.patientPhoneNumber.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         holder.separatorView.setBackgroundColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
@@ -172,7 +167,7 @@ public class AdmittedPatientsListAdapter
         holder.textBedNo.setText(admittedPatientDataObject.getBedNo());
         //---- START: Setting of hospitalID or referecne ID, reference is IS high priority than hospitalID.-----
         String dataToShowInPatientID = String.valueOf(admittedPatientDataObject.getPatientId());
-        holder.patientIdTextView.setText(holder.patientIdTextView.getResources().getString(R.string.uhid) + " " + dataToShowInPatientID + "");
+        holder.patientIdTextView.setText(DMSApplication.LABEL_UHID + " " + dataToShowInPatientID + "");
         //---- END------
 
         if (admittedPatientDataObject.getSpannableString() != null) {
@@ -200,15 +195,15 @@ public class AdmittedPatientsListAdapter
             //---------------
             //Spannable condition for PatientId
             if (dataToShowInPatientID.toLowerCase().contains(admittedPatientDataObject.getSpannableString().toLowerCase())) {
-                holder.patientIdTextView.setText(doCreateSpannableData(mContext.getString(R.string.uhid) + " " + dataToShowInPatientID, admittedPatientDataObject.getSpannableString()));
+                holder.patientIdTextView.setText(doCreateSpannableData(DMSApplication.LABEL_UHID + " " + dataToShowInPatientID, admittedPatientDataObject.getSpannableString()));
             } else {
-                holder.patientIdTextView.setText(mContext.getString(R.string.uhid) + " " + dataToShowInPatientID);
+                holder.patientIdTextView.setText(DMSApplication.LABEL_UHID + " " + dataToShowInPatientID);
             }
             //---------------
         } else {
             holder.patientNameTextView.setText(patientName);
             holder.patientPhoneNumber.setText(admittedPatientDataObject.getContactNo());
-            holder.patientIdTextView.setText(mContext.getString(R.string.uhid) + " " + dataToShowInPatientID);
+            holder.patientIdTextView.setText(DMSApplication.LABEL_UHID + " " + dataToShowInPatientID);
         }
 
         //-----------
@@ -231,7 +226,7 @@ public class AdmittedPatientsListAdapter
         String appDate = admittedPatientDataObject.getAdmissionDate();
         if (appDate != null) {
             holder.appointmentTime.setVisibility(View.VISIBLE);
-            holder.appointmentTime.setText(CommonMethods.formatDateTime(appDate, DMSConstants.DATE_PATTERN.hh_mm_a, DMSConstants.DATE_PATTERN.UTC_PATTERN_2ND, DMSConstants.TIME).toLowerCase());
+            holder.appointmentTime.setText(CommonMethods.formatDateTime(appDate, DMSConstants.DATE_PATTERN.hh_mm_a, DMSConstants.DATE_PATTERN.UTC_PATTERN, DMSConstants.TIME).toLowerCase());
         }
         //-------
         TextDrawable textDrawable = CommonMethods.getTextDrawable(mContext, admittedPatientDataObject.getPatientName());
@@ -253,19 +248,45 @@ public class AdmittedPatientsListAdapter
         holder.layoutAppointmentEpisode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SearchResult searchResult = new SearchResult();
-                searchResult.setPatientName(admittedPatientDataObject.getPatientName());
-                searchResult.setPatientId(admittedPatientDataObject.getPatientId());
-                searchResult.setPatientAddress(admittedPatientDataObject.getPatAddress());
-                searchResult.setPatientImageURL(admittedPatientDataObject.getPatientImageUrl());
-                onItemClickListener.onClickedOfEpisodeListButton(searchResult);
+                if (admittedPatientDataObject.isArchived()) {
+                    SearchResult searchResult = new SearchResult();
+                    searchResult.setPatientName(admittedPatientDataObject.getPatientName());
+                    searchResult.setPatientId(admittedPatientDataObject.getPatientId());
+                    searchResult.setPatientAddress(admittedPatientDataObject.getPatAddress());
+                    searchResult.setPatientImageURL(admittedPatientDataObject.getPatientImageUrl());
+                    onItemClickListener.onClickedOfEpisodeListButton(searchResult);
+                } else {
+                    CommonMethods.showErrorDialog(mContext.getString(R.string.patient_not_having_record), mContext, false, new ErrorDialogCallback() {
+                        @Override
+                        public void ok() {
+                        }
+
+                        @Override
+                        public void retry() {
+                        }
+                    });
+                }
+
             }
         });
 
         holder.idAndDetailsLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onItemClickListener.onClickOfPatientDetails(admittedPatientDataObject);
+                if (admittedPatientDataObject.isArchived()) {
+                    onItemClickListener.onClickOfPatientDetails(admittedPatientDataObject);
+                } else {
+                    CommonMethods.showErrorDialog(mContext.getString(R.string.patient_not_having_record), mContext, false, new ErrorDialogCallback() {
+                        @Override
+                        public void ok() {
+                        }
+
+                        @Override
+                        public void retry() {
+                        }
+                    });
+                }
+
             }
         });
         holder.patientPhoneNumber.setOnClickListener(new View.OnClickListener() {

@@ -277,8 +277,10 @@ public class CommonMethods {
             ourDate = dateFormatter.format(value);
         } catch (Exception e) {
             if (formatString.equalsIgnoreCase(DMSConstants.TIME)) {
+                e.fillInStackTrace();
                 ourDate = "00:00 am";
             } else if (formatString.equalsIgnoreCase(DMSConstants.DATE)) {
+                e.fillInStackTrace();
                 ourDate = "00-00-000";
             }
         }

@@ -6,6 +6,7 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.scorg.dms.model.dms_models.ViewRights;
 
 import java.util.ArrayList;
 
@@ -17,6 +18,11 @@ public class MyAppointmentsDataModel implements Parcelable {
     @SerializedName("appointmentList")
     @Expose
     private ArrayList<AppointmentPatientData> appointmentPatientData = new ArrayList<AppointmentPatientData>();
+
+    @SerializedName("viewRights")
+    @Expose
+    private ViewRights viewRights;
+
 
     public final static Creator<MyAppointmentsDataModel> CREATOR = new Creator<MyAppointmentsDataModel>() {
 
@@ -37,6 +43,7 @@ public class MyAppointmentsDataModel implements Parcelable {
     protected MyAppointmentsDataModel(Parcel in) {
         in.readList(this.clinicList, (ClinicList.class.getClassLoader()));
         in.readList(this.appointmentPatientData, (AppointmentPatientData.class.getClassLoader()));
+        in.readValue((ViewRights.class.getClassLoader()));
     }
 
 
@@ -60,10 +67,19 @@ public class MyAppointmentsDataModel implements Parcelable {
         this.appointmentPatientData = appointmentPatientData;
     }
 
+    public ViewRights getViewRights() {
+        return viewRights;
+    }
+
+    public void setViewRights(ViewRights viewRights) {
+        this.viewRights = viewRights;
+    }
+
     public void writeToParcel(Parcel dest, int flags) {
 
         dest.writeList(clinicList);
         dest.writeList(appointmentPatientData);
+        dest.writeSerializable(viewRights);
     }
 
     public int describeContents() {

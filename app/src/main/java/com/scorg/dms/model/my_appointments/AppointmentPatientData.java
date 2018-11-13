@@ -57,6 +57,9 @@ public class AppointmentPatientData implements Parcelable, Cloneable, Comparable
     @Expose
     private boolean IsArchived;
 
+    @SerializedName("AppointmentCode")
+    @Expose
+    private int AppointmentCode;
 
     private boolean selectedGroupCheckbox;
 
@@ -94,6 +97,7 @@ public class AppointmentPatientData implements Parcelable, Cloneable, Comparable
         this.PatId = ((String) in.readValue((String.class.getClassLoader())));
         this.consultationType = ((String) in.readValue((String.class.getClassLoader())));
         this.IsArchived = ((boolean) in.readValue((boolean.class.getClassLoader())));
+        this.AppointmentCode = ((int) in.readValue((int.class.getClassLoader())));
 
     }
 
@@ -231,6 +235,14 @@ public class AppointmentPatientData implements Parcelable, Cloneable, Comparable
         IsArchived = archived;
     }
 
+    public int getAppointmentCode() {
+        return AppointmentCode;
+    }
+
+    public void setAppointmentCode(int appointmentCode) {
+        AppointmentCode = appointmentCode;
+    }
+
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeValue(patientId);
         dest.writeValue(patientName);
@@ -246,6 +258,7 @@ public class AppointmentPatientData implements Parcelable, Cloneable, Comparable
         dest.writeValue(PatId);
         dest.writeValue(consultationType);
         dest.writeValue(IsArchived);
+        dest.writeValue(AppointmentCode);
     }
 
     public int describeContents() {

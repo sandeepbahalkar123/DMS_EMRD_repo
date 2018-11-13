@@ -11,33 +11,68 @@ import java.io.Serializable;
 
 public class PatientEpisodeFileData implements Serializable {
 
-    @SerializedName("FileType")
-    @Expose
-    private String fileType;
     @SerializedName("RecordId")
     @Expose
     private int recordId;
+    @SerializedName("FileType")
+    @Expose
+    private String fileType;
     @SerializedName("FileTypeRefId")
     @Expose
     private String fileTypeRefId;
     @SerializedName("AdmissionDate")
     @Expose
     private String admissionDate;
+    @SerializedName("DateTmeAdmissionDate")
+    @Expose
+    private String dateTmeAdmissionDate;
     @SerializedName("DischargeDate")
     @Expose
     private String dischargeDate;
+    @SerializedName("DateTmeDischargeDate")
+    @Expose
+    private Object dateTmeDischargeDate;
+    @SerializedName("ProcessDate")
+    @Expose
+    private String processDate;
+    @SerializedName("DateTmeProcessDate")
+    @Expose
+    private String dateTmeProcessDate;
+    @SerializedName("Patientid")
+    @Expose
+    private String patientid;
+    @SerializedName("PatientName")
+    @Expose
+    private String patientName;
+    @SerializedName("DoctorID")
+    @Expose
+    private int doctorID;
     @SerializedName("DoctorName")
     @Expose
     private String doctorName;
-
     @SerializedName("PatId")
     @Expose
-    private String patId;
+    private int patId;
+    @SerializedName("USER_DOCTOR_ID")
+    @Expose
+    private int uSERDOCTORID;
+    @SerializedName("IsView")
+    @Expose
+    private boolean isView;
+    @SerializedName("IsPrimary")
+    @Expose
+    private boolean isPrimary;
+    @SerializedName("IsOldArchivedRecord")
+    @Expose
+    private boolean isOldArchivedRecord;
 
-    //-- THIS IS ADDED TO MAINTAIN RESPECTIVE PARENT PATIENT ID
-    private String respectiveParentPatientID;
+    public int getRecordId() {
+        return recordId;
+    }
 
-    private boolean isShowCompleteList = false;
+    public void setRecordId(int recordId) {
+        this.recordId = recordId;
+    }
 
     public String getFileType() {
         return fileType;
@@ -63,6 +98,14 @@ public class PatientEpisodeFileData implements Serializable {
         this.admissionDate = admissionDate;
     }
 
+    public String getDateTmeAdmissionDate() {
+        return dateTmeAdmissionDate;
+    }
+
+    public void setDateTmeAdmissionDate(String dateTmeAdmissionDate) {
+        this.dateTmeAdmissionDate = dateTmeAdmissionDate;
+    }
+
     public String getDischargeDate() {
         return dischargeDate;
     }
@@ -71,20 +114,52 @@ public class PatientEpisodeFileData implements Serializable {
         this.dischargeDate = dischargeDate;
     }
 
-    public String getRespectiveParentPatientID() {
-        return respectiveParentPatientID;
+    public Object getDateTmeDischargeDate() {
+        return dateTmeDischargeDate;
     }
 
-    public void setRespectiveParentPatientID(String respectiveParentPatientID) {
-        this.respectiveParentPatientID = respectiveParentPatientID;
+    public void setDateTmeDischargeDate(Object dateTmeDischargeDate) {
+        this.dateTmeDischargeDate = dateTmeDischargeDate;
     }
 
-    public int getRecordId() {
-        return recordId;
+    public String getProcessDate() {
+        return processDate;
     }
 
-    public void setRecordId(int recordId) {
-        this.recordId = recordId;
+    public void setProcessDate(String processDate) {
+        this.processDate = processDate;
+    }
+
+    public String getDateTmeProcessDate() {
+        return dateTmeProcessDate;
+    }
+
+    public void setDateTmeProcessDate(String dateTmeProcessDate) {
+        this.dateTmeProcessDate = dateTmeProcessDate;
+    }
+
+    public String getPatientid() {
+        return patientid;
+    }
+
+    public void setPatientid(String patientid) {
+        this.patientid = patientid;
+    }
+
+    public String getPatientName() {
+        return patientName;
+    }
+
+    public void setPatientName(String patientName) {
+        this.patientName = patientName;
+    }
+
+    public int getDoctorID() {
+        return doctorID;
+    }
+
+    public void setDoctorID(int doctorID) {
+        this.doctorID = doctorID;
     }
 
     public String getDoctorName() {
@@ -95,11 +170,43 @@ public class PatientEpisodeFileData implements Serializable {
         this.doctorName = doctorName;
     }
 
-    public String getPatId() {
+    public int getPatId() {
         return patId;
     }
 
-    public void setPatId(String patId) {
+    public void setPatId(int patId) {
         this.patId = patId;
+    }
+
+    public int getUSERDOCTORID() {
+        return uSERDOCTORID;
+    }
+
+    public void setUSERDOCTORID(int uSERDOCTORID) {
+        this.uSERDOCTORID = uSERDOCTORID;
+    }
+
+    public boolean IsView() {
+        return isView;
+    }
+
+    public void setIsView(boolean isView) {
+        this.isView = isView;
+    }
+
+    public boolean IsPrimary() {
+        return isPrimary;
+    }
+
+    public void setIsPrimary(boolean isPrimary) {
+        this.isPrimary = isPrimary;
+    }
+
+    public boolean IsOldArchivedRecord() {
+        return isOldArchivedRecord;
+    }
+
+    public void setIsOldArchivedRecord(boolean isOldArchivedRecord) {
+        this.isOldArchivedRecord = isOldArchivedRecord;
     }
 }
