@@ -173,7 +173,9 @@ public class ActiveAppointmentsFragment extends Fragment implements AppointmentL
             LinearLayoutManager linearlayoutManager = new LinearLayoutManager(this.getContext(), LinearLayoutManager.VERTICAL, false);
             recyclerView.setLayoutManager(linearlayoutManager);
             //list is sorted for Booked and Confirmed Status appointments
-            mAppointmentListAdapter = new AppointmentListAdapter(getActivity(), myAppointmentsDataModel.getAppointmentPatientData(), this);
+            ArrayList<AppointmentPatientData> activeAppointmentPatientData = sortByActiveAppointmets( myAppointmentsDataModel.getAppointmentPatientData());
+
+            mAppointmentListAdapter = new AppointmentListAdapter(getActivity(),activeAppointmentPatientData, this);
             recyclerView.setAdapter(mAppointmentListAdapter);
 
         } else {
@@ -185,7 +187,17 @@ public class ActiveAppointmentsFragment extends Fragment implements AppointmentL
         }
 
     }
+    private ArrayList<AppointmentPatientData> sortByActiveAppointmets(ArrayList<AppointmentPatientData> appointmentPatientData) {
+        ArrayList<AppointmentPatientData> filterList= new ArrayList<>();
+        for ( AppointmentPatientData patientData:appointmentPatientData){
 
+            if (patientData.getAppointmentStatus().equalsIgnoreCase(DMSConstants.APPOINTMENT_STATUS.BOOKED_STATUS)){
+                filterList.add(patientData);
+            }
+
+        }
+        return filterList;
+    }
 
     @Override
     public void onClickedOfEpisodeListButton(SearchResult groupHeader) {

@@ -189,7 +189,7 @@ public class MyAppointmentsFragment extends Fragment implements AppointmentListA
             LinearLayoutManager linearlayoutManager = new LinearLayoutManager(this.getContext(), LinearLayoutManager.VERTICAL, false);
             recyclerView.setLayoutManager(linearlayoutManager);
             //list is sorted for Booked and Confirmed Status appointments
-            mAppointmentListAdapter = new AppointmentListAdapter(getActivity(), myAppointmentsDataModel.getAppointmentPatientData(), this);
+           // mAppointmentListAdapter = new AppointmentListAdapter(getActivity(),activeAppointmentPatientData, this);
             recyclerView.setAdapter(mAppointmentListAdapter);
 
         } else {
@@ -203,6 +203,8 @@ public class MyAppointmentsFragment extends Fragment implements AppointmentListA
     }
 
 
+
+
     @Override
     public void onClickedOfEpisodeListButton(SearchResult groupHeader) {
         Intent intent = new Intent(getActivity(), PatientDetailsActivity.class);
@@ -213,4 +215,5 @@ public class MyAppointmentsFragment extends Fragment implements AppointmentListA
         startActivity(intent);
 
     }
+
 }
