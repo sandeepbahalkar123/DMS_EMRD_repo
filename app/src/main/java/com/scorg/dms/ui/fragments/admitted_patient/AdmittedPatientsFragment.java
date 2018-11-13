@@ -1,5 +1,6 @@
 package com.scorg.dms.ui.fragments.admitted_patient;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -7,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -60,6 +62,9 @@ public class AdmittedPatientsFragment extends Fragment implements AdmittedPatien
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
 
+    @BindView(R.id.swipeToRefresh)
+    public SwipeRefreshLayout swipeToRefresh;
+
     @BindView(R.id.emptyListView)
     RelativeLayout emptyListView;
     @BindView(R.id.rightFab)
@@ -69,12 +74,8 @@ public class AdmittedPatientsFragment extends Fragment implements AdmittedPatien
     ImageView imgNoRecordFound;
     Unbinder unbinder;
     private AdmittedPatientsListAdapter admittedPatientsListAdapter;
-    private AppointmentHelper mAppointmentHelper;
-
-    private ArrayList<AppointmentPatientData> mAppointmentPatientData;
-    private String mUserSelectedDate;
-    private DMSPatientsHelper mPatientsHelper;
     ViewRights viewRights;
+    private OnFragmentInteraction onFragmentInteraction;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
@@ -106,20 +107,17 @@ public class AdmittedPatientsFragment extends Fragment implements AdmittedPatien
             }
         });
 
-        mUserSelectedDate = getArguments().getString(DMSConstants.DATE);
-        AdmittedPatientDataModel myAppointmentsDataModel = getArguments().getParcelable(ADMITTED_PATIENT_DATA);
-        viewRights  = (ViewRights) getArguments().getSerializable(VIEW_RIGHTS_DETAILS);
-        setFilteredData(myAppointmentsDataModel);
+        swipeToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                onFragmentInteraction.pullRefresh();
+                searchEditText.setText("");
+            }
+        });
     }
 
-    public static AdmittedPatientsFragment newInstance(AdmittedPatientDataModel admittedPatientDataModel, String mDateSelectedByUser, ViewRights viewRights) {
-        AdmittedPatientsFragment myAppointmentsFragment = new AdmittedPatientsFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString(DMSConstants.DATE, mDateSelectedByUser);
-        bundle.putParcelable(ADMITTED_PATIENT_DATA, admittedPatientDataModel);
-        bundle.putSerializable(VIEW_RIGHTS_DETAILS, viewRights);
-        myAppointmentsFragment.setArguments(bundle);
-        return myAppointmentsFragment;
+    public static AdmittedPatientsFragment newInstance() {
+        return new AdmittedPatientsFragment();
     }
 
     @Override
@@ -173,18 +171,9 @@ public class AdmittedPatientsFragment extends Fragment implements AdmittedPatien
         unbinder.unbind();
     }
 
-    @OnClick({R.id.rightFab})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.rightFab:
-                AdmittedPatientsActivity activity = (AdmittedPatientsActivity) getActivity();
-                activity.getActivityDrawerLayout().openDrawer(GravityCompat.END);
-                break;
-        }
-    }
-
-
     public void setFilteredData(AdmittedPatientDataModel myAppointmentsDataModel) {
+
+        viewRights = myAppointmentsDataModel.getViewRights();
 
         if (!myAppointmentsDataModel.getAdmittedPatientData().isEmpty()) {
             recyclerView.setVisibility(View.VISIBLE);
@@ -202,19 +191,28 @@ public class AdmittedPatientsFragment extends Fragment implements AdmittedPatien
             imgNoRecordFound.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
 
         }
-
     }
-
 
     @Override
     public void onClickedOfEpisodeListButton(SearchResult groupHeader) {
-
         Intent intent = new Intent(getActivity(), PatientDetailsActivity.class);
         Bundle bundle = new Bundle();
         bundle.putSerializable(PATIENT_DETAILS, groupHeader);
         bundle.putSerializable(VIEW_RIGHTS_DETAILS,viewRights);
         intent.putExtra(DMSConstants.BUNDLE, bundle);
         startActivity(intent);
-
     }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnFragmentInteraction) {
+            onFragmentInteraction = (OnFragmentInteraction) context;
+        }
+    }
+
+    public interface OnFragmentInteraction {
+        void pullRefresh();
+    }
+
 }

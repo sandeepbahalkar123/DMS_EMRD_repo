@@ -13,6 +13,10 @@ public class ArchiveDatum {
     @Expose
     private String fileType;
 
+    @SerializedName("displayKey")
+    @Expose
+    private String displayKey;
+
     @SerializedName("confidentialState")
     @Expose
     private int confidentialState;
@@ -29,9 +33,14 @@ public class ArchiveDatum {
     @Expose
     private List<LstOrderedDocType> lstOrderedDocTypes = new ArrayList<LstOrderedDocType>();
 
+    @SerializedName("lsthideDocCategory")
+    @Expose
+    private List<LstHideDocType> lstHideDocTypes = new ArrayList<LstHideDocType>();
+
     private int totalLstDateFolderTypePageCount = -1;
     private int totalArchiveDataLstDocCategoriesPageCount = -1;
     private int totalArchiveDataLstOrderPageCount = -1;
+    private int totalArchiveDataLstHidePageCount = -1;
 
 
     public String getFileType() {
@@ -114,6 +123,21 @@ public class ArchiveDatum {
         return totalArchiveDataLstOrderPageCount;
     }
 
+    public int getTotalArchiveDataLstHidePageCount() {
+        if (lstOrderedDocTypes != null) {
+            if (totalArchiveDataLstHidePageCount == -1) {
+                int count = 0;
+                for (LstHideDocType temp :
+                        lstHideDocTypes) {
+                    count = count + temp.getPageCount();
+                }
+                setTotalArchiveDataLstHidePageCount(count);
+            }
+        }
+
+        return totalArchiveDataLstOrderPageCount;
+    }
+
     public int getConfidentialState() {
         return confidentialState;
     }
@@ -128,6 +152,26 @@ public class ArchiveDatum {
 
     public void setLstOrderedDocTypes(List<LstOrderedDocType> lstOrderedDocTypes) {
         this.lstOrderedDocTypes = lstOrderedDocTypes;
+    }
+
+    public String getDisplayKey() {
+        return displayKey;
+    }
+
+    public void setDisplayKey(String displayKey) {
+        this.displayKey = displayKey;
+    }
+
+    public List<LstHideDocType> getLstHideDocTypes() {
+        return lstHideDocTypes;
+    }
+
+    public void setLstHideDocTypes(List<LstHideDocType> lstHideDocTypes) {
+        this.lstHideDocTypes = lstHideDocTypes;
+    }
+
+    public void setTotalArchiveDataLstHidePageCount(int totalArchiveDataLstHidePageCount) {
+        this.totalArchiveDataLstHidePageCount = totalArchiveDataLstHidePageCount;
     }
 
     @Override

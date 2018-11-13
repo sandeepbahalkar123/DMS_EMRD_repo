@@ -3,13 +3,13 @@ package com.scorg.dms.ui.activities.admitted_patient_list;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
+import android.support.v4.app.ActivityCompat;
 import android.text.Html;
 import android.text.Spanned;
 import android.util.Log;
@@ -18,7 +18,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.philliphsu.bottomsheetpickers.date.DatePickerDialog;
 import com.scorg.dms.R;
@@ -48,8 +47,7 @@ import permissions.dispatcher.RuntimePermissions;
 import static com.scorg.dms.util.DMSConstants.SUCCESS;
 
 @RuntimePermissions
-public class AdmittedPatientsActivity extends BaseActivity implements HelperResponse, DatePickerDialog.OnDateSetListener {
-
+public class AdmittedPatientsActivity extends BaseActivity implements HelperResponse, DatePickerDialog.OnDateSetListener, AdmittedPatientsFragment.OnFragmentInteraction {
 
     @BindView(R.id.backImageView)
     ImageView backImageView;
@@ -61,10 +59,6 @@ public class AdmittedPatientsActivity extends BaseActivity implements HelperResp
     TextView dateTextview;
     @BindView(R.id.viewContainer)
     FrameLayout viewContainer;
-    @BindView(R.id.nav_view)
-    FrameLayout navView;
-    @BindView(R.id.drawer_layout)
-    DrawerLayout drawerLayout;
     @BindView(R.id.emptyListView)
     RelativeLayout emptyListView;
 
@@ -74,12 +68,9 @@ public class AdmittedPatientsActivity extends BaseActivity implements HelperResp
     private Context mContext;
     private AdmittedPatientsFragment mAdmittedPatientsFragment;
     private AdmittedPatientHelper admittedPatientHelper;
-    private String month;
-    private String mYear;
     private AdmittedPatientBaseModel admittedPatientBaseModel;
-    private long mClickedPhoneNumber;
     private String mDateSelectedByUser = "";
-    public static final int CLOSE_APPOINTMENT_ACTIVITY_AFTER_BOOK_APPOINTMENT = 666;
+    private long mClickedPhoneNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,23 +88,19 @@ public class AdmittedPatientsActivity extends BaseActivity implements HelperResp
         //Call api for AppointmentData
         String date = CommonMethods.getCurrentDate(DMSConstants.DATE_PATTERN.UTC_PATTERN);
         System.out.println(date);
+
+        mAdmittedPatientsFragment = AdmittedPatientsFragment.newInstance();
+        getSupportFragmentManager().beginTransaction().replace(R.id.viewContainer, mAdmittedPatientsFragment).commit();
+
         admittedPatientHelper = new AdmittedPatientHelper(this, this);
         admittedPatientHelper.doGetAdmittedData(date);
-
         imgNoRecordFound.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
     }
 
 
-    public DrawerLayout getActivityDrawerLayout() {
-        return drawerLayout;
-    }
-
     private void setDateInToolbar() {
         //Set Date in Required Format i.e 13thJuly'18
         dateTextview.setVisibility(View.VISIBLE);
-
-        month = CommonMethods.getCurrentDate("MM");
-        mYear = CommonMethods.getCurrentDate("yyyy");
         String day = CommonMethods.getCurrentDate("dd");
         mDateSelectedByUser = CommonMethods.getCurrentDate(DMSConstants.DATE_PATTERN.d_M_YYYY);
         String toDisplay = day + "<sup>" + CommonMethods.getSuffixForNumber(Integer.parseInt(day)) + "</sup> " + CommonMethods.getCurrentDate("MMM'' yy");
@@ -131,6 +118,7 @@ public class AdmittedPatientsActivity extends BaseActivity implements HelperResp
 
     @Override
     public void onSuccess(String mOldDataTag, CustomResponse customResponse) {
+        mAdmittedPatientsFragment.swipeToRefresh.setRefreshing(false);
         if (mOldDataTag.equalsIgnoreCase(DMSConstants.TASK_ADMITTED_PATIENT_DATA)) {
             if (customResponse != null) {
                 admittedPatientBaseModel = (AdmittedPatientBaseModel) customResponse;
@@ -138,18 +126,12 @@ public class AdmittedPatientsActivity extends BaseActivity implements HelperResp
 
                     AdmittedPatientDataModel patientDataModel = admittedPatientBaseModel.getAdmittedPatientDataModel();
                     patientDataModel.setAdmittedPatientData(admittedPatientBaseModel.getAdmittedPatientDataModel().getAdmittedPatientData());
+                    mAdmittedPatientsFragment.setFilteredData(patientDataModel);
 
-                    mAdmittedPatientsFragment = AdmittedPatientsFragment.newInstance(patientDataModel, mDateSelectedByUser,admittedPatientBaseModel.getAdmittedPatientDataModel().getViewRights());
-                    getSupportFragmentManager().beginTransaction().replace(R.id.viewContainer, mAdmittedPatientsFragment).commit();
-
-                    Bundle bundle = new Bundle();
-                    bundle.putParcelable(DMSConstants.ADMITTED_PATIENT_DATA, admittedPatientBaseModel.getAdmittedPatientDataModel());
-                    bundle.putSerializable(DMSConstants.VIEW_RIGHTS_DETAILS, admittedPatientBaseModel.getAdmittedPatientDataModel().getViewRights());
-                    if (emptyListView.getVisibility()==View.VISIBLE){
+                    if (emptyListView.getVisibility() == View.VISIBLE) {
                         emptyListView.setVisibility(View.GONE);
                         imgNoRecordFound.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
                     }
-
                 }
             }
         }
@@ -157,6 +139,7 @@ public class AdmittedPatientsActivity extends BaseActivity implements HelperResp
 
 
     private void showErrorDialog(String errorMessage, boolean isTimeout) {
+        mAdmittedPatientsFragment.swipeToRefresh.setRefreshing(false);
         CommonMethods.showErrorDialog(errorMessage, mContext, isTimeout, new ErrorDialogCallback() {
             @Override
             public void ok() {
@@ -177,26 +160,26 @@ public class AdmittedPatientsActivity extends BaseActivity implements HelperResp
     @Override
     public void onParseError(String mOldDataTag, String errorMessage) {
 
-       showErrorDialog(errorMessage,false);
+        showErrorDialog(errorMessage, false);
 
     }
 
     @Override
     public void onServerError(String mOldDataTag, String serverErrorMessage) {
-        showErrorDialog(serverErrorMessage,false);
+        showErrorDialog(serverErrorMessage, false);
 
 
     }
 
     @Override
     public void onNoConnectionError(String mOldDataTag, String serverErrorMessage) {
-        showErrorDialog(serverErrorMessage,false);
+        showErrorDialog(serverErrorMessage, false);
 
     }
 
     @Override
     public void onTimeOutError(String mOldDataTag, String timeOutErrorMessage) {
-        showErrorDialog(timeOutErrorMessage,true);
+        showErrorDialog(timeOutErrorMessage, true);
 
 
     }
@@ -223,15 +206,6 @@ public class AdmittedPatientsActivity extends BaseActivity implements HelperResp
         }
     }
 
-    @Override
-    public void onBackPressed() {
-        if (drawerLayout.isDrawerOpen(GravityCompat.END)) {
-            drawerLayout.closeDrawer(GravityCompat.END);
-        } else {
-            super.onBackPressed();
-        }
-    }
-
 
     private ArrayList<AppointmentPatientData> getBookedAndConfirmed(ArrayList<AppointmentPatientData> mAppointmentPatientData) {
 
@@ -248,13 +222,14 @@ public class AdmittedPatientsActivity extends BaseActivity implements HelperResp
     public void callPatient(long patientPhone) {
         mClickedPhoneNumber = patientPhone;
         AdmittedPatientsActivityPermissionsDispatcher.doCallSupportWithCheck(this);
-
     }
 
     @NeedsPermission(Manifest.permission.CALL_PHONE)
     void doCallSupport() {
         Intent callIntent = new Intent(Intent.ACTION_CALL);
         callIntent.setData(Uri.parse("tel:" + mClickedPhoneNumber));
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED)
+            return;
         startActivity(callIntent);
     }
 
@@ -274,8 +249,6 @@ public class AdmittedPatientsActivity extends BaseActivity implements HelperResp
         String timeToShow = CommonMethods.formatDateTime(dayOfMonth + "-" + monthOfYearToShow + "-" + year, DMSConstants.DATE_PATTERN.MMM_YY,
                 DMSConstants.DATE_PATTERN.DD_MM_YYYY, DMSConstants.DATE).toLowerCase();
         String[] timeToShowSpilt = timeToShow.split(",");
-        month = timeToShowSpilt[0].substring(0, 1).toUpperCase() + timeToShowSpilt[0].substring(1);
-        mYear = timeToShowSpilt.length == 2 ? timeToShowSpilt[1] : "";
         Date date = CommonMethods.convertStringToDate(dayOfMonth + "-" + monthOfYearToShow + "-" + year, DMSConstants.DATE_PATTERN.DD_MM_YYYY);
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
@@ -294,11 +267,17 @@ public class AdmittedPatientsActivity extends BaseActivity implements HelperResp
         if (monthOfYearToShow <= 9) {
             monthToSend = "0" + monthToSend;
         }
-        String dateToSend = CommonMethods.formatDateTime(dayOfMonth + "-" + monthToSend + "-" + year, DMSConstants.DATE_PATTERN.UTC_PATTERN,DMSConstants.DATE_PATTERN.DD_MM_YYYY,DMSConstants.DATE);
+        String dateToSend = CommonMethods.formatDateTime(dayOfMonth + "-" + monthToSend + "-" + year, DMSConstants.DATE_PATTERN.UTC_PATTERN, DMSConstants.DATE_PATTERN.DD_MM_YYYY, DMSConstants.DATE);
 
-        Log.e("selected dateToSend",""+dateToSend);
+        Log.e("selected dateToSend", "" + dateToSend);
         //-----
 
+        admittedPatientHelper.doGetAdmittedData(dateToSend);
+    }
+
+    @Override
+    public void pullRefresh() {
+        String dateToSend = CommonMethods.formatDateTime(mDateSelectedByUser, DMSConstants.DATE_PATTERN.UTC_PATTERN, DMSConstants.DATE_PATTERN.DD_MM_YYYY, DMSConstants.DATE);
         admittedPatientHelper.doGetAdmittedData(dateToSend);
     }
 }

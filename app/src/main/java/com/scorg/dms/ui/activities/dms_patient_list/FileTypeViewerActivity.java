@@ -1596,7 +1596,11 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
 
             TreeNode archiveDatumObjectFolder;
 
-            if (archiveDatumObject.getFileType().toLowerCase().contains("order")) {
+            String key = "";
+            if (archiveDatumObject.getDisplayKey() != null)
+                key = archiveDatumObject.getDisplayKey().toLowerCase();
+
+            if (key.contains("order")) {
 
                 //---- For list lstDateFolderType loop
                 List<LstOrderedDocType> lstOrderedDocTypeList = archiveDatumObject.getLstOrderedDocTypes();

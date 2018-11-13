@@ -34,7 +34,8 @@
         android:layout_marginBottom="@dimen/fab_margin"
         android:visibility="gone"
         app:backgroundTint="@color/floating_blue_color"
-        app:srcCompat="@drawable/filter" />
+        app:srcCompat="@drawable/filter"
+        android:layout_alignParentEnd="true" />
 
 
 </RelativeLayout>

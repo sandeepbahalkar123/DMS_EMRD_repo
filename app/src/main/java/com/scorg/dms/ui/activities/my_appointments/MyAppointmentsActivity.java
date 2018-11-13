@@ -3,12 +3,14 @@ package com.scorg.dms.ui.activities.my_appointments;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -34,7 +36,6 @@ import com.scorg.dms.singleton.DMSApplication;
 import com.scorg.dms.ui.activities.BaseActivity;
 import com.scorg.dms.ui.fragments.my_appointments.ActiveAppointmentsFragment;
 import com.scorg.dms.ui.fragments.my_appointments.AllAppointmentsFragment;
-import com.scorg.dms.ui.fragments.my_appointments.MyAppointmentsFragment;
 import com.scorg.dms.util.CommonMethods;
 import com.scorg.dms.util.DMSConstants;
 
@@ -55,15 +56,14 @@ import static com.scorg.dms.util.DMSConstants.SUCCESS;
  * Created by jeetal on 31/1/18.
  */
 @RuntimePermissions
-public class MyAppointmentsActivity extends BaseActivity implements HelperResponse, DatePickerDialog.OnDateSetListener {
+public class MyAppointmentsActivity extends BaseActivity implements HelperResponse, DatePickerDialog.OnDateSetListener, ActiveAppointmentsFragment.OnFragmentInteraction, AllAppointmentsFragment.OnFragmentInteraction {
+    public ViewRights viewRights;
     @BindView(R.id.backImageView)
     ImageView backImageView;
     @BindView(R.id.titleTextView)
     TextView titleTextView;
     @BindView(R.id.userInfoTextView)
     TextView userInfoTextView;
-    @BindView(R.id.dateTextview)
-    TextView dateTextview;
 //    @BindView(R.id.viewContainer)
 //    FrameLayout viewContainer;
 //    @BindView(R.id.nav_view)
@@ -75,26 +75,20 @@ public class MyAppointmentsActivity extends BaseActivity implements HelperRespon
 //
 //    @BindView(R.id.imgNoRecordFound)
 //    ImageView imgNoRecordFound;
-
-
+    @BindView(R.id.dateTextview)
+    TextView dateTextview;
     @BindView(R.id.tabs)
     TabLayout tabs;
     @BindView(R.id.viewpager)
     ViewPager viewpager;
-
-
-    private Context mContext;
-
-    private AppointmentHelper mAppointmentHelper;
-
-    private MyAppointmentsBaseModel myAppointmentsBaseMainModel;
-    private long mClickedPhoneNumber;
-    private String mDateSelectedByUser = "";
-
-    public ViewRights viewRights;
     String[] mFragmentTitleList = new String[2];
     ActiveAppointmentsFragment activeAppointmentsFragment;
     AllAppointmentsFragment allAppointmentsFragment;
+    private Context mContext;
+    private AppointmentHelper mAppointmentHelper;
+    private MyAppointmentsBaseModel myAppointmentsBaseMainModel;
+    private long mClickedPhoneNumber;
+    private String mDateSelectedByUser = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -169,7 +163,7 @@ public class MyAppointmentsActivity extends BaseActivity implements HelperRespon
                 if (myAppointmentsBaseMainModel.getCommon().getStatusCode().equals(SUCCESS)) {
                     MyAppointmentsDataModel myAppointmentsDM = myAppointmentsBaseMainModel.getMyAppointmentsDataModel();
                     viewRights = myAppointmentsDM.getViewRights();
-                    myAppointmentsDM.setAppointmentPatientData(myAppointmentsBaseMainModel.getMyAppointmentsDataModel().getAppointmentPatientData());
+                    myAppointmentsDM.setAppointmentPatientData(myAppointmentsDM.getAppointmentPatientData());
                     activeAppointmentsFragment.setFilteredData(myAppointmentsDM);
                     allAppointmentsFragment.setFilteredData(myAppointmentsDM);
 
@@ -179,6 +173,8 @@ public class MyAppointmentsActivity extends BaseActivity implements HelperRespon
     }
 
     private void showErrorDialog(String errorMessage, boolean isTimeout) {
+        allAppointmentsFragment.swipeToRefresh.setRefreshing(false);
+        activeAppointmentsFragment.swipeToRefresh.setRefreshing(false);
         CommonMethods.showErrorDialog(errorMessage, mContext, isTimeout, new ErrorDialogCallback() {
             @Override
             public void ok() {
@@ -272,6 +268,8 @@ public class MyAppointmentsActivity extends BaseActivity implements HelperRespon
     void doCallSupport() {
         Intent callIntent = new Intent(Intent.ACTION_CALL);
         callIntent.setData(Uri.parse("tel:" + mClickedPhoneNumber));
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED)
+            return;
         startActivity(callIntent);
     }
 
@@ -313,6 +311,12 @@ public class MyAppointmentsActivity extends BaseActivity implements HelperRespon
 
         //-----
 
+        mAppointmentHelper.doGetAppointmentData(dateToSend);
+    }
+
+    @Override
+    public void pullRefresh() {
+        String dateToSend = CommonMethods.formatDateTime(mDateSelectedByUser, DMSConstants.DATE_PATTERN.UTC_PATTERN, DMSConstants.DATE_PATTERN.DD_MM_YYYY, DMSConstants.DATE);
         mAppointmentHelper.doGetAppointmentData(dateToSend);
     }
 
