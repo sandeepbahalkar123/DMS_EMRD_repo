@@ -55,7 +55,6 @@ import static com.scorg.dms.util.DMSConstants.VIEW_RIGHTS_DETAILS;
 
 public class AdmittedPatientsFragment extends Fragment implements AdmittedPatientsListAdapter.OnItemClickListener {
 
-
     @BindView(R.id.searchEditText)
     EditTextWithDeleteButton searchEditText;
 
@@ -64,14 +63,14 @@ public class AdmittedPatientsFragment extends Fragment implements AdmittedPatien
 
     @BindView(R.id.swipeToRefresh)
     public SwipeRefreshLayout swipeToRefresh;
+    @BindView(R.id.imgNoRecordFound)
+    public ImageView imgNoRecordFound;
 
     @BindView(R.id.emptyListView)
-    RelativeLayout emptyListView;
+    public RelativeLayout emptyListView;
     @BindView(R.id.rightFab)
     FloatingActionButton rightFab;
 
-    @BindView(R.id.imgNoRecordFound)
-    ImageView imgNoRecordFound;
     Unbinder unbinder;
     private AdmittedPatientsListAdapter admittedPatientsListAdapter;
     ViewRights viewRights;

@@ -16,6 +16,4 @@
         android:fitsSystemWindows="true"
         android:orientation="vertical" />
 
-    <include layout="@layout/common_no_records_found" />
-
 </RelativeLayout>

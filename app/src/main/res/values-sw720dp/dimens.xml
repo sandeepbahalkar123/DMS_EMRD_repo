@@ -65,6 +65,6 @@
     <dimen name="label_height">170dp</dimen>
     <dimen name="dp43">66dp</dimen>
     <dimen name="dp45">67dp</dimen>
-
-
+    <dimen name="tab_width">60dp</dimen>
+    <dimen name="tab_height">40dp</dimen>
 </resources>

@@ -16,7 +16,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.philliphsu.bottomsheetpickers.date.DatePickerDialog;
@@ -59,11 +58,6 @@ public class AdmittedPatientsActivity extends BaseActivity implements HelperResp
     TextView dateTextview;
     @BindView(R.id.viewContainer)
     FrameLayout viewContainer;
-    @BindView(R.id.emptyListView)
-    RelativeLayout emptyListView;
-
-    @BindView(R.id.imgNoRecordFound)
-    ImageView imgNoRecordFound;
 
     private Context mContext;
     private AdmittedPatientsFragment mAdmittedPatientsFragment;
@@ -94,7 +88,6 @@ public class AdmittedPatientsActivity extends BaseActivity implements HelperResp
 
         admittedPatientHelper = new AdmittedPatientHelper(this, this);
         admittedPatientHelper.doGetAdmittedData(date);
-        imgNoRecordFound.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
     }
 
 
@@ -127,11 +120,7 @@ public class AdmittedPatientsActivity extends BaseActivity implements HelperResp
                     AdmittedPatientDataModel patientDataModel = admittedPatientBaseModel.getAdmittedPatientDataModel();
                     patientDataModel.setAdmittedPatientData(admittedPatientBaseModel.getAdmittedPatientDataModel().getAdmittedPatientData());
                     mAdmittedPatientsFragment.setFilteredData(patientDataModel);
-
-                    if (emptyListView.getVisibility() == View.VISIBLE) {
-                        emptyListView.setVisibility(View.GONE);
-                        imgNoRecordFound.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
-                    }
+                    mAdmittedPatientsFragment.emptyListView.setVisibility(View.GONE);
                 }
             }
         }
@@ -139,7 +128,10 @@ public class AdmittedPatientsActivity extends BaseActivity implements HelperResp
 
 
     private void showErrorDialog(String errorMessage, boolean isTimeout) {
-        mAdmittedPatientsFragment.swipeToRefresh.setRefreshing(false);
+        if (mAdmittedPatientsFragment.swipeToRefresh != null) {
+            mAdmittedPatientsFragment.swipeToRefresh.setRefreshing(false);
+            mAdmittedPatientsFragment.emptyListView.setVisibility(View.VISIBLE);
+        }
         CommonMethods.showErrorDialog(errorMessage, mContext, isTimeout, new ErrorDialogCallback() {
             @Override
             public void ok() {
@@ -150,11 +142,8 @@ public class AdmittedPatientsActivity extends BaseActivity implements HelperResp
                 String date = CommonMethods.getCurrentDate(DMSConstants.DATE_PATTERN.UTC_PATTERN);
                 System.out.println(date);
                 admittedPatientHelper.doGetAdmittedData(date);
-
             }
         });
-        emptyListView.setVisibility(View.VISIBLE);
-        imgNoRecordFound.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
     }
 
     @Override

@@ -45,7 +45,6 @@ import static com.scorg.dms.util.DMSConstants.VIEW_RIGHTS_DETAILS;
 
 public class AllAppointmentsFragment extends Fragment implements AppointmentListAdapter.OnItemClickListener {
 
-
     @BindView(R.id.searchEditText)
     EditTextWithDeleteButton searchEditText;
 
