@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="?android:attr/selectableItemBackground"
     android:minHeight="@dimen/dp40">
 
@@ -14,33 +14,36 @@
         android:layout_centerVertical="true"
         android:gravity="center"
         android:orientation="horizontal"
-        android:paddingLeft="@dimen/dp10"
-        android:paddingStart="@dimen/dp10">
+        android:paddingStart="@dimen/dp5"
+        android:paddingLeft="@dimen/dp5">
 
 
         <android.support.v7.widget.AppCompatCheckBox
             android:id="@+id/node_selector"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp3"
+            android:layout_marginLeft="@dimen/dp3"
             android:button="@drawable/checkbox_selector"
+            android:padding="@dimen/dp3"
             android:visibility="gone"
             tools:visibility="visible" />
-
 
         <ImageView
             android:id="@+id/icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dp5"
-            android:layout_marginRight="@dimen/dp5"
+            android:padding="@dimen/dp5"
             android:src="@drawable/ic_tree_close_folder" />
 
         <TextView
             android:id="@+id/node_value"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/dp5"
             android:layout_marginLeft="@dimen/dp5"
+            android:paddingTop="@dimen/dp5"
+            android:paddingBottom="@dimen/dp5"
+            android:layout_marginEnd="@dimen/dp5"
             android:layout_marginRight="@dimen/dp5"
             android:layout_weight="1"
             android:fontFamily="@font/roboto_medium"
@@ -55,8 +58,8 @@
             android:layout_marginEnd="@dimen/dp5"
             android:layout_marginRight="@dimen/dp5"
             android:padding="@dimen/dp5"
-            app:srcCompat="@drawable/ic_lock"
             android:visibility="gone"
+            app:srcCompat="@drawable/ic_lock"
             tools:visibility="visible" />
 
     </LinearLayout>

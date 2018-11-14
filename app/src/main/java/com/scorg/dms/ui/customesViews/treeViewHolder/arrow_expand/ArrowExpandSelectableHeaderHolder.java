@@ -64,7 +64,7 @@ public class ArrowExpandSelectableHeaderHolder extends TreeNode.BaseNodeViewHold
     public View createNodeView(final TreeNode node, final ArrowExpandIconTreeItemHolder.IconTreeItem value) {
         final LayoutInflater inflater = LayoutInflater.from(context);
         final View view = inflater.inflate(R.layout.treeview_arrow_expandable_header, null, false);
-        nodeSelector = (AppCompatCheckBox) view.findViewById(R.id.node_selector);
+        nodeSelector = view.findViewById(R.id.node_selector);
 
 
         int[][] states = new int[][]{
@@ -84,15 +84,15 @@ public class ArrowExpandSelectableHeaderHolder extends TreeNode.BaseNodeViewHold
         nodeSelector.setSupportButtonTintList(myList);
 
 
-        icon_lock = (ImageView) view.findViewById(R.id.icon_lock);
+        icon_lock = view.findViewById(R.id.icon_lock);
         icon_lock.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
-        arrowView = (ImageView) view.findViewById(R.id.icon);
+        arrowView = view.findViewById(R.id.icon);
         arrowView.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
-        mainContentLayout = (LinearLayout) view.findViewById(R.id.mainContentLayout);
+        mainContentLayout = view.findViewById(R.id.mainContentLayout);
 
         mainContentLayout.setPadding(leftPadding, 0, 0, 0);
 
-        tvValue = (TextView) view.findViewById(R.id.node_value);
+        tvValue = view.findViewById(R.id.node_value);
         tvValue.setTextColor(getNodeValueColor());
 
         if (isTreeLabelBold())
@@ -123,23 +123,21 @@ public class ArrowExpandSelectableHeaderHolder extends TreeNode.BaseNodeViewHold
             }
         });
 
-//        arrowView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                tView.toggleNode(node, isOnlyOneNodeExpanded());
-//            }
-//        });
+        arrowView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                tView.toggleNode(node, isOnlyOneNodeExpanded());
+            }
+        });
 
         if (istViewClickRequired) {
-            tvValue.getRootView().setOnClickListener(new View.OnClickListener() {
+            tvValue.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     tView.toggleNode(node, isOnlyOneNodeExpanded());
                 }
             });
-
         }
-
 
         nodeSelector.setClickable(false);
         nodeSelector.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

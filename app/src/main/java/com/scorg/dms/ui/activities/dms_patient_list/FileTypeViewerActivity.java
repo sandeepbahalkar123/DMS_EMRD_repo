@@ -814,7 +814,6 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
 
             archiveCount = archiveCount + lstDateFolderTypeList.size();
 
-
             for (int l = 0; l < lstDateFolderTypeList.size(); l++) {
                 LstDateFolderType lstDateFolderType = lstDateFolderTypeList.get(l);
 

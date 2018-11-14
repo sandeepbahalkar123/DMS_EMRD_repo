@@ -226,5 +226,6 @@
     <string name="patient_not_having_record">No records found for these patient.</string>
     <string name="active_appointmets">Active</string>
     <string name="all_appointments">View all</string>
+    <string name="id_type">ID Type</string>
 
 </resources>
