@@ -62,7 +62,6 @@ public class AdmittedPatientsActivity extends BaseActivity implements HelperResp
     private Context mContext;
     private AdmittedPatientsFragment mAdmittedPatientsFragment;
     private AdmittedPatientHelper admittedPatientHelper;
-    private AdmittedPatientBaseModel admittedPatientBaseModel;
     private String mDateSelectedByUser = "";
     private long mClickedPhoneNumber;
 
@@ -111,16 +110,18 @@ public class AdmittedPatientsActivity extends BaseActivity implements HelperResp
 
     @Override
     public void onSuccess(String mOldDataTag, CustomResponse customResponse) {
-        mAdmittedPatientsFragment.swipeToRefresh.setRefreshing(false);
+        if (mAdmittedPatientsFragment.swipeToRefresh != null)
+            mAdmittedPatientsFragment.swipeToRefresh.setRefreshing(false);
         if (mOldDataTag.equalsIgnoreCase(DMSConstants.TASK_ADMITTED_PATIENT_DATA)) {
             if (customResponse != null) {
-                admittedPatientBaseModel = (AdmittedPatientBaseModel) customResponse;
+                AdmittedPatientBaseModel admittedPatientBaseModel = (AdmittedPatientBaseModel) customResponse;
                 if (admittedPatientBaseModel.getCommon().getStatusCode().equals(SUCCESS)) {
 
                     AdmittedPatientDataModel patientDataModel = admittedPatientBaseModel.getAdmittedPatientDataModel();
                     patientDataModel.setAdmittedPatientData(admittedPatientBaseModel.getAdmittedPatientDataModel().getAdmittedPatientData());
                     mAdmittedPatientsFragment.setFilteredData(patientDataModel);
-                    mAdmittedPatientsFragment.emptyListView.setVisibility(View.GONE);
+                    if (mAdmittedPatientsFragment.emptyListView != null)
+                        mAdmittedPatientsFragment.emptyListView.setVisibility(View.GONE);
                 }
             }
         }
