@@ -16,6 +16,10 @@ public class LstDocCategory {
     @Expose
     private String categoryName;
 
+    @SerializedName("nodeColor")
+    @Expose
+    private String nodeColor;
+
     @SerializedName("pageCount")
     @Expose
     private int pageCount;
@@ -28,6 +32,10 @@ public class LstDocCategory {
     @SerializedName("lstDocTypes")
     @Expose
     private List<LstDocType> lstDocTypes = new ArrayList<LstDocType>();
+
+    @SerializedName("lsthideDocCategory")
+    @Expose
+    private List<LstHideDocType> lsthideDocCategory = new ArrayList<LstHideDocType>();
 
     private int totalDocTypePageCount = -1;
 
@@ -87,6 +95,14 @@ public class LstDocCategory {
         this.mergedFileCompareCustomID = mergedFileCompareCustomID;
     }
 
+    public String getNodeColor() {
+        return nodeColor == null ? "#000000" : nodeColor;
+    }
+
+    public void setNodeColor(String nodeColor) {
+        this.nodeColor = nodeColor;
+    }
+
     public int getPageCount() {
         return pageCount;
     }
@@ -102,6 +118,14 @@ public class LstDocCategory {
 
     public void setConfidentialState(int confidentialState) {
         this.confidentialState = confidentialState;
+    }
+
+    public List<LstHideDocType> getLsthideDocCategory() {
+        return lsthideDocCategory;
+    }
+
+    public void setLsthideDocCategory(List<LstHideDocType> lsthideDocCategory) {
+        this.lsthideDocCategory = lsthideDocCategory;
     }
 
     @Override

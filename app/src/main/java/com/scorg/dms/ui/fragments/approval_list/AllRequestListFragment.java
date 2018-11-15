@@ -38,7 +38,6 @@ import com.scorg.dms.ui.customesViews.CircularImageView;
 import com.scorg.dms.ui.customesViews.drag_drop_recyclerview_helper.EndlessRecyclerViewScrollListener;
 import com.scorg.dms.util.CommonMethods;
 import com.scorg.dms.util.DMSConstants;
-import com.scorg.dms.util.NetworkUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -122,7 +121,7 @@ public class AllRequestListFragment extends Fragment implements RequestListAdapt
             @Override
             public void onRefresh() {
                 currentPage = 1;
-                mPendingApprovalHelper.doGetPendingApprovalData(currentPage, true);
+                mPendingApprovalHelper.doGetPendingApprovalData(currentPage, false);
             }
         });
 
@@ -236,7 +235,7 @@ public class AllRequestListFragment extends Fragment implements RequestListAdapt
                 if (customResponse != null) {
                     RequestedArchivedBaseModel requestedArchivedBaseModel = (RequestedArchivedBaseModel) customResponse;
 
-                    if (currentPage == 0)
+                    if (currentPage == 1)
                         requestedArchivedDetailList.clear();
 
                     requestedArchivedDetailList.addAll(requestedArchivedBaseModel.getPendingApprovalDataModel().getRequestedArchivedDetailList());

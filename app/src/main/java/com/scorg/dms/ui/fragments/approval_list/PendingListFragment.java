@@ -300,7 +300,7 @@ public class PendingListFragment extends Fragment implements RequestListAdapter.
             case DMSConstants.TASK_PENDING_APPROVAL_LIST: {
                 if (customResponse != null) {
                     RequestedArchivedBaseModel requestedArchivedBaseModel = (RequestedArchivedBaseModel) customResponse;
-                    if (currentPage == 0)
+                    if (currentPage == 1)
                         requestedArchivedDetailList.clear();
                     requestedArchivedDetailList.addAll(requestedArchivedBaseModel.getPendingApprovalDataModel().getRequestedArchivedDetailList());
                     mIsLoadMorePatients = requestedArchivedBaseModel.getPendingApprovalDataModel().isPaggination();

@@ -153,8 +153,10 @@ public class MyAppointmentsActivity extends BaseActivity implements HelperRespon
     }
 
     private void showErrorDialog(String errorMessage, boolean isTimeout) {
-        allAppointmentsFragment.swipeToRefresh.setRefreshing(false);
-        activeAppointmentsFragment.swipeToRefresh.setRefreshing(false);
+        if (activeAppointmentsFragment.swipeToRefresh != null)
+            activeAppointmentsFragment.swipeToRefresh.setRefreshing(false);
+        if (allAppointmentsFragment.swipeToRefresh != null)
+            allAppointmentsFragment.swipeToRefresh.setRefreshing(false);
         CommonMethods.showErrorDialog(errorMessage, mContext, isTimeout, new ErrorDialogCallback() {
             @Override
             public void ok() {

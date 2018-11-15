@@ -43,16 +43,14 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp1"
-                    android:background="@color/white"
-                    android:layout_marginTop="@dimen/dp5"
-                    android:layout_marginLeft="@dimen/dp10"
-                    android:layout_marginRight="@dimen/dp10"
                     android:layout_marginStart="@dimen/dp10"
+                    android:layout_marginLeft="@dimen/dp10"
+                    android:layout_marginTop="@dimen/dp5"
                     android:layout_marginEnd="@dimen/dp10"
+                    android:layout_marginRight="@dimen/dp10"
                     android:layout_marginBottom="5dp"
-                    />
+                    android:background="@color/white" />
             </LinearLayout>
-
 
 
             <android.support.v7.widget.RecyclerView
@@ -62,13 +60,19 @@
                 android:orientation="horizontal"
                 app:reverseLayout="false" />
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/expandableListView"
+            <android.support.v4.widget.SwipeRefreshLayout
+                android:id="@+id/swipeToRefresh"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                app:reverseLayout="false" />
+                android:layout_height="match_parent">
 
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/expandableListView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    app:reverseLayout="false" />
+
+            </android.support.v4.widget.SwipeRefreshLayout>
 
             <include
                 android:id="@+id/emptyListView"
@@ -76,17 +80,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:visibility="visible" />
-
-            <!-- <ExpandableListView
-                 android:id="@+id/expandableListView"
-                 android:layout_width="match_parent"
-                 android:layout_height="match_parent"
-                 android:clipToPadding="false"
-                 android:divider="@null"
-                 android:groupIndicator="@android:color/holo_red_dark"
-                 android:paddingBottom="@dimen/dp58"
-                 android:paddingTop="@dimen/dp8"
-                 android:visibility="gone" />-->
 
         </LinearLayout>
 

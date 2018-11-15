@@ -216,8 +216,8 @@ public class AndroidTreeView {
                         else collapseNode(node1, false);
                     }
         }
-
     }
+
     private void collapseNode(TreeNode node, final boolean includeSubnodes) {
         node.setExpanded(false);
         TreeNode.BaseNodeViewHolder nodeViewHolder = getViewHolderForNode(node);

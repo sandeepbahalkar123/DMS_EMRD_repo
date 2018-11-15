@@ -17,6 +17,10 @@ public class LstDateFolderType {
     @Expose
     private int pageCount;
 
+    @SerializedName("nodeColor")
+    @Expose
+    private String nodeColor;
+
     @SerializedName("confidentialState")
     @Expose
     private int confidentialState;
@@ -24,6 +28,10 @@ public class LstDateFolderType {
     @SerializedName("lstDocCategories")
     @Expose
     private List<LstDocCategory> lstDocCategories = new ArrayList<LstDocCategory>();
+
+    @SerializedName("lsthideDocCategory")
+    @Expose
+    private List<LstHideDocType> lsthideDocCategory = new ArrayList<LstHideDocType>();
 
     private int totalDocCategoryPageCount = -1;
 
@@ -33,6 +41,14 @@ public class LstDateFolderType {
 
     public void setDateFolderType(String dateFolderType) {
         this.dateFolderType = dateFolderType;
+    }
+
+    public String getNodeColor() {
+        return nodeColor == null ? "#000000" : nodeColor;
+    }
+
+    public void setNodeColor(String nodeColor) {
+        this.nodeColor = nodeColor;
     }
 
     public int getPageCount() {
@@ -73,6 +89,14 @@ public class LstDateFolderType {
 
     public void setConfidentialState(int confidentialState) {
         this.confidentialState = confidentialState;
+    }
+
+    public List<LstHideDocType> getLsthideDocCategory() {
+        return lsthideDocCategory;
+    }
+
+    public void setLsthideDocCategory(List<LstHideDocType> lsthideDocCategory) {
+        this.lsthideDocCategory = lsthideDocCategory;
     }
 
     @Override

@@ -811,12 +811,8 @@
                                 android:textOn="@string/on" />
 
                         </LinearLayout>
-
                     </LinearLayout>
-
                 </LinearLayout>
-
-
             </LinearLayout>
 
 
@@ -861,17 +857,18 @@
                 android:background="@color/grey_500" />
 
             <RelativeLayout
-                android:id="@+id/fileTypeTreeViewContainer"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"></RelativeLayout>
+                android:layout_height="match_parent">
 
-            <include
-                 layout="@layout/common_no_records_found" />
+                <RelativeLayout
+                    android:id="@+id/fileTypeTreeViewContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+                <include layout="@layout/common_no_records_found" />
+            </RelativeLayout>
 
         </LinearLayout>
-
-
     </RelativeLayout>
 
 

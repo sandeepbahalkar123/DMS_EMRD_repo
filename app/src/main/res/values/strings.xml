@@ -172,7 +172,7 @@
     </string-array>
     <string-array name="get_archived_preference_list">
         <item>Folder</item>
-        <item>File</item>
+        <!--<item>File</item>-->
         <item>Date</item>
         <item>My Order</item>
     </string-array>
@@ -238,5 +238,6 @@
     <string name="check_wifi_connection">The Wifi connection appears to be off. Please, check the Wifi settings and try again.</string>
     <string name="raise_request_episode">Raise Request</string>
     <string name="select_file_type">Select File Type</string>
+    <string name="id_type">ID Type</string>
 
 </resources>

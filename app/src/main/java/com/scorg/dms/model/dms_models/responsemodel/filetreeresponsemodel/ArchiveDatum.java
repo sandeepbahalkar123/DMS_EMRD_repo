@@ -31,16 +31,24 @@ public class ArchiveDatum {
 
     @SerializedName("lstOrderedDocTypes")
     @Expose
-    private List<LstOrderedDocType> lstOrderedDocTypes = new ArrayList<LstOrderedDocType>();
+    private List<LstDateFileType> lstOrderedDocTypes = new ArrayList<LstDateFileType>();
 
     @SerializedName("lsthideDocCategory")
     @Expose
     private List<LstHideDocType> lstHideDocTypes = new ArrayList<LstHideDocType>();
 
-    private int totalLstDateFolderTypePageCount = -1;
-    private int totalArchiveDataLstDocCategoriesPageCount = -1;
-    private int totalArchiveDataLstOrderPageCount = -1;
-    private int totalArchiveDataLstHidePageCount = -1;
+    @SerializedName("nodeColor")
+    @Expose
+    private String nodeColor;
+
+    @SerializedName("pageCount")
+    @Expose
+    private int pageCount;
+
+//    private int totalLstDateFolderTypePageCount = -1;
+//    private int totalArchiveDataLstDocCategoriesPageCount = -1;
+//    private int totalArchiveDataLstOrderPageCount = -1;
+//    private int totalArchiveDataLstHidePageCount = -1;
 
 
     public String getFileType() {
@@ -59,7 +67,7 @@ public class ArchiveDatum {
         this.lstDateFolderTypeList = lstDateFolderTypeList;
     }
 
-    public void setTotalLstDateFolderTypePageCount(int totalLstDateFolderTypePageCount) {
+   /* public void setTotalLstDateFolderTypePageCount(int totalLstDateFolderTypePageCount) {
         this.totalLstDateFolderTypePageCount = totalLstDateFolderTypePageCount;
     }
 
@@ -75,7 +83,7 @@ public class ArchiveDatum {
             setTotalLstDateFolderTypePageCount(count);
         }
         return totalLstDateFolderTypePageCount;
-    }
+    }*/
 
     public List<LstDocCategory> getArchiveDataLstDocCategories() {
         return archiveDataLstDocCategories;
@@ -85,7 +93,7 @@ public class ArchiveDatum {
         this.archiveDataLstDocCategories = archiveDataLstDocCategories;
     }
 
-    public void setTotalArchiveDataLstDocCategoriesPageCount(int totalArchiveDataLstDocCategoriesPageCount) {
+    /*public void setTotalArchiveDataLstDocCategoriesPageCount(int totalArchiveDataLstDocCategoriesPageCount) {
         this.totalArchiveDataLstDocCategoriesPageCount = totalArchiveDataLstDocCategoriesPageCount;
     }
 
@@ -112,7 +120,7 @@ public class ArchiveDatum {
         if (lstOrderedDocTypes != null) {
             if (totalArchiveDataLstOrderPageCount == -1) {
                 int count = 0;
-                for (LstOrderedDocType temp :
+                for (LstDateFileType temp :
                         lstOrderedDocTypes) {
                     count = count + temp.getPageCount();
                 }
@@ -136,7 +144,7 @@ public class ArchiveDatum {
         }
 
         return totalArchiveDataLstOrderPageCount;
-    }
+    }*/
 
     public int getConfidentialState() {
         return confidentialState;
@@ -146,11 +154,11 @@ public class ArchiveDatum {
         this.confidentialState = confidentialState;
     }
 
-    public List<LstOrderedDocType> getLstOrderedDocTypes() {
+    public List<LstDateFileType> getLstOrderedDocTypes() {
         return lstOrderedDocTypes;
     }
 
-    public void setLstOrderedDocTypes(List<LstOrderedDocType> lstOrderedDocTypes) {
+    public void setLstOrderedDocTypes(List<LstDateFileType> lstOrderedDocTypes) {
         this.lstOrderedDocTypes = lstOrderedDocTypes;
     }
 
@@ -170,8 +178,24 @@ public class ArchiveDatum {
         this.lstHideDocTypes = lstHideDocTypes;
     }
 
-    public void setTotalArchiveDataLstHidePageCount(int totalArchiveDataLstHidePageCount) {
+    /*public void setTotalArchiveDataLstHidePageCount(int totalArchiveDataLstHidePageCount) {
         this.totalArchiveDataLstHidePageCount = totalArchiveDataLstHidePageCount;
+    }*/
+
+    public String getNodeColor() {
+        return nodeColor == null ? "#000000" : nodeColor;
+    }
+
+    public void setNodeColor(String nodeColor) {
+        this.nodeColor = nodeColor;
+    }
+
+    public int getPageCount() {
+        return pageCount;
+    }
+
+    public void setPageCount(int pageCount) {
+        this.pageCount = pageCount;
     }
 
     @Override
@@ -180,7 +204,6 @@ public class ArchiveDatum {
                 "fileType='" + fileType + '\'' +
                 ", lstDateFolderTypeList=" + lstDateFolderTypeList +
                 ", archiveDataLstDocCategories=" + archiveDataLstDocCategories +
-                ", totalLstDateFolderTypePageCount=" + totalLstDateFolderTypePageCount +
                 ", confidentialState=" + confidentialState +
                 '}';
     }

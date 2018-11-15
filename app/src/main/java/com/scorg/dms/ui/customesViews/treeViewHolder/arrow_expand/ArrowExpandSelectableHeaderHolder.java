@@ -19,6 +19,12 @@ import android.widget.TextView;
 import com.scorg.dms.R;
 import com.scorg.dms.model.dms_models.responsemodel.annotationlistresponsemodel.AnnotationList;
 import com.scorg.dms.model.dms_models.responsemodel.annotationlistresponsemodel.DocTypeList;
+import com.scorg.dms.model.dms_models.responsemodel.filetreeresponsemodel.ArchiveDatum;
+import com.scorg.dms.model.dms_models.responsemodel.filetreeresponsemodel.LstDateFileType;
+import com.scorg.dms.model.dms_models.responsemodel.filetreeresponsemodel.LstDateFolderType;
+import com.scorg.dms.model.dms_models.responsemodel.filetreeresponsemodel.LstDocCategory;
+import com.scorg.dms.model.dms_models.responsemodel.filetreeresponsemodel.LstDocType;
+import com.scorg.dms.model.dms_models.responsemodel.filetreeresponsemodel.LstHideDocType;
 import com.scorg.dms.singleton.DMSApplication;
 import com.unnamed.b.atv.model.TreeNode;
 
@@ -64,7 +70,7 @@ public class ArrowExpandSelectableHeaderHolder extends TreeNode.BaseNodeViewHold
     public View createNodeView(final TreeNode node, final ArrowExpandIconTreeItemHolder.IconTreeItem value) {
         final LayoutInflater inflater = LayoutInflater.from(context);
         final View view = inflater.inflate(R.layout.treeview_arrow_expandable_header, null, false);
-        nodeSelector = (AppCompatCheckBox) view.findViewById(R.id.node_selector);
+        nodeSelector = view.findViewById(R.id.node_selector);
 
 
         int[][] states = new int[][]{
@@ -84,15 +90,15 @@ public class ArrowExpandSelectableHeaderHolder extends TreeNode.BaseNodeViewHold
         nodeSelector.setSupportButtonTintList(myList);
 
 
-        icon_lock = (ImageView) view.findViewById(R.id.icon_lock);
+        icon_lock = view.findViewById(R.id.icon_lock);
         icon_lock.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
-        arrowView = (ImageView) view.findViewById(R.id.icon);
+        arrowView = view.findViewById(R.id.icon);
         arrowView.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
-        mainContentLayout = (LinearLayout) view.findViewById(R.id.mainContentLayout);
+        mainContentLayout = view.findViewById(R.id.mainContentLayout);
 
         mainContentLayout.setPadding(leftPadding, 0, 0, 0);
 
-        tvValue = (TextView) view.findViewById(R.id.node_value);
+        tvValue = view.findViewById(R.id.node_value);
         tvValue.setTextColor(getNodeValueColor());
 
         if (isTreeLabelBold())
@@ -123,23 +129,21 @@ public class ArrowExpandSelectableHeaderHolder extends TreeNode.BaseNodeViewHold
             }
         });
 
-//        arrowView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                tView.toggleNode(node, isOnlyOneNodeExpanded());
-//            }
-//        });
+        arrowView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                tView.toggleNode(node, isOnlyOneNodeExpanded());
+            }
+        });
 
         if (istViewClickRequired) {
-            tvValue.getRootView().setOnClickListener(new View.OnClickListener() {
+            tvValue.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     tView.toggleNode(node, isOnlyOneNodeExpanded());
                 }
             });
-
         }
-
 
         nodeSelector.setClickable(false);
         nodeSelector.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -190,6 +194,32 @@ public class ArrowExpandSelectableHeaderHolder extends TreeNode.BaseNodeViewHold
             nodeSelector.setChecked(((AnnotationList) value.objectData).
                     getSelected());
         }
+
+        if (value.objectData instanceof ArchiveDatum)
+            tvValue.setTextColor(Color.parseColor(((ArchiveDatum) value.objectData).getNodeColor()));
+        else if (value.objectData instanceof LstDocType) {
+            tvValue.setTextColor(Color.parseColor(((LstDocType) value.objectData).getNodeColor()));
+
+            // Favorite logic -----------------------------
+            if (node.isLeaf()) {
+                if (((LstDocType) value.objectData).isFavourite()) {
+                    node.setExpanded(true);
+                    if (node.getParent() != null)
+                        node.getParent().setExpanded(true);
+                    if (node.getRoot() != null)
+                        node.getRoot().setExpanded(true);
+                }
+            }
+            // Favorite logic -----------------------------
+
+        } else if (value.objectData instanceof LstDateFileType)
+            tvValue.setTextColor(Color.parseColor(((LstDateFileType) value.objectData).getNodeColor()));
+        else if (value.objectData instanceof LstDateFolderType)
+            tvValue.setTextColor(Color.parseColor(((LstDateFolderType) value.objectData).getNodeColor()));
+        else if (value.objectData instanceof LstDocCategory)
+            tvValue.setTextColor(Color.parseColor(((LstDocCategory) value.objectData).getNodeColor()));
+        else if (value.objectData instanceof LstHideDocType)
+            tvValue.setTextColor(Color.parseColor(((LstHideDocType) value.objectData).getNodeColor()));
 
         if (confidentialState == 2 || confidentialState == 3 || confidentialState == 4) {
             icon_lock.setVisibility(View.VISIBLE);
