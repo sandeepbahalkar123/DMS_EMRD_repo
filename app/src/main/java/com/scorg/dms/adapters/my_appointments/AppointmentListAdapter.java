@@ -78,7 +78,7 @@ public class AppointmentListAdapter
     private Context mContext;
     private ArrayList<AppointmentPatientData> mAppointmentDataList;
     private ArrayList<AppointmentPatientData> mAppointmentDataListOriginal;
-
+    GradientDrawable appointmentConsultationTypeButtonBackground ;
 
     public AppointmentListAdapter(Context context, ArrayList<AppointmentPatientData> waitingDataList, OnItemClickListener onItemClickListener) {
         this.mContext = context;
@@ -91,6 +91,11 @@ public class AppointmentListAdapter
         buttonBackground.setShape(GradientDrawable.RECTANGLE);
         buttonBackground.setColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
         buttonBackground.setCornerRadius(mContext.getResources().getDimension(R.dimen.dp5));
+        appointmentConsultationTypeButtonBackground= new GradientDrawable();
+        appointmentConsultationTypeButtonBackground.setShape(GradientDrawable.RECTANGLE);
+        appointmentConsultationTypeButtonBackground.setCornerRadius(context.getResources().getDimension(R.dimen.dp4));
+        appointmentConsultationTypeButtonBackground.setStroke(2, Color.parseColor(DMSApplication.COLOR_PRIMARY));
+
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
@@ -183,7 +188,8 @@ public class AppointmentListAdapter
         holder.patientPhoneNumber.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         holder.separatorView.setBackgroundColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         holder.viewLine1.setBackgroundColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
-
+        holder.appointmentConsultationType.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+        holder.appointmentConsultationType.setBackground(appointmentConsultationTypeButtonBackground);
 
         String salutation = appointmentPatientDataObject.getSalutation();
         String patientName = toCamelCase(appointmentPatientDataObject.getPatientName());
@@ -248,35 +254,60 @@ public class AppointmentListAdapter
             holder.patientGenderTextView.setVisibility(View.GONE);
         }
         //-----------
+
+        GradientDrawable appointmentStatusButtonBackground = new GradientDrawable();
+        appointmentStatusButtonBackground.setShape(GradientDrawable.RECTANGLE);
+        appointmentStatusButtonBackground.setCornerRadius(mContext.getResources().getDimension(R.dimen.dp4));
+
         if (appointmentPatientDataObject.getAppointmentStatus().contains(BOOKED_STATUS)) {
             holder.opdTypeTextView.setTextColor(ContextCompat.getColor(mContext, R.color.book_color));
             holder.opdTypeTextView.setText(mContext.getString(R.string.booked));
+            appointmentStatusButtonBackground.setStroke(2, ContextCompat.getColor(mContext, R.color.book_color));
+            holder.opdTypeTextView.setBackground(appointmentStatusButtonBackground);
         } else if (appointmentPatientDataObject.getAppointmentStatus().contains(COMPLETED_STATUS)) {
             holder.opdTypeTextView.setText(mContext.getString(R.string.capitalcompleted));
             holder.opdTypeTextView.setTextColor(ContextCompat.getColor(mContext, R.color.complete_color));
+            appointmentStatusButtonBackground.setStroke(2, ContextCompat.getColor(mContext, R.color.complete_color));
+            holder.opdTypeTextView.setBackground(appointmentStatusButtonBackground);
         } else if (appointmentPatientDataObject.getAppointmentStatus().contains(CONFIRM_STATUS)) {
             holder.opdTypeTextView.setText(appointmentPatientDataObject.getAppointmentStatus());
             holder.opdTypeTextView.setTextColor(ContextCompat.getColor(mContext, R.color.confirm_color));
+            appointmentStatusButtonBackground.setStroke(2, ContextCompat.getColor(mContext, R.color.confirm_color));
+            holder.opdTypeTextView.setBackground(appointmentStatusButtonBackground);
         } else if (appointmentPatientDataObject.getAppointmentStatus().contains(CANCEL_STATUS)) {
             holder.opdTypeTextView.setText(appointmentPatientDataObject.getAppointmentStatus());
             holder.opdTypeTextView.setTextColor(ContextCompat.getColor(mContext, R.color.cancel_color));
+            appointmentStatusButtonBackground.setStroke(2, ContextCompat.getColor(mContext, R.color.cancel_color));
+            holder.opdTypeTextView.setBackground(appointmentStatusButtonBackground);
         } else if (appointmentPatientDataObject.getAppointmentStatus().equals(NO_SHOW)) {
             holder.opdTypeTextView.setText(appointmentPatientDataObject.getAppointmentStatus());
             holder.opdTypeTextView.setTextColor(ContextCompat.getColor(mContext, R.color.no_show_color));
+            appointmentStatusButtonBackground.setStroke(2, ContextCompat.getColor(mContext, R.color.no_show_color));
+            holder.opdTypeTextView.setBackground(appointmentStatusButtonBackground);
         } else if (appointmentPatientDataObject.getAppointmentStatus().equals(OTHER)) {
             holder.opdTypeTextView.setText(appointmentPatientDataObject.getAppointmentStatus());
             holder.opdTypeTextView.setTextColor(ContextCompat.getColor(mContext, R.color.other_color));
+            appointmentStatusButtonBackground.setStroke(2, ContextCompat.getColor(mContext, R.color.other_color));
+            holder.opdTypeTextView.setBackground(appointmentStatusButtonBackground);
+
         }
+
+
         //---------
         String appDate = appointmentPatientDataObject.getAppDate();
         if (appDate != null) {
             holder.appointmentTime.setVisibility(View.VISIBLE);
             holder.appointmentTime.setText(CommonMethods.formatDateTime(appDate, DMSConstants.DATE_PATTERN.hh_mm_a, DMSConstants.DATE_PATTERN.UTC_PATTERN, DMSConstants.TIME).toLowerCase());
+        } else {
+            holder.appointmentTime.setVisibility(View.INVISIBLE);
         }
+
 
         String consultationType = appointmentPatientDataObject.getConsultationType();
         if (!consultationType.equalsIgnoreCase("")) {
             holder.appointmentConsultationType.setText(consultationType);
+        }else {
+            holder.appointmentConsultationType.setVisibility(View.INVISIBLE);
         }
 
         //-------
@@ -362,8 +393,8 @@ public class AppointmentListAdapter
                 }
             }
         });
-        if (DMSApplication.APPOINTMENT_STATUS_URL.equalsIgnoreCase(""))
-            holder.btnDone.setVisibility(View.INVISIBLE);
+//        if (DMSApplication.APPOINTMENT_STATUS_URL.equalsIgnoreCase(""))
+//            holder.btnDone.setVisibility(View.INVISIBLE);
 
         holder.layoutAppointmentCode.setVisibility(View.VISIBLE);
         holder.patientAppointmentsCode.setText("" + appointmentPatientDataObject.getAppointmentCode());

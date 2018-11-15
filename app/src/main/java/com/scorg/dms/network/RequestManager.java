@@ -91,7 +91,7 @@ public class RequestManager extends ConnectRequest implements Connector, Request
     @Override
     public void connect() {
 
-        if (NetworkUtil.isInternetAvailable(mContext)) {
+//        if (NetworkUtil.isInternetAvailable(mContext)) {
 
             RequestPool.getInstance(this.mContext).cancellAllPreviousRequestWithSameTag(requestTag);
 
@@ -111,13 +111,13 @@ public class RequestManager extends ConnectRequest implements Connector, Request
             } else {
                 jsonRequest();
             }
-        } else {
-            mConnectionListener.onResponse(ConnectionListener.NO_INTERNET, null, mOldDataTag);
-            if (mViewById != null)
-                CommonMethods.showSnack(mViewById, mContext.getString(R.string.internet));
-//            else
-//                CommonMethods.showToast(mContext, mContext.getString(R.string.internet));
-        }
+//        } else {
+//            mConnectionListener.onResponse(ConnectionListener.NO_INTERNET, null, mOldDataTag);
+//            if (mViewById != null)
+//                CommonMethods.showSnack(mViewById, mContext.getString(R.string.internet));
+////            else
+////                CommonMethods.showToast(mContext, mContext.getString(R.string.internet));
+//        }
     }
 
     private void jsonRequest(String url, int connectionType, final Map<String, String> headerParams, CustomResponse customResponse, final boolean isTokenExpired) {

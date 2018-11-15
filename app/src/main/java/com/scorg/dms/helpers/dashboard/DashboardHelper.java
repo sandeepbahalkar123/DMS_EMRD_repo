@@ -32,7 +32,6 @@ public class DashboardHelper implements ConnectionListener {
 
     @Override
     public void onResponse(int responseResult, CustomResponse customResponse, String mOldDataTag) {
-
         //CommonMethods.Log(TAG, customResponse.toString());
         switch (responseResult) {
             case ConnectionListener.RESPONSE_OK:

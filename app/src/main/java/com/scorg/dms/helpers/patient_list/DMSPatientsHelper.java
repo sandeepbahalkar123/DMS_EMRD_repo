@@ -64,7 +64,6 @@ public class DMSPatientsHelper implements ConnectionListener {
 
 
     public void raiseUnlockRequestArchivedFile(RaiseUnlockRequestModel unlockRequestModel) {
-
         ConnectionFactory mConnectionFactory = new ConnectionFactory(mContext, this, null, true, DMSConstants.TASK_RAISE_REQUEST_CONFIDENTIAL, Request.Method.POST, false);
         mConnectionFactory.setHeaderParams();
         mConnectionFactory.setPostParams(unlockRequestModel);

@@ -129,7 +129,7 @@ public class AllRequestListFragment extends Fragment implements RequestListAdapt
         mRecyclerView.addOnScrollListener(new EndlessRecyclerViewScrollListener(linearlayoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
-                if (NetworkUtil.isInternetAvailable(mParentActivity) && mIsLoadMorePatients) {
+                if (mIsLoadMorePatients) {
                     currentPage = currentPage + 1;
                     mPendingApprovalHelper.doGetPendingApprovalData(currentPage, false);
                 }

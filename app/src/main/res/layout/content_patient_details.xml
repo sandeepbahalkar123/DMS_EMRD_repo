@@ -44,48 +44,98 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="horizontal"
+                android:weightSum="1">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingStart="@dimen/dp2"
-                    android:paddingLeft="@dimen/dp2"
-                    android:paddingBottom="@dimen/dp1">
+                    android:layout_weight="0.3"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingStart="@dimen/dp2"
+                            android:paddingLeft="@dimen/dp2"
+                            android:paddingBottom="@dimen/dp1">
+
+                            <TextView
+                                android:id="@+id/labelUHID"
+                                style="@style/editTextInputLayout"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="left|center"
+                                android:paddingRight="@dimen/dp5"
+                                android:text="@string/uhid"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/sp13" />
+
+                            <TextView
+                                android:id="@+id/uhidData"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="left|center"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/sp13" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
 
                     <TextView
-                        android:id="@+id/labelUHID"
-                        style="@style/editTextInputLayout"
-                        android:layout_width="wrap_content"
+                        android:id="@+id/patientName"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="left|center"
-                        android:paddingRight="@dimen/dp5"
-                        android:text="@string/uhid"
+                        android:paddingStart="@dimen/dp2"
+                        android:paddingLeft="@dimen/dp2"
+                        android:paddingBottom="@dimen/dp1"
+                        android:fontFamily="@font/roboto_regular"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/sp13" />
-
-                    <TextView
-                        android:id="@+id/uhidData"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="left|center"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/sp13" />
-
+                        android:textSize="@dimen/sp13"
+                        tools:text="Yogesh" />
                 </LinearLayout>
 
-                <TextView
-                    android:id="@+id/patientName"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="left|center"
-                    android:paddingStart="@dimen/dp2"
-                    android:paddingLeft="@dimen/dp2"
-                    android:paddingBottom="@dimen/dp1"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/sp13"
-                    tools:text="Yogesh" />
+                    android:layout_height="match_parent"
+                    android:gravity="bottom|right"
+                    android:layout_weight="0.7">
+                    <TextView
+                        android:id="@+id/btnEpisodeRaiseRequest"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="@dimen/dp2"
+                        android:paddingLeft="@dimen/dp2"
+                        android:paddingBottom="@dimen/dp5"
+                        android:paddingEnd="@dimen/dp2"
+                        android:paddingRight="@dimen/dp2"
+                        android:paddingTop="@dimen/dp5"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:fontFamily="@font/roboto_regular"
+                        android:textSize="@dimen/sp12"
+                        android:visibility="gone"
+                        android:layout_marginRight="@dimen/dp5"
+                        android:text="@string/raise_request_episode"/>
+
+
+                </LinearLayout>
             </LinearLayout>
 
         </LinearLayout>
@@ -115,14 +165,13 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp1"
-                android:background="@color/white"
-                android:layout_marginTop="@dimen/dp5"
-                android:layout_marginLeft="@dimen/dp10"
-                android:layout_marginRight="@dimen/dp10"
                 android:layout_marginStart="@dimen/dp10"
+                android:layout_marginLeft="@dimen/dp10"
+                android:layout_marginTop="@dimen/dp5"
                 android:layout_marginEnd="@dimen/dp10"
+                android:layout_marginRight="@dimen/dp10"
                 android:layout_marginBottom="5dp"
-                />
+                android:background="@color/white" />
         </LinearLayout>
 
 

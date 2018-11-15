@@ -17,6 +17,15 @@ public class RaiseUnlockRequestModel implements CustomResponse {
     @Expose
     private String[] CheckList;
 
+    @SerializedName("fileTypeId")
+    @Expose
+    private String[] fileTypeId;
+
+
+    @SerializedName("patId")
+    @Expose
+    private String patId;
+
 
     public String getRequestTypeId() {
         return RequestTypeId;
@@ -32,5 +41,21 @@ public class RaiseUnlockRequestModel implements CustomResponse {
 
     public void setCheckList(String[] checkList) {
         CheckList = checkList;
+    }
+
+    public String[] getFileTypeId() {
+        return fileTypeId;
+    }
+
+    public void setFileTypeId(String[] fileTypeId) {
+        this.fileTypeId = fileTypeId;
+    }
+
+    public String getPatId() {
+        return patId;
+    }
+
+    public void setPatId(String patId) {
+        this.patId = patId;
     }
 }

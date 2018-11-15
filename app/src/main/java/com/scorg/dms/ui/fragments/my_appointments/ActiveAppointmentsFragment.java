@@ -63,9 +63,6 @@ public class ActiveAppointmentsFragment extends Fragment implements AppointmentL
     Unbinder unbinder;
     ViewRights viewRights;
     private AppointmentListAdapter mAppointmentListAdapter;
-    private AppointmentHelper mAppointmentHelper;
-    private ArrayList<AppointmentPatientData> mAppointmentPatientData;
-    private DMSPatientsHelper mPatientsHelper;
     private OnFragmentInteraction onFragmentInteraction;
 
     public static ActiveAppointmentsFragment newInstance() {

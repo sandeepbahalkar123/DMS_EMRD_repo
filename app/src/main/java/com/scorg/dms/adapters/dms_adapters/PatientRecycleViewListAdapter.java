@@ -92,13 +92,6 @@ public class PatientRecycleViewListAdapter extends RecyclerView.Adapter<PatientR
         groupViewHolder.uhid.setText(DMSApplication.LABEL_UHID + ":");
 
 
-        // groupViewHolder.cardView.setBackground(ContextCompat.getDrawable(_context, R.drawable.round_background_full_view));
-
-        groupViewHolder.groupItemCollapseButton.setVisibility(View.GONE);
-        groupViewHolder.groupItemExpandCollapseButton.setImageResource(R.drawable.ic_expand_more_black_24dp);
-        //  groupViewHolder.divider.setVisibility(View.VISIBLE);
-
-
         //-------------
         TextDrawable textDrawable = CommonMethods.getTextDrawable(groupViewHolder.patientImageView.getContext(), groupHeader.getPatientName());
         RequestOptions requestOptions = new RequestOptions();
@@ -187,28 +180,18 @@ public class PatientRecycleViewListAdapter extends RecyclerView.Adapter<PatientR
         LinearLayout mainContentLayout;
         @BindView(R.id.userName)
         TextView userName;
-
         @BindView(R.id.userAge)
         TextView userAge;
-
         @BindView(R.id.userGender)
         TextView userGender;
-
-
         @BindView(R.id.uhid)
         TextView uhid;
         @BindView(R.id.patientId)
         TextView patientId;
-        @BindView(R.id.groupItemExpandCollapseButton)
-        AppCompatImageButton groupItemExpandCollapseButton;
-        @BindView(R.id.groupItemCollapseButton)
-        LinearLayout groupItemCollapseButton;
         @BindView(R.id.patientImageView)
         ImageView patientImageView;
         @BindView(R.id.bluelineImageView)
         ImageView bluelineImageView;
-
-
         @BindView(R.id.episodeList)
         TextView episodeList;
 

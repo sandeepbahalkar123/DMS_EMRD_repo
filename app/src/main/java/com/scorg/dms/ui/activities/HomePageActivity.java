@@ -119,12 +119,6 @@ public class HomePageActivity extends BaseActivity implements HelperResponse, Da
     @BindView(R.id.nav_right_view)
     FrameLayout mRightNavigationView;
 
-//    @BindView(R.id.viewShow)
-//    TextView viewShow;
-//
-//    @BindView(R.id.viewHide)
-//    TextView viewHide;
-
     @BindView(R.id.txtDashboardHeader)
     TextView txtDashboardHeader;
 
@@ -286,10 +280,12 @@ public class HomePageActivity extends BaseActivity implements HelperResponse, Da
             public void onTabSelected(TabLayout.Tab tab) {
                 if (tab.getPosition() == 0) {
                     tab.getCustomView().setBackground(buttonBackgroundActiveSelected);
-                    setAppointmentAdapter(appointmentActivePatientData);
+                    if (mDashboardDataModel != null)
+                        setAppointmentAdapter(appointmentActivePatientData);
                 } else {
                     tab.getCustomView().setBackground(buttonBackgroundViewAllSelected);
-                    setAppointmentAdapter(mDashboardDataModel.getAppointmentPatientDataList());
+                    if (mDashboardDataModel != null)
+                        setAppointmentAdapter(mDashboardDataModel.getAppointmentPatientDataList());
                 }
                 TextView textView = tab.getCustomView().findViewById(R.id.textTab);
                 textView.setTextColor(getResources().getColor(R.color.white));
@@ -446,14 +442,11 @@ public class HomePageActivity extends BaseActivity implements HelperResponse, Da
 
                     mDashboardDataModel = mDashboardBaseModel.getDashboardDataModel();
                     if (mDashboardDataModel != null) {
-//                        viewShow.setClickable(true);
-//                        viewHide.setClickable(true);
                         pendingApprovalCount.setText(mDashboardDataModel.getPendingApprovedCount());
                         totalPatientsCount.setText(mDashboardDataModel.getTotalPatientCount());
                         todayAppointmentsCount.setText(mDashboardDataModel.getAppointmentCount());
                         // waitingPatientCount.setText(mDashboardDataModel.getWaitingCount());
                         admittedPatientCount.setText(mDashboardDataModel.getAdmittedPatientCount());
-
 
                         DMSPreferencesManager.putInt(DMSPreferencesManager.DMS_PREFERENCES_KEY.ARCHIVE_API_COUNT, mDashboardDataModel.getViewArchivedApiTakeCount(), mContext);
                         DMSPreferencesManager.putString(DMSPreferencesManager.DMS_PREFERENCES_KEY.COLOR_PRIMARY, mDashboardDataModel.getColorPrimary(), mContext);
@@ -473,16 +466,19 @@ public class HomePageActivity extends BaseActivity implements HelperResponse, Da
                         DMSApplication.LABEL_DOCTOR_NAME = mDashboardDataModel.getLstLabelNameData().getLabelDoctorName();
                         DMSApplication.APPOINTMENT_STATUS_URL = mDashboardDataModel.getAppointmentStatusUrl();
                         setAssetsFromServer();
-//
-//                        if (DMSApplication.APPOINTMENT_STATUS_URL.equalsIgnoreCase(""))
-//                            layoutShowHide.setVisibility(View.INVISIBLE);
+
 
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                             getWindow().setStatusBarColor(Color.parseColor(DMSApplication.COLOR_DARK_PRIMARY));
                         }
-
                         appointmentActivePatientData = getBookedAppointment(mDashboardDataModel.getAppointmentPatientDataList());
-                        setAppointmentAdapter(appointmentActivePatientData);
+                        if (tabsActiveVieAll.getVisibility() == View.INVISIBLE)
+                            tabsActiveVieAll.setVisibility(View.VISIBLE);
+                        if (tabsActiveVieAll.getSelectedTabPosition() == 0) {
+                            setAppointmentAdapter(appointmentActivePatientData);
+                        } else {
+                            setAppointmentAdapter(mDashboardDataModel.getAppointmentPatientDataList());
+                        }
 
                         if (mDashboardDataModel.getAppointmentPatientDataList().size() <= 0) {
                             emptyListView.setVisibility(View.VISIBLE);
@@ -497,12 +493,13 @@ public class HomePageActivity extends BaseActivity implements HelperResponse, Da
                         admittedPatientCount.setText("0");
                         recyclerView.setVisibility(View.GONE);
                         emptyListView.setVisibility(View.VISIBLE);
+                        tabsActiveVieAll.setVisibility(View.INVISIBLE);
 
                     }
                 } else {
                     recyclerView.setVisibility(View.GONE);
                     emptyListView.setVisibility(View.VISIBLE);
-
+                    tabsActiveVieAll.setVisibility(View.INVISIBLE);
                 }
                 break;
         }
@@ -523,7 +520,7 @@ public class HomePageActivity extends BaseActivity implements HelperResponse, Da
         todayAppointmentsCount.setText("0");
         // waitingPatientCount.setText("0");
         admittedPatientCount.setText("0");
-
+        tabsActiveVieAll.setVisibility(View.INVISIBLE);
         if (mDrawer.isDrawerOpen(GravityCompat.START)) {
             Log.e("mDrawer", "open");
             mDrawer.closeDrawer(GravityCompat.START);
@@ -532,7 +529,8 @@ public class HomePageActivity extends BaseActivity implements HelperResponse, Da
 
     @Override
     public void onParseError(String mOldDataTag, String errorMessage) {
-        setErrorContent();
+        if (mDashboardDataModel == null)
+            setErrorContent();
         CommonMethods.showErrorDialog(errorMessage, mContext, false, new ErrorDialogCallback() {
             @Override
             public void ok() {
@@ -548,7 +546,8 @@ public class HomePageActivity extends BaseActivity implements HelperResponse, Da
 
     @Override
     public void onServerError(String mOldDataTag, String serverErrorMessage) {
-        setErrorContent();
+        if (mDashboardDataModel == null)
+            setErrorContent();
         CommonMethods.showErrorDialog(serverErrorMessage, mContext, false, new ErrorDialogCallback() {
             @Override
             public void ok() {
@@ -563,7 +562,8 @@ public class HomePageActivity extends BaseActivity implements HelperResponse, Da
 
     @Override
     public void onNoConnectionError(String mOldDataTag, String serverErrorMessage) {
-        setErrorContent();
+        if (mDashboardDataModel == null)
+            setErrorContent();
         CommonMethods.showErrorDialog(serverErrorMessage, mContext, false, new ErrorDialogCallback() {
             @Override
             public void ok() {
@@ -578,8 +578,9 @@ public class HomePageActivity extends BaseActivity implements HelperResponse, Da
 
     @Override
     public void onTimeOutError(String mOldDataTag, final String timeOutErrorMessage) {
-        setErrorContent();
-        CommonMethods.showErrorDialog(timeOutErrorMessage, mContext, false, new ErrorDialogCallback() {
+        if (mDashboardDataModel == null)
+            setErrorContent();
+        CommonMethods.showErrorDialog(timeOutErrorMessage, mContext, true, new ErrorDialogCallback() {
             @Override
             public void ok() {
             }
@@ -592,20 +593,19 @@ public class HomePageActivity extends BaseActivity implements HelperResponse, Da
 
     }
 
-    @OnClick({/*R.id.viewShow,*/ R.id.layoutDrawerIcon, R.id.layoutTotalPatients, R.id.layoutTodayAppointment, R.id.layoutWaitingPatient, R.id.layoutDrawerSetting, R.id.layoutDrawerSupport, R.id.layoutPendingApproval, R.id.layoutDrawerHome, R.id.layoutAdmittedPatient})
+    @OnClick({R.id.layoutDrawerIcon, R.id.layoutTotalPatients, R.id.layoutTodayAppointment, R.id.layoutWaitingPatient, R.id.layoutDrawerSetting, R.id.layoutDrawerSupport, R.id.layoutPendingApproval, R.id.layoutDrawerHome, R.id.layoutAdmittedPatient})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.layoutTodayAppointment:
-                if (mDashboardDataModel != null) {
-                    Intent myAppointmentsActivity = new Intent(this, MyAppointmentsActivity.class);
-                    startActivity(myAppointmentsActivity);
-                }
+
+                Intent myAppointmentsActivity = new Intent(this, MyAppointmentsActivity.class);
+                startActivity(myAppointmentsActivity);
                 break;
             case R.id.layoutAdmittedPatient:
-                if (mDashboardDataModel != null) {
-                    Intent admittedPatientsActivity = new Intent(this, AdmittedPatientsActivity.class);
-                    startActivity(admittedPatientsActivity);
-                }
+
+                Intent admittedPatientsActivity = new Intent(this, AdmittedPatientsActivity.class);
+                startActivity(admittedPatientsActivity);
+
                 break;
             case R.id.layoutWaitingPatient:
                 if (mDashboardDataModel != null) {
@@ -613,18 +613,29 @@ public class HomePageActivity extends BaseActivity implements HelperResponse, Da
                     startActivity(todayAppointmentsOrWaitingList);
                 }
                 break;
-
             case R.id.layoutPendingApproval:
-                if (mDashboardDataModel != null) {
-                    Intent pendingApprovalList = new Intent(this, RequestedArchivedMainListActivity.class);
-                    startActivity(pendingApprovalList);
-                }
+
+                Intent pendingApprovalList = new Intent(this, RequestedArchivedMainListActivity.class);
+                startActivity(pendingApprovalList);
+
                 break;
             case R.id.layoutTotalPatients:
                 if (mDashboardDataModel != null) {
                     Intent patientList = new Intent(this, PatientListActivity.class);
                     patientList.putExtra(DMSConstants.PATIENT_LIST_PARAMS.FILE_TYPE, mDashboardDataModel.getFileTypes());
                     startActivity(patientList);
+                } else {
+                    CommonMethods.showErrorDialog(getString(R.string.data_not_found), mContext, true, new ErrorDialogCallback() {
+                        @Override
+                        public void ok() {
+                        }
+
+                        @Override
+                        public void retry() {
+                            mDashboardHelper.doGetDashboardResponse();
+                        }
+                    });
+
                 }
                 break;
             case R.id.layoutDrawerSetting:
@@ -638,10 +649,6 @@ public class HomePageActivity extends BaseActivity implements HelperResponse, Da
             case R.id.layoutDrawerIcon:
                 mDrawer.openDrawer(GravityCompat.START);
                 break;
-//            case R.id.viewShow:
-//                Intent myAppointmentsActivity = new Intent(this, MyAppointmentsActivity.class);
-//                startActivity(myAppointmentsActivity);
-//                break;
             case R.id.layoutDrawerHome:
                 mDashboardHelper.doGetDashboardResponse();
                 break;

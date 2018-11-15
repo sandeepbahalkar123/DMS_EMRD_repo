@@ -3,11 +3,9 @@ package com.scorg.dms.ui.activities;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.os.Build;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -15,10 +13,10 @@ import com.scorg.dms.R;
 import com.scorg.dms.helpers.login.LoginHelper;
 import com.scorg.dms.interfaces.CheckIpConnection;
 import com.scorg.dms.interfaces.CustomResponse;
+import com.scorg.dms.interfaces.ErrorDialogCallback;
 import com.scorg.dms.interfaces.HelperResponse;
 import com.scorg.dms.model.dms_models.responsemodel.iptestresponsemodel.IpTestResponseModel;
 import com.scorg.dms.preference.DMSPreferencesManager;
-import com.scorg.dms.singleton.DMSApplication;
 import com.scorg.dms.util.CommonMethods;
 import com.scorg.dms.util.DMSConstants;
 
@@ -36,6 +34,7 @@ public class SplashScreenActivity extends BaseActivity implements HelperResponse
     ImageView splashBackground;
     @BindView(R.id.splashLogo)
     ImageView splashLogo;
+    WifiManager wifiCheck;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,12 +43,12 @@ public class SplashScreenActivity extends BaseActivity implements HelperResponse
         mContext = SplashScreenActivity.this;
         ButterKnife.bind(this);
         mLoginHelper = new LoginHelper(this, this);
+        wifiCheck = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         if (DMSPreferencesManager.getString(DMSPreferencesManager.CACHE_TIME, mContext).isEmpty())
             DMSPreferencesManager.putString(DMSPreferencesManager.CACHE_TIME, CommonMethods.getCurrentDate("ddMMyyyyhhmmss"), mContext);
 
         CommonMethods.setImageUrl(this, DMSConstants.Images.IC_LOGIN_BACKGROUD, splashBackground, R.drawable.login_background);
         CommonMethods.setImageUrl(this, DMSConstants.Images.IC_LOGIN_LOGO, splashLogo, R.drawable.login_logo);
-
         doAppCheckLogin();
     }
 
@@ -59,46 +58,69 @@ public class SplashScreenActivity extends BaseActivity implements HelperResponse
             @Override
             public void run() {
 
-                String userName = DMSPreferencesManager.getString(DMSConstants.USERNAME, mContext);
-                String password = DMSPreferencesManager.getString(DMSConstants.PASSWORD, mContext);
-
-                Intent intentObj = null;
-
-                if (DMSConstants.BLANK.equalsIgnoreCase(userName) || DMSConstants.BLANK.equalsIgnoreCase(password)) {
-                    if (!DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.IS_VALID_IP_CONFIG, mContext).equals(DMSConstants.TRUE)) {
-                        //alert dialog for serverpath
-                        CommonMethods.showIPAlertDialog(SplashScreenActivity.this, getString(R.string.server_path) + "\n" + getString(R.string.for_example_server_path), new CheckIpConnection() {
-                            @Override
-                            public void onOkButtonClickListner(String serverPath, Context context, Dialog dialog) {
-                                mDialog = dialog;
-                                mContext = context;
-                                DMSPreferencesManager.putString(DMSPreferencesManager.DMS_PREFERENCES_KEY.SERVER_PATH, serverPath, context);
-                                mLoginHelper.checkConnectionToServer(serverPath);
+                if (wifiCheck.isWifiEnabled()) {
 
 
-                            }
-                        });
+                    String userName = DMSPreferencesManager.getString(DMSConstants.USERNAME, mContext);
+                    String password = DMSPreferencesManager.getString(DMSConstants.PASSWORD, mContext);
+
+                    Intent intentObj = null;
+
+
+                    if (DMSConstants.BLANK.equalsIgnoreCase(userName) || DMSConstants.BLANK.equalsIgnoreCase(password)) {
+                        if (!DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.IS_VALID_IP_CONFIG, mContext).equals(DMSConstants.TRUE)) {
+                            //alert dialog for serverpath
+                            CommonMethods.showIPAlertDialog(SplashScreenActivity.this, getString(R.string.server_path) + "\n" + getString(R.string.for_example_server_path), new CheckIpConnection() {
+                                @Override
+                                public void onOkButtonClickListner(String serverPath, Context context, Dialog dialog) {
+                                    mDialog = dialog;
+                                    mContext = context;
+                                    DMSPreferencesManager.putString(DMSPreferencesManager.DMS_PREFERENCES_KEY.SERVER_PATH, serverPath, context);
+                                    mLoginHelper.checkConnectionToServer(serverPath);
+
+                                }
+                            });
+                        } else {
+                            intentObj = new Intent(mContext, LoginActivity.class);
+                            intentObj.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            intentObj.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            intentObj.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(intentObj);
+
+                            finish();
+                            overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+
+                        }
                     } else {
-                        intentObj = new Intent(mContext, LoginActivity.class);
-                        intentObj.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        intentObj.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        intentObj.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(intentObj);
+                        if (DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.IS_VALID_IP_CONFIG, mContext).equals(DMSConstants.TRUE)) {
+                            String serverPath = DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.SERVER_PATH, mContext);
+                            mLoginHelper.checkConnectionToServer(serverPath);
 
-                        finish();
-                        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+                        }
 
+//                            //------Check Remember ME first , then only move on next screen.
+//                        intentObj = new Intent(mContext, HomePageActivity.class);
+//                        intentObj.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                        intentObj.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                        intentObj.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                        startActivity(intentObj);
+//
+//                        finish();
+//                        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
                     }
                 } else {
-                    //------Check Remember ME first , then only move on next screen.
-                    intentObj = new Intent(mContext, HomePageActivity.class);
-                    intentObj.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    intentObj.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    intentObj.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(intentObj);
 
-                    finish();
-                    overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+                    CommonMethods.showErrorDialog(getString(R.string.check_wifi_connection), mContext, false, new ErrorDialogCallback() {
+                        @Override
+                        public void ok() {
+                            finish();
+                        }
+
+                        @Override
+                        public void retry() {
+
+                        }
+                    });
                 }
             }
         }, DMSConstants.TIME_STAMPS.THREE_SECONDS);
@@ -107,18 +129,37 @@ public class SplashScreenActivity extends BaseActivity implements HelperResponse
 
     @Override
     public void onSuccess(String mOldDataTag, CustomResponse customResponse) {
-        mDialog.dismiss();
+
         //TODO : IP CHECK API IN NOT IMPLEMENTED YET, HENCE COMMENTED BELOW CODE
 
         IpTestResponseModel ipTestResponseModel = (IpTestResponseModel) customResponse;
         if (ipTestResponseModel.getCommon().getStatusCode().equals(DMSConstants.SUCCESS)) {
-            DMSPreferencesManager.putString(DMSPreferencesManager.DMS_PREFERENCES_KEY.IS_VALID_IP_CONFIG, DMSConstants.TRUE, mContext);
-            Intent intentObj = new Intent(mContext, LoginActivity.class);
-            intentObj.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            intentObj.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            intentObj.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            mContext.startActivity(intentObj);
-            finish();
+
+            if (DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.IS_VALID_IP_CONFIG, mContext).equals(DMSConstants.TRUE)) {
+                DMSPreferencesManager.putString(DMSPreferencesManager.DMS_PREFERENCES_KEY.IS_VALID_IP_CONFIG, DMSConstants.TRUE, mContext);
+                DMSPreferencesManager.putString(DMSConstants.LOGIN_SUCCESS, DMSConstants.TRUE, mContext);
+
+                Intent intentObj = new Intent(mContext, HomePageActivity.class);
+                intentObj.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                intentObj.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intentObj.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intentObj);
+                finish();
+                overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+
+            } else {
+                mDialog.dismiss();
+                DMSPreferencesManager.putString(DMSPreferencesManager.DMS_PREFERENCES_KEY.IS_VALID_IP_CONFIG, DMSConstants.TRUE, mContext);
+                Intent intentObj = new Intent(mContext, LoginActivity.class);
+                intentObj.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                intentObj.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intentObj.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                mContext.startActivity(intentObj);
+                finish();
+            }
+
+        } else {
+
 
         }
     }

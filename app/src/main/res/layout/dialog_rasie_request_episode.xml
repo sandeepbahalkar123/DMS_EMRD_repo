@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:gravity="center">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp10"
+        android:layout_marginRight="@dimen/dp10"
+        android:background="@drawable/curve_edges_background"
+        android:gravity="center"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/textview_sucess"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="@dimen/dp10"
+            android:text="@string/select_file_type"
+            android:textSize="@dimen/sp18" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp1"
+            android:background="@color/grey"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerViewFile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:divider="@null"
+            android:dividerHeight="0dp"
+            android:padding="@dimen/dp5"
+            tools:ignore="ObsoleteLayoutParam" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp8"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/button_cancel"
+                android:layout_width="@dimen/dp0"
+                android:layout_height="@dimen/dp40"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/cancel"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp16" />
+
+            <View
+                android:id="@+id/dialogSpace"
+                android:layout_width="@dimen/dp2"
+                android:layout_height="@dimen/dp1" />
+
+            <Button
+                android:id="@+id/button_ok"
+                android:layout_width="@dimen/dp0"
+                android:layout_height="@dimen/dp40"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/done"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp16" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</RelativeLayout>

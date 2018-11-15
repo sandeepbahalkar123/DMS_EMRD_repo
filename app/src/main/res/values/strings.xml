@@ -32,11 +32,11 @@
     <!--Key for Debug-->
 
     <!--sandeep sir account credentials-->
-    <string name="parse_error">parse error</string>
-    <string name="something_went_wrong_error">Something went wrong</string>
-    <string name="no_connection_error">No network</string>
-    <string name="timeout_error">Timeout error</string>
-    <string name="default_error">default error</string>
+    <string name="parse_error">Parse Error</string>
+    <string name="something_went_wrong_error">Something Went Wrong</string>
+    <string name="no_connection_error">No Network</string>
+    <string name="timeout_error">Timeout Error</string>
+    <string name="default_error">Default Error</string>
     <string name="cancel">Cancel</string>
     <string name="do_you_exit">Do you want to exit ?</string>
     <string name="do_you_want_to_cancel">Do you want to cancel the request ?</string>
@@ -135,7 +135,7 @@
     <string name="from_date">From:</string>
     <string name="to_date">To:</string>
     <string name="patient_name">Patient Name:</string>
-    <string name="change_ip">Do you want to change IP address?</string>
+    <string name="change_ip">Do you want to change ?</string>
     <string name="date_type">DType:</string>
     <string name="documenttype">DT:</string>
     <string name="enter_annotation">Annotation:</string>
@@ -176,6 +176,13 @@
         <item>Date</item>
         <item>My Order</item>
     </string-array>
+
+
+    <string-array name="get_archived_preference_list_episode">
+        <item>Folder</item>
+        <item>My Order</item>
+    </string-array>
+
     <string-array name="opd_array">
         <item>Select</item>
         <item>Visit Date</item>
@@ -211,6 +218,7 @@
     <string name="address">Address:</string>
     <string name="title_activity_patient_details">Patient Details</string>
     <string name="in_uhid">in UHID</string>
+    <string name="in">in\u0020</string>
     <string name="in_patient_name">in Patient name</string>
     <string name="in_ref_id">in Ref Id</string>
     <string name="in_all">in All</string>
@@ -226,5 +234,9 @@
     <string name="patient_not_having_record">No records found for these patient.</string>
     <string name="active_appointmets">Active</string>
     <string name="all_appointments">View all</string>
+    <string name="data_not_found">Required  Data Not Found</string>
+    <string name="check_wifi_connection">The Wifi connection appears to be off. Please, check the Wifi settings and try again.</string>
+    <string name="raise_request_episode">Raise Request</string>
+    <string name="select_file_type">Select File Type</string>
 
 </resources>

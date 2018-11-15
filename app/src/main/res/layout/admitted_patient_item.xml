@@ -59,8 +59,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/roboto_medium"
-                            android:paddingStart="@dimen/dp13"
-                            android:paddingLeft="@dimen/dp13"
+                            android:paddingStart="@dimen/dp7"
+                            android:paddingLeft="@dimen/dp7"
                             android:textColor="@color/black"
                             android:textSize="@dimen/sp13"
                             tools:ignore="RtlSymmetry"
@@ -90,7 +90,7 @@
                     android:id="@+id/patientDetailsClickLinearLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/dp6">
+                    android:layout_marginBottom="@dimen/dp5">
 
                     <com.scorg.dms.ui.customesViews.CircularImageView
                         android:id="@+id/patientImageView"
@@ -98,6 +98,7 @@
                         android:layout_height="@dimen/dp45"
                         android:layout_marginLeft="@dimen/dp10"
                         android:layout_marginStart="@dimen/dp10"
+                        android:visibility="gone"
                         tools:src="@drawable/uren_pic" />
 
                     <LinearLayout
@@ -192,6 +193,7 @@
                 android:layout_height="@dimen/dp1"
                 android:layout_marginEnd="@dimen/dp2"
                 android:layout_marginStart="@dimen/dp2"
+                android:visibility="gone"
                 android:background="@color/tagColor" />
 
             <LinearLayout
@@ -199,6 +201,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/dp8"
                 android:layout_marginTop="@dimen/dp3"
+                android:visibility="gone"
                 android:gravity="center">
 
                 <LinearLayout
@@ -248,7 +251,6 @@
                     android:visibility="visible">
 
                     <TextView
-
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"

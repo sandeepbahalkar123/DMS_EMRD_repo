@@ -57,7 +57,7 @@ public class AppointmentPatientData implements Parcelable, Cloneable, Comparable
     @Expose
     private boolean IsArchived;
 
-    @SerializedName("AppointmentCode")
+    @SerializedName("appointmentCode")
     @Expose
     private int AppointmentCode;
 

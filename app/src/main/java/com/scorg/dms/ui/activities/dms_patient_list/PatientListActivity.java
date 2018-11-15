@@ -287,9 +287,9 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
                 String enteredText = s.toString().trim();
                 mAutoCompleteSearchBoxList.clear();
                 if (enteredText.length() != 0) {
-                    mAutoCompleteSearchBoxList.add(new PatientFilter(enteredText,"in "+DMSApplication.LABEL_UHID));
+                    mAutoCompleteSearchBoxList.add(new PatientFilter(enteredText,getString(R.string.in).concat(DMSApplication.LABEL_UHID)));
                     mAutoCompleteSearchBoxList.add(new PatientFilter(enteredText, getString(R.string.in_patient_name)));
-                    mAutoCompleteSearchBoxList.add(new PatientFilter(enteredText, "in "+DMSApplication.LABEL_REF_ID));
+                    mAutoCompleteSearchBoxList.add(new PatientFilter(enteredText, getString(R.string.in).concat(DMSApplication.LABEL_REF_ID)));
                     mAutoCompleteSearchBoxList.add(new PatientFilter(enteredText, getString(R.string.in_all)));
 
                     mPatientSearchAutoCompleteTextViewAdapter = new PatientSearchAutoCompleteTextViewAdapter(PatientListActivity.this, R.layout.patient_filter_right_drawer, R.id.custom_spinner_txt_view_Id, mAutoCompleteSearchBoxList, PatientListActivity.this);
@@ -308,46 +308,6 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
             }
         });
 
-
-//        mAutoCompleteSearchBox.addTextChangedListener(new SearchTextViewWithDeleteButton().TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable s) {
-//
-//                String enteredText = s.toString().trim();
-//                mAutoCompleteSearchBoxList.clear();
-//                if (enteredText.length() != 0) {
-//                    mAutoCompleteSearchBoxList.add(new PatientFilter(enteredText, getString(R.string.in_uhid)));
-//                    mAutoCompleteSearchBoxList.add(new PatientFilter(enteredText, getString(R.string.in_patient_name)));
-//                    mAutoCompleteSearchBoxList.add(new PatientFilter(enteredText, getString(R.string.in_ref_id)));
-//                    mAutoCompleteSearchBoxList.add(new PatientFilter(enteredText, getString(R.string.in_all)));
-//
-//                    mPatientSearchAutoCompleteTextViewAdapter = new PatientSearchAutoCompleteTextViewAdapter(PatientListActivity.this, R.layout.patient_filter_right_drawer, R.id.custom_spinner_txt_view_Id, mAutoCompleteSearchBoxList, PatientListActivity.this);
-////                    mAutoCompleteSearchBox.setAdapter(mPatientSearchAutoCompleteTextViewAdapter);
-////                    new Handler().postDelayed(new Runnable() {
-////                        @Override
-////                        public void run() {
-////                            mAutoCompleteSearchBox.showDropDown();
-////                        }
-////                    }, 200);
-//
-//                } else {
-//                    if (patientExpandableListAdapter.getItemCount() == 0)
-//                        doGetPatientList();
-//                }
-//            }
-//        });
-
-        //-----------------
 
     }
 
@@ -431,7 +391,7 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
             //TODO, hacked bcaz API not sending UHID, remove else block once received from API.
             String[] stringArrayExtraTemp = new String[mFileTypeStringArrayExtra.length + 1];
             System.arraycopy(mFileTypeStringArrayExtra, 0, stringArrayExtraTemp, 0, mFileTypeStringArrayExtra.length);
-            stringArrayExtraTemp[mFileTypeStringArrayExtra.length] = getString(R.string.uhid);
+            stringArrayExtraTemp[mFileTypeStringArrayExtra.length] = DMSApplication.LABEL_UHID;
             //------
             // ******THIS IS DONE TO ADD SELECT in SPINNER.
             String[] newTemp = new String[stringArrayExtraTemp.length + 1];
@@ -505,6 +465,7 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
     @Override
     public void onSuccess(String mOldDataTag, CustomResponse customResponse) {
         if (mOldDataTag == DMSConstants.TASK_PATIENT_LIST) {
+            mAutoCompleteSearchBox.getEditText().dismissDropDown();
             ShowSearchResultResponseModel showSearchResultResponseModel = (ShowSearchResultResponseModel) customResponse;
             List<SearchResult> searchResult = showSearchResultResponseModel.getSearchResultData().getSearchResult();
             viewRights=showSearchResultResponseModel.getSearchResultData().getViewRights();
@@ -512,7 +473,6 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
             patientExpandableListAdapter.addNewItems(searchResult);
             patientExpandableListAdapter.notifyDataSetChanged();
             mSearchPatientNameEditText.dismissDropDown();
-            mAutoCompleteSearchBox.getEditText().dismissDropDown();
             Log.e("searchResult", "---" + searchResult.size());
             if (searchResult.size() <= 0) {
                 mPatientListView.setVisibility(View.GONE);
@@ -760,11 +720,11 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
                 //--- FileType and enteredValue validation : START
                 String enteredUHIDValue = mUHIDEditText.getText().toString().trim();
                 Log.e("enteredUHIDValue", enteredUHIDValue);
-                if (mSelectedId.equalsIgnoreCase(getString(R.string.uhid)) && (enteredUHIDValue.length() == 0)) {
+                if (mSelectedId.equalsIgnoreCase(DMSApplication.LABEL_UHID) && (enteredUHIDValue.length() == 0)) {
                     CommonMethods.showSnack(mContext, mUHIDEditText, getString(R.string.error_enter_uhid));
                     break;
                 } else if ((enteredUHIDValue.length() != 0) && (mSelectedId.equalsIgnoreCase(getString(R.string.Select)))) {
-                    CommonMethods.showSnack(mContext, mUHIDEditText, getString(R.string.Select) + " " + getString(R.string.ipd) + "/" + getString(R.string.opd) + "/" + getString(R.string.uhid));
+                    CommonMethods.showSnack(mContext, mUHIDEditText, getString(R.string.Select) + " " + getString(R.string.ipd) + "/" + getString(R.string.opd) + "/" + DMSApplication.LABEL_UHID);
                     break;
                 } else {
                     if (!mSelectedId.equalsIgnoreCase(getString(R.string.Select))) {
@@ -843,7 +803,7 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
 
         showSearchResultRequestModel.setFileType(selectedFileType);
 
-        if (getString(R.string.uhid).equalsIgnoreCase(selectedFileType)) {
+        if (DMSApplication.LABEL_UHID.equalsIgnoreCase(selectedFileType)) {
             showSearchResultRequestModel.setPatientId(enteredID);
             showSearchResultRequestModel.setReferenceId(DMSConstants.BLANK);
             showSearchResultRequestModel.setFileType(DMSConstants.BLANK);
@@ -867,19 +827,19 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
         String enteredSearchBoxValue = mAutoCompleteSearchBox.getText().toString().trim();
         //------------
         if (enteredSearchBoxValue.length() != 0) {
-            if (enteredSearchBoxValue.toLowerCase().endsWith(getString(R.string.in_uhid).toLowerCase())) {
-                String[] split = enteredSearchBoxValue.split(getString(R.string.in_uhid));
-                showSearchResultRequestModel.setPatientId(split[0]);
+            if (enteredSearchBoxValue.toLowerCase().endsWith(getString(R.string.in).concat(DMSApplication.LABEL_UHID).toLowerCase())) {
+                String[] split = enteredSearchBoxValue.split(getString(R.string.in).concat(DMSApplication.LABEL_UHID));
+                showSearchResultRequestModel.setPatientId(split[0].toUpperCase());
                 showSearchResultRequestModel.setReferenceId(DMSConstants.BLANK);
                 showSearchResultRequestModel.setFileType(DMSConstants.BLANK);
-            } else if (enteredSearchBoxValue.toLowerCase().endsWith(getString(R.string.in_ref_id).toLowerCase())) {
+            } else if (enteredSearchBoxValue.toLowerCase().endsWith(getString(R.string.in).concat(DMSApplication.LABEL_REF_ID).toLowerCase())) {
                 showSearchResultRequestModel.setPatientId(DMSConstants.BLANK);
-                showSearchResultRequestModel.setReferenceId(enteredSearchBoxValue);
+                showSearchResultRequestModel.setReferenceId(enteredSearchBoxValue.toUpperCase());
             } else if (enteredSearchBoxValue.toLowerCase().endsWith(getString(R.string.in_patient_name).toLowerCase())) {
                 showSearchResultRequestModel.setPatientId(DMSConstants.BLANK);
-                showSearchResultRequestModel.setPatientName(enteredSearchBoxValue);
+                showSearchResultRequestModel.setPatientName(enteredSearchBoxValue.toUpperCase());
             } else if (enteredSearchBoxValue.toLowerCase().endsWith(getString(R.string.in_all).toLowerCase())) {
-                showSearchResultRequestModel.setCommonSearch("" + mAutoCompleteSearchBox.getText().toString());
+                showSearchResultRequestModel.setCommonSearch("" + mAutoCompleteSearchBox.getText().toString().toUpperCase());
             }
         }
 
@@ -899,7 +859,7 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
 
         showSearchResultRequestModel.setFileType(selectedFileType);
 
-        if (getString(R.string.uhid).equalsIgnoreCase(selectedFileType)) {
+        if (DMSApplication.LABEL_UHID.equalsIgnoreCase(selectedFileType)) {
             showSearchResultRequestModel.setPatientId(enteredID);
             showSearchResultRequestModel.setReferenceId(DMSConstants.BLANK);
             showSearchResultRequestModel.setFileType(DMSConstants.BLANK);
@@ -923,22 +883,22 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
         String enteredSearchBoxValue = patientFilter.getSearchType();
         //------------
         if (enteredSearchBoxValue.length() != 0) {
-            if (enteredSearchBoxValue.toLowerCase().equals(getString(R.string.in_uhid).toLowerCase())) {
+            if (enteredSearchBoxValue.toLowerCase().equals(getString(R.string.in).concat(DMSApplication.LABEL_UHID).toLowerCase())) {
                 showSearchResultRequestModel.setPatientId(patientFilter.getSearchValue());
                 showSearchResultRequestModel.setReferenceId(DMSConstants.BLANK);
                 showSearchResultRequestModel.setFileType(DMSConstants.BLANK);
-            } else if (enteredSearchBoxValue.toLowerCase().equals(getString(R.string.in_ref_id).toLowerCase())) {
+            } else if (enteredSearchBoxValue.toLowerCase().equals(getString(R.string.in).concat(DMSApplication.LABEL_REF_ID).toLowerCase())) {
                 showSearchResultRequestModel.setPatientId(DMSConstants.BLANK);
-                showSearchResultRequestModel.setReferenceId(patientFilter.getSearchValue());
+                showSearchResultRequestModel.setReferenceId(patientFilter.getSearchValue().toUpperCase());
             } else if (enteredSearchBoxValue.toLowerCase().equals(getString(R.string.in_patient_name).toLowerCase())) {
                 showSearchResultRequestModel.setPatientId(DMSConstants.BLANK);
-                showSearchResultRequestModel.setPatientName(patientFilter.getSearchValue());
+                showSearchResultRequestModel.setPatientName(patientFilter.getSearchValue().toUpperCase());
             } else if (enteredSearchBoxValue.toLowerCase().equals(getString(R.string.in_all).toLowerCase())) {
-                showSearchResultRequestModel.setCommonSearch(patientFilter.getSearchValue());
+                showSearchResultRequestModel.setCommonSearch(patientFilter.getSearchValue().toUpperCase());
             }
         }
 
-        //    mAutoCompleteSearchBox.dismissDropDown();
+           mAutoCompleteSearchBox.getEditText().dismissDropDown();
 
         mPatientsHelper.doGetPatientList(showSearchResultRequestModel);
     }
@@ -1019,7 +979,7 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
                 mSpinnerAmissionDate.setEnabled(true);
                 mCustomSpinAdapter = new Custom_Spin_Adapter(mContext, mArrayId, getResources().getStringArray(R.array.opd_array));
                 mSpinnerAmissionDate.setAdapter(mCustomSpinAdapter);
-            } else if (mSelectedId.equalsIgnoreCase(getResources().getString(R.string.uhid))) {
+            } else if (mSelectedId.equalsIgnoreCase(DMSApplication.LABEL_UHID)) {
                 mSpinnerAmissionDate.setEnabled(true);
                 mCustomSpinAdapter = new Custom_Spin_Adapter(mContext, mArrayId, getResources().getStringArray(R.array.admission_date));
                 mSpinnerAmissionDate.setAdapter(mCustomSpinAdapter);

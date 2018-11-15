@@ -29,6 +29,11 @@ public class EpisodeResponseModel implements CustomResponse, Serializable {
 
     public class EpisodeDataList implements CustomResponse {
 
+
+        @SerializedName("fileTypeList")
+        @Expose
+        private ArrayList<FileTypeList> fileTypeList = new ArrayList<FileTypeList>();
+
         @SerializedName("searchResultList")
         @Expose
         private List<PatientEpisodeFileData> patientEpisodeFileDataList = new ArrayList<PatientEpisodeFileData>();
@@ -54,6 +59,14 @@ public class EpisodeResponseModel implements CustomResponse, Serializable {
             this.ispaggination = ispaggination;
         }
 
+
+        public ArrayList<FileTypeList> getFileTypeList() {
+            return fileTypeList;
+        }
+
+        public void setFileTypeList(ArrayList<FileTypeList> fileTypeList) {
+            this.fileTypeList = fileTypeList;
+        }
     }
 
     public EpisodeDataList getEpisodeDataList() {

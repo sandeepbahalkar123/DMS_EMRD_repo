@@ -235,6 +235,9 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
 
     @BindView(R.id.imgNoRecordFound)
     ImageView imgNoRecordFound;
+    @BindView(R.id.labelDrawerUDID)
+    TextView labelDrawerUDID;
+
 
     DrawerLayout mDrawer;
     //---------
@@ -415,7 +418,6 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 final File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/PDFViewCache/");
                 file.delete();
                 finish();
@@ -491,6 +493,7 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
         mDoctorNameTwo.setText(doctorName);
         mDoctorNameOne.setText(doctorName);
         mPatientAddress.setText(patientAddress);
+        labelDrawerUDID.setText(DMSApplication.LABEL_UHID);
     }
 
     @OnClick({R.id.imageCloseDrawer, R.id.openRightDrawer, R.id.loadPreviousArchiveDataList, R.id.loadNextArchiveDataList, R.id.compareButton, R.id.compareLabel, R.id.fileOneRemoveButton, R.id.fileTwoRemoveButton})
@@ -1521,7 +1524,6 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
                     } else {
                         loadedArchiveDataMessage.setText("" + archiveCount + " " + getString(R.string.records));
                     }
-
 
                     break;
                 case DMSConstants.ArchivedPreference.FILE:

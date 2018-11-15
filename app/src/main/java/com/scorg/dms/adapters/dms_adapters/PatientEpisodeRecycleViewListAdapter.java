@@ -122,66 +122,22 @@ public class PatientEpisodeRecycleViewListAdapter extends RecyclerView.Adapter<P
         //--------------------
 
 
+       boolean isShowEye= viewHideEyeIconEpisode(viewRights,childElement.IsView(),childElement.IsPrimary(),childElement.getFileType());
 
-
-        /// case 1
-        if (viewRights.getIsAllFileAccessible()) {
+        if (isShowEye) {
             childViewHolder.imageViewRights.setVisibility(View.GONE);
             childViewHolder.rowLay.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     onPatientListener.onEpisodeListItemClick(childElement);
+                   // onPatientListener.showRaiseRequestBtn(false);
                 }
             });
         } else {
             childViewHolder.imageViewRights.setVisibility(View.VISIBLE);
+            onPatientListener.showRaiseRequestBtn(true);
         }
 
-        //// case 2
-        if (viewRights.getIsRequestForAll() && !childElement.IsView()) {
-            childViewHolder.imageViewRights.setVisibility(View.VISIBLE);
-        } else {
-            childViewHolder.imageViewRights.setVisibility(View.GONE);
-            childViewHolder.rowLay.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onPatientListener.onEpisodeListItemClick(childElement);
-                }
-            });
-        }
-        /// case 3
-        if (viewRights.getAllowOnlyPrimaryFiles() && childElement.IsPrimary()) {
-            childViewHolder.imageViewRights.setVisibility(View.GONE);
-            childViewHolder.rowLay.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onPatientListener.onEpisodeListItemClick(childElement);
-                }
-            });
-        } else {
-            childViewHolder.imageViewRights.setVisibility(View.VISIBLE);
-        }
-
-        /// case 4
-        if (viewRights.getIsOneFileIsPrimary() && viewRights.getPrimaryFileTypeSetting().contains(childElement.getFileType())) {
-            childViewHolder.imageViewRights.setVisibility(View.VISIBLE);
-        } else {
-            childViewHolder.imageViewRights.setVisibility(View.GONE);
-            childViewHolder.rowLay.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onPatientListener.onEpisodeListItemClick(childElement);
-                }
-            });
-        }
-
-        /// case 5 /// Uncomment this when IsAppointment parameter get from api
-//
-//        if(viewRights.IsAppointment==true){
-//            childViewHolder.imageViewRights.setVisibility(View.GONE);
-//        }else{
-//            childViewHolder.imageViewRights.setVisibility(View.VISIBLE);
-//        }
     }
 
 
@@ -232,7 +188,7 @@ public class PatientEpisodeRecycleViewListAdapter extends RecyclerView.Adapter<P
 
         void onEpisodeListItemClick(PatientEpisodeFileData groupHeader);
 
-        void smoothScrollToPosition(int previousPosition);
+        void showRaiseRequestBtn(boolean isShow);
     }
 
     public void removeAll() {
@@ -241,6 +197,31 @@ public class PatientEpisodeRecycleViewListAdapter extends RecyclerView.Adapter<P
 
     public void addNewItems(List<PatientEpisodeFileData> searchResult) {
         this._originalListDataHeader.addAll(searchResult);
+    }
+
+
+    public boolean viewHideEyeIconEpisode(ViewRights viewRights, boolean isView, boolean isPrimary, String fileType){
+        if (viewRights.getIsAllFileAccessible()) {
+            return true;
+        }
+
+        if (viewRights.isViewAppointmentPatient()) {
+            return true;
+        }
+
+        if (viewRights.getIsRequestForAll() && isView) {
+            return true;
+        }
+
+        if (viewRights.getAllowOnlyPrimaryFiles() && isPrimary ){
+            return true;
+        }
+
+        if (viewRights.getIsOneFileIsPrimary() && viewRights.getPrimaryFileTypeSetting().contains(fileType)) {
+            return true;
+        }
+
+        return false;
     }
 
 }
