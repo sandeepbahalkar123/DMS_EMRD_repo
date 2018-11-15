@@ -6,29 +6,19 @@ import android.os.Parcelable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class LstHideDocType implements Parcelable {
+public class LstHideDocType {
 
-    public final static Creator<LstHideDocType> CREATOR = new Creator<LstHideDocType>() {
-
-
-        @SuppressWarnings({
-                "unchecked"
-        })
-        public LstHideDocType createFromParcel(Parcel in) {
-            return new LstHideDocType(in);
-        }
-
-        public LstHideDocType[] newArray(int size) {
-            return (new LstHideDocType[size]);
-        }
-
-    };
     @SerializedName("categoryId")
     @Expose
     private int categoryId;
     @SerializedName("categoryName")
     @Expose
     private String categoryName;
+
+    @SerializedName("nodeColor")
+    @Expose
+    private String nodeColor;
+
     @SerializedName("pageCount")
     @Expose
     private int pageCount;
@@ -54,19 +44,6 @@ public class LstHideDocType implements Parcelable {
     @Expose
     private String fileType;
 
-    protected LstHideDocType(Parcel in) {
-        this.categoryId = ((int) in.readValue((int.class.getClassLoader())));
-        this.categoryName = ((String) in.readValue((String.class.getClassLoader())));
-        this.pageCount = ((int) in.readValue((int.class.getClassLoader())));
-        this.confidentialState = ((int) in.readValue((int.class.getClassLoader())));
-        this.fileTypeRefId = ((String) in.readValue((String.class.getClassLoader())));
-        this.documentType = ((String) in.readValue((String.class.getClassLoader())));
-        this.documentTypeId = ((int) in.readValue((int.class.getClassLoader())));
-        this.recordId = ((int) in.readValue((int.class.getClassLoader())));
-        this.recordDetailId = ((int) in.readValue((int.class.getClassLoader())));
-        this.fileType = ((String) in.readValue((Object.class.getClassLoader())));
-    }
-
     public LstHideDocType() {
     }
 
@@ -84,6 +61,14 @@ public class LstHideDocType implements Parcelable {
 
     public void setCategoryName(String categoryName) {
         this.categoryName = categoryName;
+    }
+
+    public String getNodeColor() {
+        return nodeColor == null ? "#000000" : nodeColor;
+    }
+
+    public void setNodeColor(String nodeColor) {
+        this.nodeColor = nodeColor;
     }
 
     public int getPageCount() {
@@ -148,23 +133,6 @@ public class LstHideDocType implements Parcelable {
 
     public void setFileType(String fileType) {
         this.fileType = fileType;
-    }
-
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeValue(categoryId);
-        dest.writeValue(categoryName);
-        dest.writeValue(pageCount);
-        dest.writeValue(confidentialState);
-        dest.writeValue(fileTypeRefId);
-        dest.writeValue(documentType);
-        dest.writeValue(documentTypeId);
-        dest.writeValue(recordId);
-        dest.writeValue(recordDetailId);
-        dest.writeValue(fileType);
-    }
-
-    public int describeContents() {
-        return 0;
     }
 
 }

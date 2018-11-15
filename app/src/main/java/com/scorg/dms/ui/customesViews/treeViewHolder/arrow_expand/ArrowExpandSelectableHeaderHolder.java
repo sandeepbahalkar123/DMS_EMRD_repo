@@ -19,6 +19,12 @@ import android.widget.TextView;
 import com.scorg.dms.R;
 import com.scorg.dms.model.dms_models.responsemodel.annotationlistresponsemodel.AnnotationList;
 import com.scorg.dms.model.dms_models.responsemodel.annotationlistresponsemodel.DocTypeList;
+import com.scorg.dms.model.dms_models.responsemodel.filetreeresponsemodel.ArchiveDatum;
+import com.scorg.dms.model.dms_models.responsemodel.filetreeresponsemodel.LstDateFileType;
+import com.scorg.dms.model.dms_models.responsemodel.filetreeresponsemodel.LstDateFolderType;
+import com.scorg.dms.model.dms_models.responsemodel.filetreeresponsemodel.LstDocCategory;
+import com.scorg.dms.model.dms_models.responsemodel.filetreeresponsemodel.LstDocType;
+import com.scorg.dms.model.dms_models.responsemodel.filetreeresponsemodel.LstHideDocType;
 import com.scorg.dms.singleton.DMSApplication;
 import com.unnamed.b.atv.model.TreeNode;
 
@@ -188,6 +194,32 @@ public class ArrowExpandSelectableHeaderHolder extends TreeNode.BaseNodeViewHold
             nodeSelector.setChecked(((AnnotationList) value.objectData).
                     getSelected());
         }
+
+        if (value.objectData instanceof ArchiveDatum)
+            tvValue.setTextColor(Color.parseColor(((ArchiveDatum) value.objectData).getNodeColor()));
+        else if (value.objectData instanceof LstDocType) {
+            tvValue.setTextColor(Color.parseColor(((LstDocType) value.objectData).getNodeColor()));
+
+            // Favorite logic -----------------------------
+            if (node.isLeaf()) {
+                if (((LstDocType) value.objectData).isFavourite()) {
+                    node.setExpanded(true);
+                    if (node.getParent() != null)
+                        node.getParent().setExpanded(true);
+                    if (node.getRoot() != null)
+                        node.getRoot().setExpanded(true);
+                }
+            }
+            // Favorite logic -----------------------------
+
+        } else if (value.objectData instanceof LstDateFileType)
+            tvValue.setTextColor(Color.parseColor(((LstDateFileType) value.objectData).getNodeColor()));
+        else if (value.objectData instanceof LstDateFolderType)
+            tvValue.setTextColor(Color.parseColor(((LstDateFolderType) value.objectData).getNodeColor()));
+        else if (value.objectData instanceof LstDocCategory)
+            tvValue.setTextColor(Color.parseColor(((LstDocCategory) value.objectData).getNodeColor()));
+        else if (value.objectData instanceof LstHideDocType)
+            tvValue.setTextColor(Color.parseColor(((LstHideDocType) value.objectData).getNodeColor()));
 
         if (confidentialState == 2 || confidentialState == 3 || confidentialState == 4) {
             icon_lock.setVisibility(View.VISIBLE);

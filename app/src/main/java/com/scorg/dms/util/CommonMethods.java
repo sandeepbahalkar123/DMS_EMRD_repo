@@ -14,7 +14,6 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.GradientDrawable;
 import android.support.design.widget.Snackbar;
-import android.support.v4.widget.Space;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -29,7 +28,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -54,7 +52,9 @@ import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -161,7 +161,7 @@ public class CommonMethods {
 
     public static TextDrawable getTextDrawable(Context context, String name) {
         ColorGenerator mColorGenerator = ColorGenerator.MATERIAL;
-        name=nameInitialSuffix(name);
+        name = nameInitialSuffix(name);
         if (DMSConstants.BLANK.equalsIgnoreCase(name)) {
             int color2 = mColorGenerator.getColor(name);
             return TextDrawable.builder()
@@ -181,24 +181,26 @@ public class CommonMethods {
         }
 
     }
-    private static String nameInitialSuffix(String name){
-        if(name.substring(0,3).equals("Mrs") ){
-            name=name.substring(4,name.length());
-        }else if(name.substring(0,4).equals("Mrs.") ){
-            name=name.substring(5,name.length());
-        }else if(name.substring(0,2).equals("Mr") || name.substring(0,2).equals("Dr")){
-            name=name.substring(3,name.length());
-        }else if(name.substring(0,3).equals("Mr.") || name.substring(0,3).equals("Dr.")){
-            name=name.substring(4,name.length());
-        }else if(name.substring(0,4).equals("Miss") ){
-            name=name.substring(5,name.length());
-        }else if(name.substring(0,5).equals("Miss.") ){
-            name=name.substring(6,name.length());
-        }else if(name.charAt(0)==' '){
-            name=name.substring(1,name.length());
+
+    private static String nameInitialSuffix(String name) {
+        if (name.substring(0, 3).equals("Mrs")) {
+            name = name.substring(4, name.length());
+        } else if (name.substring(0, 4).equals("Mrs.")) {
+            name = name.substring(5, name.length());
+        } else if (name.substring(0, 2).equals("Mr") || name.substring(0, 2).equals("Dr")) {
+            name = name.substring(3, name.length());
+        } else if (name.substring(0, 3).equals("Mr.") || name.substring(0, 3).equals("Dr.")) {
+            name = name.substring(4, name.length());
+        } else if (name.substring(0, 4).equals("Miss")) {
+            name = name.substring(5, name.length());
+        } else if (name.substring(0, 5).equals("Miss.")) {
+            name = name.substring(6, name.length());
+        } else if (name.charAt(0) == ' ') {
+            name = name.substring(1, name.length());
         }
         return name;
     }
+
     public static int getVersionCode(Context mContext) {
         int versionCode = -1;
         try {
@@ -468,15 +470,14 @@ public class CommonMethods {
         ImageView dialogIcon = dialog.findViewById(R.id.dialogIcon);
         dialogIcon.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         buttonCancel.setText(R.string.retry);
-        View space= dialog.findViewById(R.id.dialogSpace);
+        View space = dialog.findViewById(R.id.dialogSpace);
 
         buttonOk.setBackground(buttonLeftRightBackground);
         buttonCancel.setBackground(buttonRightBackground);
         if (isTimeout) {
             buttonCancel.setVisibility(View.VISIBLE);
             buttonOk.setBackground(buttonLeftBackground);
-        }
-        else {
+        } else {
             space.setVisibility(View.GONE);
             buttonCancel.setVisibility(View.GONE);
             buttonOk.setBackground(buttonLeftRightBackground);
@@ -609,6 +610,11 @@ public class CommonMethods {
         BitmapDrawable d = new BitmapDrawable(url);
         imageView.setBackground(d);
     }
+
+    public static boolean isNullOrEmpty(final Collection<?> c) {
+        return c == null || c.isEmpty();
+    }
+
     //--------------
 }
 

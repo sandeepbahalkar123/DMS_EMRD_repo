@@ -5,6 +5,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class LstDocType {
 
@@ -14,6 +15,15 @@ public class LstDocType {
     @SerializedName("typeName")
     @Expose
     private String typeName;
+
+    @SerializedName("nodeColor")
+    @Expose
+    private String nodeColor;
+
+    @SerializedName("isFavourite")
+    @Expose
+    private boolean isFavourite;
+
     @SerializedName("pageCount")
     @Expose
     private Integer pageCount;
@@ -42,11 +52,13 @@ public class LstDocType {
     @Expose
     private String fileTypeRefId;
 
-
-
     @SerializedName("lstdateFileType")
     @Expose
     private ArrayList<LstDateFileType> lstDateFileTypeList = new ArrayList<LstDateFileType>();
+
+    @SerializedName("lsthideDocCategory")
+    @Expose
+    private List<LstHideDocType> lsthideDocCategory = new ArrayList<LstHideDocType>();
 
     public Integer getTypeId() {
         return typeId;
@@ -72,12 +84,28 @@ public class LstDocType {
         this.createdDate = createdDate;
     }
 
+    public String getNodeColor() {
+        return nodeColor == null ? "#000000" : nodeColor;
+    }
+
+    public void setNodeColor(String nodeColor) {
+        this.nodeColor = nodeColor;
+    }
+
     public Integer getPageCount() {
         return pageCount;
     }
 
     public void setPageCount(Integer pageCount) {
         this.pageCount = pageCount;
+    }
+
+    public boolean isFavourite() {
+        return isFavourite;
+    }
+
+    public void setFavourite(boolean favourite) {
+        isFavourite = favourite;
     }
 
     public Integer getPageNumber() {
@@ -134,6 +162,15 @@ public class LstDocType {
 
     public void setFileTypeRefId(String fileTypeRefId) {
         this.fileTypeRefId = fileTypeRefId;
+    }
+
+
+    public List<LstHideDocType> getLsthideDocCategory() {
+        return lsthideDocCategory;
+    }
+
+    public void setLsthideDocCategory(List<LstHideDocType> lsthideDocCategory) {
+        this.lsthideDocCategory = lsthideDocCategory;
     }
 
     @Override

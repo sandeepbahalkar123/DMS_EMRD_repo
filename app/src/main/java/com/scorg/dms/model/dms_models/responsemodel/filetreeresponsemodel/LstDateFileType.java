@@ -18,10 +18,18 @@ public class LstDateFileType {
     @Expose
     private String date;
 
+    @SerializedName("nodeColor")
+    @Expose
+    private String nodeColor;
+
+    @SerializedName("isFavourite")
+    @Expose
+    private boolean isFavourite;
 
     @SerializedName("pageCount")
     @Expose
     private Integer pageCount;
+
     @SerializedName("recordId")
     @Expose
     private Integer recordId;
@@ -56,6 +64,14 @@ public class LstDateFileType {
         this.typeName = typeName;
     }
 
+    public String getNodeColor() {
+        return nodeColor == null ? "#000000" : nodeColor;
+    }
+
+    public void setNodeColor(String nodeColor) {
+        this.nodeColor = nodeColor;
+    }
+
     public Integer getPageCount() {
         return pageCount;
     }
@@ -64,6 +80,13 @@ public class LstDateFileType {
         this.pageCount = pageCount;
     }
 
+    public boolean isFavourite() {
+        return isFavourite;
+    }
+
+    public void setFavourite(boolean favourite) {
+        isFavourite = favourite;
+    }
 
     public Integer getRecordId() {
         return recordId;

@@ -282,11 +282,14 @@ public class HomePageActivity extends BaseActivity implements HelperResponse, Da
             public void onTabSelected(TabLayout.Tab tab) {
                 if (tab.getPosition() == 0) {
                     tab.getCustomView().setBackground(buttonBackgroundActiveSelected);
-                    setAppointmentAdapter(appointmentActivePatientData);
+                    if (appointmentActivePatientData != null)
+                        setAppointmentAdapter(appointmentActivePatientData);
                 } else {
                     tab.getCustomView().setBackground(buttonBackgroundViewAllSelected);
-                    if (mDashboardDataModel.getAppointmentPatientDataList() != null)
-                        setAppointmentAdapter(mDashboardDataModel.getAppointmentPatientDataList());
+                    if (mDashboardDataModel != null) {
+                        if (mDashboardDataModel.getAppointmentPatientDataList() != null)
+                            setAppointmentAdapter(mDashboardDataModel.getAppointmentPatientDataList());
+                    }
                 }
                 TextView textView = tab.getCustomView().findViewById(R.id.textTab);
                 textView.setTextColor(getResources().getColor(R.color.white));

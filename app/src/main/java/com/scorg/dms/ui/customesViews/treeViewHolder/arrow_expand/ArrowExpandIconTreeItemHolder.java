@@ -26,7 +26,6 @@ public class ArrowExpandIconTreeItemHolder extends TreeNode.BaseNodeViewHolder<A
         final View view = inflater.inflate(R.layout.treeview_layout_icon_node, null, false);
         tvValue = (TextView) view.findViewById(R.id.node_value);
         tvValue.setText(value.text.toString());
-
         return view;
     }
 

@@ -172,7 +172,7 @@
     </string-array>
     <string-array name="get_archived_preference_list">
         <item>Folder</item>
-        <item>File</item>
+        <!--<item>File</item>-->
         <item>Date</item>
         <item>My Order</item>
     </string-array>
