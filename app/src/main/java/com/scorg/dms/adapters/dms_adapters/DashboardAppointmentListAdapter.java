@@ -50,9 +50,8 @@ public class DashboardAppointmentListAdapter extends RecyclerView.Adapter<Dashbo
     private DashboardAppointmentListAdapter.OnItemClickListener onItemClickListener;
     private List<AppointmentPatientData> _originalListDataHeader = new ArrayList<>(); // header titles
     private String uhid;
-    GradientDrawable appointmentStatusButtonBackground ;
-    GradientDrawable appointmentConsultationTypeButtonBackground ;
 
+    GradientDrawable appointmentConsultationTypeButtonBackground;
 
 
     public DashboardAppointmentListAdapter(Context context, List<AppointmentPatientData> searchResult, OnItemClickListener onItemClickListener) {
@@ -63,18 +62,8 @@ public class DashboardAppointmentListAdapter extends RecyclerView.Adapter<Dashbo
         buttonBackground = new GradientDrawable();
         buttonBackground.setShape(GradientDrawable.RECTANGLE);
         buttonBackground.setColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
-        buttonBackground.setCornerRadius(_context.getResources().getDimension(R.dimen.dp5));
+        buttonBackground.setCornerRadius(_context.getResources().getDimension(R.dimen.dp2));
 
-        appointmentStatusButtonBackground= new GradientDrawable();
-        appointmentStatusButtonBackground.setShape(GradientDrawable.RECTANGLE);
-        appointmentStatusButtonBackground.setCornerRadius(context.getResources().getDimension(R.dimen.dp4));
-
-
-
-        appointmentConsultationTypeButtonBackground= new GradientDrawable();
-        appointmentConsultationTypeButtonBackground.setShape(GradientDrawable.RECTANGLE);
-        appointmentConsultationTypeButtonBackground.setCornerRadius(context.getResources().getDimension(R.dimen.dp4));
-        appointmentConsultationTypeButtonBackground.setStroke(2, Color.parseColor(DMSApplication.COLOR_PRIMARY));
 
     }
 
@@ -133,45 +122,31 @@ public class DashboardAppointmentListAdapter extends RecyclerView.Adapter<Dashbo
             groupViewHolder.appointmentTime.setVisibility(View.INVISIBLE);
         }
 
-
         if (groupHeader.getAppointmentStatus().contains(BOOKED_STATUS)) {
             groupViewHolder.appointmentStatus.setTextColor(ContextCompat.getColor(_context, R.color.book_color));
             groupViewHolder.appointmentStatus.setText(_context.getString(R.string.booked));
-            appointmentStatusButtonBackground.setStroke(2, ContextCompat.getColor(_context, R.color.book_color));
-            groupViewHolder.appointmentStatus.setBackground(appointmentStatusButtonBackground);
-
         } else if (groupHeader.getAppointmentStatus().contains(COMPLETED_STATUS)) {
             groupViewHolder.appointmentStatus.setText(_context.getString(R.string.capitalcompleted));
             groupViewHolder.appointmentStatus.setTextColor(ContextCompat.getColor(_context, R.color.complete_color));
-            appointmentStatusButtonBackground.setStroke(2, ContextCompat.getColor(_context, R.color.complete_color));
-            groupViewHolder.appointmentStatus.setBackground(appointmentStatusButtonBackground);
         } else if (groupHeader.getAppointmentStatus().contains(CONFIRM_STATUS)) {
             groupViewHolder.appointmentStatus.setText(groupHeader.getAppointmentStatus());
             groupViewHolder.appointmentStatus.setTextColor(ContextCompat.getColor(_context, R.color.confirm_color));
-            appointmentStatusButtonBackground.setStroke(2, ContextCompat.getColor(_context, R.color.confirm_color));
-            groupViewHolder.appointmentStatus.setBackground(appointmentStatusButtonBackground);
         } else if (groupHeader.getAppointmentStatus().contains(CANCEL_STATUS)) {
             groupViewHolder.appointmentStatus.setText(groupHeader.getAppointmentStatus());
             groupViewHolder.appointmentStatus.setTextColor(ContextCompat.getColor(_context, R.color.cancel_color));
-            appointmentStatusButtonBackground.setStroke(2, ContextCompat.getColor(_context, R.color.cancel_color));
-            groupViewHolder.appointmentStatus.setBackground(appointmentStatusButtonBackground);
         } else if (groupHeader.getAppointmentStatus().equals(NO_SHOW)) {
             groupViewHolder.appointmentStatus.setText(groupHeader.getAppointmentStatus());
             groupViewHolder.appointmentStatus.setTextColor(ContextCompat.getColor(_context, R.color.no_show_color));
-            appointmentStatusButtonBackground.setStroke(2, ContextCompat.getColor(_context, R.color.no_show_color));
-            groupViewHolder.appointmentStatus.setBackground(appointmentStatusButtonBackground);
         } else if (groupHeader.getAppointmentStatus().equals(OTHER)) {
             groupViewHolder.appointmentStatus.setText(groupHeader.getAppointmentStatus());
             groupViewHolder.appointmentStatus.setTextColor(ContextCompat.getColor(_context, R.color.other_color));
-            appointmentStatusButtonBackground.setStroke(2, ContextCompat.getColor(_context, R.color.other_color));
-            groupViewHolder.appointmentStatus.setBackground(appointmentStatusButtonBackground);
         }
 
 
         String consultationType = groupHeader.getConsultationType();
         if (!consultationType.equalsIgnoreCase("")) {
             groupViewHolder.appointmentConsultationType.setText(consultationType);
-        }else {
+        } else {
             groupViewHolder.appointmentConsultationType.setVisibility(View.INVISIBLE);
         }
 
@@ -185,6 +160,7 @@ public class DashboardAppointmentListAdapter extends RecyclerView.Adapter<Dashbo
                         @Override
                         public void ok() {
                         }
+
                         @Override
                         public void retry() {
 
@@ -199,8 +175,8 @@ public class DashboardAppointmentListAdapter extends RecyclerView.Adapter<Dashbo
 //            groupViewHolder.layoutAppointmentCode.setVisibility(View.VISIBLE);
 //            groupViewHolder.patientAppointmentsCode.setText("" + groupHeader.getAppointmentCode());
 //       }
-        if(DMSApplication.APPOINTMENT_STATUS_URL.equalsIgnoreCase(""))
-            groupViewHolder.btnDone.setVisibility(View.INVISIBLE);
+//        if (DMSApplication.APPOINTMENT_STATUS_URL.equalsIgnoreCase(""))
+//            groupViewHolder.btnDone.setVisibility(View.INVISIBLE);
 
     }
 

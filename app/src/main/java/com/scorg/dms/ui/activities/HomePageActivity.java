@@ -72,7 +72,7 @@ public class HomePageActivity extends BaseActivity implements HelperResponse, Da
 
     //------------
     @BindView(R.id.totalPatientsCount)
-    TextView totalPatientsCount;
+    ImageView totalPatientsCount;
     @BindView(R.id.todayAppointmentsCount)
     TextView todayAppointmentsCount;
     @BindView(R.id.waitingPatientCount)
@@ -336,7 +336,7 @@ public class HomePageActivity extends BaseActivity implements HelperResponse, Da
         supportText.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         textHeaderTodayAppointment.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         pendingApprovalCount.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
-        totalPatientsCount.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+        totalPatientsCount.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         todayAppointmentsCount.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         waitingPatientCount.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         admittedPatientCount.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
@@ -441,7 +441,6 @@ public class HomePageActivity extends BaseActivity implements HelperResponse, Da
                     mDashboardDataModel = mDashboardBaseModel.getDashboardDataModel();
                     if (mDashboardDataModel != null) {
                         pendingApprovalCount.setText(mDashboardDataModel.getPendingApprovedCount());
-                        totalPatientsCount.setText(mDashboardDataModel.getTotalPatientCount());
                         todayAppointmentsCount.setText(mDashboardDataModel.getAppointmentCount());
                         // waitingPatientCount.setText(mDashboardDataModel.getWaitingCount());
                         admittedPatientCount.setText(mDashboardDataModel.getAdmittedPatientCount());
@@ -485,7 +484,6 @@ public class HomePageActivity extends BaseActivity implements HelperResponse, Da
                         }
                     } else {
                         pendingApprovalCount.setText("0");
-                        totalPatientsCount.setText("0");
                         todayAppointmentsCount.setText("0");
                         // waitingPatientCount.setText("0");
                         admittedPatientCount.setText("0");
@@ -514,7 +512,6 @@ public class HomePageActivity extends BaseActivity implements HelperResponse, Da
     private void setErrorContent() {
         emptyListView.setVisibility(View.VISIBLE);
         pendingApprovalCount.setText("0");
-        totalPatientsCount.setText("0");
         todayAppointmentsCount.setText("0");
         // waitingPatientCount.setText("0");
         admittedPatientCount.setText("0");

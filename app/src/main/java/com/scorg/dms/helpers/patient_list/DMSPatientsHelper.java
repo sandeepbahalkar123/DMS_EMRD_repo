@@ -114,6 +114,10 @@ public class DMSPatientsHelper implements ConnectionListener {
                 CommonMethods.Log(TAG, mContext.getString(R.string.no_connection_error));
                 mHelperResponseManager.onNoConnectionError(mOldDataTag, mContext.getString(R.string.no_connection_error));
                 break;
+            case ConnectionListener.NO_CONNECTION_ERROR:
+                CommonMethods.Log(TAG, mContext.getString(R.string.no_connection_error));
+                mHelperResponseManager.onNoConnectionError(mOldDataTag, mContext.getString(R.string.no_connection_error));
+                break;
             default:
                 mHelperResponseManager.onParseError(mOldDataTag, mContext.getString(R.string.something_went_wrong_error));
                 CommonMethods.Log(TAG, "default error");

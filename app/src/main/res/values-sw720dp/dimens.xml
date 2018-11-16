@@ -63,7 +63,7 @@
     <dimen name="compare_dialog">360dp</dimen>
     <dimen name="banner_height">350dp</dimen>
     <dimen name="label_height">170dp</dimen>
-    <dimen name="dp43">66dp</dimen>
+    <dimen name="dp44">67dp</dimen>
     <dimen name="dp45">67dp</dimen>
     <dimen name="tab_width">60dp</dimen>
     <dimen name="tab_height">40dp</dimen>

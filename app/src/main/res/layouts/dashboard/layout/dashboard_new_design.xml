@@ -103,17 +103,13 @@
                             android:gravity="center"
                             android:orientation="vertical">
 
-                            <TextView
+                            <ImageView
                                 android:id="@+id/totalPatientsCount"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="@font/roboto_bold"
                                 android:gravity="center"
-                                android:text="0"
-                                android:textColor="@color/timing_bg_color"
-                                android:textSize="@dimen/sp20"
-                                android:visibility="gone"
-                                tools:text="21" />
+                                app:srcCompat="@drawable/ic_allpatient"
+                                 />
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -313,7 +309,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp1"
                     android:layout_marginTop="@dimen/dp5"
-                    android:layout_marginBottom="@dimen/dp5"
+                    android:layout_marginBottom="@dimen/dp0"
                     android:background="@color/grey_700" />
 
                 <include layout="@layout/common_recycler_view"></include>
