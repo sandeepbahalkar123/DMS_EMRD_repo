@@ -21,6 +21,10 @@ public class LstDateFolderType {
     @Expose
     private String nodeColor;
 
+    @SerializedName("favouriteColor")
+    @Expose
+    private String favouriteColor;
+
     @SerializedName("confidentialState")
     @Expose
     private int confidentialState;
@@ -49,6 +53,14 @@ public class LstDateFolderType {
 
     public void setNodeColor(String nodeColor) {
         this.nodeColor = nodeColor;
+    }
+
+    public String getFavouriteColor() {
+        return favouriteColor == null ? "#00000000" : favouriteColor;
+    }
+
+    public void setFavouriteColor(String favouriteColor) {
+        this.favouriteColor = favouriteColor;
     }
 
     public int getPageCount() {

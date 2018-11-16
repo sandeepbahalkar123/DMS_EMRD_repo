@@ -22,6 +22,10 @@ public class LstDateFileType {
     @Expose
     private String nodeColor;
 
+    @SerializedName("favouriteColor")
+    @Expose
+    private String favouriteColor;
+
     @SerializedName("isFavourite")
     @Expose
     private boolean isFavourite;
@@ -70,6 +74,14 @@ public class LstDateFileType {
 
     public void setNodeColor(String nodeColor) {
         this.nodeColor = nodeColor;
+    }
+
+    public String getFavouriteColor() {
+        return favouriteColor == null ? "#00000000" : favouriteColor;
+    }
+
+    public void setFavouriteColor(String favouriteColor) {
+        this.favouriteColor = favouriteColor;
     }
 
     public Integer getPageCount() {

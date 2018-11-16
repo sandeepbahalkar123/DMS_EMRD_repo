@@ -19,6 +19,10 @@ public class LstHideDocType {
     @Expose
     private String nodeColor;
 
+    @SerializedName("favouriteColor")
+    @Expose
+    private String favouriteColor;
+
     @SerializedName("pageCount")
     @Expose
     private int pageCount;
@@ -28,12 +32,12 @@ public class LstHideDocType {
     @SerializedName("fileTypeRefId")
     @Expose
     private String fileTypeRefId;
-    @SerializedName("documentType")
+    @SerializedName("typeName")
     @Expose
-    private String documentType;
-    @SerializedName("documentTypeId")
+    private String typeName;
+    @SerializedName("typeId")
     @Expose
-    private int documentTypeId;
+    private int typeId;
     @SerializedName("recordId")
     @Expose
     private int recordId;
@@ -71,6 +75,14 @@ public class LstHideDocType {
         this.nodeColor = nodeColor;
     }
 
+    public String getFavouriteColor() {
+        return favouriteColor == null ? "#00000000" : favouriteColor;
+    }
+
+    public void setFavouriteColor(String favouriteColor) {
+        this.favouriteColor = favouriteColor;
+    }
+
     public int getPageCount() {
         return pageCount;
     }
@@ -95,20 +107,20 @@ public class LstHideDocType {
         this.fileTypeRefId = fileTypeRefId;
     }
 
-    public String getDocumentType() {
-        return documentType;
+    public String getTypeName() {
+        return typeName;
     }
 
-    public void setDocumentType(String documentType) {
-        this.documentType = documentType;
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
     }
 
-    public int getDocumentTypeId() {
-        return documentTypeId;
+    public int getTypeId() {
+        return typeId;
     }
 
-    public void setDocumentTypeId(int documentTypeId) {
-        this.documentTypeId = documentTypeId;
+    public void setTypeId(int typeId) {
+        this.typeId = typeId;
     }
 
     public int getRecordId() {
