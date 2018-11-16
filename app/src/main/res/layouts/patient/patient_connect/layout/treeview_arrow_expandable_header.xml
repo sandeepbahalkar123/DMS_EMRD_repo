@@ -11,12 +11,16 @@
         android:id="@+id/mainContentLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
+        android:layout_centerVertical="true">
+
+    <LinearLayout
+        android:id="@+id/mainContentBackground"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="horizontal"
         android:paddingStart="@dimen/dp5"
         android:paddingLeft="@dimen/dp5">
-
 
         <android.support.v7.widget.AppCompatCheckBox
             android:id="@+id/node_selector"
@@ -61,6 +65,8 @@
             android:visibility="gone"
             app:srcCompat="@drawable/ic_lock"
             tools:visibility="visible" />
+
+    </LinearLayout>
 
     </LinearLayout>
 </RelativeLayout>

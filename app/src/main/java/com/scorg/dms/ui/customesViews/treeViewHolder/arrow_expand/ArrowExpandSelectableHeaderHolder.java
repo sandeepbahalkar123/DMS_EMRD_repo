@@ -42,6 +42,7 @@ public class ArrowExpandSelectableHeaderHolder extends TreeNode.BaseNodeViewHold
     private ImageView arrowView, icon_lock;
     private AppCompatCheckBox nodeSelector;
     private LinearLayout mainContentLayout;
+    private LinearLayout mainContentBackground;
     private int confidentialState;
     private ArrowExpandSelectableHeaderHolderLockIconClickListener lockIconClickListener;
     private boolean isChecked;
@@ -95,6 +96,7 @@ public class ArrowExpandSelectableHeaderHolder extends TreeNode.BaseNodeViewHold
         arrowView = view.findViewById(R.id.icon);
         arrowView.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         mainContentLayout = view.findViewById(R.id.mainContentLayout);
+        mainContentBackground = view.findViewById(R.id.mainContentBackground);
 
         mainContentLayout.setPadding(leftPadding, 0, 0, 0);
 
@@ -195,31 +197,38 @@ public class ArrowExpandSelectableHeaderHolder extends TreeNode.BaseNodeViewHold
                     getSelected());
         }
 
-        if (value.objectData instanceof ArchiveDatum)
+        if (value.objectData instanceof ArchiveDatum) {
             tvValue.setTextColor(Color.parseColor(((ArchiveDatum) value.objectData).getNodeColor()));
-        else if (value.objectData instanceof LstDocType) {
+            mainContentBackground.setBackgroundColor(Color.parseColor(((ArchiveDatum) value.objectData).getFavouriteColor()));
+        } else if (value.objectData instanceof LstDocType) {
             tvValue.setTextColor(Color.parseColor(((LstDocType) value.objectData).getNodeColor()));
+            mainContentBackground.setBackgroundColor(Color.parseColor(((LstDocType) value.objectData).getFavouriteColor()));
 
             // Favorite logic -----------------------------
-            if (node.isLeaf()) {
-                if (((LstDocType) value.objectData).isFavourite()) {
-                    node.setExpanded(true);
-                    if (node.getParent() != null)
-                        node.getParent().setExpanded(true);
-                    if (node.getRoot() != null)
-                        node.getRoot().setExpanded(true);
-                }
-            }
+//            if (node.isLeaf()) {
+//                if (((LstDocType) value.objectData).isFavourite()) {
+//                    node.setExpanded(true);
+//                    if (node.getParent() != null)
+//                        node.getParent().setExpanded(true);
+//                    if (node.getRoot() != null)
+//                        node.getRoot().setExpanded(true);
+//                }
+//            }
             // Favorite logic -----------------------------
 
-        } else if (value.objectData instanceof LstDateFileType)
+        } else if (value.objectData instanceof LstDateFileType) {
             tvValue.setTextColor(Color.parseColor(((LstDateFileType) value.objectData).getNodeColor()));
-        else if (value.objectData instanceof LstDateFolderType)
+            mainContentBackground.setBackgroundColor(Color.parseColor(((LstDateFileType) value.objectData).getFavouriteColor()));
+        } else if (value.objectData instanceof LstDateFolderType) {
             tvValue.setTextColor(Color.parseColor(((LstDateFolderType) value.objectData).getNodeColor()));
-        else if (value.objectData instanceof LstDocCategory)
+            mainContentBackground.setBackgroundColor(Color.parseColor(((LstDateFolderType) value.objectData).getFavouriteColor()));
+        } else if (value.objectData instanceof LstDocCategory) {
             tvValue.setTextColor(Color.parseColor(((LstDocCategory) value.objectData).getNodeColor()));
-        else if (value.objectData instanceof LstHideDocType)
+            mainContentBackground.setBackgroundColor(Color.parseColor(((LstDocCategory) value.objectData).getFavouriteColor()));
+        } else if (value.objectData instanceof LstHideDocType) {
             tvValue.setTextColor(Color.parseColor(((LstHideDocType) value.objectData).getNodeColor()));
+            mainContentBackground.setBackgroundColor(Color.parseColor(((LstHideDocType) value.objectData).getFavouriteColor()));
+        }
 
         if (confidentialState == 2 || confidentialState == 3 || confidentialState == 4) {
             icon_lock.setVisibility(View.VISIBLE);

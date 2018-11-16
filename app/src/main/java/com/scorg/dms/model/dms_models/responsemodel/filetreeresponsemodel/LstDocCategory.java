@@ -20,6 +20,10 @@ public class LstDocCategory {
     @Expose
     private String nodeColor;
 
+    @SerializedName("favouriteColor")
+    @Expose
+    private String favouriteColor;
+
     @SerializedName("pageCount")
     @Expose
     private int pageCount;
@@ -97,6 +101,14 @@ public class LstDocCategory {
 
     public String getNodeColor() {
         return nodeColor == null ? "#000000" : nodeColor;
+    }
+
+    public String getFavouriteColor() {
+        return favouriteColor == null ? "#00000000" : favouriteColor;
+    }
+
+    public void setFavouriteColor(String favouriteColor) {
+        this.favouriteColor = favouriteColor;
     }
 
     public void setNodeColor(String nodeColor) {

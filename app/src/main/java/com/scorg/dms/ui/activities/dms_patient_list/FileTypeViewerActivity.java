@@ -791,13 +791,14 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
 
     }
 
-    private void createAnnotationTreeWithMyOrderPreferences(FileTreeResponseData fileTreeResponseData, boolean isExpanded) {
+    private void createAnnotationTree(FileTreeResponseData fileTreeResponseData, boolean isExpanded) {
         mFileTypeOneTreeViewContainer.removeAllViews();
 
         TreeNode treeRoot = TreeNode.root();
         int confidentialState;
-        int lstDocTypeChildLeftPadding = (int) (getResources().getDimension(R.dimen.dp50) / getResources().getDisplayMetrics().density);
-        int lstDateFolderTypeChildLeftPadding = (int) (getResources().getDimension(R.dimen.dp100) / getResources().getDisplayMetrics().density);
+        int lstDocTypeChildLeftPadding = (int) (getResources().getDimension(R.dimen.dp36) / getResources().getDisplayMetrics().density);
+        int lstDateFolderTypeChildLeftPadding = (int) (getResources().getDimension(R.dimen.dp72) / getResources().getDisplayMetrics().density);
+        int lstFileLeftPadding = (int) (getResources().getDimension(R.dimen.dp108) / getResources().getDisplayMetrics().density);
         int textColor = ContextCompat.getColor(this, R.color.black);
 
         List<ArchiveDatum> archiveData = fileTreeResponseData.getArchiveData();
@@ -900,15 +901,15 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
                         // Label(pageCount)|id
                         confidentialState = lstHideDocType.getConfidentialState();
 
-                        dataToShow = lstHideDocType.getCategoryName() + " (" + lstHideDocType.getPageCount() + ")" + "|" + lstHideDocType.getCategoryId();
-                        ArrowExpandSelectableHeaderHolder docCatSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstDateFolderTypeChildLeftPadding, true, confidentialState, false);
+                        dataToShow = lstHideDocType.getTypeName() + " (" + lstHideDocType.getPageCount() + ")" + "|" + lstHideDocType.getTypeId();
+                        ArrowExpandSelectableHeaderHolder docCatSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstFileLeftPadding, false, confidentialState, false);
                         docCatSelectableHeaderHolder.setOnlyOneNodeExpanded(false);
 
                         docCatSelectableHeaderHolder.setNodeValueColor(textColor);
 
                         //---- To bold clicked text in tree
                         // if (lstDocCategoryObject.getCategoryName().equalsIgnoreCase(mPreviousClickedTreeElement.get(i)))
-                        if (lstHideDocType.getCategoryName().equalsIgnoreCase(mPreviousClickedTreeElement.get(lstHideDocType.getCategoryName())))
+                        if (lstHideDocType.getTypeName().equalsIgnoreCase(mPreviousClickedTreeElement.get(lstHideDocType.getTypeName())))
                             docCatSelectableHeaderHolder.setTreeLabelBold(true);
 
                         TreeNode lstDocCategoryObjectFolder = new TreeNode(new ArrowExpandIconTreeItemHolder.IconTreeItem(R.string.ic_shopping_cart, dataToShow, lstHideDocType, i))
@@ -930,7 +931,7 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
                         dataToShow = lstDocTypeChild.getTypeName() + " (" + lstDocTypeChild.getPageCount() + ")" + "|" + lstDocTypeChild.getTypeId();
                         confidentialState = lstDocTypeChild.getConfidentialState();
                         //-------
-                        ArrowExpandSelectableHeaderHolder lstDocTypeChildSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstDateFolderTypeChildLeftPadding, false, confidentialState, false);
+                        ArrowExpandSelectableHeaderHolder lstDocTypeChildSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstFileLeftPadding, false, confidentialState, false);
                         lstDocTypeChildSelectableHeaderHolder.setOnlyOneNodeExpanded(false);
                         lstDocTypeChildSelectableHeaderHolder.setNodeValueColor(textColor);
 
@@ -989,15 +990,15 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
                         // Label(pageCount)|id
                         confidentialState = lstHideDocType.getConfidentialState();
 
-                        dataToShow = lstHideDocType.getCategoryName() + " (" + lstHideDocType.getPageCount() + ")" + "|" + lstHideDocType.getCategoryId();
-                        ArrowExpandSelectableHeaderHolder docCatSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstDateFolderTypeChildLeftPadding, true, confidentialState, false);
+                        dataToShow = lstHideDocType.getTypeName() + " (" + lstHideDocType.getPageCount() + ")" + "|" + lstHideDocType.getTypeId();
+                        ArrowExpandSelectableHeaderHolder docCatSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstDateFolderTypeChildLeftPadding, false, confidentialState, false);
                         docCatSelectableHeaderHolder.setOnlyOneNodeExpanded(false);
 
                         docCatSelectableHeaderHolder.setNodeValueColor(textColor);
 
                         //---- To bold clicked text in tree
                         // if (lstDocCategoryObject.getCategoryName().equalsIgnoreCase(mPreviousClickedTreeElement.get(i)))
-                        if (lstHideDocType.getCategoryName().equalsIgnoreCase(mPreviousClickedTreeElement.get(lstHideDocType.getCategoryName())))
+                        if (lstHideDocType.getTypeName().equalsIgnoreCase(mPreviousClickedTreeElement.get(lstHideDocType.getTypeName())))
                             docCatSelectableHeaderHolder.setTreeLabelBold(true);
 
                         TreeNode lstDocCategoryObjectFolder = new TreeNode(new ArrowExpandIconTreeItemHolder.IconTreeItem(R.string.ic_shopping_cart, dataToShow, lstHideDocType, i))
@@ -1043,7 +1044,7 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
                             confidentialState = lstDocTypeChild.getConfidentialState();
 
                             //-------
-                            ArrowExpandSelectableHeaderHolder lstDocTypeChildSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstDateFolderTypeChildLeftPadding, false, confidentialState, false);
+                            ArrowExpandSelectableHeaderHolder lstDocTypeChildSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, isExpanded, lstFileLeftPadding, false, confidentialState, false);
                             lstDocTypeChildSelectableHeaderHolder.setOnlyOneNodeExpanded(false);
                             lstDocTypeChildSelectableHeaderHolder.setNodeValueColor(textColor);
 
@@ -1172,6 +1173,18 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
                 tempClickedLstDocTypeElement.setRecordDetailId(clickedLstDocTypeElement.getRecordDetailId());
                 tempClickedLstDocTypeElement.setPermission(clickedLstDocTypeElement.getPermission());
                 tempClickedLstDocTypeElement.setConfidentialState(clickedLstDocTypeElement.getConfidentialState());
+                doClickedOperationOnTreeItem(tempClickedLstDocTypeElement);
+                mDrawer.closeDrawer(GravityCompat.END);
+            } else if (value1.objectData instanceof LstHideDocType) {
+                LstHideDocType hideDocType = (LstHideDocType) value1.objectData;
+                LstDocType tempClickedLstDocTypeElement = new LstDocType();
+                tempClickedLstDocTypeElement.setTypeId(hideDocType.getTypeId());
+                tempClickedLstDocTypeElement.setTypeName(hideDocType.getTypeName());
+                tempClickedLstDocTypeElement.setPageCount(hideDocType.getPageCount());
+                tempClickedLstDocTypeElement.setRecordId(hideDocType.getRecordId());
+                tempClickedLstDocTypeElement.setRecordDetailId(hideDocType.getRecordDetailId());
+//                tempClickedLstDocTypeElement.setPermission(hideDocType.getPermission());
+                tempClickedLstDocTypeElement.setConfidentialState(hideDocType.getConfidentialState());
                 doClickedOperationOnTreeItem(tempClickedLstDocTypeElement);
                 mDrawer.closeDrawer(GravityCompat.END);
             }
@@ -1476,7 +1489,7 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
         if (mFileTreeResponseData == null)
             getLoadArchivedList();
         else {
-            createAnnotationTreeWithMyOrderPreferences(mFileTreeResponseData, true);
+            createAnnotationTree(mFileTreeResponseData, true);
             if (mFileTreeResponseData.isPagination()) {
                 loadedArchiveDataMessage.setText("" + currentCount + " " + getString(R.string.records_more));
             } else {

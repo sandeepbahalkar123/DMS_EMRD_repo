@@ -41,6 +41,10 @@ public class ArchiveDatum {
     @Expose
     private String nodeColor;
 
+    @SerializedName("favouriteColor")
+    @Expose
+    private String favouriteColor;
+
     @SerializedName("pageCount")
     @Expose
     private int pageCount;
@@ -188,6 +192,14 @@ public class ArchiveDatum {
 
     public void setNodeColor(String nodeColor) {
         this.nodeColor = nodeColor;
+    }
+
+    public String getFavouriteColor() {
+        return favouriteColor == null ? "#00000000" : favouriteColor;
+    }
+
+    public void setFavouriteColor(String favouriteColor) {
+        this.favouriteColor = favouriteColor;
     }
 
     public int getPageCount() {

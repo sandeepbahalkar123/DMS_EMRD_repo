@@ -70,5 +70,7 @@
     <dimen name="dp45">45dp</dimen>
     <dimen name="tab_width">40dp</dimen>
     <dimen name="tab_height">30dp</dimen>
+    <dimen name="dp72">72dp</dimen>
+    <dimen name="dp108">108dp</dimen>
 
 </resources>
