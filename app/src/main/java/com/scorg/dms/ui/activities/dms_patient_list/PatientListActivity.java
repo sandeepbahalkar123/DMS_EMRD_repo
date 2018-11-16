@@ -116,7 +116,7 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
     @BindView(R.id.spinner_admissionDate)
     Spinner mSpinnerAmissionDate;
     @BindView(R.id.et_uhid)
-    EditText mUHIDEditText;
+    AutoCompleteTextView mUHIDEditText;
     @BindView(R.id.et_fromdate)
     EditText mFromDateEditText;
     @BindView(R.id.et_todate)
@@ -124,7 +124,7 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
     @BindView(R.id.et_searchPatientName)
     AutoCompleteTextView mSearchPatientNameEditText;
     @BindView(R.id.et_userEnteredAnnotation)
-    EditText mAnnotationEditText;
+    AutoCompleteTextView mAnnotationEditText;
     @BindView(R.id.et_search_annotation)
     EditText mSearchAnnotationEditText;
     @BindView(R.id.bt_clear_search_annotation)

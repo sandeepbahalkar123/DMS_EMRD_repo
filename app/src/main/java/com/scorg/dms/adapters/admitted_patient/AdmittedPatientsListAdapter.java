@@ -60,10 +60,6 @@ public class AdmittedPatientsListAdapter
         this.admittedPatientDataList = new ArrayList<>();
         this.admittedPatientDataList.addAll(admittedPatientData);
         this.onItemClickListener = onItemClickListener;
-//        buttonBackground = new GradientDrawable();
-//        buttonBackground.setShape(GradientDrawable.RECTANGLE);
-//        buttonBackground.setColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
-//        buttonBackground.setCornerRadius(context.getResources().getDimension(R.dimen.dp5));
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
@@ -156,6 +152,8 @@ public class AdmittedPatientsListAdapter
         holder.viewLine1.setBackgroundColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         holder.textBedNoHead.setTextColor(Color.parseColor(DMSApplication.COLOR_APPOINTMENT_TEXT));
         holder.textNewPatient.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+        holder.patientIdTextView.setTextColor(Color.parseColor(DMSApplication.COLOR_APPOINTMENT_TEXT));
+        holder.patientNameTextView.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
 
 
         String salutation = admittedPatientDataObject.getSalutation();

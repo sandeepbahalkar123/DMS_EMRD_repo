@@ -28,7 +28,7 @@
                 android:id="@+id/layoutPatSearch"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp44"
-                android:layout_marginBottom="@dimen/dp3"
+                android:layout_marginBottom="@dimen/dp5"
                 android:orientation="vertical">
 
                 <com.scorg.dms.ui.customesViews.SearchTextViewWithDeleteButton
@@ -48,7 +48,6 @@
                     android:layout_marginTop="@dimen/dp5"
                     android:layout_marginEnd="@dimen/dp10"
                     android:layout_marginRight="@dimen/dp10"
-                    android:layout_marginBottom="5dp"
                     android:background="@color/white" />
             </LinearLayout>
 

@@ -62,8 +62,6 @@ public class MyAppointmentsActivity extends BaseActivity implements HelperRespon
     ImageView backImageView;
     @BindView(R.id.titleTextView)
     TextView titleTextView;
-    @BindView(R.id.userInfoTextView)
-    TextView userInfoTextView;
     @BindView(R.id.dateTextview)
     TextView dateTextview;
     @BindView(R.id.tabs)

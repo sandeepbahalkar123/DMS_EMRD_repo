@@ -79,18 +79,19 @@ public class PatientRecycleViewListAdapter extends RecyclerView.Adapter<PatientR
         GradientDrawable episodButtonBackground = new GradientDrawable();
         episodButtonBackground.setShape(GradientDrawable.RECTANGLE);
         episodButtonBackground.setColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
-        episodButtonBackground.setCornerRadius(_context.getResources().getDimension(R.dimen.dp8));
+        episodButtonBackground.setCornerRadius(_context.getResources().getDimension(R.dimen.dp2));
         groupViewHolder.episodeList.setBackground(episodButtonBackground);
 
         final SearchResult groupHeader = _originalListDataHeader.get(position);
-        groupViewHolder.uhid.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
-        groupViewHolder.patientId.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+        groupViewHolder.uhid.setTextColor(Color.parseColor(DMSApplication.COLOR_APPOINTMENT_TEXT));
+        groupViewHolder.patientId.setTextColor(Color.parseColor(DMSApplication.COLOR_APPOINTMENT_TEXT));
         groupViewHolder.bluelineImageView.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+        groupViewHolder.userName.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
 
         groupViewHolder.userName.setText(groupHeader.getPatientName());
         groupViewHolder.patientId.setText(groupHeader.getPatientId());
-        groupViewHolder.uhid.setText(DMSApplication.LABEL_UHID + ":");
-
+        groupViewHolder.uhid.setText(DMSApplication.LABEL_UHID + " :");
+        groupViewHolder.userGender.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
 
         //-------------
         TextDrawable textDrawable = CommonMethods.getTextDrawable(groupViewHolder.patientImageView.getContext(), groupHeader.getPatientName());
@@ -111,7 +112,7 @@ public class PatientRecycleViewListAdapter extends RecyclerView.Adapter<PatientR
 
         if (groupHeader.getAge() != null) {
             groupViewHolder.userAge.setVisibility(View.VISIBLE);
-            groupViewHolder.userAge.setText(groupHeader.getAge().concat(" Year"));
+            groupViewHolder.userAge.setText(groupHeader.getAge() + " " + _context.getString(R.string.years));
         }
 
 

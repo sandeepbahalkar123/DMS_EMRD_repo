@@ -109,6 +109,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
+                                android:padding="@dimen/dp2"
                                 app:srcCompat="@drawable/ic_allpatient"
                                  />
 
@@ -257,13 +258,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@+id/bannerLayout"
-                android:layout_margin="@dimen/dp8"
-                android:layout_marginTop="@dimen/dp0"
                 android:orientation="vertical">
-
 
                 <RelativeLayout
                     android:layout_width="match_parent"
+                    android:layout_margin="@dimen/dp5"
                     android:layout_height="wrap_content">
 
                     <TextView
@@ -310,7 +309,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp1"
                     android:layout_marginTop="@dimen/dp5"
-                    android:layout_marginBottom="@dimen/dp0"
                     android:background="@color/grey_700" />
 
                 <include layout="@layout/common_recycler_view"></include>

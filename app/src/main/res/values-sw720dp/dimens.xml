@@ -39,7 +39,7 @@
     <dimen name="sp12">18sp</dimen>
     <dimen name="sp18">27sp</dimen>
     <dimen name="sp14">20sp</dimen>
-    <dimen name="sp16">24sp</dimen>
+    <dimen name="sp16">23sp</dimen>
     <dimen name="sp15">22sp</dimen>
     <dimen name="sp17">26sp</dimen>
     <dimen name="sp20">30sp</dimen>
@@ -69,4 +69,6 @@
     <dimen name="tab_height">40dp</dimen>
     <dimen name="dp72">104dp</dimen>
     <dimen name="dp108">156dp</dimen>
+    <dimen name="dp24">34dp</dimen>
+    <dimen name="back_arrow">24dp</dimen>
 </resources>

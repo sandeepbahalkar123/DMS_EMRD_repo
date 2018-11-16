@@ -72,7 +72,7 @@ public class AdmittedPatientsFragment extends Fragment implements AdmittedPatien
     FloatingActionButton rightFab;
 
     Unbinder unbinder;
-    private AdmittedPatientsListAdapter admittedPatientsListAdapter;
+    public AdmittedPatientsListAdapter admittedPatientsListAdapter;
     ViewRights viewRights;
     private OnFragmentInteraction onFragmentInteraction;
 
