@@ -233,7 +233,7 @@
     <string name="search_label">Search\u0020</string>
     <string name="patient_not_having_record">No records found for these patient.</string>
     <string name="active_appointmets">Active</string>
-    <string name="all_appointments">View all</string>
+    <string name="all_appointments">All</string>
     <string name="data_not_found">Required  Data Not Found</string>
     <string name="check_wifi_connection">The Wifi connection appears to be off. Please, check the Wifi settings and try again.</string>
     <string name="raise_request_episode">Raise Request</string>

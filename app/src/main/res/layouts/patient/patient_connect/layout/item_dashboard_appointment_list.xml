@@ -9,6 +9,8 @@
         android:id="@+id/cardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp5"
+        android:layout_marginBottom="@dimen/dp5"
         android:orientation="vertical">
 
         <LinearLayout
@@ -56,7 +58,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/roboto_medium"
                             android:textColor="@color/grey_shade"
-                            android:textSize="@dimen/sp15"
+                            android:textSize="@dimen/sp14"
                             tools:ignore="RtlSymmetry"
                             tools:text="23456" />
 
@@ -69,7 +71,7 @@
                         android:layout_height="match_parent"
                         android:fontFamily="@font/roboto_bold"
                         android:textColor="@color/tagColor"
-                        android:textSize="@dimen/sp14"
+                        android:textSize="@dimen/sp15"
                         tools:text="Mr. Uren Chhadva" />
 
                     <LinearLayout
@@ -178,6 +180,7 @@
                         android:paddingEnd="@dimen/dp10"
                         android:paddingRight="@dimen/dp10"
                         android:paddingBottom="@dimen/dp3"
+                        android:layout_marginBottom="@dimen/dp2"
                         android:text="@string/done"
                         android:textAllCaps="true"
                         android:textColor="@color/white"
@@ -198,7 +201,6 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp1"
         android:layout_below="@+id/cardView"
-        android:layout_marginTop="@dimen/dp5"
         android:background="@color/grey"
         android:visibility="visible" />
 

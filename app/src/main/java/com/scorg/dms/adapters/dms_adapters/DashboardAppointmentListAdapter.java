@@ -171,12 +171,9 @@ public class DashboardAppointmentListAdapter extends RecyclerView.Adapter<Dashbo
             }
         });
         groupViewHolder.layoutAppointmentCode.setVisibility(View.VISIBLE);
-//        if (groupHeader.getAppointmentCode()!=0) {
-//            groupViewHolder.layoutAppointmentCode.setVisibility(View.VISIBLE);
-//            groupViewHolder.patientAppointmentsCode.setText("" + groupHeader.getAppointmentCode());
-//       }
-//        if (DMSApplication.APPOINTMENT_STATUS_URL.equalsIgnoreCase(""))
-//            groupViewHolder.btnDone.setVisibility(View.INVISIBLE);
+
+        if (DMSApplication.APPOINTMENT_STATUS_URL.equalsIgnoreCase(""))
+            groupViewHolder.btnDone.setVisibility(View.INVISIBLE);
 
     }
 

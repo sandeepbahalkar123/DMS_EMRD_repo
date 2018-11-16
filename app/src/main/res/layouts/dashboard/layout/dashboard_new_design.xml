@@ -91,6 +91,7 @@
                         android:layout_gravity="center"
                         android:layout_marginTop="@dimen/dp20"
                         android:gravity="center"
+                        android:background="@color/transparent"
                         android:orientation="horizontal"
                         android:visibility="visible">
 
@@ -99,7 +100,7 @@
                             android:layout_width="@dimen/dp0"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:background="@drawable/curve_edge_dashbooard_display_count_bg"
+                            android:background="@drawable/curve_background"
                             android:gravity="center"
                             android:orientation="vertical">
 
@@ -128,7 +129,7 @@
                             android:layout_height="match_parent"
                             android:layout_marginLeft="@dimen/dp5"
                             android:layout_weight="1"
-                            android:background="@drawable/curve_edge_dashbooard_display_count_bg"
+                            android:background="@drawable/curve_background"
                             android:gravity="center"
                             android:orientation="vertical">
 
@@ -159,7 +160,7 @@
                             android:layout_height="match_parent"
                             android:layout_marginLeft="@dimen/dp5"
                             android:layout_weight="1"
-                            android:background="@drawable/curve_edge_dashbooard_display_count_bg"
+                            android:background="@drawable/curve_background"
                             android:gravity="center"
                             android:orientation="vertical">
 
@@ -191,7 +192,7 @@
                             android:layout_height="match_parent"
                             android:layout_marginLeft="@dimen/dp5"
                             android:layout_weight="1"
-                            android:background="@drawable/curve_edge_dashbooard_display_count_bg"
+                            android:background="@drawable/curve_background"
                             android:gravity="center"
                             android:orientation="vertical"
                             android:visibility="gone">
@@ -222,7 +223,7 @@
                             android:layout_height="match_parent"
                             android:layout_marginLeft="@dimen/dp5"
                             android:layout_weight="1"
-                            android:background="@drawable/curve_edge_dashbooard_display_count_bg"
+                            android:background="@drawable/curve_background"
                             android:gravity="center"
                             android:orientation="vertical">
 
