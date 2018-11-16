@@ -238,6 +238,8 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
     @BindView(R.id.labelDrawerUDID)
     TextView labelDrawerUDID;
 
+    @BindView(R.id.footerLayout)
+    LinearLayout footerLayout;
 
     DrawerLayout mDrawer;
     //---------
@@ -249,7 +251,6 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
     String patientName;
     String doctorName;
     String patientAddress;
-    private Integer mPageNumber = 0;
     private boolean isFirstPdf = true;
     private float mCurrentXOffset = -1;
     private float mCurrentYOffset = -1;
@@ -613,6 +614,9 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
                 setErrorDialog(fileTreeResponseModel.getCommon().getStatusMessage(), mOldDataTag, false, FileTypeViewerActivity.this);
             } else {
 
+                if (fileTreeResponseModel.getFileTreeResponseData().isPagination())
+                    footerLayout.setVisibility(View.VISIBLE);
+
                 if (!fileTreeResponseModel.getFileTreeResponseData().getArchiveData().isEmpty()) {
                     if (emptyListView.getVisibility() == View.VISIBLE)
                         emptyListView.setVisibility(View.GONE);
@@ -621,10 +625,7 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
                 } else {
                     setErrorDialog("Records Not Found", mOldDataTag, false, FileTypeViewerActivity.this);
                 }
-
-
             }
-
 
             //------
 
@@ -1300,6 +1301,7 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
     private void loadFile(PDFView pdfViewToLoad, File file) {
         CommonMethods.Log(TAG, "PDF URL1112222:==-->> " + file);
 
+        Integer mPageNumber = 0;
         if (pdfViewToLoad == mFirstPdfView) {
             mFirstPdfView.fromFile(file)
                     .defaultPage(mPageNumber)
@@ -1509,6 +1511,18 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
                     String val = data.getFileTypeRefId() + "_" + data.getTypeId() + "_" + data.getRecordId();
                     arrayCheckList.add(val);
                 }
+                Log.e("CheckList", "--" + arrayCheckList);
+                String[] stringArray = arrayCheckList.toArray(new String[arrayCheckList.size()]);
+                unlockRequestModel.setRequestTypeId("3");
+                unlockRequestModel.setCheckList(stringArray);
+                showDialogRaiseRequest(unlockRequestModel);
+            } else if (value1.objectData instanceof LstHideDocType) {
+                LstHideDocType lstHideDocType = (LstHideDocType) value1.objectData;
+
+                //FileTypeRefId_typeID_RecordID
+                String val = lstHideDocType.getFileTypeRefId() + "_" + lstHideDocType.getTypeId() + "_" + lstHideDocType.getRecordId();
+                arrayCheckList.add(val);
+
                 Log.e("CheckList", "--" + arrayCheckList);
                 String[] stringArray = arrayCheckList.toArray(new String[arrayCheckList.size()]);
                 unlockRequestModel.setRequestTypeId("3");
