@@ -216,6 +216,7 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
         mClearPatientNameButton.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         imageAnnotation.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         mClearSearchAnnotationButton.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+        imgNoRecordFound.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         mAutoCompleteSearchBox.setHint(getString(R.string.search_label)+DMSApplication.LABEL_UHID+getString(R.string.coma_space_seperator)+DMSApplication.LABEL_REF_ID+getString(R.string.coma_space_seperator)+getString(R.string.label_patient_name) );
         mPatientListView.addOnScrollListener(new EndlessRecyclerViewScrollListener(linearlayoutManager) {
             @Override
@@ -309,7 +310,8 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
                     }, 200);
 
                 } else {
-                    if (patientExpandableListAdapter.getItemCount() == 0)
+                    if (mAutoCompleteSearchBox.getEditText().length() == 0)
+                        patientExpandableListAdapter.removeAll();
                         doGetPatientList();
                 }
             }
@@ -485,12 +487,12 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
                 Log.e("searchResult", "---" + searchResult.size());
                 if (searchResult.size() <= 0) {
                     mPatientListView.setVisibility(View.GONE);
-                    // mRecycleTag.setVisibility(View.GONE);
+                   // mRecycleTag.setVisibility(View.GONE);
                     emptyListView.setVisibility(View.VISIBLE);
                     imgNoRecordFound.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
                 } else {
                     mPatientListView.setVisibility(View.VISIBLE);
-                    // mRecycleTag.setVisibility(View.VISIBLE);
+                 //   mRecycleTag.setVisibility(View.VISIBLE);
                     emptyListView.setVisibility(View.GONE);
                 }
                 //mPatientListView.setDividerHeight(2);
@@ -547,7 +549,7 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
         if (mOldDataTag.equals(DMSConstants.TASK_PATIENT_LIST)) {
             if (patientExpandableListAdapter.getItemCount() == 0) {
                 mPatientListView.setVisibility(View.GONE);
-                // mRecycleTag.setVisibility(View.GONE);
+              //  mRecycleTag.setVisibility(View.GONE);
                 emptyListView.setVisibility(View.VISIBLE);
                 imgNoRecordFound.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
             }
