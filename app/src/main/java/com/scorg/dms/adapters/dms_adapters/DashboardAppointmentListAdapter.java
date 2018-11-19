@@ -86,7 +86,7 @@ public class DashboardAppointmentListAdapter extends RecyclerView.Adapter<Dashbo
 
         groupViewHolder.userName.setText(groupHeader.getPatientName().trim());
         groupViewHolder.patientId.setTextColor(Color.parseColor(DMSApplication.COLOR_APPOINTMENT_TEXT));
-        groupViewHolder.patientId.setText(uhid + " - " + groupHeader.getPatientId().trim());
+        groupViewHolder.patientId.setText(uhid + " " + groupHeader.getPatientId().trim());
 
         //-------------
         TextDrawable textDrawable = CommonMethods.getTextDrawable(groupViewHolder.patientImageView.getContext(), groupHeader.getPatientName());
@@ -170,10 +170,10 @@ public class DashboardAppointmentListAdapter extends RecyclerView.Adapter<Dashbo
 
             }
         });
-        groupViewHolder.layoutAppointmentCode.setVisibility(View.VISIBLE);
+     //   groupViewHolder.layoutAppointmentCode.setVisibility(View.VISIBLE);
 
-//        if (DMSApplication.APPOINTMENT_STATUS_URL.equalsIgnoreCase(""))
-//            groupViewHolder.btnDone.setVisibility(View.INVISIBLE);
+        if (DMSApplication.APPOINTMENT_STATUS_URL.equalsIgnoreCase(""))
+            groupViewHolder.btnDone.setVisibility(View.INVISIBLE);
 
     }
 

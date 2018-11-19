@@ -162,7 +162,7 @@ public class RequestListAdapter
 
         //-------------
         String dataToShowInPatientID = String.valueOf(item.getPatientID());
-        holder.mPatientIdTextView.setText(DMSApplication.LABEL_UHID + "-" + dataToShowInPatientID);
+        holder.mPatientIdTextView.setText(DMSApplication.LABEL_UHID + " " + dataToShowInPatientID);
         //-------------
         String name = CommonMethods.toCamelCase(item.getPatientName());
         if (item.getSalutation() != null && !item.getSalutation().equals("")) {

@@ -374,11 +374,11 @@ public class AppointmentListAdapter
                 }
             }
         });
-//        if (DMSApplication.APPOINTMENT_STATUS_URL.equalsIgnoreCase(""))
-//            holder.btnDone.setVisibility(View.INVISIBLE);
+        if (DMSApplication.APPOINTMENT_STATUS_URL.equalsIgnoreCase(""))
+            holder.btnDone.setVisibility(View.INVISIBLE);
 
-        holder.layoutAppointmentCode.setVisibility(View.VISIBLE);
-        holder.patientAppointmentsCode.setText("" + appointmentPatientDataObject.getAppointmentCode());
+//        holder.layoutAppointmentCode.setVisibility(View.VISIBLE);
+//        holder.patientAppointmentsCode.setText("" + appointmentPatientDataObject.getAppointmentCode());
     }
 
     private void onPatDetailsClick(AppointmentPatientData appointmentPatientDataObject) {

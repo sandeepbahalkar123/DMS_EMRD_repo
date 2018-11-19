@@ -468,7 +468,6 @@ public class PatientDetailsActivity extends BaseActivity implements HelperRespon
     @Override
     public void onSearchAutoCompleteItemClicked(PatientFilter patientFilter) {
         mPatientEpisodeRecycleViewListAdapter.removeAll();
-        mAutoCompleteSearchBox.setText(patientFilter.getSearchValue());
         doGetPatientEpisode(patientFilter.getSearchValue(), 0);
         mAutoCompleteSearchBox.getEditText().dismissDropDown();
         mAutoCompleteSearchBox.getEditText().setSelection(mAutoCompleteSearchBox.getText().length());

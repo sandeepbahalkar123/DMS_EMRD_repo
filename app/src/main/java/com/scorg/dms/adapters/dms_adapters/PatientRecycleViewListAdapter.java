@@ -90,7 +90,7 @@ public class PatientRecycleViewListAdapter extends RecyclerView.Adapter<PatientR
 
         groupViewHolder.userName.setText(groupHeader.getPatientName());
         groupViewHolder.patientId.setText(groupHeader.getPatientId());
-        groupViewHolder.uhid.setText(DMSApplication.LABEL_UHID + " :");
+        groupViewHolder.uhid.setText(DMSApplication.LABEL_UHID + " ");
         groupViewHolder.userGender.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
 
         //-------------
