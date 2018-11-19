@@ -73,4 +73,8 @@
     <dimen name="dp72">72dp</dimen>
     <dimen name="dp108">108dp</dimen>
 
+    <dimen name="level1">60dp</dimen>
+    <dimen name="level2">120dp</dimen>
+    <dimen name="level3">180dp</dimen>
+
 </resources>

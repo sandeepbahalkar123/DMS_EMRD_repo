@@ -7,58 +7,70 @@
     android:background="?android:attr/selectableItemBackground"
     android:minHeight="@dimen/dp40">
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/mainContentLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true">
 
-    <LinearLayout
-        android:id="@+id/mainContentBackground"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:paddingStart="@dimen/dp5"
-        android:paddingLeft="@dimen/dp5">
-
-        <android.support.v7.widget.AppCompatCheckBox
-            android:id="@+id/node_selector"
+        <LinearLayout
+            android:id="@+id/mainContentBackground"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dp3"
-            android:layout_marginLeft="@dimen/dp3"
-            android:button="@drawable/checkbox_selector"
-            android:padding="@dimen/dp3"
-            android:visibility="gone"
-            tools:visibility="visible" />
+            android:layout_centerVertical="true"
+            android:layout_toStartOf="@+id/icon_lock"
+            android:layout_toLeftOf="@+id/icon_lock"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/dp5"
+            android:paddingLeft="@dimen/dp5">
 
-        <ImageView
-            android:id="@+id/icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/dp5"
-            android:src="@drawable/ic_tree_close_folder" />
+            <android.support.v7.widget.AppCompatCheckBox
+                android:id="@+id/node_selector"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp3"
+                android:layout_marginLeft="@dimen/dp3"
+                android:button="@drawable/checkbox_selector"
+                android:padding="@dimen/dp3"
+                android:visibility="gone"
+                tools:visibility="visible" />
 
-        <TextView
-            android:id="@+id/node_value"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dp5"
-            android:paddingTop="@dimen/dp5"
-            android:paddingBottom="@dimen/dp5"
-            android:layout_marginEnd="@dimen/dp5"
-            android:layout_marginRight="@dimen/dp5"
-            android:layout_weight="1"
-            android:fontFamily="@font/roboto_medium"
-            android:textColor="@color/black"
-            android:textSize="@dimen/sp14"
-            tools:text="Discharge Summary (Hand written format)" />
+            <ImageView
+                android:id="@+id/icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dp6"
+                android:src="@drawable/ic_tree_close_folder" />
+
+            <TextView
+                android:id="@+id/node_value"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:minHeight="@dimen/dp40"
+                android:layout_marginLeft="@dimen/dp5"
+                android:layout_marginEnd="@dimen/dp5"
+                android:layout_marginRight="@dimen/dp5"
+                android:paddingStart="@dimen/dp4"
+                android:paddingEnd="@dimen/dp4"
+                android:gravity="center_vertical"
+                android:layout_weight="1"
+                android:fontFamily="@font/roboto_medium"
+                android:paddingTop="@dimen/dp5"
+                android:paddingBottom="@dimen/dp5"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp14"
+                tools:text="Discharge Summary (Hand written format)" />
+
+        </LinearLayout>
 
         <android.support.v7.widget.AppCompatImageView
             android:id="@+id/icon_lock"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
             android:layout_marginEnd="@dimen/dp5"
             android:layout_marginRight="@dimen/dp5"
             android:padding="@dimen/dp5"
@@ -66,7 +78,5 @@
             app:srcCompat="@drawable/ic_lock"
             tools:visibility="visible" />
 
-    </LinearLayout>
-
-    </LinearLayout>
+    </RelativeLayout>
 </RelativeLayout>
