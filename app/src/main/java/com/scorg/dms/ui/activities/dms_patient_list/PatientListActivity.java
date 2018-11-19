@@ -13,7 +13,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -116,7 +115,7 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
     @BindView(R.id.spinner_admissionDate)
     Spinner mSpinnerAmissionDate;
     @BindView(R.id.et_uhid)
-    EditText mUHIDEditText;
+    AutoCompleteTextView mUHIDEditText;
     @BindView(R.id.et_fromdate)
     EditText mFromDateEditText;
     @BindView(R.id.et_todate)
@@ -124,7 +123,7 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
     @BindView(R.id.et_searchPatientName)
     AutoCompleteTextView mSearchPatientNameEditText;
     @BindView(R.id.et_userEnteredAnnotation)
-    EditText mAnnotationEditText;
+    AutoCompleteTextView mAnnotationEditText;
     @BindView(R.id.et_search_annotation)
     EditText mSearchAnnotationEditText;
     @BindView(R.id.bt_clear_search_annotation)
@@ -184,6 +183,7 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
     private String priv = "";
     private boolean mIsLoadMorePatients;
     public ViewRights viewRights;
+    private String old = "";
 
     //---------
     @Override
@@ -216,7 +216,8 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
         mClearPatientNameButton.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         imageAnnotation.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         mClearSearchAnnotationButton.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
-        mAutoCompleteSearchBox.setHint(getString(R.string.search_label)+DMSApplication.LABEL_UHID+getString(R.string.coma_space_seperator)+DMSApplication.LABEL_REF_ID+getString(R.string.coma_space_seperator)+getString(R.string.label_patient_name) );
+        imgNoRecordFound.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+        mAutoCompleteSearchBox.setHint(getString(R.string.search_label) + DMSApplication.LABEL_UHID + getString(R.string.coma_space_seperator) + DMSApplication.LABEL_REF_ID + getString(R.string.coma_space_seperator) + getString(R.string.label_patient_name));
         mPatientListView.addOnScrollListener(new EndlessRecyclerViewScrollListener(linearlayoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
@@ -291,27 +292,34 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
 
             @Override
             public void afterTextChanged(Editable s) {
-                String enteredText = s.toString().trim();
+                final String enteredText = s.toString().trim();
                 mAutoCompleteSearchBoxList.clear();
                 if (enteredText.length() != 0) {
-                    mAutoCompleteSearchBoxList.add(new PatientFilter(enteredText,getString(R.string.in).concat(DMSApplication.LABEL_UHID)));
+                    mAutoCompleteSearchBoxList.add(new PatientFilter(enteredText, getString(R.string.in).concat(DMSApplication.LABEL_UHID)));
                     mAutoCompleteSearchBoxList.add(new PatientFilter(enteredText, getString(R.string.in_patient_name)));
                     mAutoCompleteSearchBoxList.add(new PatientFilter(enteredText, getString(R.string.in).concat(DMSApplication.LABEL_REF_ID)));
                     mAutoCompleteSearchBoxList.add(new PatientFilter(enteredText, getString(R.string.in_all)));
 
                     mPatientSearchAutoCompleteTextViewAdapter = new PatientSearchAutoCompleteTextViewAdapter(PatientListActivity.this, R.layout.patient_filter_right_drawer, R.id.custom_spinner_txt_view_Id, mAutoCompleteSearchBoxList, PatientListActivity.this);
                     mAutoCompleteSearchBox.getEditText().setAdapter(mPatientSearchAutoCompleteTextViewAdapter);
+
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            mAutoCompleteSearchBox.getEditText().showDropDown();
+//                            if (!old.equals(enteredText)) {
+                                mAutoCompleteSearchBox.getEditText().showDropDown();
+                                Log.i("SHOWDROPDOWN", "shown");
+//                            }
                         }
                     }, 200);
 
                 } else {
-                    if (patientExpandableListAdapter.getItemCount() == 0)
-                        doGetPatientList();
+                    if (mAutoCompleteSearchBox.getEditText().length() == 0)
+                        patientExpandableListAdapter.removeAll();
+                    currentPage = 0;
+                    doGetPatientList();
                 }
+                old = enteredText;
             }
         });
     }
@@ -476,12 +484,15 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
                 List<SearchResult> searchResult = showSearchResultResponseModel.getSearchResultData().getSearchResult();
                 viewRights = showSearchResultResponseModel.getSearchResultData().getViewRights();
                 mIsLoadMorePatients = showSearchResultResponseModel.getSearchResultData().isPaggination();
+
+           //     mAutoCompleteSearchBox.getEditText().dismissDropDown();
+
                 if (currentPage == 0)
                     patientExpandableListAdapter.removeAll();
                 patientExpandableListAdapter.addNewItems(searchResult);
                 patientExpandableListAdapter.notifyDataSetChanged();
                 mSearchPatientNameEditText.dismissDropDown();
-                mAutoCompleteSearchBox.getEditText().dismissDropDown();
+
                 Log.e("searchResult", "---" + searchResult.size());
                 if (searchResult.size() <= 0) {
                     mPatientListView.setVisibility(View.GONE);
@@ -490,7 +501,7 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
                     imgNoRecordFound.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
                 } else {
                     mPatientListView.setVisibility(View.VISIBLE);
-                    // mRecycleTag.setVisibility(View.VISIBLE);
+                    //   mRecycleTag.setVisibility(View.VISIBLE);
                     emptyListView.setVisibility(View.GONE);
                 }
                 //mPatientListView.setDividerHeight(2);
@@ -547,7 +558,7 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
         if (mOldDataTag.equals(DMSConstants.TASK_PATIENT_LIST)) {
             if (patientExpandableListAdapter.getItemCount() == 0) {
                 mPatientListView.setVisibility(View.GONE);
-                // mRecycleTag.setVisibility(View.GONE);
+                //  mRecycleTag.setVisibility(View.GONE);
                 emptyListView.setVisibility(View.VISIBLE);
                 imgNoRecordFound.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
             }
@@ -637,6 +648,7 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
                     public void retry() {
                         if (mOldDataTag.equals(DMSConstants.TASK_PATIENT_LIST)) {
                             if (patientExpandableListAdapter.getItemCount() == 0) {
+                                //currentPage = 0;
                                 doGetPatientList();
                             }
                         }
@@ -852,7 +864,7 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
                 showSearchResultRequestModel.setCommonSearch("" + mAutoCompleteSearchBox.getText().toString().toUpperCase());
             }
         }
-
+        Log.e("pageno",""+currentPage);
         mPatientsHelper.doGetPatientList(showSearchResultRequestModel);
     }
 
@@ -908,7 +920,7 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
             }
         }
 
-           mAutoCompleteSearchBox.getEditText().dismissDropDown();
+     //   mAutoCompleteSearchBox.getEditText().dismissDropDown();
 
         mPatientsHelper.doGetPatientList(showSearchResultRequestModel);
     }
@@ -1343,9 +1355,7 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
 
     @Override
     public void onSearchAutoCompleteItemClicked(PatientFilter patientFilter) {
-
         mAutoCompleteSearchBox.getEditText().dismissDropDown();
-        mAutoCompleteSearchBox.setText(patientFilter.getSearchValue());
         mAutoCompleteSearchBox.getEditText().setSelection(mAutoCompleteSearchBox.getText().length());
 
         patientExpandableListAdapter.removeAll();

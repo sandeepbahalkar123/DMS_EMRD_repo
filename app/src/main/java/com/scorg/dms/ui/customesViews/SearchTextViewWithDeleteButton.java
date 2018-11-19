@@ -158,6 +158,9 @@ public class SearchTextViewWithDeleteButton extends LinearLayout {
         editText.setGravity(Gravity.LEFT | Gravity.CENTER_VERTICAL);
         editText.setBackground(null);
         editText.setHint(hintText);
+        editText.setDropDownAnchor(getId());
+        editText.setDropDownVerticalOffset((int) getResources().getDimension(R.dimen.dp8));
+        //editText.setDropDownHorizontalOffset((int) getResources().getDimension(R.dimen.dp8));
 
         //--------
         try {

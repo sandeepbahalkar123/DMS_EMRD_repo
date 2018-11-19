@@ -91,6 +91,7 @@
                         android:layout_gravity="center"
                         android:layout_marginTop="@dimen/dp20"
                         android:gravity="center"
+                        android:background="@color/transparent"
                         android:orientation="horizontal"
                         android:visibility="visible">
 
@@ -99,21 +100,18 @@
                             android:layout_width="@dimen/dp0"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:background="@drawable/curve_edge_dashbooard_display_count_bg"
+                            android:background="@drawable/curve_background"
                             android:gravity="center"
                             android:orientation="vertical">
 
-                            <TextView
+                            <ImageView
                                 android:id="@+id/totalPatientsCount"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="@font/roboto_bold"
                                 android:gravity="center"
-                                android:text="0"
-                                android:textColor="@color/timing_bg_color"
-                                android:textSize="@dimen/sp20"
-                                android:visibility="gone"
-                                tools:text="21" />
+                                android:padding="@dimen/dp2"
+                                app:srcCompat="@drawable/ic_allpatient"
+                                 />
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -132,7 +130,7 @@
                             android:layout_height="match_parent"
                             android:layout_marginLeft="@dimen/dp5"
                             android:layout_weight="1"
-                            android:background="@drawable/curve_edge_dashbooard_display_count_bg"
+                            android:background="@drawable/curve_background"
                             android:gravity="center"
                             android:orientation="vertical">
 
@@ -163,7 +161,7 @@
                             android:layout_height="match_parent"
                             android:layout_marginLeft="@dimen/dp5"
                             android:layout_weight="1"
-                            android:background="@drawable/curve_edge_dashbooard_display_count_bg"
+                            android:background="@drawable/curve_background"
                             android:gravity="center"
                             android:orientation="vertical">
 
@@ -195,7 +193,7 @@
                             android:layout_height="match_parent"
                             android:layout_marginLeft="@dimen/dp5"
                             android:layout_weight="1"
-                            android:background="@drawable/curve_edge_dashbooard_display_count_bg"
+                            android:background="@drawable/curve_background"
                             android:gravity="center"
                             android:orientation="vertical"
                             android:visibility="gone">
@@ -226,7 +224,7 @@
                             android:layout_height="match_parent"
                             android:layout_marginLeft="@dimen/dp5"
                             android:layout_weight="1"
-                            android:background="@drawable/curve_edge_dashbooard_display_count_bg"
+                            android:background="@drawable/curve_background"
                             android:gravity="center"
                             android:orientation="vertical">
 
@@ -260,13 +258,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@+id/bannerLayout"
-                android:layout_margin="@dimen/dp8"
-                android:layout_marginTop="@dimen/dp0"
                 android:orientation="vertical">
-
 
                 <RelativeLayout
                     android:layout_width="match_parent"
+                    android:layout_margin="@dimen/dp5"
                     android:layout_height="wrap_content">
 
                     <TextView
@@ -313,7 +309,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp1"
                     android:layout_marginTop="@dimen/dp5"
-                    android:layout_marginBottom="@dimen/dp5"
                     android:background="@color/grey_700" />
 
                 <include layout="@layout/common_recycler_view"></include>

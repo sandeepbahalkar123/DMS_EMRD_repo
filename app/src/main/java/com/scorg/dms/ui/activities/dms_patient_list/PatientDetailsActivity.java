@@ -58,7 +58,7 @@ import butterknife.OnClick;
 
 import static com.scorg.dms.util.DMSConstants.BUNDLE;
 
-public class PatientDetailsActivity extends BaseActivity implements HelperResponse, PatientEpisodeRecycleViewListAdapter.OnEpisodeClickListener, PatientSearchAutoCompleteTextViewAdapter.OnItemClickListener {
+public class PatientDetailsActivity extends BaseActivity implements HelperResponse, PatientEpisodeRecycleViewListAdapter.OnEpisodeClickListener, PatientSearchAutoCompleteTextViewAdapter.OnItemClickListener,SearchTextViewWithDeleteButton.OnClearButtonClickedInEditTextListener {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -200,8 +200,13 @@ public class PatientDetailsActivity extends BaseActivity implements HelperRespon
                     }, 200);
 
                 } else {
-                    if (mPatientEpisodeRecycleViewListAdapter.getItemCount() == 0)
+
+                    // if (mPatientEpisodeRecycleViewListAdapter.getItemCount() == 0)
+                    if (mAutoCompleteSearchBox.getEditText().length() == 0){
+                        mPatientEpisodeRecycleViewListAdapter.removeAll();
                         doGetPatientEpisode("", 0);
+                    }
+
                 }
 
             }
@@ -463,10 +468,15 @@ public class PatientDetailsActivity extends BaseActivity implements HelperRespon
     @Override
     public void onSearchAutoCompleteItemClicked(PatientFilter patientFilter) {
         mPatientEpisodeRecycleViewListAdapter.removeAll();
-        mAutoCompleteSearchBox.setText(patientFilter.getSearchValue());
         doGetPatientEpisode(patientFilter.getSearchValue(), 0);
         mAutoCompleteSearchBox.getEditText().dismissDropDown();
         mAutoCompleteSearchBox.getEditText().setSelection(mAutoCompleteSearchBox.getText().length());
 
+    }
+
+    @Override
+    public void onClearButtonClicked() {
+        mPatientEpisodeRecycleViewListAdapter.removeAll();
+        doGetPatientEpisode("", 0);
     }
 }

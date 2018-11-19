@@ -74,8 +74,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/dp6"
-                android:paddingRight="@dimen/dp6"
                 android:paddingTop="@dimen/dp6"
+                android:paddingRight="@dimen/dp6"
                 android:text="@string/id_type"
                 android:textSize="@dimen/sp12" />
 
@@ -96,21 +96,22 @@
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="0dp"
-                    android:layout_height="@dimen/dp36"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/dp5"
                     android:layout_weight="1"
-                    android:gravity="center">
+                    app:hintTextAppearance="@style/editTextInputLayout">
 
-                    <EditText
+                    <AutoCompleteTextView
                         android:id="@+id/et_uhid"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp36"
-                        android:background="@null"
+                        android:layout_height="wrap_content"
                         android:ellipsize="end"
                         android:imeOptions="actionNext"
-                        android:inputType="text"
                         android:textColor="@color/black"
+                        android:textCursorDrawable="@drawable/cursor_color"
                         android:textSize="@dimen/sp13" />
+
                 </android.support.design.widget.TextInputLayout>
 
 
@@ -132,11 +133,11 @@
 
                 <Spinner
                     android:id="@+id/spinner_admissionDate"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dp5"
                     android:layout_marginRight="@dimen/dp5"
-                    android:gravity="center"
+                    android:gravity="start"
                     android:spinnerMode="dropdown"
                     android:textColor="@color/black" />
             </LinearLayout>
@@ -263,6 +264,7 @@
                     android:id="@+id/bt_clear_patient_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="4dp"
@@ -279,33 +281,39 @@
                 android:layout_marginBottom="@dimen/dp5"
                 android:background="@color/grey_200"
                 android:gravity="center"
-                android:orientation="horizontal"
-                android:padding="@dimen/dp5">
+                android:orientation="horizontal">
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_gravity="center"
                     android:layout_marginLeft="@dimen/dp5"
                     android:layout_marginRight="@dimen/dp5"
+                    android:layout_toStartOf="@id/imageAnnotation"
+                    android:layout_toLeftOf="@id/imageAnnotation"
                     app:hintTextAppearance="@style/editTextInputLayout">
 
-                    <EditText
+                    <AutoCompleteTextView
                         android:id="@+id/et_userEnteredAnnotation"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@null"
+                        android:ellipsize="end"
                         android:hint="@string/enterAnnotation"
                         android:imeOptions="actionNext"
                         android:textColor="@color/black"
                         android:textCursorDrawable="@drawable/cursor_color"
                         android:textSize="@dimen/sp13" />
+
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.v7.widget.AppCompatImageView
                     android:id="@+id/imageAnnotation"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="4dp"
                     android:src="@mipmap/annotation" />
             </RelativeLayout>
 
@@ -318,24 +326,25 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
-                    android:layout_marginStart="@dimen/dp5"
                     android:layout_marginLeft="@dimen/dp5"
-                    android:layout_toStartOf="@+id/bt_clear_search_annotation"
-                    android:layout_toLeftOf="@+id/bt_clear_search_annotation"
+                    android:layout_marginRight="@dimen/dp5"
+                    android:layout_toStartOf="@id/bt_clear_search_annotation"
+                    android:layout_toLeftOf="@id/bt_clear_search_annotation"
                     app:hintTextAppearance="@style/editTextInputLayout">
 
-                    <EditText
+                    <AutoCompleteTextView
                         android:id="@+id/et_search_annotation"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@null"
+                        android:layout_height="wrap_content"
                         android:ellipsize="end"
                         android:hint="@string/searchAnnotation"
-                        android:imeOptions="actionDone"
+                        android:imeOptions="actionNext"
                         android:textColor="@color/black"
                         android:textCursorDrawable="@drawable/cursor_color"
                         android:textSize="@dimen/sp13" />
+
                 </android.support.design.widget.TextInputLayout>
+
 
                 <ImageView
                     android:id="@+id/bt_clear_search_annotation"

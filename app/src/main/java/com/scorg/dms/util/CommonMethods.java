@@ -15,6 +15,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.GradientDrawable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -37,6 +38,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.signature.ObjectKey;
 import com.scorg.dms.R;
+import com.scorg.dms.adapters.admitted_patient.AdmittedPatientsListAdapter;
 import com.scorg.dms.interfaces.CheckIpConnection;
 import com.scorg.dms.interfaces.DatePickerDialogListener;
 import com.scorg.dms.interfaces.ErrorDialogCallback;
@@ -613,6 +615,10 @@ public class CommonMethods {
 
     public static boolean isNullOrEmpty(final Collection<?> c) {
         return c == null || c.isEmpty();
+    }
+
+    public static boolean isNullOrEmpty(RecyclerView.Adapter adapter) {
+        return adapter == null || (adapter.getItemCount()==0);
     }
 
     //--------------

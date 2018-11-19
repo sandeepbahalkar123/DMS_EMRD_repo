@@ -6,8 +6,10 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
+import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
@@ -60,10 +62,6 @@ public class AdmittedPatientsListAdapter
         this.admittedPatientDataList = new ArrayList<>();
         this.admittedPatientDataList.addAll(admittedPatientData);
         this.onItemClickListener = onItemClickListener;
-//        buttonBackground = new GradientDrawable();
-//        buttonBackground.setShape(GradientDrawable.RECTANGLE);
-//        buttonBackground.setColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
-//        buttonBackground.setCornerRadius(context.getResources().getDimension(R.dimen.dp5));
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
@@ -156,6 +154,8 @@ public class AdmittedPatientsListAdapter
         holder.viewLine1.setBackgroundColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         holder.textBedNoHead.setTextColor(Color.parseColor(DMSApplication.COLOR_APPOINTMENT_TEXT));
         holder.textNewPatient.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+        holder.patientIdTextView.setTextColor(Color.parseColor(DMSApplication.COLOR_APPOINTMENT_TEXT));
+        holder.patientNameTextView.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
 
 
         String salutation = admittedPatientDataObject.getSalutation();
@@ -225,8 +225,20 @@ public class AdmittedPatientsListAdapter
         //---------
         String appDate = admittedPatientDataObject.getAdmissionDate();
         if (appDate != null) {
+
+            String day = CommonMethods.formatDateTime(appDate, "dd", DMSConstants.DATE_PATTERN.UTC_PATTERN, DMSConstants.TIME);
+            String monthYear=CommonMethods.formatDateTime(appDate, "MMM''yy", DMSConstants.DATE_PATTERN.UTC_PATTERN, DMSConstants.TIME);
+            String toDisplay = day + "<sup>" + CommonMethods.getSuffixForNumber(Integer.parseInt(day)) + "</sup> " + monthYear;
+
+            Spanned dateToDisplay;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                dateToDisplay = Html.fromHtml(toDisplay, Html.FROM_HTML_MODE_LEGACY);
+            else
+                dateToDisplay = Html.fromHtml(toDisplay);
+
+
             holder.appointmentTime.setVisibility(View.VISIBLE);
-            holder.appointmentTime.setText(CommonMethods.formatDateTime(appDate, DMSConstants.DATE_PATTERN.hh_mm_a, DMSConstants.DATE_PATTERN.UTC_PATTERN, DMSConstants.TIME).toLowerCase());
+            holder.appointmentTime.setText(dateToDisplay +" "+CommonMethods.formatDateTime(appDate, DMSConstants.DATE_PATTERN.hh_mm_a, DMSConstants.DATE_PATTERN.UTC_PATTERN, DMSConstants.TIME).toLowerCase());
         }
         //-------
         TextDrawable textDrawable = CommonMethods.getTextDrawable(mContext, admittedPatientDataObject.getPatientName());

@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-
     android:orientation="vertical">
 
     <RelativeLayout
@@ -16,13 +15,11 @@
             android:id="@+id/backImageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp14"
-            android:paddingBottom="@dimen/dp10"
             android:paddingEnd="@dimen/dp10"
             android:paddingLeft="@dimen/dp14"
             android:paddingRight="@dimen/dp10"
+            android:layout_centerVertical="true"
             android:paddingStart="@dimen/dp14"
-            android:paddingTop="@dimen/dp6"
             app:srcCompat="@drawable/back_arrow_a_01" />
 
         <TextView
@@ -30,36 +27,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp14"
-            android:layout_toEndOf="@id/backImageView"
-            android:layout_toLeftOf="@+id/dateTextview"
-            android:layout_toRightOf="@id/backImageView"
+            android:layout_marginBottom="@dimen/dp14"
             android:layout_toStartOf="@+id/dateTextview"
+            android:layout_toEndOf="@+id/backImageView"
             android:ellipsize="end"
             android:lines="1"
+            android:layout_centerVertical="true"
             android:paddingEnd="@dimen/dp16"
             android:paddingStart="@dimen/dp16"
             android:textColor="@color/white"
-            android:textSize="@dimen/sp17"
+            tools:textColor="@color/black"
+            android:textSize="@dimen/sp16"
             android:fontFamily="@font/roboto_bold"
-            tools:text="@string/appointment_completed" />
+            tools:text="@string/appointment_completed"
+            android:layout_toLeftOf="@+id/dateTextview"
+            android:layout_toRightOf="@+id/backImageView" />
 
-        <TextView
-            android:id="@+id/userInfoTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/titleTextView"
-            android:layout_marginBottom="@dimen/dp2"
-            android:layout_toEndOf="@id/backImageView"
-            android:layout_toRightOf="@id/backImageView"
-            android:paddingLeft="@dimen/dp16"
-            android:paddingStart="@dimen/dp16"
-            android:textColor="@color/white"
-            android:textSize="@dimen/sp12"
-            android:visibility="gone"
-            android:fontFamily="@font/roboto_bold"
-            tools:ignore="RtlSymmetry"
-            tools:text="36 yrs - Male"
-            tools:visibility="visible" />
 
         <TextView
             android:id="@+id/dateTextview"
@@ -68,7 +51,6 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginTop="@dimen/dp14"
             android:paddingBottom="@dimen/dp6"
             android:paddingEnd="@dimen/dp16"
             android:paddingRight="@dimen/dp16"
@@ -79,42 +61,6 @@
             tools:ignore="RtlSymmetry"
             tools:text="27th Dec '17"
             tools:visibility="visible" />
-
-        <Spinner
-            android:id="@+id/year"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_gravity="right|center_vertical"
-            android:layout_marginTop="@dimen/dp14"
-            android:textColor="@color/white"
-            android:textSize="@dimen/sp16"
-            android:textStyle="bold"
-            android:visibility="gone"
-            app:srcCompat="@drawable/ic_arrow_back_white_24dp"
-            tools:ignore="RtlHardcoded"
-            tools:visibility="visible" />
-
-        <ImageView
-            android:id="@+id/addImageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginTop="@dimen/dp14"
-            android:gravity="right"
-            android:paddingBottom="@dimen/dp6"
-            android:paddingEnd="@dimen/dp16"
-            android:paddingRight="@dimen/dp16"
-            android:visibility="gone"
-            app:srcCompat="@drawable/bsp_ic_add_circle_24dp"
-            tools:ignore="RtlHardcoded,RtlSymmetry"
-            tools:visibility="gone" />
-
-
 
     </RelativeLayout>
 

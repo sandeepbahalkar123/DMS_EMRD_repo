@@ -45,9 +45,6 @@ public class SettingsActivity extends BaseActivity implements  HelperResponse {
     ImageView backImageView;
     @BindView(R.id.titleTextView)
     TextView titleTextView;
-    @BindView(R.id.userInfoTextView)
-    TextView userInfoTextView;
-
 
     @BindView(R.id.change_ip_address)
     TextView change_ip_address;

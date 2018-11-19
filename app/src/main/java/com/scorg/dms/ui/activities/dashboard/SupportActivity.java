@@ -42,8 +42,6 @@ public class SupportActivity extends BaseActivity {
     ImageView backImageView;
     @BindView(R.id.titleTextView)
     TextView titleTextView;
-    @BindView(R.id.userInfoTextView)
-    TextView userInfoTextView;
     @BindView(R.id.dateTextview)
     TextView dateTextview;
     @BindView(R.id.versionText)

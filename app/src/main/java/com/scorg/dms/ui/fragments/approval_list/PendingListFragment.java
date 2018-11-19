@@ -274,25 +274,7 @@ public class PendingListFragment extends Fragment implements RequestListAdapter.
                 if (searchResultData != null) {
                     List<SearchResult> searchResultList = searchResultData.getSearchResult();
                     if (!searchResultList.isEmpty()) {
-                        SearchResult searchPatientInformation = searchResultList.get(0);
-                        //TODO : as API response chnaged, hence need to fix this too.
-                        /*List<PatientFileData> patientFileDataList = searchPatientInformation.getPatientFileData();
-                        if (patientFileDataList != null) {
-                            if (!patientFileDataList.isEmpty()) {
-                                PatientFileData childElement = patientFileDataList.get(0);
-                                Intent intent = new Intent(getActivity(), FileTypeViewerActivity.class);
-                                Bundle extra = new Bundle();
-                                ArrayList<PatientFileData> dataToSend = new ArrayList<PatientFileData>();
-                                dataToSend.add(childElement);
-                                extra.putSerializable(getString(R.string.compare), dataToSend);
-                                extra.putString(DMSConstants.PATIENT_ADDRESS, searchPatientInformation.getPatientAddress());
-                                extra.putString(DMSConstants.DOCTOR_NAME, searchPatientInformation.getDoctorName());
-                                extra.putString(DMSConstants.ID, childElement.getRespectiveParentPatientID());
-                                extra.putString(DMSConstants.PATIENT_LIST_PARAMS.PATIENT_NAME, "" + searchPatientInformation.getPatientName());
-                                intent.putExtra(DMSConstants.DATA, extra);
-                                startActivity(intent);
-                            }
-                        }*/
+
                     }
                 }
             }

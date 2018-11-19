@@ -4,10 +4,11 @@
     android:id="@+id/swipe_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="@dimen/dp4"
-    android:layout_marginEnd="@dimen/dp7"
-    android:layout_marginStart="@dimen/dp7"
-    android:layout_marginTop="@dimen/dp5"
+    android:layout_marginBottom="@dimen/dp5"
+    android:layout_marginStart="@dimen/dp5"
+    android:layout_marginEnd="@dimen/dp5"
+    android:layout_marginRight="@dimen/dp5"
+    android:layout_marginLeft="@dimen/dp5"
     app:dragEdge="right"
     app:mode="same_level">
 
@@ -62,7 +63,7 @@
                             android:paddingStart="@dimen/dp7"
                             android:paddingLeft="@dimen/dp7"
                             android:textColor="@color/black"
-                            android:textSize="@dimen/sp13"
+                            android:textSize="@dimen/sp14"
                             tools:ignore="RtlSymmetry"
                             tools:text="ID: 23456" />
 

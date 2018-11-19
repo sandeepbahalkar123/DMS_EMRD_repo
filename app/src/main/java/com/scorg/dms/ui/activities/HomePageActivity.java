@@ -72,7 +72,7 @@ public class HomePageActivity extends BaseActivity implements HelperResponse, Da
 
     //------------
     @BindView(R.id.totalPatientsCount)
-    TextView totalPatientsCount;
+    ImageView totalPatientsCount;
     @BindView(R.id.todayAppointmentsCount)
     TextView todayAppointmentsCount;
     @BindView(R.id.waitingPatientCount)
@@ -187,6 +187,12 @@ public class HomePageActivity extends BaseActivity implements HelperResponse, Da
     private DashboardDataModel mDashboardDataModel;
     private DashboardAppointmentListAdapter mDashBoardAppointmentListAdapter;
 
+     GradientDrawable buttonBackgroundActiveSelected = new GradientDrawable();
+     GradientDrawable buttonBackgroundViewAllSelected = new GradientDrawable();
+     GradientDrawable buttonBackgroundActiveUnSelected = new GradientDrawable();
+     GradientDrawable buttonBackgroundViewAllUnSelected = new GradientDrawable();
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -232,23 +238,19 @@ public class HomePageActivity extends BaseActivity implements HelperResponse, Da
         float[] bottomLeftRadius = {getResources().getDimension(R.dimen.dp8), getResources().getDimension(R.dimen.dp8), 0, 0, 0, 0, getResources().getDimension(R.dimen.dp8), getResources().getDimension(R.dimen.dp8)};
         float[] bottomRightRadius = {0, 0, getResources().getDimension(R.dimen.dp8), getResources().getDimension(R.dimen.dp8), getResources().getDimension(R.dimen.dp8), getResources().getDimension(R.dimen.dp8), 0, 0};
 
-        final GradientDrawable buttonBackgroundActiveSelected = new GradientDrawable();
         buttonBackgroundActiveSelected.setShape(GradientDrawable.RECTANGLE);
         buttonBackgroundActiveSelected.setColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
         buttonBackgroundActiveSelected.setCornerRadii(bottomLeftRadius);
 
-        final GradientDrawable buttonBackgroundViewAllSelected = new GradientDrawable();
         buttonBackgroundViewAllSelected.setShape(GradientDrawable.RECTANGLE);
         buttonBackgroundViewAllSelected.setColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
         buttonBackgroundViewAllSelected.setCornerRadii(bottomRightRadius);
 
-        final GradientDrawable buttonBackgroundActiveUnSelected = new GradientDrawable();
         buttonBackgroundActiveUnSelected.setShape(GradientDrawable.RECTANGLE);
         buttonBackgroundActiveUnSelected.setColor(getResources().getColor(R.color.white));
         buttonBackgroundActiveUnSelected.setStroke(1, Color.parseColor(DMSApplication.COLOR_ACCENT));
         buttonBackgroundActiveUnSelected.setCornerRadii(bottomLeftRadius);
 
-        final GradientDrawable buttonBackgroundViewAllUnSelected = new GradientDrawable();
         buttonBackgroundViewAllUnSelected.setShape(GradientDrawable.RECTANGLE);
         buttonBackgroundViewAllUnSelected.setColor(getResources().getColor(R.color.white));
         buttonBackgroundViewAllUnSelected.setStroke(1, Color.parseColor(DMSApplication.COLOR_ACCENT));
@@ -336,13 +338,15 @@ public class HomePageActivity extends BaseActivity implements HelperResponse, Da
         supportText.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         textHeaderTodayAppointment.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         pendingApprovalCount.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
-        totalPatientsCount.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+        totalPatientsCount.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         todayAppointmentsCount.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         waitingPatientCount.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         admittedPatientCount.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
-//
-//        if (DMSApplication.APPOINTMENT_STATUS_URL.equalsIgnoreCase(""))
-//            layoutShowHide.setVisibility(View.INVISIBLE);
+        buttonBackgroundActiveSelected.setColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
+        buttonBackgroundViewAllSelected.setColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
+        buttonBackgroundActiveUnSelected.setStroke(1, Color.parseColor(DMSApplication.COLOR_ACCENT));
+        buttonBackgroundViewAllUnSelected.setStroke(1, Color.parseColor(DMSApplication.COLOR_ACCENT));
+
     }
 
 
@@ -441,7 +445,6 @@ public class HomePageActivity extends BaseActivity implements HelperResponse, Da
                     mDashboardDataModel = mDashboardBaseModel.getDashboardDataModel();
                     if (mDashboardDataModel != null) {
                         pendingApprovalCount.setText(mDashboardDataModel.getPendingApprovedCount());
-                        totalPatientsCount.setText(mDashboardDataModel.getTotalPatientCount());
                         todayAppointmentsCount.setText(mDashboardDataModel.getAppointmentCount());
                         // waitingPatientCount.setText(mDashboardDataModel.getWaitingCount());
                         admittedPatientCount.setText(mDashboardDataModel.getAdmittedPatientCount());
@@ -472,20 +475,26 @@ public class HomePageActivity extends BaseActivity implements HelperResponse, Da
                         appointmentActivePatientData = getBookedAppointment(mDashboardDataModel.getAppointmentPatientDataList());
                         if (tabsActiveVieAll.getVisibility() == View.INVISIBLE)
                             tabsActiveVieAll.setVisibility(View.VISIBLE);
+
                         if (tabsActiveVieAll.getSelectedTabPosition() == 0) {
                             setAppointmentAdapter(appointmentActivePatientData);
+                            TextView textView = tabsActiveVieAll.getTabAt(1).getCustomView().findViewById(R.id.textTab);
+                            textView.setTextColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
                         } else {
                             setAppointmentAdapter(mDashboardDataModel.getAppointmentPatientDataList());
+                            TextView textView = tabsActiveVieAll.getTabAt(1).getCustomView().findViewById(R.id.textTab);
+                            textView.setTextColor(getResources().getColor(R.color.white));
                         }
 
                         if (mDashboardDataModel.getAppointmentPatientDataList().size() <= 0) {
                             emptyListView.setVisibility(View.VISIBLE);
+                            tabsActiveVieAll.setVisibility(View.INVISIBLE);
                         } else {
                             emptyListView.setVisibility(View.GONE);
+                            tabsActiveVieAll.setVisibility(View.VISIBLE);
                         }
                     } else {
                         pendingApprovalCount.setText("0");
-                        totalPatientsCount.setText("0");
                         todayAppointmentsCount.setText("0");
                         // waitingPatientCount.setText("0");
                         admittedPatientCount.setText("0");
@@ -514,7 +523,6 @@ public class HomePageActivity extends BaseActivity implements HelperResponse, Da
     private void setErrorContent() {
         emptyListView.setVisibility(View.VISIBLE);
         pendingApprovalCount.setText("0");
-        totalPatientsCount.setText("0");
         todayAppointmentsCount.setText("0");
         // waitingPatientCount.setText("0");
         admittedPatientCount.setText("0");

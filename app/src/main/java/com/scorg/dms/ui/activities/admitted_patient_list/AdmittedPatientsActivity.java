@@ -24,6 +24,7 @@ import com.scorg.dms.helpers.admittedpatient.AdmittedPatientHelper;
 import com.scorg.dms.interfaces.CustomResponse;
 import com.scorg.dms.interfaces.ErrorDialogCallback;
 import com.scorg.dms.interfaces.HelperResponse;
+import com.scorg.dms.model.Common;
 import com.scorg.dms.model.admitted_patient.AdmittedPatientBaseModel;
 import com.scorg.dms.model.admitted_patient.AdmittedPatientDataModel;
 import com.scorg.dms.model.my_appointments.AppointmentPatientData;
@@ -52,8 +53,6 @@ public class AdmittedPatientsActivity extends BaseActivity implements HelperResp
     ImageView backImageView;
     @BindView(R.id.titleTextView)
     TextView titleTextView;
-    @BindView(R.id.userInfoTextView)
-    TextView userInfoTextView;
     @BindView(R.id.dateTextview)
     TextView dateTextview;
     @BindView(R.id.viewContainer)
@@ -120,8 +119,9 @@ public class AdmittedPatientsActivity extends BaseActivity implements HelperResp
                     AdmittedPatientDataModel patientDataModel = admittedPatientBaseModel.getAdmittedPatientDataModel();
                     patientDataModel.setAdmittedPatientData(admittedPatientBaseModel.getAdmittedPatientDataModel().getAdmittedPatientData());
                     mAdmittedPatientsFragment.setFilteredData(patientDataModel);
-                    if (mAdmittedPatientsFragment.emptyListView != null)
-                        mAdmittedPatientsFragment.emptyListView.setVisibility(View.GONE);
+//
+//                    if (mAdmittedPatientsFragment.emptyListView.getVisibility()==View.VISIBLE)
+//                        mAdmittedPatientsFragment.emptyListView.setVisibility(View.GONE);
                 }
             }
         }
@@ -131,7 +131,8 @@ public class AdmittedPatientsActivity extends BaseActivity implements HelperResp
     private void showErrorDialog(String errorMessage, boolean isTimeout) {
         if (mAdmittedPatientsFragment.swipeToRefresh != null) {
             mAdmittedPatientsFragment.swipeToRefresh.setRefreshing(false);
-            mAdmittedPatientsFragment.emptyListView.setVisibility(View.VISIBLE);
+            if(CommonMethods.isNullOrEmpty(mAdmittedPatientsFragment.admittedPatientsListAdapter))
+                mAdmittedPatientsFragment.emptyListView.setVisibility(View.VISIBLE);
         }
         CommonMethods.showErrorDialog(errorMessage, mContext, isTimeout, new ErrorDialogCallback() {
             @Override

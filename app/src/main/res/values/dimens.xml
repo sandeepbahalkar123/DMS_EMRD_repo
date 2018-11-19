@@ -66,12 +66,14 @@
     <dimen name="compare_dialog">270dp</dimen>
     <dimen name="banner_height">200dp</dimen>
     <dimen name="label_height">90dp</dimen>
-    <dimen name="dp43">43dp</dimen>
+    <dimen name="dp44">44dp</dimen>
     <dimen name="dp45">45dp</dimen>
     <dimen name="tab_width">40dp</dimen>
     <dimen name="tab_height">30dp</dimen>
     <dimen name="dp72">72dp</dimen>
     <dimen name="dp108">108dp</dimen>
+    <dimen name="dp24">24dp</dimen>
+    <dimen name="back_arrow">24dp</dimen>
 
     <dimen name="level1">60dp</dimen>
     <dimen name="level2">120dp</dimen>

@@ -349,7 +349,12 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
 
         //-----------
         mDrawer.openDrawer(GravityCompat.END);
-        mArchivedPreferenceSpinnerListener();
+
+        if (respectiveRecordID != null) {
+            mArchivedPreferenceSpinnerListenerForEpisode();
+        }else {
+            mArchivedPreferenceSpinnerListener();
+        }
         if (CommonMethods.isTablet(this)) {
             layoutCompareSwitch.setVisibility(View.VISIBLE);
         }
@@ -611,8 +616,11 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
             hideProgressDialog();
             FileTreeResponseModel fileTreeResponseModel = (FileTreeResponseModel) customResponse;
             if (!fileTreeResponseModel.getCommon().getStatusCode().equals(DMSConstants.SUCCESS)) {
-                if (emptyListView.getVisibility() != View.VISIBLE)
-                    emptyListView.setVisibility(View.VISIBLE);
+
+                if (mFileTreeResponseData.getArchiveData().isEmpty()) {
+                    if (emptyListView.getVisibility() != View.VISIBLE)
+                        emptyListView.setVisibility(View.VISIBLE);
+                }
                 setErrorDialog(fileTreeResponseModel.getCommon().getStatusMessage(), mOldDataTag, false, FileTypeViewerActivity.this);
             } else {
 
@@ -718,37 +726,43 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
     @Override
     public void onParseError(String mOldDataTag, String errorMessage) {
         if (String.valueOf(mOldDataTag).equalsIgnoreCase("" + DMSConstants.TASK_GET_ARCHIVED_LIST)) {
-            emptyListView.setVisibility(View.VISIBLE);
+            setErrorDialog(errorMessage, mOldDataTag, false, mContext);
+            if (mFileTreeResponseData.getArchiveData().isEmpty())
+                emptyListView.setVisibility(View.VISIBLE);
+        }else {
+            setErrorDialog(errorMessage, mOldDataTag, false, mContext);
         }
-        setErrorDialog(errorMessage, mOldDataTag, false, mContext);
-
 
     }
 
     @Override
     public void onServerError(String mOldDataTag, String serverErrorMessage) {
         if (String.valueOf(mOldDataTag).equalsIgnoreCase("" + DMSConstants.TASK_GET_ARCHIVED_LIST)) {
-            emptyListView.setVisibility(View.VISIBLE);
+            setErrorDialog(serverErrorMessage, mOldDataTag, false, mContext);
+            if (mFileTreeResponseData.getArchiveData().isEmpty())
+                emptyListView.setVisibility(View.VISIBLE);
+        }else {
+            setErrorDialog(serverErrorMessage, mOldDataTag, false, mContext);
         }
-        setErrorDialog(serverErrorMessage, mOldDataTag, false, mContext);
-
     }
 
     @Override
     public void onNoConnectionError(String mOldDataTag, String serverErrorMessage) {
         if (String.valueOf(mOldDataTag).equalsIgnoreCase("" + DMSConstants.TASK_GET_ARCHIVED_LIST)) {
-            emptyListView.setVisibility(View.VISIBLE);
+            setErrorDialog(serverErrorMessage, mOldDataTag, false, mContext);
+            if (mFileTreeResponseData.getArchiveData().isEmpty())
+                emptyListView.setVisibility(View.VISIBLE);
+        }else {
+            setErrorDialog(serverErrorMessage, mOldDataTag, false, mContext);
         }
-        setErrorDialog(serverErrorMessage, mOldDataTag, false, mContext);
-
     }
 
     @Override
     public void onTimeOutError(String mOldDataTag, String timeOutErrorMessage) {
         if (String.valueOf(mOldDataTag).equalsIgnoreCase("" + DMSConstants.TASK_GET_ARCHIVED_LIST)) {
-            emptyListView.setVisibility(View.VISIBLE);
             setErrorDialog(timeOutErrorMessage, mOldDataTag, true, mContext);
-
+            if (mFileTreeResponseData.getArchiveData().isEmpty())
+                emptyListView.setVisibility(View.VISIBLE);
         } else {
             setErrorDialog(timeOutErrorMessage, mOldDataTag, false, mContext);
         }
@@ -1479,12 +1493,40 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
         });
     }
 
+    private void mArchivedPreferenceSpinnerListenerForEpisode() {
+        final String[] array = getResources().getStringArray(R.array.get_archived_preference_list_episode);
+        int[] prefImageList = new int[]{R.drawable.ic_pref_folder, R.drawable.ic_pref_file};
+
+        CustomPreferenceSpinAdapter preferenceSpinAdapter = new CustomPreferenceSpinAdapter(this, array, prefImageList);
+        mArchivedPreferenceSpinner.setAdapter(preferenceSpinAdapter);
+        mArchivedPreferenceSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (array[position].equals("My Order"))
+                    mArchivedSelectedPreference = "Order";
+                else
+                    mArchivedSelectedPreference = array[position];
+
+                mFileTreeResponseData = null;
+                getArchivedPageNumber = 1;
+                archiveCount = 0;
+                doCreateTreeStructure();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+
+
     private void doCreateTreeStructure() {
 
         if (respectiveRecordID != null) {
-            mArchivedSelectedPreference = DMSConstants.ArchivedPreference.DATE;
-            mArchivedPreferenceSpinner.setVisibility(View.GONE);
-            mPreferenceLayout.setVisibility(View.GONE);
+//            mArchivedSelectedPreference = DMSConstants.ArchivedPreference.DATE;
+//            mArchivedPreferenceSpinner.setVisibility(View.GONE);
+//            mPreferenceLayout.setVisibility(View.GONE);
         }
 
         if (mFileTreeResponseData == null)

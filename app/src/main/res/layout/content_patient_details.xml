@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".ui.activities.dms_patient_list.PatientDetailsActivity"
     tools:showIn="@layout/activity_patient_details">
-
 
     <LinearLayout
         android:id="@+id/mainDataLayout"
@@ -27,6 +27,7 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:orientation="vertical">
 
                 <ImageView
@@ -148,7 +149,7 @@
         <LinearLayout
             android:id="@+id/layoutPatSearch"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp43"
+            android:layout_height="@dimen/dp44"
             android:layout_marginBottom="@dimen/dp5"
             android:orientation="vertical">
 
@@ -177,20 +178,20 @@
 
     </LinearLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/mainDataLayout">
+        android:orientation="vertical">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/listOfOPDTypes"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="wrap_content" />
 
         <include layout="@layout/common_no_records_found" />
 
 
-    </RelativeLayout>
+    </LinearLayout>
 
 
-</RelativeLayout>
+</LinearLayout>
