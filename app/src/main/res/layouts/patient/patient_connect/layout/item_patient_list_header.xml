@@ -1,29 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/transparent"
-    android:layout_marginBottom="@dimen/dp5"
-    android:layout_marginStart="@dimen/dp5"
-    android:layout_marginEnd="@dimen/dp5"
-    android:layout_marginRight="@dimen/dp5"
-    android:layout_marginLeft="@dimen/dp5">
+    android:background="@color/white"
+    android:orientation="vertical">
 
 
-    <LinearLayout
-        android:id="@+id/cardView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+    <!--<LinearLayout-->
+        <!--android:id="@+id/cardView"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:orientation="vertical">-->
 
         <LinearLayout
             android:id="@+id/mainContentLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp5"
             android:layout_marginEnd="@dimen/dp5"
             android:layout_marginRight="@dimen/dp5"
+            android:layout_marginLeft="@dimen/dp5"
             android:layout_marginBottom="@dimen/dp8"
             android:orientation="vertical">
 
@@ -39,6 +37,7 @@
                     android:layout_centerVertical="true"
                     android:paddingStart="@dimen/dp2"
                     android:paddingLeft="@dimen/dp2"
+                    android:visibility="gone"
                     android:paddingTop="@dimen/dp2"
                     app:srcCompat="@drawable/result_blue_line"
                     tools:ignore="ContentDescription,RtlSymmetry" />
@@ -51,8 +50,8 @@
                     android:layout_toEndOf="@id/bluelineImageView"
                     android:layout_toRightOf="@id/bluelineImageView"
                     android:fontFamily="@font/roboto_medium"
-                    android:paddingStart="@dimen/dp7"
-                    android:paddingLeft="@dimen/dp7"
+                    android:layout_marginStart="@dimen/dp11"
+                    android:layout_marginLeft="@dimen/dp11"
                     android:textColor="@color/tagColor"
                     android:textSize="@dimen/sp13"
                     tools:ignore="RtlSymmetry"
@@ -182,8 +181,13 @@
 
             </LinearLayout>
 
+
         </LinearLayout>
 
-    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp1"
+        android:background="@color/grey_shade"/>
+    <!--</LinearLayout>-->
 
-</RelativeLayout>
+</LinearLayout>

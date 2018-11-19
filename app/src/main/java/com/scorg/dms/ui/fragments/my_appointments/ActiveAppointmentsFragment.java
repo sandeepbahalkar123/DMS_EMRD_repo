@@ -81,6 +81,7 @@ public class ActiveAppointmentsFragment extends Fragment implements AppointmentL
 
     private void init() {
         imgNoRecordFound.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+        searchEditText.setHint(getString(R.string.search_label)+"Name & "+DMSApplication.LABEL_UHID);
         searchEditText.addTextChangedListener(new EditTextWithDeleteButton.TextChangedListener() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -199,7 +200,7 @@ public class ActiveAppointmentsFragment extends Fragment implements AppointmentL
         ArrayList<AppointmentPatientData> filterList = new ArrayList<>();
         for (AppointmentPatientData patientData : appointmentPatientData) {
 
-            if (patientData.getAppointmentStatus().equalsIgnoreCase(DMSConstants.APPOINTMENT_STATUS.BOOKED_STATUS)) {
+            if (!patientData.getAppointmentStatus().contains(DMSConstants.APPOINTMENT_STATUS.COMPLETED_STATUS) && !patientData.getAppointmentStatus().contains(DMSConstants.APPOINTMENT_STATUS.CANCEL_STATUS)) {
                 filterList.add(patientData);
             }
 

@@ -96,7 +96,7 @@ public class DMSConstants {
         String BOOKED_STATUS = "Booked";
         String CONFIRM_STATUS = "Confirm";
         String CANCEL_STATUS = "Cancel";
-        String COMPLETED_STATUS = "Completed";
+        String COMPLETED_STATUS = "Complete";
 
     }
 

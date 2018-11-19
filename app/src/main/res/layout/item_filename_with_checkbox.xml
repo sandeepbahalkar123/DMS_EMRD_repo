@@ -23,13 +23,17 @@
             android:textSize="@dimen/sp13"
             tools:text="IPD" />
 
-        <CheckBox
+        <android.support.v7.widget.AppCompatCheckBox
             android:id="@+id/checkboxFile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp3"
+            android:layout_marginLeft="@dimen/dp3"
+            android:button="@drawable/checkbox_selector"
+            android:padding="@dimen/dp3"
             android:clickable="false"
-            android:layout_gravity="right" />
-
+            android:layout_gravity="right"
+            tools:visibility="visible" />
 
     </LinearLayout>
 

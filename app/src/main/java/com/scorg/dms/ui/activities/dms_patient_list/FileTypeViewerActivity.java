@@ -617,10 +617,9 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
             FileTreeResponseModel fileTreeResponseModel = (FileTreeResponseModel) customResponse;
             if (!fileTreeResponseModel.getCommon().getStatusCode().equals(DMSConstants.SUCCESS)) {
 
-                if (mFileTreeResponseData.getArchiveData().isEmpty()) {
                     if (emptyListView.getVisibility() != View.VISIBLE)
                         emptyListView.setVisibility(View.VISIBLE);
-                }
+
                 setErrorDialog(fileTreeResponseModel.getCommon().getStatusMessage(), mOldDataTag, false, FileTypeViewerActivity.this);
             } else {
 

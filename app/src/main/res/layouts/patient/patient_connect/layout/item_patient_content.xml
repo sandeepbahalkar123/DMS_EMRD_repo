@@ -7,8 +7,7 @@
     android:layout_marginTop="@dimen/dp5"
     android:background="@color/white"
     android:orientation="vertical"
-    android:paddingStart="@dimen/dp4"
-    android:paddingEnd="@dimen/dp4">
+    >
 
     <LinearLayout
         android:id="@+id/cardView"
@@ -16,6 +15,8 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dp2"
         android:layout_marginRight="@dimen/dp2"
+        android:paddingStart="@dimen/dp4"
+        android:paddingEnd="@dimen/dp4"
         android:orientation="vertical">
 
         <LinearLayout

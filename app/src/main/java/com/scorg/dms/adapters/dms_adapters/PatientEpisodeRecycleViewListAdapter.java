@@ -73,7 +73,7 @@ public class PatientEpisodeRecycleViewListAdapter extends RecyclerView.Adapter<P
         buttonBackground.setColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
         buttonBackground.setCornerRadius(_context.getResources().getDimension(R.dimen.dp5));
         final PatientEpisodeFileData childElement = _originalListDataHeader.get(position);
-
+        childViewHolder.ipdValue.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         childViewHolder.ipdDischargeDateValue.setVisibility(View.GONE);
         childViewHolder.ipdDischargeDate.setVisibility(View.GONE);
         childViewHolder.ipd.setBackground(buttonBackground);

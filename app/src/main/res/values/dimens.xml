@@ -78,5 +78,6 @@
     <dimen name="level1">60dp</dimen>
     <dimen name="level2">120dp</dimen>
     <dimen name="level3">180dp</dimen>
+    <dimen name="dialog_width">250dp</dimen>
 
 </resources>

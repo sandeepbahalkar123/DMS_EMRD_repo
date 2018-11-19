@@ -131,7 +131,9 @@
                         android:textColor="@color/white"
                         android:fontFamily="@font/roboto_regular"
                         android:textSize="@dimen/sp12"
-                        android:visibility="gone"
+                        android:visibility="visible"
+                        tools:visibility="visible"
+                        android:background="@drawable/cursor_color"
                         android:layout_marginRight="@dimen/dp5"
                         android:text="@string/raise_request_episode"/>
 

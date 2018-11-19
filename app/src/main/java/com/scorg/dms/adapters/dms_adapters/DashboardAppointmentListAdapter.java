@@ -124,21 +124,21 @@ public class DashboardAppointmentListAdapter extends RecyclerView.Adapter<Dashbo
 
         if (groupHeader.getAppointmentStatus().contains(BOOKED_STATUS)) {
             groupViewHolder.appointmentStatus.setTextColor(ContextCompat.getColor(_context, R.color.book_color));
-            groupViewHolder.appointmentStatus.setText(_context.getString(R.string.booked));
+            groupViewHolder.appointmentStatus.setText(_context.getString(R.string.booked).toUpperCase());
         } else if (groupHeader.getAppointmentStatus().contains(COMPLETED_STATUS)) {
-            groupViewHolder.appointmentStatus.setText(_context.getString(R.string.capitalcompleted));
+            groupViewHolder.appointmentStatus.setText(_context.getString(R.string.capitalcompleted).toUpperCase());
             groupViewHolder.appointmentStatus.setTextColor(ContextCompat.getColor(_context, R.color.complete_color));
         } else if (groupHeader.getAppointmentStatus().contains(CONFIRM_STATUS)) {
-            groupViewHolder.appointmentStatus.setText(groupHeader.getAppointmentStatus());
+            groupViewHolder.appointmentStatus.setText(groupHeader.getAppointmentStatus().toUpperCase());
             groupViewHolder.appointmentStatus.setTextColor(ContextCompat.getColor(_context, R.color.confirm_color));
         } else if (groupHeader.getAppointmentStatus().contains(CANCEL_STATUS)) {
-            groupViewHolder.appointmentStatus.setText(groupHeader.getAppointmentStatus());
+            groupViewHolder.appointmentStatus.setText(groupHeader.getAppointmentStatus().toUpperCase());
             groupViewHolder.appointmentStatus.setTextColor(ContextCompat.getColor(_context, R.color.cancel_color));
         } else if (groupHeader.getAppointmentStatus().equals(NO_SHOW)) {
-            groupViewHolder.appointmentStatus.setText(groupHeader.getAppointmentStatus());
+            groupViewHolder.appointmentStatus.setText(groupHeader.getAppointmentStatus().toUpperCase());
             groupViewHolder.appointmentStatus.setTextColor(ContextCompat.getColor(_context, R.color.no_show_color));
         } else if (groupHeader.getAppointmentStatus().equals(OTHER)) {
-            groupViewHolder.appointmentStatus.setText(groupHeader.getAppointmentStatus());
+            groupViewHolder.appointmentStatus.setText(groupHeader.getAppointmentStatus().toUpperCase());
             groupViewHolder.appointmentStatus.setTextColor(ContextCompat.getColor(_context, R.color.other_color));
         }
 

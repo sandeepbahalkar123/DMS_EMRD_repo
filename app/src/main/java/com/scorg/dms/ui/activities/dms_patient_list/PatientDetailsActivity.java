@@ -127,7 +127,7 @@ public class PatientDetailsActivity extends BaseActivity implements HelperRespon
         buttonBackgroundBtnEpisodeRaiseRequest.setCornerRadius(mContext.getResources().getDimension(R.dimen.dp5));
 
         imgNoRecordFound.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
-        mAutoCompleteSearchBox.setHint("Search " + DMSApplication.LABEL_REF_ID);
+        mAutoCompleteSearchBox.setHint(getString(R.string.search_label) + DMSApplication.LABEL_REF_ID);
         btnEpisodeRaiseRequest.setBackground(buttonBackgroundBtnEpisodeRaiseRequest);
         //--------------
         labelUHID.setText(DMSApplication.LABEL_UHID);

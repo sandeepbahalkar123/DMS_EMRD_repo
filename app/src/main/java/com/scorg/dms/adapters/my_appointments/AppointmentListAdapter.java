@@ -93,8 +93,7 @@ public class AppointmentListAdapter
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
-        private FrameLayout front_layout;
-        private RelativeLayout swipe_layout;
+
         private TextView appointmentTime;
         private ImageView bluelineImageView;
         private TextView patientIdTextView;
@@ -122,8 +121,6 @@ public class AppointmentListAdapter
         MyViewHolder(View convertView) {
             super(convertView);
             idAndDetailsLayout = (LinearLayout) convertView.findViewById(R.id.idAndDetailsLayout);
-            front_layout = (FrameLayout) convertView.findViewById(R.id.front_layout);
-            swipe_layout = (RelativeLayout) convertView.findViewById(R.id.swipe_layout);
             appointmentTime = (TextView) convertView.findViewById(R.id.appointmentTime);
             patientIdTextView = (TextView) convertView.findViewById(R.id.patientIdTextView);
             patientImageView = (CircularImageView) convertView.findViewById(R.id.patientImageView);
@@ -169,12 +166,7 @@ public class AppointmentListAdapter
     }
 
     private void bindGroupItem(final AppointmentPatientData appointmentPatientDataObject, final AppointmentListAdapter.MyViewHolder holder) {
-        GradientDrawable cardBackground = new GradientDrawable();
-        cardBackground.setShape(GradientDrawable.RECTANGLE);
-        cardBackground.setColor(Color.WHITE);
-        cardBackground.setCornerRadius(mContext.getResources().getDimension(R.dimen.dp8));
-        cardBackground.setStroke(mContext.getResources().getDimensionPixelSize(R.dimen.dp1), Color.parseColor(DMSApplication.COLOR_PRIMARY));
-        holder.swipe_layout.setBackground(cardBackground);
+
         holder.bluelineImageView.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         holder.callIcon.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         holder.btnDone.setBackground(buttonBackground);
@@ -184,12 +176,17 @@ public class AppointmentListAdapter
         holder.viewLine1.setBackgroundColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         holder.appointmentConsultationType.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         String salutation = appointmentPatientDataObject.getSalutation();
-        String patientName = toCamelCase(appointmentPatientDataObject.getPatientName());
+        String patientName = appointmentPatientDataObject.getPatientName();
+
+        Log.e("salutation","--"+salutation);
+        Log.e("name",patientName);
+        Log.e("name,,,,",appointmentPatientDataObject.getPatientName());
 
         if (salutation != null) {
             patientName = salutation + " " + patientName;
         }
 
+        Log.e("name.....",patientName);
         //---- START: Setting of hospitalID or referecne ID, reference is IS high priority than hospitalID.-----
         String dataToShowInPatientID = String.valueOf(appointmentPatientDataObject.getPatientId());
         holder.patientIdTextView.setText(DMSApplication.LABEL_UHID+" " + dataToShowInPatientID + "");
@@ -255,21 +252,21 @@ public class AppointmentListAdapter
 
         if (appointmentPatientDataObject.getAppointmentStatus().contains(BOOKED_STATUS)) {
             holder.opdTypeTextView.setTextColor(ContextCompat.getColor(mContext, R.color.book_color));
-            holder.opdTypeTextView.setText(mContext.getString(R.string.booked));
+            holder.opdTypeTextView.setText(mContext.getString(R.string.booked).toUpperCase());
         } else if (appointmentPatientDataObject.getAppointmentStatus().contains(COMPLETED_STATUS)) {
-            holder.opdTypeTextView.setText(mContext.getString(R.string.capitalcompleted));
+            holder.opdTypeTextView.setText(mContext.getString(R.string.capitalcompleted).toUpperCase());
             holder.opdTypeTextView.setTextColor(ContextCompat.getColor(mContext, R.color.complete_color));
         } else if (appointmentPatientDataObject.getAppointmentStatus().contains(CONFIRM_STATUS)) {
-            holder.opdTypeTextView.setText(appointmentPatientDataObject.getAppointmentStatus());
+            holder.opdTypeTextView.setText(appointmentPatientDataObject.getAppointmentStatus().toUpperCase());
             holder.opdTypeTextView.setTextColor(ContextCompat.getColor(mContext, R.color.confirm_color));
         } else if (appointmentPatientDataObject.getAppointmentStatus().contains(CANCEL_STATUS)) {
-            holder.opdTypeTextView.setText(appointmentPatientDataObject.getAppointmentStatus());
+            holder.opdTypeTextView.setText(appointmentPatientDataObject.getAppointmentStatus().toUpperCase());
             holder.opdTypeTextView.setTextColor(ContextCompat.getColor(mContext, R.color.cancel_color));
         } else if (appointmentPatientDataObject.getAppointmentStatus().equals(NO_SHOW)) {
-            holder.opdTypeTextView.setText(appointmentPatientDataObject.getAppointmentStatus());
+            holder.opdTypeTextView.setText(appointmentPatientDataObject.getAppointmentStatus().toUpperCase());
             holder.opdTypeTextView.setTextColor(ContextCompat.getColor(mContext, R.color.no_show_color));
         } else if (appointmentPatientDataObject.getAppointmentStatus().equals(OTHER)) {
-            holder.opdTypeTextView.setText(appointmentPatientDataObject.getAppointmentStatus());
+            holder.opdTypeTextView.setText(appointmentPatientDataObject.getAppointmentStatus().toUpperCase());
             holder.opdTypeTextView.setTextColor(ContextCompat.getColor(mContext, R.color.other_color));
         }
 
@@ -305,7 +302,7 @@ public class AppointmentListAdapter
                 .apply(requestOptions).thumbnail(0.5f)
                 .into(holder.patientImageView);
 
-        ViewTreeObserver vto = holder.front_layout.getViewTreeObserver();
+
 
 
         holder.layoutAppointmentEpisode.setOnClickListener(new View.OnClickListener() {

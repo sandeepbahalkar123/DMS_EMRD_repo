@@ -76,5 +76,6 @@
 
     <dimen name="dp24">34dp</dimen>
     <dimen name="back_arrow">24dp</dimen>
+    <dimen name="dialog_width">300dp</dimen>
 
 </resources>
