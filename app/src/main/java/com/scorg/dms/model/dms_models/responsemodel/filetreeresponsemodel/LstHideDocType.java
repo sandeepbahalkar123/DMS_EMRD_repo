@@ -23,6 +23,10 @@ public class LstHideDocType {
     @Expose
     private String favouriteColor;
 
+    @SerializedName("isFavourite")
+    @Expose
+    private boolean isFavourite;
+
     @SerializedName("pageCount")
     @Expose
     private int pageCount;
@@ -81,6 +85,14 @@ public class LstHideDocType {
 
     public void setFavouriteColor(String favouriteColor) {
         this.favouriteColor = favouriteColor;
+    }
+
+    public boolean isFavourite() {
+        return isFavourite;
+    }
+
+    public void setFavourite(boolean favourite) {
+        isFavourite = favourite;
     }
 
     public int getPageCount() {

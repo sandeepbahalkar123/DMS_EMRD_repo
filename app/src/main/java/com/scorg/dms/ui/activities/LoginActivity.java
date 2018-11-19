@@ -72,7 +72,7 @@ public class LoginActivity extends BaseActivity implements HelperResponse {
     @OnClick(R.id.loginButton)
     public void doLogin() {
         if (!validate()) {
-            mLoginHelper.doAppLogin(mUserName.getText().toString(), mPassword.getText().toString());
+            mLoginHelper.doAppLogin(mUserName.getText().toString().trim(), mPassword.getText().toString().trim());
             // onSuccess(null, null);
         }
     }
@@ -85,7 +85,7 @@ public class LoginActivity extends BaseActivity implements HelperResponse {
      * @return
      */
     private boolean validate() {
-        userName = mUserName.getText().toString();
+        userName = mUserName.getText().toString().trim();
         password = mPassword.getText().toString();
         String message = null;
         if (userName.isEmpty() || password.isEmpty()) {
@@ -174,7 +174,7 @@ public class LoginActivity extends BaseActivity implements HelperResponse {
             @Override
             public void retry() {
                 if (!validate()) {
-                    mLoginHelper.doAppLogin(mUserName.getText().toString(), mPassword.getText().toString());
+                    mLoginHelper.doAppLogin(mUserName.getText().toString().trim(), mPassword.getText().toString());
                     // onSuccess(null, null);
                 }
             }
