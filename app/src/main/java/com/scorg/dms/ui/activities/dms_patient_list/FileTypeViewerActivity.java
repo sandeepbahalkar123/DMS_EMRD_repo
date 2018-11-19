@@ -274,6 +274,7 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
     private ArrayList<GetEncryptedPDFRequestModel> mGetEncryptedPDFRequestModelList = new ArrayList<>();
 
     private CustomProgressDialog customProgressDialog;
+    private boolean isTreeCreated;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -503,7 +504,8 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
             case R.id.openRightDrawer:
                 archiveCount = 0;
                 mDrawer.openDrawer(GravityCompat.END);
-                doCreateTreeStructure();
+                if (!isTreeCreated)
+                    doCreateTreeStructure();
                 break;
             case R.id.loadPreviousArchiveDataList:
                 archiveCount = 0;
@@ -1102,6 +1104,7 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
         mAndroidTreeView.setDefaultNodeClickListener(this);
         mAndroidTreeView.setUseAutoToggle(false);
         mFileTypeOneTreeViewContainer.addView(mAndroidTreeView.getView());
+        isTreeCreated = true;
     }
 
     @Override
