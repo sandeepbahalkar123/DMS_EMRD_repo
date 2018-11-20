@@ -12,7 +12,7 @@
         android:id="@+id/viewContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/dp56"
+        android:layout_marginTop="@dimen/drawer_header"
         android:fitsSystemWindows="true"
         android:orientation="vertical" />
 

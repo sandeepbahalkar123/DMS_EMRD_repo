@@ -267,7 +267,7 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
 
     private RelativeLayout mFirstFileTypeProgressDialogLayout;
     private RelativeLayout mSecondFileTypeProgressDialogLayout;
-    private LinkedHashMap<Integer, String> mPreviousClickedTreeElement = null;
+    private LinkedHashMap<String, String> mPreviousClickedTreeElement = null;
     private String fileOneData;
     private String fileTwoData;
     private String mArchivedSelectedPreference = DMSConstants.ArchivedPreference.FOLDER;
@@ -518,9 +518,7 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
         mDoctorNameTwo.setText(doctorName);
         mDoctorNameOne.setText(doctorName);
 
-
-
-        if(patientAddress!=null )
+        if (patientAddress != null)
             mPatientAddress.setText(patientAddress);
         else
             layoutDrawerAddress.setVisibility(View.GONE);
@@ -584,7 +582,7 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
                 break;
             case R.id.fileOneRemoveButton:
                 String fileToRemove = mFileOneFileName.getText().toString().trim().replace(getString(R.string.file), "").trim();
-                for (Integer key : mPreviousClickedTreeElement.keySet()) {
+                for (String key : mPreviousClickedTreeElement.keySet()) {
                     if (mPreviousClickedTreeElement.get(key).equalsIgnoreCase(fileToRemove)) {
                         mPreviousClickedTreeElement.remove(key);
                         break;
@@ -599,14 +597,18 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
                 break;
             case R.id.fileTwoRemoveButton:
                 String fileTwoRemove = mFileTwoFileName.getText().toString().trim().replace(getString(R.string.file), "").trim();
-                for (Integer key : mPreviousClickedTreeElement.keySet()) {
+                for (String key : mPreviousClickedTreeElement.keySet()) {
                     if (mPreviousClickedTreeElement.get(key).equalsIgnoreCase(fileTwoRemove)) {
                         mPreviousClickedTreeElement.remove(key);
                         break;
                     }
                 }
+
                 if (mGetEncryptedPDFRequestModelList.size() == 2)
                     mGetEncryptedPDFRequestModelList.remove(1);
+                else if (mGetEncryptedPDFRequestModelList.size() == 1)
+                    mGetEncryptedPDFRequestModelList.remove(0);
+
                 mFileTwoFileName.setText("");
                 mFileTwoPatientID.setText("");
                 break;
@@ -677,6 +679,9 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
                     mFileTreeResponseData = fileTreeResponseModel.getFileTreeResponseData();
                     doCreateTreeStructure();
                 } else {
+                    footerLayout.setVisibility(View.GONE);
+                    emptyListView.setVisibility(View.VISIBLE);
+                    mFileTypeOneTreeViewContainer.removeAllViews();
                     setErrorDialog("Records Not Found", mOldDataTag, false, FileTypeViewerActivity.this);
                 }
             }
@@ -1009,7 +1014,7 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
 
                         //---- To bold clicked text in tree
                         // if (lstDocCategoryObject.getCategoryName().equalsIgnoreCase(mPreviousClickedTreeElement.get(i)))
-                        if (lstHideDocType.getTypeName().equalsIgnoreCase(mPreviousClickedTreeElement.get(lstHideDocType.getTypeName())))
+                        if (lstHideDocType.getTypeName().equalsIgnoreCase(mPreviousClickedTreeElement.get(lstHideDocType.getRecordDetailId())))
                             docCatSelectableHeaderHolder.setTreeLabelBold(true);
 
                         TreeNode lstDocCategoryObjectFolder = new TreeNode(new ArrowExpandIconTreeItemHolder.IconTreeItem(R.string.ic_shopping_cart, dataToShow, lstHideDocType, i))
@@ -1111,7 +1116,7 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
 
                         //---- To bold clicked text in tree
                         // if (lstDocCategoryObject.getCategoryName().equalsIgnoreCase(mPreviousClickedTreeElement.get(i)))
-                        if (lstHideDocType.getTypeName().equalsIgnoreCase(mPreviousClickedTreeElement.get(lstHideDocType.getTypeName())))
+                        if (lstHideDocType.getTypeName().equalsIgnoreCase(mPreviousClickedTreeElement.get(lstHideDocType.getRecordDetailId())))
                             docCatSelectableHeaderHolder.setTreeLabelBold(true);
 
                         TreeNode lstDocCategoryObjectFolder = new TreeNode(new ArrowExpandIconTreeItemHolder.IconTreeItem(R.string.ic_shopping_cart, dataToShow, lstHideDocType, i))
@@ -1322,16 +1327,39 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
         if (mOpenCompareDialogSwitch.isChecked()) {
             if (mGetEncryptedPDFRequestModelList.size() == 2) {
                 expandCompareDialog();
-                CommonMethods.showToast(this, "Can not compare more than 2 PDFs");
+//                CommonMethods.showToast(this, "Can not compare more than 2 PDFs");
+
+                CommonMethods.showErrorDialog("Can not compare more than 2 PDFs", this, false, new ErrorDialogCallback() {
+                    @Override
+                    public void ok() {
+
+                    }
+
+                    @Override
+                    public void retry() {
+
+                    }
+                });
+
             } else {
 
-                if (mPreviousClickedTreeElement.containsKey(clickedLstDocTypeElement.getRecordDetailId())) {
-                    CommonMethods.showToast(this, "Can not compare same PDFs");
+                if (mPreviousClickedTreeElement.containsKey(String.valueOf(clickedLstDocTypeElement.getRecordDetailId()))) {
+                    CommonMethods.showErrorDialog("Can not compare same PDFs", this, false, new ErrorDialogCallback() {
+                        @Override
+                        public void ok() {
+
+                        }
+
+                        @Override
+                        public void retry() {
+
+                        }
+                    });
 
                 } else {
 
+                    mPreviousClickedTreeElement.put(String.valueOf(clickedLstDocTypeElement.getRecordDetailId()), clickedLstDocTypeElement.getTypeName().trim());
                     mGetEncryptedPDFRequestModelList.add(getEncryptedPDFRequestModel);
-                    mPreviousClickedTreeElement.put(clickedLstDocTypeElement.getRecordDetailId(), clickedLstDocTypeElement.getTypeName().trim());
 
                     ArrayList<String> tempClickedElements = new ArrayList<>(mPreviousClickedTreeElement.values());
 
@@ -1368,7 +1396,7 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
             mGetEncryptedPDFRequestModelList.add(getEncryptedPDFRequestModel);
 
             mPreviousClickedTreeElement.clear();
-            mPreviousClickedTreeElement.put(clickedLstDocTypeElement.getRecordDetailId(), clickedLstDocTypeElement.getTypeName().trim());
+            mPreviousClickedTreeElement.put(String.valueOf(clickedLstDocTypeElement.getRecordDetailId()), clickedLstDocTypeElement.getTypeName().trim());
             labelFirstPdf.setText(clickedLstDocTypeElement.getTypeName());
             mFirstFileTypeProgressDialogLayout.setVisibility(View.VISIBLE);
             //--------
