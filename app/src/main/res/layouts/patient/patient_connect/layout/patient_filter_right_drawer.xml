@@ -116,17 +116,17 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp4"
                     android:paddingLeft="@dimen/dp6"
                     android:paddingRight="@dimen/dp6"
-                    android:layout_marginTop="@dimen/dp4"
                     android:text="@string/select_date_type"
                     android:textSize="@dimen/sp13" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingTop="@dimen/dp4"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:paddingTop="@dimen/dp4">
 
                     <Spinner
                         android:id="@+id/spinner_admissionDate"
@@ -134,15 +134,15 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/dp5"
                         android:layout_marginRight="@dimen/dp5"
+                        android:layout_weight="1"
                         android:gravity="start"
                         android:spinnerMode="dropdown"
-                        android:layout_weight="1"
                         android:textColor="@color/black" />
 
                     <View
-                        android:layout_weight="1"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
 
                 </LinearLayout>
 
@@ -154,9 +154,9 @@
                 android:layout_marginBottom="@dimen/dp5"
                 android:background="@color/grey_200"
                 android:baselineAligned="false"
+                android:orientation="horizontal"
                 android:paddingTop="@dimen/dp4"
                 android:paddingBottom="@dimen/dp4"
-                android:orientation="horizontal"
                 android:weightSum="2">
 
                 <LinearLayout
@@ -395,6 +395,9 @@
             app:srcCompat="@drawable/no_records_found"
             tools:visibility="visible" />
 
+        <include
+            layout="@layout/mydialog"
+            android:visibility="gone" />
 
     </RelativeLayout>
 

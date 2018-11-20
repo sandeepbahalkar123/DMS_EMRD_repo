@@ -31,7 +31,7 @@ import butterknife.OnClick;
 public class LoginActivity extends BaseActivity implements HelperResponse {
 
     String TAG = this.getClass().getSimpleName();
-    Context mContext;
+    private Context mContext;
     String mServerPath;
     @BindView(R.id.userName)
     EditText mUserName;
@@ -45,16 +45,15 @@ public class LoginActivity extends BaseActivity implements HelperResponse {
 
     @BindView(R.id.loginButton)
     Button loginButton;
-
-    private LoginHelper mLoginHelper;
     String userName = "";
     String password = "";
+    private LoginHelper mLoginHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        mContext = getApplicationContext();
+        mContext = this;
         ButterKnife.bind(this);
 
         CommonMethods.setImageUrl(this, DMSConstants.Images.IC_LOGIN_BACKGROUD, loginBackground, R.drawable.login_background);
@@ -78,7 +77,6 @@ public class LoginActivity extends BaseActivity implements HelperResponse {
     }
 
 
-
     /**
      * Return true if fields empty/validation failed, else false.
      *
@@ -88,12 +86,21 @@ public class LoginActivity extends BaseActivity implements HelperResponse {
         userName = mUserName.getText().toString().trim();
         password = mPassword.getText().toString();
         String message = null;
-        if (userName.isEmpty() || password.isEmpty()) {
+        if (userName.isEmpty() || password.isEmpty())
             message = getString(R.string.error_empty_fields);
-        }
 
         if (message != null) {
-            CommonMethods.showSnack(mUserName, message);
+            CommonMethods.showErrorDialog(message, mContext, false, new ErrorDialogCallback() {
+                @Override
+                public void ok() {
+
+                }
+
+                @Override
+                public void retry() {
+
+                }
+            });
             return true;
         } else {
             return false;
@@ -123,7 +130,7 @@ public class LoginActivity extends BaseActivity implements HelperResponse {
 
     @Override
     public void onParseError(String mOldDataTag, String errorMessage) {
-        CommonMethods.showErrorDialog(errorMessage,this,false, new ErrorDialogCallback() {
+        CommonMethods.showErrorDialog(errorMessage, this, false, new ErrorDialogCallback() {
             @Override
             public void ok() {
             }
@@ -132,12 +139,12 @@ public class LoginActivity extends BaseActivity implements HelperResponse {
             public void retry() {
             }
         });
-        Log.e("loginResponce","onParseError");
+        Log.e("loginResponce", "onParseError");
     }
 
     @Override
     public void onServerError(String mOldDataTag, String serverErrorMessage) {
-        CommonMethods.showErrorDialog(getString(R.string.invalid_username_password),this,false, new ErrorDialogCallback() {
+        CommonMethods.showErrorDialog(getString(R.string.invalid_username_password), this, false, new ErrorDialogCallback() {
             @Override
             public void ok() {
             }
@@ -146,12 +153,12 @@ public class LoginActivity extends BaseActivity implements HelperResponse {
             public void retry() {
             }
         });
-        Log.e("loginResponce","onServerError");
+        Log.e("loginResponce", "onServerError");
     }
 
     @Override
     public void onNoConnectionError(String mOldDataTag, String serverErrorMessage) {
-        CommonMethods.showErrorDialog(serverErrorMessage,this, false,new ErrorDialogCallback() {
+        CommonMethods.showErrorDialog(serverErrorMessage, this, false, new ErrorDialogCallback() {
             @Override
             public void ok() {
             }
@@ -160,13 +167,13 @@ public class LoginActivity extends BaseActivity implements HelperResponse {
             public void retry() {
             }
         });
-        Log.e("loginResponce","onNoConnectionError");
+        Log.e("loginResponce", "onNoConnectionError");
 
     }
 
     @Override
     public void onTimeOutError(String mOldDataTag, String timeOutErrorMessage) {
-        CommonMethods.showErrorDialog(timeOutErrorMessage,this,true, new ErrorDialogCallback() {
+        CommonMethods.showErrorDialog(timeOutErrorMessage, this, true, new ErrorDialogCallback() {
             @Override
             public void ok() {
             }
@@ -179,7 +186,7 @@ public class LoginActivity extends BaseActivity implements HelperResponse {
                 }
             }
         });
-        Log.e("loginResponce","onTimeOutError");
+        Log.e("loginResponce", "onTimeOutError");
     }
 }
 
