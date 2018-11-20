@@ -47,7 +47,7 @@ public class LstHideDocType {
     private int recordId;
     @SerializedName("recordDetailId")
     @Expose
-    private int recordDetailId;
+    private Integer recordDetailId;
     @SerializedName("fileType")
     @Expose
     private String fileType;
@@ -143,11 +143,11 @@ public class LstHideDocType {
         this.recordId = recordId;
     }
 
-    public int getRecordDetailId() {
+    public Integer getRecordDetailId() {
         return recordDetailId;
     }
 
-    public void setRecordDetailId(int recordDetailId) {
+    public void setRecordDetailId(Integer recordDetailId) {
         this.recordDetailId = recordDetailId;
     }
 
