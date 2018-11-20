@@ -325,8 +325,10 @@ public class PendingListFragment extends Fragment implements RequestListAdapter.
                 mPendingApprovalHelper.doGetPendingApprovalData(1, true);
             }
         });
-        noRecords.setVisibility(View.VISIBLE);
-        imgNoRecordFound.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+        if (requestedArchivedDetailList.isEmpty()) {
+            noRecords.setVisibility(View.VISIBLE);
+            imgNoRecordFound.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+        }
     }
 
     @Override

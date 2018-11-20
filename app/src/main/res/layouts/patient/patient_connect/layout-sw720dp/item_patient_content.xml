@@ -36,7 +36,6 @@
                 android:fontFamily="@font/roboto_medium"
                 tools:textColor="@color/colorAccent"
                 android:paddingRight="@dimen/dp5"
-                android:paddingLeft="@dimen/dp5"
                 android:paddingTop="@dimen/dp3"
                 android:paddingBottom="@dimen/dp3"
                 android:layout_gravity="center"

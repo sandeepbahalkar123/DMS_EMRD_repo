@@ -231,7 +231,7 @@ public class AdmittedPatientsListAdapter
 
 
             holder.appointmentTime.setVisibility(View.VISIBLE);
-            holder.appointmentTime.setText(dateToDisplay +","+CommonMethods.formatDateTime(appDate, DMSConstants.DATE_PATTERN.hh_mm_a, DMSConstants.DATE_PATTERN.UTC_PATTERN, DMSConstants.TIME).toLowerCase());
+            holder.appointmentTime.setText(dateToDisplay +" "+CommonMethods.formatDateTime(appDate, DMSConstants.DATE_PATTERN.hh_mm_a, DMSConstants.DATE_PATTERN.UTC_PATTERN, DMSConstants.TIME).toLowerCase());
         }
         //-------
         TextDrawable textDrawable = CommonMethods.getTextDrawable(mContext, admittedPatientDataObject.getPatientName());

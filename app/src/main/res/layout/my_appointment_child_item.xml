@@ -19,8 +19,8 @@
             android:layout_height="match_parent"
             android:layout_marginStart="@dimen/dp5"
             android:layout_marginLeft="@dimen/dp5"
-            android:layout_marginEnd="@dimen/dp5"
-            android:layout_marginRight="@dimen/dp5"
+            android:layout_marginEnd="@dimen/dp3"
+            android:layout_marginRight="@dimen/dp3"
             android:paddingBottom="@dimen/dp5"
             android:orientation="vertical">
 
@@ -28,8 +28,8 @@
                 android:id="@+id/layoutPatId"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dp11"
-                android:layout_marginLeft="@dimen/dp11"
+                android:layout_marginStart="@dimen/dp5"
+                android:layout_marginLeft="@dimen/dp5"
                >
 
                 <ImageView
@@ -103,8 +103,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginStart="@dimen/dp11"
-                    android:layout_marginLeft="@dimen/dp11"
+                    android:layout_marginStart="@dimen/dp5"
+                    android:layout_marginLeft="@dimen/dp5"
                     android:layout_toEndOf="@id/patientImageView"
                     android:layout_toRightOf="@id/patientImageView"
                     android:orientation="horizontal"

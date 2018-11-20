@@ -102,6 +102,7 @@
                     android:ellipsize="end"
                     android:imeOptions="actionNext"
                     android:textColor="@color/black"
+                    android:hint="Enter ID"
                     android:textCursorDrawable="@drawable/cursor_color"
                     android:textSize="@dimen/sp13" />
 

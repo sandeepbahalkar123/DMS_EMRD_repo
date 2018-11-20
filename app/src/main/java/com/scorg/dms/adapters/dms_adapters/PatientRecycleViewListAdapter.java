@@ -108,8 +108,10 @@ public class PatientRecycleViewListAdapter extends RecyclerView.Adapter<PatientR
             @Override
             public void onClick(View v) {
                 if (groupHeader.isArchived()) {
-                    SearchResult groupHeader = _originalListDataHeader.get(position);
-                    onPatientListener.onPatientListItemClick(groupHeader);
+                    if (_originalListDataHeader.size()>position) {
+                        SearchResult groupHeader = _originalListDataHeader.get(position);
+                        onPatientListener.onPatientListItemClick(groupHeader);
+                    }
                 } else {
                     CommonMethods.showErrorDialog(_context.getString(R.string.patient_not_having_record), _context, false, new ErrorDialogCallback() {
                         @Override
@@ -131,8 +133,10 @@ public class PatientRecycleViewListAdapter extends RecyclerView.Adapter<PatientR
             public void onClick(View v) {
 
                 if (groupHeader.isArchived()) {
-                    SearchResult groupHeader = _originalListDataHeader.get(position);
-                    onPatientListener.onClickedOfEpisodeListButton(groupHeader);
+                    if (_originalListDataHeader.size()>position) {
+                        SearchResult groupHeader = _originalListDataHeader.get(position);
+                        onPatientListener.onClickedOfEpisodeListButton(groupHeader);
+                    }
                 } else {
                     CommonMethods.showErrorDialog(_context.getString(R.string.patient_not_having_record), _context, false, new ErrorDialogCallback() {
                         @Override

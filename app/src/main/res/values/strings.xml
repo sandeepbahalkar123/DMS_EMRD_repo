@@ -119,7 +119,7 @@
     <string name="request_raised_success"> Request raised successfully.</string>
 
     <!-- Strings related to login -->
-    <string name="error_empty_fields">Please enter username/password</string>
+    <string name="error_empty_fields"> <![CDATA[Please Enter Username & Password]]></string>
 
     <string name="visit_date">Visit Date:\u0020</string>
     <string name="error_enter_uhid">Enter UHID</string>
