@@ -217,10 +217,12 @@ public class HomePageActivity extends BaseActivity implements HelperResponse, Da
         mDashboardHelper = new DashboardHelper(this, this);
         String doctorNameToDisplay;
         String hospitalNameToDisplay;
-        if (DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.USER_NAME, mContext).toLowerCase().contains("Dr.")) {
+
+
+        if ( (DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.DOC_NAME, mContext)).toLowerCase().contains("dr.")) {
             doctorNameToDisplay = DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.DOC_NAME, mContext);
         } else {
-            doctorNameToDisplay = "Dr. " + DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.DOC_NAME, mContext);
+            doctorNameToDisplay = "DR. " + DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.DOC_NAME, mContext);
         }
         hospitalNameToDisplay = DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.HOSPITAL_NAME, mContext);
 

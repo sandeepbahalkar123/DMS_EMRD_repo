@@ -518,7 +518,6 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
         mDoctorNameTwo.setText(doctorName);
         mDoctorNameOne.setText(doctorName);
 
-        Log.e("patientAddress","-----"+patientAddress);
 
 
         if(patientAddress!=null )
