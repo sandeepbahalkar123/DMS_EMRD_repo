@@ -517,10 +517,15 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
         mPatientId.setText(respectivePatientID);
         mDoctorNameTwo.setText(doctorName);
         mDoctorNameOne.setText(doctorName);
-        if (patientAddress.isEmpty())
-            layoutDrawerAddress.setVisibility(View.GONE);
-        else
+
+        Log.e("patientAddress","-----"+patientAddress);
+
+
+        if(patientAddress!=null )
             mPatientAddress.setText(patientAddress);
+        else
+            layoutDrawerAddress.setVisibility(View.GONE);
+
         labelDrawerUDID.setText(DMSApplication.LABEL_UHID);
     }
 
