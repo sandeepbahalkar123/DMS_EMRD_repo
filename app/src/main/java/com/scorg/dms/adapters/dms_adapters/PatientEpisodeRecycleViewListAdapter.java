@@ -39,9 +39,6 @@ public class PatientEpisodeRecycleViewListAdapter extends RecyclerView.Adapter<P
 
     // @BindString(R.string.opd)
     private String opd;
-    // @BindString(R.string.ipd)
-    private String ipd;
-    private String uhid;
     private ViewRights viewRights;
     boolean isMainPrimary;
 
@@ -49,8 +46,8 @@ public class PatientEpisodeRecycleViewListAdapter extends RecyclerView.Adapter<P
         this._context = context;
         addNewItems(searchResult, isMainPrimary);
         opd = _context.getString(R.string.opd);
-        ipd = _context.getString(R.string.ipd);
-        uhid = DMSApplication.LABEL_UHID;
+        // @BindString(R.string.ipd)
+        String ipd = _context.getString(R.string.ipd);
         this.viewRights = viewRights;
 
         if (context instanceof OnEpisodeClickListener) {

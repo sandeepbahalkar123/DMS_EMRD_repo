@@ -1,5 +1,6 @@
 package com.scorg.dms.ui.activities.dms_patient_list;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -98,7 +99,7 @@ public class PatientDetailsActivity extends BaseActivity implements HelperRespon
     private PatientEpisodeRecycleViewListAdapter mPatientEpisodeRecycleViewListAdapter;
     private boolean mIsLoadMoreEpisode;
     public ViewRights mviewRights;
-    EpisodeResponseModel showSearchResultResponseModel;
+    private EpisodeResponseModel showSearchResultResponseModel;
     public boolean isMainPrimary =false;
 
     @Override
@@ -121,6 +122,7 @@ public class PatientDetailsActivity extends BaseActivity implements HelperRespon
         init();
     }
 
+    @SuppressLint("CheckResult")
     public void init() {
         GradientDrawable buttonBackgroundBtnEpisodeRaiseRequest = new GradientDrawable();
         buttonBackgroundBtnEpisodeRaiseRequest.setShape(GradientDrawable.RECTANGLE);
@@ -243,7 +245,6 @@ public class PatientDetailsActivity extends BaseActivity implements HelperRespon
         buttonRightBackground.setShape(GradientDrawable.RECTANGLE);
         buttonRightBackground.setColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
         buttonRightBackground.setCornerRadii(bottomRightRadius);
-
 
         Button buttonCancel = dialog.findViewById(R.id.button_cancel);
         Button buttonOk = dialog.findViewById(R.id.button_ok);

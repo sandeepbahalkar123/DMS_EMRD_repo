@@ -678,6 +678,9 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
                     mFileTreeResponseData = fileTreeResponseModel.getFileTreeResponseData();
                     doCreateTreeStructure();
                 } else {
+                    footerLayout.setVisibility(View.GONE);
+                    emptyListView.setVisibility(View.VISIBLE);
+                    mFileTypeOneTreeViewContainer.removeAllViews();
                     setErrorDialog("Records Not Found", mOldDataTag, false, FileTypeViewerActivity.this);
                 }
             }
