@@ -228,17 +228,18 @@
     <string name="clear_file_cache">Clear File Cache</string>
     <string name="retry">Retry</string>
     <string name="appointment_code">Appointment Code :</string>
-    <string name="label_patient_name">Patient Name</string>
+
     <string name="coma_space_seperator">,\u0020</string>
     <string name="search_label">Search by\u0020</string>
     <string name="patient_not_having_record">No records found for these patient.</string>
     <string name="active_appointmets">Active</string>
     <string name="all_appointments">View All</string>
     <string name="data_not_found">Required  Data Not Found</string>
-    <string name="check_wifi_connection">The Wifi connection appears to be off. Please, check the Wifi settings and try again.</string>
+    <string name="check_wifi_connection">The Wifi connection appears to be off. Please check the Wifi settings and try again.</string>
     <string name="raise_request_episode">Raise View File Request</string>
     <string name="select_file_type">Select File Type</string>
     <string name="id_type">ID Type</string>
     <string name="all">All</string>
+    <string name="label_patient_name">\u0020<![CDATA[& Patient Name]]></string>
 
 </resources>

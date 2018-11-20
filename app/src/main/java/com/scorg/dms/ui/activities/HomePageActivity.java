@@ -176,6 +176,9 @@ public class HomePageActivity extends BaseActivity implements HelperResponse, Da
     @BindView(R.id.layoutTopBackground)
     LinearLayout layoutTopBackground;
 
+    @BindView(R.id.layoutDrawerHeader)
+    LinearLayout layoutDrawerHeader;
+
     @BindView(R.id.tabsActiveVieAll)
     TabLayout tabsActiveVieAll;
 
@@ -599,7 +602,7 @@ public class HomePageActivity extends BaseActivity implements HelperResponse, Da
 
     }
 
-    @OnClick({R.id.layoutDrawerIcon, R.id.layoutTotalPatients, R.id.layoutTodayAppointment, R.id.layoutWaitingPatient, R.id.layoutDrawerSetting, R.id.layoutDrawerSupport, R.id.layoutPendingApproval, R.id.layoutDrawerHome, R.id.layoutAdmittedPatient})
+    @OnClick({R.id.layoutDrawerIcon, R.id.layoutTotalPatients, R.id.layoutTodayAppointment, R.id.layoutWaitingPatient, R.id.layoutDrawerSetting, R.id.layoutDrawerSupport, R.id.layoutPendingApproval, R.id.layoutDrawerHome, R.id.layoutAdmittedPatient,R.id.layoutDrawerHeader})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.layoutTodayAppointment:
@@ -658,7 +661,12 @@ public class HomePageActivity extends BaseActivity implements HelperResponse, Da
             case R.id.layoutDrawerHome:
                 mDashboardHelper.doGetDashboardResponse();
                 break;
-
+            case R.id.layoutDrawerHeader:
+                if (mDrawer.isDrawerOpen(GravityCompat.START)) {
+                    Log.e("mDrawer", "open");
+                    mDrawer.closeDrawer(GravityCompat.START);
+                }
+                break;
         }
     }
 

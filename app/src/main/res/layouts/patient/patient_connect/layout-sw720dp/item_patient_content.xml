@@ -14,8 +14,6 @@
         android:id="@+id/cardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dp2"
-        android:layout_marginRight="@dimen/dp2"
         android:paddingTop="@dimen/dp5"
         android:orientation="vertical">
 
@@ -24,8 +22,8 @@
             android:layout_height="wrap_content"
             android:baselineAligned="false"
             android:orientation="horizontal"
-            android:paddingEnd="@dimen/dp10"
-            android:paddingStart="@dimen/dp10"
+            android:paddingEnd="@dimen/dp5"
+            android:paddingStart="@dimen/dp5"
             android:paddingTop="@dimen/dp5"
             android:padding="@dimen/dp5">
 
@@ -70,7 +68,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingLeft="@dimen/dp10"
+            android:paddingLeft="@dimen/dp5"
             >
 
             <TextView
@@ -99,8 +97,8 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:padding="@dimen/dp5"
-            android:paddingEnd="@dimen/dp10"
-            android:paddingStart="@dimen/dp10">
+            android:paddingEnd="@dimen/dp5"
+            android:paddingStart="@dimen/dp5">
 
             <LinearLayout
                 android:layout_width="0dp"

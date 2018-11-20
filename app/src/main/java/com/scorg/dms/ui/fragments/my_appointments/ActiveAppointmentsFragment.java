@@ -81,7 +81,7 @@ public class ActiveAppointmentsFragment extends Fragment implements AppointmentL
 
     private void init() {
         imgNoRecordFound.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
-        searchEditText.setHint(getString(R.string.search_label)+"Name & "+DMSApplication.LABEL_UHID);
+        searchEditText.setHint(getString(R.string.search_label)+DMSApplication.LABEL_UHID+ getString(R.string.label_patient_name));
         searchEditText.addTextChangedListener(new EditTextWithDeleteButton.TextChangedListener() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
