@@ -81,5 +81,6 @@
     <dimen name="check_left_padding">66dp</dimen>
     <dimen name="dp38">56dp</dimen>
     <dimen name="next_button_padding">10dp</dimen>
+    <dimen name="drawer_header">64dp</dimen>
 
 </resources>

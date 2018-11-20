@@ -21,7 +21,7 @@
             <LinearLayout
                 android:id="@+id/layoutMedicalRecordHeader"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp56"
+                android:layout_height="@dimen/drawer_header"
                 android:background="@color/SkyBlue"
                 android:gravity="center"
                 android:orientation="vertical">
@@ -37,9 +37,11 @@
                         android:id="@+id/imageCloseDrawer"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/dp10"
-                        android:layout_marginLeft="@dimen/dp10"
-                        android:background="@drawable/ic_close_white"
+                        android:layout_marginStart="@dimen/dp5"
+                        android:layout_marginLeft="@dimen/dp5"
+                        android:padding="@dimen/dp5"
+                        android:src="@drawable/ic_close_white"
+                        android:background="@color/transparent"
                         android:textColor="@color/white" />
 
                     <TextView
