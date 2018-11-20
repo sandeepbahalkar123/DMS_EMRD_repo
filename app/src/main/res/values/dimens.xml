@@ -79,4 +79,7 @@
     <dimen name="level2">120dp</dimen>
     <dimen name="level3">180dp</dimen>
 
+    <dimen name="check_left_padding">94dp</dimen>
+    <dimen name="dp38">38dp</dimen>
+
 </resources>

@@ -137,6 +137,8 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
     Button mCompareButton;
     @BindView(R.id.archivedPreferenceSpinner)
     Spinner mArchivedPreferenceSpinner;
+    @BindView(R.id.archivedPreferenceSpinnerBG)
+    LinearLayout archivedPreferenceSpinnerBG;
     @BindView(R.id.preferenceLayout)
     LinearLayout mPreferenceLayout;
     //---------
@@ -297,12 +299,24 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
         deviderView.setBackgroundColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         mCompareButton.setBackgroundColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         imgNoRecordFound.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+
+        mLoadPreviousArchiveDataList.setColorFilter(Color.parseColor(DMSApplication.COLOR_ACCENT));
+        mLoadNextArchiveDataList.setColorFilter(Color.parseColor(DMSApplication.COLOR_ACCENT));
+
         GradientDrawable cardBackground = new GradientDrawable();
         cardBackground.setShape(GradientDrawable.RECTANGLE);
         cardBackground.setColor(Color.WHITE);
         cardBackground.setCornerRadius(mContext.getResources().getDimension(R.dimen.dp8));
         cardBackground.setStroke(mContext.getResources().getDimensionPixelSize(R.dimen.dp1), Color.parseColor(DMSApplication.COLOR_PRIMARY));
         mPatientId.setBackground(cardBackground);
+
+        GradientDrawable spinnerBackground = new GradientDrawable();
+        spinnerBackground.setShape(GradientDrawable.RECTANGLE);
+        spinnerBackground.setColor(Color.WHITE);
+        spinnerBackground.setCornerRadius(mContext.getResources().getDimension(R.dimen.dp8));
+        spinnerBackground.setStroke(mContext.getResources().getDimensionPixelSize(R.dimen.dp1), Color.parseColor(DMSApplication.COLOR_PRIMARY));
+        archivedPreferenceSpinnerBG.setBackground(spinnerBackground);
+
         int[][] states = new int[][]{
                 new int[]{-android.R.attr.state_checked},
                 new int[]{android.R.attr.state_checked},
@@ -431,10 +445,10 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
             }
         });
         //-----------
-        mFirstFileTypePdfViewLayout.addView(CommonMethods.loadView(R.layout.mydialog, this));
+        mFirstFileTypePdfViewLayout.addView(CommonMethods.progressDialogView(R.layout.mydialog, this));
         mFirstFileTypeProgressDialogLayout = mFirstFileTypePdfViewLayout.findViewById(R.id.progressBarContainerLayout);
         mFirstFileTypeProgressDialogLayout.setVisibility(View.GONE);
-        mSecondFileTypePdfViewLayout.addView(CommonMethods.loadView(R.layout.mydialog, this));
+        mSecondFileTypePdfViewLayout.addView(CommonMethods.progressDialogView(R.layout.mydialog, this));
         mSecondFileTypeProgressDialogLayout = mSecondFileTypePdfViewLayout.findViewById(R.id.progressBarContainerLayout);
         mSecondFileTypeProgressDialogLayout.setVisibility(View.GONE);
 
