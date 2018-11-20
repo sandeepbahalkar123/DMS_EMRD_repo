@@ -91,13 +91,12 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
 
     private static final long ANIMATION_DURATION = 500; // in milliseconds
     private static Handler mAddedTagsEventHandler;
+    public ViewRights viewRights;
     SimpleDateFormat dfDate = new SimpleDateFormat(DMSConstants.DATE_PATTERN.YYYY_MM_DD, Locale.US);
-
     @BindView(R.id.expandableListView)
     RecyclerView mPatientListView;
     @BindView(R.id.swipeToRefresh)
     SwipeRefreshLayout swipeToRefresh;
-
     @BindView(R.id.openFilterRightDrawerFAB)
     FloatingActionButton mOpenFilterViewFAB;
     @BindView(R.id.toolbar)
@@ -140,17 +139,17 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
     ImageView imgNoRecordFound;
     @BindView(R.id.imgNoRecordFoundDrawer)
     ImageView imgNoRecordFoundDrawer;
-
     @BindView(R.id.imageFromDate)
     ImageView imageFromDate;
     @BindView(R.id.imageToDate)
     ImageView imageToDate;
-
     @BindView(R.id.imageAnnotation)
     ImageView imageAnnotation;
     //----------------
     @BindView(R.id.emptyListView)
     RelativeLayout emptyListView;
+    @BindView(R.id.myDialog)
+    RelativeLayout mFirstFileTypeProgressDialogLayout;
     Date mFromDate;
     String patientName;
     ArrayList mPatientLists;
@@ -159,7 +158,6 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
     private String mAdmissionDate;
     private String[] mArrayId;
     private Context mContext;
-    private RelativeLayout mFirstFileTypeProgressDialogLayout;
     private Custom_Spin_Adapter mCustomSpinAdapter;
     private DMSPatientsHelper mPatientsHelper;
     private TagAdapter mTagsAdapter;
@@ -172,17 +170,14 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
     private String TAG = this.getClass().getName();
     private boolean isCompareDialogCollapsed = true;
     private RelativeLayout mCompareDialogLayout;
-
     //    private TextView mFileTwoDischargeDate;
     private PatientRecycleViewListAdapter patientExpandableListAdapter;
-
     //---------
     private int currentPage = 0;
     private String[] mFileTypeStringArrayExtra;
     private PatientSearchAutoCompleteTextViewAdapter mPatientSearchAutoCompleteTextViewAdapter;
     private String priv = "";
     private boolean mIsLoadMorePatients;
-    public ViewRights viewRights;
     private String old = "";
 
     //---------
@@ -234,7 +229,7 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
             public void onRefresh() {
                 mAutoCompleteSearchBox.setText("");
                 currentPage = 0;
-               // doGetPatientList();
+                // doGetPatientList();
             }
         });
     }
@@ -306,8 +301,8 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                                mAutoCompleteSearchBox.getEditText().showDropDown();
-                                Log.i("SHOWDROPDOWN", "shown");
+                            mAutoCompleteSearchBox.getEditText().showDropDown();
+                            Log.i("SHOWDROPDOWN", "shown");
                         }
                     }, 200);
 
@@ -451,8 +446,9 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
 
         Log.e(TAG, "++++++++++++++++++++++");
 
-        mAnnotationTreeViewContainer.addView(CommonMethods.progressDialogView(R.layout.mydialog, this));
-        mFirstFileTypeProgressDialogLayout = mAnnotationTreeViewContainer.findViewById(R.id.progressBarContainerLayout);
+        mFirstFileTypeProgressDialogLayout.setVisibility(View.VISIBLE);
+        ImageView progressIcon = mFirstFileTypeProgressDialogLayout.findViewById(R.id.progressIcon);
+        CommonMethods.setImageUrl(mContext, DMSConstants.Images.IC_ACTIONBAR_LOGO, progressIcon, R.drawable.ic_launcher);
 
         mDrawer.addDrawerListener(new DrawerLayout.DrawerListener() {
             @Override
@@ -487,7 +483,7 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
                 viewRights = showSearchResultResponseModel.getSearchResultData().getViewRights();
                 mIsLoadMorePatients = showSearchResultResponseModel.getSearchResultData().isPaggination();
 
-           //     mAutoCompleteSearchBox.getEditText().dismissDropDown();
+                //     mAutoCompleteSearchBox.getEditText().dismissDropDown();
 
                 if (currentPage == 0)
                     patientExpandableListAdapter.removeAll();
@@ -736,7 +732,6 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
 
                 String fromDate = mFromDateEditText.getText().toString().trim();
                 String toDate = mToDateEditText.getText().toString().trim();
-                patientExpandableListAdapter.removeAll();
                 mSearchPatientNameEditText.dismissDropDown();
                 //*********adding field values in arrayList to generate tags in recycler view
                 //we are adding refrence id and file type value in FILE_TYPE parameter
@@ -744,17 +739,43 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
                 //--- FileType and enteredValue validation : START
                 String enteredUHIDValue = mUHIDEditText.getText().toString().trim();
                 Log.e("enteredUHIDValue", enteredUHIDValue);
+                boolean isValid = true;
                 if (mSelectedId.equalsIgnoreCase(DMSApplication.LABEL_UHID) && (enteredUHIDValue.length() == 0)) {
-                    CommonMethods.showSnack(mContext, mUHIDEditText, getString(R.string.error_enter_uhid));
-                    break;
+                    CommonMethods.showErrorDialog(mUHIDEditText.getHint().toString(), mContext, false, new ErrorDialogCallback() {
+                        @Override
+                        public void ok() {
+
+                        }
+
+                        @Override
+                        public void retry() {
+
+                        }
+                    });
+                    isValid = false;
                 } else if ((enteredUHIDValue.length() != 0) && (mSelectedId.equalsIgnoreCase(getString(R.string.Select)))) {
-                    CommonMethods.showSnack(mContext, mUHIDEditText, getString(R.string.Select) + " " + getString(R.string.ipd) + "/" + getString(R.string.opd) + "/" + DMSApplication.LABEL_UHID);
-                    break;
+//                    CommonMethods.showSnack(mContext, mUHIDEditText, getString(R.string.Select) + " " + getString(R.string.ipd) + "/" + getString(R.string.opd) + "/" + DMSApplication.LABEL_UHID);
+                    CommonMethods.showErrorDialog(mUHIDEditText.getHint().toString(), mContext, false, new ErrorDialogCallback() {
+                        @Override
+                        public void ok() {
+
+                        }
+
+                        @Override
+                        public void retry() {
+
+                        }
+                    });
+                    isValid = false;
                 } else {
                     if (!mSelectedId.equalsIgnoreCase(getString(R.string.Select))) {
                         mAddedTagsForFiltering.put(DMSConstants.PATIENT_LIST_PARAMS.FILE_TYPE, mSelectedId + ":" + enteredUHIDValue);
                     }
                 }
+
+                if (isValid)
+                    patientExpandableListAdapter.removeAll();
+                else break;
                 //--- FileType and enteredValue validation : END
 
                 if (!mAdmissionDate.equalsIgnoreCase(getResources().getString(R.string.Select))) {
@@ -866,7 +887,7 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
                 showSearchResultRequestModel.setCommonSearch("" + mAutoCompleteSearchBox.getText().toString().toUpperCase());
             }
         }
-        Log.e("pageno",""+currentPage);
+        Log.e("pageno", "" + currentPage);
         mPatientsHelper.doGetPatientList(showSearchResultRequestModel);
     }
 
@@ -922,13 +943,14 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
             }
         }
 
-     //   mAutoCompleteSearchBox.getEditText().dismissDropDown();
+        //   mAutoCompleteSearchBox.getEditText().dismissDropDown();
 
         mPatientsHelper.doGetPatientList(showSearchResultRequestModel);
     }
 
     private void createAnnotationTreeStructure(AnnotationListData annotationListData, boolean isExpanded) {
 
+        mFirstFileTypeProgressDialogLayout.setVisibility(View.GONE);
         mAnnotationTreeViewContainer.removeAllViews();
 
         TreeNode root = TreeNode.root();
