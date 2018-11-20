@@ -78,6 +78,7 @@
     <dimen name="level1">60dp</dimen>
     <dimen name="level2">120dp</dimen>
     <dimen name="level3">180dp</dimen>
+    <dimen name="dialog_width">250dp</dimen>
 
     <dimen name="check_left_padding">94dp</dimen>
     <dimen name="dp38">38dp</dimen>

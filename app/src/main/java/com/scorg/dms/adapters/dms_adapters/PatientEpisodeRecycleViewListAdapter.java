@@ -43,10 +43,11 @@ public class PatientEpisodeRecycleViewListAdapter extends RecyclerView.Adapter<P
     private String ipd;
     private String uhid;
     private ViewRights viewRights;
+    boolean isMainPrimary;
 
     public PatientEpisodeRecycleViewListAdapter(Context context, List<PatientEpisodeFileData> searchResult, ViewRights viewRights) {
         this._context = context;
-        addNewItems(searchResult);
+        addNewItems(searchResult, isMainPrimary);
         opd = _context.getString(R.string.opd);
         ipd = _context.getString(R.string.ipd);
         uhid = DMSApplication.LABEL_UHID;
@@ -73,7 +74,7 @@ public class PatientEpisodeRecycleViewListAdapter extends RecyclerView.Adapter<P
         buttonBackground.setColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
         buttonBackground.setCornerRadius(_context.getResources().getDimension(R.dimen.dp5));
         final PatientEpisodeFileData childElement = _originalListDataHeader.get(position);
-
+        childViewHolder.ipdValue.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         childViewHolder.ipdDischargeDateValue.setVisibility(View.GONE);
         childViewHolder.ipdDischargeDate.setVisibility(View.GONE);
         childViewHolder.ipd.setBackground(buttonBackground);
@@ -122,24 +123,24 @@ public class PatientEpisodeRecycleViewListAdapter extends RecyclerView.Adapter<P
         //--------------------
 
 
-       boolean isShowEye= viewHideEyeIconEpisode(viewRights,childElement.IsView(),childElement.IsPrimary(),childElement.getFileType());
+        boolean isShowEye = viewHideEyeIconEpisode(viewRights, childElement.IsView(), childElement.IsPrimary(), childElement.getFileType(), isMainPrimary);
 
         if (isShowEye) {
+            childViewHolder.imageViewRights.setVisibility(View.VISIBLE);
+            onPatientListener.showRaiseRequestBtn(true);
+        } else {
             childViewHolder.imageViewRights.setVisibility(View.GONE);
             childViewHolder.rowLay.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     onPatientListener.onEpisodeListItemClick(childElement);
-                   // onPatientListener.showRaiseRequestBtn(false);
+                    // onPatientListener.showRaiseRequestBtn(false);
                 }
             });
-        } else {
-            childViewHolder.imageViewRights.setVisibility(View.VISIBLE);
-            onPatientListener.showRaiseRequestBtn(true);
+
         }
 
     }
-
 
 
     @Override
@@ -195,33 +196,40 @@ public class PatientEpisodeRecycleViewListAdapter extends RecyclerView.Adapter<P
         this._originalListDataHeader.clear();
     }
 
-    public void addNewItems(List<PatientEpisodeFileData> searchResult) {
+    public void addNewItems(List<PatientEpisodeFileData> searchResult, boolean isMainPrimary) {
         this._originalListDataHeader.addAll(searchResult);
+        this.isMainPrimary = isMainPrimary;
     }
 
 
-    public boolean viewHideEyeIconEpisode(ViewRights viewRights, boolean isView, boolean isPrimary, String fileType){
+    public boolean viewHideEyeIconEpisode(ViewRights viewRights, boolean isView, boolean isPrimary, String fileType, boolean isMainPrimary) {
         if (viewRights.getIsAllFileAccessible()) {
-            return true;
+            return false;  //Icon do not show
         }
 
         if (viewRights.isViewAppointmentPatient()) {
-            return true;
+            return false; //Icon do not show
         }
 
         if (viewRights.getIsRequestForAll() && isView) {
-            return true;
+            return false; //Icon do not show
         }
 
-        if (viewRights.getAllowOnlyPrimaryFiles() && isPrimary ){
-            return true;
+        if ((viewRights.getAllowOnlyPrimaryFiles() && isPrimary) || (viewRights.getAllowOnlyPrimaryFiles() && isView)) {
+            return false; //Icon do not show
         }
 
-        if (viewRights.getIsOneFileIsPrimary() && viewRights.getPrimaryFileTypeSetting().contains(fileType)) {
-            return true;
+        if (isMainPrimary) {
+
+            if (viewRights.getIsOneFileIsPrimary() && (viewRights.getPrimaryFileTypeSetting().contains(fileType)) && !isPrimary) {
+                return true; // Icon will show
+            }else {
+                return false;//Icon do not show
+            }
+
         }
 
-        return false;
+        return true; /// // Icon will show
     }
 
 }

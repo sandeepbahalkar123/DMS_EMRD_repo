@@ -37,6 +37,11 @@ public class ShowSearchResultRequestModel implements CustomResponse {
     @Expose
     private String commonSearch = "";
 
+    @SerializedName("episodePagNo")
+    @Expose
+    private String episodePagNo = "";
+
+
     private String[] DocTypeId = new String[0];
 
     public String getPatientId() {
@@ -134,6 +139,14 @@ public class ShowSearchResultRequestModel implements CustomResponse {
 
     public void setCommonSearch(String commonSearch) {
         this.commonSearch = commonSearch;
+    }
+
+    public String getEpisodePagNo() {
+        return episodePagNo;
+    }
+
+    public void setEpisodePagNo(String episodePagNo) {
+        this.episodePagNo = episodePagNo;
     }
 
     @Override

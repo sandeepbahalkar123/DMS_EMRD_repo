@@ -268,7 +268,7 @@ public class HomePageActivity extends BaseActivity implements HelperResponse, Da
 
         LinearLayout tabViewAll = (LinearLayout) LayoutInflater.from(this).inflate(R.layout.custom_tab, null);
         TextView textViewAll = tabViewAll.findViewById(R.id.textTab);
-        textViewAll.setText(getString(R.string.all_appointments));
+        textViewAll.setText(getString(R.string.all));
         textViewAll.setTextColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
         tabViewAll.setBackground(buttonBackgroundViewAllUnSelected);
         tabsActiveVieAll.getTabAt(1).setCustomView(tabViewAll);
@@ -703,7 +703,7 @@ public class HomePageActivity extends BaseActivity implements HelperResponse, Da
         ArrayList<AppointmentPatientData> mAppointListForBookAndConfirm = new ArrayList<>();
         for (int i = 0; i < mAppointmentPatientData.size(); i++) {
             String appointmentStatus = mAppointmentPatientData.get(i).getAppointmentStatus();
-            if (appointmentStatus.equalsIgnoreCase(DMSConstants.APPOINTMENT_STATUS.BOOKED_STATUS) /*|| appointmentStatus.equalsIgnoreCase(DMSConstants.APPOINTMENT_STATUS.CONFIRM_STATUS)*/) {
+            if (!appointmentStatus.contains(DMSConstants.APPOINTMENT_STATUS.COMPLETED_STATUS) && !appointmentStatus.contains(DMSConstants.APPOINTMENT_STATUS.CANCEL_STATUS)) {
                 mAppointListForBookAndConfirm.add(mAppointmentPatientData.get(i));
             }
         }

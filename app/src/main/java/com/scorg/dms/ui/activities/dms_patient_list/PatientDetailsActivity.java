@@ -99,6 +99,7 @@ public class PatientDetailsActivity extends BaseActivity implements HelperRespon
     private boolean mIsLoadMoreEpisode;
     public ViewRights mviewRights;
     EpisodeResponseModel showSearchResultResponseModel;
+    public boolean isMainPrimary =false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,7 +128,7 @@ public class PatientDetailsActivity extends BaseActivity implements HelperRespon
         buttonBackgroundBtnEpisodeRaiseRequest.setCornerRadius(mContext.getResources().getDimension(R.dimen.dp5));
 
         imgNoRecordFound.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
-        mAutoCompleteSearchBox.setHint("Search " + DMSApplication.LABEL_REF_ID);
+        mAutoCompleteSearchBox.setHint(getString(R.string.search_label) + DMSApplication.LABEL_REF_ID);
         btnEpisodeRaiseRequest.setBackground(buttonBackgroundBtnEpisodeRaiseRequest);
         //--------------
         labelUHID.setText(DMSApplication.LABEL_UHID);
@@ -155,7 +156,7 @@ public class PatientDetailsActivity extends BaseActivity implements HelperRespon
         mPatientEpisodeRecycleViewListAdapter = new PatientEpisodeRecycleViewListAdapter(this, new ArrayList<PatientEpisodeFileData>(), mviewRights);
         listOfOPDTypes.setAdapter(mPatientEpisodeRecycleViewListAdapter);
         //--------
-        doGetPatientEpisode("", 0);
+        doGetPatientEpisode("", 1);
         //----------
         LinearLayoutManager linearlayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         listOfOPDTypes.setLayoutManager(linearlayoutManager);
@@ -163,9 +164,8 @@ public class PatientDetailsActivity extends BaseActivity implements HelperRespon
         listOfOPDTypes.addOnScrollListener(new EndlessRecyclerViewScrollListener(linearlayoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
-
                 if (mIsLoadMoreEpisode) {
-                    doGetPatientEpisode(mAutoCompleteSearchBox.getText().toString().trim(), page);
+                    doGetPatientEpisode(mAutoCompleteSearchBox.getText().toString().trim(), page+1);
                 }
 
             }
@@ -204,7 +204,7 @@ public class PatientDetailsActivity extends BaseActivity implements HelperRespon
                     // if (mPatientEpisodeRecycleViewListAdapter.getItemCount() == 0)
                     if (mAutoCompleteSearchBox.getEditText().length() == 0){
                         mPatientEpisodeRecycleViewListAdapter.removeAll();
-                        doGetPatientEpisode("", 0);
+                        doGetPatientEpisode("", 1);
                     }
 
                 }
@@ -293,7 +293,7 @@ public class PatientDetailsActivity extends BaseActivity implements HelperRespon
         ShowSearchResultRequestModel showSearchResultRequestModel = new ShowSearchResultRequestModel();
         showSearchResultRequestModel.setPatientId(mReceivedPatientData.getPatientId());
         showSearchResultRequestModel.setReferenceId(refId.toUpperCase());
-        showSearchResultRequestModel.setPageNumber("" + page);
+        showSearchResultRequestModel.setEpisodePagNo("" + page);
         mPatientsHelper.doGetPatientEpisodeList(showSearchResultRequestModel);
     }
 
@@ -308,10 +308,12 @@ public class PatientDetailsActivity extends BaseActivity implements HelperRespon
                 mIsLoadMoreEpisode = showSearchResultResponseModel.getEpisodeDataList().isPaggination();
                 mAutoCompleteSearchBox.getEditText().dismissDropDown();
                 if (episodeDataList != null) {
+                    isMainPrimary =episodeDataList.isMainPrimary();
+
                     List<PatientEpisodeFileData> patientEpisodeFileDataList = episodeDataList.getPatientEpisodeFileDataList();
 
                     if (patientEpisodeFileDataList.size() != 0) {
-                        mPatientEpisodeRecycleViewListAdapter.addNewItems(patientEpisodeFileDataList);
+                        mPatientEpisodeRecycleViewListAdapter.addNewItems(patientEpisodeFileDataList,isMainPrimary);
                         mPatientEpisodeRecycleViewListAdapter.notifyDataSetChanged();
                         emptyListView.setVisibility(View.GONE);
                     } else {
@@ -408,7 +410,7 @@ public class PatientDetailsActivity extends BaseActivity implements HelperRespon
                 @Override
                 public void retry() {
                     if (mPatientEpisodeRecycleViewListAdapter.getItemCount() == 0)
-                        doGetPatientEpisode("", 0);
+                        doGetPatientEpisode("", 1);
                 }
             });
 
@@ -468,7 +470,7 @@ public class PatientDetailsActivity extends BaseActivity implements HelperRespon
     @Override
     public void onSearchAutoCompleteItemClicked(PatientFilter patientFilter) {
         mPatientEpisodeRecycleViewListAdapter.removeAll();
-        doGetPatientEpisode(patientFilter.getSearchValue(), 0);
+        doGetPatientEpisode(patientFilter.getSearchValue(), 1);
         mAutoCompleteSearchBox.getEditText().dismissDropDown();
         mAutoCompleteSearchBox.getEditText().setSelection(mAutoCompleteSearchBox.getText().length());
 
@@ -477,6 +479,6 @@ public class PatientDetailsActivity extends BaseActivity implements HelperRespon
     @Override
     public void onClearButtonClicked() {
         mPatientEpisodeRecycleViewListAdapter.removeAll();
-        doGetPatientEpisode("", 0);
+        doGetPatientEpisode("", 1);
     }
 }

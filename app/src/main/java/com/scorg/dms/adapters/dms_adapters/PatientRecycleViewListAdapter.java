@@ -40,20 +40,11 @@ public class PatientRecycleViewListAdapter extends RecyclerView.Adapter<PatientR
 
     private List<SearchResult> _originalListDataHeader = new ArrayList<>(); // header titles
 
-    // @BindString(R.string.opd)
-    private String opd;
-    // @BindString(R.string.ipd)
-    private String ipd;
-    private String uhid;
     private List<SearchResult> searchResultForPatientDetails = new ArrayList<>();
 
     public PatientRecycleViewListAdapter(Context context, List<SearchResult> searchResult) {
         this._context = context;
         addNewItems(searchResult);
-        opd = _context.getString(R.string.opd);
-        ipd = _context.getString(R.string.ipd);
-        uhid = _context.getString(R.string.uhid);
-
         if (context instanceof OnPatientListener) {
             onPatientListener = (OnPatientListener) context;
         } else CommonMethods.Log(TAG, "Implement OnPatientListener in Activity");
@@ -69,13 +60,6 @@ public class PatientRecycleViewListAdapter extends RecyclerView.Adapter<PatientR
     @SuppressLint("CheckResult")
     @Override
     public void onBindViewHolder(GroupViewHolder groupViewHolder, final int position) {
-        GradientDrawable buttonBackground = new GradientDrawable();
-        buttonBackground.setShape(GradientDrawable.RECTANGLE);
-        buttonBackground.setColor(Color.WHITE);
-        buttonBackground.setCornerRadius(_context.getResources().getDimension(R.dimen.dp8));
-        buttonBackground.setStroke(_context.getResources().getDimensionPixelSize(R.dimen.dp1), Color.parseColor(DMSApplication.COLOR_PRIMARY));
-        groupViewHolder.cardView.setBackground(buttonBackground);
-
         GradientDrawable episodButtonBackground = new GradientDrawable();
         episodButtonBackground.setShape(GradientDrawable.RECTANGLE);
         episodButtonBackground.setColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
@@ -87,8 +71,7 @@ public class PatientRecycleViewListAdapter extends RecyclerView.Adapter<PatientR
         groupViewHolder.patientId.setTextColor(Color.parseColor(DMSApplication.COLOR_APPOINTMENT_TEXT));
         groupViewHolder.bluelineImageView.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         groupViewHolder.userName.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
-
-        groupViewHolder.userName.setText(groupHeader.getPatientName());
+        groupViewHolder.userName.setText(groupHeader.getPatientName().toUpperCase());
         groupViewHolder.patientId.setText(groupHeader.getPatientId());
         groupViewHolder.uhid.setText(DMSApplication.LABEL_UHID + " ");
         groupViewHolder.userGender.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
@@ -175,8 +158,8 @@ public class PatientRecycleViewListAdapter extends RecyclerView.Adapter<PatientR
     }
 
     static class GroupViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.cardView)
-        LinearLayout cardView;
+//        @BindView(R.id.cardView)
+//        LinearLayout cardView;
         @BindView(R.id.mainContentLayout)
         LinearLayout mainContentLayout;
         @BindView(R.id.userName)

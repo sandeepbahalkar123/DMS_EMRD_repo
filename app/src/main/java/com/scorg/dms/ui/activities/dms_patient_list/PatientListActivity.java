@@ -234,7 +234,7 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
             public void onRefresh() {
                 mAutoCompleteSearchBox.setText("");
                 currentPage = 0;
-                doGetPatientList();
+               // doGetPatientList();
             }
         });
     }

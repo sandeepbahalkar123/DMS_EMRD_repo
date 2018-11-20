@@ -1,5 +1,9 @@
 package com.scorg.dms.adapters.dms_adapters;
 
+import android.annotation.SuppressLint;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +14,7 @@ import android.widget.TextView;
 
 import com.scorg.dms.R;
 import com.scorg.dms.model.dms_models.responsemodel.episode_list.FileTypeList;
+import com.scorg.dms.singleton.DMSApplication;
 
 import java.util.ArrayList;
 
@@ -21,14 +26,29 @@ public class RaiseRequestFileNameAdapter extends RecyclerView.Adapter<RaiseReque
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView textFileName;
         public LinearLayout layoutFileType;
-        public CheckBox checkBox;
+        public AppCompatCheckBox checkBox;
 
+        @SuppressLint("RestrictedApi")
         public MyViewHolder(View view) {
             super(view);
             textFileName = (TextView) view.findViewById(R.id.textFileName);
             layoutFileType = (LinearLayout) view.findViewById(R.id.layoutFileType);
-            checkBox = (CheckBox) view.findViewById(R.id.checkboxFile);
-            // genre = (TextView) view.findViewById(R.id.genre);
+            checkBox = (AppCompatCheckBox) view.findViewById(R.id.checkboxFile);
+            int[][] states = new int[][]{
+                    new int[]{android.R.attr.state_enabled}, // enabled
+                    new int[]{-android.R.attr.state_enabled}, // disabled
+                    new int[]{-android.R.attr.state_checked}, // unchecked
+                    new int[]{android.R.attr.state_pressed} // pressed
+            };
+
+            int[] colors = new int[]{
+                    Color.parseColor(DMSApplication.COLOR_PRIMARY),
+                    Color.parseColor(DMSApplication.COLOR_PRIMARY),
+                    Color.parseColor(DMSApplication.COLOR_PRIMARY),
+                    Color.parseColor(DMSApplication.COLOR_PRIMARY)
+            };
+            ColorStateList myList = new ColorStateList(states, colors);
+            checkBox.setSupportButtonTintList(myList);
 
         }
     }

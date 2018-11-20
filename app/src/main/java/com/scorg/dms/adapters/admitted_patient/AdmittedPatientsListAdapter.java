@@ -13,6 +13,7 @@ import android.text.Html;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,7 +49,6 @@ import static com.scorg.dms.util.CommonMethods.toCamelCase;
 public class AdmittedPatientsListAdapter
         extends RecyclerView.Adapter<AdmittedPatientsListAdapter.MyViewHolder> implements Filterable {
     private static final String TAG = "AdmittedPatientsListAdapter";
-    //  private final GradientDrawable buttonBackground;
     private OnItemClickListener onItemClickListener;
     private Context mContext;
     private ArrayList<AdmittedPatientData> admittedPatientDataList;
@@ -67,10 +67,7 @@ public class AdmittedPatientsListAdapter
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
 
-        private FrameLayout front_layout;
-
-        private RelativeLayout swipe_layout;
-
+        private LinearLayout front_layout;
         private TextView appointmentTime;
         private ImageView bluelineImageView;
         private TextView patientIdTextView;
@@ -85,7 +82,6 @@ public class AdmittedPatientsListAdapter
 
 
         private LinearLayout idAndDetailsLayout;
-
         private LinearLayout layoutAppointmentEpisode;
         private View viewLine1;
         private View separatorView;
@@ -95,8 +91,7 @@ public class AdmittedPatientsListAdapter
         MyViewHolder(View convertView) {
             super(convertView);
             idAndDetailsLayout = (LinearLayout) convertView.findViewById(R.id.idAndDetailsLayout);
-            front_layout = (FrameLayout) convertView.findViewById(R.id.front_layout);
-            swipe_layout = (RelativeLayout) convertView.findViewById(R.id.swipe_layout);
+            front_layout = (LinearLayout) convertView.findViewById(R.id.front_layout);
             appointmentTime = (TextView) convertView.findViewById(R.id.appointmentTime);
             patientIdTextView = (TextView) convertView.findViewById(R.id.patientIdTextView);
             patientImageView = (CircularImageView) convertView.findViewById(R.id.patientImageView);
@@ -139,12 +134,7 @@ public class AdmittedPatientsListAdapter
 
     @SuppressLint("CheckResult")
     private void bindGroupItem(final AdmittedPatientData admittedPatientDataObject, final AdmittedPatientsListAdapter.MyViewHolder holder) {
-        GradientDrawable cardBackground = new GradientDrawable();
-        cardBackground.setShape(GradientDrawable.RECTANGLE);
-        cardBackground.setColor(Color.WHITE);
-        cardBackground.setCornerRadius(mContext.getResources().getDimension(R.dimen.dp8));
-        cardBackground.setStroke(mContext.getResources().getDimensionPixelSize(R.dimen.dp1), Color.parseColor(DMSApplication.COLOR_PRIMARY));
-        holder.swipe_layout.setBackground(cardBackground);
+
         holder.bluelineImageView.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         holder.callIcon.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         //   holder.appointmentTime.setBackground(buttonBackground);
@@ -159,11 +149,14 @@ public class AdmittedPatientsListAdapter
 
 
         String salutation = admittedPatientDataObject.getSalutation();
-        String patientName = toCamelCase(admittedPatientDataObject.getPatientName());
+        String patientName = admittedPatientDataObject.getPatientName();
+
 
         if (salutation != null) {
             patientName = salutation + " " + patientName;
         }
+
+
         holder.textBedNo.setText(admittedPatientDataObject.getBedNo());
         //---- START: Setting of hospitalID or referecne ID, reference is IS high priority than hospitalID.-----
         String dataToShowInPatientID = String.valueOf(admittedPatientDataObject.getPatientId());
@@ -238,7 +231,7 @@ public class AdmittedPatientsListAdapter
 
 
             holder.appointmentTime.setVisibility(View.VISIBLE);
-            holder.appointmentTime.setText(dateToDisplay +" "+CommonMethods.formatDateTime(appDate, DMSConstants.DATE_PATTERN.hh_mm_a, DMSConstants.DATE_PATTERN.UTC_PATTERN, DMSConstants.TIME).toLowerCase());
+            holder.appointmentTime.setText(dateToDisplay +","+CommonMethods.formatDateTime(appDate, DMSConstants.DATE_PATTERN.hh_mm_a, DMSConstants.DATE_PATTERN.UTC_PATTERN, DMSConstants.TIME).toLowerCase());
         }
         //-------
         TextDrawable textDrawable = CommonMethods.getTextDrawable(mContext, admittedPatientDataObject.getPatientName());
