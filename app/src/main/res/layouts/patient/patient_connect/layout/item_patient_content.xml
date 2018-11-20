@@ -15,8 +15,8 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dp2"
         android:layout_marginRight="@dimen/dp2"
-        android:paddingStart="@dimen/dp4"
-        android:paddingEnd="@dimen/dp4"
+        android:paddingStart="@dimen/dp2"
+        android:paddingEnd="@dimen/dp2"
         android:orientation="vertical">
 
         <LinearLayout
@@ -25,9 +25,9 @@
             android:baselineAligned="false"
             android:orientation="horizontal"
             android:padding="@dimen/dp5"
-            android:paddingStart="@dimen/dp10"
+            android:paddingStart="@dimen/dp5"
             android:paddingTop="@dimen/dp5"
-            android:paddingEnd="@dimen/dp10">
+            android:paddingEnd="@dimen/dp5">
 
             <TextView
                 android:id="@+id/ipd"
@@ -72,7 +72,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingLeft="@dimen/dp10">
+            android:paddingLeft="@dimen/dp5">
 
             <TextView
                 android:id="@+id/labelDoctorName"
@@ -105,7 +105,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/dp5"
                 android:orientation="vertical"
-                android:paddingLeft="@dimen/dp10">
+                android:paddingLeft="@dimen/dp5">
 
                 <LinearLayout
                     android:layout_width="match_parent"

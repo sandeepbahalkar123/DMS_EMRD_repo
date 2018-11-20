@@ -217,7 +217,7 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
         imageAnnotation.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         mClearSearchAnnotationButton.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         imgNoRecordFound.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
-        mAutoCompleteSearchBox.setHint(getString(R.string.search_label) + DMSApplication.LABEL_UHID + getString(R.string.coma_space_seperator) + DMSApplication.LABEL_REF_ID + getString(R.string.coma_space_seperator) + getString(R.string.label_patient_name));
+        mAutoCompleteSearchBox.setHint(getString(R.string.search_label) + DMSApplication.LABEL_UHID + getString(R.string.coma_space_seperator) + DMSApplication.LABEL_REF_ID + getString(R.string.label_patient_name));
         mPatientListView.addOnScrollListener(new EndlessRecyclerViewScrollListener(linearlayoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
