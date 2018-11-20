@@ -13,7 +13,6 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -27,12 +26,14 @@ import com.scorg.dms.model.dms_models.responsemodel.filetreeresponsemodel.LstDoc
 import com.scorg.dms.model.dms_models.responsemodel.filetreeresponsemodel.LstDocType;
 import com.scorg.dms.model.dms_models.responsemodel.filetreeresponsemodel.LstHideDocType;
 import com.scorg.dms.singleton.DMSApplication;
+import com.scorg.dms.util.CommonMethods;
 import com.unnamed.b.atv.model.TreeNode;
 
 /**
  *
  */
 public class ArrowExpandSelectableHeaderHolder extends TreeNode.BaseNodeViewHolder<ArrowExpandIconTreeItemHolder.IconTreeItem> {
+    private final int width;
     private int nodeValueColor;
     private boolean isTreeLabelBold;
     private int leftPadding;
@@ -60,6 +61,7 @@ public class ArrowExpandSelectableHeaderHolder extends TreeNode.BaseNodeViewHold
         this.confidentialState = confidentialState;
         this.isChecked = isChecked;
         nodeValueColor = ContextCompat.getColor(context, R.color.black);
+        width = (int) (context.getResources().getDisplayMetrics().widthPixels / (CommonMethods.isTablet(context) ? 1.6 : 1.2));
 
         if (context instanceof ArrowExpandSelectableHeaderHolderLockIconClickListener) {
             lockIconClickListener = (ArrowExpandSelectableHeaderHolderLockIconClickListener) context;
@@ -72,7 +74,6 @@ public class ArrowExpandSelectableHeaderHolder extends TreeNode.BaseNodeViewHold
         final LayoutInflater inflater = LayoutInflater.from(context);
         final View view = inflater.inflate(R.layout.treeview_arrow_expandable_header, null, false);
         nodeSelector = view.findViewById(R.id.node_selector);
-
 
         int[][] states = new int[][]{
                 new int[]{android.R.attr.state_enabled}, // enabled
@@ -96,6 +97,10 @@ public class ArrowExpandSelectableHeaderHolder extends TreeNode.BaseNodeViewHold
         arrowView = view.findViewById(R.id.icon);
         arrowView.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         mainContentLayout = view.findViewById(R.id.mainContentLayout);
+        RelativeLayout mainContent = view.findViewById(R.id.mainLayout);
+        mainContent.setMinimumWidth(width);
+//        mainContent.getLayoutParams().width = width;
+//        mainContent.requestLayout();
 
         mainContentLayout.setPadding(leftPadding, 0, 0, 0);
 

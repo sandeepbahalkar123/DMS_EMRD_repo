@@ -306,10 +306,8 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
-//                            if (!old.equals(enteredText)) {
                                 mAutoCompleteSearchBox.getEditText().showDropDown();
                                 Log.i("SHOWDROPDOWN", "shown");
-//                            }
                         }
                     }, 200);
 
@@ -447,6 +445,10 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
         ViewGroup.LayoutParams layoutParams = mRightNavigationView.getLayoutParams();
         layoutParams.width = width;
         mRightNavigationView.setLayoutParams(layoutParams);
+
+//        mAnnotationTreeViewContainer.getLayoutParams().width = width;
+//        mAnnotationTreeViewContainer.requestLayout();
+
         Log.e(TAG, "++++++++++++++++++++++");
 
         mAnnotationTreeViewContainer.addView(CommonMethods.loadView(R.layout.mydialog, this));
