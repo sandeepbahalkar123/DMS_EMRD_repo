@@ -833,6 +833,40 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
             //          //
             //////////////
 
+            // Hide Type ----------------------------------------------------------
+
+            //---- For list lstDateFolderType loop
+            List<LstHideDocType> lstHideDocTypes = archiveDatumObject.getLstHideDocTypes();
+
+            if (!CommonMethods.isNullOrEmpty(lstHideDocTypes)) {
+
+                archiveCount = archiveCount + lstHideDocTypes.size();
+
+                for (int l = 0; l < lstHideDocTypes.size(); l++) {
+                    LstHideDocType lstHideDocType = lstHideDocTypes.get(l);
+
+                    //-------NODE LstDateFolderType--------------
+                    // Label(pageCount)|id
+                    confidentialState = lstHideDocType.getConfidentialState();
+                    dataToShow = lstHideDocType.getTypeName() + " (" + lstHideDocType.getPageCount() + ")" + "|NA";
+                    ArrowExpandSelectableHeaderHolder lstDateFolderTypeSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, (l == 0), lstDocTypeChildLeftPadding, false, confidentialState, false);
+                    lstDateFolderTypeSelectableHeaderHolder.setOnlyOneNodeExpanded(false);
+
+                    lstDateFolderTypeSelectableHeaderHolder.setNodeValueColor(textColor);
+
+                    //---- To bold clicked text in tree
+                    // if (lstDateFolderType.getDateFolderType().equalsIgnoreCase(mPreviousClickedTreeElement.get(i)))
+                    if (lstHideDocType.getTypeName().equalsIgnoreCase(mPreviousClickedTreeElement.get(lstHideDocType.getRecordDetailId())))
+                        lstDateFolderTypeSelectableHeaderHolder.setTreeLabelBold(true);
+
+                    TreeNode lstDateFolderTypeObjectFolder = new TreeNode(new ArrowExpandIconTreeItemHolder.IconTreeItem(R.string.ic_shopping_cart, dataToShow, lstHideDocType, i))
+                            .setViewHolder(lstDateFolderTypeSelectableHeaderHolder);
+                    //---
+
+                    archiveDatumObjectFolder.addChildren(lstDateFolderTypeObjectFolder);
+                }
+            }
+
             // My Order ----------------------------------------------------------
 
             //---- For list lstDateFolderType loop

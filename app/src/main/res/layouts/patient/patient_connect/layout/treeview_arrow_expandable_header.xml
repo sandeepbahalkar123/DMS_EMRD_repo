@@ -15,7 +15,9 @@
         <RelativeLayout
             android:id="@+id/mainContentLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/dp4"
+            android:paddingEnd="@dimen/dp4">
 
             <android.support.v7.widget.AppCompatCheckBox
                 android:id="@+id/node_selector"
@@ -39,25 +41,31 @@
                 android:padding="@dimen/dp6"
                 android:src="@drawable/ic_tree_close_folder" />
 
-            <TextView
-                android:id="@+id/node_value"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dp5"
-                android:layout_marginEnd="@dimen/dp5"
-                android:layout_marginRight="@dimen/dp5"
                 android:layout_toStartOf="@+id/icon_lock"
                 android:layout_toLeftOf="@+id/icon_lock"
                 android:layout_toEndOf="@+id/icon"
-                android:layout_toRightOf="@+id/icon"
-                android:fontFamily="@font/roboto_medium"
-                android:gravity="center_vertical"
-                android:minHeight="@dimen/dp40"
-                android:paddingStart="@dimen/dp4"
-                android:paddingEnd="@dimen/dp4"
-                android:textColor="@color/black"
-                android:textSize="@dimen/sp14"
-                tools:text="Discharge Summary (Hand written format)" />
+                android:layout_toRightOf="@+id/icon">
+
+                <TextView
+                    android:id="@+id/node_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp5"
+                    android:layout_marginEnd="@dimen/dp5"
+                    android:layout_marginRight="@dimen/dp5"
+                    android:fontFamily="@font/roboto_medium"
+                    android:gravity="center_vertical"
+                    android:minHeight="@dimen/dp40"
+                    android:paddingStart="@dimen/dp4"
+                    android:paddingEnd="@dimen/dp4"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/sp14"
+                    tools:text="Discharge Summary (Hand written format)" />
+
+            </RelativeLayout>
 
             <android.support.v7.widget.AppCompatImageView
                 android:id="@+id/icon_lock"
@@ -66,8 +74,6 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:layout_marginEnd="@dimen/dp5"
-                android:layout_marginRight="@dimen/dp5"
                 android:padding="@dimen/dp5"
                 android:visibility="gone"
                 app:srcCompat="@drawable/ic_lock"
