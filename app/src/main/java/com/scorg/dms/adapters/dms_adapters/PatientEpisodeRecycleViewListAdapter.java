@@ -125,17 +125,18 @@ public class PatientEpisodeRecycleViewListAdapter extends RecyclerView.Adapter<P
        boolean isShowEye= viewHideEyeIconEpisode(viewRights,childElement.IsView(),childElement.IsPrimary(),childElement.getFileType());
 
         if (isShowEye) {
+            childViewHolder.imageViewRights.setVisibility(View.VISIBLE);
+            onPatientListener.showRaiseRequestBtn(true);
+        } else {
             childViewHolder.imageViewRights.setVisibility(View.GONE);
             childViewHolder.rowLay.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     onPatientListener.onEpisodeListItemClick(childElement);
-                   // onPatientListener.showRaiseRequestBtn(false);
+                    // onPatientListener.showRaiseRequestBtn(false);
                 }
             });
-        } else {
-            childViewHolder.imageViewRights.setVisibility(View.VISIBLE);
-            onPatientListener.showRaiseRequestBtn(true);
+
         }
 
     }
@@ -202,26 +203,26 @@ public class PatientEpisodeRecycleViewListAdapter extends RecyclerView.Adapter<P
 
     public boolean viewHideEyeIconEpisode(ViewRights viewRights, boolean isView, boolean isPrimary, String fileType){
         if (viewRights.getIsAllFileAccessible()) {
-            return true;
+            return false;  //Icon do not show
         }
 
         if (viewRights.isViewAppointmentPatient()) {
-            return true;
+            return false; //Icon do not show
         }
 
         if (viewRights.getIsRequestForAll() && isView) {
-            return true;
+            return false; //Icon do not show
         }
 
-        if (viewRights.getAllowOnlyPrimaryFiles() && isPrimary ){
-            return true;
+        if ( (viewRights.getAllowOnlyPrimaryFiles() && isPrimary) || (viewRights.getAllowOnlyPrimaryFiles() && isView) ){
+            return false; //Icon do not show
         }
 
-        if (viewRights.getIsOneFileIsPrimary() && viewRights.getPrimaryFileTypeSetting().contains(fileType)) {
-            return true;
+        if (viewRights.getIsOneFileIsPrimary() && !(viewRights.getPrimaryFileTypeSetting().contains(fileType))) {
+            return false; //Icon do not show
         }
 
-        return false;
+        return true; /// // Icon will show
     }
 
 }

@@ -137,7 +137,7 @@ public class LoginActivity extends BaseActivity implements HelperResponse {
 
     @Override
     public void onServerError(String mOldDataTag, String serverErrorMessage) {
-        CommonMethods.showErrorDialog(serverErrorMessage,this,false, new ErrorDialogCallback() {
+        CommonMethods.showErrorDialog(getString(R.string.invalid_username_password),this,false, new ErrorDialogCallback() {
             @Override
             public void ok() {
             }

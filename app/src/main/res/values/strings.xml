@@ -146,7 +146,7 @@
     <string name="records">Records</string>
 
     <string name="support_bottom_first_line">DOCUPHI is a unique product of</string>
-    <string name="invalid_username_password"> Invalid username/password</string>
+    <string name="invalid_username_password">Invalid Email address or Password.</string>
     <string name="pdf">PDF</string>
     <string name="patient_list_search_hint">Search UHID,Ref id,Patient name</string>
     <string name="patient_details_search_hint">Search Ref id</string>
