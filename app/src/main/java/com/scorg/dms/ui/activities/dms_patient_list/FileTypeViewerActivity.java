@@ -638,7 +638,7 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
 
     @Override
     public void onSuccess(String mOldDataTag, CustomResponse customResponse) {
-        if (mOldDataTag.equalsIgnoreCase("" + DMSConstants.TASK_GET_ARCHIVED_LIST)) {
+        if (mOldDataTag.equalsIgnoreCase(DMSConstants.TASK_GET_ARCHIVED_LIST)) {
             hideProgressDialog();
             FileTreeResponseModel fileTreeResponseModel = (FileTreeResponseModel) customResponse;
             if (!fileTreeResponseModel.getCommon().getStatusCode().equals(DMSConstants.SUCCESS)) {
@@ -663,6 +663,7 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
                         mLoadPreviousArchiveDataList.setVisibility(View.INVISIBLE);
                 } else {
                     mLoadPreviousArchiveDataList.setVisibility(View.VISIBLE);
+                    mLoadNextArchiveDataList.setVisibility(View.INVISIBLE);
                 }
 
 
