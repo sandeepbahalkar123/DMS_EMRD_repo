@@ -42,6 +42,10 @@ public class EpisodeResponseModel implements CustomResponse, Serializable {
         @Expose
         private boolean ispaggination;
 
+        @SerializedName("isMainPrimary")
+        @Expose
+        private boolean isMainPrimary;
+
 
         public List<PatientEpisodeFileData> getPatientEpisodeFileDataList() {
             return patientEpisodeFileDataList;
@@ -66,6 +70,14 @@ public class EpisodeResponseModel implements CustomResponse, Serializable {
 
         public void setFileTypeList(ArrayList<FileTypeList> fileTypeList) {
             this.fileTypeList = fileTypeList;
+        }
+
+        public boolean isMainPrimary() {
+            return isMainPrimary;
+        }
+
+        public void setMainPrimary(boolean mainPrimary) {
+            isMainPrimary = mainPrimary;
         }
     }
 

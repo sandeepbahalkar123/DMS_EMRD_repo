@@ -241,6 +241,9 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
     @BindView(R.id.footerLayout)
     LinearLayout footerLayout;
 
+    @BindView(R.id.layoutDrawerAddress)
+    LinearLayout layoutDrawerAddress;
+
     DrawerLayout mDrawer;
     //---------
     ArrayList<PatientEpisodeFileData> mSelectedFileTypeDataToCompare;
@@ -275,6 +278,7 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
 
     private CustomProgressDialog customProgressDialog;
     private boolean isTreeCreated;
+    private boolean isBackPress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -352,7 +356,7 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
 
         if (respectiveRecordID != null) {
             mArchivedPreferenceSpinnerListenerForEpisode();
-        }else {
+        } else {
             mArchivedPreferenceSpinnerListener();
         }
         if (CommonMethods.isTablet(this)) {
@@ -499,7 +503,10 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
         mPatientId.setText(respectivePatientID);
         mDoctorNameTwo.setText(doctorName);
         mDoctorNameOne.setText(doctorName);
-        mPatientAddress.setText(patientAddress);
+        if (patientAddress.isEmpty())
+            layoutDrawerAddress.setVisibility(View.GONE);
+        else
+            mPatientAddress.setText(patientAddress);
         labelDrawerUDID.setText(DMSApplication.LABEL_UHID);
     }
 
@@ -514,26 +521,32 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
                 break;
             case R.id.loadPreviousArchiveDataList:
                 archiveCount = 0;
-                getArchivedPageNumber = getArchivedPageNumber - 1;
-                currentCount = currentCount - archiveApiCount;
-
-                if (getArchivedPageNumber == 0) {
+                isBackPress = true;
+                if (getArchivedPageNumber == 1) {
+                    mLoadPreviousArchiveDataList.setVisibility(View.INVISIBLE);
                     CommonMethods.showToast(this, "No Previous data to load");
                 } else {
+                    getArchivedPageNumber = getArchivedPageNumber - 1;
+                    currentCount = currentCount - archiveApiCount;
                     mFileTreeResponseData = null;
                     doCreateTreeStructure();
+                    mLoadNextArchiveDataList.setVisibility(View.VISIBLE);
                 }
                 break;
             case R.id.loadNextArchiveDataList:
                 archiveCount = 0;
+                isBackPress = false;
                 if (mFileTreeResponseData != null) {
                     if (!mFileTreeResponseData.isPagination()) {
                         CommonMethods.showToast(this, "No Next data to load");
+                        mLoadNextArchiveDataList.setVisibility(View.INVISIBLE);
+                        mLoadPreviousArchiveDataList.setVisibility(View.VISIBLE);
                     } else {
                         currentCount = currentCount + archiveApiCount;
-                        getArchivedPageNumber = getArchivedPageNumber + 1;
                         mFileTreeResponseData = null;
+                        getArchivedPageNumber = getArchivedPageNumber + 1;
                         doCreateTreeStructure();
+                        mLoadPreviousArchiveDataList.setVisibility(View.VISIBLE);
                     }
                 } else CommonMethods.showToast(this, "No Next data to load");
 
@@ -612,19 +625,32 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
     @Override
     public void onSuccess(String mOldDataTag, CustomResponse customResponse) {
         if (mOldDataTag.equalsIgnoreCase("" + DMSConstants.TASK_GET_ARCHIVED_LIST)) {
-
             hideProgressDialog();
             FileTreeResponseModel fileTreeResponseModel = (FileTreeResponseModel) customResponse;
             if (!fileTreeResponseModel.getCommon().getStatusCode().equals(DMSConstants.SUCCESS)) {
 
-                    if (emptyListView.getVisibility() != View.VISIBLE)
-                        emptyListView.setVisibility(View.VISIBLE);
+                if (emptyListView.getVisibility() != View.VISIBLE)
+                    emptyListView.setVisibility(View.VISIBLE);
+
 
                 setErrorDialog(fileTreeResponseModel.getCommon().getStatusMessage(), mOldDataTag, false, FileTypeViewerActivity.this);
+
+                if (isBackPress) {
+                    getArchivedPageNumber = getArchivedPageNumber + 1;
+                } else {
+                    getArchivedPageNumber = getArchivedPageNumber - 1;
+                }
+
             } else {
 
-                if (fileTreeResponseModel.getFileTreeResponseData().isPagination())
+                if (fileTreeResponseModel.getFileTreeResponseData().isPagination()) {
                     footerLayout.setVisibility(View.VISIBLE);
+                    if (getArchivedPageNumber == 1)
+                        mLoadPreviousArchiveDataList.setVisibility(View.INVISIBLE);
+                } else {
+                    mLoadPreviousArchiveDataList.setVisibility(View.VISIBLE);
+                }
+
 
                 if (!fileTreeResponseModel.getFileTreeResponseData().getArchiveData().isEmpty()) {
                     if (emptyListView.getVisibility() == View.VISIBLE)
@@ -728,7 +754,7 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
             setErrorDialog(errorMessage, mOldDataTag, false, mContext);
             if (mFileTreeResponseData.getArchiveData().isEmpty())
                 emptyListView.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             setErrorDialog(errorMessage, mOldDataTag, false, mContext);
         }
 
@@ -740,7 +766,7 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
             setErrorDialog(serverErrorMessage, mOldDataTag, false, mContext);
             if (mFileTreeResponseData.getArchiveData().isEmpty())
                 emptyListView.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             setErrorDialog(serverErrorMessage, mOldDataTag, false, mContext);
         }
     }
@@ -751,7 +777,7 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
             setErrorDialog(serverErrorMessage, mOldDataTag, false, mContext);
             if (mFileTreeResponseData.getArchiveData().isEmpty())
                 emptyListView.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             setErrorDialog(serverErrorMessage, mOldDataTag, false, mContext);
         }
     }

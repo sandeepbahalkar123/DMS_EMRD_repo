@@ -162,6 +162,7 @@
 
 
             <LinearLayout
+                android:id="@+id/layoutDrawerAddress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical">
@@ -860,6 +861,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/dp10"
+                android:paddingStart="@dimen/dp10"
+                android:paddingLeft="@dimen/dp10"
+                android:paddingEnd="@dimen/dp10"
+                android:paddingRight="@dimen/dp10"
                 android:background="@mipmap/left_arrow"
                 android:textColor="@color/white" />
 
@@ -879,6 +884,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginRight="@dimen/dp10"
+                android:paddingStart="@dimen/dp10"
+                android:paddingLeft="@dimen/dp10"
+                android:paddingEnd="@dimen/dp10"
+                android:paddingRight="@dimen/dp10"
                 android:background="@mipmap/right_arrow"
                 android:textColor="@color/white" />
 

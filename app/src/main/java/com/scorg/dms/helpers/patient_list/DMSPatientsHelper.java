@@ -99,12 +99,12 @@ public class DMSPatientsHelper implements ConnectionListener {
 
             case ConnectionListener.PARSE_ERR0R:
                 CommonMethods.Log(TAG, "parse error");
-                mHelperResponseManager.onParseError(mOldDataTag, "parse error");
+                mHelperResponseManager.onParseError(mOldDataTag, mContext.getString(R.string.something_went_wrong_error));
                 break;
 
             case ConnectionListener.SERVER_ERROR:
                 CommonMethods.Log(TAG, "server error");
-                mHelperResponseManager.onServerError(mOldDataTag, "server error");
+                mHelperResponseManager.onServerError(mOldDataTag, mContext.getString(R.string.something_went_wrong_error));
                 break;
             case ConnectionListener.TIMEOUT_ERROR:
                 CommonMethods.Log(TAG, mContext.getString(R.string.timeout_error));
