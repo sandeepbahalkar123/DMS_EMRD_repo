@@ -451,7 +451,7 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
 
         Log.e(TAG, "++++++++++++++++++++++");
 
-        mAnnotationTreeViewContainer.addView(CommonMethods.loadView(R.layout.mydialog, this));
+        mAnnotationTreeViewContainer.addView(CommonMethods.progressDialogView(R.layout.mydialog, this));
         mFirstFileTypeProgressDialogLayout = mAnnotationTreeViewContainer.findViewById(R.id.progressBarContainerLayout);
 
         mDrawer.addDrawerListener(new DrawerLayout.DrawerListener() {
@@ -932,7 +932,7 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
         mAnnotationTreeViewContainer.removeAllViews();
 
         TreeNode root = TreeNode.root();
-        int lstDocTypeChildLeftPadding = (int) (getResources().getDimension(R.dimen.dp50) / getResources().getDisplayMetrics().density);
+        int lstDocTypeChildLeftPadding = (int) (getResources().getDimension(R.dimen.check_left_padding) / getResources().getDisplayMetrics().density);
 
         boolean isChecked;
         if (annotationListData != null) {

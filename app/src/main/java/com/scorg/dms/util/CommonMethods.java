@@ -511,17 +511,19 @@ public class CommonMethods {
         return mtch.find();
     }
 
-    public static View loadView(int resourceName, Context mActivity) {
+    public static View progressDialogView(int resourceName, Context mActivity) {
 
         LayoutInflater inflater = (LayoutInflater) mActivity
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-        // param.gravity = Gravity.CENTER;
         View child = inflater.inflate(resourceName, null);
+
+        ImageView imageView = child.findViewById(R.id.progressIcon);
+        CommonMethods.setImageUrl(mActivity, DMSConstants.Images.IC_ACTIONBAR_LOGO, imageView, R.drawable.ic_launcher);
+
         LinearLayout l1 = new LinearLayout(mActivity);
         child.setLayoutParams(param);
-
         l1.setLayoutParams(param);
         l1.addView(child);
         return l1;

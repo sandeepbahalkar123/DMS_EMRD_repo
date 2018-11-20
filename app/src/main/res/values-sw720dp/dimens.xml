@@ -78,4 +78,7 @@
     <dimen name="back_arrow">24dp</dimen>
     <dimen name="dialog_width">300dp</dimen>
 
+    <dimen name="check_left_padding">66dp</dimen>
+    <dimen name="dp38">56dp</dimen>
+
 </resources>

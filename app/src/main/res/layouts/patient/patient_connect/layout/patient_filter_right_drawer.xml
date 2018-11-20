@@ -82,38 +82,28 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dp3"
                 android:background="@color/white"
                 android:orientation="horizontal">
 
                 <Spinner
                     android:id="@+id/spinner_selectId"
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:textColor="@color/dcr_customer_name" />
-
-                <android.support.design.widget.TextInputLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginLeft="@dimen/dp5"
                     android:layout_weight="1"
-                    app:hintTextAppearance="@style/editTextInputLayout">
+                    android:textColor="@color/dcr_customer_name" />
 
-                    <AutoCompleteTextView
-                        android:id="@+id/et_uhid"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:ellipsize="end"
-                        android:imeOptions="actionNext"
-                        android:textColor="@color/black"
-                        android:textCursorDrawable="@drawable/cursor_color"
-                        android:textSize="@dimen/sp13" />
-
-                </android.support.design.widget.TextInputLayout>
-
+                <AutoCompleteTextView
+                    android:id="@+id/et_uhid"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:imeOptions="actionNext"
+                    android:textColor="@color/black"
+                    android:textCursorDrawable="@drawable/cursor_color"
+                    android:textSize="@dimen/sp13" />
 
             </LinearLayout>
 
@@ -126,20 +116,36 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dp5"
-                    android:layout_marginRight="@dimen/dp5"
+                    android:paddingLeft="@dimen/dp6"
+                    android:paddingRight="@dimen/dp6"
+                    android:layout_marginTop="@dimen/dp4"
                     android:text="@string/select_date_type"
                     android:textSize="@dimen/sp13" />
 
-                <Spinner
-                    android:id="@+id/spinner_admissionDate"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dp5"
-                    android:layout_marginRight="@dimen/dp5"
-                    android:gravity="start"
-                    android:spinnerMode="dropdown"
-                    android:textColor="@color/black" />
+                    android:paddingTop="@dimen/dp4"
+                    android:orientation="horizontal">
+
+                    <Spinner
+                        android:id="@+id/spinner_admissionDate"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dp5"
+                        android:layout_marginRight="@dimen/dp5"
+                        android:gravity="start"
+                        android:spinnerMode="dropdown"
+                        android:layout_weight="1"
+                        android:textColor="@color/black" />
+
+                    <View
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+
             </LinearLayout>
 
             <LinearLayout
@@ -148,6 +154,8 @@
                 android:layout_marginBottom="@dimen/dp5"
                 android:background="@color/grey_200"
                 android:baselineAligned="false"
+                android:paddingTop="@dimen/dp4"
+                android:paddingBottom="@dimen/dp4"
                 android:orientation="horizontal"
                 android:weightSum="2">
 

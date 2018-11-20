@@ -10,14 +10,14 @@
     <RelativeLayout
         android:id="@+id/mainLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/dp5"
+        android:paddingEnd="@dimen/dp5">
 
         <RelativeLayout
             android:id="@+id/mainContentLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingStart="@dimen/dp4"
-            android:paddingEnd="@dimen/dp4">
+            android:layout_height="wrap_content">
 
             <android.support.v7.widget.AppCompatCheckBox
                 android:id="@+id/node_selector"
@@ -38,7 +38,7 @@
                 android:layout_centerVertical="true"
                 android:layout_toEndOf="@+id/node_selector"
                 android:layout_toRightOf="@+id/node_selector"
-                android:padding="@dimen/dp6"
+                android:padding="@dimen/dp5"
                 android:src="@drawable/ic_tree_close_folder" />
 
             <RelativeLayout
@@ -54,11 +54,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dp5"
-                    android:layout_marginEnd="@dimen/dp5"
                     android:layout_marginRight="@dimen/dp5"
                     android:fontFamily="@font/roboto_medium"
                     android:gravity="center_vertical"
-                    android:minHeight="@dimen/dp40"
+                    android:minHeight="@dimen/dp38"
                     android:paddingStart="@dimen/dp4"
                     android:paddingEnd="@dimen/dp4"
                     android:textColor="@color/black"

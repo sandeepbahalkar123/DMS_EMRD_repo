@@ -723,13 +723,20 @@
                         android:layout_height="wrap_content"
                         android:layout_weight=".7">
 
-                        <Spinner
-                            android:id="@+id/archivedPreferenceSpinner"
-                            android:layout_width="@dimen/dp110"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center"
-                            android:background="@drawable/shape_pref_bg"
-                            android:gravity="center" />
+                        <LinearLayout
+                            android:id="@+id/archivedPreferenceSpinnerBG"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            tools:background="@drawable/shape_rounded_corners_with_border">
+
+                            <Spinner
+                                android:id="@+id/archivedPreferenceSpinner"
+                                android:layout_width="@dimen/dp110"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center"
+                                android:background="@drawable/shape_pref_bg"
+                                android:gravity="center" />
+                        </LinearLayout>
 
                     </LinearLayout>
 
@@ -840,59 +847,52 @@
 
         <LinearLayout
             android:id="@+id/footerLayout"
-            android:orientation="vertical"
-            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true">
+            android:layout_alignParentBottom="true"
+            android:orientation="vertical"
+            android:visibility="gone"
+            tools:visibility="visible">
 
-            <View
+            <!--<View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp1"
                 android:layout_marginTop="@dimen/dp5"
-                android:background="@color/grey_500" />
+                android:background="@color/grey_500" />-->
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/dp5">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <android.support.v7.widget.AppCompatImageButton
-                android:id="@+id/loadPreviousArchiveDataList"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="@dimen/dp10"
-                android:paddingStart="@dimen/dp10"
-                android:paddingLeft="@dimen/dp10"
-                android:paddingEnd="@dimen/dp10"
-                android:paddingRight="@dimen/dp10"
-                android:background="@mipmap/left_arrow"
-                android:textColor="@color/white" />
+                <android.support.v7.widget.AppCompatImageButton
+                    android:id="@+id/loadPreviousArchiveDataList"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@color/transparent"
+                    android:padding="@dimen/dp5"
+                    android:rotation="180"
+                    app:srcCompat="@drawable/ic_play_circle_filled" />
 
-            <TextView
-                android:id="@+id/loadedArchiveDataMessage"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:textColor="@color/black"
-                android:textSize="@dimen/sp14"
-                android:visibility="invisible"
-                tools:text="this is text" />
+                <TextView
+                    android:id="@+id/loadedArchiveDataMessage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/sp14"
+                    android:visibility="invisible"
+                    tools:text="this is text" />
 
-            <android.support.v7.widget.AppCompatImageButton
-                android:id="@+id/loadNextArchiveDataList"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginRight="@dimen/dp10"
-                android:paddingStart="@dimen/dp10"
-                android:paddingLeft="@dimen/dp10"
-                android:paddingEnd="@dimen/dp10"
-                android:paddingRight="@dimen/dp10"
-                android:background="@mipmap/right_arrow"
-                android:textColor="@color/white" />
+                <android.support.v7.widget.AppCompatImageButton
+                    android:id="@+id/loadNextArchiveDataList"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@color/transparent"
+                    android:padding="@dimen/dp5"
+                    app:srcCompat="@drawable/ic_play_circle_filled" />
 
-        </LinearLayout>
+            </LinearLayout>
 
         </LinearLayout>
 
