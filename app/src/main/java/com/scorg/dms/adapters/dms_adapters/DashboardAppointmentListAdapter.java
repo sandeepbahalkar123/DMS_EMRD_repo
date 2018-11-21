@@ -140,6 +140,9 @@ public class DashboardAppointmentListAdapter extends RecyclerView.Adapter<Dashbo
         } else if (groupHeader.getAppointmentStatus().equals(OTHER)) {
             groupViewHolder.appointmentStatus.setText(groupHeader.getAppointmentStatus().toUpperCase());
             groupViewHolder.appointmentStatus.setTextColor(ContextCompat.getColor(_context, R.color.other_color));
+        }else {
+            groupViewHolder.appointmentStatus.setText(groupHeader.getAppointmentStatus().toUpperCase());
+            groupViewHolder.appointmentStatus.setTextColor(ContextCompat.getColor(_context, R.color.other_color));
         }
 
 

@@ -268,8 +268,10 @@ public class AppointmentListAdapter
         } else if (appointmentPatientDataObject.getAppointmentStatus().equals(OTHER)) {
             holder.opdTypeTextView.setText(appointmentPatientDataObject.getAppointmentStatus().toUpperCase());
             holder.opdTypeTextView.setTextColor(ContextCompat.getColor(mContext, R.color.other_color));
+        }else {
+            holder.opdTypeTextView.setText(appointmentPatientDataObject.getAppointmentStatus().toUpperCase());
+            holder.opdTypeTextView.setTextColor(ContextCompat.getColor(mContext, R.color.other_color));
         }
-
 
         //---------
         String appDate = appointmentPatientDataObject.getAppDate();
