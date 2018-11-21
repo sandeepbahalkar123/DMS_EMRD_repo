@@ -1126,6 +1126,11 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
                 String enteredString = mSearchAnnotationEditText.getText().toString();
                 if (enteredString.equals("")) {
                     mClearSearchAnnotationButton.setVisibility(View.GONE);
+
+                    if (mAnnotationListData.getAnnotationLists().isEmpty())
+                        imgNoRecordFoundDrawer.setVisibility(View.VISIBLE);
+                    else imgNoRecordFoundDrawer.setVisibility(View.GONE);
+
                     createAnnotationTreeStructure(mAnnotationListData, false);
                 } else {
                     mClearSearchAnnotationButton.setVisibility(View.VISIBLE);
@@ -1167,6 +1172,9 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
                     }
                     annotationListData.setAnnotationLists(annotationTempList);
                     createAnnotationTreeStructure(annotationListData, false);
+                    if (annotationTempList.isEmpty())
+                        imgNoRecordFoundDrawer.setVisibility(View.VISIBLE);
+                    else imgNoRecordFoundDrawer.setVisibility(View.GONE);
                 }
             }
         });

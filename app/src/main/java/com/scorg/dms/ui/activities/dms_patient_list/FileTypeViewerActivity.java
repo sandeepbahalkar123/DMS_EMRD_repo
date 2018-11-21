@@ -393,7 +393,7 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
                 Integer value = (Integer) animation.getAnimatedValue();
 
                 LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) mCompareDialogLayout.getLayoutParams();
-                params.height = CommonMethods.convertDpToPixel(value.intValue());
+                params.height = CommonMethods.convertDpToPixel(value);
                 mCompareDialogLayout.setLayoutParams(params);
 
             }
@@ -414,7 +414,7 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
                 Integer value = (Integer) animation.getAnimatedValue();
 
                 LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) mCompareDialogLayout.getLayoutParams();
-                params.height = CommonMethods.convertDpToPixel(value.intValue());
+                params.height = CommonMethods.convertDpToPixel(value);
                 mCompareDialogLayout.setLayoutParams(params);
 
             }
