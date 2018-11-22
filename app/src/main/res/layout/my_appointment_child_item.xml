@@ -194,9 +194,10 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginEnd="@dimen/dp10"
+                                android:maxWidth="@dimen/dp110"
                                 android:layout_marginRight="@dimen/dp10"
                                 android:fontFamily="@font/roboto_medium"
-                                android:text="Confirm"
+                                tools:text="qwertyuiopasdfghjklzxcvbnmqwert"
                                 android:textColor="@color/tagColor"
                                 android:textSize="@dimen/sp12" />
 
@@ -216,7 +217,7 @@
                                 android:fontFamily="@font/roboto_medium"
                                 android:paddingStart="@dimen/dp10"
                                 android:paddingLeft="@dimen/dp10"
-                                android:text="Consultation Type"
+                                tools:text="Consultation Type"
                                 android:textColor="@color/green"
                                 android:textSize="@dimen/sp12" />
 

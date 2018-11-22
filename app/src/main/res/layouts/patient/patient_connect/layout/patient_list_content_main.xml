@@ -27,8 +27,11 @@
             <LinearLayout
                 android:id="@+id/layoutPatSearch"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp44"
-                android:orientation="vertical">
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                tools:background="@color/SkyBlue"
+                android:paddingBottom="@dimen/dp5"
+                >
 
                 <com.scorg.dms.ui.customesViews.SearchTextViewWithDeleteButton
                     android:id="@+id/autocompleteSearchBox"
@@ -36,8 +39,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp5"
                     android:visibility="visible"
-                    app:hintText="@string/patient_details_search_hint"
-                    app:textSize="@dimen/sp15" />
+                    app:hintText="@string/patient_list_search_hint"
+                    app:textSize="@dimen/sp15"
+                    />
 
                 <View
                     android:layout_width="match_parent"

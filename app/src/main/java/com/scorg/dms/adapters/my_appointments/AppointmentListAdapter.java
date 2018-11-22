@@ -178,15 +178,11 @@ public class AppointmentListAdapter
         String salutation = appointmentPatientDataObject.getSalutation();
         String patientName = appointmentPatientDataObject.getPatientName();
 
-        Log.e("salutation","--"+salutation);
-        Log.e("name",patientName);
-        Log.e("name,,,,",appointmentPatientDataObject.getPatientName());
 
         if (salutation != null) {
             patientName = salutation + " " + patientName;
         }
 
-        Log.e("name.....",patientName);
         //---- START: Setting of hospitalID or referecne ID, reference is IS high priority than hospitalID.-----
         String dataToShowInPatientID = String.valueOf(appointmentPatientDataObject.getPatientId());
         holder.patientIdTextView.setText(DMSApplication.LABEL_UHID+" " + dataToShowInPatientID + "");
@@ -373,7 +369,7 @@ public class AppointmentListAdapter
                 }
             }
         });
-        if (DMSApplication.APPOINTMENT_STATUS_URL.equalsIgnoreCase(""))
+        if (DMSApplication.APPOINTMENT_STATUS_URL.trim().equalsIgnoreCase(""))
             holder.btnDone.setVisibility(View.INVISIBLE);
 
 //        holder.layoutAppointmentCode.setVisibility(View.VISIBLE);

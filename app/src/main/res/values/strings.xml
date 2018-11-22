@@ -240,6 +240,6 @@
     <string name="select_file_type">Select File Type</string>
     <string name="id_type">ID Type</string>
     <string name="all">All</string>
-    <string name="label_patient_name">\u0020<![CDATA[& Patient Name]]></string>
+    <string name="label_patient_name">\u0020<![CDATA[& Name]]></string>
 
 </resources>

@@ -113,9 +113,10 @@
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="@dimen/dp10"
                             android:layout_marginRight="@dimen/dp10"
+                            android:maxWidth="@dimen/status_text_max_width"
                             android:fontFamily="@font/roboto_medium"
-                            android:text="Confirm"
-                            android:textColor="@color/tagColor"
+                            tools:text="Status"
+                            android:textColor="@color/appointment_time_color"
                             android:textSize="@dimen/sp12" />
 
                         <View
@@ -134,7 +135,7 @@
                             android:fontFamily="@font/roboto_medium"
                             android:paddingStart="@dimen/dp10"
                             android:paddingLeft="@dimen/dp10"
-                            android:text="Consultation Type"
+                            tools:text="Consultation Type"
                             android:textColor="@color/green"
                             android:textSize="@dimen/sp12" />
 

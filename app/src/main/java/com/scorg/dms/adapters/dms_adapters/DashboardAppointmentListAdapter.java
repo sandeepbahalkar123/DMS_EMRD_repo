@@ -175,9 +175,8 @@ public class DashboardAppointmentListAdapter extends RecyclerView.Adapter<Dashbo
         });
      //   groupViewHolder.layoutAppointmentCode.setVisibility(View.VISIBLE);
 
-        if (DMSApplication.APPOINTMENT_STATUS_URL.equalsIgnoreCase(""))
+        if (DMSApplication.APPOINTMENT_STATUS_URL.trim().equalsIgnoreCase(""))
             groupViewHolder.btnDone.setVisibility(View.INVISIBLE);
-
     }
 
     @Override
