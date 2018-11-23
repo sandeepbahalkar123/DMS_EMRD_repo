@@ -348,8 +348,8 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
         DrawableCompat.setTintList(DrawableCompat.wrap(mOpenCompareDialogSwitch1.getThumbDrawable()), new ColorStateList(states, thumbColors));
         DrawableCompat.setTintList(DrawableCompat.wrap(mOpenCompareDialogSwitch1.getTrackDrawable()), new ColorStateList(states, trackColors));
         compareLabel.setBackgroundColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
-        mFileOneRemoveButton.setBackgroundColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
-        mFileTwoRemoveButton.setBackgroundColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
+        mFileOneRemoveButton.setColorFilter(Color.parseColor(DMSApplication.COLOR_ACCENT));
+        mFileTwoRemoveButton.setColorFilter(Color.parseColor(DMSApplication.COLOR_ACCENT));
         Bundle extra = getIntent().getBundleExtra(DMSConstants.DATA);
 
         if (extra != null) {
