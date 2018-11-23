@@ -40,6 +40,7 @@
                 android:paddingTop="@dimen/dp3"
                 android:paddingRight="@dimen/dp5"
                 android:paddingBottom="@dimen/dp3"
+                android:maxWidth="@dimen/file_type_text_max_width"
                 android:textColor="@color/white"
                 android:textSize="@dimen/sp14"
                 tools:text="IPD"

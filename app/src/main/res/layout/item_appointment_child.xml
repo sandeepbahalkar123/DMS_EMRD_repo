@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+    <RelativeLayout
+        android:id="@+id/layoutPatDetails"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp5"
+        android:layout_marginLeft="@dimen/dp5"
+        android:layout_marginEnd="@dimen/dp3"
+        android:layout_marginRight="@dimen/dp3"
+        android:paddingBottom="@dimen/dp5">
+        <TextView
+            android:id="@+id/patientIdTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="ID: 23456"
+            android:fontFamily="@font/roboto_medium"
+            android:textColor="@color/black"
+            android:textSize="@dimen/sp14"
+            android:layout_marginStart="@dimen/dp5"
+            android:layout_marginLeft="@dimen/dp5"/>
+        <TextView
+            android:id="@+id/appointmentTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginEnd="@dimen/dp8"
+            android:layout_marginRight="@dimen/dp8"
+            android:fontFamily="@font/roboto_bold"
+            android:text="11:00 pm"
+            android:textColor="@color/appointment_time_color"
+            android:textSize="@dimen/sp12"
+            android:visibility="gone"
+            tools:visibility="visible"/>
+
+        <TextView
+            android:id="@+id/patientNameTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_bold"
+            android:textSize="@dimen/sp15"
+            tools:text="Mr. Uren Chhadva"
+            android:layout_marginStart="@dimen/dp5"
+            android:layout_marginLeft="@dimen/dp5"
+            android:layout_below="@+id/patientIdTextView"
+            />
+        <TextView
+            android:id="@+id/patientAgeTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_medium"
+            android:textColor="@color/black"
+            android:textSize="@dimen/sp12"
+            tools:text="36 yrs - "
+            android:layout_below="@+id/patientNameTextView"
+            android:layout_marginStart="@dimen/dp5"
+            android:layout_marginLeft="@dimen/dp5"/>
+
+        <TextView
+            android:id="@+id/patientGenderTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_medium"
+            android:textColor="@color/rating_color"
+            android:textSize="@dimen/sp12"
+            tools:text="Male"
+            android:layout_below="@+id/patientNameTextView"
+            android:layout_toEndOf="@+id/patientAgeTextView"
+            android:layout_toRightOf="@+id/patientAgeTextView" />
+
+        <LinearLayout
+            android:id="@+id/layoutAppointmentCode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/dp3"
+            android:visibility="gone"
+            tools:visibility="visible"
+            android:layout_marginStart="@dimen/dp5"
+            android:layout_marginLeft="@dimen/dp5"
+            android:layout_below="@+id/patientGenderTextView">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="@dimen/dp5"
+                android:layout_marginRight="@dimen/dp5"
+                android:fontFamily="@font/roboto_medium"
+                android:text="@string/appointment_code"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp12" />
+
+            <TextView
+                android:id="@+id/patientAppointmentsCode"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/roboto_medium"
+                android:text="0"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp12" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/opdTypeTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dp10"
+            android:maxWidth="@dimen/status_text_max_width"
+            android:layout_marginRight="@dimen/dp10"
+            android:fontFamily="@font/roboto_medium"
+            tools:text="Status"
+            android:textColor="@color/appointment_time_color"
+            android:textSize="@dimen/sp12"
+            android:layout_below="@id/layoutAppointmentCode"
+            android:layout_marginStart="@dimen/dp5"
+            android:layout_marginLeft="@dimen/dp5"
+            />
+
+        <View
+            android:id="@+id/divView"
+            android:layout_width="@dimen/dp1"
+            android:layout_height="@dimen/dp12"
+            android:layout_marginTop="@dimen/dp3"
+            android:layout_toRightOf="@id/opdTypeTextView"
+            android:background="@color/grey"
+            android:layout_below="@id/layoutAppointmentCode"/>
+
+        <TextView
+            android:id="@+id/appointmentConsultationType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/divView"
+            android:fontFamily="@font/roboto_medium"
+            android:paddingStart="@dimen/dp10"
+            android:paddingLeft="@dimen/dp10"
+            tools:text="Consultation Type"
+            android:textColor="@color/green"
+            android:textSize="@dimen/sp12"
+            android:layout_below="@id/layoutAppointmentCode"/>
+
+        <TextView
+            android:id="@+id/btnDone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/done"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp11"
+            tools:textColor="@color/black"
+            android:layout_below="@+id/layoutAppointmentCode"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:paddingStart="@dimen/dp10"
+            android:paddingLeft="@dimen/dp10"
+            android:paddingTop="@dimen/dp3"
+            android:paddingEnd="@dimen/dp10"
+            android:paddingRight="@dimen/dp10"
+            android:paddingBottom="@dimen/dp3"
+            android:layout_marginEnd="@dimen/dp8"
+            android:layout_marginRight="@dimen/dp8"
+            android:layout_alignParentBottom="true"
+            />
+
+    </RelativeLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp1"
+        android:background="@color/grey_shade"
+        android:layout_below="@id/opdTypeTextView"/>
+
+
+</LinearLayout>

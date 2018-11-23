@@ -103,10 +103,7 @@ public class AppointmentListAdapter
         private TextView patientGenderTextView;
         private TextView opdTypeTextView;
         private TextView patientPhoneNumber;
-        private LinearLayout idAndDetailsLayout;
-        private Button appointmentReschedule;
-        private Button appointmentCancel;
-        private Button appointmentComplete;
+
         private LinearLayout layoutAppointmentEpisode;
         private View viewLine1;
         private View separatorView;
@@ -115,12 +112,11 @@ public class AppointmentListAdapter
         private TextView appointmentConsultationType;
         private TextView patientAppointmentsCode;
         private RelativeLayout layoutPatId;
-        private LinearLayout layoutPatDetails;
+        private RelativeLayout layoutPatDetails;
         private LinearLayout layoutAppointmentCode;
 
         MyViewHolder(View convertView) {
             super(convertView);
-            idAndDetailsLayout = (LinearLayout) convertView.findViewById(R.id.idAndDetailsLayout);
             appointmentTime = (TextView) convertView.findViewById(R.id.appointmentTime);
             patientIdTextView = (TextView) convertView.findViewById(R.id.patientIdTextView);
             patientImageView = (CircularImageView) convertView.findViewById(R.id.patientImageView);
@@ -137,7 +133,7 @@ public class AppointmentListAdapter
             separatorView = (View) convertView.findViewById(R.id.separatorView);
             appointmentConsultationType = (TextView) convertView.findViewById(R.id.appointmentConsultationType);
             layoutPatId = (RelativeLayout) convertView.findViewById(R.id.layoutPatId);
-            layoutPatDetails = (LinearLayout) convertView.findViewById(R.id.layoutPatDetails);
+            layoutPatDetails = (RelativeLayout) convertView.findViewById(R.id.layoutPatDetails);
             layoutAppointmentCode = (LinearLayout) convertView.findViewById(R.id.layoutAppointmentCode);
             patientAppointmentsCode = (TextView) convertView.findViewById(R.id.patientAppointmentsCode);
 
@@ -152,7 +148,7 @@ public class AppointmentListAdapter
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        final View v = inflater.inflate(R.layout.my_appointment_child_item, parent, false);
+        final View v = inflater.inflate(R.layout.item_appointment_child, parent, false);
         return new MyViewHolder(v);
     }
 
@@ -167,13 +163,13 @@ public class AppointmentListAdapter
 
     private void bindGroupItem(final AppointmentPatientData appointmentPatientDataObject, final AppointmentListAdapter.MyViewHolder holder) {
 
-        holder.bluelineImageView.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
-        holder.callIcon.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+     //   holder.bluelineImageView.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+       // holder.callIcon.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         holder.btnDone.setBackground(buttonBackground);
         holder.patientGenderTextView.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
-        holder.patientPhoneNumber.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
-        holder.separatorView.setBackgroundColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
-        holder.viewLine1.setBackgroundColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+    //    holder.patientPhoneNumber.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+//        holder.separatorView.setBackgroundColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+      //  holder.viewLine1.setBackgroundColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         holder.appointmentConsultationType.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         String salutation = appointmentPatientDataObject.getSalutation();
         String patientName = appointmentPatientDataObject.getPatientName();
@@ -200,19 +196,19 @@ public class AppointmentListAdapter
             }
 
 
-            //----------------
-            //Spannable condition for PatientPhoneNumber
-            if (appointmentPatientDataObject.getContactNo() != null) {
-                holder.patientPhoneNumber.setVisibility(View.VISIBLE);
-                if (appointmentPatientDataObject.getContactNo().toLowerCase().contains(appointmentPatientDataObject.getSpannableString().toLowerCase())) {
-                    holder.patientPhoneNumber.setText(doCreateSpannableData(appointmentPatientDataObject.getContactNo(), appointmentPatientDataObject.getSpannableString()));
-                } else {
-                    holder.patientPhoneNumber.setText(appointmentPatientDataObject.getContactNo());
-                }
-            } else {
-                holder.patientPhoneNumber.setVisibility(View.VISIBLE);
-                holder.patientPhoneNumber.setText("-");
-            }
+//            //----------------
+//            //Spannable condition for PatientPhoneNumber
+//            if (appointmentPatientDataObject.getContactNo() != null) {
+//                holder.patientPhoneNumber.setVisibility(View.VISIBLE);
+//                if (appointmentPatientDataObject.getContactNo().toLowerCase().contains(appointmentPatientDataObject.getSpannableString().toLowerCase())) {
+//                    holder.patientPhoneNumber.setText(doCreateSpannableData(appointmentPatientDataObject.getContactNo(), appointmentPatientDataObject.getSpannableString()));
+//                } else {
+//                    holder.patientPhoneNumber.setText(appointmentPatientDataObject.getContactNo());
+//                }
+//            } else {
+//                holder.patientPhoneNumber.setVisibility(View.VISIBLE);
+//                holder.patientPhoneNumber.setText("-");
+//            }
 
             //---------------
             //Spannable condition for PatientId
@@ -224,7 +220,7 @@ public class AppointmentListAdapter
             //---------------
         } else {
             holder.patientNameTextView.setText(patientName);
-            holder.patientPhoneNumber.setText(appointmentPatientDataObject.getContactNo());
+//            holder.patientPhoneNumber.setText(appointmentPatientDataObject.getContactNo());
             holder.patientIdTextView.setText(DMSApplication.LABEL_UHID + " " + dataToShowInPatientID);
         }
 
@@ -287,46 +283,46 @@ public class AppointmentListAdapter
         }
 
         //-------
-        TextDrawable textDrawable = CommonMethods.getTextDrawable(mContext, appointmentPatientDataObject.getPatientName());
-        RequestOptions requestOptions = new RequestOptions();
-        requestOptions.dontAnimate();
-        requestOptions.diskCacheStrategy(DiskCacheStrategy.NONE);
-        requestOptions.skipMemoryCache(false);
-        requestOptions.placeholder(textDrawable);
-        requestOptions.error(textDrawable);
-
-        Glide.with(mContext)
-                .load(appointmentPatientDataObject.getPatientImageUrl())
-                .apply(requestOptions).thumbnail(0.5f)
-                .into(holder.patientImageView);
-
-
+//        TextDrawable textDrawable = CommonMethods.getTextDrawable(mContext, appointmentPatientDataObject.getPatientName());
+//        RequestOptions requestOptions = new RequestOptions();
+//        requestOptions.dontAnimate();
+//        requestOptions.diskCacheStrategy(DiskCacheStrategy.NONE);
+//        requestOptions.skipMemoryCache(false);
+//        requestOptions.placeholder(textDrawable);
+//        requestOptions.error(textDrawable);
+//
+//        Glide.with(mContext)
+//                .load(appointmentPatientDataObject.getPatientImageUrl())
+//                .apply(requestOptions).thumbnail(0.5f)
+//                .into(holder.patientImageView);
 
 
-        holder.layoutAppointmentEpisode.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (appointmentPatientDataObject.isArchived()) {
-                    SearchResult searchResult = new SearchResult();
-                    searchResult.setPatientName(appointmentPatientDataObject.getPatientName());
-                    searchResult.setPatientId(appointmentPatientDataObject.getPatientId());
-                    searchResult.setPatientAddress(appointmentPatientDataObject.getPatAddress());
-                    searchResult.setPatientImageURL(appointmentPatientDataObject.getPatientImageUrl());
-                    onItemClickListener.onClickedOfEpisodeListButton(searchResult);
-                } else {
-                    CommonMethods.showErrorDialog(mContext.getString(R.string.patient_not_having_record), mContext, false, new ErrorDialogCallback() {
-                        @Override
-                        public void ok() {
-                        }
 
-                        @Override
-                        public void retry() {
-                        }
-                    });
-                }
 
-            }
-        });
+//        holder.layoutAppointmentEpisode.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if (appointmentPatientDataObject.isArchived()) {
+//                    SearchResult searchResult = new SearchResult();
+//                    searchResult.setPatientName(appointmentPatientDataObject.getPatientName());
+//                    searchResult.setPatientId(appointmentPatientDataObject.getPatientId());
+//                    searchResult.setPatientAddress(appointmentPatientDataObject.getPatAddress());
+//                    searchResult.setPatientImageURL(appointmentPatientDataObject.getPatientImageUrl());
+//                    onItemClickListener.onClickedOfEpisodeListButton(searchResult);
+//                } else {
+//                    CommonMethods.showErrorDialog(mContext.getString(R.string.patient_not_having_record), mContext, false, new ErrorDialogCallback() {
+//                        @Override
+//                        public void ok() {
+//                        }
+//
+//                        @Override
+//                        public void retry() {
+//                        }
+//                    });
+//                }
+//
+//            }
+//        });
 
 
         holder.layoutPatDetails.setOnClickListener(new View.OnClickListener() {
@@ -337,40 +333,25 @@ public class AppointmentListAdapter
             }
         });
 
-        holder.layoutPatId.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onPatDetailsClick(appointmentPatientDataObject);
-
-            }
-        });
-
-        holder.patientImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onPatDetailsClick(appointmentPatientDataObject);
-
-            }
-        });
 
 
-        holder.patientPhoneNumber.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String contactNo = appointmentPatientDataObject.getContactNo();
-                if (contactNo != null) {
-                    try {
-                        long i = Long.parseLong(contactNo);
-                        onItemClickListener.onPhoneNoClick(i);
-
-                    } catch (NumberFormatException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        });
+//        holder.patientPhoneNumber.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                String contactNo = appointmentPatientDataObject.getContactNo();
+//                if (contactNo != null) {
+//                    try {
+//                        long i = Long.parseLong(contactNo);
+//                        onItemClickListener.onPhoneNoClick(i);
+//
+//                    } catch (NumberFormatException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//            }
+//        });
         if (DMSApplication.APPOINTMENT_STATUS_URL.trim().equalsIgnoreCase(""))
-            holder.btnDone.setVisibility(View.INVISIBLE);
+            holder.btnDone.setVisibility(View.GONE);
 
 //        holder.layoutAppointmentCode.setVisibility(View.VISIBLE);
 //        holder.patientAppointmentsCode.setText("" + appointmentPatientDataObject.getAppointmentCode());

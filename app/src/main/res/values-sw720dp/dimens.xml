@@ -82,6 +82,8 @@
     <dimen name="dp38">56dp</dimen>
     <dimen name="next_button_padding">10dp</dimen>
     <dimen name="drawer_header">64dp</dimen>
-    <dimen name="status_text_max_width">160dp</dimen>
+    <dimen name="status_text_max_width">190dp</dimen>
+    <dimen name="file_type_text_max_width">270dp</dimen>
+
 
 </resources>

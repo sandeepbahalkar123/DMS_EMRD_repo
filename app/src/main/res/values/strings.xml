@@ -59,7 +59,7 @@
     <string name="waiting_list">Waiting List</string>
     <string name="request_list">Approval List</string>
     <string name="dashboard">dashboard</string>
-    <string name="my_patients">My Patients</string>
+    <string name="my_patients">All Patients</string>
     <string name="do_you_logout">Do you want to logout?</string>
     <string name="select_date_text">Select Date</string>
     <string name="doc_name">Doctor Name:\u0020</string>
@@ -241,5 +241,6 @@
     <string name="id_type">ID Type</string>
     <string name="all">All</string>
     <string name="label_patient_name">\u0020<![CDATA[& Name]]></string>
+    <string name="select_two_files">Please Select Two Files.</string>
 
 </resources>

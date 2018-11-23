@@ -37,6 +37,7 @@
                 tools:textColor="@color/colorAccent"
                 android:paddingStart="@dimen/dp5"
                 android:paddingEnd="@dimen/dp5"
+                android:maxWidth="@dimen/file_type_text_max_width"
                 android:paddingTop="@dimen/dp3"
                 android:paddingBottom="@dimen/dp3"
                 android:layout_gravity="center"

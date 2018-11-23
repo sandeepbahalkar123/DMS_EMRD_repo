@@ -23,7 +23,7 @@
                 android:id="@+id/layoutPatSearch"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp44"
-                android:layout_marginBottom="@dimen/dp5"
+                android:paddingBottom="@dimen/dp5"
                 android:orientation="vertical">
 
                 <com.scorg.dms.ui.customesViews.EditTextWithDeleteButton

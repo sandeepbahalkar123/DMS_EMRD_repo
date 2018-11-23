@@ -111,7 +111,7 @@ public class MyAppointmentsActivity extends BaseActivity implements HelperRespon
         activeAppointmentsFragment = ActiveAppointmentsFragment.newInstance();
         allAppointmentsFragment = AllAppointmentsFragment.newInstance();
         adapter.addFragment(activeAppointmentsFragment, getString(R.string.active_appointmets));
-        adapter.addFragment(allAppointmentsFragment, getString(R.string.all_appointments));
+        adapter.addFragment(allAppointmentsFragment, getString(R.string.all));
         viewPager.setAdapter(adapter);
     }
 

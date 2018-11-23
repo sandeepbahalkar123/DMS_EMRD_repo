@@ -300,12 +300,18 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
         patientIcon.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         uhidIcon.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         addressIcon.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
-        deviderView.setBackgroundColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+        deviderView.setBackgroundColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
         mCompareButton.setBackgroundColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         imgNoRecordFound.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
 
         mLoadPreviousArchiveDataList.setColorFilter(Color.parseColor(DMSApplication.COLOR_ACCENT));
         mLoadNextArchiveDataList.setColorFilter(Color.parseColor(DMSApplication.COLOR_ACCENT));
+        GradientDrawable backgroundCompareButton = new GradientDrawable();
+        backgroundCompareButton.setShape(GradientDrawable.RECTANGLE);
+        backgroundCompareButton.setColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
+        backgroundCompareButton.setCornerRadius(mContext.getResources().getDimension(R.dimen.dp3));
+        mCompareButton.setBackground(backgroundCompareButton);
+
 
         GradientDrawable cardBackground = new GradientDrawable();
         cardBackground.setShape(GradientDrawable.RECTANGLE);
@@ -572,6 +578,19 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
                 if (mGetEncryptedPDFRequestModelList.size() == 2) {
                     mPatientsHelper.getPdfData(mGetEncryptedPDFRequestModelList.get(0), DMSConstants.TASK_GET_PDF_DATA + "_0");
                     mPatientsHelper.getPdfData(mGetEncryptedPDFRequestModelList.get(1), DMSConstants.TASK_GET_PDF_DATA + "_1");
+                }else {
+                    CommonMethods.showErrorDialog(getString(R.string.select_two_files), mContext, false, new ErrorDialogCallback() {
+                                @Override
+                                public void ok() {
+
+                                }
+
+                                @Override
+                                public void retry() {
+
+                                }
+                            }
+                    );
                 }
 
                 break;
@@ -593,7 +612,7 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
                     mGetEncryptedPDFRequestModelList.remove(0);
                 mFileOneFileName.setText("");
                 mFileOnePatientID.setText("");
-
+                mFileOneIcon.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_no_document_selected));
                 break;
             case R.id.fileTwoRemoveButton:
                 String fileTwoRemove = mFileTwoFileName.getText().toString().trim().replace(getString(R.string.file), "").trim();
@@ -611,6 +630,7 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
 
                 mFileTwoFileName.setText("");
                 mFileTwoPatientID.setText("");
+                mFileTwoIcon.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_no_document_selected));
                 break;
             case R.id.imageCloseDrawer:
                 archiveCount = 0;
@@ -1328,7 +1348,6 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
             if (mGetEncryptedPDFRequestModelList.size() == 2) {
                 expandCompareDialog();
 //                CommonMethods.showToast(this, "Can not compare more than 2 PDFs");
-
                 CommonMethods.showErrorDialog("Can not compare more than 2 PDFs", this, false, new ErrorDialogCallback() {
                     @Override
                     public void ok() {
@@ -1371,7 +1390,9 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
                             mFileOneFileName.setText(getString(R.string.file) + tempClickedElements.get(0));
                             mFirstFileTypeProgressDialogLayout.setVisibility(View.VISIBLE);
                             labelFirstPdf.setText(tempClickedElements.get(0));
+                            mFileOneIcon.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_selected_document));
                             break;
+
                         case 2:
                             //-----
                             mFileOnePatientID.setText(getString(R.string.patient_id) + respectivePatientID);
@@ -1385,6 +1406,8 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
 
                             mSecondFileTypeProgressDialogLayout.setVisibility(View.VISIBLE);
                             labelSecondPdf.setText(tempClickedElements.get(1));
+                            mFileOneIcon.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_selected_document));
+                            mFileTwoIcon.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_selected_document));
                             break;
                     }
                 }
@@ -1757,7 +1780,7 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
         buttonLeft.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialog.dismiss();
+
                 mPatientsHelper.raiseUnlockRequestArchivedFile(unlockRequestModel);
 
             }

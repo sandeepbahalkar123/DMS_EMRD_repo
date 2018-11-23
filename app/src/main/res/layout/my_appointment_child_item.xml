@@ -120,7 +120,7 @@
 
                         <TextView
                             android:id="@+id/patientNameTextView"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:ellipsize="end"
                             android:fontFamily="@font/roboto_bold"
@@ -194,7 +194,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginEnd="@dimen/dp10"
-                                android:maxWidth="@dimen/dp110"
+                                android:maxWidth="@dimen/status_text_max_width"
                                 android:layout_marginRight="@dimen/dp10"
                                 android:fontFamily="@font/roboto_medium"
                                 tools:text="qwertyuiopasdfghjklzxcvbnmqwert"
@@ -274,7 +274,6 @@
                             android:paddingBottom="@dimen/dp3"
                             android:text="@string/done"
                             android:textAllCaps="true"
-
                             android:textColor="@color/white"
                             android:textSize="@dimen/sp11" />
 
