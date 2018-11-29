@@ -151,6 +151,7 @@ public class AllAppointmentsFragment extends Fragment implements AppointmentList
         extra.putString(DMSConstants.PATIENT_ID, patientListObject.getPatientId());
         extra.putString(DMSConstants.PAT_ID, patientListObject.getPatId());
         extra.putString(DMSConstants.PATIENT_LIST_PARAMS.PATIENT_NAME, "" + patientListObject.getPatientName());
+        extra.putString(DMSConstants.PATIENT_LIST_PARAMS.ARCHIVE_PAGE_TYPE, getString(R.string.appointment_page_type));
         intent.putExtra(DMSConstants.DATA, extra);
         startActivity(intent);
 

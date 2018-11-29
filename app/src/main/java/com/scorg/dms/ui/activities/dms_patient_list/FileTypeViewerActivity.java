@@ -256,6 +256,7 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
     String patientName;
     String doctorName;
     String patientAddress;
+    String pageType;
     private boolean isFirstPdf = true;
     private float mCurrentXOffset = -1;
     private float mCurrentYOffset = -1;
@@ -360,6 +361,7 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
             patientAddress = extra.getString(DMSConstants.PATIENT_ADDRESS);
             doctorName = extra.getString(DMSConstants.DOCTOR_NAME);
             respectivePatID = extra.getString(DMSConstants.PAT_ID);
+            pageType = extra.getString(DMSConstants.PATIENT_LIST_PARAMS.ARCHIVE_PAGE_TYPE);
         }
 
 
@@ -658,6 +660,7 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
         model.setRecordId(respectiveRecordID);
         model.setPageNumber(getArchivedPageNumber);
         model.setPreference(mArchivedSelectedPreference);
+        model.setPageType(pageType);
         mPatientsHelper.doGetArchivedList(model);
     }
 

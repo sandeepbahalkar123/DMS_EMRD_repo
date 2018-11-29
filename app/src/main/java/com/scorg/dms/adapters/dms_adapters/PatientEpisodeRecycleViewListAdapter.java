@@ -120,12 +120,9 @@ public class PatientEpisodeRecycleViewListAdapter extends RecyclerView.Adapter<P
         //--------------------
 
 
-        boolean isShowEye = viewHideEyeIconEpisode(viewRights, childElement.IsView(), childElement.IsPrimary(), childElement.getFileType(), isMainPrimary);
+      //  boolean isShowEye = viewHideEyeIconEpisode(viewRights, childElement.IsView(), childElement.IsPrimary(), childElement.getFileType(), isMainPrimary);
 
-        if (isShowEye) {
-            childViewHolder.imageViewRights.setVisibility(View.VISIBLE);
-            onPatientListener.showRaiseRequestBtn(true);
-        } else {
+        if (childElement.isFileAcessible()) {
             childViewHolder.imageViewRights.setVisibility(View.GONE);
             childViewHolder.rowLay.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -134,7 +131,10 @@ public class PatientEpisodeRecycleViewListAdapter extends RecyclerView.Adapter<P
                     // onPatientListener.showRaiseRequestBtn(false);
                 }
             });
+        } else {
 
+            childViewHolder.imageViewRights.setVisibility(View.VISIBLE);
+            onPatientListener.showRaiseRequestBtn(true);
         }
 
     }

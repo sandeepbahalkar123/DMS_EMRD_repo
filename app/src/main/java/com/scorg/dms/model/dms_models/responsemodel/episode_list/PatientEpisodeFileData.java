@@ -66,6 +66,11 @@ public class PatientEpisodeFileData implements Serializable {
     @Expose
     private boolean isOldArchivedRecord;
 
+    @SerializedName("IsFileAcessible")
+    @Expose
+    private boolean isFileAcessible;
+
+
     public int getRecordId() {
         return recordId;
     }
@@ -208,5 +213,13 @@ public class PatientEpisodeFileData implements Serializable {
 
     public void setIsOldArchivedRecord(boolean isOldArchivedRecord) {
         this.isOldArchivedRecord = isOldArchivedRecord;
+    }
+
+    public boolean isFileAcessible() {
+        return isFileAcessible;
+    }
+
+    public void setFileAcessible(boolean fileAcessible) {
+        isFileAcessible = fileAcessible;
     }
 }

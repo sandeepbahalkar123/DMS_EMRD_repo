@@ -22,6 +22,10 @@ public class GetArchiveRequestModel implements CustomResponse {
     @Expose
     private String preference;
 
+    @SerializedName("PageType")
+    @Expose
+    private String PageType;
+
     public String getPatId() {
         return patId;
     }
@@ -60,5 +64,13 @@ public class GetArchiveRequestModel implements CustomResponse {
 
     public void setPreference(String preference) {
         this.preference = preference;
+    }
+
+    public String getPageType() {
+        return PageType;
+    }
+
+    public void setPageType(String pageType) {
+        PageType = pageType;
     }
 }

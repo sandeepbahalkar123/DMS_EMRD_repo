@@ -435,6 +435,8 @@ public class PatientDetailsActivity extends BaseActivity implements HelperRespon
         extra.putString(DMSConstants.PAT_ID, String.valueOf(groupHeader.getPatId()));
         extra.putString(DMSConstants.PATIENT_LIST_PARAMS.PATIENT_NAME, "" + mReceivedPatientData.getPatientName());
         extra.putString(DMSConstants.RECORD_ID, String.valueOf(groupHeader.getRecordId()));
+        extra.putString(DMSConstants.PATIENT_LIST_PARAMS.ARCHIVE_PAGE_TYPE, getString(R.string.patient_page_type));
+
         intent.putExtra(DMSConstants.DATA, extra);
         startActivity(intent);
     }

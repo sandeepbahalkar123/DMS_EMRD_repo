@@ -703,6 +703,7 @@ public class HomePageActivity extends BaseActivity implements HelperResponse, Da
         extra.putString(DMSConstants.PATIENT_ID, appointmentPatientData.getPatientId());
         extra.putString(DMSConstants.PAT_ID, appointmentPatientData.getPatId());
         extra.putString(DMSConstants.PATIENT_LIST_PARAMS.PATIENT_NAME, "" + appointmentPatientData.getPatientName());
+        extra.putString(DMSConstants.PATIENT_LIST_PARAMS.ARCHIVE_PAGE_TYPE, getString(R.string.appointment_page_type));
         intent.putExtra(DMSConstants.DATA, extra);
         startActivity(intent);
     }

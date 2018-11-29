@@ -143,6 +143,7 @@ public class DMSConstants {
         public static final String TO_DATE = "toDate";
         public static final String ANNOTATION_TEXT = "annotationText";
         public static final String DOC_TYPE_ID = "DocTypeId";
+        public static final String ARCHIVE_PAGE_TYPE = "PageType";
     }
 
     public static class ArchivedPreference {

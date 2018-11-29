@@ -1239,6 +1239,7 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
         extra.putString(DMSConstants.PAT_ID, groupHeader.getPatId());
 
         extra.putString(DMSConstants.PATIENT_LIST_PARAMS.PATIENT_NAME, "" + groupHeader.getPatientName());
+        extra.putString(DMSConstants.PATIENT_LIST_PARAMS.ARCHIVE_PAGE_TYPE, getString(R.string.patient_page_type));
         intent.putExtra(DMSConstants.DATA, extra);
         startActivity(intent);
     }

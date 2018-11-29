@@ -242,5 +242,8 @@
     <string name="all">All</string>
     <string name="label_patient_name">\u0020<![CDATA[& Name]]></string>
     <string name="select_two_files">Please Select Two Files.</string>
+    <string name="appointment_page_type">appointment</string>
+    <string name="patient_page_type">search</string>
+    <string name="admitted_page_type">admitted</string>
 
 </resources>
