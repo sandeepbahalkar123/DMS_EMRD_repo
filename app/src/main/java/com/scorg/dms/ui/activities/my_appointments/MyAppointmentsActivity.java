@@ -273,7 +273,11 @@ public class MyAppointmentsActivity extends BaseActivity implements HelperRespon
         if (monthOfYearToShow <= 9) {
             monthToSend = "0" + monthToSend;
         }
-        String dateToSend = CommonMethods.formatDateTime(dayOfMonth + "-" + monthToSend + "-" + year, DMSConstants.DATE_PATTERN.UTC_PATTERN, DMSConstants.DATE_PATTERN.DD_MM_YYYY, DMSConstants.DATE);
+
+        String currentDate = CommonMethods.getCurrentDate(DMSConstants.DATE_PATTERN.UTC_PATTERN);
+        String currentUTCTime = currentDate.split("T")[1];
+
+        String dateToSend = year + "-" + monthToSend + "-" + dayOfMonth + "T" + currentUTCTime;
 
         Log.e("selected dateToSend", "" + dateToSend);
 
@@ -284,7 +288,11 @@ public class MyAppointmentsActivity extends BaseActivity implements HelperRespon
 
     @Override
     public void pullRefresh() {
-        String dateToSend = CommonMethods.formatDateTime(mDateSelectedByUser, DMSConstants.DATE_PATTERN.UTC_PATTERN, DMSConstants.DATE_PATTERN.DD_MM_YYYY, DMSConstants.DATE);
+
+        String currentDate = CommonMethods.getCurrentDate(DMSConstants.DATE_PATTERN.UTC_PATTERN);
+        String currentUTCTime = currentDate.split("T")[1];
+
+        String dateToSend = CommonMethods.formatDateTime(mDateSelectedByUser, DMSConstants.DATE_PATTERN.YYYY_MM_DD, DMSConstants.DATE_PATTERN.DD_MM_YYYY, DMSConstants.DATE) + "T" + currentUTCTime;
         mAppointmentHelper.doGetAppointmentData(dateToSend);
     }
 

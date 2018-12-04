@@ -24,7 +24,6 @@ import com.scorg.dms.helpers.admittedpatient.AdmittedPatientHelper;
 import com.scorg.dms.interfaces.CustomResponse;
 import com.scorg.dms.interfaces.ErrorDialogCallback;
 import com.scorg.dms.interfaces.HelperResponse;
-import com.scorg.dms.model.Common;
 import com.scorg.dms.model.admitted_patient.AdmittedPatientBaseModel;
 import com.scorg.dms.model.admitted_patient.AdmittedPatientDataModel;
 import com.scorg.dms.model.my_appointments.AppointmentPatientData;
@@ -131,7 +130,7 @@ public class AdmittedPatientsActivity extends BaseActivity implements HelperResp
     private void showErrorDialog(String errorMessage, boolean isTimeout) {
         if (mAdmittedPatientsFragment.swipeToRefresh != null) {
             mAdmittedPatientsFragment.swipeToRefresh.setRefreshing(false);
-            if(CommonMethods.isNullOrEmpty(mAdmittedPatientsFragment.admittedPatientsListAdapter))
+            if (CommonMethods.isNullOrEmpty(mAdmittedPatientsFragment.admittedPatientsListAdapter))
                 mAdmittedPatientsFragment.emptyListView.setVisibility(View.VISIBLE);
         }
         CommonMethods.showErrorDialog(errorMessage, mContext, isTimeout, new ErrorDialogCallback() {
@@ -258,7 +257,11 @@ public class AdmittedPatientsActivity extends BaseActivity implements HelperResp
         if (monthOfYearToShow <= 9) {
             monthToSend = "0" + monthToSend;
         }
-        String dateToSend = CommonMethods.formatDateTime(dayOfMonth + "-" + monthToSend + "-" + year, DMSConstants.DATE_PATTERN.UTC_PATTERN, DMSConstants.DATE_PATTERN.DD_MM_YYYY, DMSConstants.DATE);
+
+        String currentDate = CommonMethods.getCurrentDate(DMSConstants.DATE_PATTERN.UTC_PATTERN);
+        String currentUTCTime = currentDate.split("T")[1];
+
+        String dateToSend = year + "-" + monthToSend + "-" + dayOfMonth + "T" + currentUTCTime;
 
         Log.e("selected dateToSend", "" + dateToSend);
         //-----
@@ -268,7 +271,10 @@ public class AdmittedPatientsActivity extends BaseActivity implements HelperResp
 
     @Override
     public void pullRefresh() {
-        String dateToSend = CommonMethods.formatDateTime(mDateSelectedByUser, DMSConstants.DATE_PATTERN.UTC_PATTERN, DMSConstants.DATE_PATTERN.DD_MM_YYYY, DMSConstants.DATE);
+
+        String currentDate = CommonMethods.getCurrentDate(DMSConstants.DATE_PATTERN.UTC_PATTERN);
+        String currentUTCTime = currentDate.split("T")[1];
+        String dateToSend = CommonMethods.formatDateTime(mDateSelectedByUser, DMSConstants.DATE_PATTERN.YYYY_MM_DD, DMSConstants.DATE_PATTERN.DD_MM_YYYY, DMSConstants.DATE) + "T" + currentUTCTime;
         admittedPatientHelper.doGetAdmittedData(dateToSend);
     }
 }
