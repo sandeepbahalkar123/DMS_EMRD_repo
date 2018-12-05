@@ -1,11 +1,8 @@
-
-
 package com.scorg.dms.adapters.admitted_patient;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
@@ -13,17 +10,14 @@ import android.text.Html;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.Filter;
 import android.widget.Filterable;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.amulyakhare.textdrawable.TextDrawable;
@@ -43,8 +37,6 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static com.scorg.dms.util.CommonMethods.toCamelCase;
-
 
 public class AdmittedPatientsListAdapter
         extends RecyclerView.Adapter<AdmittedPatientsListAdapter.MyViewHolder> implements Filterable {
@@ -62,53 +54,6 @@ public class AdmittedPatientsListAdapter
         this.admittedPatientDataList = new ArrayList<>();
         this.admittedPatientDataList.addAll(admittedPatientData);
         this.onItemClickListener = onItemClickListener;
-    }
-
-    public static class MyViewHolder extends RecyclerView.ViewHolder {
-
-
-        private LinearLayout front_layout;
-        private TextView appointmentTime;
-        private ImageView bluelineImageView;
-        private TextView patientIdTextView;
-        private CircularImageView patientImageView;
-        private TextView patientNameTextView;
-        private TextView patientAgeTextView;
-        private TextView patientGenderTextView;
-        private TextView textBedNo;
-        private TextView textBedNoHead;
-        private TextView textNewPatient;
-        private TextView patientPhoneNumber;
-
-
-        private LinearLayout idAndDetailsLayout;
-        private LinearLayout layoutAppointmentEpisode;
-        private View viewLine1;
-        private View separatorView;
-        private ImageView callIcon;
-
-
-        MyViewHolder(View convertView) {
-            super(convertView);
-            idAndDetailsLayout = (LinearLayout) convertView.findViewById(R.id.idAndDetailsLayout);
-            front_layout = (LinearLayout) convertView.findViewById(R.id.front_layout);
-            appointmentTime = (TextView) convertView.findViewById(R.id.appointmentTime);
-            patientIdTextView = (TextView) convertView.findViewById(R.id.patientIdTextView);
-            patientImageView = (CircularImageView) convertView.findViewById(R.id.patientImageView);
-            patientNameTextView = (TextView) convertView.findViewById(R.id.patientNameTextView);
-            patientAgeTextView = (TextView) convertView.findViewById(R.id.patientAgeTextView);
-            patientGenderTextView = (TextView) convertView.findViewById(R.id.patientGenderTextView);
-            textBedNo = (TextView) convertView.findViewById(R.id.textBedNo);
-            textBedNoHead = (TextView) convertView.findViewById(R.id.textBedNoHead);
-            textNewPatient = (TextView) convertView.findViewById(R.id.textNewPatient);
-            patientPhoneNumber = (TextView) convertView.findViewById(R.id.patientPhoneNumber);
-            layoutAppointmentEpisode = (LinearLayout) convertView.findViewById(R.id.layoutAppointmentEpisode);
-            bluelineImageView = (ImageView) convertView.findViewById(R.id.bluelineImageView);
-            callIcon = (ImageView) convertView.findViewById(R.id.callIcon);
-            viewLine1 = (View) convertView.findViewById(R.id.viewLine1);
-            separatorView = (View) convertView.findViewById(R.id.separatorView);
-
-        }
     }
 
     @Override
@@ -220,7 +165,7 @@ public class AdmittedPatientsListAdapter
         if (appDate != null) {
 
             String day = CommonMethods.formatDateTime(appDate, "dd", DMSConstants.DATE_PATTERN.UTC_PATTERN, DMSConstants.TIME);
-            String monthYear=CommonMethods.formatDateTime(appDate, "MMM''yy", DMSConstants.DATE_PATTERN.UTC_PATTERN, DMSConstants.TIME);
+            String monthYear = CommonMethods.formatDateTime(appDate, "MMM''yy", DMSConstants.DATE_PATTERN.UTC_PATTERN, DMSConstants.TIME);
             String toDisplay = day + "<sup>" + CommonMethods.getSuffixForNumber(Integer.parseInt(day)) + "</sup> " + monthYear;
 
             Spanned dateToDisplay;
@@ -231,7 +176,7 @@ public class AdmittedPatientsListAdapter
 
 
             holder.appointmentTime.setVisibility(View.VISIBLE);
-            holder.appointmentTime.setText(dateToDisplay +" "+CommonMethods.formatDateTime(appDate, DMSConstants.DATE_PATTERN.hh_mm_a, DMSConstants.DATE_PATTERN.UTC_PATTERN, DMSConstants.TIME).toLowerCase());
+            holder.appointmentTime.setText(dateToDisplay + " " + CommonMethods.formatDateTime(appDate, DMSConstants.DATE_PATTERN.hh_mm_a, DMSConstants.DATE_PATTERN.UTC_PATTERN, DMSConstants.TIME).toLowerCase());
         }
         //-------
         TextDrawable textDrawable = CommonMethods.getTextDrawable(mContext, admittedPatientDataObject.getPatientName());
@@ -312,7 +257,6 @@ public class AdmittedPatientsListAdapter
 
     }
 
-
     private SpannableString doCreateSpannableData(String inputData, String spannableString) {
 
         SpannableString spannableIdString = new SpannableString(inputData);
@@ -376,7 +320,6 @@ public class AdmittedPatientsListAdapter
         };
     }
 
-
     public interface OnItemClickListener {
 
         void onRecordFound(boolean isListEmpty);
@@ -386,5 +329,52 @@ public class AdmittedPatientsListAdapter
         void onPhoneNoClick(long patientPhone);
 
         void onClickedOfEpisodeListButton(SearchResult groupHeader);
+    }
+
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
+
+
+        private LinearLayout front_layout;
+        private TextView appointmentTime;
+        private ImageView bluelineImageView;
+        private TextView patientIdTextView;
+        private CircularImageView patientImageView;
+        private TextView patientNameTextView;
+        private TextView patientAgeTextView;
+        private TextView patientGenderTextView;
+        private TextView textBedNo;
+        private TextView textBedNoHead;
+        private TextView textNewPatient;
+        private TextView patientPhoneNumber;
+
+
+        private LinearLayout idAndDetailsLayout;
+        private LinearLayout layoutAppointmentEpisode;
+        private View viewLine1;
+        private View separatorView;
+        private ImageView callIcon;
+
+
+        MyViewHolder(View convertView) {
+            super(convertView);
+            idAndDetailsLayout = (LinearLayout) convertView.findViewById(R.id.idAndDetailsLayout);
+            front_layout = (LinearLayout) convertView.findViewById(R.id.front_layout);
+            appointmentTime = (TextView) convertView.findViewById(R.id.appointmentTime);
+            patientIdTextView = (TextView) convertView.findViewById(R.id.patientIdTextView);
+            patientImageView = (CircularImageView) convertView.findViewById(R.id.patientImageView);
+            patientNameTextView = (TextView) convertView.findViewById(R.id.patientNameTextView);
+            patientAgeTextView = (TextView) convertView.findViewById(R.id.patientAgeTextView);
+            patientGenderTextView = (TextView) convertView.findViewById(R.id.patientGenderTextView);
+            textBedNo = (TextView) convertView.findViewById(R.id.textBedNo);
+            textBedNoHead = (TextView) convertView.findViewById(R.id.textBedNoHead);
+            textNewPatient = (TextView) convertView.findViewById(R.id.textNewPatient);
+            patientPhoneNumber = (TextView) convertView.findViewById(R.id.patientPhoneNumber);
+            layoutAppointmentEpisode = (LinearLayout) convertView.findViewById(R.id.layoutAppointmentEpisode);
+            bluelineImageView = (ImageView) convertView.findViewById(R.id.bluelineImageView);
+            callIcon = (ImageView) convertView.findViewById(R.id.callIcon);
+            viewLine1 = (View) convertView.findViewById(R.id.viewLine1);
+            separatorView = (View) convertView.findViewById(R.id.separatorView);
+
+        }
     }
 }

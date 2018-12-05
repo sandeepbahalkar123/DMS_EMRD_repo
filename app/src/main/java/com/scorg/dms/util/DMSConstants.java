@@ -109,7 +109,6 @@ public class DMSConstants {
         String DD_MMM = "dd MMM";
         String MM = "MM";
         String MMM = "MMM";
-        String UTC_PATTERN_2ND = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
         String UTC_PATTERN = "yyyy-MM-dd'T'HH:mm:ss'Z'";
         String YYYY_MM_DD = "yyyy-MM-dd";
         String DD_MM_YYYY = "dd-MM-yyyy";

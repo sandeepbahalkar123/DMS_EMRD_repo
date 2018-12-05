@@ -38,7 +38,6 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.signature.ObjectKey;
 import com.scorg.dms.R;
-import com.scorg.dms.adapters.admitted_patient.AdmittedPatientsListAdapter;
 import com.scorg.dms.interfaces.CheckIpConnection;
 import com.scorg.dms.interfaces.DatePickerDialogListener;
 import com.scorg.dms.interfaces.ErrorDialogCallback;
@@ -56,7 +55,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -620,7 +618,7 @@ public class CommonMethods {
     }
 
     public static boolean isNullOrEmpty(RecyclerView.Adapter adapter) {
-        return adapter == null || (adapter.getItemCount()==0);
+        return adapter == null || (adapter.getItemCount() == 0);
     }
 
     //--------------
