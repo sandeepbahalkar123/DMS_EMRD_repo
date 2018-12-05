@@ -231,6 +231,14 @@ public class CommonMethods {
         return df.format(c.getTime());
     }
 
+    public static String getCurrentDateLocal(String yyyyMmDd) // for enrollmentId
+    {
+        Calendar c = Calendar.getInstance();
+        SimpleDateFormat df = new SimpleDateFormat(yyyyMmDd, Locale.US);
+       // df.setTimeZone(TimeZone.getTimeZone("UTC"));/// this line add to set UTC time zone to date
+        return df.format(c.getTime());
+    }
+
     public static void showSnack(Context mContext, View mViewById, String msg) {
         Snackbar snack = Snackbar.make(mViewById, msg, Snackbar.LENGTH_SHORT);
         ViewGroup group = (ViewGroup) snack.getView();
@@ -276,6 +284,7 @@ public class CommonMethods {
             Date value = ft.parse(selectedDateTime);
             SimpleDateFormat dateFormatter = new SimpleDateFormat(requestedFormat, Locale.US); //this format changeable
             dateFormatter.setTimeZone(TimeZone.getDefault());
+           // dateFormatter.setTimeZone(TimeZone.getTimeZone("UTC"));
             ourDate = dateFormatter.format(value);
         } catch (Exception e) {
             if (formatString.equalsIgnoreCase(DMSConstants.TIME)) {

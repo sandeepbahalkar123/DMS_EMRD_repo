@@ -225,6 +225,8 @@ public class PatientRecycleViewListAdapter extends RecyclerView.Adapter<PatientR
 
     public void addNewItems(List<SearchResult> searchResult) {
         this._originalListDataHeader.addAll(searchResult);
+
+
     }
 
 }

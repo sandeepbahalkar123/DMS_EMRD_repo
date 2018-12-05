@@ -39,10 +39,14 @@ import com.scorg.dms.ui.fragments.my_appointments.AllAppointmentsFragment;
 import com.scorg.dms.util.CommonMethods;
 import com.scorg.dms.util.DMSConstants;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -76,6 +80,7 @@ public class MyAppointmentsActivity extends BaseActivity implements HelperRespon
     private MyAppointmentsBaseModel myAppointmentsBaseMainModel;
     private long mClickedPhoneNumber;
     private String mDateSelectedByUser = "";
+    String dateToSend = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,9 +106,9 @@ public class MyAppointmentsActivity extends BaseActivity implements HelperRespon
         tabs.setupWithViewPager(viewpager);
         //Call api for AppointmentData
         mAppointmentHelper = new AppointmentHelper(this, this);
-        String date = CommonMethods.getCurrentDate(DMSConstants.DATE_PATTERN.UTC_PATTERN);
-        System.out.println(date);
-        mAppointmentHelper.doGetAppointmentData(date);
+        mDateSelectedByUser= CommonMethods.getCurrentDate(DMSConstants.DATE_PATTERN.UTC_PATTERN);
+        System.out.println(mDateSelectedByUser);
+        mAppointmentHelper.doGetAppointmentData(mDateSelectedByUser);
     }
 
     private void setupViewPager(ViewPager viewPager) {
@@ -120,8 +125,13 @@ public class MyAppointmentsActivity extends BaseActivity implements HelperRespon
         //Set Date in Required Format i.e 13thJuly'18
         dateTextview.setVisibility(View.VISIBLE);
         String day = CommonMethods.getCurrentDate("dd");
-        mDateSelectedByUser = CommonMethods.getCurrentDate(DMSConstants.DATE_PATTERN.d_M_YYYY);
-        String toDisplay = day + "<sup>" + CommonMethods.getSuffixForNumber(Integer.parseInt(day)) + "</sup> " + CommonMethods.getCurrentDate("MMM'' yy");
+
+        Log.e("day--", day);
+
+
+        String day2 = CommonMethods.getCurrentDateLocal("dd");
+        Log.e("day2--", day2);
+        String toDisplay = day2 + "<sup>" + CommonMethods.getSuffixForNumber(Integer.parseInt(day)) + "</sup> " + CommonMethods.getCurrentDate("MMM'' yy");
 
         Spanned dateToDisplay;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
@@ -252,13 +262,13 @@ public class MyAppointmentsActivity extends BaseActivity implements HelperRespon
     public void onDateSet(DatePickerDialog dialog, String year, String monthOfYear, String dayOfMonth) {
 
         int monthOfYearToShow = Integer.parseInt(monthOfYear) + 1;
-        mDateSelectedByUser = dayOfMonth + "-" + monthOfYearToShow + "-" + year;
-        Log.e("mDateSelectedByUser", "" + mDateSelectedByUser);
+
         dateTextview.setVisibility(View.VISIBLE);
         Date date = CommonMethods.convertStringToDate(dayOfMonth + "-" + monthOfYearToShow + "-" + year, DMSConstants.DATE_PATTERN.DD_MM_YYYY);
         Log.e("selected date", "" + date);
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
+
         String toDisplay = cal.get(Calendar.DAY_OF_MONTH) + "<sup>" + CommonMethods.getSuffixForNumber(cal.get(Calendar.DAY_OF_MONTH)) + "</sup> " + CommonMethods.getFormattedDate(monthOfYearToShow + " " + year, "MM yyyy", "MMM'' yy");
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
@@ -274,26 +284,29 @@ public class MyAppointmentsActivity extends BaseActivity implements HelperRespon
             monthToSend = "0" + monthToSend;
         }
 
-        String currentDate = CommonMethods.getCurrentDate(DMSConstants.DATE_PATTERN.UTC_PATTERN);
-        String currentUTCTime = currentDate.split("T")[1];
-
-        String dateToSend = year + "-" + monthToSend + "-" + dayOfMonth + "T" + currentUTCTime;
-
-        Log.e("selected dateToSend", "" + dateToSend);
+        String dateConvert = year + "-" + monthToSend + "-" + (Integer.parseInt(dayOfMonth) - 1) + "T24:00:00Z";
+        Log.e("selected dateConvert", "" + dateConvert);
+        String ourDate = "";
+        try {
+            SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US);
+            Date value = ft.parse(dateConvert);
+            SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US); //this format changeable
+            dateFormatter.setTimeZone(TimeZone.getTimeZone("UTC"));
+            ourDate = dateFormatter.format(value);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Log.e("selected dateToSend1111", "" + ourDate);
+        mDateSelectedByUser = ourDate;
+        Log.e("mDateSelectedByUser", "" + mDateSelectedByUser);
 
         //-----
-
-        mAppointmentHelper.doGetAppointmentData(dateToSend);
+        mAppointmentHelper.doGetAppointmentData(mDateSelectedByUser);
     }
 
     @Override
     public void pullRefresh() {
-
-        String currentDate = CommonMethods.getCurrentDate(DMSConstants.DATE_PATTERN.UTC_PATTERN);
-        String currentUTCTime = currentDate.split("T")[1];
-
-        String dateToSend = CommonMethods.formatDateTime(mDateSelectedByUser, DMSConstants.DATE_PATTERN.YYYY_MM_DD, DMSConstants.DATE_PATTERN.DD_MM_YYYY, DMSConstants.DATE) + "T" + currentUTCTime;
-        mAppointmentHelper.doGetAppointmentData(dateToSend);
+        mAppointmentHelper.doGetAppointmentData(mDateSelectedByUser);
     }
 
 

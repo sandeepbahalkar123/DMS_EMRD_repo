@@ -33,9 +33,13 @@ import com.scorg.dms.ui.fragments.admitted_patient.AdmittedPatientsFragment;
 import com.scorg.dms.util.CommonMethods;
 import com.scorg.dms.util.DMSConstants;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -77,23 +81,28 @@ public class AdmittedPatientsActivity extends BaseActivity implements HelperResp
         titleTextView.setText(getString(R.string.admitted_patient));
         setDateInToolbar();
         //Call api for AppointmentData
-        String date = CommonMethods.getCurrentDate(DMSConstants.DATE_PATTERN.UTC_PATTERN);
-        System.out.println(date);
+        mDateSelectedByUser = CommonMethods.getCurrentDate(DMSConstants.DATE_PATTERN.UTC_PATTERN);
+        System.out.println(mDateSelectedByUser);
 
         mAdmittedPatientsFragment = AdmittedPatientsFragment.newInstance();
         getSupportFragmentManager().beginTransaction().replace(R.id.viewContainer, mAdmittedPatientsFragment).commit();
 
         admittedPatientHelper = new AdmittedPatientHelper(this, this);
-        admittedPatientHelper.doGetAdmittedData(date);
+        admittedPatientHelper.doGetAdmittedData(mDateSelectedByUser);
     }
 
 
     private void setDateInToolbar() {
         //Set Date in Required Format i.e 13thJuly'18
         dateTextview.setVisibility(View.VISIBLE);
+
         String day = CommonMethods.getCurrentDate("dd");
-        mDateSelectedByUser = CommonMethods.getCurrentDate(DMSConstants.DATE_PATTERN.d_M_YYYY);
-        String toDisplay = day + "<sup>" + CommonMethods.getSuffixForNumber(Integer.parseInt(day)) + "</sup> " + CommonMethods.getCurrentDate("MMM'' yy");
+        Log.e("day--",day);
+
+        String day2= CommonMethods.getCurrentDateLocal("dd");
+        Log.e("day2--",day2);
+    //    mDateSelectedByUser = CommonMethods.getCurrentDate(DMSConstants.DATE_PATTERN.d_M_YYYY);
+        String toDisplay = day2 + "<sup>" + CommonMethods.getSuffixForNumber(Integer.parseInt(day)) + "</sup> " + CommonMethods.getCurrentDate("MMM'' yy");
 
         Spanned dateToDisplay;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
@@ -234,7 +243,6 @@ public class AdmittedPatientsActivity extends BaseActivity implements HelperResp
     public void onDateSet(DatePickerDialog dialog, String year, String monthOfYear, String dayOfMonth) {
 
         int monthOfYearToShow = Integer.parseInt(monthOfYear) + 1;
-        mDateSelectedByUser = dayOfMonth + "-" + monthOfYearToShow + "-" + year;
         dateTextview.setVisibility(View.VISIBLE);
         String timeToShow = CommonMethods.formatDateTime(dayOfMonth + "-" + monthOfYearToShow + "-" + year, DMSConstants.DATE_PATTERN.MMM_YY,
                 DMSConstants.DATE_PATTERN.DD_MM_YYYY, DMSConstants.DATE).toLowerCase();
@@ -257,25 +265,52 @@ public class AdmittedPatientsActivity extends BaseActivity implements HelperResp
         if (monthOfYearToShow <= 9) {
             monthToSend = "0" + monthToSend;
         }
-
-        String currentDate = CommonMethods.getCurrentDate(DMSConstants.DATE_PATTERN.UTC_PATTERN);
-        String currentUTCTime = currentDate.split("T")[1];
-
-        String dateToSend = year + "-" + monthToSend + "-" + dayOfMonth + "T" + currentUTCTime;
-
-        Log.e("selected dateToSend", "" + dateToSend);
+//
+////        String currentDate = CommonMethods.getCurrentDate(DMSConstants.DATE_PATTERN.UTC_PATTERN);
+////        String currentUTCTime = currentDate.split("T")[1];
+////
+////        String dateToSend = year + "-" + monthToSend + "-" + dayOfMonth + "T" + currentUTCTime;
+//
+//        String dateToSend = CommonMethods.formatDateTime(dayOfMonth + "-" + monthToSend + "-" + year, DMSConstants.DATE_PATTERN.UTC_PATTERN, DMSConstants.DATE_PATTERN.DD_MM_YYYY, DMSConstants.DATE);
+//
+//
+//        Log.e("selected dateToSend", "" + dateToSend);
         //-----
 
-        admittedPatientHelper.doGetAdmittedData(dateToSend);
+        String dateConvert = year + "-" + monthToSend + "-" + (Integer.parseInt(dayOfMonth) - 1) + "T24:00:00Z";
+        Log.e("selected dateConvert", "" + dateConvert);
+        String ourDate = "";
+        try {
+            SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US);
+            Date value = ft.parse(dateConvert);
+            SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US); //this format changeable
+            dateFormatter.setTimeZone(TimeZone.getTimeZone("UTC"));
+            ourDate = dateFormatter.format(value);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Log.e("selected dateToSend1111", "" + ourDate);
+        mDateSelectedByUser = ourDate;
+        Log.e("mDateSelectedByUser", "" + mDateSelectedByUser);
+
+        //-----
+
+
+
+
+        admittedPatientHelper.doGetAdmittedData(mDateSelectedByUser);
     }
 
     @Override
     public void pullRefresh() {
 
-        String currentDate = CommonMethods.getCurrentDate(DMSConstants.DATE_PATTERN.UTC_PATTERN);
-        String currentUTCTime = currentDate.split("T")[1];
-        String dateToSend = CommonMethods.formatDateTime(mDateSelectedByUser, DMSConstants.DATE_PATTERN.YYYY_MM_DD, DMSConstants.DATE_PATTERN.DD_MM_YYYY, DMSConstants.DATE) + "T" + currentUTCTime;
-        admittedPatientHelper.doGetAdmittedData(dateToSend);
+//        String currentDate = CommonMethods.getCurrentDate(DMSConstants.DATE_PATTERN.UTC_PATTERN);
+//        String currentUTCTime = currentDate.split("T")[1];
+//        String dateToSend = CommonMethods.formatDateTime(mDateSelectedByUser, DMSConstants.DATE_PATTERN.YYYY_MM_DD, DMSConstants.DATE_PATTERN.DD_MM_YYYY, DMSConstants.DATE) + "T" + currentUTCTime;
+
+       // String dateToSend = CommonMethods.formatDateTime(mDateSelectedByUser, DMSConstants.DATE_PATTERN.UTC_PATTERN, DMSConstants.DATE_PATTERN.DD_MM_YYYY, DMSConstants.DATE);
+
+        admittedPatientHelper.doGetAdmittedData(mDateSelectedByUser);
     }
 }
 

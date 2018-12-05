@@ -29,9 +29,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                tools:background="@color/SkyBlue"
                 android:paddingBottom="@dimen/dp5"
-                >
+                tools:background="@color/SkyBlue">
 
                 <com.scorg.dms.ui.customesViews.SearchTextViewWithDeleteButton
                     android:id="@+id/autocompleteSearchBox"
@@ -40,8 +39,7 @@
                     android:layout_marginTop="@dimen/dp5"
                     android:visibility="visible"
                     app:hintText="@string/patient_list_search_hint"
-                    app:textSize="@dimen/sp15"
-                    />
+                    app:textSize="@dimen/sp15" />
 
                 <View
                     android:layout_width="match_parent"
@@ -65,12 +63,13 @@
             <android.support.v4.widget.SwipeRefreshLayout
                 android:id="@+id/swipeToRefresh"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                >
+                android:layout_height="match_parent">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
+
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/expandableListView"
                         android:layout_width="match_parent"
@@ -82,8 +81,7 @@
                         android:id="@+id/emptyListView"
                         layout="@layout/common_no_records_found"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        />
+                        android:layout_height="match_parent" />
                 </LinearLayout>
 
 

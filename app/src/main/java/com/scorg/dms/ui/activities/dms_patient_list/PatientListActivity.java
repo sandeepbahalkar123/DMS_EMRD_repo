@@ -308,8 +308,10 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
                     }, 200);
 
                 } else {
-                    if (mAutoCompleteSearchBox.getEditText().length() == 0)
+                    if (mAutoCompleteSearchBox.getEditText().length() == 0) {
                         patientExpandableListAdapter.removeAll();
+                        patientExpandableListAdapter.notifyDataSetChanged();
+                    }
                     currentPage = 1;
                     doGetPatientList();
                 }

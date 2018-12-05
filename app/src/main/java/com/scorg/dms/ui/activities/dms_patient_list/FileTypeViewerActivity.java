@@ -281,7 +281,6 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
     String patientGender;
 
 
-
     private boolean isFirstPdf = true;
     private float mCurrentXOffset = -1;
     private float mCurrentYOffset = -1;
@@ -565,18 +564,27 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
 
         labelDrawerUDID.setText(DMSApplication.LABEL_UHID);
 
-        if(patientAge == null && patientGender == null){
-            patientDetailsLinearLayout.setVisibility(View.GONE);
+        if (patientGender == null) {
+            if (patientAge != null) {
+                if (patientAge.equals("0"))
+                    patientDetailsLinearLayout.setVisibility(View.GONE);
+            } else
+                patientDetailsLinearLayout.setVisibility(View.GONE);
         }
 
         if (patientAge != null) {
-            userAge.setVisibility(View.VISIBLE);
+            if (!patientAge.equals("0"))
+                userAge.setVisibility(View.VISIBLE);
             userAge.setText(patientAge + " " + getString(R.string.years));
+        } else {
+            userAge.setVisibility(View.GONE);
         }
 
         if (patientGender != null) {
             userGender.setVisibility(View.VISIBLE);
             userGender.setText(patientGender);
+        } else {
+            userGender.setVisibility(View.GONE);
         }
 
 
