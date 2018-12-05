@@ -444,7 +444,14 @@ public class HomePageActivity extends BaseActivity implements HelperResponse, Da
                 }
                 DashboardBaseModel mDashboardBaseModel = (DashboardBaseModel) customResponse;
                 if (!mDashboardBaseModel.getCommon().getStatusCode().equals(DMSConstants.SUCCESS)) {
-                    CommonMethods.showToast(mContext, mDashboardBaseModel.getCommon().getStatusMessage());
+                    CommonMethods.showErrorDialog(getString(R.string.something_went_wrong_error), mContext, false, new ErrorDialogCallback() {
+                        @Override
+                        public void ok() {
+                        }
+                        @Override
+                        public void retry() {
+                        }
+                    });
                 } else if (DMSConstants.RESPONSE_OK.equalsIgnoreCase(mDashboardBaseModel.getCommon().getSuccess())) {
 
                     mDashboardDataModel = mDashboardBaseModel.getDashboardDataModel();
@@ -704,6 +711,8 @@ public class HomePageActivity extends BaseActivity implements HelperResponse, Da
         extra.putString(DMSConstants.PAT_ID, appointmentPatientData.getPatId());
         extra.putString(DMSConstants.PATIENT_LIST_PARAMS.PATIENT_NAME, "" + appointmentPatientData.getPatientName());
         extra.putString(DMSConstants.PATIENT_LIST_PARAMS.ARCHIVE_PAGE_TYPE, getString(R.string.appointment_page_type));
+        extra.putString(DMSConstants.PATIENT_AGE,appointmentPatientData.getAge() );
+        extra.putString(DMSConstants.PATIENT_GENDER,appointmentPatientData.getGender());
         intent.putExtra(DMSConstants.DATA, extra);
         startActivity(intent);
     }

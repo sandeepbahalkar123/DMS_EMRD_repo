@@ -212,20 +212,28 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
     TableRow dischargeDateRow;
     @BindView(R.id.dischargeDateRowTwo)
     TableRow dischargeDateRowTwo;
+
     @BindView(R.id.layoutCompareSwitch)
     LinearLayout layoutCompareSwitch;
+
     @BindView(R.id.compareDialogSwitch)
     SwitchCompat mOpenCompareDialogSwitch;
+
     @BindView(R.id.layoutCompareSwitch1)
     LinearLayout layoutCompareSwitch1;
+
     @BindView(R.id.compareDialogSwitch1)
     SwitchCompat mOpenCompareDialogSwitch1;
+
     @BindView(R.id.imageCloseDrawer)
     AppCompatImageButton imageCloseDrawer;
+
     @BindView(R.id.patientIcon)
     ImageView patientIcon;
+
     @BindView(R.id.uhidIcon)
     ImageView uhidIcon;
+
     @BindView(R.id.addressIcon)
     ImageView addressIcon;
 
@@ -246,6 +254,18 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
     @BindView(R.id.layoutDrawerAddress)
     LinearLayout layoutDrawerAddress;
 
+    @BindView(R.id.patientDetailsLinearLayout)
+    LinearLayout patientDetailsLinearLayout;
+
+    @BindView(R.id.userAge)
+    TextView userAge;
+
+    @BindView(R.id.userGender)
+    TextView userGender;
+
+    @BindView(R.id.iconPatientGenderAge)
+    ImageView iconPatientGenderAge;
+
     DrawerLayout mDrawer;
     //---------
     ArrayList<PatientEpisodeFileData> mSelectedFileTypeDataToCompare;
@@ -257,6 +277,11 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
     String doctorName;
     String patientAddress;
     String pageType;
+    String patientAge;
+    String patientGender;
+
+
+
     private boolean isFirstPdf = true;
     private float mCurrentXOffset = -1;
     private float mCurrentYOffset = -1;
@@ -283,6 +308,9 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
     private boolean isTreeCreated;
     private boolean isBackPress;
 
+
+    Dialog dialogRaiseRequest;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -299,11 +327,13 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
         customProgressDialog = new CustomProgressDialog(mContext);
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
         patientIcon.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+        iconPatientGenderAge.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         uhidIcon.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         addressIcon.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         deviderView.setBackgroundColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
         mCompareButton.setBackgroundColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         imgNoRecordFound.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+        userGender.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
 
         mLoadPreviousArchiveDataList.setColorFilter(Color.parseColor(DMSApplication.COLOR_ACCENT));
         mLoadNextArchiveDataList.setColorFilter(Color.parseColor(DMSApplication.COLOR_ACCENT));
@@ -362,6 +392,8 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
             doctorName = extra.getString(DMSConstants.DOCTOR_NAME);
             respectivePatID = extra.getString(DMSConstants.PAT_ID);
             pageType = extra.getString(DMSConstants.PATIENT_LIST_PARAMS.ARCHIVE_PAGE_TYPE);
+            patientAge = extra.getString(DMSConstants.PATIENT_AGE);
+            patientGender = extra.getString(DMSConstants.PATIENT_GENDER);
         }
 
 
@@ -532,6 +564,22 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
             layoutDrawerAddress.setVisibility(View.GONE);
 
         labelDrawerUDID.setText(DMSApplication.LABEL_UHID);
+
+        if(patientAge == null && patientGender == null){
+            patientDetailsLinearLayout.setVisibility(View.GONE);
+        }
+
+        if (patientAge != null) {
+            userAge.setVisibility(View.VISIBLE);
+            userAge.setText(patientAge + " " + getString(R.string.years));
+        }
+
+        if (patientGender != null) {
+            userGender.setVisibility(View.VISIBLE);
+            userGender.setText(patientGender);
+        }
+
+
     }
 
     @OnClick({R.id.imageCloseDrawer, R.id.openRightDrawer, R.id.loadPreviousArchiveDataList, R.id.loadNextArchiveDataList, R.id.compareButton, R.id.compareLabel, R.id.fileOneRemoveButton, R.id.fileTwoRemoveButton})
@@ -580,7 +628,7 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
                 if (mGetEncryptedPDFRequestModelList.size() == 2) {
                     mPatientsHelper.getPdfData(mGetEncryptedPDFRequestModelList.get(0), DMSConstants.TASK_GET_PDF_DATA + "_0");
                     mPatientsHelper.getPdfData(mGetEncryptedPDFRequestModelList.get(1), DMSConstants.TASK_GET_PDF_DATA + "_1");
-                }else {
+                } else {
                     CommonMethods.showErrorDialog(getString(R.string.select_two_files), mContext, false, new ErrorDialogCallback() {
                                 @Override
                                 public void ok() {
@@ -728,8 +776,8 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
 
             String msg = unlockRequestResponseBaseMode.getRequestResponseResultUnlock().getResult();
             CommonMethods.showToast(this, getResources().getString(R.string.request_raised_success));
-
-
+            if (dialogRaiseRequest != null && dialogRaiseRequest.isShowing())
+                dialogRaiseRequest.dismiss();
         }
     }
 
@@ -752,7 +800,8 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
         if (mFirstFileTypeProgressDialogLayout.getVisibility() == View.VISIBLE)
             mFirstFileTypeProgressDialogLayout.setVisibility(View.GONE);
 
-
+        if (dialogRaiseRequest != null && dialogRaiseRequest.isShowing())
+            dialogRaiseRequest.dismiss();
     }
 
     void setErrorDialog(String errorMessage, String mOldDataTag, boolean isTimeout, Context mContext) {
@@ -1752,13 +1801,13 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
 
 
     private void showDialogRaiseRequest(final RaiseUnlockRequestModel unlockRequestModel) {
-        final Dialog dialog = new Dialog(this);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.dialog_alert);
-        dialog.setCanceledOnTouchOutside(false);
-        dialog.setCancelable(false);
-        ((TextView) dialog.findViewById(R.id.textview_sucess)).setText(getResources().getString(R.string.do_you_want_to_unlock));
+        dialogRaiseRequest = new Dialog(this);
+        dialogRaiseRequest.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialogRaiseRequest.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialogRaiseRequest.setContentView(R.layout.dialog_alert);
+        dialogRaiseRequest.setCanceledOnTouchOutside(false);
+        dialogRaiseRequest.setCancelable(false);
+        ((TextView) dialogRaiseRequest.findViewById(R.id.textview_sucess)).setText(getResources().getString(R.string.do_you_want_to_unlock));
 
         float[] bottomLeftRadius = {0, 0, 0, 0, getResources().getDimension(R.dimen.dp8), getResources().getDimension(R.dimen.dp8), 0, 0};
         float[] bottomRightRadius = {0, 0, 0, 0, 0, 0, getResources().getDimension(R.dimen.dp8), getResources().getDimension(R.dimen.dp8)};
@@ -1773,9 +1822,9 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
         buttonRightBackground.setColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
         buttonRightBackground.setCornerRadii(bottomLeftRadius);
 
-        Button buttonRight = dialog.findViewById(R.id.button_cancel);
-        Button buttonLeft = dialog.findViewById(R.id.button_ok);
-        ImageView dialogIcon = dialog.findViewById(R.id.dialogIcon);
+        Button buttonRight = dialogRaiseRequest.findViewById(R.id.button_cancel);
+        Button buttonLeft = dialogRaiseRequest.findViewById(R.id.button_ok);
+        ImageView dialogIcon = dialogRaiseRequest.findViewById(R.id.dialogIcon);
         dialogIcon.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         buttonLeft.setBackground(buttonLeftBackground);
         buttonRight.setBackground(buttonRightBackground);
@@ -1792,10 +1841,10 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
         buttonRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialog.dismiss();
+                dialogRaiseRequest.dismiss();
 
             }
         });
-        dialog.show();
+        dialogRaiseRequest.show();
     }
 }

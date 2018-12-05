@@ -81,6 +81,8 @@ public class DashboardAppointmentListAdapter extends RecyclerView.Adapter<Dashbo
         groupViewHolder.btnDone.setBackground(buttonBackground);
         groupViewHolder.userName.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         groupViewHolder.appointmentConsultationType.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+        groupViewHolder.userGender.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+
         groupViewHolder.appointmentConsultationType.setBackground(appointmentConsultationTypeButtonBackground);
         final AppointmentPatientData groupHeader = _originalListDataHeader.get(position);
 
@@ -113,6 +115,25 @@ public class DashboardAppointmentListAdapter extends RecyclerView.Adapter<Dashbo
                 onItemClickListener.onClickedOfEpisodeListButton(searchResult);
             }
         });
+
+
+        if (groupHeader.getAge() != null && !groupHeader.getAge().equals("0")) {
+            groupViewHolder.userAge.setVisibility(View.VISIBLE);
+            groupViewHolder.userAge.setText(groupHeader.getAge() + " " + _context.getString(R.string.years));
+        }else {
+            groupViewHolder.userAge.setVisibility(View.GONE);
+        }
+
+
+        if (groupHeader.getGender() != null) {
+            groupViewHolder.userGender.setVisibility(View.VISIBLE);
+            groupViewHolder.userGender.setText(groupHeader.getGender());
+        }else {
+            groupViewHolder.userGender.setVisibility(View.GONE);
+        }
+
+
+
 
         String appDate = groupHeader.getAppDate();
         if (appDate != null) {
@@ -212,6 +233,10 @@ public class DashboardAppointmentListAdapter extends RecyclerView.Adapter<Dashbo
         @BindView(R.id.layoutAppointmentCode)
         LinearLayout layoutAppointmentCode;
 
+        @BindView(R.id.userAge)
+        TextView userAge;
+        @BindView(R.id.userGender)
+        TextView userGender;
 
         GroupViewHolder(View view) {
             super(view);
@@ -221,7 +246,16 @@ public class DashboardAppointmentListAdapter extends RecyclerView.Adapter<Dashbo
     }
 
     public void addNewItems(List<AppointmentPatientData> searchResult) {
+
+        int currentSize = this._originalListDataHeader.size() + 1;
         this._originalListDataHeader.addAll(searchResult);
+        notifyItemRangeInserted(currentSize, this._originalListDataHeader.size());
+
+     //   this._originalListDataHeader.addAll(searchResult);
+
+
+
+
     }
 
 

@@ -52,29 +52,40 @@
             android:layout_marginLeft="@dimen/dp5"
             android:layout_below="@+id/patientIdTextView"
             />
-        <TextView
-            android:id="@+id/patientAgeTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/roboto_medium"
-            android:textColor="@color/black"
-            android:textSize="@dimen/sp12"
-            tools:text="36 yrs - "
-            android:layout_below="@+id/patientNameTextView"
-            android:layout_marginStart="@dimen/dp5"
-            android:layout_marginLeft="@dimen/dp5"/>
 
-        <TextView
-            android:id="@+id/patientGenderTextView"
+
+
+        <LinearLayout
+            android:id="@+id/patientDetailsLinearLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/roboto_medium"
-            android:textColor="@color/rating_color"
-            android:textSize="@dimen/sp12"
-            tools:text="Male"
+            android:layout_marginStart="@dimen/dp5"
+            android:layout_marginLeft="@dimen/dp5"
             android:layout_below="@+id/patientNameTextView"
-            android:layout_toEndOf="@+id/patientAgeTextView"
-            android:layout_toRightOf="@+id/patientAgeTextView" />
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/patientAgeTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_medium"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp12"
+                android:visibility="gone"
+                tools:visibility="visible"
+                tools:text="36 yrs - " />
+
+            <TextView
+                android:id="@+id/patientGenderTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_medium"
+                android:textColor="@color/rating_color"
+                android:textSize="@dimen/sp12"
+                android:visibility="gone"
+                tools:visibility="visible"
+                tools:text="Male" />
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/layoutAppointmentCode"
@@ -86,7 +97,7 @@
             tools:visibility="visible"
             android:layout_marginStart="@dimen/dp5"
             android:layout_marginLeft="@dimen/dp5"
-            android:layout_below="@+id/patientGenderTextView">
+            android:layout_below="@+id/patientDetailsLinearLayout">
 
             <TextView
                 android:layout_width="wrap_content"

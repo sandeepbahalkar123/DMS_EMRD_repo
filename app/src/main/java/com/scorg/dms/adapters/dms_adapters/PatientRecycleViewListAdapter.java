@@ -97,11 +97,16 @@ public class PatientRecycleViewListAdapter extends RecyclerView.Adapter<PatientR
             groupViewHolder.userAge.setVisibility(View.VISIBLE);
             groupViewHolder.userAge.setText(groupHeader.getAge() + " " + _context.getString(R.string.years));
         }
+        else {
+            groupViewHolder.userAge.setVisibility(View.GONE);
+        }
 
 
         if (groupHeader.getGender() != null) {
             groupViewHolder.userGender.setVisibility(View.VISIBLE);
             groupViewHolder.userGender.setText(groupHeader.getGender());
+        }else {
+            groupViewHolder.userGender.setVisibility(View.GONE);
         }
 
         groupViewHolder.mainContentLayout.setOnClickListener(new View.OnClickListener() {

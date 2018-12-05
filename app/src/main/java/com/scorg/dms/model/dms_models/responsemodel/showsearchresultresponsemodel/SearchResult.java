@@ -29,11 +29,11 @@ public class SearchResult implements Serializable {
 
     @SerializedName("age")
     @Expose
-    private String age="";
+    private String age;
 
     @SerializedName("gender")
     @Expose
-    private String gender="";
+    private String gender;
 
 
     @SerializedName("IsArchived")

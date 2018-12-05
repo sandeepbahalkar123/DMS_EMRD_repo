@@ -80,6 +80,8 @@ public class DMSConstants {
     public static final String APPOINTMENT_DATA = "appointment_data";
     public static final String ADMITTED_PATIENT_DATA = "admitted_patient_data";
     public static final String PATIENT_ID = "patient_id";
+    public static final String PATIENT_AGE = "patient_age";
+    public static final String PATIENT_GENDER = "patient_gender";
     public static final String PAT_ID = "pat_id";
     public static final String NO = "no";
     public static final String RECORD_ID = "record_id";

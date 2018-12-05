@@ -9,6 +9,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -20,6 +21,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -88,6 +90,17 @@ public class PatientDetailsActivity extends BaseActivity implements HelperRespon
     @BindView(R.id.btnEpisodeRaiseRequest)
     TextView btnEpisodeRaiseRequest;
 
+    @BindView(R.id.swipeToRefresh)
+    SwipeRefreshLayout swipeToRefresh;
+
+    @BindView(R.id.patientDetailsLinearLayout)
+    LinearLayout patientDetailsLinearLayout;
+
+    @BindView(R.id.userAge)
+    TextView userAge;
+
+    @BindView(R.id.userGender)
+    TextView userGender;
 
     ArrayList<PatientFilter> mAutoCompleteSearchBoxList = new ArrayList<>();
     private PatientSearchAutoCompleteTextViewAdapter mPatientSearchAutoCompleteTextViewAdapter;
@@ -139,6 +152,21 @@ public class PatientDetailsActivity extends BaseActivity implements HelperRespon
 
         mPatientName.setText(mReceivedPatientData.getPatientName());
 
+        if (mReceivedPatientData.getAge() == null && mReceivedPatientData.getGender() == null ) {
+            patientDetailsLinearLayout.setVisibility(View.GONE);
+        }
+
+        if (mReceivedPatientData.getAge() != null) {
+            userAge.setVisibility(View.VISIBLE);
+            userAge.setText(mReceivedPatientData.getAge() + " " + getString(R.string.years));
+        }
+
+
+        if (mReceivedPatientData.getGender() != null) {
+            userGender.setVisibility(View.VISIBLE);
+            userGender.setText(mReceivedPatientData.getGender());
+        }
+
 
         TextDrawable textDrawable = CommonMethods.getTextDrawable(patientImageView.getContext(), mReceivedPatientData.getPatientName());
         RequestOptions requestOptions = new RequestOptions();
@@ -170,6 +198,15 @@ public class PatientDetailsActivity extends BaseActivity implements HelperRespon
                     doGetPatientEpisode(mAutoCompleteSearchBox.getText().toString().trim(), page+1);
                 }
 
+            }
+        });
+
+
+        swipeToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mAutoCompleteSearchBox.setText("");
+                // doGetPatientList();
             }
         });
         //------- search autocomplete--------
@@ -300,6 +337,7 @@ public class PatientDetailsActivity extends BaseActivity implements HelperRespon
 
     @Override
     public void onSuccess(String mOldDataTag, CustomResponse customResponse) {
+        swipeToRefresh.setRefreshing(false);
         if (mOldDataTag == DMSConstants.TASK_GET_EPISODE_LIST) {
             showSearchResultResponseModel = (EpisodeResponseModel) customResponse;
             if (!showSearchResultResponseModel.getCommon().getStatusCode().equals(DMSConstants.SUCCESS)) {
@@ -347,7 +385,7 @@ public class PatientDetailsActivity extends BaseActivity implements HelperRespon
 
     @Override
     public void onParseError(String mOldDataTag, String errorMessage) {
-
+        swipeToRefresh.setRefreshing(false);
         if (mPatientEpisodeRecycleViewListAdapter.getItemCount() == 0) {
             emptyListView.setVisibility(View.VISIBLE);
             CommonMethods.showErrorDialog(errorMessage, mContext, false, new ErrorDialogCallback() {
@@ -366,7 +404,7 @@ public class PatientDetailsActivity extends BaseActivity implements HelperRespon
 
     @Override
     public void onServerError(String mOldDataTag, String serverErrorMessage) {
-
+        swipeToRefresh.setRefreshing(false);
         if (mPatientEpisodeRecycleViewListAdapter.getItemCount() == 0) {
             emptyListView.setVisibility(View.VISIBLE);
             CommonMethods.showErrorDialog(serverErrorMessage, mContext, false, new ErrorDialogCallback() {
@@ -385,6 +423,7 @@ public class PatientDetailsActivity extends BaseActivity implements HelperRespon
 
     @Override
     public void onNoConnectionError(String mOldDataTag, String serverErrorMessage) {
+        swipeToRefresh.setRefreshing(false);
         if (mPatientEpisodeRecycleViewListAdapter.getItemCount() == 0) {
             emptyListView.setVisibility(View.VISIBLE);
             CommonMethods.showErrorDialog(serverErrorMessage, mContext, false, new ErrorDialogCallback() {
@@ -401,6 +440,7 @@ public class PatientDetailsActivity extends BaseActivity implements HelperRespon
 
     @Override
     public void onTimeOutError(String mOldDataTag, String timeOutErrorMessage) {
+        swipeToRefresh.setRefreshing(false);
         if (mPatientEpisodeRecycleViewListAdapter.getItemCount() == 0) {
             emptyListView.setVisibility(View.VISIBLE);
             CommonMethods.showErrorDialog(timeOutErrorMessage, mContext, true, new ErrorDialogCallback() {
@@ -436,6 +476,10 @@ public class PatientDetailsActivity extends BaseActivity implements HelperRespon
         extra.putString(DMSConstants.PATIENT_LIST_PARAMS.PATIENT_NAME, "" + mReceivedPatientData.getPatientName());
         extra.putString(DMSConstants.RECORD_ID, String.valueOf(groupHeader.getRecordId()));
         extra.putString(DMSConstants.PATIENT_LIST_PARAMS.ARCHIVE_PAGE_TYPE, getString(R.string.patient_page_type));
+
+        extra.putString(DMSConstants.PATIENT_AGE,mReceivedPatientData.getAge());
+        extra.putString(DMSConstants.PATIENT_GENDER,mReceivedPatientData.getGender());
+
 
         intent.putExtra(DMSConstants.DATA, extra);
         startActivity(intent);

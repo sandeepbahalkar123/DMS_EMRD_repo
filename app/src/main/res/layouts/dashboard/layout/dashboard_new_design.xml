@@ -262,8 +262,11 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_margin="@dimen/dp5"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp3"
+                    android:layout_marginRight="@dimen/dp3"
+                    android:layout_marginBottom="@dimen/dp3"
+                    android:layout_marginTop="@dimen/dp6">
 
                     <TextView
                         android:id="@+id/textHeaderTodayAppointment"
@@ -280,8 +283,10 @@
                         android:id="@+id/patientLogo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/dp5"
+                        android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/dp10"
+                        android:adjustViewBounds="true"
                         android:src="@drawable/mypatients_icon_copy"
                         tools:ignore="ContentDescription" />
 
@@ -300,7 +305,8 @@
                         app:tabMode="fixed"
                         app:tabPaddingEnd="0dp"
                         app:tabPaddingStart="0dp"
-                        tools:layout_width="@dimen/dp50" />
+                        tools:layout_width="@dimen/dp50"
+                        />
 
 
                 </RelativeLayout>
@@ -308,7 +314,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp1"
-                    android:layout_marginTop="@dimen/dp5"
+                    android:layout_marginTop="@dimen/dp3"
                     android:background="@color/grey_700" />
 
                 <include layout="@layout/common_recycler_view"></include>

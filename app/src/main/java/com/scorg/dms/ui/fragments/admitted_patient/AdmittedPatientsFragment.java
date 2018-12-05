@@ -160,6 +160,8 @@ public class AdmittedPatientsFragment extends Fragment implements AdmittedPatien
         extra.putString(DMSConstants.PAT_ID, patientListObject.getPatId());
         extra.putString(DMSConstants.PATIENT_LIST_PARAMS.PATIENT_NAME, "" + patientListObject.getPatientName());
         extra.putString(DMSConstants.PATIENT_LIST_PARAMS.ARCHIVE_PAGE_TYPE, getString(R.string.admitted_page_type));
+        extra.putString(DMSConstants.PATIENT_AGE,patientListObject.getAge() );
+        extra.putString(DMSConstants.PATIENT_GENDER,patientListObject.getGender());
         intent.putExtra(DMSConstants.DATA, extra);
         startActivity(intent);
 

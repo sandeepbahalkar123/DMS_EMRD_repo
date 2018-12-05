@@ -31,7 +31,7 @@ public class AppointmentPatientData implements Parcelable, Cloneable, Comparable
     @SerializedName("ContactNo")
     @Expose
     private String contactNo;
-    @SerializedName("Age")
+    @SerializedName("Age1")
     @Expose
     private String age;
     @SerializedName("Gender")

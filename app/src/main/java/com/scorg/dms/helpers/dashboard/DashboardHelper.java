@@ -44,7 +44,7 @@ public class DashboardHelper implements ConnectionListener {
                 mHelperResponseManager.onParseError(mOldDataTag, mContext.getString(R.string.something_went_wrong_error));
                 break;
             case ConnectionListener.SERVER_ERROR:
-                CommonMethods.Log(TAG, mContext.getString(R.string.server_error));
+               CommonMethods.Log(TAG, mContext.getString(R.string.server_error));
                 mHelperResponseManager.onServerError(mOldDataTag, mContext.getString(R.string.something_went_wrong_error));
                 break;
             case ConnectionListener.NO_INTERNET:

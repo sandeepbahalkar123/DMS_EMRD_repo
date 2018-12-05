@@ -173,7 +173,7 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
     //    private TextView mFileTwoDischargeDate;
     private PatientRecycleViewListAdapter patientExpandableListAdapter;
     //---------
-    private int currentPage = 0;
+    private int currentPage = 1;
     private String[] mFileTypeStringArrayExtra;
     private PatientSearchAutoCompleteTextViewAdapter mPatientSearchAutoCompleteTextViewAdapter;
     private String priv = "";
@@ -229,7 +229,7 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
             @Override
             public void onRefresh() {
                 mAutoCompleteSearchBox.setText("");
-                currentPage = 0;
+                currentPage = 1;
                 // doGetPatientList();
             }
         });
@@ -263,7 +263,7 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
             public void handleMessage(Message msg) {
                 patientExpandableListAdapter.removeAll();
                 mIsLoadMorePatients = true;
-                currentPage = 0;
+                currentPage = 1;
                 doGetPatientList();
             }
         };
@@ -310,7 +310,7 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
                 } else {
                     if (mAutoCompleteSearchBox.getEditText().length() == 0)
                         patientExpandableListAdapter.removeAll();
-                    currentPage = 0;
+                    currentPage = 1;
                     doGetPatientList();
                 }
                 old = enteredText;
@@ -486,7 +486,7 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
 
                 //     mAutoCompleteSearchBox.getEditText().dismissDropDown();
 
-                if (currentPage == 0)
+                if (currentPage == 1)
                     patientExpandableListAdapter.removeAll();
                 patientExpandableListAdapter.addNewItems(searchResult);
                 patientExpandableListAdapter.notifyDataSetChanged();
@@ -822,7 +822,7 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
                 mTagsAdapter = new TagAdapter(mContext, mAddedTagsForFiltering, mAddedTagsEventHandler);
                 mRecycleTag.setAdapter(mTagsAdapter);
                 mDrawer.closeDrawer(GravityCompat.END);
-                currentPage = 0;
+                currentPage = 1;
                 mIsLoadMorePatients = true;
                 doGetPatientList();
                 break;
@@ -1226,13 +1226,6 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
 
         Intent intent = new Intent(mContext, FileTypeViewerActivity.class);
         Bundle extra = new Bundle();
-        //ArrayList<PatientFileData> dataToSend = new ArrayList<PatientFileData>();
-        //dataToSend.add(childElement);
-        //  SearchResult searchPatientInformation = patientExpandableListAdapter.searchPatientInfo("" + groupHeader.getPatientId());
-        //todo: filepath(pdf url is not getting in api)
-        // extra.putSerializable(getString(R.string.compare), dataToSend);
-        // extra.putSerializable(getString(R.string.compare), new ArrayList<PatientFileData>());
-
         extra.putString(DMSConstants.PATIENT_ADDRESS, groupHeader.getPatientAddress());
         extra.putString(DMSConstants.DOCTOR_NAME, groupHeader.getDoctorName());
         extra.putString(DMSConstants.PATIENT_ID, groupHeader.getPatientId());
@@ -1240,6 +1233,8 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
 
         extra.putString(DMSConstants.PATIENT_LIST_PARAMS.PATIENT_NAME, "" + groupHeader.getPatientName());
         extra.putString(DMSConstants.PATIENT_LIST_PARAMS.ARCHIVE_PAGE_TYPE, getString(R.string.patient_page_type));
+        extra.putString(DMSConstants.PATIENT_AGE,groupHeader.getAge() );
+        extra.putString(DMSConstants.PATIENT_GENDER,groupHeader.getGender());
         intent.putExtra(DMSConstants.DATA, extra);
         startActivity(intent);
     }

@@ -163,13 +163,10 @@ public class AppointmentListAdapter
 
     private void bindGroupItem(final AppointmentPatientData appointmentPatientDataObject, final AppointmentListAdapter.MyViewHolder holder) {
 
-     //   holder.bluelineImageView.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
-       // holder.callIcon.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+
         holder.btnDone.setBackground(buttonBackground);
         holder.patientGenderTextView.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
-    //    holder.patientPhoneNumber.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
-//        holder.separatorView.setBackgroundColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
-      //  holder.viewLine1.setBackgroundColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+
         holder.appointmentConsultationType.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         String salutation = appointmentPatientDataObject.getSalutation();
         String patientName = appointmentPatientDataObject.getPatientName();
@@ -184,6 +181,7 @@ public class AppointmentListAdapter
         holder.patientIdTextView.setText(DMSApplication.LABEL_UHID+" " + dataToShowInPatientID + "");
         holder.patientIdTextView.setTextColor(Color.parseColor(DMSApplication.COLOR_APPOINTMENT_TEXT));
         holder.patientNameTextView.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+        holder.patientGenderTextView.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         //---- END------
 
         if (appointmentPatientDataObject.getSpannableString() != null) {
@@ -223,9 +221,8 @@ public class AppointmentListAdapter
 //            holder.patientPhoneNumber.setText(appointmentPatientDataObject.getContactNo());
             holder.patientIdTextView.setText(DMSApplication.LABEL_UHID + " " + dataToShowInPatientID);
         }
-
         //-----------
-        if (appointmentPatientDataObject.getAge() != null) {
+        if (appointmentPatientDataObject.getAge() != null && !appointmentPatientDataObject.getAge().equals("0")) {
             holder.patientAgeTextView.setVisibility(View.VISIBLE);
             holder.patientAgeTextView.setText(appointmentPatientDataObject.getAge() + " " + mContext.getString(R.string.years));
         } else {

@@ -93,7 +93,6 @@
                         android:padding="@dimen/dp5"
                         android:textSize="@dimen/sp15"
                         android:text=""
-
                         />
                 </LinearLayout>
                 </com.github.barteksc.pdfviewer.PDFView>
