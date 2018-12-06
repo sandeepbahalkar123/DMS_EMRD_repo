@@ -76,7 +76,7 @@
     <string name="today_appointment">OPD\nPatients</string>
     <string name="today_appointment_no_new_line">Today\'s Appointments</string>
     <string name="admitted_patients"> Admitted\nPatients</string>
-    <string name="pending_approval">Pending\nApproval</string>
+    <string name="pending_approval">Pending\nApprovals</string>
     <string name="today_patient">All \nPatients</string>
     <string name="years">yrs -\u0020</string>
     <string name="done">Done</string>

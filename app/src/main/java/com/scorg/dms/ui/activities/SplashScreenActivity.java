@@ -166,7 +166,14 @@ public class SplashScreenActivity extends BaseActivity implements HelperResponse
 
     @Override
     public void onParseError(String mOldDataTag, String errorMessage) {
-
+        DMSPreferencesManager.putString(DMSConstants.LOGIN_SUCCESS, DMSConstants.FALSE, mContext);
+        CommonMethods.showIPAlertDialog(SplashScreenActivity.this, getString(R.string.wrong_server_path) + "\n" + getString(R.string.for_example_server_path), new CheckIpConnection() {
+            @Override
+            public void onOkButtonClickListner(String serverPath, Context context, Dialog dialog) {
+                DMSPreferencesManager.putString(DMSPreferencesManager.DMS_PREFERENCES_KEY.SERVER_PATH, serverPath, context);
+                mLoginHelper.checkConnectionToServer(serverPath);
+            }
+        });
     }
 
     @Override
@@ -198,7 +205,6 @@ public class SplashScreenActivity extends BaseActivity implements HelperResponse
 
     @Override
     public void onTimeOutError(String mOldDataTag, String timeOutErrorMessage) {
-        Toast.makeText(mContext, timeOutErrorMessage + "", Toast.LENGTH_SHORT).show();
         DMSPreferencesManager.putString(DMSConstants.LOGIN_SUCCESS, DMSConstants.FALSE, mContext);
         CommonMethods.showIPAlertDialog(SplashScreenActivity.this, getString(R.string.wrong_server_path) + "\n" + getString(R.string.for_example_server_path), new CheckIpConnection() {
             @Override
