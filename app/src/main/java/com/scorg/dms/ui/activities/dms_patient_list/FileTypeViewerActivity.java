@@ -782,8 +782,23 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
 
             UnlockRequestResponseBaseModel unlockRequestResponseBaseMode = (UnlockRequestResponseBaseModel) customResponse;
 
-            String msg = unlockRequestResponseBaseMode.getRequestResponseResultUnlock().getResult();
-            CommonMethods.showToast(this, getResources().getString(R.string.request_raised_success));
+            //String msg = unlockRequestResponseBaseMode.getRequestResponseResultUnlock().getResult();
+            //CommonMethods.showToast(this, getResources().getString(R.string.request_raised_success));
+            if (unlockRequestResponseBaseMode.getCommon().getStatusCode().equals(DMSConstants.SUCCESS)) {
+                String msg = unlockRequestResponseBaseMode.getCommon().getStatusMessage();
+                CommonMethods.showErrorDialog(msg, mContext, false, new ErrorDialogCallback() {
+                    @Override
+                    public void ok() {
+
+                    }
+
+                    @Override
+                    public void retry() {
+
+                    }
+                });
+            }
+
             if (dialogRaiseRequest != null && dialogRaiseRequest.isShowing())
                 dialogRaiseRequest.dismiss();
         }

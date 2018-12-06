@@ -1,0 +1,79 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/filepicker/src/main/AndroidManifest.xml:2:1-27:12
+INJECTED from /home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/filepicker/src/main/AndroidManifest.xml:2:1-27:12
+INJECTED from /home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/filepicker/src/main/AndroidManifest.xml:2:1-27:12
+INJECTED from /home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/filepicker/src/main/AndroidManifest.xml:2:1-27:12
+INJECTED from /home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/filepicker/src/main/AndroidManifest.xml:2:1-27:12
+INJECTED from /home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/filepicker/src/main/AndroidManifest.xml:2:1-27:12
+INJECTED from /home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/filepicker/src/main/AndroidManifest.xml:2:1-27:12
+	package
+		ADDED from /home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/filepicker/src/main/AndroidManifest.xml:3:5-36
+		INJECTED from /home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/filepicker/src/main/AndroidManifest.xml
+		INJECTED from /home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/filepicker/src/main/AndroidManifest.xml
+	android:versionName
+		INJECTED from /home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/filepicker/src/main/AndroidManifest.xml
+		ADDED from /home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/filepicker/src/main/AndroidManifest.xml:2:1-27:12
+		INJECTED from /home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/filepicker/src/main/AndroidManifest.xml
+	android:versionCode
+		INJECTED from /home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/filepicker/src/main/AndroidManifest.xml
+		ADDED from /home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/filepicker/src/main/AndroidManifest.xml:2:1-27:12
+		INJECTED from /home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/filepicker/src/main/AndroidManifest.xml
+	xmlns:android
+		ADDED from /home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/filepicker/src/main/AndroidManifest.xml:2:11-69
+uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
+ADDED from /home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/filepicker/src/main/AndroidManifest.xml:5:5-81
+	android:name
+		ADDED from /home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/filepicker/src/main/AndroidManifest.xml:5:22-78
+uses-permission#android.permission.READ_EXTERNAL_STORAGE
+ADDED from /home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/filepicker/src/main/AndroidManifest.xml:6:5-80
+	android:name
+		ADDED from /home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/filepicker/src/main/AndroidManifest.xml:6:22-77
+application
+ADDED from /home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/filepicker/src/main/AndroidManifest.xml:8:5-25:19
+	android:supportsRtl
+		ADDED from /home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/filepicker/src/main/AndroidManifest.xml:10:9-35
+	android:allowBackup
+		ADDED from /home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/filepicker/src/main/AndroidManifest.xml:9:9-35
+activity#droidninja.filepicker.FilePickerActivity
+ADDED from /home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/filepicker/src/main/AndroidManifest.xml:11:9-13:65
+	android:configChanges
+		ADDED from /home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/filepicker/src/main/AndroidManifest.xml:13:13-63
+	android:name
+		ADDED from /home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/filepicker/src/main/AndroidManifest.xml:12:13-47
+activity#droidninja.filepicker.MediaDetailsActivity
+ADDED from /home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/filepicker/src/main/AndroidManifest.xml:14:9-15:65
+	android:configChanges
+		ADDED from /home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/filepicker/src/main/AndroidManifest.xml:15:13-63
+	android:name
+		ADDED from /home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/filepicker/src/main/AndroidManifest.xml:14:19-55
+provider#android.support.v4.content.FileProvider
+ADDED from /home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/filepicker/src/main/AndroidManifest.xml:16:9-24:20
+	android:grantUriPermissions
+		ADDED from /home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/filepicker/src/main/AndroidManifest.xml:20:13-47
+	android:authorities
+		ADDED from /home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/filepicker/src/main/AndroidManifest.xml:18:13-82
+	android:exported
+		ADDED from /home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/filepicker/src/main/AndroidManifest.xml:19:13-37
+	android:name
+		ADDED from /home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/filepicker/src/main/AndroidManifest.xml:17:13-67
+meta-data#android.support.FILE_PROVIDER_PATHS
+ADDED from /home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/filepicker/src/main/AndroidManifest.xml:21:13-23:57
+	android:resource
+		ADDED from /home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/filepicker/src/main/AndroidManifest.xml:23:17-55
+	android:name
+		ADDED from /home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/filepicker/src/main/AndroidManifest.xml:22:17-67
+uses-sdk
+INJECTED from /home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/filepicker/src/main/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/filepicker/src/main/AndroidManifest.xml
+INJECTED from /home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/filepicker/src/main/AndroidManifest.xml
+INJECTED from /home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/filepicker/src/main/AndroidManifest.xml
+INJECTED from /home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/filepicker/src/main/AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from /home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/filepicker/src/main/AndroidManifest.xml
+		ADDED from /home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/filepicker/src/main/AndroidManifest.xml
+		INJECTED from /home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/filepicker/src/main/AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from /home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/filepicker/src/main/AndroidManifest.xml
+		ADDED from /home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/filepicker/src/main/AndroidManifest.xml
+		INJECTED from /home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/filepicker/src/main/AndroidManifest.xml

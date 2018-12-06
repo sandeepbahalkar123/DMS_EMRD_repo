@@ -1,0 +1,45 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/slideview/src/main/AndroidManifest.xml:1:1-12:12
+INJECTED from /home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/slideview/src/main/AndroidManifest.xml:1:1-12:12
+INJECTED from /home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/slideview/src/main/AndroidManifest.xml:1:1-12:12
+INJECTED from /home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/slideview/src/main/AndroidManifest.xml:1:1-12:12
+INJECTED from /home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/slideview/src/main/AndroidManifest.xml:1:1-12:12
+INJECTED from /home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/slideview/src/main/AndroidManifest.xml:1:1-12:12
+INJECTED from /home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/slideview/src/main/AndroidManifest.xml:1:1-12:12
+	package
+		ADDED from /home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/slideview/src/main/AndroidManifest.xml:2:11-37
+		INJECTED from /home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/slideview/src/main/AndroidManifest.xml
+		INJECTED from /home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/slideview/src/main/AndroidManifest.xml
+	android:versionName
+		INJECTED from /home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/slideview/src/main/AndroidManifest.xml
+		ADDED from /home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/slideview/src/main/AndroidManifest.xml:1:1-12:12
+		INJECTED from /home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/slideview/src/main/AndroidManifest.xml
+	android:versionCode
+		INJECTED from /home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/slideview/src/main/AndroidManifest.xml
+		ADDED from /home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/slideview/src/main/AndroidManifest.xml:1:1-12:12
+		INJECTED from /home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/slideview/src/main/AndroidManifest.xml
+	xmlns:android
+		ADDED from /home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/slideview/src/main/AndroidManifest.xml:1:11-69
+application
+ADDED from /home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/slideview/src/main/AndroidManifest.xml:4:5-10:19
+	android:supportsRtl
+		ADDED from /home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/slideview/src/main/AndroidManifest.xml:7:9-35
+	android:label
+		ADDED from /home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/slideview/src/main/AndroidManifest.xml:6:9-41
+	android:allowBackup
+		ADDED from /home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/slideview/src/main/AndroidManifest.xml:5:9-35
+uses-sdk
+INJECTED from /home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/slideview/src/main/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/slideview/src/main/AndroidManifest.xml
+INJECTED from /home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/slideview/src/main/AndroidManifest.xml
+INJECTED from /home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/slideview/src/main/AndroidManifest.xml
+INJECTED from /home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/slideview/src/main/AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from /home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/slideview/src/main/AndroidManifest.xml
+		ADDED from /home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/slideview/src/main/AndroidManifest.xml
+		INJECTED from /home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/slideview/src/main/AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from /home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/slideview/src/main/AndroidManifest.xml
+		ADDED from /home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/slideview/src/main/AndroidManifest.xml
+		INJECTED from /home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/slideview/src/main/AndroidManifest.xml

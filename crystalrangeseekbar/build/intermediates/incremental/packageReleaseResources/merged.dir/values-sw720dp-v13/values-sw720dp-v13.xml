@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <bool name="isTablet">true</bool>
+    <dimen name="bar_height">10dp</dimen>
+    <dimen name="bubble_thumb_height">70dp</dimen>
+    <dimen name="bubble_thumb_width">70dp</dimen>
+    <dimen name="thumb_height">38dp</dimen>
+    <dimen name="thumb_width">32dp</dimen>
+</resources>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="3"><dataSet config="main$Generated" generated="true"><source path="/home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/fabmenu/src/main/res"/><source path="/home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/fabmenu/build/generated/res/rs/release"/><source path="/home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/fabmenu/build/generated/res/resValues/release"/></dataSet><dataSet config="main" generated-set="main$Generated"><source path="/home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/fabmenu/src/main/res"><file name="ic_action_add" path="/home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/fabmenu/src/main/res/drawable-hdpi/ic_action_add.png" qualifiers="hdpi-v4" type="drawable"/><file name="fab_speed_dial_item" path="/home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/fabmenu/src/main/res/layout/fab_speed_dial_item.xml" qualifiers="" type="layout"/><file name="fab_speed_dial" path="/home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/fabmenu/src/main/res/layout/fab_speed_dial.xml" qualifiers="" type="layout"/><file name="ic_action_add" path="/home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/fabmenu/src/main/res/drawable-mdpi/ic_action_add.png" qualifiers="mdpi-v4" type="drawable"/><file path="/home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/fabmenu/src/main/res/values/attrs.xml" qualifiers=""><declare-styleable name="FabSpeedDial">
+        
+        <attr format="reference" name="fab_menu"/>
+
+        
+        <attr format="color" name="fab_fabBackgroundColor"/>
+        
+        <attr format="reference" name="fab_fabDrawable"/>
+        
+        <attr format="color" name="fab_fabDrawableTint"/>
+        
+        <attr format="color" name="fab_fabRippleColor"/>
+
+        
+        <attr format="color" name="fab_miniFabBackgroundColor"/>
+        <attr format="reference" name="fab_miniFabBackgroundColorList"/>
+        
+        <attr format="color" name="fab_miniFabDrawableTint"/>
+        <attr format="reference" name="fab_miniFabDrawableTintList"/>
+        
+        <attr format="color" name="fab_miniFabRippleColor"/>
+        <attr format="reference" name="fab_miniFabRippleColorList"/>
+
+        
+        <attr format="color" name="fab_miniFabTextColor"/>
+        <attr format="reference" name="fab_miniFabTextColorList"/>
+        
+        <attr format="reference" name="fab_miniFabTextBackground"/>
+        <attr format="reference" name="fab_miniFabTextBackgroundList"/>
+
+        
+        <attr format="boolean" name="fab_useTouchGuard"/>
+        
+        <attr format="color" name="fab_touchGuardColor"/>
+        
+        <attr format="boolean" name="fab_useRevealEffect"/>
+
+        
+        <attr format="boolean" name="fab_useRippleOnPreLollipop"/>
+    </declare-styleable></file><file name="ic_action_add" path="/home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/fabmenu/src/main/res/drawable-xxhdpi/ic_action_add.png" qualifiers="xxhdpi-v4" type="drawable"/><file name="fab_speed_dial_item" path="/home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/fabmenu/src/main/res/layout-land/fab_speed_dial_item.xml" qualifiers="land" type="layout"/><file name="fab_speed_dial" path="/home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/fabmenu/src/main/res/layout-land/fab_speed_dial.xml" qualifiers="land" type="layout"/><file name="ic_action_add" path="/home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/fabmenu/src/main/res/drawable-xhdpi/ic_action_add.png" qualifiers="xhdpi-v4" type="drawable"/></source><source path="/home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/fabmenu/build/generated/res/rs/release"/><source path="/home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/fabmenu/build/generated/res/resValues/release"/></dataSet><dataSet config="release$Generated" generated="true"><source path="/home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/fabmenu/src/release/res"/></dataSet><dataSet config="release" generated-set="release$Generated"><source path="/home/sandeepbahalkar/Android_Studio_Projects/DMS_EMRD_repo/fabmenu/src/release/res"/></dataSet><mergedItems><configuration qualifiers=""><declare-styleable name="FabSpeedDial"><attr format="reference" name="fab_menu"/><attr format="color" name="fab_fabBackgroundColor"/><attr format="reference" name="fab_fabDrawable"/><attr format="color" name="fab_fabDrawableTint"/><attr format="color" name="fab_fabRippleColor"/><attr format="color" name="fab_miniFabBackgroundColor"/><attr format="reference" name="fab_miniFabBackgroundColorList"/><attr format="color" name="fab_miniFabDrawableTint"/><attr format="reference" name="fab_miniFabDrawableTintList"/><attr format="color" name="fab_miniFabRippleColor"/><attr format="reference" name="fab_miniFabRippleColorList"/><attr format="color" name="fab_miniFabTextColor"/><attr format="reference" name="fab_miniFabTextColorList"/><attr format="reference" name="fab_miniFabTextBackground"/><attr format="reference" name="fab_miniFabTextBackgroundList"/><attr format="boolean" name="fab_useTouchGuard"/><attr format="color" name="fab_touchGuardColor"/><attr format="boolean" name="fab_useRevealEffect"/><attr format="boolean" name="fab_useRippleOnPreLollipop"/></declare-styleable></configuration></mergedItems></merger>
