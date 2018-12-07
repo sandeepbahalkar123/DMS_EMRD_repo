@@ -121,18 +121,7 @@ public class SupportActivity extends BaseActivity {
                     intent.putExtra(Intent.EXTRA_TEXT, "your_text");
                     startActivity(intent);
                 } catch (ActivityNotFoundException e) {
-                    CommonMethods.showErrorDialog("Respective Application not supported to this device.", this, false, new ErrorDialogCallback() {
-                        @Override
-                        public void ok() {
-
-                        }
-
-                        @Override
-                        public void retry() {
-
-                        }
-                    });
-
+                    CommonMethods.showToast(this,"Respective Application not supported to this device.");
                 }
 
                 break;

@@ -1563,18 +1563,8 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
                 });
             } catch (Exception e) {
                 e.fillInStackTrace();
+                CommonMethods.showToast(this,pdfFileURL);
 
-                CommonMethods.showErrorDialog(getString(R.string.not_valid_pdf_url), this, false, new ErrorDialogCallback() {
-                    @Override
-                    public void ok() {
-
-                    }
-
-                    @Override
-                    public void retry() {
-
-                    }
-                });
             }
         }
     }
