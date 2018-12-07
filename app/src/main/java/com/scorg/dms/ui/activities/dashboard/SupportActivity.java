@@ -9,13 +9,12 @@ import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.scorg.dms.R;
-import com.scorg.dms.interfaces.ErrorDialogCallback;
 import com.scorg.dms.singleton.DMSApplication;
 import com.scorg.dms.ui.activities.BaseActivity;
 import com.scorg.dms.util.CommonMethods;
@@ -25,7 +24,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.RuntimePermissions;
-import android.widget.TextView;
 
 /**
  * Created by jeetal on 3/11/17.
@@ -94,8 +92,8 @@ public class SupportActivity extends BaseActivity {
             Intent callIntent = new Intent(Intent.ACTION_CALL);
             callIntent.setData(Uri.parse("tel:9921385816"));
             startActivity(callIntent);
-        }catch(SecurityException e){
-            Toast.makeText(mContext,e.getMessage(),Toast.LENGTH_LONG).show();
+        } catch (SecurityException e) {
+            Toast.makeText(mContext, e.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
 
@@ -121,18 +119,7 @@ public class SupportActivity extends BaseActivity {
                     intent.putExtra(Intent.EXTRA_TEXT, "your_text");
                     startActivity(intent);
                 } catch (ActivityNotFoundException e) {
-                    CommonMethods.showErrorDialog("Respective Application not supported to this device.", this, false, new ErrorDialogCallback() {
-                        @Override
-                        public void ok() {
-
-                        }
-
-                        @Override
-                        public void retry() {
-
-                        }
-                    });
-
+                    CommonMethods.showToast(this, "Respective Application not supported to this device.");
                 }
 
                 break;

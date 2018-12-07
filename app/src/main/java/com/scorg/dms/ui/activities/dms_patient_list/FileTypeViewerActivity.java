@@ -44,7 +44,6 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.github.barteksc.pdfviewer.PDFView;
 import com.github.barteksc.pdfviewer.listener.OnDrawListener;
@@ -1563,18 +1562,7 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
                 });
             } catch (Exception e) {
                 e.fillInStackTrace();
-
-                CommonMethods.showErrorDialog(getString(R.string.not_valid_pdf_url), this, false, new ErrorDialogCallback() {
-                    @Override
-                    public void ok() {
-
-                    }
-
-                    @Override
-                    public void retry() {
-
-                    }
-                });
+                CommonMethods.showToast(this, pdfFileURL);
             }
         }
     }
