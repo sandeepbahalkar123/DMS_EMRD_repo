@@ -245,5 +245,6 @@
     <string name="appointment_page_type">appointment</string>
     <string name="patient_page_type">search</string>
     <string name="admitted_page_type">admitted</string>
+    <string name="not_valid_pdf_url">This is not valid document.</string>
 
 </resources>

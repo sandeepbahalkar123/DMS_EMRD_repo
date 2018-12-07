@@ -860,7 +860,18 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
                 askWriteExtenralStoragePermission(REQUEST_CODE_WRITE_FILE_TWO_PERMISSIONS);
             }
         } else
-            Toast.makeText(mContext, "Document not available", Toast.LENGTH_SHORT).show();
+
+            CommonMethods.showErrorDialog("Document not available", this, false, new ErrorDialogCallback() {
+                @Override
+                public void ok() {
+
+                }
+
+                @Override
+                public void retry() {
+
+                }
+            });
 
 
         //----
@@ -1552,7 +1563,18 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
                 });
             } catch (Exception e) {
                 e.fillInStackTrace();
-                Toast.makeText(this, pdfFileURL, Toast.LENGTH_LONG).show();
+
+                CommonMethods.showErrorDialog(getString(R.string.not_valid_pdf_url), this, false, new ErrorDialogCallback() {
+                    @Override
+                    public void ok() {
+
+                    }
+
+                    @Override
+                    public void retry() {
+
+                    }
+                });
             }
         }
     }

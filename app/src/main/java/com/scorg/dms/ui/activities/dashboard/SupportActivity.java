@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.scorg.dms.R;
+import com.scorg.dms.interfaces.ErrorDialogCallback;
 import com.scorg.dms.singleton.DMSApplication;
 import com.scorg.dms.ui.activities.BaseActivity;
 import com.scorg.dms.util.CommonMethods;
@@ -120,7 +121,18 @@ public class SupportActivity extends BaseActivity {
                     intent.putExtra(Intent.EXTRA_TEXT, "your_text");
                     startActivity(intent);
                 } catch (ActivityNotFoundException e) {
-                    Toast.makeText(mContext, "Respective Application not supported to this device", Toast.LENGTH_SHORT).show();
+                    CommonMethods.showErrorDialog("Respective Application not supported to this device.", this, false, new ErrorDialogCallback() {
+                        @Override
+                        public void ok() {
+
+                        }
+
+                        @Override
+                        public void retry() {
+
+                        }
+                    });
+
                 }
 
                 break;
