@@ -79,7 +79,7 @@ public class AdmittedPatientsActivity extends BaseActivity implements HelperResp
     private void initialize() {
         mContext = AdmittedPatientsActivity.this;
         titleTextView.setText(getString(R.string.admitted_patient));
-        setDateInToolbar();
+      //  setDateInToolbar();
         //Call api for AppointmentData
         mDateSelectedByUser = CommonMethods.getCurrentDate(DMSConstants.DATE_PATTERN.UTC_PATTERN);
         System.out.println(mDateSelectedByUser);

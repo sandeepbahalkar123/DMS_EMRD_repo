@@ -285,7 +285,7 @@ public class AdmittedPatientsListAdapter
         return new Filter() {
             @Override
             protected FilterResults performFiltering(CharSequence charSequence) {
-                String charString = charSequence.toString();
+                String charString = charSequence.toString().trim();
 
                 admittedPatientDataList.clear();
 
