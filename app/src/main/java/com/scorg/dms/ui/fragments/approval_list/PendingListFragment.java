@@ -45,7 +45,6 @@ import com.scorg.dms.ui.customesViews.CircularImageView;
 import com.scorg.dms.ui.customesViews.drag_drop_recyclerview_helper.EndlessRecyclerViewScrollListener;
 import com.scorg.dms.util.CommonMethods;
 import com.scorg.dms.util.DMSConstants;
-import com.scorg.dms.util.NetworkUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -303,11 +302,37 @@ public class PendingListFragment extends Fragment implements RequestListAdapter.
             case DMSConstants.TASK_CANCEL_REQUEST_CONFIDENTIAL: {
                 if (customResponse != null) {
                     CancelUnlockRequestResponseBaseModel cancelUnlockRequestResponseBaseModel = (CancelUnlockRequestResponseBaseModel) customResponse;
-                    if (cancelUnlockRequestResponseBaseModel.getCommon().getStatusCode() == 200)
-                        CommonMethods.showToast(getActivity(), "Successfully Canceled");
-                    DMSApplication.ISCancelRequest = true;
-                    requestedArchivedDetailList.clear();
-                    mPendingApprovalHelper.doGetPendingApprovalData(1, true);
+                    if (cancelUnlockRequestResponseBaseModel.getCommon().getStatusCode() == 200) {
+                        String msg = cancelUnlockRequestResponseBaseModel.getCommon().getStatusMessage();
+                        if (msg.equalsIgnoreCase("ok"))
+                            msg = "Request Successfully Canceled.";
+                        CommonMethods.showErrorDialog(msg, getActivity(), false, new ErrorDialogCallback() {
+                            @Override
+                            public void ok() {
+
+                            }
+
+                            @Override
+                            public void retry() {
+
+                            }
+                        });
+                        DMSApplication.ISCancelRequest = true;
+                        requestedArchivedDetailList.clear();
+                        mPendingApprovalHelper.doGetPendingApprovalData(1, true);
+                    } else {
+                        CommonMethods.showErrorDialog(cancelUnlockRequestResponseBaseModel.getCommon().getStatusMessage(), getActivity(), false, new ErrorDialogCallback() {
+                            @Override
+                            public void ok() {
+
+                            }
+
+                            @Override
+                            public void retry() {
+
+                            }
+                        });
+                    }
                 }
             }
         }

@@ -706,6 +706,7 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
             case R.id.reset:
                 mAddedTagsForFiltering.clear();
                 mUHIDEditText.setText(DMSConstants.BLANK);
+                mUHIDEditText.setHint("Enter ID");
                 mFromDateEditText.setText(DMSConstants.BLANK);
                 mToDateEditText.setText(DMSConstants.BLANK);
                 mSearchAnnotationEditText.setText(DMSConstants.BLANK);
@@ -758,7 +759,7 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
                     isValid = false;
                 } else if ((enteredUHIDValue.length() != 0) && (mSelectedId.equalsIgnoreCase(getString(R.string.Select)))) {
 //                    CommonMethods.showSnack(mContext, mUHIDEditText, getString(R.string.Select) + " " + getString(R.string.ipd) + "/" + getString(R.string.opd) + "/" + DMSApplication.LABEL_UHID);
-                    CommonMethods.showErrorDialog(mUHIDEditText.getHint().toString(), mContext, false, new ErrorDialogCallback() {
+                    CommonMethods.showErrorDialog("Select ID Type", mContext, false, new ErrorDialogCallback() {
                         @Override
                         public void ok() {
 
@@ -772,7 +773,7 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
                     isValid = false;
                 } else {
                     if (!mSelectedId.equalsIgnoreCase(getString(R.string.Select))) {
-                        mAddedTagsForFiltering.put(DMSConstants.PATIENT_LIST_PARAMS.FILE_TYPE, mSelectedId + ":" + enteredUHIDValue);
+                        mAddedTagsForFiltering.put(DMSConstants.PATIENT_LIST_PARAMS.FILE_TYPE, mSelectedId + ":" + enteredUHIDValue.trim());
                     }
                 }
 
