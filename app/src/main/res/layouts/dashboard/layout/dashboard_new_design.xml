@@ -300,6 +300,7 @@
                         android:layout_marginEnd="@dimen/dp5"
                         android:layout_marginRight="@dimen/dp5"
                         app:tabGravity="fill"
+                        android:visibility="gone"
                         android:layout_centerVertical="true"
                         app:tabIndicatorHeight="@dimen/dp0"
                         app:tabMode="fixed"
