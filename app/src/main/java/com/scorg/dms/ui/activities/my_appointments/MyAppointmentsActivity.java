@@ -19,6 +19,7 @@ import android.text.Html;
 import android.text.Spanned;
 import android.util.Log;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -34,6 +35,7 @@ import com.scorg.dms.model.my_appointments.MyAppointmentsBaseModel;
 import com.scorg.dms.model.my_appointments.MyAppointmentsDataModel;
 import com.scorg.dms.singleton.DMSApplication;
 import com.scorg.dms.ui.activities.BaseActivity;
+import com.scorg.dms.ui.fragments.admitted_patient.AdmittedPatientsFragment;
 import com.scorg.dms.ui.fragments.my_appointments.ActiveAppointmentsFragment;
 import com.scorg.dms.ui.fragments.my_appointments.AllAppointmentsFragment;
 import com.scorg.dms.util.CommonMethods;
@@ -68,13 +70,18 @@ public class MyAppointmentsActivity extends BaseActivity implements HelperRespon
     TextView titleTextView;
     @BindView(R.id.dateTextview)
     TextView dateTextview;
-    @BindView(R.id.tabs)
-    TabLayout tabs;
-    @BindView(R.id.viewpager)
-    ViewPager viewpager;
-    String[] mFragmentTitleList = new String[2];
-    ActiveAppointmentsFragment activeAppointmentsFragment;
+//    @BindView(R.id.tabs)
+//    TabLayout tabs;
+//    @BindView(R.id.viewpager)
+//    ViewPager viewpager;
+
+    @BindView(R.id.viewContainer)
+    FrameLayout viewContainer;
+
+  //  String[] mFragmentTitleList = new String[2];
+   // ActiveAppointmentsFragment activeAppointmentsFragment;
     AllAppointmentsFragment allAppointmentsFragment;
+
     private Context mContext;
     private AppointmentHelper mAppointmentHelper;
     private MyAppointmentsBaseModel myAppointmentsBaseMainModel;
@@ -85,14 +92,14 @@ public class MyAppointmentsActivity extends BaseActivity implements HelperRespon
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.waiting_base_layout);
+        setContentView(R.layout.my_patients_base_layout);
         ButterKnife.bind(this);
         findViewById(R.id.toolbar).setBackgroundColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
-        findViewById(R.id.tabs).setBackgroundColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+     //   findViewById(R.id.tabs).setBackgroundColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
 
         ButterKnife.bind(this);
-        mFragmentTitleList[0] = getString(R.string.active_appointmets);
-        mFragmentTitleList[1] = getString(R.string.all_appointments);
+       // mFragmentTitleList[0] = getString(R.string.active_appointmets);
+     //   mFragmentTitleList[1] = getString(R.string.all_appointments);
         initialize();
 
 
@@ -102,23 +109,27 @@ public class MyAppointmentsActivity extends BaseActivity implements HelperRespon
         mContext = MyAppointmentsActivity.this;
         titleTextView.setText(getString(R.string.appointments));
         setDateInToolbar();
-        setupViewPager(viewpager);
-        tabs.setupWithViewPager(viewpager);
+        //setupViewPager(viewpager);
+      //  tabs.setupWithViewPager(viewpager);
         //Call api for AppointmentData
         mAppointmentHelper = new AppointmentHelper(this, this);
         mDateSelectedByUser= CommonMethods.getCurrentDate(DMSConstants.DATE_PATTERN.UTC_PATTERN);
         System.out.println(mDateSelectedByUser);
+
+        allAppointmentsFragment = AllAppointmentsFragment.newInstance();
+        getSupportFragmentManager().beginTransaction().replace(R.id.viewContainer, allAppointmentsFragment).commit();
+
         mAppointmentHelper.doGetAppointmentData(mDateSelectedByUser);
     }
 
-    private void setupViewPager(ViewPager viewPager) {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        activeAppointmentsFragment = ActiveAppointmentsFragment.newInstance();
-        allAppointmentsFragment = AllAppointmentsFragment.newInstance();
-        adapter.addFragment(activeAppointmentsFragment, getString(R.string.active_appointmets));
-        adapter.addFragment(allAppointmentsFragment, getString(R.string.all));
-        viewPager.setAdapter(adapter);
-    }
+//    private void setupViewPager(ViewPager viewPager) {
+//        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+//        activeAppointmentsFragment = ActiveAppointmentsFragment.newInstance();
+//        allAppointmentsFragment = AllAppointmentsFragment.newInstance();
+//        adapter.addFragment(activeAppointmentsFragment, getString(R.string.active_appointmets));
+//        adapter.addFragment(allAppointmentsFragment, getString(R.string.all));
+//        viewPager.setAdapter(adapter);
+//    }
 
 
     private void setDateInToolbar() {
@@ -153,7 +164,7 @@ public class MyAppointmentsActivity extends BaseActivity implements HelperRespon
                     MyAppointmentsDataModel myAppointmentsDM = myAppointmentsBaseMainModel.getMyAppointmentsDataModel();
                     viewRights = myAppointmentsDM.getViewRights();
                     myAppointmentsDM.setAppointmentPatientData(myAppointmentsDM.getAppointmentPatientData());
-                    activeAppointmentsFragment.setFilteredData(myAppointmentsDM);
+                  // activeAppointmentsFragment.setFilteredData(myAppointmentsDM);
                     allAppointmentsFragment.setFilteredData(myAppointmentsDM);
                 }
             }
@@ -161,8 +172,8 @@ public class MyAppointmentsActivity extends BaseActivity implements HelperRespon
     }
 
     private void showErrorDialog(String errorMessage, boolean isTimeout) {
-        if (activeAppointmentsFragment.swipeToRefresh != null)
-            activeAppointmentsFragment.swipeToRefresh.setRefreshing(false);
+//        if (activeAppointmentsFragment.swipeToRefresh != null)
+//            activeAppointmentsFragment.swipeToRefresh.setRefreshing(false);
         if (allAppointmentsFragment.swipeToRefresh != null)
             allAppointmentsFragment.swipeToRefresh.setRefreshing(false);
         CommonMethods.showErrorDialog(errorMessage, mContext, isTimeout, new ErrorDialogCallback() {

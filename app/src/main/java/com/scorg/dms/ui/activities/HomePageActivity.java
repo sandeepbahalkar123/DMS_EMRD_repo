@@ -235,7 +235,7 @@ public class HomePageActivity extends BaseActivity implements HelperResponse, Da
                 mDashboardHelper.doGetDashboardResponse();
             }
         });
-        setupTabs();
+      //  setupTabs();
     }
 
     private void setupTabs() {
@@ -485,18 +485,18 @@ public class HomePageActivity extends BaseActivity implements HelperResponse, Da
                             getWindow().setStatusBarColor(Color.parseColor(DMSApplication.COLOR_DARK_PRIMARY));
                         }
                         appointmentActivePatientData = getBookedAppointment(mDashboardDataModel.getAppointmentPatientDataList());
-                        if (tabsActiveVieAll.getVisibility() == View.INVISIBLE)
-                            tabsActiveVieAll.setVisibility(View.VISIBLE);
+//                        if (tabsActiveVieAll.getVisibility() == View.INVISIBLE)
+//                            tabsActiveVieAll.setVisibility(View.VISIBLE);
 
-                        if (tabsActiveVieAll.getSelectedTabPosition() == 0) {
-                            setAppointmentAdapter(appointmentActivePatientData);
-                            TextView textView = tabsActiveVieAll.getTabAt(1).getCustomView().findViewById(R.id.textTab);
-                            textView.setTextColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
-                        } else {
+//                        if (tabsActiveVieAll.getSelectedTabPosition() == 0) {
+//                            setAppointmentAdapter(appointmentActivePatientData);
+//                            TextView textView = tabsActiveVieAll.getTabAt(1).getCustomView().findViewById(R.id.textTab);
+//                            textView.setTextColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
+//                        } else {
                             setAppointmentAdapter(mDashboardDataModel.getAppointmentPatientDataList());
-                            TextView textView = tabsActiveVieAll.getTabAt(1).getCustomView().findViewById(R.id.textTab);
-                            textView.setTextColor(getResources().getColor(R.color.white));
-                        }
+                           // TextView textView = tabsActiveVieAll.getTabAt(1).getCustomView().findViewById(R.id.textTab);
+                          //  textView.setTextColor(getResources().getColor(R.color.white));
+                      //  }
 
                         if (mDashboardDataModel.getAppointmentPatientDataList().size() <= 0) {
                             emptyListView.setVisibility(View.VISIBLE);
