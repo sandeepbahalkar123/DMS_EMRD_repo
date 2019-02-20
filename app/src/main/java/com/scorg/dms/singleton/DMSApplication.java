@@ -25,6 +25,16 @@ public class DMSApplication extends MultiDexApplication {
     public static String COLOR_DARK_PRIMARY = "#0077A7";
     public static String COLOR_ACCENT = "#04ABDF";
     public static String COLOR_APPOINTMENT_TEXT = "#0077A7";
+
+    public static String LABEL_UHID= "UHID";
+    public static String LABEL_REF_ID= "Ref id";
+    public static String LABEL_DOCTOR_NAME= "Doctor Name";
+
+    public static String APPOINTMENT_STATUS_URL= "";
+
+
+
+
     public static boolean ISCancelRequest = false;
 
 

@@ -16,5 +16,5 @@ public interface ConnectionListener extends ResponseResults {
      */
     public void onResponse(int responseResult, CustomResponse customResponse, String mOldDataTag);
 
-    public void onTimeout(ConnectRequest request);
+    public void onTimeout(ConnectRequest request, String mOldDataTag);
 }

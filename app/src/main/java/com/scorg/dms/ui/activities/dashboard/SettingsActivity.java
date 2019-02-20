@@ -45,9 +45,6 @@ public class SettingsActivity extends BaseActivity implements  HelperResponse {
     ImageView backImageView;
     @BindView(R.id.titleTextView)
     TextView titleTextView;
-    @BindView(R.id.userInfoTextView)
-    TextView userInfoTextView;
-
 
     @BindView(R.id.change_ip_address)
     TextView change_ip_address;
@@ -82,17 +79,16 @@ public class SettingsActivity extends BaseActivity implements  HelperResponse {
     }
 
     private void initialize() {
-        logout.setTextColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
-        change_ip_address.setTextColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
-        clearImageCache.setTextColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
-        clearFileCache.setTextColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
+        logout.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+        change_ip_address.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+        clearImageCache.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+        clearFileCache.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         dashboardArrowIcon.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         mContext = SettingsActivity.this;
         docId = DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.DOC_ID, mContext);
         loginHelper = new LoginHelper(mContext, this);
         titleTextView.setText(getString(R.string.settings));
         backImageView.setVisibility(View.VISIBLE);
-
     }
 
     @Override

@@ -59,12 +59,12 @@
 
                     <android.support.v7.widget.AppCompatImageView
                         android:id="@+id/fileOneRemoveButton"
-                        android:layout_width="@dimen/dp23"
-                        android:layout_height="@dimen/dp23"
-                        android:layout_gravity="end|top"
-                        android:background="@drawable/blue_dot"
-                        android:visibility="visible"
-                        app:srcCompat="@drawable/close_btn" />
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:rotation="45"
+                        android:padding="3dp"
+                        android:layout_gravity="end|top" android:visibility="visible"
+                        app:srcCompat="@drawable/ic_add_circle" />
                 </LinearLayout>
 
                 <TextView
@@ -72,6 +72,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
+                    android:maxLines="1"
+                    android:ellipsize="end"
                     android:textSize="@dimen/sp12"
                     tools:text="@string/patient_id" />
 
@@ -90,6 +92,8 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:textSize="@dimen/sp12"
+                    android:maxLines="2"
+                    android:ellipsize="end"
                     tools:text="@string/file" />
 
                 <ImageView
@@ -97,7 +101,7 @@
                     android:layout_width="@dimen/dp80"
                     android:layout_height="@dimen/dp80"
                     android:padding="@dimen/dp10"
-                    android:src="@drawable/ic_selected_document" />
+                    android:src="@drawable/ic_no_document_selected" />
 
 
                 <!-- <TextView
@@ -140,12 +144,13 @@
 
                     <android.support.v7.widget.AppCompatImageView
                         android:id="@+id/fileTwoRemoveButton"
-                        android:layout_width="@dimen/dp23"
-                        android:layout_height="@dimen/dp23"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="end|top"
-                        android:background="@drawable/blue_dot"
+                        android:rotation="45"
+                        android:padding="3dp"
                         android:visibility="visible"
-                        app:srcCompat="@drawable/close_btn" />
+                        app:srcCompat="@drawable/ic_add_circle" />
                 </LinearLayout>
 
                 <TextView
@@ -154,6 +159,8 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:textSize="@dimen/sp12"
+                    android:maxLines="1"
+                    android:ellipsize="end"
                     tools:text="@string/patient_id" />
 
                 <TextView
@@ -170,6 +177,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
+                    android:maxLines="2"
+                    android:ellipsize="end"
                     android:textSize="@dimen/sp12"
                     tools:text="@string/file" />
 
@@ -178,7 +187,7 @@
                     android:layout_width="@dimen/dp80"
                     android:layout_height="@dimen/dp80"
                     android:padding="@dimen/dp10"
-                    android:src="@drawable/ic_selected_document" />
+                    android:src="@drawable/ic_no_document_selected" />
 
 
                 <!--  <TextView

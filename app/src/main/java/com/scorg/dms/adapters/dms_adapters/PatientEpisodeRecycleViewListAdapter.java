@@ -4,16 +4,16 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
-import android.support.v7.widget.AppCompatImageButton;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.scorg.dms.R;
+import com.scorg.dms.model.dms_models.ViewRights;
 import com.scorg.dms.model.dms_models.responsemodel.episode_list.PatientEpisodeFileData;
 import com.scorg.dms.singleton.DMSApplication;
 import com.scorg.dms.util.CommonMethods;
@@ -39,16 +39,16 @@ public class PatientEpisodeRecycleViewListAdapter extends RecyclerView.Adapter<P
 
     // @BindString(R.string.opd)
     private String opd;
-    // @BindString(R.string.ipd)
-    private String ipd;
-    private String uhid;
+    private ViewRights viewRights;
+    boolean isMainPrimary;
 
-    public PatientEpisodeRecycleViewListAdapter(Context context, List<PatientEpisodeFileData> searchResult) {
+    public PatientEpisodeRecycleViewListAdapter(Context context, List<PatientEpisodeFileData> searchResult, ViewRights viewRights) {
         this._context = context;
-        addNewItems(searchResult);
+        addNewItems(searchResult, isMainPrimary);
         opd = _context.getString(R.string.opd);
-        ipd = _context.getString(R.string.ipd);
-        uhid = _context.getString(R.string.uhid);
+        // @BindString(R.string.ipd)
+        String ipd = _context.getString(R.string.ipd);
+        this.viewRights = viewRights;
 
         if (context instanceof OnEpisodeClickListener) {
             onPatientListener = (OnEpisodeClickListener) context;
@@ -69,12 +69,13 @@ public class PatientEpisodeRecycleViewListAdapter extends RecyclerView.Adapter<P
         GradientDrawable buttonBackground = new GradientDrawable();
         buttonBackground.setShape(GradientDrawable.RECTANGLE);
         buttonBackground.setColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
-        buttonBackground.setCornerRadius(_context.getResources().getDimension(R.dimen.dp8));
+        buttonBackground.setCornerRadius(_context.getResources().getDimension(R.dimen.dp5));
         final PatientEpisodeFileData childElement = _originalListDataHeader.get(position);
-
+        childViewHolder.ipdValue.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         childViewHolder.ipdDischargeDateValue.setVisibility(View.GONE);
+        childViewHolder.ipdDischargeDate.setVisibility(View.GONE);
         childViewHolder.ipd.setBackground(buttonBackground);
-
+        childViewHolder.labelDoctorName.setText(DMSApplication.LABEL_DOCTOR_NAME + ":");
         //---
         if (opd.equalsIgnoreCase(childElement.getFileType())) {
             // Label
@@ -108,37 +109,36 @@ public class PatientEpisodeRecycleViewListAdapter extends RecyclerView.Adapter<P
                 date = CommonMethods.formatDateTime(childElement.getDischargeDate(), DMSConstants.DATE_PATTERN.DD_MMM_YYYY, DMSConstants.DATE_PATTERN.DD_MM_YYYY, DMSConstants.DATE);
                 childViewHolder.ipdDischargeDateValue.setText(date);
                 childViewHolder.ipdDischargeDateValue.setVisibility(View.VISIBLE);
+                childViewHolder.ipdDischargeDate.setVisibility(View.VISIBLE);
             }
 
         }
 
-        if (CommonMethods.isTablet(_context))
-            childViewHolder.ipdCheckBox.setVisibility(View.GONE);
-        else
-            childViewHolder.ipdCheckBox.setVisibility(View.GONE);
 
         childViewHolder.doctorName.setText(childElement.getDoctorName());
 
         //--------------------
 
-        childViewHolder.rowLay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onPatientListener.onEpisodeListItemClick(childElement);
-            }
-        });
 
-        //  childViewHolder.childCardView.setBackgroundResource(R.drawable.round_background_and_square_side_view);
-        childViewHolder.childItemCollapseButton.setVisibility(View.GONE);
+      //  boolean isShowEye = viewHideEyeIconEpisode(viewRights, childElement.IsView(), childElement.IsPrimary(), childElement.getFileType(), isMainPrimary);
 
+        if (childElement.isFileAcessible()) {
+            childViewHolder.imageViewRights.setVisibility(View.GONE);
+            childViewHolder.rowLay.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onPatientListener.onEpisodeListItemClick(childElement);
+                    // onPatientListener.showRaiseRequestBtn(false);
+                }
+            });
+        } else {
 
-        childViewHolder.childItemExpandCollapseButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            }
-        });
+            childViewHolder.imageViewRights.setVisibility(View.VISIBLE);
+            onPatientListener.showRaiseRequestBtn(true);
+        }
 
     }
+
 
     @Override
     public int getItemCount() {
@@ -166,12 +166,10 @@ public class PatientEpisodeRecycleViewListAdapter extends RecyclerView.Adapter<P
         TextView ipdDischargeDateValue;
         @BindView(R.id.doctorName)
         TextView doctorName;
-        @BindView(R.id.ipdCheckBox)
-        CheckBox ipdCheckBox;
-        @BindView(R.id.childItemCollapseButton)
-        LinearLayout childItemCollapseButton;
-        @BindView(R.id.childItemExpandCollapseButton)
-        AppCompatImageButton childItemExpandCollapseButton;
+        @BindView(R.id.labelDoctorName)
+        TextView labelDoctorName;
+        @BindView(R.id.imageViewRights)
+        ImageView imageViewRights;
 
         //@BindView(R.id.divider)
         //View divider;
@@ -188,15 +186,47 @@ public class PatientEpisodeRecycleViewListAdapter extends RecyclerView.Adapter<P
 
         void onEpisodeListItemClick(PatientEpisodeFileData groupHeader);
 
-        void smoothScrollToPosition(int previousPosition);
+        void showRaiseRequestBtn(boolean isShow);
     }
 
     public void removeAll() {
         this._originalListDataHeader.clear();
     }
 
-    public void addNewItems(List<PatientEpisodeFileData> searchResult) {
+    public void addNewItems(List<PatientEpisodeFileData> searchResult, boolean isMainPrimary) {
         this._originalListDataHeader.addAll(searchResult);
+        this.isMainPrimary = isMainPrimary;
+    }
+
+
+    public boolean viewHideEyeIconEpisode(ViewRights viewRights, boolean isView, boolean isPrimary, String fileType, boolean isMainPrimary) {
+        if (viewRights.getIsAllFileAccessible()) {
+            return false;  //Icon do not show
+        }
+
+        if (viewRights.isViewAppointmentPatient()) {
+            return false; //Icon do not show
+        }
+
+        if (viewRights.getIsRequestForAll() && isView) {
+            return false; //Icon do not show
+        }
+
+        if ((viewRights.getAllowOnlyPrimaryFiles() && isPrimary) || (viewRights.getAllowOnlyPrimaryFiles() && isView)) {
+            return false; //Icon do not show
+        }
+
+        if (isMainPrimary) {
+
+            if (viewRights.getIsOneFileIsPrimary() && (viewRights.getPrimaryFileTypeSetting().contains(fileType)) && !isPrimary) {
+                return true; // Icon will show
+            }else {
+                return false;//Icon do not show
+            }
+
+        }
+
+        return true; /// // Icon will show
     }
 
 }

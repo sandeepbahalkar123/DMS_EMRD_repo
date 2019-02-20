@@ -19,17 +19,38 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/toolbar_divider_color" />
 
-            <android.support.v7.widget.AppCompatAutoCompleteTextView
-                android:id="@+id/autocompleteSearchBox"
+            <LinearLayout
+                android:id="@+id/layoutPatSearch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dp5"
-                android:gravity="center"
-                android:padding="@dimen/dp5"
-                android:background="@null"
-                android:hint="@string/patient_list_search_hint"
-                android:textCursorDrawable="@drawable/cursor_color" />
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/dp5"
+                tools:background="@color/SkyBlue">
+
+                <com.scorg.dms.ui.customesViews.SearchTextViewWithDeleteButton
+                    android:id="@+id/autocompleteSearchBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp5"
+                    android:visibility="visible"
+                    app:hintText="@string/patient_list_search_hint"
+                    app:textSize="@dimen/sp15" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp1"
+                    android:layout_marginStart="@dimen/dp10"
+                    android:layout_marginLeft="@dimen/dp10"
+                    android:layout_marginTop="@dimen/dp5"
+                    android:layout_marginEnd="@dimen/dp10"
+                    android:layout_marginRight="@dimen/dp10"
+                    android:background="@color/white" />
+            </LinearLayout>
 
 
             <android.support.v7.widget.RecyclerView
@@ -39,31 +60,32 @@
                 android:orientation="horizontal"
                 app:reverseLayout="false" />
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/expandableListView"
+            <android.support.v4.widget.SwipeRefreshLayout
+                android:id="@+id/swipeToRefresh"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                app:reverseLayout="false" />
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/expandableListView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:reverseLayout="false" />
+
+                    <include
+                        android:id="@+id/emptyListView"
+                        layout="@layout/common_no_records_found"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                </LinearLayout>
 
 
-            <include
-                android:id="@+id/emptyListView"
-                layout="@layout/common_no_records_found"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:visibility="visible" />
-
-            <!-- <ExpandableListView
-                 android:id="@+id/expandableListView"
-                 android:layout_width="match_parent"
-                 android:layout_height="match_parent"
-                 android:clipToPadding="false"
-                 android:divider="@null"
-                 android:groupIndicator="@android:color/holo_red_dark"
-                 android:paddingBottom="@dimen/dp58"
-                 android:paddingTop="@dimen/dp8"
-                 android:visibility="gone" />-->
+            </android.support.v4.widget.SwipeRefreshLayout>
 
         </LinearLayout>
 
@@ -72,9 +94,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
-            android:layout_marginBottom="@dimen/dp10"
             android:layout_marginEnd="@dimen/fab_margin"
             android:layout_marginRight="@dimen/fab_margin"
+            android:layout_marginBottom="@dimen/dp10"
             app:srcCompat="@drawable/ic_filter" />
 
     </FrameLayout>

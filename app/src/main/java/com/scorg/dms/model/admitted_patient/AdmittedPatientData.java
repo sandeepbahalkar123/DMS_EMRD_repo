@@ -57,6 +57,9 @@ public class AdmittedPatientData implements Parcelable, Cloneable, Comparable<Ad
     @Expose
     private String AdmissionDate;
 
+    @SerializedName("IsArchived")
+    @Expose
+    private boolean IsArchived;
 
     private boolean selectedGroupCheckbox;
 
@@ -94,6 +97,7 @@ public class AdmittedPatientData implements Parcelable, Cloneable, Comparable<Ad
         this.PatId = ((String) in.readValue((String.class.getClassLoader())));
         this.BedNo = ((String) in.readValue((String.class.getClassLoader())));
         this.AdmissionDate = ((String) in.readValue((String.class.getClassLoader())));
+        this.IsArchived = ((boolean) in.readValue((boolean.class.getClassLoader())));
 
     }
 
@@ -230,6 +234,14 @@ public class AdmittedPatientData implements Parcelable, Cloneable, Comparable<Ad
         this.spannableString = spannableString;
     }
 
+    public boolean isArchived() {
+        return IsArchived;
+    }
+
+    public void setArchived(boolean archived) {
+        IsArchived = archived;
+    }
+
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeValue(patientId);
         dest.writeValue(patientName);
@@ -245,6 +257,7 @@ public class AdmittedPatientData implements Parcelable, Cloneable, Comparable<Ad
         dest.writeValue(PatId);
         dest.writeValue(BedNo);
         dest.writeValue(AdmissionDate);
+        dest.writeValue(IsArchived);
     }
 
     public int describeContents() {

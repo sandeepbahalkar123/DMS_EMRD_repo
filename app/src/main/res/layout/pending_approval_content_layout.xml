@@ -36,9 +36,9 @@
                 android:layout_width="@dimen/dp8"
                 android:layout_height="@dimen/dp8"
                 android:layout_centerVertical="true"
-                android:layout_marginBottom="@dimen/dp6"
-                android:layout_marginRight="@dimen/dp8"
                 android:layout_marginTop="@dimen/dp6"
+                android:layout_marginRight="@dimen/dp8"
+                android:layout_marginBottom="@dimen/dp6"
                 android:background="@drawable/circular_bullet" />
 
             <TextView
@@ -48,9 +48,9 @@
                 android:layout_centerVertical="true"
                 android:layout_toEndOf="@id/bulletImageView"
                 android:layout_toRightOf="@id/bulletImageView"
+                android:fontFamily="@font/roboto_bold"
                 android:textColor="@color/black"
                 android:textSize="@dimen/sp16"
-                android:fontFamily="@font/roboto_bold"
                 tools:text="Shree Clinic - " />
 
             <TextView
@@ -62,10 +62,10 @@
                 android:layout_toEndOf="@id/clinicNameTextView"
                 android:layout_toRightOf="@id/clinicNameTextView"
                 android:ellipsize="end"
+                android:fontFamily="@font/roboto_medium"
                 android:maxLines="1"
                 android:textColor="@color/clinic_address_color"
                 android:textSize="@dimen/sp13"
-                android:fontFamily="@font/roboto_medium"
                 tools:text="Worli, Mumbaifgfdgfdgfgf" />
         </RelativeLayout>
 
@@ -73,14 +73,22 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/dp5">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerView"
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/swipeToRefresh"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/dp5"
-            tools:visibility="visible" />
+            android:layout_height="match_parent">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/dp5"
+                tools:visibility="visible" />
+
+        </android.support.v4.widget.SwipeRefreshLayout>
 
         <LinearLayout
             android:id="@+id/noRecords"
@@ -88,15 +96,15 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:orientation="vertical"
-            android:visibility="gone"
+            android:visibility="visible"
             tools:visibility="visible">
 
             <ImageView
                 android:id="@+id/imgNoRecordFound"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/dp32"
                 android:layout_marginStart="@dimen/dp32"
+                android:layout_marginEnd="@dimen/dp32"
                 android:adjustViewBounds="true"
                 android:background="@drawable/no_records_found"
                 app:srcCompat="@drawable/no_records_found" />

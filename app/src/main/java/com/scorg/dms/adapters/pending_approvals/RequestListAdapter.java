@@ -118,10 +118,6 @@ public class RequestListAdapter
             bluelineImageView = v.findViewById(R.id.bluelineImageView);
         }
 
-//        @Override
-//        public View getSwipeableContainerView() {
-//            return mContainer;
-//        }
     }
 
     @Override
@@ -144,7 +140,8 @@ public class RequestListAdapter
         holder.textProcessBy.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         holder.textCurrentStage.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         holder.textRequester.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
-        holder.mPatientIdTextView.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+        holder.mPatientIdTextView.setTextColor(Color.parseColor(DMSApplication.COLOR_APPOINTMENT_TEXT));
+        holder.mPatientNameTextView.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         holder.viewDivider.setBackgroundColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         holder.bluelineImageView.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
 
@@ -165,9 +162,9 @@ public class RequestListAdapter
 
         //-------------
         String dataToShowInPatientID = String.valueOf(item.getPatientID());
-        holder.mPatientIdTextView.setText(holder.mPatientIdTextView.getResources().getString(R.string.uhid) + "-" + dataToShowInPatientID);
+        holder.mPatientIdTextView.setText(DMSApplication.LABEL_UHID + " " + dataToShowInPatientID);
         //-------------
-        String name = CommonMethods.toCamelCase(item.getPatientName());
+        String name = item.getPatientName();
         if (item.getSalutation() != null && !item.getSalutation().equals("")) {
             Log.e("getSalutation","--"+item.getSalutation());
             name = item.getSalutation() + " " + name;

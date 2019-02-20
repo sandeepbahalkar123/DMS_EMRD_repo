@@ -1,5 +1,6 @@
 package com.scorg.dms.ui.fragments.admitted_patient;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -7,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -23,6 +25,7 @@ import com.scorg.dms.helpers.myappointments.AppointmentHelper;
 import com.scorg.dms.helpers.patient_list.DMSPatientsHelper;
 import com.scorg.dms.model.admitted_patient.AdmittedPatientData;
 import com.scorg.dms.model.admitted_patient.AdmittedPatientDataModel;
+import com.scorg.dms.model.dms_models.ViewRights;
 import com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemodel.SearchResult;
 import com.scorg.dms.model.my_appointments.AppointmentPatientData;
 import com.scorg.dms.model.my_appointments.MyAppointmentsDataModel;
@@ -43,6 +46,7 @@ import butterknife.Unbinder;
 
 import static com.scorg.dms.util.DMSConstants.ADMITTED_PATIENT_DATA;
 import static com.scorg.dms.util.DMSConstants.PATIENT_DETAILS;
+import static com.scorg.dms.util.DMSConstants.VIEW_RIGHTS_DETAILS;
 
 
 /**
@@ -51,27 +55,26 @@ import static com.scorg.dms.util.DMSConstants.PATIENT_DETAILS;
 
 public class AdmittedPatientsFragment extends Fragment implements AdmittedPatientsListAdapter.OnItemClickListener {
 
-
     @BindView(R.id.searchEditText)
     EditTextWithDeleteButton searchEditText;
 
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
 
+    @BindView(R.id.swipeToRefresh)
+    public SwipeRefreshLayout swipeToRefresh;
+    @BindView(R.id.imgNoRecordFound)
+    public ImageView imgNoRecordFound;
+
     @BindView(R.id.emptyListView)
-    RelativeLayout emptyListView;
+    public RelativeLayout emptyListView;
     @BindView(R.id.rightFab)
     FloatingActionButton rightFab;
 
-    @BindView(R.id.imgNoRecordFound)
-    ImageView imgNoRecordFound;
     Unbinder unbinder;
-    private AdmittedPatientsListAdapter admittedPatientsListAdapter;
-    private AppointmentHelper mAppointmentHelper;
-
-    private ArrayList<AppointmentPatientData> mAppointmentPatientData;
-    private String mUserSelectedDate;
-    private DMSPatientsHelper mPatientsHelper;
+    public AdmittedPatientsListAdapter admittedPatientsListAdapter;
+    ViewRights viewRights;
+    private OnFragmentInteraction onFragmentInteraction;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
@@ -85,6 +88,7 @@ public class AdmittedPatientsFragment extends Fragment implements AdmittedPatien
 
     private void init() {
         imgNoRecordFound.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+        searchEditText.setHint(getString(R.string.search_label)+DMSApplication.LABEL_UHID+ getString(R.string.label_patient_name));
         searchEditText.addTextChangedListener(new EditTextWithDeleteButton.TextChangedListener() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -103,18 +107,17 @@ public class AdmittedPatientsFragment extends Fragment implements AdmittedPatien
             }
         });
 
-        mUserSelectedDate = getArguments().getString(DMSConstants.DATE);
-        AdmittedPatientDataModel myAppointmentsDataModel = getArguments().getParcelable(ADMITTED_PATIENT_DATA);
-        setFilteredData(myAppointmentsDataModel);
+        swipeToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                onFragmentInteraction.pullRefresh();
+                searchEditText.setText("");
+            }
+        });
     }
 
-    public static AdmittedPatientsFragment newInstance(AdmittedPatientDataModel admittedPatientDataModel, String mDateSelectedByUser) {
-        AdmittedPatientsFragment myAppointmentsFragment = new AdmittedPatientsFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString(DMSConstants.DATE, mDateSelectedByUser);
-        bundle.putParcelable(ADMITTED_PATIENT_DATA, admittedPatientDataModel);
-        myAppointmentsFragment.setArguments(bundle);
-        return myAppointmentsFragment;
+    public static AdmittedPatientsFragment newInstance() {
+        return new AdmittedPatientsFragment();
     }
 
     @Override
@@ -156,6 +159,9 @@ public class AdmittedPatientsFragment extends Fragment implements AdmittedPatien
         extra.putString(DMSConstants.PATIENT_ID, patientListObject.getPatientId());
         extra.putString(DMSConstants.PAT_ID, patientListObject.getPatId());
         extra.putString(DMSConstants.PATIENT_LIST_PARAMS.PATIENT_NAME, "" + patientListObject.getPatientName());
+        extra.putString(DMSConstants.PATIENT_LIST_PARAMS.ARCHIVE_PAGE_TYPE, getString(R.string.admitted_page_type));
+        extra.putString(DMSConstants.PATIENT_AGE,patientListObject.getAge() );
+        extra.putString(DMSConstants.PATIENT_GENDER,patientListObject.getGender());
         intent.putExtra(DMSConstants.DATA, extra);
         startActivity(intent);
 
@@ -168,18 +174,9 @@ public class AdmittedPatientsFragment extends Fragment implements AdmittedPatien
         unbinder.unbind();
     }
 
-    @OnClick({R.id.rightFab})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.rightFab:
-                MyAppointmentsActivity activity = (MyAppointmentsActivity) getActivity();
-                activity.getActivityDrawerLayout().openDrawer(GravityCompat.END);
-                break;
-        }
-    }
-
-
     public void setFilteredData(AdmittedPatientDataModel myAppointmentsDataModel) {
+
+        viewRights = myAppointmentsDataModel.getViewRights();
 
         if (!myAppointmentsDataModel.getAdmittedPatientData().isEmpty()) {
             recyclerView.setVisibility(View.VISIBLE);
@@ -197,18 +194,28 @@ public class AdmittedPatientsFragment extends Fragment implements AdmittedPatien
             imgNoRecordFound.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
 
         }
-
     }
-
 
     @Override
     public void onClickedOfEpisodeListButton(SearchResult groupHeader) {
-
         Intent intent = new Intent(getActivity(), PatientDetailsActivity.class);
         Bundle bundle = new Bundle();
         bundle.putSerializable(PATIENT_DETAILS, groupHeader);
+        bundle.putSerializable(VIEW_RIGHTS_DETAILS,viewRights);
         intent.putExtra(DMSConstants.BUNDLE, bundle);
         startActivity(intent);
-
     }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnFragmentInteraction) {
+            onFragmentInteraction = (OnFragmentInteraction) context;
+        }
+    }
+
+    public interface OnFragmentInteraction {
+        void pullRefresh();
+    }
+
 }

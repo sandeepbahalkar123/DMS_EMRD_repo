@@ -13,9 +13,9 @@ import com.scorg.dms.R;
 import com.scorg.dms.singleton.DMSApplication;
 
 public class CustomPreferenceSpinAdapter extends BaseAdapter {
-    Context mContext;
-    String[] prefNameList;
-    int[] prefImageList;
+    private Context mContext;
+    private String[] prefNameList;
+    private int[] prefImageList;
 
 
     public CustomPreferenceSpinAdapter(Context context, String[] prefNameList, int[] prefImageList) {

@@ -10,11 +10,11 @@ public class DMSConstants {
 
         String FOLDER = "/Contents/android/";
 
-        String IC_LOGIN_BACKGROUD  = "/ic_login_backgroud.png";
-        String IC_LOGIN_LOGO  = "/ic_login_logo.png";
-        String IC_ACTIONBAR_LOGO  = "/ic_actionbar_logo.png";
-        String LOGO_SMALL  = "/logo_small.png";
-        String DASHBOARD_BACKGROUND  = "/background_dashboard.png";
+        String IC_LOGIN_BACKGROUD = "/ic_login_backgroud.png";
+        String IC_LOGIN_LOGO = "/ic_login_logo.png";
+        String IC_ACTIONBAR_LOGO = "/ic_actionbar_logo.png";
+        String LOGO_SMALL = "/logo_small.png";
+        String DASHBOARD_BACKGROUND = "/background_dashboard.png";
     }
 
     public static final String BUNDLE = "bundle";
@@ -80,10 +80,14 @@ public class DMSConstants {
     public static final String APPOINTMENT_DATA = "appointment_data";
     public static final String ADMITTED_PATIENT_DATA = "admitted_patient_data";
     public static final String PATIENT_ID = "patient_id";
+    public static final String PATIENT_AGE = "patient_age";
+    public static final String PATIENT_GENDER = "patient_gender";
     public static final String PAT_ID = "pat_id";
     public static final String NO = "no";
     public static final String RECORD_ID = "record_id";
     public static final String PATIENT_DETAILS = "patient_details";
+    public static final String VIEW_RIGHTS_DETAILS = "view_rights_details";
+
     public interface APPOINTMENT_STATUS {
         int BOOKED = 1;
         int CONFIRM = 2;
@@ -94,10 +98,9 @@ public class DMSConstants {
         String BOOKED_STATUS = "Booked";
         String CONFIRM_STATUS = "Confirm";
         String CANCEL_STATUS = "Cancel";
-        String COMPLETED_STATUS = "Completed";
+        String COMPLETED_STATUS = "Complete";
 
     }
-
 
 
     public interface DATE_PATTERN {
@@ -106,7 +109,6 @@ public class DMSConstants {
         String DD_MMM = "dd MMM";
         String MM = "MM";
         String MMM = "MMM";
-       String UTC_PATTERN_2ND = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
         String UTC_PATTERN = "yyyy-MM-dd'T'HH:mm:ss'Z'";
         String YYYY_MM_DD = "yyyy-MM-dd";
         String DD_MM_YYYY = "dd-MM-yyyy";
@@ -142,12 +144,14 @@ public class DMSConstants {
         public static final String TO_DATE = "toDate";
         public static final String ANNOTATION_TEXT = "annotationText";
         public static final String DOC_TYPE_ID = "DocTypeId";
+        public static final String ARCHIVE_PAGE_TYPE = "PageType";
     }
 
     public static class ArchivedPreference {
         public static final String FOLDER = "Folder";
         public static final String DATE = "Date";
         public static final String FILE = "File";
+        public static final String MY_ORDER = "Order";
     }
 
 }

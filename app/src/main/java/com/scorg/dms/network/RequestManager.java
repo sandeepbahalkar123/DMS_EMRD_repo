@@ -62,7 +62,7 @@ import java.util.Map;
 
 public class RequestManager extends ConnectRequest implements Connector, RequestTimer.RequestTimerListener {
     private final String TAG = this.getClass().getName();
-    private static final int CONNECTION_TIME_OUT = 1000 * 60;
+    private static final int CONNECTION_TIME_OUT = 1000 * 0;
     private static final int N0OF_RETRY = 0;
     private String requestTag;
     private int connectionType;
@@ -91,7 +91,7 @@ public class RequestManager extends ConnectRequest implements Connector, Request
     @Override
     public void connect() {
 
-        if (NetworkUtil.isInternetAvailable(mContext)) {
+//        if (NetworkUtil.isInternetAvailable(mContext)) {
 
             RequestPool.getInstance(this.mContext).cancellAllPreviousRequestWithSameTag(requestTag);
 
@@ -111,13 +111,13 @@ public class RequestManager extends ConnectRequest implements Connector, Request
             } else {
                 jsonRequest();
             }
-        } else {
-            mConnectionListener.onResponse(ConnectionListener.NO_INTERNET, null, mOldDataTag);
-            if (mViewById != null)
-                CommonMethods.showSnack(mViewById, mContext.getString(R.string.internet));
-            else
-                CommonMethods.showToast(mContext, mContext.getString(R.string.internet));
-        }
+//        } else {
+//            mConnectionListener.onResponse(ConnectionListener.NO_INTERNET, null, mOldDataTag);
+//            if (mViewById != null)
+//                CommonMethods.showSnack(mViewById, mContext.getString(R.string.internet));
+////            else
+////                CommonMethods.showToast(mContext, mContext.getString(R.string.internet));
+//        }
     }
 
     private void jsonRequest(String url, int connectionType, final Map<String, String> headerParams, CustomResponse customResponse, final boolean isTokenExpired) {
@@ -160,6 +160,7 @@ public class RequestManager extends ConnectRequest implements Connector, Request
 
             }
         };
+        jsonRequest.setShouldCache(false);
         jsonRequest.setRetryPolicy(new DefaultRetryPolicy(CONNECTION_TIME_OUT, N0OF_RETRY, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         jsonRequest.setTag(requestTag);
         requestTimer.start();
@@ -208,6 +209,7 @@ public class RequestManager extends ConnectRequest implements Connector, Request
 
             }
         };
+        jsonRequest.setShouldCache(false);
         jsonRequest.setRetryPolicy(new DefaultRetryPolicy(CONNECTION_TIME_OUT, N0OF_RETRY, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         jsonRequest.setTag(requestTag);
         requestTimer.start();
@@ -234,16 +236,16 @@ public class RequestManager extends ConnectRequest implements Connector, Request
                 }
         ) {
             @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
+            public Map<String, String> getHeaders() {
                 return headerParams;
             }
 
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams() {
                 return postParams;
             }
         };
-
+        stringRequest.setShouldCache(false);
         stringRequest.setRetryPolicy(new DefaultRetryPolicy(CONNECTION_TIME_OUT, N0OF_RETRY, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         stringRequest.setTag(requestTag);
         requestTimer.start();
@@ -268,12 +270,31 @@ public class RequestManager extends ConnectRequest implements Connector, Request
 
         try {
 
+            if (error != null) {
+                if (error.getMessage() != null) {
+                    CommonMethods.Log(TAG, error.getMessage());
+                }
+            }
+
 //            VolleyError error1 = new VolleyError(new String(error.networkResponse.data));
 //            error = error1;
 //            CommonMethods.Log("Error Message", error.getMessage() + "\n error Localize message" + error.getLocalizedMessage());
-            CommonMethods.Log(TAG, "Goes into error response condition");
             if (error instanceof TimeoutError) {
-                mConnectionListener.onResponse(ConnectionListener.TIMEOUT_ERROR, null, mOldDataTag);
+                // mConnectionListener.onResponse(ConnectionListener.TIMEOUT_ERROR, null, mOldDataTag);
+                if (mContext instanceof AppCompatActivity) {
+                    ((AppCompatActivity) this.mContext).runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (mProgressDialog != null && mProgressDialog.isShowing()) {
+                                mProgressDialog.dismiss();
+                            }
+                        }
+                    });
+                }
+
+                RequestPool.getInstance(mContext)
+                        .cancellAllPreviousRequestWithSameTag(requestTag);
+                mConnectionListener.onTimeout(this, mOldDataTag);
 
             } else if (error instanceof NoConnectionError) {
 
@@ -299,15 +320,17 @@ public class RequestManager extends ConnectRequest implements Connector, Request
                     ((AppCompatActivity) mContext).finishAffinity();
                 } else {
                     mConnectionListener.onResponse(ConnectionListener.SERVER_ERROR, null, mOldDataTag);
-                    if (DMSConstants.TASK_LOGIN_CODE != mOldDataTag)
-                        CommonMethods.showToast(mContext, mContext.getResources().getString(R.string.server_error));
+
+                    //if (!DMSConstants.TASK_LOGIN_CODE.equals(mOldDataTag))
+                        //CommonMethods.showToast(mContext, mContext.getResources().getString(R.string.server_error));
+
                 }
             } else if (error instanceof NetworkError) {
                 mConnectionListener.onResponse(ConnectionListener.NO_INTERNET, null, mOldDataTag);
                 if (mViewById != null)
                     CommonMethods.showSnack(mViewById, mContext.getString(R.string.internet));
-                else
-                    CommonMethods.showToast(mContext, mContext.getString(R.string.internet));
+//                else
+//                    CommonMethods.showToast(mContext, mContext.getString(R.string.internet));
             } else if (error instanceof ParseError) {
                 mConnectionListener.onResponse(ConnectionListener.PARSE_ERR0R, null, mOldDataTag);
             } else if (error instanceof AuthFailureError) {
@@ -315,7 +338,7 @@ public class RequestManager extends ConnectRequest implements Connector, Request
                     tokenRefreshRequest();
                 }
             } else {
-                CommonMethods.showToast(mContext, error.getMessage());
+                CommonMethods.Log(TAG, error.getMessage());
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -476,22 +499,22 @@ public class RequestManager extends ConnectRequest implements Connector, Request
 
     @Override
     public void onTimeout(RequestTimer requestTimer) {
-        if (mContext instanceof AppCompatActivity) {
-            if (mContext != null) {
-                ((AppCompatActivity) this.mContext).runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (mProgressDialog != null && mProgressDialog.isShowing()) {
-                            mProgressDialog.dismiss();
-                        }
-                    }
-                });
-            }
-        }
 
-        RequestPool.getInstance(mContext)
-                .cancellAllPreviousRequestWithSameTag(requestTag);
-        mConnectionListener.onTimeout(this);
+//        if (mContext instanceof AppCompatActivity) {
+//            ((AppCompatActivity) this.mContext).runOnUiThread(new Runnable() {
+//                @Override
+//                public void run() {
+//                    if (mProgressDialog != null && mProgressDialog.isShowing()) {
+//                        mProgressDialog.dismiss();
+//                    }
+//                }
+//            });
+//        }
+//
+//        RequestPool.getInstance(mContext)
+//                .cancellAllPreviousRequestWithSameTag(requestTag);
+//        mConnectionListener.onTimeout(this,mOldDataTag);
+
     }
 
     public void showErrorDialog(String msg) {

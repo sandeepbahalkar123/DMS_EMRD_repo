@@ -36,8 +36,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.config
         }
-
-
     }
     sourceSets {
         main {
@@ -91,6 +89,7 @@ dependencies {
     annotationProcessor 'com.github.hotchemi:permissionsdispatcher-processor:2.4.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
 
+//    implementation 'info.hoang8f:android-segmented:1.0.6'
 }
 
 configurations.all {

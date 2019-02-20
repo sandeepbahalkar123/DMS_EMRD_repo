@@ -5,6 +5,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class LstDocType {
 
@@ -14,6 +15,19 @@ public class LstDocType {
     @SerializedName("typeName")
     @Expose
     private String typeName;
+
+    @SerializedName("nodeColor")
+    @Expose
+    private String nodeColor;
+
+    @SerializedName("favouriteColor")
+    @Expose
+    private String favouriteColor;
+
+    @SerializedName("isFavourite")
+    @Expose
+    private boolean isFavourite;
+
     @SerializedName("pageCount")
     @Expose
     private Integer pageCount;
@@ -46,12 +60,18 @@ public class LstDocType {
     @Expose
     private ArrayList<LstDateFileType> lstDateFileTypeList = new ArrayList<LstDateFileType>();
 
+<<<<<<< HEAD
     @SerializedName("nodeType")
     @Expose
     private String nodeType;
     @SerializedName("pacsUrl")
     @Expose
     private String pacsUrl;
+=======
+    @SerializedName("lsthideDocCategory")
+    @Expose
+    private List<LstHideDocType> lsthideDocCategory = new ArrayList<LstHideDocType>();
+>>>>>>> 06b335b86507e6adc27ac4351048a8c42d999232
 
     public Integer getTypeId() {
         return typeId;
@@ -77,12 +97,36 @@ public class LstDocType {
         this.createdDate = createdDate;
     }
 
+    public String getNodeColor() {
+        return nodeColor == null ? "#000000" : nodeColor;
+    }
+
+    public void setNodeColor(String nodeColor) {
+        this.nodeColor = nodeColor;
+    }
+
+    public String getFavouriteColor() {
+        return favouriteColor == null ? "#00000000" : favouriteColor;
+    }
+
+    public void setFavouriteColor(String favouriteColor) {
+        this.favouriteColor = favouriteColor;
+    }
+
     public Integer getPageCount() {
         return pageCount;
     }
 
     public void setPageCount(Integer pageCount) {
         this.pageCount = pageCount;
+    }
+
+    public boolean isFavourite() {
+        return isFavourite;
+    }
+
+    public void setFavourite(boolean favourite) {
+        isFavourite = favourite;
     }
 
     public Integer getPageNumber() {
@@ -141,6 +185,7 @@ public class LstDocType {
         this.fileTypeRefId = fileTypeRefId;
     }
 
+<<<<<<< HEAD
     public String getNodeType() {
         return nodeType;
     }
@@ -155,6 +200,15 @@ public class LstDocType {
 
     public void setPacsUrl(String pacsUrl) {
         this.pacsUrl = pacsUrl;
+=======
+
+    public List<LstHideDocType> getLsthideDocCategory() {
+        return lsthideDocCategory;
+    }
+
+    public void setLsthideDocCategory(List<LstHideDocType> lsthideDocCategory) {
+        this.lsthideDocCategory = lsthideDocCategory;
+>>>>>>> 06b335b86507e6adc27ac4351048a8c42d999232
     }
 
     @Override

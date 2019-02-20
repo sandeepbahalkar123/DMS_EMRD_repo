@@ -29,11 +29,17 @@ public class SearchResult implements Serializable {
 
     @SerializedName("age")
     @Expose
-    private String age="";
+    private String age;
 
     @SerializedName("gender")
     @Expose
-    private String gender="";
+    private String gender;
+
+
+    @SerializedName("IsArchived")
+    @Expose
+    private boolean IsArchived;
+
 
 
     public String getPatientId() {
@@ -99,5 +105,13 @@ public class SearchResult implements Serializable {
 
     public void setGender(String gender) {
         this.gender = gender;
+    }
+
+    public boolean isArchived() {
+        return IsArchived;
+    }
+
+    public void setArchived(boolean archived) {
+        IsArchived = archived;
     }
 }

@@ -32,10 +32,11 @@
     <!--Key for Debug-->
 
     <!--sandeep sir account credentials-->
-    <string name="parse_error">parse error</string>
-    <string name="no_connection_error">Internal server error</string>
-    <string name="timeout_error">Timeout error</string>
-    <string name="default_error">default error</string>
+    <string name="parse_error">Parse Error</string>
+    <string name="something_went_wrong_error">Something Went Wrong</string>
+    <string name="no_connection_error">No Network</string>
+    <string name="timeout_error">Timeout Error</string>
+    <string name="default_error">Default Error</string>
     <string name="cancel">Cancel</string>
     <string name="do_you_exit">Do you want to exit ?</string>
     <string name="do_you_want_to_cancel">Do you want to cancel the request ?</string>
@@ -44,7 +45,7 @@
     <string name="filter">Filter</string>
     <string name="reset">Reset</string>
     <string name="welcome">Welcome,</string>
-    <string name="search_hint"><![CDATA[Search by Name, Phone & Patient ID]]></string>
+    <string name="search_hint"><![CDATA[Search by Name & Patient ID]]></string>
     <string name="home">Home</string>
     <string name="settings">Settings</string>
     <string name="support">Support</string>
@@ -54,19 +55,20 @@
     <string name="booked">Booked</string>
     <string name="capitalcompleted">Completed</string>
     <string name="appointments">Appointments</string>
-    <string name="admitted_patient">Admitted Patient</string>
+    <string name="admitted_patient">Admitted Patients</string>
     <string name="waiting_list">Waiting List</string>
-    <string name="request_list">Request List</string>
+    <string name="request_list">Approval List</string>
     <string name="dashboard">dashboard</string>
-    <string name="my_patients">My Patients</string>
+    <string name="my_patients">All Patients</string>
     <string name="do_you_logout">Do you want to logout?</string>
     <string name="select_date_text">Select Date</string>
-    <string name="doc_name">Doctor Name:</string>
+    <string name="doc_name">Doctor Name:\u0020</string>
     <!--<string name="template_list">Template List</string>-->
     <string name="active">ACTIVE</string>
     <string name="pending_request">PENDING REQUESTS</string>
     <string name="all_request">ALL REQUESTS</string>
-    <string name="view_all">VIEW ALL</string>
+    <string name="view_all">Show</string>
+    <string name="hide">Hide</string>
     <string name="in_time">In Time</string>
     <string name="appointment_completed">Appointment is completed</string>
     <string name="episode">Episode</string>
@@ -74,9 +76,10 @@
     <string name="today_appointment">OPD\nPatients</string>
     <string name="today_appointment_no_new_line">Today\'s Appointments</string>
     <string name="admitted_patients"> Admitted\nPatients</string>
-    <string name="pending_approval">Pending\nApproval</string>
-    <string name="today_patient">My \nPatients</string>
+    <string name="pending_approval">Pending\nApprovals</string>
+    <string name="today_patient">All \nPatients</string>
     <string name="years">yrs -\u0020</string>
+    <string name="done">Done</string>
 
 
     <string name="waiting_list_message">Oops !! There are no patients currently in the waiting list.</string>
@@ -107,8 +110,8 @@
     <string name="discharge">Discharge</string>
     <string name="from">From</string>
     <string name="to">To</string>
-    <string name="requester">Requester- </string>
-    <string name="processed_by">Processed By- </string>
+    <string name="requester">Requester -\u0020</string>
+    <string name="processed_by">Processed By -\u0020</string>
     <string name="patient_id">Patient ID:</string>
     <string name="medical_records">Medical Records</string>
     <string name="complete">Complete</string>
@@ -116,7 +119,7 @@
     <string name="request_raised_success"> Request raised successfully.</string>
 
     <!-- Strings related to login -->
-    <string name="error_empty_fields">Please enter username/password</string>
+    <string name="error_empty_fields"> <![CDATA[Please Enter Username & Password]]></string>
 
     <string name="visit_date">Visit Date:\u0020</string>
     <string name="error_enter_uhid">Enter UHID</string>
@@ -132,7 +135,7 @@
     <string name="from_date">From:</string>
     <string name="to_date">To:</string>
     <string name="patient_name">Patient Name:</string>
-    <string name="change_ip">Do you want to change IP address?</string>
+    <string name="change_ip">Do you want to change ?</string>
     <string name="date_type">DType:</string>
     <string name="documenttype">DT:</string>
     <string name="enter_annotation">Annotation:</string>
@@ -143,7 +146,7 @@
     <string name="records">Records</string>
 
     <string name="support_bottom_first_line">DOCUPHI is a unique product of</string>
-    <string name="invalid_username_password"> Invalid username/password</string>
+    <string name="invalid_username_password">Invalid Email address or Password.</string>
     <string name="pdf">PDF</string>
     <string name="patient_list_search_hint">Search UHID,Ref id,Patient name</string>
     <string name="patient_details_search_hint">Search Ref id</string>
@@ -169,9 +172,17 @@
     </string-array>
     <string-array name="get_archived_preference_list">
         <item>Folder</item>
-        <item>File</item>
+        <!--<item>File</item>-->
         <item>Date</item>
+        <item>My Order</item>
     </string-array>
+
+
+    <string-array name="get_archived_preference_list_episode">
+        <item>Folder</item>
+        <item>My Order</item>
+    </string-array>
+
     <string-array name="opd_array">
         <item>Select</item>
         <item>Visit Date</item>
@@ -207,6 +218,7 @@
     <string name="address">Address:</string>
     <string name="title_activity_patient_details">Patient Details</string>
     <string name="in_uhid">in UHID</string>
+    <string name="in">in\u0020</string>
     <string name="in_patient_name">in Patient name</string>
     <string name="in_ref_id">in Ref Id</string>
     <string name="in_all">in All</string>
@@ -214,6 +226,29 @@
     <string name="off">OFF</string>
     <string name="refresh_images">Refresh Images</string>
     <string name="clear_file_cache">Clear File Cache</string>
+<<<<<<< HEAD
     <string name="title_activity_web_view">WebViewActivity</string>
+=======
+    <string name="retry">Retry</string>
+    <string name="appointment_code">Appointment Code :</string>
+
+    <string name="coma_space_seperator">,\u0020</string>
+    <string name="search_label">Search by\u0020</string>
+    <string name="patient_not_having_record">No records found for these patient.</string>
+    <string name="active_appointmets">Active</string>
+    <string name="all_appointments">View All</string>
+    <string name="data_not_found">Required  Data Not Found</string>
+    <string name="check_wifi_connection">The Wifi connection appears to be off. Please check the Wifi settings and try again.</string>
+    <string name="raise_request_episode">Raise View File Request</string>
+    <string name="select_file_type">Select File Type</string>
+    <string name="id_type">ID Type</string>
+    <string name="all">All</string>
+    <string name="label_patient_name">\u0020<![CDATA[& Name]]></string>
+    <string name="select_two_files">Please Select Two Files.</string>
+    <string name="appointment_page_type">appointment</string>
+    <string name="patient_page_type">search</string>
+    <string name="admitted_page_type">admitted</string>
+    <string name="not_valid_pdf_url">This is not valid document.</string>
+>>>>>>> 06b335b86507e6adc27ac4351048a8c42d999232
 
 </resources>

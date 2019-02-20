@@ -44,14 +44,9 @@ public class RequestedArchivedMainListActivity extends BaseActivity implements H
     ImageView backImageView;
     @BindView(R.id.titleTextView)
     TextView titleTextView;
-    @BindView(R.id.userInfoTextView)
-    TextView userInfoTextView;
+
     @BindView(R.id.dateTextview)
     TextView dateTextview;
-    @BindView(R.id.year)
-    Spinner year;
-    @BindView(R.id.addImageView)
-    ImageView addImageView;
     @BindView(R.id.tabs)
     TabLayout tabs;
     @BindView(R.id.viewpager)
@@ -113,7 +108,7 @@ public class RequestedArchivedMainListActivity extends BaseActivity implements H
     public void onTimeOutError(String mOldDataTag, String timeOutErrorMessage) {
     }
 
-    @OnClick({R.id.backImageView, R.id.titleTextView, R.id.userInfoTextView})
+    @OnClick({R.id.backImageView, R.id.titleTextView})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.backImageView:
@@ -121,9 +116,6 @@ public class RequestedArchivedMainListActivity extends BaseActivity implements H
                 break;
             case R.id.titleTextView:
                 break;
-            case R.id.userInfoTextView:
-                break;
-
         }
     }
 

@@ -25,6 +25,7 @@
     <dimen name="dp11">11dp</dimen>
     <dimen name="dp3">3dp</dimen>
     <dimen name="dp100">100dp</dimen>
+    <dimen name="dp110">110dp</dimen>
     <dimen name="dp17">17dp</dimen>
     <dimen name="dp23">23dp</dimen>
     <dimen name="dp28">28dp</dimen>
@@ -59,5 +60,27 @@
     <dimen name="dp26">26dp</dimen>
     <dimen name="dp36">36dp</dimen>
     <dimen name="compare_dialog">270dp</dimen>
+    <dimen name="banner_height">200dp</dimen>
+    <dimen name="label_height">100dp</dimen>
+    <dimen name="dp44">46dp</dimen>
+    <dimen name="dp45">45dp</dimen>
+    <dimen name="tab_width">40dp</dimen>
+    <dimen name="tab_height">30dp</dimen>
+    <dimen name="dp72">72dp</dimen>
+    <dimen name="dp108">108dp</dimen>
+    <dimen name="dp24">24dp</dimen>
+    <dimen name="back_arrow">24dp</dimen>
+
+    <dimen name="level1">50dp</dimen>
+    <dimen name="level2">100dp</dimen>
+    <dimen name="level3">150dp</dimen>
+    <dimen name="dialog_width">250dp</dimen>
+
+    <dimen name="check_left_padding">94dp</dimen>
+    <dimen name="dp38">38dp</dimen>
+    <dimen name="next_button_padding">5dp</dimen>
+    <dimen name="drawer_header">56dp</dimen>
+    <dimen name="status_text_max_width">110dp</dimen>
+    <dimen name="file_type_text_max_width">130dp</dimen>
 
 </resources>

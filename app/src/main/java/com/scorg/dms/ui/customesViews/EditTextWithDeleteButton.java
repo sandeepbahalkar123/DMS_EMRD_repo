@@ -6,6 +6,7 @@ import android.content.res.TypedArray;
 import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.InputType;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.util.TypedValue;
@@ -157,6 +158,8 @@ public class EditTextWithDeleteButton extends LinearLayout {
         editText.setGravity(Gravity.LEFT | Gravity.CENTER_VERTICAL);
         editText.setBackground(null);
         editText.setHint(hintText);
+        editText.setMaxLines(2);
+        editText.setEllipsize(TextUtils.TruncateAt.END);
         //--------
         try {
             Field f = null;

@@ -29,6 +29,11 @@ public class EpisodeResponseModel implements CustomResponse, Serializable {
 
     public class EpisodeDataList implements CustomResponse {
 
+
+        @SerializedName("fileTypeList")
+        @Expose
+        private ArrayList<FileTypeList> fileTypeList = new ArrayList<FileTypeList>();
+
         @SerializedName("searchResultList")
         @Expose
         private List<PatientEpisodeFileData> patientEpisodeFileDataList = new ArrayList<PatientEpisodeFileData>();
@@ -36,6 +41,10 @@ public class EpisodeResponseModel implements CustomResponse, Serializable {
         @SerializedName("ispaggination")
         @Expose
         private boolean ispaggination;
+
+        @SerializedName("isMainPrimary")
+        @Expose
+        private boolean isMainPrimary;
 
 
         public List<PatientEpisodeFileData> getPatientEpisodeFileDataList() {
@@ -54,6 +63,22 @@ public class EpisodeResponseModel implements CustomResponse, Serializable {
             this.ispaggination = ispaggination;
         }
 
+
+        public ArrayList<FileTypeList> getFileTypeList() {
+            return fileTypeList;
+        }
+
+        public void setFileTypeList(ArrayList<FileTypeList> fileTypeList) {
+            this.fileTypeList = fileTypeList;
+        }
+
+        public boolean isMainPrimary() {
+            return isMainPrimary;
+        }
+
+        public void setMainPrimary(boolean mainPrimary) {
+            isMainPrimary = mainPrimary;
+        }
     }
 
     public EpisodeDataList getEpisodeDataList() {

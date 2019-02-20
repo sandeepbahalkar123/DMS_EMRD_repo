@@ -12,6 +12,10 @@ public class ArchiveDatum {
     @Expose
     private String fileType;
 
+    @SerializedName("displayKey")
+    @Expose
+    private String displayKey;
+
     @SerializedName("confidentialState")
     @Expose
     private int confidentialState;
@@ -24,9 +28,30 @@ public class ArchiveDatum {
     @Expose
     private List<LstDocCategory> archiveDataLstDocCategories = new ArrayList<LstDocCategory>();
 
+    @SerializedName("lstOrderedDocTypes")
+    @Expose
+    private List<LstDateFileType> lstOrderedDocTypes = new ArrayList<LstDateFileType>();
 
-    private int totalLstDateFolderTypePageCount = -1;
-    private int totalArchiveDataLstDocCategoriesPageCount = -1;
+    @SerializedName("lsthideDocCategory")
+    @Expose
+    private List<LstHideDocType> lstHideDocTypes = new ArrayList<LstHideDocType>();
+
+    @SerializedName("nodeColor")
+    @Expose
+    private String nodeColor;
+
+    @SerializedName("favouriteColor")
+    @Expose
+    private String favouriteColor;
+
+    @SerializedName("pageCount")
+    @Expose
+    private int pageCount;
+
+//    private int totalLstDateFolderTypePageCount = -1;
+//    private int totalArchiveDataLstDocCategoriesPageCount = -1;
+//    private int totalArchiveDataLstOrderPageCount = -1;
+//    private int totalArchiveDataLstHidePageCount = -1;
 
 
     public String getFileType() {
@@ -45,17 +70,26 @@ public class ArchiveDatum {
         this.lstDateFolderTypeList = lstDateFolderTypeList;
     }
 
+<<<<<<< HEAD
+=======
+   /* public void setTotalLstDateFolderTypePageCount(int totalLstDateFolderTypePageCount) {
+        this.totalLstDateFolderTypePageCount = totalLstDateFolderTypePageCount;
+    }
+
+>>>>>>> 06b335b86507e6adc27ac4351048a8c42d999232
     public int getTotalLstDateFolderTypePageCount() {
         if (totalLstDateFolderTypePageCount == -1) {
             int count = 0;
-            for (LstDateFolderType temp :
-                    lstDateFolderTypeList) {
-                count = count + temp.getPageCount();
+            if (lstDateFolderTypeList != null) {
+                for (LstDateFolderType temp :
+                        lstDateFolderTypeList) {
+                    count = count + temp.getPageCount();
+                }
             }
             setTotalLstDateFolderTypePageCount(count);
         }
         return totalLstDateFolderTypePageCount;
-    }
+    }*/
 
     public void setTotalLstDateFolderTypePageCount(int totalLstDateFolderTypePageCount) {
         this.totalLstDateFolderTypePageCount = totalLstDateFolderTypePageCount;
@@ -69,6 +103,17 @@ public class ArchiveDatum {
         this.archiveDataLstDocCategories = archiveDataLstDocCategories;
     }
 
+<<<<<<< HEAD
+=======
+    /*public void setTotalArchiveDataLstDocCategoriesPageCount(int totalArchiveDataLstDocCategoriesPageCount) {
+        this.totalArchiveDataLstDocCategoriesPageCount = totalArchiveDataLstDocCategoriesPageCount;
+    }
+
+    public void setTotalArchiveDataLstOrderPageCount(int totalArchiveDataLstOrderPageCount) {
+        this.totalArchiveDataLstOrderPageCount = totalArchiveDataLstOrderPageCount;
+    }
+
+>>>>>>> 06b335b86507e6adc27ac4351048a8c42d999232
     public int getTotalArchiveDataLstDocCategoriesPageCount() {
         if (archiveDataLstDocCategories != null) {
             if (totalArchiveDataLstDocCategoriesPageCount == -1) {
@@ -84,10 +129,43 @@ public class ArchiveDatum {
         return totalArchiveDataLstDocCategoriesPageCount;
     }
 
+<<<<<<< HEAD
     public void setTotalArchiveDataLstDocCategoriesPageCount(int totalArchiveDataLstDocCategoriesPageCount) {
         this.totalArchiveDataLstDocCategoriesPageCount = totalArchiveDataLstDocCategoriesPageCount;
     }
 
+=======
+    public int getTotalArchiveDataLstOrderPageCount() {
+        if (lstOrderedDocTypes != null) {
+            if (totalArchiveDataLstOrderPageCount == -1) {
+                int count = 0;
+                for (LstDateFileType temp :
+                        lstOrderedDocTypes) {
+                    count = count + temp.getPageCount();
+                }
+                setTotalArchiveDataLstOrderPageCount(count);
+            }
+        }
+
+        return totalArchiveDataLstOrderPageCount;
+    }
+
+    public int getTotalArchiveDataLstHidePageCount() {
+        if (lstOrderedDocTypes != null) {
+            if (totalArchiveDataLstHidePageCount == -1) {
+                int count = 0;
+                for (LstHideDocType temp :
+                        lstHideDocTypes) {
+                    count = count + temp.getPageCount();
+                }
+                setTotalArchiveDataLstHidePageCount(count);
+            }
+        }
+
+        return totalArchiveDataLstOrderPageCount;
+    }*/
+
+>>>>>>> 06b335b86507e6adc27ac4351048a8c42d999232
     public int getConfidentialState() {
         return confidentialState;
     }
@@ -96,13 +174,64 @@ public class ArchiveDatum {
         this.confidentialState = confidentialState;
     }
 
+    public List<LstDateFileType> getLstOrderedDocTypes() {
+        return lstOrderedDocTypes;
+    }
+
+    public void setLstOrderedDocTypes(List<LstDateFileType> lstOrderedDocTypes) {
+        this.lstOrderedDocTypes = lstOrderedDocTypes;
+    }
+
+    public String getDisplayKey() {
+        return displayKey;
+    }
+
+    public void setDisplayKey(String displayKey) {
+        this.displayKey = displayKey;
+    }
+
+    public List<LstHideDocType> getLstHideDocTypes() {
+        return lstHideDocTypes;
+    }
+
+    public void setLstHideDocTypes(List<LstHideDocType> lstHideDocTypes) {
+        this.lstHideDocTypes = lstHideDocTypes;
+    }
+
+    /*public void setTotalArchiveDataLstHidePageCount(int totalArchiveDataLstHidePageCount) {
+        this.totalArchiveDataLstHidePageCount = totalArchiveDataLstHidePageCount;
+    }*/
+
+    public String getNodeColor() {
+        return nodeColor == null ? "#000000" : nodeColor;
+    }
+
+    public void setNodeColor(String nodeColor) {
+        this.nodeColor = nodeColor;
+    }
+
+    public String getFavouriteColor() {
+        return favouriteColor == null ? "#00000000" : favouriteColor;
+    }
+
+    public void setFavouriteColor(String favouriteColor) {
+        this.favouriteColor = favouriteColor;
+    }
+
+    public int getPageCount() {
+        return pageCount;
+    }
+
+    public void setPageCount(int pageCount) {
+        this.pageCount = pageCount;
+    }
+
     @Override
     public String toString() {
         return "ArchiveDatum{" +
                 "fileType='" + fileType + '\'' +
                 ", lstDateFolderTypeList=" + lstDateFolderTypeList +
                 ", archiveDataLstDocCategories=" + archiveDataLstDocCategories +
-                ", totalLstDateFolderTypePageCount=" + totalLstDateFolderTypePageCount +
                 ", confidentialState=" + confidentialState +
                 '}';
     }

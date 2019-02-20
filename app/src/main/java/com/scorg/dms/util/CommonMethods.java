@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.content.res.ColorStateList;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Color;
@@ -15,10 +14,8 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.GradientDrawable;
 import android.support.design.widget.Snackbar;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.drawable.DrawableCompat;
-import android.support.v4.widget.ImageViewCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -43,6 +40,7 @@ import com.bumptech.glide.signature.ObjectKey;
 import com.scorg.dms.R;
 import com.scorg.dms.interfaces.CheckIpConnection;
 import com.scorg.dms.interfaces.DatePickerDialogListener;
+import com.scorg.dms.interfaces.ErrorDialogCallback;
 import com.scorg.dms.preference.DMSPreferencesManager;
 import com.scorg.dms.singleton.DMSApplication;
 import com.scorg.dms.ui.activities.SplashScreenActivity;
@@ -55,6 +53,7 @@ import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
@@ -162,7 +161,7 @@ public class CommonMethods {
 
     public static TextDrawable getTextDrawable(Context context, String name) {
         ColorGenerator mColorGenerator = ColorGenerator.MATERIAL;
-
+        name = nameInitialSuffix(name);
         if (DMSConstants.BLANK.equalsIgnoreCase(name)) {
             int color2 = mColorGenerator.getColor(name);
             return TextDrawable.builder()
@@ -181,6 +180,25 @@ public class CommonMethods {
                     .buildRound(("" + name.charAt(0)).toUpperCase(), color2);
         }
 
+    }
+
+    private static String nameInitialSuffix(String name) {
+        if (name.substring(0, 3).equals("Mrs")) {
+            name = name.substring(4, name.length());
+        } else if (name.substring(0, 4).equals("Mrs.")) {
+            name = name.substring(5, name.length());
+        } else if (name.substring(0, 2).equals("Mr") || name.substring(0, 2).equals("Dr")) {
+            name = name.substring(3, name.length());
+        } else if (name.substring(0, 3).equals("Mr.") || name.substring(0, 3).equals("Dr.")) {
+            name = name.substring(4, name.length());
+        } else if (name.substring(0, 4).equals("Miss")) {
+            name = name.substring(5, name.length());
+        } else if (name.substring(0, 5).equals("Miss.")) {
+            name = name.substring(6, name.length());
+        } else if (name.charAt(0) == ' ') {
+            name = name.substring(1, name.length());
+        }
+        return name;
     }
 
     public static int getVersionCode(Context mContext) {
@@ -210,6 +228,14 @@ public class CommonMethods {
         Calendar c = Calendar.getInstance();
         SimpleDateFormat df = new SimpleDateFormat(yyyyMmDd, Locale.US);
         df.setTimeZone(TimeZone.getTimeZone("UTC"));/// this line add to set UTC time zone to date
+        return df.format(c.getTime());
+    }
+
+    public static String getCurrentDateLocal(String yyyyMmDd) // for enrollmentId
+    {
+        Calendar c = Calendar.getInstance();
+        SimpleDateFormat df = new SimpleDateFormat(yyyyMmDd, Locale.US);
+       // df.setTimeZone(TimeZone.getTimeZone("UTC"));/// this line add to set UTC time zone to date
         return df.format(c.getTime());
     }
 
@@ -258,11 +284,14 @@ public class CommonMethods {
             Date value = ft.parse(selectedDateTime);
             SimpleDateFormat dateFormatter = new SimpleDateFormat(requestedFormat, Locale.US); //this format changeable
             dateFormatter.setTimeZone(TimeZone.getDefault());
+           // dateFormatter.setTimeZone(TimeZone.getTimeZone("UTC"));
             ourDate = dateFormatter.format(value);
         } catch (Exception e) {
             if (formatString.equalsIgnoreCase(DMSConstants.TIME)) {
+                e.fillInStackTrace();
                 ourDate = "00:00 am";
             } else if (formatString.equalsIgnoreCase(DMSConstants.DATE)) {
+                e.fillInStackTrace();
                 ourDate = "00-00-000";
             }
         }
@@ -291,6 +320,7 @@ public class CommonMethods {
 
     public static Date convertStringToDate(String dateString, String dateFormat) {
         SimpleDateFormat formatter = new SimpleDateFormat(dateFormat, Locale.US);
+        formatter.setTimeZone(TimeZone.getTimeZone("UTC"));
         Date date = null;
 
         try {
@@ -334,25 +364,8 @@ public class CommonMethods {
         dialog.setCancelable(false);
         if (dialogHeader != null)
             ((TextView) dialog.findViewById(R.id.textView_dialog_heading)).setText(dialogHeader);
-
-//        float[] bottomLeftRadius = {0, 0, 0, 0, mContext.getResources().getDimension(R.dimen.dp8), mContext.getResources().getDimension(R.dimen.dp8), 0, 0};
-//        float[] bottomRightRadius = {0, 0, 0, 0, 0, 0, mContext.getResources().getDimension(R.dimen.dp8), mContext.getResources().getDimension(R.dimen.dp8)};
-//
-//        GradientDrawable buttonLeftBackground = new GradientDrawable();
-//        buttonLeftBackground.setShape(GradientDrawable.RECTANGLE);
-//        buttonLeftBackground.setColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
-//        buttonLeftBackground.setCornerRadii(bottomRightRadius);
-//
-//        GradientDrawable buttonRightBackground = new GradientDrawable();
-//        buttonRightBackground.setShape(GradientDrawable.RECTANGLE);
-//        buttonRightBackground.setColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
-//        buttonRightBackground.setCornerRadii(bottomLeftRadius);
-
         Button buttonRight = dialog.findViewById(R.id.button_cancel);
         Button buttonLeft = dialog.findViewById(R.id.button_ok);
-//
-//        buttonLeft.setBackground(buttonLeftBackground);
-//        buttonRight.setBackground(buttonRightBackground);
 
         buttonLeft.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -431,6 +444,73 @@ public class CommonMethods {
     }
 
 
+    public static void showErrorDialog(String msg, final Context mContext, boolean isTimeout, final ErrorDialogCallback errorDialogCallback) {
+        final Dialog dialog = new Dialog(mContext);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_exit);
+        dialog.setCanceledOnTouchOutside(true);
+        dialog.setCancelable(true);
+
+        float[] bottomLeftRadius = {0, 0, 0, 0, mContext.getResources().getDimension(R.dimen.dp8), mContext.getResources().getDimension(R.dimen.dp8), 0, 0};
+        float[] bottomRightRadius = {0, 0, 0, 0, 0, 0, mContext.getResources().getDimension(R.dimen.dp8), mContext.getResources().getDimension(R.dimen.dp8)};
+        float[] bottomLiftRightRadius = {0, 0, 0, 0, mContext.getResources().getDimension(R.dimen.dp8), mContext.getResources().getDimension(R.dimen.dp8), mContext.getResources().getDimension(R.dimen.dp8), mContext.getResources().getDimension(R.dimen.dp8)};
+
+
+        GradientDrawable buttonLeftBackground = new GradientDrawable();
+        buttonLeftBackground.setShape(GradientDrawable.RECTANGLE);
+        buttonLeftBackground.setColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
+        buttonLeftBackground.setCornerRadii(bottomLeftRadius);
+
+        GradientDrawable buttonRightBackground = new GradientDrawable();
+        buttonRightBackground.setShape(GradientDrawable.RECTANGLE);
+        buttonRightBackground.setColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
+        buttonRightBackground.setCornerRadii(bottomRightRadius);
+
+
+        GradientDrawable buttonLeftRightBackground = new GradientDrawable();
+        buttonLeftRightBackground.setShape(GradientDrawable.RECTANGLE);
+        buttonLeftRightBackground.setColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
+        buttonLeftRightBackground.setCornerRadii(bottomLiftRightRadius);
+
+
+        Button buttonCancel = dialog.findViewById(R.id.button_cancel);
+        Button buttonOk = dialog.findViewById(R.id.button_ok);
+        ImageView dialogIcon = dialog.findViewById(R.id.dialogIcon);
+        dialogIcon.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+        buttonCancel.setText(R.string.retry);
+        View space = dialog.findViewById(R.id.dialogSpace);
+
+        buttonOk.setBackground(buttonLeftRightBackground);
+        buttonCancel.setBackground(buttonRightBackground);
+        if (isTimeout) {
+            buttonCancel.setVisibility(View.VISIBLE);
+            buttonOk.setBackground(buttonLeftBackground);
+        } else {
+            space.setVisibility(View.GONE);
+            buttonCancel.setVisibility(View.GONE);
+            buttonOk.setBackground(buttonLeftRightBackground);
+        }
+
+        ((TextView) dialog.findViewById(R.id.textview_sucess)).setText(msg);
+        buttonOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                errorDialogCallback.ok();
+                dialog.dismiss();
+            }
+        });
+        buttonCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                errorDialogCallback.retry();
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+    }
+
+
     private static boolean isValidIP(String ipAddr) {
 
         Pattern ptn = Pattern.compile("(\\b(1?[0-9]{1,2}|2[0-4][0-9]|25[0-5])\\b)\\.(\\b(1?[0-9]{1,2}|2[0-4][0-9]|25[0-5])\\b)\\.(\\b(1?[0-9]{1,2}|2[0-4][0-9]|25[0-5])\\b)\\.(\\b(1?[0-9]{1,2}|2[0-4][0-9]|25[0-5])\\b)\\:(\\d{1,4})$");
@@ -438,17 +518,19 @@ public class CommonMethods {
         return mtch.find();
     }
 
-    public static View loadView(int resourceName, Context mActivity) {
+    public static View progressDialogView(int resourceName, Context mActivity) {
 
         LayoutInflater inflater = (LayoutInflater) mActivity
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-        // param.gravity = Gravity.CENTER;
         View child = inflater.inflate(resourceName, null);
+
+        ImageView imageView = child.findViewById(R.id.progressIcon);
+        CommonMethods.setImageUrl(mActivity, DMSConstants.Images.IC_ACTIONBAR_LOGO, imageView, R.drawable.ic_launcher);
+
         LinearLayout l1 = new LinearLayout(mActivity);
         child.setLayoutParams(param);
-
         l1.setLayoutParams(param);
         l1.addView(child);
         return l1;
@@ -539,6 +621,15 @@ public class CommonMethods {
         BitmapDrawable d = new BitmapDrawable(url);
         imageView.setBackground(d);
     }
+
+    public static boolean isNullOrEmpty(final Collection<?> c) {
+        return c == null || c.isEmpty();
+    }
+
+    public static boolean isNullOrEmpty(RecyclerView.Adapter adapter) {
+        return adapter == null || (adapter.getItemCount() == 0);
+    }
+
     //--------------
 }
 

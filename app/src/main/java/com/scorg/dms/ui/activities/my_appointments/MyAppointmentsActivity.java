@@ -3,39 +3,52 @@ package com.scorg.dms.ui.activities.my_appointments;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.AppCompatActivity;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.text.Html;
 import android.text.Spanned;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.philliphsu.bottomsheetpickers.date.DatePickerDialog;
 import com.scorg.dms.R;
 import com.scorg.dms.helpers.myappointments.AppointmentHelper;
 import com.scorg.dms.interfaces.CustomResponse;
+import com.scorg.dms.interfaces.ErrorDialogCallback;
 import com.scorg.dms.interfaces.HelperResponse;
+import com.scorg.dms.model.dms_models.ViewRights;
 import com.scorg.dms.model.my_appointments.AppointmentPatientData;
 import com.scorg.dms.model.my_appointments.MyAppointmentsBaseModel;
 import com.scorg.dms.model.my_appointments.MyAppointmentsDataModel;
 import com.scorg.dms.singleton.DMSApplication;
 import com.scorg.dms.ui.activities.BaseActivity;
-import com.scorg.dms.ui.fragments.my_appointments.MyAppointmentsFragment;
+import com.scorg.dms.ui.fragments.admitted_patient.AdmittedPatientsFragment;
+import com.scorg.dms.ui.fragments.my_appointments.ActiveAppointmentsFragment;
+import com.scorg.dms.ui.fragments.my_appointments.AllAppointmentsFragment;
 import com.scorg.dms.util.CommonMethods;
 import com.scorg.dms.util.DMSConstants;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -49,36 +62,32 @@ import static com.scorg.dms.util.DMSConstants.SUCCESS;
  * Created by jeetal on 31/1/18.
  */
 @RuntimePermissions
-public class MyAppointmentsActivity extends BaseActivity implements HelperResponse, DatePickerDialog.OnDateSetListener {
+public class MyAppointmentsActivity extends BaseActivity implements HelperResponse, DatePickerDialog.OnDateSetListener, ActiveAppointmentsFragment.OnFragmentInteraction, AllAppointmentsFragment.OnFragmentInteraction {
+    public ViewRights viewRights;
     @BindView(R.id.backImageView)
     ImageView backImageView;
     @BindView(R.id.titleTextView)
     TextView titleTextView;
-    @BindView(R.id.userInfoTextView)
-    TextView userInfoTextView;
     @BindView(R.id.dateTextview)
     TextView dateTextview;
+//    @BindView(R.id.tabs)
+//    TabLayout tabs;
+//    @BindView(R.id.viewpager)
+//    ViewPager viewpager;
+
     @BindView(R.id.viewContainer)
     FrameLayout viewContainer;
-    @BindView(R.id.nav_view)
-    FrameLayout navView;
-    @BindView(R.id.drawer_layout)
-    DrawerLayout drawerLayout;
-    @BindView(R.id.emptyListView)
-    RelativeLayout emptyListView;
 
-    @BindView(R.id.imgNoRecordFound)
-    ImageView imgNoRecordFound;
+  //  String[] mFragmentTitleList = new String[2];
+   // ActiveAppointmentsFragment activeAppointmentsFragment;
+    AllAppointmentsFragment allAppointmentsFragment;
 
     private Context mContext;
-    private MyAppointmentsFragment mMyAppointmentsFragment;
     private AppointmentHelper mAppointmentHelper;
-    private String month;
-    private String mYear;
     private MyAppointmentsBaseModel myAppointmentsBaseMainModel;
     private long mClickedPhoneNumber;
     private String mDateSelectedByUser = "";
-    public static final int CLOSE_APPOINTMENT_ACTIVITY_AFTER_BOOK_APPOINTMENT = 666;
+    String dateToSend = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,37 +95,54 @@ public class MyAppointmentsActivity extends BaseActivity implements HelperRespon
         setContentView(R.layout.my_patients_base_layout);
         ButterKnife.bind(this);
         findViewById(R.id.toolbar).setBackgroundColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+     //   findViewById(R.id.tabs).setBackgroundColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+
+        ButterKnife.bind(this);
+       // mFragmentTitleList[0] = getString(R.string.active_appointmets);
+     //   mFragmentTitleList[1] = getString(R.string.all_appointments);
         initialize();
+
+
     }
 
     private void initialize() {
         mContext = MyAppointmentsActivity.this;
         titleTextView.setText(getString(R.string.appointments));
         setDateInToolbar();
+        //setupViewPager(viewpager);
+      //  tabs.setupWithViewPager(viewpager);
         //Call api for AppointmentData
-        String date = CommonMethods.getCurrentDate(DMSConstants.DATE_PATTERN.UTC_PATTERN);
-        System.out.println(date);
         mAppointmentHelper = new AppointmentHelper(this, this);
-        mAppointmentHelper.doGetAppointmentData(date);
+        mDateSelectedByUser= CommonMethods.getCurrentDate(DMSConstants.DATE_PATTERN.UTC_PATTERN);
+        System.out.println(mDateSelectedByUser);
 
-        imgNoRecordFound.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+        allAppointmentsFragment = AllAppointmentsFragment.newInstance();
+        getSupportFragmentManager().beginTransaction().replace(R.id.viewContainer, allAppointmentsFragment).commit();
 
+        mAppointmentHelper.doGetAppointmentData(mDateSelectedByUser);
     }
 
+//    private void setupViewPager(ViewPager viewPager) {
+//        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+//        activeAppointmentsFragment = ActiveAppointmentsFragment.newInstance();
+//        allAppointmentsFragment = AllAppointmentsFragment.newInstance();
+//        adapter.addFragment(activeAppointmentsFragment, getString(R.string.active_appointmets));
+//        adapter.addFragment(allAppointmentsFragment, getString(R.string.all));
+//        viewPager.setAdapter(adapter);
+//    }
 
-    public DrawerLayout getActivityDrawerLayout() {
-        return drawerLayout;
-    }
 
     private void setDateInToolbar() {
         //Set Date in Required Format i.e 13thJuly'18
         dateTextview.setVisibility(View.VISIBLE);
-
-        month = CommonMethods.getCurrentDate("MM");
-        mYear = CommonMethods.getCurrentDate("yyyy");
         String day = CommonMethods.getCurrentDate("dd");
-        mDateSelectedByUser = CommonMethods.getCurrentDate(DMSConstants.DATE_PATTERN.d_M_YYYY);
-        String toDisplay = day + "<sup>" + CommonMethods.getSuffixForNumber(Integer.parseInt(day)) + "</sup> " + CommonMethods.getCurrentDate("MMM'' yy");
+
+        Log.e("day--", day);
+
+
+        String day2 = CommonMethods.getCurrentDateLocal("dd");
+        Log.e("day2--", day2);
+        String toDisplay = day2 + "<sup>" + CommonMethods.getSuffixForNumber(Integer.parseInt(day)) + "</sup> " + CommonMethods.getCurrentDate("MMM'' yy");
 
         Spanned dateToDisplay;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
@@ -135,46 +161,56 @@ public class MyAppointmentsActivity extends BaseActivity implements HelperRespon
             if (customResponse != null) {
                 myAppointmentsBaseMainModel = (MyAppointmentsBaseModel) customResponse;
                 if (myAppointmentsBaseMainModel.getCommon().getStatusCode().equals(SUCCESS)) {
-
                     MyAppointmentsDataModel myAppointmentsDM = myAppointmentsBaseMainModel.getMyAppointmentsDataModel();
-                    myAppointmentsDM.setAppointmentPatientData(myAppointmentsBaseMainModel.getMyAppointmentsDataModel().getAppointmentPatientData());
-
-                    mMyAppointmentsFragment = MyAppointmentsFragment.newInstance(myAppointmentsDM, mDateSelectedByUser);
-                   getSupportFragmentManager().beginTransaction().replace(R.id.viewContainer, mMyAppointmentsFragment).commit();
-
-                    Bundle bundle = new Bundle();
-                    bundle.putParcelable(DMSConstants.APPOINTMENT_DATA, myAppointmentsBaseMainModel.getMyAppointmentsDataModel());
+                    viewRights = myAppointmentsDM.getViewRights();
+                    myAppointmentsDM.setAppointmentPatientData(myAppointmentsDM.getAppointmentPatientData());
+                  // activeAppointmentsFragment.setFilteredData(myAppointmentsDM);
+                    allAppointmentsFragment.setFilteredData(myAppointmentsDM);
                 }
             }
         }
     }
 
+    private void showErrorDialog(String errorMessage, boolean isTimeout) {
+//        if (activeAppointmentsFragment.swipeToRefresh != null)
+//            activeAppointmentsFragment.swipeToRefresh.setRefreshing(false);
+        if (allAppointmentsFragment.swipeToRefresh != null)
+            allAppointmentsFragment.swipeToRefresh.setRefreshing(false);
+        CommonMethods.showErrorDialog(errorMessage, mContext, isTimeout, new ErrorDialogCallback() {
+            @Override
+            public void ok() {
+            }
+
+            @Override
+            public void retry() {
+                String date = CommonMethods.getCurrentDate(DMSConstants.DATE_PATTERN.UTC_PATTERN);
+                System.out.println(date);
+                mAppointmentHelper.doGetAppointmentData(date);
+            }
+        });
+    }
+
     @Override
     public void onParseError(String mOldDataTag, String errorMessage) {
+        showErrorDialog(errorMessage, false);
 
-        CommonMethods.showToast(mContext, errorMessage);
-        emptyListView.setVisibility(View.VISIBLE);
-        imgNoRecordFound.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
 
     }
 
     @Override
     public void onServerError(String mOldDataTag, String serverErrorMessage) {
-        CommonMethods.showToast(mContext, serverErrorMessage);
-        emptyListView.setVisibility(View.VISIBLE);
-        imgNoRecordFound.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
-
+        showErrorDialog(serverErrorMessage, false);
     }
 
     @Override
     public void onNoConnectionError(String mOldDataTag, String serverErrorMessage) {
-        CommonMethods.showToast(mContext, serverErrorMessage);
-
+        showErrorDialog(serverErrorMessage, false);
     }
 
     @Override
     public void onTimeOutError(String mOldDataTag, String timeOutErrorMessage) {
-        CommonMethods.showToast(mContext,timeOutErrorMessage);
+        showErrorDialog(timeOutErrorMessage, true);
+
     }
 
     @OnClick({R.id.backImageView, R.id.dateTextview})
@@ -185,7 +221,7 @@ public class MyAppointmentsActivity extends BaseActivity implements HelperRespon
                 break;
             case R.id.dateTextview:
                 Calendar now = Calendar.getInstance();
-// As of version 2.3.0, `BottomSheetDatePickerDialog` is deprecated.
+                // As of version 2.3.0, `BottomSheetDatePickerDialog` is deprecated.
                 DatePickerDialog datePickerDialog = DatePickerDialog.newInstance(
                         this,
                         now.get(Calendar.YEAR),
@@ -198,16 +234,6 @@ public class MyAppointmentsActivity extends BaseActivity implements HelperRespon
                 break;
         }
     }
-
-    @Override
-    public void onBackPressed() {
-        if (drawerLayout.isDrawerOpen(GravityCompat.END)) {
-            drawerLayout.closeDrawer(GravityCompat.END);
-        } else {
-            super.onBackPressed();
-        }
-    }
-
 
     private ArrayList<AppointmentPatientData> getBookedAndConfirmed(ArrayList<AppointmentPatientData> mAppointmentPatientData) {
 
@@ -222,8 +248,6 @@ public class MyAppointmentsActivity extends BaseActivity implements HelperRespon
     }
 
 
-
-
     public void callPatient(long patientPhone) {
         mClickedPhoneNumber = patientPhone;
         MyAppointmentsActivityPermissionsDispatcher.doCallSupportWithCheck(this);
@@ -233,9 +257,10 @@ public class MyAppointmentsActivity extends BaseActivity implements HelperRespon
     void doCallSupport() {
         Intent callIntent = new Intent(Intent.ACTION_CALL);
         callIntent.setData(Uri.parse("tel:" + mClickedPhoneNumber));
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED)
+            return;
         startActivity(callIntent);
     }
-
 
 
     public void onRequestPermssionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -248,14 +273,10 @@ public class MyAppointmentsActivity extends BaseActivity implements HelperRespon
     public void onDateSet(DatePickerDialog dialog, String year, String monthOfYear, String dayOfMonth) {
 
         int monthOfYearToShow = Integer.parseInt(monthOfYear) + 1;
-        mDateSelectedByUser = dayOfMonth + "-" + monthOfYearToShow + "-" + year;
+
         dateTextview.setVisibility(View.VISIBLE);
-        String timeToShow = CommonMethods.formatDateTime(dayOfMonth + "-" + monthOfYearToShow + "-" + year, DMSConstants.DATE_PATTERN.MMM_YY,
-                DMSConstants.DATE_PATTERN.DD_MM_YYYY, DMSConstants.DATE).toLowerCase();
-        String[] timeToShowSpilt = timeToShow.split(",");
-        month = timeToShowSpilt[0].substring(0, 1).toUpperCase() + timeToShowSpilt[0].substring(1);
-        mYear = timeToShowSpilt.length == 2 ? timeToShowSpilt[1] : "";
         Date date = CommonMethods.convertStringToDate(dayOfMonth + "-" + monthOfYearToShow + "-" + year, DMSConstants.DATE_PATTERN.DD_MM_YYYY);
+        Log.e("selected date", "" + date);
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
 
@@ -273,8 +294,61 @@ public class MyAppointmentsActivity extends BaseActivity implements HelperRespon
         if (monthOfYearToShow <= 9) {
             monthToSend = "0" + monthToSend;
         }
-        //-----
 
-        mAppointmentHelper.doGetAppointmentData(dayOfMonth + "/" + monthToSend + "/" + year);
+        String dateConvert = year + "-" + monthToSend + "-" + (Integer.parseInt(dayOfMonth) - 1) + "T24:00:00Z";
+        Log.e("selected dateConvert", "" + dateConvert);
+        String ourDate = "";
+        try {
+            SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US);
+            Date value = ft.parse(dateConvert);
+            SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US); //this format changeable
+            dateFormatter.setTimeZone(TimeZone.getTimeZone("UTC"));
+            ourDate = dateFormatter.format(value);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Log.e("selected dateToSend1111", "" + ourDate);
+        mDateSelectedByUser = ourDate;
+        Log.e("mDateSelectedByUser", "" + mDateSelectedByUser);
+
+        //-----
+        mAppointmentHelper.doGetAppointmentData(mDateSelectedByUser);
     }
+
+    @Override
+    public void pullRefresh() {
+        mAppointmentHelper.doGetAppointmentData(mDateSelectedByUser);
+    }
+
+
+    private class ViewPagerAdapter extends FragmentPagerAdapter {
+        private final List<Fragment> mFragmentList = new ArrayList<>();
+        private final List<String> mFragmentTitleList = new ArrayList<>();
+
+        public ViewPagerAdapter(FragmentManager manager) {
+            super(manager);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return mFragmentList.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return mFragmentList.size();
+        }
+
+        public void addFragment(Fragment fragment, String title) {
+            mFragmentList.add(fragment);
+            mFragmentTitleList.add(title);
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mFragmentTitleList.get(position);
+        }
+    }
+
+
 }

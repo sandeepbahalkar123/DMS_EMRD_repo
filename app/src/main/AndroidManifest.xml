@@ -1,17 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.scorg.dms">
     <!-- To auto-complete the email text field in the login form with the user's emails -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.SEND_DOWNLOAD_COMPLETED_INTENTS" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
 
     <application
         android:name=".singleton.DMSApplication"
@@ -21,11 +19,18 @@
         android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
+<<<<<<< HEAD
         android:theme="@style/AppTheme">
         <activity
             android:name=".ui.activities.WebViewActivity"
             android:label="@string/title_activity_web_view"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+=======
+        android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning">
+
+
+>>>>>>> 06b335b86507e6adc27ac4351048a8c42d999232
         <activity
             android:name=".ui.activities.SplashScreenActivity"
             android:configChanges="orientation|keyboard|screenSize"
@@ -82,7 +87,13 @@
         <activity
             android:name=".ui.activities.dms_patient_list.PatientDetailsActivity"
             android:label="@string/title_activity_patient_details"
+<<<<<<< HEAD
             android:theme="@style/AppTheme.NoActionBar" />
+=======
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan"/>
+
+>>>>>>> 06b335b86507e6adc27ac4351048a8c42d999232
         <activity
             android:name=".ui.activities.pending_approval_list.RequestedArchivedMainListActivity"
             android:label="@string/app_name"

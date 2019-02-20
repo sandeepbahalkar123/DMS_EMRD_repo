@@ -20,6 +20,7 @@ import com.scorg.dms.R;
 import com.scorg.dms.adapters.my_appointments.AppointmentListAdapter;
 import com.scorg.dms.helpers.myappointments.AppointmentHelper;
 import com.scorg.dms.helpers.patient_list.DMSPatientsHelper;
+import com.scorg.dms.model.dms_models.ViewRights;
 import com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemodel.SearchResult;
 import com.scorg.dms.model.my_appointments.AppointmentPatientData;
 import com.scorg.dms.model.my_appointments.MyAppointmentsDataModel;
@@ -39,6 +40,7 @@ import butterknife.Unbinder;
 
 import static com.scorg.dms.util.DMSConstants.APPOINTMENT_DATA;
 import static com.scorg.dms.util.DMSConstants.PATIENT_DETAILS;
+import static com.scorg.dms.util.DMSConstants.VIEW_RIGHTS_DETAILS;
 
 
 /**
@@ -68,6 +70,7 @@ public class MyAppointmentsFragment extends Fragment implements AppointmentListA
     private ArrayList<AppointmentPatientData> mAppointmentPatientData;
     private String mUserSelectedDate;
     private DMSPatientsHelper mPatientsHelper;
+    ViewRights viewRights;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
@@ -101,14 +104,16 @@ public class MyAppointmentsFragment extends Fragment implements AppointmentListA
 
         mUserSelectedDate = getArguments().getString(DMSConstants.DATE);
         MyAppointmentsDataModel myAppointmentsDataModel = getArguments().getParcelable(APPOINTMENT_DATA);
+        viewRights = (ViewRights) getArguments().getSerializable(VIEW_RIGHTS_DETAILS);
         setFilteredData(myAppointmentsDataModel);
     }
 
-    public static MyAppointmentsFragment newInstance(MyAppointmentsDataModel myAppointmentsDataModel, String mDateSelectedByUser) {
+    public static MyAppointmentsFragment newInstance(MyAppointmentsDataModel myAppointmentsDataModel, String mDateSelectedByUser,ViewRights viewRights) {
         MyAppointmentsFragment myAppointmentsFragment = new MyAppointmentsFragment();
         Bundle bundle = new Bundle();
         bundle.putString(DMSConstants.DATE, mDateSelectedByUser);
         bundle.putParcelable(APPOINTMENT_DATA, myAppointmentsDataModel);
+        bundle.putSerializable(VIEW_RIGHTS_DETAILS, viewRights);
         myAppointmentsFragment.setArguments(bundle);
         return myAppointmentsFragment;
     }
@@ -169,7 +174,7 @@ public class MyAppointmentsFragment extends Fragment implements AppointmentListA
         switch (view.getId()) {
             case R.id.rightFab:
                 MyAppointmentsActivity activity = (MyAppointmentsActivity) getActivity();
-                activity.getActivityDrawerLayout().openDrawer(GravityCompat.END);
+                //activity.getActivityDrawerLayout().openDrawer(GravityCompat.END);
                 break;
         }
     }
@@ -184,12 +189,13 @@ public class MyAppointmentsFragment extends Fragment implements AppointmentListA
             LinearLayoutManager linearlayoutManager = new LinearLayoutManager(this.getContext(), LinearLayoutManager.VERTICAL, false);
             recyclerView.setLayoutManager(linearlayoutManager);
             //list is sorted for Booked and Confirmed Status appointments
-            mAppointmentListAdapter = new AppointmentListAdapter(getActivity(), myAppointmentsDataModel.getAppointmentPatientData(), this);
+           // mAppointmentListAdapter = new AppointmentListAdapter(getActivity(),activeAppointmentPatientData, this);
             recyclerView.setAdapter(mAppointmentListAdapter);
 
         } else {
             recyclerView.setVisibility(View.GONE);
-            emptyListView.setVisibility(View.VISIBLE);
+            if (emptyListView.getVisibility() != View.VISIBLE)
+                emptyListView.setVisibility(View.VISIBLE);
             imgNoRecordFound.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
 
         }
@@ -197,14 +203,17 @@ public class MyAppointmentsFragment extends Fragment implements AppointmentListA
     }
 
 
+
+
     @Override
     public void onClickedOfEpisodeListButton(SearchResult groupHeader) {
-
         Intent intent = new Intent(getActivity(), PatientDetailsActivity.class);
         Bundle bundle = new Bundle();
         bundle.putSerializable(PATIENT_DETAILS, groupHeader);
+        bundle.putSerializable(VIEW_RIGHTS_DETAILS, viewRights);
         intent.putExtra(DMSConstants.BUNDLE, bundle);
         startActivity(intent);
 
     }
+
 }

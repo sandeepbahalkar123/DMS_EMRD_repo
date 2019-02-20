@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="md_baseline">24dp</dimen>
+    <dimen name="md_baseline_content">80dp</dimen>
+    <dimen name="md_baseline_count">15dp</dimen>
+</resources>

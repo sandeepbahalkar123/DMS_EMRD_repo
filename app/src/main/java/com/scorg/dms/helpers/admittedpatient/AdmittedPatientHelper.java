@@ -36,11 +36,11 @@ public class AdmittedPatientHelper implements ConnectionListener {
                 break;
             case ConnectionListener.PARSE_ERR0R:
                 CommonMethods.Log(TAG, mContext.getString(R.string.parse_error));
-                mHelperResponseManager.onParseError(mOldDataTag, mContext.getString(R.string.parse_error));
+                mHelperResponseManager.onParseError(mOldDataTag, mContext.getString(R.string.something_went_wrong_error));
                 break;
             case ConnectionListener.SERVER_ERROR:
                 CommonMethods.Log(TAG, mContext.getString(R.string.server_error));
-                mHelperResponseManager.onServerError(mOldDataTag, mContext.getString(R.string.server_error));
+                mHelperResponseManager.onServerError(mOldDataTag, mContext.getString(R.string.something_went_wrong_error));
                 break;
             case ConnectionListener.NO_INTERNET:
                 CommonMethods.Log(TAG, mContext.getString(R.string.no_connection_error));
@@ -61,9 +61,11 @@ public class AdmittedPatientHelper implements ConnectionListener {
     }
 
     @Override
-    public void onTimeout(ConnectRequest request) {
+    public void onTimeout(ConnectRequest request, String mOldDataTag) {
 
     }
+
+
 
     public void doGetAdmittedData(String userSelectedDate) {
         ConnectionFactory mConnectionFactory = new ConnectionFactory(mContext, this, null, true, DMSConstants.TASK_ADMITTED_PATIENT_DATA, Request.Method.POST, true);

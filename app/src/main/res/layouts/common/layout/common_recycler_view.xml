@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <android.support.v7.widget.RecyclerView
@@ -20,22 +21,22 @@
         android:id="@+id/emptyListView"
         layout="@layout/common_no_records_found"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone" />
+        android:layout_height="match_parent" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/rightFab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
         android:layout_gravity="bottom|right"
-        android:layout_marginBottom="@dimen/fab_margin"
         android:layout_marginEnd="@dimen/fab_margin"
         android:layout_marginRight="@dimen/fab_margin"
+        android:layout_marginBottom="@dimen/fab_margin"
         android:visibility="gone"
         app:backgroundTint="@color/floating_blue_color"
-        app:srcCompat="@drawable/filter" />
+        app:srcCompat="@drawable/filter"
+        android:layout_alignParentEnd="true" />
 
 
 </RelativeLayout>

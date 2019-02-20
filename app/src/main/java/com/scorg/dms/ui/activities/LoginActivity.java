@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,6 +13,7 @@ import android.widget.ImageView;
 import com.scorg.dms.R;
 import com.scorg.dms.helpers.login.LoginHelper;
 import com.scorg.dms.interfaces.CustomResponse;
+import com.scorg.dms.interfaces.ErrorDialogCallback;
 import com.scorg.dms.interfaces.HelperResponse;
 import com.scorg.dms.model.dms_models.responsemodel.loginresponsemodel.LoginResponseModel;
 import com.scorg.dms.preference.DMSPreferencesManager;
@@ -22,7 +22,6 @@ import com.scorg.dms.util.CommonMethods;
 import com.scorg.dms.util.DMSConstants;
 
 import butterknife.BindView;
-import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -32,7 +31,7 @@ import butterknife.OnClick;
 public class LoginActivity extends BaseActivity implements HelperResponse {
 
     String TAG = this.getClass().getSimpleName();
-    Context mContext;
+    private Context mContext;
     String mServerPath;
     @BindView(R.id.userName)
     EditText mUserName;
@@ -46,16 +45,15 @@ public class LoginActivity extends BaseActivity implements HelperResponse {
 
     @BindView(R.id.loginButton)
     Button loginButton;
-
-    private LoginHelper mLoginHelper;
     String userName = "";
     String password = "";
+    private LoginHelper mLoginHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        mContext = getApplicationContext();
+        mContext = this;
         ButterKnife.bind(this);
 
         CommonMethods.setImageUrl(this, DMSConstants.Images.IC_LOGIN_BACKGROUD, loginBackground, R.drawable.login_background);
@@ -73,11 +71,10 @@ public class LoginActivity extends BaseActivity implements HelperResponse {
     @OnClick(R.id.loginButton)
     public void doLogin() {
         if (!validate()) {
-            mLoginHelper.doAppLogin(mUserName.getText().toString(), mPassword.getText().toString());
+            mLoginHelper.doAppLogin(mUserName.getText().toString().trim(), mPassword.getText().toString().trim());
             // onSuccess(null, null);
         }
     }
-
 
 
     /**
@@ -86,15 +83,24 @@ public class LoginActivity extends BaseActivity implements HelperResponse {
      * @return
      */
     private boolean validate() {
-        userName = mUserName.getText().toString();
+        userName = mUserName.getText().toString().trim();
         password = mPassword.getText().toString();
         String message = null;
-        if (userName.isEmpty() || password.isEmpty()) {
+        if (userName.isEmpty() || password.isEmpty())
             message = getString(R.string.error_empty_fields);
-        }
 
         if (message != null) {
-            CommonMethods.showSnack(mUserName, message);
+            CommonMethods.showErrorDialog(message, mContext, false, new ErrorDialogCallback() {
+                @Override
+                public void ok() {
+
+                }
+
+                @Override
+                public void retry() {
+
+                }
+            });
             return true;
         } else {
             return false;
@@ -124,27 +130,63 @@ public class LoginActivity extends BaseActivity implements HelperResponse {
 
     @Override
     public void onParseError(String mOldDataTag, String errorMessage) {
-        CommonMethods.showToast(this, errorMessage);
-        Log.e("loginResponce","onParseError");
+        CommonMethods.showErrorDialog(errorMessage, this, false, new ErrorDialogCallback() {
+            @Override
+            public void ok() {
+            }
+
+            @Override
+            public void retry() {
+            }
+        });
+        Log.e("loginResponce", "onParseError");
     }
 
     @Override
     public void onServerError(String mOldDataTag, String serverErrorMessage) {
-        CommonMethods.showToast(this, getString(R.string.invalid_username_password));
-        Log.e("loginResponce","onServerError");
+        CommonMethods.showErrorDialog(getString(R.string.invalid_username_password), this, false, new ErrorDialogCallback() {
+            @Override
+            public void ok() {
+            }
+
+            @Override
+            public void retry() {
+            }
+        });
+        Log.e("loginResponce", "onServerError");
     }
 
     @Override
     public void onNoConnectionError(String mOldDataTag, String serverErrorMessage) {
-        CommonMethods.showToast(this, serverErrorMessage);
-        Log.e("loginResponce","onNoConnectionError");
+        CommonMethods.showErrorDialog(serverErrorMessage, this, false, new ErrorDialogCallback() {
+            @Override
+            public void ok() {
+            }
+
+            @Override
+            public void retry() {
+            }
+        });
+        Log.e("loginResponce", "onNoConnectionError");
 
     }
 
     @Override
     public void onTimeOutError(String mOldDataTag, String timeOutErrorMessage) {
-        CommonMethods.showToast(this, timeOutErrorMessage);
-        Log.e("loginResponce","onTimeOutError");
+        CommonMethods.showErrorDialog(timeOutErrorMessage, this, true, new ErrorDialogCallback() {
+            @Override
+            public void ok() {
+            }
+
+            @Override
+            public void retry() {
+                if (!validate()) {
+                    mLoginHelper.doAppLogin(mUserName.getText().toString().trim(), mPassword.getText().toString());
+                    // onSuccess(null, null);
+                }
+            }
+        });
+        Log.e("loginResponce", "onTimeOutError");
     }
 }
 

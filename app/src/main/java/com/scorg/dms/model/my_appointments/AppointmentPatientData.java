@@ -31,7 +31,7 @@ public class AppointmentPatientData implements Parcelable, Cloneable, Comparable
     @SerializedName("ContactNo")
     @Expose
     private String contactNo;
-    @SerializedName("Age")
+    @SerializedName("Age1")
     @Expose
     private String age;
     @SerializedName("Gender")
@@ -49,6 +49,17 @@ public class AppointmentPatientData implements Parcelable, Cloneable, Comparable
     @Expose
     private String PatId;
 
+    @SerializedName("consultationType")
+    @Expose
+    private String consultationType;
+
+    @SerializedName("IsArchived")
+    @Expose
+    private boolean IsArchived;
+
+    @SerializedName("appointmentCode")
+    @Expose
+    private int AppointmentCode;
 
     private boolean selectedGroupCheckbox;
 
@@ -84,6 +95,9 @@ public class AppointmentPatientData implements Parcelable, Cloneable, Comparable
         this.outstandingAmount = ((String) in.readValue((String.class.getClassLoader())));
         this.PatAddress = ((String) in.readValue((String.class.getClassLoader())));
         this.PatId = ((String) in.readValue((String.class.getClassLoader())));
+        this.consultationType = ((String) in.readValue((String.class.getClassLoader())));
+        this.IsArchived = ((boolean) in.readValue((boolean.class.getClassLoader())));
+        this.AppointmentCode = ((int) in.readValue((int.class.getClassLoader())));
 
     }
 
@@ -204,6 +218,31 @@ public class AppointmentPatientData implements Parcelable, Cloneable, Comparable
         this.spannableString = spannableString;
     }
 
+
+    public String getConsultationType() {
+        return consultationType;
+    }
+
+    public void setConsultationType(String consultationType) {
+        this.consultationType = consultationType;
+    }
+
+    public boolean isArchived() {
+        return IsArchived;
+    }
+
+    public void setArchived(boolean archived) {
+        IsArchived = archived;
+    }
+
+    public int getAppointmentCode() {
+        return AppointmentCode;
+    }
+
+    public void setAppointmentCode(int appointmentCode) {
+        AppointmentCode = appointmentCode;
+    }
+
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeValue(patientId);
         dest.writeValue(patientName);
@@ -217,6 +256,9 @@ public class AppointmentPatientData implements Parcelable, Cloneable, Comparable
         dest.writeValue(outstandingAmount);
         dest.writeValue(PatAddress);
         dest.writeValue(PatId);
+        dest.writeValue(consultationType);
+        dest.writeValue(IsArchived);
+        dest.writeValue(AppointmentCode);
     }
 
     public int describeContents() {

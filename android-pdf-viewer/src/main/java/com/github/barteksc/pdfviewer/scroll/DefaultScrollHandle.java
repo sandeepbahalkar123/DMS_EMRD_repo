@@ -106,6 +106,7 @@ public class DefaultScrollHandle extends RelativeLayout implements ScrollHandle 
 
     @Override
     public void setScroll(float position) {
+        Log.e("DEFAULT_SCROLL","position"+position);
         if (!shown()) {
             show();
         } else {

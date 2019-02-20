@@ -24,12 +24,9 @@ import java.util.Map;
  */
 
 public class LoginHelper implements ConnectionListener {
-    String TAG = this.getClass().getName();
-    Context mContext;
-    HelperResponse mHelperResponseManager;
-    private String mServerPath;
-    private String userName;
-    private String password;
+    private String TAG = this.getClass().getName();
+    private Context mContext;
+    private HelperResponse mHelperResponseManager;
 
     public LoginHelper(Context context, HelperResponse loginActivity) {
         this.mContext = context;
@@ -58,19 +55,20 @@ public class LoginHelper implements ConnectionListener {
                 }
                 break;
             case ConnectionListener.PARSE_ERR0R:
-                CommonMethods.Log(TAG, "parse error");
+                CommonMethods.Log(TAG, mContext.getString(R.string.something_went_wrong_error));
+                mHelperResponseManager.onParseError(mOldDataTag,mContext.getString(R.string.something_went_wrong_error));
                 break;
             case ConnectionListener.SERVER_ERROR:
                 CommonMethods.Log(TAG, "server error");
-                mHelperResponseManager.onServerError(mOldDataTag, "server error");
+                mHelperResponseManager.onServerError(mOldDataTag, mContext.getString(R.string.something_went_wrong_error));
+                break;
+            case ConnectionListener.NO_INTERNET:
+                CommonMethods.Log(TAG, mContext.getString(R.string.no_connection_error));
+                mHelperResponseManager.onNoConnectionError(mOldDataTag, mContext.getString(R.string.no_connection_error));
                 break;
             case ConnectionListener.NO_CONNECTION_ERROR:
-                CommonMethods.Log(TAG, "no connection error");
-                mHelperResponseManager.onNoConnectionError(mOldDataTag, "no connection error");
-                break;
-            case ConnectionListener.TIMEOUT_ERROR:
-                CommonMethods.Log(TAG, mContext.getString(R.string.timeout_error));
-                mHelperResponseManager.onTimeOutError(mOldDataTag, mContext.getString(R.string.timeout_error));
+                CommonMethods.Log(TAG, mContext.getString(R.string.no_connection_error));
+                mHelperResponseManager.onNoConnectionError(mOldDataTag, mContext.getString(R.string.no_connection_error));
                 break;
             default:
                 CommonMethods.Log(TAG, "default error");
@@ -79,15 +77,15 @@ public class LoginHelper implements ConnectionListener {
     }
 
     @Override
-    public void onTimeout(ConnectRequest request) {
+    public void onTimeout(ConnectRequest request, String mOldDataTag) {
+        CommonMethods.Log(TAG, mContext.getString(R.string.timeout_error));
+        mHelperResponseManager.onTimeOutError(mOldDataTag, mContext.getString(R.string.timeout_error));
 
     }
 
     //-------DMS LOGIN AND IP CHECK APIS. : START
 
     public void doAppLogin(String userName, String password) {
-        this.userName = userName;
-        this.password = password;
         ConnectionFactory mConnectionFactory = new ConnectionFactory(mContext, this, null, true, DMSConstants.TASK_LOGIN_CODE, Request.Method.POST, false);
         mConnectionFactory.setHeaderParams();
         Map<String, String> testParams = new HashMap<String, String>();
@@ -103,7 +101,6 @@ public class LoginHelper implements ConnectionListener {
     }
 
     public void checkConnectionToServer(String serverPath) {
-        this.mServerPath = serverPath;
 
         //TODO : IP CHECK API IN NOT IMPLEMENTED YET, HENCE COMMENTED BELOW CODE, N GOES INTO ONSUCEESS.
         ConnectionFactory mConnectionFactory = new ConnectionFactory(mContext, this, null, true, DMSConstants.TASK_CHECK_SERVER_CONNECTION, Request.Method.GET, false);

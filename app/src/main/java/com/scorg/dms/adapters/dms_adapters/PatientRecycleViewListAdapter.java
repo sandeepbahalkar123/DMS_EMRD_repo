@@ -17,6 +17,7 @@ import com.amulyakhare.textdrawable.TextDrawable;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.scorg.dms.R;
+import com.scorg.dms.interfaces.ErrorDialogCallback;
 import com.scorg.dms.model.dms_models.responsemodel.showsearchresultresponsemodel.SearchResult;
 import com.scorg.dms.singleton.DMSApplication;
 import com.scorg.dms.util.CommonMethods;
@@ -39,20 +40,11 @@ public class PatientRecycleViewListAdapter extends RecyclerView.Adapter<PatientR
 
     private List<SearchResult> _originalListDataHeader = new ArrayList<>(); // header titles
 
-    // @BindString(R.string.opd)
-    private String opd;
-    // @BindString(R.string.ipd)
-    private String ipd;
-    private String uhid;
     private List<SearchResult> searchResultForPatientDetails = new ArrayList<>();
 
     public PatientRecycleViewListAdapter(Context context, List<SearchResult> searchResult) {
         this._context = context;
         addNewItems(searchResult);
-        opd = _context.getString(R.string.opd);
-        ipd = _context.getString(R.string.ipd);
-        uhid = _context.getString(R.string.uhid);
-
         if (context instanceof OnPatientListener) {
             onPatientListener = (OnPatientListener) context;
         } else CommonMethods.Log(TAG, "Implement OnPatientListener in Activity");
@@ -62,42 +54,27 @@ public class PatientRecycleViewListAdapter extends RecyclerView.Adapter<PatientR
     public GroupViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_patient_list_header, parent, false);
-
         return new GroupViewHolder(itemView);
     }
 
     @SuppressLint("CheckResult")
     @Override
     public void onBindViewHolder(GroupViewHolder groupViewHolder, final int position) {
-        GradientDrawable buttonBackground = new GradientDrawable();
-        buttonBackground.setShape(GradientDrawable.RECTANGLE);
-        buttonBackground.setColor(Color.WHITE);
-        buttonBackground.setCornerRadius(_context.getResources().getDimension(R.dimen.dp8));
-        buttonBackground.setStroke(_context.getResources().getDimensionPixelSize(R.dimen.dp1), Color.parseColor(DMSApplication.COLOR_PRIMARY));
-        groupViewHolder.cardView.setBackground(buttonBackground);
-
         GradientDrawable episodButtonBackground = new GradientDrawable();
         episodButtonBackground.setShape(GradientDrawable.RECTANGLE);
         episodButtonBackground.setColor(Color.parseColor(DMSApplication.COLOR_ACCENT));
-        episodButtonBackground.setCornerRadius(_context.getResources().getDimension(R.dimen.dp8));
+        episodButtonBackground.setCornerRadius(_context.getResources().getDimension(R.dimen.dp2));
         groupViewHolder.episodeList.setBackground(episodButtonBackground);
 
-        SearchResult groupHeader = _originalListDataHeader.get(position);
-        groupViewHolder.uhid.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
-        groupViewHolder.patientId.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+        final SearchResult groupHeader = _originalListDataHeader.get(position);
+        groupViewHolder.uhid.setTextColor(Color.parseColor(DMSApplication.COLOR_APPOINTMENT_TEXT));
+        groupViewHolder.patientId.setTextColor(Color.parseColor(DMSApplication.COLOR_APPOINTMENT_TEXT));
         groupViewHolder.bluelineImageView.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
-
-        groupViewHolder.userName.setText(groupHeader.getPatientName());
+        groupViewHolder.userName.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+        groupViewHolder.userName.setText(groupHeader.getPatientName().toUpperCase());
         groupViewHolder.patientId.setText(groupHeader.getPatientId());
-        groupViewHolder.uhid.setText(uhid + ":");
-
-
-        // groupViewHolder.cardView.setBackground(ContextCompat.getDrawable(_context, R.drawable.round_background_full_view));
-
-        groupViewHolder.groupItemCollapseButton.setVisibility(View.GONE);
-        groupViewHolder.groupItemExpandCollapseButton.setImageResource(R.drawable.ic_expand_more_black_24dp);
-        //  groupViewHolder.divider.setVisibility(View.VISIBLE);
-
+        groupViewHolder.uhid.setText(DMSApplication.LABEL_UHID + " ");
+        groupViewHolder.userGender.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
 
         //-------------
         TextDrawable textDrawable = CommonMethods.getTextDrawable(groupViewHolder.patientImageView.getContext(), groupHeader.getPatientName());
@@ -118,32 +95,67 @@ public class PatientRecycleViewListAdapter extends RecyclerView.Adapter<PatientR
 
         if (groupHeader.getAge() != null) {
             groupViewHolder.userAge.setVisibility(View.VISIBLE);
-            groupViewHolder.userAge.setText(groupHeader.getAge().concat(" Year"));
+            groupViewHolder.userAge.setText(groupHeader.getAge() + " " + _context.getString(R.string.years));
+        }
+        else {
+            groupViewHolder.userAge.setVisibility(View.GONE);
         }
 
 
         if (groupHeader.getGender() != null) {
             groupViewHolder.userGender.setVisibility(View.VISIBLE);
             groupViewHolder.userGender.setText(groupHeader.getGender());
+        }else {
+            groupViewHolder.userGender.setVisibility(View.GONE);
         }
 
         groupViewHolder.mainContentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (groupHeader.isArchived()) {
+                    if (_originalListDataHeader.size()>position) {
+                        SearchResult groupHeader = _originalListDataHeader.get(position);
+                        onPatientListener.onPatientListItemClick(groupHeader);
+                    }
+                } else {
+                    CommonMethods.showErrorDialog(_context.getString(R.string.patient_not_having_record), _context, false, new ErrorDialogCallback() {
+                        @Override
+                        public void ok() {
 
-                SearchResult groupHeader = _originalListDataHeader.get(position);
+                        }
 
-                onPatientListener.onPatientListItemClick(groupHeader);
+                        @Override
+                        public void retry() {
 
+                        }
+                    });
+                }
             }
         });
 
         groupViewHolder.episodeList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SearchResult groupHeader = _originalListDataHeader.get(position);
 
-                onPatientListener.onClickedOfEpisodeListButton(groupHeader);
+                if (groupHeader.isArchived()) {
+                    if (_originalListDataHeader.size()>position) {
+                        SearchResult groupHeader = _originalListDataHeader.get(position);
+                        onPatientListener.onClickedOfEpisodeListButton(groupHeader);
+                    }
+                } else {
+                    CommonMethods.showErrorDialog(_context.getString(R.string.patient_not_having_record), _context, false, new ErrorDialogCallback() {
+                        @Override
+                        public void ok() {
+
+                        }
+
+                        @Override
+                        public void retry() {
+
+                        }
+                    });
+                }
+
             }
         });
 
@@ -155,34 +167,24 @@ public class PatientRecycleViewListAdapter extends RecyclerView.Adapter<PatientR
     }
 
     static class GroupViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.cardView)
-        LinearLayout cardView;
+//        @BindView(R.id.cardView)
+//        LinearLayout cardView;
         @BindView(R.id.mainContentLayout)
         LinearLayout mainContentLayout;
         @BindView(R.id.userName)
         TextView userName;
-
         @BindView(R.id.userAge)
         TextView userAge;
-
         @BindView(R.id.userGender)
         TextView userGender;
-
-
         @BindView(R.id.uhid)
         TextView uhid;
         @BindView(R.id.patientId)
         TextView patientId;
-        @BindView(R.id.groupItemExpandCollapseButton)
-        AppCompatImageButton groupItemExpandCollapseButton;
-        @BindView(R.id.groupItemCollapseButton)
-        LinearLayout groupItemCollapseButton;
         @BindView(R.id.patientImageView)
         ImageView patientImageView;
         @BindView(R.id.bluelineImageView)
         ImageView bluelineImageView;
-
-
         @BindView(R.id.episodeList)
         TextView episodeList;
 
@@ -223,6 +225,8 @@ public class PatientRecycleViewListAdapter extends RecyclerView.Adapter<PatientR
 
     public void addNewItems(List<SearchResult> searchResult) {
         this._originalListDataHeader.addAll(searchResult);
+
+
     }
 
 }

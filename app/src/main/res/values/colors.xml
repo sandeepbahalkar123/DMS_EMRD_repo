@@ -15,7 +15,7 @@
     <color name="tagColor">#0091d1</color>
     <color name="timing_bg_color">#50a9da</color>
     <color name="statusbar">#0077a7</color>
-    <color name="dashboard_text_color">#995b5b5b</color>
+    <color name="dashboard_text_color">#797979</color>
     <color name="white">#ffffff</color>
     <color name="complete_color">#6bbb8e</color>
     <color name="confirm_color">#f1b76b</color>
@@ -35,6 +35,7 @@
     <color name="grey">#b3b3b3</color>
     <color name="logo_color">#7f5b5b5b</color>
     <color name="activity_background">#E4E4E4</color>
+    <color name="appointment_time_color">#797979</color>
 
 
     <!--// DMS //-->

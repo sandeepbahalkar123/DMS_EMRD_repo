@@ -814,6 +814,8 @@ public class PDFView extends RelativeLayout {
         optimalPageWidth = w;
         optimalPageHeight = h;
 
+
+
     }
 
     public void moveTo(float offsetX, float offsetY) {
@@ -920,7 +922,7 @@ public class PDFView extends RelativeLayout {
             optimal = optimalPageWidth;
         }
 
-        int page = (int) Math.floor((Math.abs(offset) + getHeight() / 5) / toCurrentScale(optimal));
+        int page = (int) Math.floor((Math.abs(offset) + getHeight() / 3.5) / toCurrentScale(optimal));
 
         if (page >= 0 && page <= getPageCount() - 1 && page != getCurrentPage()) {
             showPage(page);
@@ -987,8 +989,19 @@ public class PDFView extends RelativeLayout {
      */
     public boolean documentFitsView() {
         if (swipeVertical) {
+
+            Log.e("if getPageCount","-"+getPageCount());
+            Log.e("if getHeight","-"+getHeight());
+            Log.e("if retuen","-"+(getPageCount() * optimalPageHeight < getHeight()));
+
+            Log.e("if retuen","-"+(getPageCount() * optimalPageHeight < getHeight()));
             return getPageCount() * optimalPageHeight < getHeight();
+
         } else {
+
+            Log.e("else getPageCount","-"+getPageCount());
+            Log.e("else getHeight","-"+getHeight());
+            Log.e("else retuen","-"+(getPageCount() * optimalPageWidth < getWidth()));
             return getPageCount() * optimalPageWidth < getWidth();
         }
     }

@@ -20,15 +20,12 @@ import java.util.List;
 
 public class ShowPatientNameAdapter extends ArrayAdapter<LstPatient> {
 
-    Context context;
-    int resource, textViewResourceId;
-    List<LstPatient> items, tempItems, suggestions;
+    private Context context;
+    private List<LstPatient> items, tempItems, suggestions;
 
     public ShowPatientNameAdapter(Context context, int resource, int textViewResourceId, List<LstPatient> items) {
         super(context, resource, textViewResourceId, items);
         this.context = context;
-        this.resource = resource;
-        this.textViewResourceId = textViewResourceId;
         this.items = items;
         tempItems = new ArrayList<LstPatient>(items); // this makes the difference.
         suggestions = new ArrayList<LstPatient>();
