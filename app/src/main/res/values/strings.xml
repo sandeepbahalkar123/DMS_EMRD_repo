@@ -214,5 +214,6 @@
     <string name="off">OFF</string>
     <string name="refresh_images">Refresh Images</string>
     <string name="clear_file_cache">Clear File Cache</string>
+    <string name="title_activity_web_view">WebViewActivity</string>
 
 </resources>

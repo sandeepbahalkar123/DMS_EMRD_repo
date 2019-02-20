@@ -42,11 +42,16 @@ public class LstDocType {
     @Expose
     private String fileTypeRefId;
 
-
-
     @SerializedName("lstdateFileType")
     @Expose
     private ArrayList<LstDateFileType> lstDateFileTypeList = new ArrayList<LstDateFileType>();
+
+    @SerializedName("nodeType")
+    @Expose
+    private String nodeType;
+    @SerializedName("pacsUrl")
+    @Expose
+    private String pacsUrl;
 
     public Integer getTypeId() {
         return typeId;
@@ -134,6 +139,22 @@ public class LstDocType {
 
     public void setFileTypeRefId(String fileTypeRefId) {
         this.fileTypeRefId = fileTypeRefId;
+    }
+
+    public String getNodeType() {
+        return nodeType;
+    }
+
+    public void setNodeType(String nodeType) {
+        this.nodeType = nodeType;
+    }
+
+    public String getPacsUrl() {
+        return pacsUrl;
+    }
+
+    public void setPacsUrl(String pacsUrl) {
+        this.pacsUrl = pacsUrl;
     }
 
     @Override
