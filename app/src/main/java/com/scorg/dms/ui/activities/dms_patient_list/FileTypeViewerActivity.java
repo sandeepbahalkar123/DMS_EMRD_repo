@@ -738,8 +738,10 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
 
                 if (fileTreeResponseModel.getFileTreeResponseData().isPagination()) {
                     footerLayout.setVisibility(View.VISIBLE);
-                    if (getArchivedPageNumber == 1)
+                    if (getArchivedPageNumber == 1) {
                         mLoadPreviousArchiveDataList.setVisibility(View.INVISIBLE);
+                        mLoadNextArchiveDataList.setVisibility(View.VISIBLE);
+                    }
                 } else {
                     mLoadPreviousArchiveDataList.setVisibility(View.VISIBLE);
                     mLoadNextArchiveDataList.setVisibility(View.INVISIBLE);
