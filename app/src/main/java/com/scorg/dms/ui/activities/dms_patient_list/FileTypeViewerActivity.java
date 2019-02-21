@@ -971,7 +971,10 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
 
 
             // Label(pageCount)|NA
-            String dataToShow = archiveDatumObject.getFileType() + " (" + archiveDatumObject.getPageCount() + ")" + "|NA";
+            String dataToShow = "";
+            if (archiveDatumObject.getPageCount() > 0)
+                dataToShow = archiveDatumObject.getFileType() + " (" + archiveDatumObject.getPageCount() + ")" + "|NA";
+            else dataToShow = archiveDatumObject.getFileType() + "|NA";
             TreeNode archiveDatumObjectFolder = new TreeNode(new ArrowExpandIconTreeItemHolder.IconTreeItem(R.string.ic_shopping_cart, dataToShow, archiveDatumObject, i))
                     .setViewHolder(selectableHeaderHolder);
 
@@ -997,7 +1000,10 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
                     //-------NODE LstDateFolderType--------------
                     // Label(pageCount)|id
                     confidentialState = lstHideDocType.getConfidentialState();
-                    dataToShow = lstHideDocType.getTypeName() + " (" + lstHideDocType.getPageCount() + ")" + "|NA";
+                    if (lstHideDocType.getPageCount() > 0)
+                        dataToShow = lstHideDocType.getTypeName() + " (" + lstHideDocType.getPageCount() + ")" + "|NA";
+                    else
+                        dataToShow = lstHideDocType.getTypeName() + "|NA";
                     ArrowExpandSelectableHeaderHolder lstDateFolderTypeSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, (l == 0), lstDocTypeChildLeftPadding, false, confidentialState, false);
                     lstDateFolderTypeSelectableHeaderHolder.setOnlyOneNodeExpanded(false);
 
@@ -1031,7 +1037,10 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
                     //-------NODE LstDateFolderType--------------
                     // Label(pageCount)|id
                     confidentialState = lstOrderedDocType.getConfidentialState();
-                    dataToShow = lstOrderedDocType.getTypeName() + " (" + lstOrderedDocType.getPageCount() + ")" + "|NA";
+                    if (lstOrderedDocType.getPageCount() > 0)
+                        dataToShow = lstOrderedDocType.getTypeName() + " (" + lstOrderedDocType.getPageCount() + ")" + "|NA";
+                    else
+                        dataToShow = lstOrderedDocType.getTypeName() + "|NA";
                     ArrowExpandSelectableHeaderHolder lstDateFolderTypeSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, (l == 0), lstDocTypeChildLeftPadding, false, confidentialState, false);
                     lstDateFolderTypeSelectableHeaderHolder.setOnlyOneNodeExpanded(false);
 
@@ -1073,7 +1082,10 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
                     //-------NODE LstDateFolderType--------------
                     // Label(pageCount)|id
                     confidentialState = lstDocCategory.getConfidentialState();
-                    dataToShow = lstDocCategory.getCategoryName() + " (" + lstDocCategory.getPageCount() + ")" + "|NA";
+                    if (lstDocCategory.getPageCount() > 0)
+                        dataToShow = lstDocCategory.getCategoryName() + " (" + lstDocCategory.getPageCount() + ")" + "|NA";
+                    else
+                        dataToShow = lstDocCategory.getCategoryName() + "|NA";
                     ArrowExpandSelectableHeaderHolder lstDateFolderTypeSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, (l == 0), lstDocTypeChildLeftPadding, true, confidentialState, false);
                     lstDateFolderTypeSelectableHeaderHolder.setOnlyOneNodeExpanded(false);
 
@@ -1106,7 +1118,10 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
                         // Label(pageCount)|id
                         confidentialState = lstHideDocType.getConfidentialState();
 
-                        dataToShow = lstHideDocType.getTypeName() + " (" + lstHideDocType.getPageCount() + ")" + "|" + lstHideDocType.getTypeId();
+                        if (lstHideDocType.getPageCount() > 0)
+                            dataToShow = lstHideDocType.getTypeName() + " (" + lstHideDocType.getPageCount() + ")" + "|" + lstHideDocType.getTypeId();
+                        else
+                            dataToShow = lstHideDocType.getTypeName() + "|" + lstHideDocType.getTypeId();
                         ArrowExpandSelectableHeaderHolder docCatSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, (l == 0 && j == 0), lstFileLeftPadding, false, confidentialState, false);
                         docCatSelectableHeaderHolder.setOnlyOneNodeExpanded(false);
 
@@ -1133,7 +1148,11 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
                         LstDocType lstDocTypeChild = lstDocTypesCategoriesChildList.get(k);
 
                         // Label(pageCount)|id
-                        dataToShow = lstDocTypeChild.getTypeName() + " (" + lstDocTypeChild.getPageCount() + ")" + "|" + lstDocTypeChild.getTypeId();
+
+                        if (lstDocTypeChild.getNodeType().equalsIgnoreCase("pacs_doc"))
+                            dataToShow = lstDocTypeChild.getTypeName() + "|" + lstDocTypeChild.getTypeId();
+                        else
+                            dataToShow = lstDocTypeChild.getTypeName() + " (" + lstDocTypeChild.getPageCount() + ")" + "|" + lstDocTypeChild.getTypeId();
                         confidentialState = lstDocTypeChild.getConfidentialState();
                         //-------
                         ArrowExpandSelectableHeaderHolder lstDocTypeChildSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, (l == 0 && k == 0), lstFileLeftPadding, false, confidentialState, false);
@@ -1174,7 +1193,9 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
                     //-------NODE LstDateFolderType--------------
                     // Label(pageCount)|id
                     confidentialState = lstDateFolderType.getConfidentialState();
-                    dataToShow = lstDateFolderType.getDateFolderType() + " (" + lstDateFolderType.getPageCount() + ")" + "|NA";
+                    if (lstDateFolderType.getPageCount() > 0)
+                        dataToShow = lstDateFolderType.getDateFolderType() + " (" + lstDateFolderType.getPageCount() + ")" + "|NA";
+                    else dataToShow = lstDateFolderType.getDateFolderType() + "|NA";
                     ArrowExpandSelectableHeaderHolder lstDateFolderTypeSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, (l == 0), lstDocTypeChildLeftPadding, true, confidentialState, false);
                     lstDateFolderTypeSelectableHeaderHolder.setOnlyOneNodeExpanded(false);
 
@@ -1208,7 +1229,10 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
                         // Label(pageCount)|id
                         confidentialState = lstHideDocType.getConfidentialState();
 
-                        dataToShow = lstHideDocType.getTypeName() + " (" + lstHideDocType.getPageCount() + ")" + "|" + lstHideDocType.getTypeId();
+                        if (lstHideDocType.getPageCount() > 0)
+                            dataToShow = lstHideDocType.getTypeName() + " (" + lstHideDocType.getPageCount() + ")" + "|" + lstHideDocType.getTypeId();
+                        else
+                            dataToShow = lstHideDocType.getTypeName() + "|" + lstHideDocType.getTypeId();
                         ArrowExpandSelectableHeaderHolder docCatSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, (j == 0), lstDateFolderTypeChildLeftPadding, false, confidentialState, false);
                         docCatSelectableHeaderHolder.setOnlyOneNodeExpanded(false);
 
@@ -1242,7 +1266,10 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
                         // Label(pageCount)|id
                         confidentialState = lstDocCategoryObject.getConfidentialState();
 
-                        dataToShow = lstDocCategoryObject.getCategoryName() + " (" + lstDocCategoryObject.getPageCount() + ")" + "|" + lstDocCategoryObject.getCategoryId();
+                        if (lstDocCategoryObject.getPageCount() > 0)
+                            dataToShow = lstDocCategoryObject.getCategoryName() + " (" + lstDocCategoryObject.getPageCount() + ")" + "|" + lstDocCategoryObject.getCategoryId();
+                        else
+                            dataToShow = lstDocCategoryObject.getCategoryName() + "|" + lstDocCategoryObject.getCategoryId();
                         ArrowExpandSelectableHeaderHolder docCatSelectableHeaderHolder = new ArrowExpandSelectableHeaderHolder(this, (j == 0), lstDateFolderTypeChildLeftPadding, true, confidentialState, false);
                         docCatSelectableHeaderHolder.setOnlyOneNodeExpanded(false);
 
@@ -1263,7 +1290,10 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
                             LstDocType lstDocTypeChild = lstDocTypesCategoriesChildList.get(k);
 
                             // Label(pageCount)|id
-                            dataToShow = lstDocTypeChild.getTypeName() + " (" + lstDocTypeChild.getPageCount() + ")" + "|" + lstDocTypeChild.getTypeId();
+                            if (lstDocTypeChild.getNodeType().equalsIgnoreCase("pacs_doc"))
+                                dataToShow = lstDocTypeChild.getTypeName() + "|" + lstDocTypeChild.getTypeId();
+                            else
+                                dataToShow = lstDocTypeChild.getTypeName() + " (" + lstDocTypeChild.getPageCount() + ")" + "|" + lstDocTypeChild.getTypeId();
 
                             confidentialState = lstDocTypeChild.getConfidentialState();
 

@@ -26,4 +26,8 @@ public class CustomProgressDialog extends Dialog {
         setOnCancelListener(null);
     }
 
+    @Override
+    public void setCancelable(boolean flag) {
+        super.setCancelable(flag);
+    }
 }
