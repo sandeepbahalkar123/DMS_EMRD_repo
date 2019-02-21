@@ -4,6 +4,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class ArchiveDatum {
@@ -70,13 +71,10 @@ public class ArchiveDatum {
         this.lstDateFolderTypeList = lstDateFolderTypeList;
     }
 
-<<<<<<< HEAD
-=======
    /* public void setTotalLstDateFolderTypePageCount(int totalLstDateFolderTypePageCount) {
         this.totalLstDateFolderTypePageCount = totalLstDateFolderTypePageCount;
     }
 
->>>>>>> 06b335b86507e6adc27ac4351048a8c42d999232
     public int getTotalLstDateFolderTypePageCount() {
         if (totalLstDateFolderTypePageCount == -1) {
             int count = 0;
@@ -91,20 +89,14 @@ public class ArchiveDatum {
         return totalLstDateFolderTypePageCount;
     }*/
 
-    public void setTotalLstDateFolderTypePageCount(int totalLstDateFolderTypePageCount) {
-        this.totalLstDateFolderTypePageCount = totalLstDateFolderTypePageCount;
-    }
-
     public List<LstDocCategory> getArchiveDataLstDocCategories() {
-        return archiveDataLstDocCategories == null ? new ArrayList<LstDocCategory>() : archiveDataLstDocCategories;
+        return archiveDataLstDocCategories;
     }
 
     public void setArchiveDataLstDocCategories(List<LstDocCategory> archiveDataLstDocCategories) {
         this.archiveDataLstDocCategories = archiveDataLstDocCategories;
     }
 
-<<<<<<< HEAD
-=======
     /*public void setTotalArchiveDataLstDocCategoriesPageCount(int totalArchiveDataLstDocCategoriesPageCount) {
         this.totalArchiveDataLstDocCategoriesPageCount = totalArchiveDataLstDocCategoriesPageCount;
     }
@@ -113,7 +105,6 @@ public class ArchiveDatum {
         this.totalArchiveDataLstOrderPageCount = totalArchiveDataLstOrderPageCount;
     }
 
->>>>>>> 06b335b86507e6adc27ac4351048a8c42d999232
     public int getTotalArchiveDataLstDocCategoriesPageCount() {
         if (archiveDataLstDocCategories != null) {
             if (totalArchiveDataLstDocCategoriesPageCount == -1) {
@@ -129,12 +120,6 @@ public class ArchiveDatum {
         return totalArchiveDataLstDocCategoriesPageCount;
     }
 
-<<<<<<< HEAD
-    public void setTotalArchiveDataLstDocCategoriesPageCount(int totalArchiveDataLstDocCategoriesPageCount) {
-        this.totalArchiveDataLstDocCategoriesPageCount = totalArchiveDataLstDocCategoriesPageCount;
-    }
-
-=======
     public int getTotalArchiveDataLstOrderPageCount() {
         if (lstOrderedDocTypes != null) {
             if (totalArchiveDataLstOrderPageCount == -1) {
@@ -165,7 +150,6 @@ public class ArchiveDatum {
         return totalArchiveDataLstOrderPageCount;
     }*/
 
->>>>>>> 06b335b86507e6adc27ac4351048a8c42d999232
     public int getConfidentialState() {
         return confidentialState;
     }

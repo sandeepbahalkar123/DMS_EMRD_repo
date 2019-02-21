@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.CompoundButtonCompat;
 import android.support.v7.widget.AppCompatCheckBox;
@@ -121,7 +122,7 @@ public class ArrowExpandSelectableHeaderHolder extends TreeNode.BaseNodeViewHold
 
         //arrowView.setPadding(20, 10, 10, 10);
         if (node.isLeaf()) {
-            arrowView.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_tree_file));
+            arrowView.setImageDrawable(getIcon(node));
             arrowView.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         }
 
@@ -234,6 +235,21 @@ public class ArrowExpandSelectableHeaderHolder extends TreeNode.BaseNodeViewHold
         }
 
         return view;
+    }
+
+    private Drawable getIcon(TreeNode node) {
+        if (node.getValue() != null) {
+            if (node.getValue() instanceof ArrowExpandIconTreeItemHolder.IconTreeItem) {
+                ArrowExpandIconTreeItemHolder.IconTreeItem iconTreeItem = (ArrowExpandIconTreeItemHolder.IconTreeItem) node.getValue();
+                if (iconTreeItem.objectData instanceof LstDocType) {
+                    LstDocType lstDocType = (LstDocType) iconTreeItem.objectData;
+                    if (lstDocType.getNodeType().equalsIgnoreCase("pacs_doc")) {
+                        return context.getResources().getDrawable(R.drawable.ic_grid_world);
+                    }
+                }
+            }
+        }
+        return context.getResources().getDrawable(R.drawable.ic_tree_file);
     }
 
 

@@ -226,9 +226,6 @@
     <string name="off">OFF</string>
     <string name="refresh_images">Refresh Images</string>
     <string name="clear_file_cache">Clear File Cache</string>
-<<<<<<< HEAD
-    <string name="title_activity_web_view">WebViewActivity</string>
-=======
     <string name="retry">Retry</string>
     <string name="appointment_code">Appointment Code :</string>
 
@@ -249,6 +246,5 @@
     <string name="patient_page_type">search</string>
     <string name="admitted_page_type">admitted</string>
     <string name="not_valid_pdf_url">This is not valid document.</string>
->>>>>>> 06b335b86507e6adc27ac4351048a8c42d999232
 
 </resources>

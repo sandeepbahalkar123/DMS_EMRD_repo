@@ -4,7 +4,6 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class LstDocType {
@@ -60,18 +59,16 @@ public class LstDocType {
     @Expose
     private ArrayList<LstDateFileType> lstDateFileTypeList = new ArrayList<LstDateFileType>();
 
-<<<<<<< HEAD
     @SerializedName("nodeType")
     @Expose
     private String nodeType;
     @SerializedName("pacsUrl")
     @Expose
     private String pacsUrl;
-=======
+
     @SerializedName("lsthideDocCategory")
     @Expose
     private List<LstHideDocType> lsthideDocCategory = new ArrayList<LstHideDocType>();
->>>>>>> 06b335b86507e6adc27ac4351048a8c42d999232
 
     public Integer getTypeId() {
         return typeId;
@@ -185,9 +182,8 @@ public class LstDocType {
         this.fileTypeRefId = fileTypeRefId;
     }
 
-<<<<<<< HEAD
     public String getNodeType() {
-        return nodeType;
+        return nodeType == null ? "" : nodeType;
     }
 
     public void setNodeType(String nodeType) {
@@ -200,7 +196,7 @@ public class LstDocType {
 
     public void setPacsUrl(String pacsUrl) {
         this.pacsUrl = pacsUrl;
-=======
+    }
 
     public List<LstHideDocType> getLsthideDocCategory() {
         return lsthideDocCategory;
@@ -208,23 +204,5 @@ public class LstDocType {
 
     public void setLsthideDocCategory(List<LstHideDocType> lsthideDocCategory) {
         this.lsthideDocCategory = lsthideDocCategory;
->>>>>>> 06b335b86507e6adc27ac4351048a8c42d999232
-    }
-
-    @Override
-    public String toString() {
-        return "LstDocType{" +
-                "typeId=" + typeId +
-                ", typeName='" + typeName + '\'' +
-                ", pageCount=" + pageCount +
-                ", recordId=" + recordId +
-                ", permission='" + permission + '\'' +
-                ", createdDate='" + createdDate + '\'' +
-                ", pageNumber=" + pageNumber +
-                ", recordDetailId=" + recordDetailId +
-                ", confidentialState=" + confidentialState +
-                ", fileTypeRefId='" + fileTypeRefId + '\'' +
-                ", lstDateFileTypeList=" + lstDateFileTypeList +
-                '}';
     }
 }

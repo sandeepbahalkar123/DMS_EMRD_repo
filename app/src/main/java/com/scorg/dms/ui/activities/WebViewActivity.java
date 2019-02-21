@@ -1,19 +1,21 @@
 package com.scorg.dms.ui.activities;
 
 import android.annotation.SuppressLint;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.scorg.dms.R;
+import com.scorg.dms.singleton.DMSApplication;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class WebViewActivity extends AppCompatActivity {
+public class WebViewActivity extends BaseActivity {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -26,9 +28,19 @@ public class WebViewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_web_view);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
+        toolbar.setBackgroundColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
         init();
         String url = getIntent().getStringExtra("url");
-        webView.loadUrl(url);
+        if (url != null)
+            webView.loadUrl(url);
+
+        String typeName = getIntent().getStringExtra("typeName");
+        if (typeName != null)
+            getSupportActionBar().setTitle(typeName);
+        else getSupportActionBar().setTitle("");
+
     }
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -44,6 +56,16 @@ public class WebViewActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // handle arrow click here
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
