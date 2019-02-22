@@ -96,6 +96,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static com.github.barteksc.pdfviewer.PDFView.DEFAULT_MIN_SCALE;
+import static com.scorg.dms.util.DMSConstants.PACS_DOC;
 
 /**
  * Created by jeetal on 14/3/17.
@@ -1151,7 +1152,7 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
 
                         // Label(pageCount)|id
 
-                        if (lstDocTypeChild.getNodeType().equalsIgnoreCase("pacs_doc"))
+                        if (lstDocTypeChild.getNodeType().equalsIgnoreCase(PACS_DOC))
                             dataToShow = lstDocTypeChild.getTypeName() + "|" + lstDocTypeChild.getTypeId();
                         else
                             dataToShow = lstDocTypeChild.getTypeName() + " (" + lstDocTypeChild.getPageCount() + ")" + "|" + lstDocTypeChild.getTypeId();
@@ -1292,7 +1293,7 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
                             LstDocType lstDocTypeChild = lstDocTypesCategoriesChildList.get(k);
 
                             // Label(pageCount)|id
-                            if (lstDocTypeChild.getNodeType().equalsIgnoreCase("pacs_doc"))
+                            if (lstDocTypeChild.getNodeType().equalsIgnoreCase(PACS_DOC))
                                 dataToShow = lstDocTypeChild.getTypeName() + "|" + lstDocTypeChild.getTypeId();
                             else
                                 dataToShow = lstDocTypeChild.getTypeName() + " (" + lstDocTypeChild.getPageCount() + ")" + "|" + lstDocTypeChild.getTypeId();
@@ -1430,6 +1431,8 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
                 tempClickedLstDocTypeElement.setRecordDetailId(clickedLstDocTypeElement.getRecordDetailId());
                 tempClickedLstDocTypeElement.setPermission(clickedLstDocTypeElement.getPermission());
                 tempClickedLstDocTypeElement.setConfidentialState(clickedLstDocTypeElement.getConfidentialState());
+                tempClickedLstDocTypeElement.setNodeType(clickedLstDocTypeElement.getNodeType());
+                tempClickedLstDocTypeElement.setPacsUrl(clickedLstDocTypeElement.getPacsUrl());
                 doClickedOperationOnTreeItem(tempClickedLstDocTypeElement);
                 mDrawer.closeDrawer(GravityCompat.END);
             } else if (value1.objectData instanceof LstHideDocType) {
@@ -1442,6 +1445,8 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
                 tempClickedLstDocTypeElement.setRecordDetailId(hideDocType.getRecordDetailId());
 //                tempClickedLstDocTypeElement.setPermission(hideDocType.getPermission());
                 tempClickedLstDocTypeElement.setConfidentialState(hideDocType.getConfidentialState());
+                tempClickedLstDocTypeElement.setNodeType(hideDocType.getNodeType());
+                tempClickedLstDocTypeElement.setPacsUrl(hideDocType.getPacsUrl());
                 doClickedOperationOnTreeItem(tempClickedLstDocTypeElement);
                 mDrawer.closeDrawer(GravityCompat.END);
             }
@@ -1451,7 +1456,7 @@ public class FileTypeViewerActivity extends BaseActivity implements HelperRespon
     private void doClickedOperationOnTreeItem(LstDocType clickedLstDocTypeElement) {
         //----- Get Obj`ect of clicked Element and create map to send  : Start------
 
-        if (clickedLstDocTypeElement.getNodeType().equalsIgnoreCase("pacs_doc")) {
+        if (clickedLstDocTypeElement.getNodeType().equalsIgnoreCase(PACS_DOC)) {
             Intent intent = new Intent(mContext, WebViewActivity.class);
             intent.putExtra("url", clickedLstDocTypeElement.getPacsUrl());
             intent.putExtra("typeName", clickedLstDocTypeElement.getTypeName());
