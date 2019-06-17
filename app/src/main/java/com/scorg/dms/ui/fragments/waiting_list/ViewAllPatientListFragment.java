@@ -121,9 +121,7 @@ public class ViewAllPatientListFragment extends Fragment implements WaitingListA
 
             }
         });
-
     }
-
 
     public static ViewAllPatientListFragment newInstance(Bundle bundle) {
         ViewAllPatientListFragment fragment = new ViewAllPatientListFragment();
@@ -218,16 +216,14 @@ public class ViewAllPatientListFragment extends Fragment implements WaitingListA
 
     @Override
     public void onSuccess(String mOldDataTag, CustomResponse customResponse) {
-        switch (mOldDataTag) {
-            case DMSConstants.TASK_PATIENT_LIST: {
-                ShowSearchResultResponseModel showSearchResultResponseModel = (ShowSearchResultResponseModel) customResponse;
-                SearchResultData searchResultData = showSearchResultResponseModel.getSearchResultData();
-
-                if (searchResultData != null) {
-                    List<SearchResult> searchResultList = searchResultData.getSearchResult();
-                    if (!searchResultList.isEmpty()) {
-                        SearchResult searchPatientInformation = searchResultList.get(0);
-                        //TODO : as API response chnaged, hence need to fix this too.
+        if (DMSConstants.TASK_PATIENT_LIST.equals(mOldDataTag)) {
+            ShowSearchResultResponseModel showSearchResultResponseModel = (ShowSearchResultResponseModel) customResponse;
+            SearchResultData searchResultData = showSearchResultResponseModel.getSearchResultData();
+            if (searchResultData != null) {
+                List<SearchResult> searchResultList = searchResultData.getSearchResult();
+                if (!searchResultList.isEmpty()) {
+                    SearchResult searchPatientInformation = searchResultList.get(0);
+                    //TODO : as API response chnaged, hence need to fix this too.
                         /*List<PatientFileData> patientFileDataList = searchPatientInformation.getPatientFileData();
                         if (patientFileDataList != null) {
                             if (!patientFileDataList.isEmpty()) {
@@ -245,10 +241,8 @@ public class ViewAllPatientListFragment extends Fragment implements WaitingListA
                                 startActivity(intent);
                             }
                         }*/
-                    }
                 }
             }
-            break;
         }
     }
 

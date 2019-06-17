@@ -219,7 +219,7 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
                 //  NetworkUtil.isInternetAvailable(mContext) &&
                 if (mIsLoadMorePatients) {
-                    currentPage = currentPage + 1;
+                    currentPage += 1;
                     doGetPatientList();
                 }
             }
@@ -1387,6 +1387,7 @@ public class PatientListActivity extends BaseActivity implements HelperResponse,
 
     @Override
     public void onSearchAutoCompleteItemClicked(PatientFilter patientFilter) {
+        currentPage = 1;
         mAutoCompleteSearchBox.getEditText().dismissDropDown();
         mAutoCompleteSearchBox.getEditText().setSelection(mAutoCompleteSearchBox.getText().length());
 
