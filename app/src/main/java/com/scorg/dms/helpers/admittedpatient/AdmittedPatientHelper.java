@@ -70,7 +70,8 @@ public class AdmittedPatientHelper implements ConnectionListener {
     public void doGetAdmittedData(String userSelectedDate) {
         ConnectionFactory mConnectionFactory = new ConnectionFactory(mContext, this, null, true, DMSConstants.TASK_ADMITTED_PATIENT_DATA, Request.Method.POST, true);
         RequestAppointmentData mRequestAppointmentData = new RequestAppointmentData();
-        mRequestAppointmentData.setDocId(Integer.valueOf(DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.DOC_ID, mContext)));
+        String docId = DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.DOC_ID, mContext);
+        mRequestAppointmentData.setDocId(Integer.valueOf(docId.isEmpty() ? "0" : docId));
         mRequestAppointmentData.setDate(userSelectedDate);
         mConnectionFactory.setPostParams(mRequestAppointmentData);
         mConnectionFactory.setHeaderParams();
