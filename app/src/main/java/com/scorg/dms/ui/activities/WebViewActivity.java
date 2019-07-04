@@ -5,12 +5,14 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.scorg.dms.R;
 import com.scorg.dms.singleton.DMSApplication;
+import com.scorg.dms.ui.customesViews.CustomProgressDialog;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -22,19 +24,25 @@ public class WebViewActivity extends BaseActivity {
     @BindView(R.id.webView)
     WebView webView;
 
+    private CustomProgressDialog customProgressDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web_view);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
+        customProgressDialog = new CustomProgressDialog(this);
+        customProgressDialog.setCancelable(true);
         toolbar.setBackgroundColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         init();
         String url = getIntent().getStringExtra("url");
-        if (url != null)
+        if (url != null) {
             webView.loadUrl(url);
+            customProgressDialog.show();
+        }
 
         String typeName = getIntent().getStringExtra("typeName");
         if (typeName != null)
@@ -53,6 +61,12 @@ public class WebViewActivity extends BaseActivity {
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 view.loadUrl(url);
                 return true;
+            }
+
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+                customProgressDialog.dismiss();
             }
         });
 

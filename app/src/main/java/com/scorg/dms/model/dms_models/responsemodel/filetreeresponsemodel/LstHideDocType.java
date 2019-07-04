@@ -1,8 +1,5 @@
 package com.scorg.dms.model.dms_models.responsemodel.filetreeresponsemodel;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -51,6 +48,13 @@ public class LstHideDocType {
     @SerializedName("fileType")
     @Expose
     private String fileType;
+
+    @SerializedName("nodeType")
+    @Expose
+    private String nodeType;
+    @SerializedName("pacsUrl")
+    @Expose
+    private String pacsUrl;
 
     public LstHideDocType() {
     }
@@ -159,4 +163,19 @@ public class LstHideDocType {
         this.fileType = fileType;
     }
 
+    public String getNodeType() {
+        return nodeType == null ? "" : nodeType;
+    }
+
+    public void setNodeType(String nodeType) {
+        this.nodeType = nodeType;
+    }
+
+    public String getPacsUrl() {
+        return pacsUrl == null ? "" : pacsUrl;
+    }
+
+    public void setPacsUrl(String pacsUrl) {
+        this.pacsUrl = pacsUrl;
+    }
 }

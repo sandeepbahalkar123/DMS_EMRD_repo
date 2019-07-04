@@ -30,6 +30,8 @@ import com.scorg.dms.singleton.DMSApplication;
 import com.scorg.dms.util.CommonMethods;
 import com.unnamed.b.atv.model.TreeNode;
 
+import static com.scorg.dms.util.DMSConstants.PACS_DOC;
+
 /**
  *
  */
@@ -243,7 +245,17 @@ public class ArrowExpandSelectableHeaderHolder extends TreeNode.BaseNodeViewHold
                 ArrowExpandIconTreeItemHolder.IconTreeItem iconTreeItem = (ArrowExpandIconTreeItemHolder.IconTreeItem) node.getValue();
                 if (iconTreeItem.objectData instanceof LstDocType) {
                     LstDocType lstDocType = (LstDocType) iconTreeItem.objectData;
-                    if (lstDocType.getNodeType().equalsIgnoreCase("pacs_doc")) {
+                    if (lstDocType.getNodeType().equalsIgnoreCase(PACS_DOC)) {
+                        return context.getResources().getDrawable(R.drawable.ic_grid_world);
+                    }
+                } else if (iconTreeItem.objectData instanceof LstHideDocType) {
+                    LstHideDocType lstDocType = (LstHideDocType) iconTreeItem.objectData;
+                    if (lstDocType.getNodeType().equalsIgnoreCase(PACS_DOC)) {
+                        return context.getResources().getDrawable(R.drawable.ic_grid_world);
+                    }
+                } else if (iconTreeItem.objectData instanceof LstDateFileType) {
+                    LstDateFileType lstDocType = (LstDateFileType) iconTreeItem.objectData;
+                    if (lstDocType.getNodeType().equalsIgnoreCase(PACS_DOC)) {
                         return context.getResources().getDrawable(R.drawable.ic_grid_world);
                     }
                 }

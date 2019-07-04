@@ -44,7 +44,7 @@ public class DashboardHelper implements ConnectionListener {
                 mHelperResponseManager.onParseError(mOldDataTag, mContext.getString(R.string.something_went_wrong_error));
                 break;
             case ConnectionListener.SERVER_ERROR:
-               CommonMethods.Log(TAG, mContext.getString(R.string.server_error));
+                CommonMethods.Log(TAG, mContext.getString(R.string.server_error));
                 mHelperResponseManager.onServerError(mOldDataTag, mContext.getString(R.string.something_went_wrong_error));
                 break;
             case ConnectionListener.NO_INTERNET:
@@ -72,7 +72,8 @@ public class DashboardHelper implements ConnectionListener {
     public void doGetDashboardResponse() {
         ConnectionFactory mConnectionFactory = new ConnectionFactory(mContext, this, null, true, DMSConstants.TASK_GET_DASHBOARD_RESPONSE, Request.Method.POST, true);
         RequestAppointmentData mRequestAppointmentData = new RequestAppointmentData();
-        mRequestAppointmentData.setDocId(Integer.valueOf(DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.DOC_ID, mContext)));
+        String docId = DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.DOC_ID, mContext);
+        mRequestAppointmentData.setDocId(Integer.valueOf(docId.isEmpty() ? "0" : docId));
         String date = CommonMethods.getCurrentDate(DMSConstants.DATE_PATTERN.UTC_PATTERN);
         mRequestAppointmentData.setDate(date);
         mConnectionFactory.setPostParams(mRequestAppointmentData);

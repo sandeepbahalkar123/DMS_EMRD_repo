@@ -183,20 +183,24 @@ public class CommonMethods {
     }
 
     private static String nameInitialSuffix(String name) {
-        if (name.substring(0, 3).equals("Mrs")) {
-            name = name.substring(4, name.length());
-        } else if (name.substring(0, 4).equals("Mrs.")) {
-            name = name.substring(5, name.length());
-        } else if (name.substring(0, 2).equals("Mr") || name.substring(0, 2).equals("Dr")) {
-            name = name.substring(3, name.length());
-        } else if (name.substring(0, 3).equals("Mr.") || name.substring(0, 3).equals("Dr.")) {
-            name = name.substring(4, name.length());
-        } else if (name.substring(0, 4).equals("Miss")) {
-            name = name.substring(5, name.length());
-        } else if (name.substring(0, 5).equals("Miss.")) {
-            name = name.substring(6, name.length());
-        } else if (name.charAt(0) == ' ') {
-            name = name.substring(1, name.length());
+        try {
+            if (name.substring(0, 3).equals("Mrs")) {
+                name = name.substring(4, name.length());
+            } else if (name.substring(0, 4).equals("Mrs.")) {
+                name = name.substring(5, name.length());
+            } else if (name.substring(0, 2).equals("Mr") || name.substring(0, 2).equals("Dr")) {
+                name = name.substring(3, name.length());
+            } else if (name.substring(0, 3).equals("Mr.") || name.substring(0, 3).equals("Dr.")) {
+                name = name.substring(4, name.length());
+            } else if (name.substring(0, 4).equals("Miss")) {
+                name = name.substring(5, name.length());
+            } else if (name.substring(0, 5).equals("Miss.")) {
+                name = name.substring(6, name.length());
+            } else if (name.charAt(0) == ' ') {
+                name = name.substring(1, name.length());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return name;
     }
@@ -235,7 +239,7 @@ public class CommonMethods {
     {
         Calendar c = Calendar.getInstance();
         SimpleDateFormat df = new SimpleDateFormat(yyyyMmDd, Locale.US);
-       // df.setTimeZone(TimeZone.getTimeZone("UTC"));/// this line add to set UTC time zone to date
+        // df.setTimeZone(TimeZone.getTimeZone("UTC"));/// this line add to set UTC time zone to date
         return df.format(c.getTime());
     }
 
@@ -284,7 +288,7 @@ public class CommonMethods {
             Date value = ft.parse(selectedDateTime);
             SimpleDateFormat dateFormatter = new SimpleDateFormat(requestedFormat, Locale.US); //this format changeable
             dateFormatter.setTimeZone(TimeZone.getDefault());
-           // dateFormatter.setTimeZone(TimeZone.getTimeZone("UTC"));
+            // dateFormatter.setTimeZone(TimeZone.getTimeZone("UTC"));
             ourDate = dateFormatter.format(value);
         } catch (Exception e) {
             if (formatString.equalsIgnoreCase(DMSConstants.TIME)) {

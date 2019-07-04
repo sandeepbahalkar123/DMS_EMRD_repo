@@ -65,8 +65,6 @@ public class SettingsActivity extends BaseActivity implements  HelperResponse {
     RelativeLayout selectMenuLayout;
 
     private Context mContext;
-    private LoginHelper loginHelper;
-    private String docId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,8 +83,7 @@ public class SettingsActivity extends BaseActivity implements  HelperResponse {
         clearFileCache.setTextColor(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         dashboardArrowIcon.setColorFilter(Color.parseColor(DMSApplication.COLOR_PRIMARY));
         mContext = SettingsActivity.this;
-        docId = DMSPreferencesManager.getString(DMSPreferencesManager.DMS_PREFERENCES_KEY.DOC_ID, mContext);
-        loginHelper = new LoginHelper(mContext, this);
+        LoginHelper loginHelper = new LoginHelper(mContext, this);
         titleTextView.setText(getString(R.string.settings));
         backImageView.setVisibility(View.VISIBLE);
     }

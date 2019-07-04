@@ -52,6 +52,13 @@ public class LstDateFileType {
     @Expose
     private String fileTypeRefId;
 
+    @SerializedName("nodeType")
+    @Expose
+    private String nodeType;
+    @SerializedName("pacsUrl")
+    @Expose
+    private String pacsUrl;
+
     public Integer getTypeId() {
         return typeId;
     }
@@ -163,6 +170,22 @@ public class LstDateFileType {
 
     public void setFileTypeRefId(String fileTypeRefId) {
         this.fileTypeRefId = fileTypeRefId;
+    }
+
+    public String getNodeType() {
+        return nodeType == null ? "" : nodeType;
+    }
+
+    public void setNodeType(String nodeType) {
+        this.nodeType = nodeType;
+    }
+
+    public String getPacsUrl() {
+        return pacsUrl == null ? "" : pacsUrl;
+    }
+
+    public void setPacsUrl(String pacsUrl) {
+        this.pacsUrl = pacsUrl;
     }
 
 }

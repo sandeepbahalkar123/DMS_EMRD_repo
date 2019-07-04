@@ -6,6 +6,8 @@ package com.scorg.dms.util;
  */
 public class DMSConstants {
 
+    public static final String PACS_DOC = "pacs_doc";
+
     public interface Images {
 
         String FOLDER = "/Contents/android/";
